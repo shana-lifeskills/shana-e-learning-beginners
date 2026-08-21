@@ -1,0 +1,283 @@
+<div class="story-tabs">
+  <div class="tab-bar">
+    <button type="button" class="tab-btn" [class.active]="activeTab() === 'video'" (click)="setTab('video')">
+      🎬 Mini Video
+    </button>
+    <button type="button" class="tab-btn" [class.active]="activeTab() === 'starters'" (click)="setTab('starters')">
+      💬 Discussion Starters
+      @if (step().discussionStarterQuestions.length) {
+        <span class="tab-count">{{ startersCorrectCount() }}/{{ step().discussionStarterQuestions.length }}</span>
+      }
+    </button>
+    <button
+      type="button"
+      class="tab-btn"
+      [class.active]="activeTab() === 'points'"
+      [class.locked]="!startersComplete()"
+      [disabled]="!startersComplete()"
+      [title]="startersComplete() ? '' : 'Finish Discussion Starters first'"
+      (click)="setTab('points')"
+    >
+      @if (!startersComplete()) { 🔒 } @else { 🤔 } {{ step().activity ? 'Activity' : 'Discussion Points' }}
+    </button>
+  </div>
+
+  <div class="tab-panel">
+    @switch (activeTab()) {
+      @case ('video') {
+        <div class="video-tab">
+          @if (step().badge) { <span class="story-badge">{{ step().badge }}</span> }
+          <h1>
+            {{ step().title }}
+            @if (step().year) { <span class="story-year">{{ step().year }}</span> }
+          </h1>
+          @if (step().attribution) { <p class="story-attribution">{{ step().attribution }}</p> }
+          @if (step().description) { <p class="story-description">{{ step().description }}</p> }
+          @if (step().creditLine) { <p class="story-credit">{{ step().creditLine }}</p> }
+          @if (step().instruction) { <p class="story-instruction">{{ step().instruction }}</p> }
+
+          @if (step().videoYoutubeUrl) {
+            <div class="youtube-frame">
+              @if (videoPlaying() && youtubeEmbedUrl(); as embedUrl) {
+                <iframe
+                  class="youtube-iframe"
+                  [src]="embedUrl"
+                  title="Lesson video"
+                  frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen
+                ></iframe>
+              } @else {
+                <button type="button" class="youtube-placeholder" (click)="playVideo()">
+                  <span>Click to play video</span>
+                </button>
+              }
+            </div>
+
+            <div class="youtube-meta">
+              @if (step().videoDurationLabel) { <p class="youtube-duration">🎥 Duration: {{ step().videoDurationLabel }}</p> }
+              <p class="youtube-link">
+                <a [href]="step().videoYoutubeUrl" target="_blank" rel="noopener">Click here</a>
+                to watch video on youtube (to play with subtitles)
+              </p>
+            </div>
+          } @else {
+            <div class="story-frame">
+              @if (step().videoUrl) {
+                <video class="lesson-video" controls>
+                  <source [src]="step().videoUrl" />
+                </video>
+              } @else {
+                <div class="story-placeholder">
+                  <img src="/assets/images/hero-kids.png" alt="A group of kids ready for story time" />
+                  <span class="play-badge">▶</span>
+                </div>
+              }
+              <p class="frame-caption">Tap ▶ to start the clip</p>
+            </div>
+          }
+
+          <button type="button" class="btn btn-primary btn-lg-tappable" (click)="setTab('starters')">
+            Next: Discussion Starters →
+          </button>
+        </div>
+      }
+
+      @case ('starters') {
+        <div class="starters-tab">
+          <p class="tab-intro">Answer each question about the story — pick the best answer to earn a star!</p>
+
+          <div class="starter-list">
+            @for (question of step().discussionStarterQuestions; track question.id) {
+              <div class="starter-card">
+                <p class="starter-prompt">{{ question.prompt }}</p>
+                <div class="starter-options">
+                  @for (option of question.options; track option.id) {
+                    <button
+                      type="button"
+                      class="starter-option"
+                      [class.correct]="optionState(question, option) === 'correct'"
+                      [class.incorrect]="optionState(question, option) === 'incorrect'"
+                      (click)="selectStarterOption(question, option)"
+                    >
+                      {{ option.text }}
+                    </button>
+                  }
+                </div>
+                @if (starterState(question).selectedOptionId && !starterState(question).correct) {
+                  <p class="try-again">Not quite — give it another try! 💪</p>
+                }
+                @if (starterState(question).correct) {
+                  <p class="correct-line">⭐ Great answer!</p>
+                }
+              </div>
+            }
+          </div>
+
+          @if (startersComplete()) {
+            <button type="button" class="btn btn-primary btn-lg-tappable" (click)="setTab('points')">
+              Next: {{ step().activity ? 'Activity' : 'Discussion Points' }} →
+            </button>
+          } @else {
+            <p class="locked-hint">Answer all {{ step().discussionStarterQuestions.length }} questions correctly to unlock {{ step().activity ? 'the Activity' : 'Discussion Points' }} 🔒</p>
+          }
+        </div>
+      }
+
+      @case ('points') {
+        @if (step().activity; as activity) {
+          <div class="activity-tab">
+            <h1>🎨 {{ activity.heading }}</h1>
+            <p class="points-intro">{{ activity.instruction }}</p>
+
+            @if (activity.slots; as slots) {
+              @if (activityLocked()) {
+                <div class="tickets-preview-grid">
+                  @for (slot of slots; track slot.id) {
+                    <div class="ticket-stub">
+                      <span class="ticket-icon">🎟️</span>
+                      <strong>{{ slot.label }}</strong>
+                      <p>“{{ ticketDrafts()[slot.id] }}”</p>
+                    </div>
+                  }
+                </div>
+              } @else {
+                <div class="tickets-grid">
+                  @for (slot of slots; track slot.id) {
+                    <div class="ticket-card">
+                      <span class="ticket-icon">🎟️</span>
+                      <label [for]="'ticket-' + slot.id">{{ slot.label }}</label>
+                      <textarea
+                        [id]="'ticket-' + slot.id"
+                        rows="2"
+                        [placeholder]="slot.placeholder"
+                        [value]="ticketDrafts()[slot.id] ?? ''"
+                        (input)="updateTicket(slot.id, $any($event.target).value)"
+                      ></textarea>
+                    </div>
+                  }
+                </div>
+              }
+            } @else {
+              <div class="activity-text-card">
+                <label for="activity-caption">{{ activity.textLabel }}</label>
+                <textarea
+                  id="activity-caption"
+                  rows="2"
+                  [placeholder]="activity.textPlaceholder"
+                  [disabled]="activityLocked()"
+                  [value]="activityText()"
+                  (input)="updateActivityText($any($event.target).value)"
+                ></textarea>
+              </div>
+
+              <div class="draw-card">
+                <div class="draw-head">
+                  <span class="draw-title">🖌️ Or draw it!</span>
+                  <div class="swatches">
+                    @for (color of colors; track color) {
+                      <button
+                        type="button"
+                        class="swatch"
+                        [style.background]="color"
+                        [class.selected]="brushColor() === color"
+                        [disabled]="activityLocked()"
+                        (click)="setBrushColor(color)"
+                        [attr.aria-label]="'Pick color ' + color"
+                      ></button>
+                    }
+                  </div>
+                </div>
+
+                <canvas
+                  #canvas
+                  class="draw-canvas"
+                  width="900"
+                  height="360"
+                  (pointerdown)="onPointerDown($event)"
+                  (pointermove)="onPointerMove($event)"
+                  (pointerup)="onPointerUp()"
+                  (pointerleave)="onPointerUp()"
+                ></canvas>
+
+                <div class="draw-footer">
+                  <label class="brush-size">
+                    Brush size:
+                    <input type="range" min="2" max="40" [value]="brushSize()" [disabled]="activityLocked()" (input)="setBrushSize($any($event.target).value)" />
+                  </label>
+                  <button type="button" class="btn btn-outline-primary clear-btn" [disabled]="activityLocked()" (click)="clearDrawing()">Clear drawing</button>
+                </div>
+              </div>
+            }
+
+            @if (activity.slots && activityLocked()) {
+              <button type="button" class="btn btn-primary btn-lg-tappable" (click)="continueAfterActivity()">
+                {{ step().continueLabel }}
+              </button>
+            } @else {
+              <button type="button" class="btn btn-primary btn-lg-tappable" [disabled]="!canSubmitActivity() || activityLocked()" (click)="submitActivity()">
+                @if (activityLocked()) { ✓ Shared! } @else { {{ activity.submitLabel }} }
+              </button>
+            }
+
+            @if (step().trainerTipQuote) {
+              <div class="trainer-tip-card">
+                <span class="tip-label">{{ step().trainerTipLabel }}</span>
+                <p class="tip-quote">“{{ step().trainerTipQuote }}”</p>
+                <p class="tip-body">{{ step().trainerTipBody }}</p>
+              </div>
+            }
+          </div>
+        } @else {
+          <div class="points-tab">
+            <h1>🧠 Discussion Points</h1>
+            <p class="points-intro">{{ step().reflectionIntro || 'Take your time to reflect on each question' }}</p>
+
+            @if (currentPoint(); as point) {
+              <div class="point-question-card">
+                <span class="point-num">Question {{ activePointIndex() + 1 }}</span>
+                <p class="point-quote">{{ point.quote }}</p>
+              </div>
+
+              @if (point.options?.length) {
+                <div class="point-options">
+                  @for (option of point.options; track option.id) {
+                    <label class="point-option">
+                      <input
+                        type="radio"
+                        [name]="point.id"
+                        [checked]="reflectionDraft()[point.id] === option.text"
+                        (change)="selectReflectionOption(point, option)"
+                      />
+                      <span>{{ option.text }}</span>
+                    </label>
+                  }
+                </div>
+              } @else {
+                <textarea
+                  class="point-textarea"
+                  rows="3"
+                  [placeholder]="point.placeholder"
+                  [value]="reflectionDraft()[point.id] ?? ''"
+                  (input)="updateReflection(point.id, $any($event.target).value)"
+                ></textarea>
+              }
+
+              <button type="button" class="btn btn-primary btn-lg-tappable" [disabled]="!currentPointAnswered()" (click)="submitPoint()">
+                {{ isLastPoint() ? step().continueLabel : 'Submit' }}
+              </button>
+            }
+
+            @if (step().trainerTipQuote) {
+              <div class="trainer-tip-card">
+                <span class="tip-label">{{ step().trainerTipLabel }}</span>
+                <p class="tip-quote">“{{ step().trainerTipQuote }}”</p>
+                <p class="tip-body">{{ step().trainerTipBody }}</p>
+              </div>
+            }
+          </div>
+        }
+      }
+    }
+  </div>
+</div>

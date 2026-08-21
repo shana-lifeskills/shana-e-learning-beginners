@@ -1,0 +1,224 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+.share-exercise { width: 100%; }
+
+.prompt {
+  @include m.playful-heading;
+  font-size: 1.45rem;
+  color: v.$color-navy-text;
+  margin-bottom: 1.25rem;
+}
+
+.share-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 1.25rem;
+
+  @media (max-width: 720px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.panel {
+  background: v.$color-cream-bg;
+  border-radius: v.$border-radius;
+  padding: 1.25rem;
+
+  h3 {
+    @include m.playful-heading;
+    font-size: 1.15rem;
+    color: v.$color-navy-text;
+    margin-bottom: 0.9rem;
+  }
+}
+
+.preview-toggle,
+.continue-btn {
+  margin-top: 0.75rem;
+}
+
+.card-preview {
+  margin-bottom: 1.1rem;
+  background: linear-gradient(135deg, #{v.$color-coral}, #{v.$color-grape});
+  border-radius: v.$border-radius;
+  padding: 1.25rem 1.4rem;
+  color: v.$color-white;
+  box-shadow: 0 5px 0 rgba(0, 0, 0, 0.12);
+}
+
+.download-btn {
+  margin-bottom: 1.5rem;
+}
+
+.preview-title {
+  display: block;
+  font-family: v.$headings-font-family;
+  font-size: 1.3rem;
+  margin-bottom: 0.9rem;
+}
+
+.preview-row {
+  background: rgba(255, 248, 237, 0.15);
+  border-radius: v.$border-radius-sm;
+  padding: 0.55rem 0.85rem;
+  margin-bottom: 0.5rem;
+
+  &:last-child { margin-bottom: 0; }
+}
+
+.preview-label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.75);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.preview-value {
+  display: block;
+  font-weight: 800;
+  font-size: 1.18rem;
+}
+
+.field {
+  margin-bottom: 0.9rem;
+
+  label {
+    display: block;
+    font-weight: 700;
+    font-size: 0.98rem;
+    color: v.$color-navy-text;
+    margin-bottom: 0.3rem;
+  }
+
+  input {
+    width: 100%;
+    border: 2px solid rgba(43, 45, 66, 0.12);
+    border-radius: v.$border-radius-sm;
+    padding: 0.6rem 0.85rem;
+    font-weight: 600;
+    font-size: 1.05rem;
+    background: v.$color-white;
+
+    &:focus {
+      outline: none;
+      border-color: v.$color-sky;
+    }
+
+    &:disabled {
+      opacity: 0.65;
+    }
+  }
+}
+
+.how-it-works {
+  margin-top: 1.1rem;
+  font-size: 0.95rem;
+
+  strong { color: v.$color-navy-text; }
+
+  ul {
+    margin: 0.4rem 0 0;
+    padding-left: 1.1rem;
+    color: rgba(43, 45, 66, 0.7);
+
+    li { margin-bottom: 0.25rem; }
+  }
+}
+
+.group-panel {
+  display: flex;
+  flex-direction: column;
+}
+
+.group-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+
+  h3 { margin: 0; }
+}
+
+.count-chip {
+  font-size: 0.82rem;
+  font-weight: 800;
+  background: rgba(107, 203, 119, 0.2);
+  color: #2f7d3b;
+  padding: 0.2rem 0.6rem;
+  border-radius: v.$border-radius-pill;
+  white-space: nowrap;
+}
+
+.empty-copy {
+  color: rgba(43, 45, 66, 0.55);
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.entry-list {
+  list-style: none;
+  margin: 0 0 1rem;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-height: 11rem;
+  overflow-y: auto;
+
+  li {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.75rem;
+    background: v.$color-white;
+    border-radius: v.$border-radius-sm;
+    padding: 0.55rem 0.8rem;
+    font-size: 1rem;
+
+    strong { color: v.$color-navy-text; }
+    span { color: rgba(43, 45, 66, 0.65); font-weight: 600; }
+
+    &.me {
+      background: rgba(78, 205, 196, 0.18);
+      strong { color: v.$color-sky; }
+    }
+  }
+}
+
+.follow-up {
+  margin-top: auto;
+  background: v.$color-white;
+  border-radius: v.$border-radius-sm;
+  padding: 0.9rem 1rem;
+
+  strong { font-size: 0.95rem; color: v.$color-navy-text; }
+
+  p {
+    font-style: italic;
+    color: rgba(43, 45, 66, 0.7);
+    font-size: 1rem;
+    margin: 0.4rem 0 0.75rem;
+  }
+}
+
+.stats {
+  display: flex;
+  gap: 1.5rem;
+
+  div { display: flex; flex-direction: column; }
+
+  span {
+    font-family: v.$headings-font-family;
+    font-weight: 800;
+    font-size: 1.35rem;
+    color: v.$color-grape;
+  }
+
+  small {
+    font-weight: 600;
+    color: rgba(43, 45, 66, 0.55);
+    font-size: 0.82rem;
+  }
+}

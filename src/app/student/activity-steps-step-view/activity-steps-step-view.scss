@@ -1,0 +1,189 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+$accent-blue: #4d78f0;
+
+.activity-steps {
+  max-width: 46rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.as-pill {
+  display: inline-block;
+  background: #fbe4c4;
+  color: #b3711b;
+  font-weight: 800;
+  font-size: 0.9rem;
+  padding: 0.5rem 1.4rem;
+  border-radius: v.$border-radius-pill;
+  margin-bottom: 1.5rem;
+}
+
+.activity-steps h1 {
+  @include m.playful-heading;
+  font-size: 2.6rem;
+  color: v.$color-navy-text;
+  margin-bottom: 0.75rem;
+}
+
+.as-subtitle {
+  color: rgba(43, 45, 66, 0.6);
+  font-size: 1.1rem;
+  line-height: 1.5;
+  max-width: 36rem;
+  margin: 0 auto 2.5rem;
+}
+
+.as-step-row {
+  position: relative;
+  margin-bottom: 2.5rem;
+}
+
+.as-step-number {
+  position: absolute;
+  top: -0.9rem;
+  left: 1.5rem;
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: $accent-blue;
+  color: v.$color-white;
+  font-weight: 800;
+  font-size: 1.1rem;
+  z-index: 1;
+}
+
+.as-step-panel {
+  border-radius: v.$border-radius-xl;
+  padding: 2.5rem 2rem 2rem;
+
+  &--blue { background: #e8f2fd; }
+  &--lavender { background: #e2e2f5; }
+}
+
+.as-step-icon {
+  display: grid;
+  place-items: center;
+  width: 4.5rem;
+  height: 4.5rem;
+  margin: 0 auto 1.5rem;
+  border-radius: v.$border-radius-sm;
+  background: v.$color-white;
+  font-size: 1.75rem;
+  box-shadow: 0 2px 8px rgba(43, 45, 66, 0.08);
+}
+
+.as-step-panel input {
+  display: block;
+  width: 100%;
+  max-width: 30rem;
+  margin: 0 auto;
+  text-align: center;
+  font: inherit;
+  font-size: 1.05rem;
+  color: v.$color-navy-text;
+  background: v.$color-white;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  padding: 1rem 1.5rem;
+
+  &:focus { outline: 2px solid $accent-blue; }
+  &::placeholder { color: rgba(43, 45, 66, 0.45); }
+}
+
+.as-progress {
+  font-weight: 800;
+  color: v.$color-navy-text;
+  margin-bottom: 1.5rem;
+}
+
+.as-submit-btn {
+  @include m.tappable;
+  background: $accent-blue;
+  color: v.$color-white;
+  border: none;
+  font-weight: 800;
+  font-size: 1.05rem;
+  padding: 1rem 2.5rem;
+  border-radius: v.$border-radius-sm;
+
+  &:disabled {
+    background: #9aa0b4;
+    cursor: default;
+  }
+
+  &:hover:not(:disabled) { opacity: 0.92; }
+}
+
+.as-preview {
+  text-align: left;
+  background: v.$color-cream-bg;
+  border-radius: v.$border-radius;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.as-preview-heading {
+  display: block;
+  font-weight: 800;
+  color: v.$color-navy-text;
+  margin-bottom: 1rem;
+}
+
+.as-preview-row {
+  background: v.$color-white;
+  border-radius: v.$border-radius-sm;
+  padding: 0.85rem 1rem;
+  margin-bottom: 0.75rem;
+
+  &:last-child { margin-bottom: 0; }
+}
+
+.as-preview-label {
+  display: block;
+  color: v.$color-grape;
+  font-weight: 700;
+  font-size: 0.8rem;
+  margin-bottom: 0.25rem;
+}
+
+.as-preview-value {
+  display: block;
+  color: v.$color-navy-text;
+  font-weight: 700;
+}
+
+.as-download-btn {
+  @include m.tappable;
+  display: block;
+  width: 100%;
+  background: linear-gradient(90deg, v.$color-grape, v.$color-bubble-pink);
+  color: v.$color-white;
+  border: none;
+  font-weight: 800;
+  font-size: 1.05rem;
+  padding: 0.95rem;
+  border-radius: v.$border-radius-pill;
+  margin-bottom: 1rem;
+
+  &:hover:not(:disabled) { opacity: 0.92; }
+  &:disabled { opacity: 0.5; cursor: default; }
+}
+
+.as-continue-btn {
+  @include m.tappable;
+  display: block;
+  width: 100%;
+  background: $accent-blue;
+  color: v.$color-white;
+  border: none;
+  font-weight: 800;
+  font-size: 1.05rem;
+  padding: 0.95rem;
+  border-radius: v.$border-radius-sm;
+
+  &:hover { opacity: 0.92; }
+}

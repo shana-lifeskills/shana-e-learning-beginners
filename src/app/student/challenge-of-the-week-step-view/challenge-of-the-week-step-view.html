@@ -1,0 +1,27 @@
+<div class="cotw">
+  <span class="cotw-eyebrow">{{ step().eyebrow }}</span>
+  <h1>{{ step().heading }}</h1>
+  <span class="cotw-divider"></span>
+
+  <div class="cotw-card">
+    <span class="cotw-pill">{{ step().pillLabel }}</span>
+    <p class="cotw-description">{{ step().description }}</p>
+
+    <div class="cotw-tags">
+      @for (tag of step().tags; track tag; let i = $index) {
+        <span class="cotw-tag" [class.alt]="i % 2 === 1">{{ tag }}</span>
+      }
+    </div>
+  </div>
+
+  <div class="cotw-confidence">
+    <span class="cotw-confidence-label">{{ step().confidenceLabel }}</span>
+    <p class="cotw-confidence-quote">"{{ step().confidenceQuote }}"</p>
+  </div>
+
+  <p class="cotw-parent-note">👪 {{ step().parentNote }}</p>
+
+  <button type="button" class="btn cotw-continue-btn" (click)="continued.emit()">
+    {{ step().continueLabel }}
+  </button>
+</div>

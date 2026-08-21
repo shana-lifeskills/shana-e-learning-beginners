@@ -1,0 +1,216 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+$accent-blue: #4d78f0;
+
+.confidence-badge {
+  max-width: 52rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.eyebrow {
+  display: inline-block;
+  background: v.$color-cream-bg;
+  color: v.$color-coral;
+  font-weight: 800;
+  font-size: 0.9rem;
+  padding: 0.5rem 1.25rem;
+  border-radius: v.$border-radius-pill;
+  margin-bottom: 1.25rem;
+}
+
+h1 {
+  @include m.playful-heading;
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  background: linear-gradient(90deg, v.$color-grape, v.$color-bubble-pink);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.subtitle {
+  color: rgba(43, 45, 66, 0.6);
+  font-weight: 600;
+  font-size: 1.05rem;
+  margin-bottom: 2.5rem;
+}
+
+.badge-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  text-align: left;
+}
+
+.panel {
+  @include m.bouncy-card;
+  background: v.$color-white;
+  padding: 1.75rem;
+
+  &:hover { transform: none; box-shadow: 0 6px 0 rgba(0, 0, 0, 0.08); }
+
+  h2 {
+    @include m.playful-heading;
+    font-size: 1.3rem;
+    color: v.$color-navy-text;
+    margin-bottom: 1rem;
+  }
+}
+
+.form-panel textarea {
+  width: 100%;
+  resize: vertical;
+  font: inherit;
+  color: v.$color-navy-text;
+  border: 2px solid rgba(43, 45, 66, 0.1);
+  border-radius: v.$border-radius-sm;
+  padding: 0.9rem 1.1rem;
+  margin-bottom: 0.6rem;
+
+  &:focus {
+    outline: none;
+    border-color: v.$color-grape;
+  }
+
+  &::placeholder { color: rgba(43, 45, 66, 0.4); }
+}
+
+.char-count {
+  display: block;
+  text-align: right;
+  color: rgba(43, 45, 66, 0.45);
+  font-size: 0.85rem;
+  margin-bottom: 0.75rem;
+}
+
+.hint {
+  color: v.$color-sunshine;
+  font-weight: 700;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.preview-panel {
+  display: flex;
+  flex-direction: column;
+
+  .preview-label {
+    color: rgba(43, 45, 66, 0.55);
+    font-weight: 700;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+  }
+}
+
+.certificate {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background: v.$color-white;
+  border: 2px solid rgba(43, 45, 66, 0.08);
+  border-radius: v.$border-radius;
+  padding: 2rem 1.5rem;
+}
+
+.ribbon-icon {
+  display: grid;
+  place-items: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  background: $accent-blue;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.certificate h3 {
+  @include m.playful-heading;
+  font-size: 1.5rem;
+  color: v.$color-navy-text;
+  margin-bottom: 0.6rem;
+}
+
+.underline {
+  display: block;
+  width: 6rem;
+  height: 4px;
+  border-radius: v.$border-radius-pill;
+  background: linear-gradient(90deg, v.$color-grape, v.$color-coral);
+  margin-bottom: 1.25rem;
+}
+
+.certificate-intro {
+  color: rgba(43, 45, 66, 0.6);
+  margin-bottom: 0.5rem;
+}
+
+.certificate-answer {
+  font-weight: 800;
+  color: v.$color-navy-text;
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+  word-break: break-word;
+}
+
+.download-btn {
+  @include m.tappable;
+  width: 100%;
+  margin-top: auto;
+  background: linear-gradient(90deg, v.$color-grape, v.$color-bubble-pink);
+  color: v.$color-white;
+  border: none;
+  font-weight: 800;
+  padding: 0.85rem;
+  border-radius: v.$border-radius-pill;
+
+  &:hover:not(:disabled) { opacity: 0.92; }
+  &:disabled { opacity: 0.5; cursor: default; }
+}
+
+.badge-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.submit-btn {
+  @include m.tappable;
+  background: rgba(77, 120, 240, 0.5);
+  color: v.$color-white;
+  border: none;
+  font-weight: 800;
+  font-size: 1rem;
+  padding: 0.9rem 2rem;
+  border-radius: v.$border-radius-sm;
+
+  &:not(:disabled) { background: rgba(77, 120, 240, 0.75); }
+  &:hover:not(:disabled) { opacity: 0.9; }
+  &:disabled { cursor: default; }
+}
+
+.continue-btn {
+  @include m.tappable;
+  background: $accent-blue;
+  color: v.$color-white;
+  border: none;
+  font-weight: 800;
+  font-size: 1rem;
+  padding: 0.9rem 2rem;
+  border-radius: v.$border-radius-sm;
+
+  &:hover:not(:disabled) { opacity: 0.92; }
+  &:disabled { opacity: 0.45; cursor: default; }
+}
+
+.continue-hint {
+  margin-top: 0.75rem;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: rgba(43, 45, 66, 0.5);
+}

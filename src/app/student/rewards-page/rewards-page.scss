@@ -1,0 +1,70 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+.rewards-page {
+  max-width: 96rem;
+  margin: 0 auto;
+  padding: 2rem 2.5rem 4rem;
+}
+
+.back-link {
+  display: inline-block;
+  font-weight: 800;
+  color: v.$color-navy-text;
+  text-decoration: none;
+  margin-bottom: 1rem;
+}
+
+h1 {
+  @include m.playful-heading;
+  color: v.$color-navy-text;
+  font-size: 1.4rem;
+  margin: 0 0 1.25rem;
+}
+
+h2 {
+  @include m.playful-heading;
+  color: v.$color-navy-text;
+  font-size: 1.25rem;
+  margin: 2rem 0 0.85rem;
+}
+
+.empty-copy {
+  color: rgba(43, 45, 66, 0.6);
+  font-weight: 600;
+}
+
+.tile-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
+  gap: 1rem;
+}
+
+.tile {
+  @include m.bouncy-card;
+  background: v.$color-white;
+  padding: 1.25rem 1rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+
+  .tile-icon {
+    font-size: 2.25rem;
+    animation: float-y 3s ease-in-out infinite;
+  }
+
+  strong {
+    font-size: 0.9rem;
+    color: v.$color-navy-text;
+  }
+
+  small {
+    font-size: 0.75rem;
+    color: rgba(43, 45, 66, 0.55);
+  }
+}
+
+.trophy-tile { border-bottom: 5px solid v.$color-sunshine; }
+.badge-tile { border-bottom: 5px solid v.$color-sky; }

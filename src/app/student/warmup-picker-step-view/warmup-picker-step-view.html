@@ -1,0 +1,27 @@
+<div class="warmup-picker">
+  <span class="badge">{{ step().badge }}</span>
+  <img class="mascot" [src]="step().mascotImage" [alt]="step().mascotAlt" />
+
+  <h1>{{ step().heading }}</h1>
+  <p class="subtitle">{{ step().subtitle }}</p>
+
+  <div class="options-grid">
+    @for (option of step().options; track option.id) {
+      <button
+        type="button"
+        class="option-card"
+        [class.selected]="isSelected(option.id)"
+        [disabled]="locked()"
+        (click)="toggle(option.id)"
+      >
+        <span class="option-icon">{{ option.icon }}</span>
+        <span class="option-label">{{ option.label }}</span>
+        <span class="option-indicator">{{ isSelected(option.id) ? '⭐' : '○' }}</span>
+      </button>
+    }
+  </div>
+
+  <button type="button" class="btn submit-btn" [disabled]="!canSubmit() || locked()" (click)="submit()">
+    {{ step().submitLabel }}
+  </button>
+</div>

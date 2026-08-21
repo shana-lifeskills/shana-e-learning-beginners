@@ -1,0 +1,73 @@
+<div class="plan-it-race">
+  <span class="pir-pill">🏁 {{ step().pillLabel }}</span>
+  <h1>{{ step().title }}</h1>
+  <p class="pir-subtitle">{{ step().subtitle }}</p>
+
+  <span class="pir-section-label">{{ step().slotsHeading }}</span>
+  <div class="pir-slots">
+    @for (id of slots(); track $index; let i = $index) {
+      <button
+        type="button"
+        class="pir-slot"
+        [class.filled]="id !== null"
+        [class.drag-over]="dragOverIndex() === i"
+        [attr.draggable]="id !== null ? true : null"
+        (click)="id !== null ? removeFromSlot(i) : null"
+        (dragstart)="onDragStartFromSlot($event, i)"
+        (dragend)="onDragEnd()"
+        (dragover)="onDragOverSlot($event, i)"
+        (dragleave)="onDragLeaveSlot(i)"
+        (drop)="onDropOnSlot($event, i)"
+      >
+        <span class="pir-slot-number">{{ i + 1 }}</span>
+        @if (id !== null) {
+          <span class="pir-slot-icon">{{ placeAt(id)?.icon }}</span>
+          <span class="pir-slot-label">{{ placeAt(id)?.label }}</span>
+        } @else {
+          <span class="pir-slot-plus">+</span>
+        }
+      </button>
+    }
+  </div>
+
+  @if (allFilled()) {
+    <p class="pir-message pir-message--success">{{ step().successMessage }}</p>
+  }
+
+  <span class="pir-section-label">{{ step().poolHeading }}</span>
+  <div
+    class="pir-pool"
+    [class.drag-over]="dragOverPool()"
+    (dragover)="onDragOverPool($event)"
+    (dragleave)="onDragLeavePool()"
+    (drop)="onDropOnPool($event)"
+  >
+    @for (place of pool(); track place.id) {
+      <button
+        type="button"
+        class="pir-card"
+        draggable="true"
+        (click)="placeInNextSlot(place.id)"
+        (dragstart)="onDragStartFromPool($event, place.id)"
+        (dragend)="onDragEnd()"
+      >
+        <span class="pir-card-icon">{{ place.icon }}</span>
+        <span class="pir-card-label">{{ place.label }}</span>
+      </button>
+    }
+  </div>
+
+  <p class="pir-parent-note">👪 {{ step().parentNote }}</p>
+
+  <div class="pir-actions">
+    <button type="button" class="btn pir-reset-btn" (click)="reset()">{{ step().resetLabel }}</button>
+    @if (allFilled()) {
+      <button type="button" class="btn pir-download-btn" [disabled]="downloading()" (click)="downloadPlan()">
+        @if (downloading()) { Preparing… } @else { ⬇ {{ step().downloadLabel }} }
+      </button>
+    }
+    <button type="button" class="btn pir-next-btn" [disabled]="!allFilled()" (click)="next()">
+      {{ step().continueLabel }} →
+    </button>
+  </div>
+</div>

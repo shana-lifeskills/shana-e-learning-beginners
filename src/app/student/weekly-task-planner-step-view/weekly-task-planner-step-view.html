@@ -1,0 +1,69 @@
+<div class="wtp">
+  <p class="wtp-instruction">{{ step().instruction }}</p>
+
+  <div class="wtp-grid">
+    @for (day of step().days; track day.id) {
+      <div class="wtp-day-card">
+        <span class="wtp-day-index">DAY {{ day.dayNumber }}</span>
+        <h2>{{ day.label }}</h2>
+
+        <div class="wtp-task-list">
+          @for (task of tasksFor(day.id); track task.id) {
+            <button type="button" class="wtp-task" [class.done]="isDone(task.id)" (click)="toggle(task.id)">
+              {{ task.label }}
+            </button>
+          }
+
+          <input
+            type="text"
+            class="wtp-add-input"
+            [placeholder]="step().addPlaceholder"
+            [value]="draftFor(day.id)"
+            (input)="updateDraft(day.id, $any($event.target).value)"
+            (keydown.enter)="addTask(day.id)"
+            (blur)="addTask(day.id)"
+          />
+        </div>
+      </div>
+    }
+
+    <div class="wtp-celebration">
+      <h2>🎉 {{ step().celebrationHeading }}</h2>
+      <p class="wtp-celebration-subtitle">{{ step().celebrationSubtitle }}</p>
+
+      <div class="wtp-progress-head">
+        <span>{{ step().progressLabel }}</span>
+        <strong>{{ doneCount() }}/{{ totalCount() }} tasks</strong>
+      </div>
+      <div class="wtp-progress-track">
+        <div class="wtp-progress-fill" [style.width.%]="progressPercent()"></div>
+      </div>
+
+      @if (allDone()) {
+        <textarea
+          class="wtp-celebration-input"
+          [placeholder]="step().celebrationPlaceholder"
+          [value]="celebrationNote()"
+          (input)="updateCelebrationNote($any($event.target).value)"
+        ></textarea>
+      } @else {
+        <div class="wtp-celebration-locked">{{ step().lockedPlaceholder }}</div>
+      }
+    </div>
+  </div>
+
+  <p class="wtp-parent-note">👪 {{ step().parentNote }}</p>
+
+  <div class="wtp-actions">
+    <button type="button" class="btn wtp-proceed-btn" [disabled]="!allDone()" (click)="proceed()">
+      {{ step().proceedLabel }} →
+    </button>
+    @if (allDone()) {
+      <button type="button" class="btn wtp-download-btn" [disabled]="downloading()" (click)="downloadCelebration()">
+        @if (downloading()) { Preparing… } @else { ⬇ {{ step().downloadLabel }} }
+      </button>
+    }
+  </div>
+
+  <p class="wtp-footer-note">✨ {{ step().footerNote }}</p>
+</div>

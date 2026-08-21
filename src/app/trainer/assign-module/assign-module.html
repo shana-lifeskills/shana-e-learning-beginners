@@ -1,0 +1,50 @@
+<div class="assign-page">
+  <a routerLink="/trainer/modules" class="back-link">← My Modules</a>
+
+  @if (loading()) {
+    <p class="loading-copy">Loading…</p>
+  } @else {
+    <div class="module-banner" [style.--accent]="module()?.themeColor">
+      <span class="icon">{{ module()?.icon }}</span>
+      <div>
+        <h1>{{ module()?.title }}</h1>
+        <p>Choose who should get this module next.</p>
+      </div>
+    </div>
+
+    @if (saved()) {
+      <div class="saved-banner">🎉 Saved! Newly-selected students can now see this on their dashboard.</div>
+    }
+
+    @if (students().length === 0) {
+      <p class="empty-copy">No students have signed up yet.</p>
+    } @else {
+      <div class="student-list">
+        @for (student of students(); track student.id) {
+          <button
+            type="button"
+            class="student-row"
+            [class.locked]="isAlreadyAssigned(student)"
+            [class.selected]="isNewlySelected(student)"
+            (click)="toggle(student)"
+          >
+            <span class="avatar">{{ avatarEmoji[student.avatarId] ?? '🙂' }}</span>
+            <span class="name">{{ student.firstName }} {{ student.lastName }}</span>
+
+            @if (isAlreadyAssigned(student)) {
+              <span class="tag assigned">✓ Assigned</span>
+            } @else if (isNewlySelected(student)) {
+              <span class="tag selected-tag">✓ Selected</span>
+            } @else {
+              <span class="tag pick">Tap to assign</span>
+            }
+          </button>
+        }
+      </div>
+
+      <button type="button" class="btn btn-primary btn-lg-tappable save-btn" [disabled]="newlySelectedIds().size === 0" (click)="save()">
+        Assign to {{ newlySelectedIds().size }} student(s)
+      </button>
+    }
+  }
+</div>

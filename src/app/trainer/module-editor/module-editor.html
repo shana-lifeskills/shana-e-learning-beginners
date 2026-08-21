@@ -1,0 +1,114 @@
+<div class="editor-page">
+  <a routerLink="/trainer/modules" class="back-link">← My Modules</a>
+
+  <h1>Build a New Module</h1>
+  <p class="subtitle">Fill in the details below — you can add as many lessons and questions as you like.</p>
+
+  @if (errorMessage()) {
+    <app-friendly-alert [message]="errorMessage()" icon="📝" />
+  }
+
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <section class="panel">
+      <h2>Module Details</h2>
+
+      <div class="mb-3">
+        <label class="form-label">Title</label>
+        <input type="text" class="form-control" formControlName="title" placeholder="e.g. Counting Critters" />
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Description</label>
+        <textarea class="form-control" rows="2" formControlName="description" placeholder="What will students learn?"></textarea>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Icon</label>
+        <div class="choice-row">
+          @for (icon of iconChoices; track icon) {
+            <button type="button" class="choice-btn icon-btn" [class.active]="form.value.icon === icon" (click)="setIcon(icon)">{{ icon }}</button>
+          }
+        </div>
+      </div>
+
+      <div class="mb-1">
+        <label class="form-label">Color Theme</label>
+        <div class="choice-row">
+          @for (color of colorChoices; track color) {
+            <button type="button" class="choice-btn color-btn" [class.active]="form.value.themeColor === color" [style.background]="color" (click)="setColor(color)"></button>
+          }
+        </div>
+      </div>
+    </section>
+
+    <div formArrayName="lessons">
+      @for (lessonGroup of lessons.controls; track lessonGroup; let li = $index) {
+        <section class="panel lesson-panel" [formGroupName]="li">
+          <div class="panel-head">
+            <h2>Lesson {{ li + 1 }}</h2>
+            @if (lessons.length > 1) {
+              <button type="button" class="remove-btn" (click)="removeLesson(li)">Remove Lesson</button>
+            }
+          </div>
+
+          <div class="row-fields">
+            <div class="mb-3 grow">
+              <label class="form-label">Lesson Title</label>
+              <input type="text" class="form-control" formControlName="title" placeholder="e.g. Meet the Critters" />
+            </div>
+            <div class="mb-3 week-field">
+              <label class="form-label">Week</label>
+              <input type="number" min="1" class="form-control" formControlName="week" />
+            </div>
+          </div>
+
+          <div formArrayName="exercises">
+            @for (exerciseGroup of exercisesOf(li).controls; track exerciseGroup; let ei = $index) {
+              <div class="exercise-block" [formGroupName]="ei">
+                <div class="panel-head">
+                  <h3>Question {{ ei + 1 }}</h3>
+                  @if (exercisesOf(li).length > 1) {
+                    <button type="button" class="remove-btn" (click)="removeExercise(li, ei)">Remove</button>
+                  }
+                </div>
+
+                <div class="mb-2">
+                  <label class="form-label">Question prompt</label>
+                  <input type="text" class="form-control" formControlName="prompt" placeholder="How many bunnies do you see? 🐰🐰🐰" />
+                </div>
+
+                <label class="form-label">Answer choices (tap ⭐ to mark the correct one)</label>
+                <div formArrayName="options" class="options-editor">
+                  @for (optionCtrl of optionsOf(li, ei).controls; track optionCtrl; let oi = $index) {
+                    <div class="option-row">
+                      <button
+                        type="button"
+                        class="star-btn"
+                        [class.active]="exerciseGroup.get('correctOptionIndex')?.value === oi"
+                        (click)="setCorrectOption(li, ei, oi)"
+                        title="Mark as correct answer"
+                      >⭐</button>
+                      <input type="text" class="form-control" [formControlName]="oi" placeholder="Option {{ oi + 1 }}" />
+                      @if (optionsOf(li, ei).length > 2) {
+                        <button type="button" class="remove-option-btn" (click)="removeOption(li, ei, oi)">✕</button>
+                      }
+                    </div>
+                  }
+                </div>
+                <button type="button" class="add-link" (click)="addOption(li, ei)">+ Add another choice</button>
+              </div>
+            }
+          </div>
+
+          <button type="button" class="add-link add-exercise" (click)="addExercise(li)">+ Add another question</button>
+        </section>
+      }
+    </div>
+
+    <button type="button" class="btn btn-outline-primary add-lesson-btn" (click)="addLesson()">+ Add Another Lesson</button>
+
+    <button type="submit" class="btn btn-primary btn-lg-tappable submit-btn" [disabled]="submitting()">
+      @if (submitting()) { Saving module… } @else { Save Module }
+    </button>
+  </form>
+</div>

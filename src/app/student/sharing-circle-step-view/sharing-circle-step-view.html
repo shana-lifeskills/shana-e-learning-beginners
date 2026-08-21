@@ -1,0 +1,48 @@
+<div class="sharing-circle">
+  <p class="eyebrow">{{ step().eyebrow }}</p>
+  <h1>{{ step().title }}</h1>
+  <p class="subtitle">{{ step().subtitle }}</p>
+
+  <div class="photo-frame">
+    <img [src]="step().image" [alt]="step().imageAlt" />
+    <div class="quote-bubble">
+      <span class="quote-dot"></span>
+      <span>&quot;{{ step().quote }}&quot;</span>
+    </div>
+  </div>
+
+  <div class="options-grid">
+    @for (option of step().options; track option.id) {
+      <button
+        type="button"
+        class="option-card"
+        [class.selected]="isSelected(option.id)"
+        [disabled]="locked()"
+        (click)="select(option.id)"
+      >
+        <span class="option-icon">{{ option.icon }}</span>
+        <strong>{{ option.title }}</strong>
+        <p>{{ option.description }}</p>
+      </button>
+    }
+  </div>
+
+  @if (selectedOption(); as option) {
+    <div class="response-field">
+      <label for="sharing-response">{{ step().textLabel }} {{ option.title }}</label>
+      <textarea
+        id="sharing-response"
+        rows="3"
+        [placeholder]="option.placeholder"
+        [disabled]="locked()"
+        [value]="text()"
+        (input)="updateText($any($event.target).value)"
+      ></textarea>
+    </div>
+  }
+
+  <button type="button" class="btn submit-btn" [disabled]="!canSubmit() || locked()" (click)="submit()">
+    {{ step().submitLabel }} ✋
+  </button>
+  <p class="ready-label">{{ step().readyLabel }}</p>
+</div>

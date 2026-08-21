@@ -1,0 +1,13 @@
+<div class="progress-ring" [style.width.px]="size()" [style.height.px]="size()">
+  <svg viewBox="0 0 72 72">
+    <circle class="track" cx="36" cy="36" r="30" />
+    <circle
+      class="fill"
+      cx="36" cy="36" r="30"
+      [style.stroke]="color()"
+      [style.strokeDasharray]="circumference"
+      [style.strokeDashoffset]="dashOffset()"
+    />
+  </svg>
+  <span class="percent-label">{{ percent() }}%</span>
+</div>

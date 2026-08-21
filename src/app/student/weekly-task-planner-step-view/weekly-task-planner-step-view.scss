@@ -1,0 +1,237 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+$accent-blue: #4d78f0;
+$day-bg: #e3edf9;
+$task-bg: #f3f7fb;
+$celebration-bg: #f7f2e4;
+
+.wtp {
+  max-width: 64rem;
+  margin: 0 auto;
+}
+
+.wtp-instruction {
+  color: v.$color-navy-text;
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin: 0 0 1.75rem;
+}
+
+.wtp-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+
+  @media (max-width: 62rem) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 34rem) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.wtp-day-card {
+  background: $day-bg;
+  border-radius: v.$border-radius-lg;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.wtp-day-index {
+  display: block;
+  color: rgba(43, 45, 66, 0.45);
+  font-weight: 800;
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.35rem;
+}
+
+.wtp-day-card h2 {
+  @include m.playful-heading;
+  font-size: 1.5rem;
+  color: v.$color-navy-text;
+  margin-bottom: 1rem;
+}
+
+.wtp-task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.wtp-task {
+  @include m.tappable;
+  background: v.$color-white;
+  border: none;
+  border-radius: v.$border-radius-sm;
+  padding: 0.75rem 1rem;
+  font-weight: 700;
+  color: v.$color-navy-text;
+  text-align: center;
+
+  &.done {
+    color: rgba(43, 45, 66, 0.4);
+    text-decoration: line-through;
+  }
+}
+
+.wtp-add-input {
+  background: $task-bg;
+  border: none;
+  border-radius: v.$border-radius-sm;
+  padding: 0.75rem 1rem;
+  font: inherit;
+  font-weight: 700;
+  color: v.$color-navy-text;
+  text-align: center;
+
+  &::placeholder {
+    color: rgba(43, 45, 66, 0.75);
+    font-weight: 700;
+  }
+
+  &:focus {
+    outline: 2px solid $accent-blue;
+    outline-offset: 1px;
+  }
+}
+
+.wtp-celebration {
+  background: $celebration-bg;
+  border-radius: v.$border-radius-lg;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+
+  h2 {
+    @include m.playful-heading;
+    font-size: 1.35rem;
+    color: v.$color-navy-text;
+    margin-bottom: 0.4rem;
+  }
+}
+
+.wtp-celebration-subtitle {
+  color: rgba(43, 45, 66, 0.55);
+  font-size: 0.95rem;
+  margin: 0 0 1.25rem;
+}
+
+.wtp-progress-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: rgba(43, 45, 66, 0.65);
+  margin-bottom: 0.5rem;
+
+  strong {
+    color: v.$color-navy-text;
+  }
+}
+
+.wtp-progress-track {
+  height: 0.5rem;
+  border-radius: v.$border-radius-pill;
+  background: rgba(43, 45, 66, 0.08);
+  overflow: hidden;
+  margin-bottom: 1.25rem;
+}
+
+.wtp-progress-fill {
+  height: 100%;
+  border-radius: v.$border-radius-pill;
+  background: linear-gradient(90deg, v.$color-grape, v.$color-bubble-pink);
+  transition: width 0.2s ease;
+}
+
+.wtp-celebration-locked {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: v.$border-radius-sm;
+  padding: 1rem;
+  color: rgba(43, 45, 66, 0.45);
+  font-size: 0.95rem;
+  min-height: 5rem;
+}
+
+.wtp-celebration-input {
+  flex: 1;
+  min-height: 5rem;
+  resize: vertical;
+  background: v.$color-white;
+  border: 2px solid v.$color-leaf;
+  border-radius: v.$border-radius-sm;
+  padding: 1rem;
+  font: inherit;
+  color: v.$color-navy-text;
+
+  &:focus {
+    outline: none;
+    border-color: $accent-blue;
+  }
+}
+
+.wtp-parent-note {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: rgba(255, 201, 60, 0.22);
+  border-radius: v.$border-radius-sm;
+  padding: 0.85rem 1.1rem;
+  margin: 0 0 1.5rem;
+  color: #7a5c00;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.wtp-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.wtp-proceed-btn {
+  @include m.tappable;
+  background: $accent-blue;
+  color: v.$color-white;
+  border: none;
+  font-weight: 800;
+  font-size: 1.05rem;
+  padding: 0.9rem 2rem;
+  border-radius: v.$border-radius;
+
+  &:hover:not(:disabled) { opacity: 0.92; }
+  &:disabled {
+    background: #9aa7d1;
+    cursor: default;
+  }
+}
+
+.wtp-download-btn {
+  @include m.tappable;
+  background: linear-gradient(90deg, v.$color-grape, v.$color-bubble-pink);
+  color: v.$color-white;
+  border: none;
+  font-weight: 800;
+  font-size: 1.05rem;
+  padding: 0.9rem 2rem;
+  border-radius: v.$border-radius;
+
+  &:hover:not(:disabled) { opacity: 0.92; }
+  &:disabled { opacity: 0.5; cursor: default; }
+}
+
+.wtp-footer-note {
+  text-align: center;
+  color: rgba(43, 45, 66, 0.5);
+  font-size: 0.9rem;
+  margin: 1.5rem 0 0;
+}

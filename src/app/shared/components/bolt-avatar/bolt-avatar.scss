@@ -1,0 +1,99 @@
+@use '../../../../assets/styles/variables' as v;
+
+.bolt {
+  position: relative;
+  display: inline-block;
+  animation: float-y 3.2s ease-in-out infinite;
+}
+
+.bolt-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.shadow { fill: rgba(43, 45, 66, 0.12); }
+.body { fill: v.$color-sky; }
+.ear { fill: v.$color-sky; }
+
+.antenna-rod { stroke: v.$color-sky; stroke-width: 4; stroke-linecap: round; }
+.antenna-ball {
+  fill: v.$color-sunshine;
+  transform-origin: 70px 8px;
+  animation: sparkle-pulse 1.8s ease-in-out infinite;
+}
+
+.arm {
+  fill: none;
+  stroke: v.$color-sky;
+  stroke-width: 6;
+  stroke-linecap: round;
+  transform-origin: 28px 88px;
+}
+.arm-right { transform-origin: 112px 88px; }
+
+.eye {
+  fill: v.$color-navy-text;
+  transform-origin: center;
+  animation: blink-eyes 4.5s ease-in-out infinite;
+}
+.eye-right { animation-delay: 0.15s; }
+
+.cheek { fill: v.$color-bubble-pink; opacity: 0.55; }
+
+.mouth {
+  fill: none;
+  stroke: v.$color-navy-text;
+  stroke-width: 4;
+  stroke-linecap: round;
+}
+
+// --- Mood variants -----------------------------------------------------
+
+.bolt.mood-wave .arm-right {
+  animation: wiggle 0.9s ease-in-out infinite;
+}
+
+.bolt.mood-cheer {
+  animation: bounce-in 0.6s ease, float-y 1.4s ease-in-out 0.6s infinite;
+
+  .body, .ear { fill: v.$color-leaf; }
+  .antenna-rod { stroke: v.$color-leaf; }
+  .arm { animation: wiggle 0.5s ease-in-out infinite; }
+  .mouth { fill: v.$color-navy-text; }
+}
+
+.bolt.mood-thinking .antenna-ball {
+  animation: spin-slow 2.5s linear infinite;
+}
+
+.bolt.mood-oops {
+  animation: shake-no 0.5s ease;
+
+  .body, .ear { fill: v.$color-bubble-pink; }
+  .antenna-rod { stroke: v.$color-bubble-pink; }
+}
+
+// --- Confetti burst for the cheer mood ---------------------------------
+
+.confetti {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+
+  span {
+    position: absolute;
+    top: -10px;
+    width: 8px;
+    height: 8px;
+    border-radius: 2px;
+    animation: confetti-fall 1.1s ease-in forwards;
+  }
+
+  span:nth-child(1) { left: 10%; background: v.$color-coral; animation-delay: 0s; }
+  span:nth-child(2) { left: 25%; background: v.$color-sunshine; animation-delay: 0.1s; }
+  span:nth-child(3) { left: 45%; background: v.$color-grape; animation-delay: 0.05s; }
+  span:nth-child(4) { left: 60%; background: v.$color-sky; animation-delay: 0.15s; }
+  span:nth-child(5) { left: 78%; background: v.$color-leaf; animation-delay: 0.02s; }
+  span:nth-child(6) { left: 90%; background: v.$color-bubble-pink; animation-delay: 0.12s; }
+}

@@ -1,0 +1,34 @@
+<div class="reward-shelf">
+  <div class="stat-tile stars">
+    <span class="stat-icon">⭐</span>
+    <div class="stat-copy">
+      @if (highlights(); as h) {
+        <small class="sub">{{ h.starsThisWeek > 0 ? '+' + h.starsThisWeek + ' stars this week' : 'Earn a star today!' }}</small>
+      }
+      <small>Stars earned</small>
+      <strong>{{ totals().stars }}</strong>
+    </div>
+  </div>
+
+  <div class="stat-tile badges">
+    <span class="stat-icon">🎖️</span>
+    <div class="stat-copy">
+      @if (highlights(); as h) {
+        <small class="sub">{{ h.badgesAlmostUnlocked > 0 ? h.badgesAlmostUnlocked + ' badge(s) almost unlocked' : 'Finish a lesson for one!' }}</small>
+      }
+      <small>Badges earned</small>
+      <strong>{{ totals().badges }}</strong>
+    </div>
+  </div>
+
+  <div class="stat-tile trophies">
+    <span class="stat-icon">🏆</span>
+    <div class="stat-copy">
+      @if (highlights()) {
+        <small class="sub">{{ totals().trophies > 0 ? 'Top 3 in your class!' : 'Finish a module to earn one!' }}</small>
+      }
+      <small>Trophies earned</small>
+      <strong>{{ totals().trophies }}</strong>
+    </div>
+  </div>
+</div>

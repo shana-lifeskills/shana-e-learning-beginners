@@ -1,0 +1,22 @@
+<div class="reflection-step">
+  <span class="eyebrow">💬 Think &amp; Reflect</span>
+  <h1>{{ step().heading }}</h1>
+  @if (step().subheading) { <p class="subheading">{{ step().subheading }}</p> }
+
+  <ul class="question-list">
+    @for (question of step().questions; track question) {
+      <li>{{ question }}</li>
+    }
+  </ul>
+
+  @if (step().trainerTip) {
+    <div class="trainer-tip">
+      <strong>💡 Remember:</strong>
+      <p>{{ step().trainerTip }}</p>
+    </div>
+  }
+
+  <button type="button" class="btn btn-primary btn-lg-tappable" (click)="continued.emit()">
+    {{ step().continueLabel }}
+  </button>
+</div>

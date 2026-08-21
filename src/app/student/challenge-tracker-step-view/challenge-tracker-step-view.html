@@ -1,0 +1,58 @@
+<div class="challenge-tracker">
+  <span class="badge">⭐ {{ step().badge }}</span>
+  <h1>{{ step().title }}</h1>
+  <p class="subtitle">{{ step().subtitle }}</p>
+
+  <div class="image-frame">
+    <img [src]="step().image" [alt]="step().imageAlt" />
+  </div>
+
+  <div class="card card-white">
+    <h2>⚡ {{ step().dailyChallengeHeading }}</h2>
+    <p class="intro">{{ step().dailyChallengeIntro }}</p>
+    <ul class="list list-heart">
+      @for (item of step().dailyChallengeItems; track item) {
+        <li><span class="marker">💚</span>{{ item }}</li>
+      }
+    </ul>
+  </div>
+
+  <div class="card card-tint">
+    <h2>👥 {{ step().parentHeading }}</h2>
+    <p class="intro">{{ step().parentIntro }}</p>
+    <ul class="list list-star">
+      @for (item of step().parentItems; track item) {
+        <li><span class="marker">⭐</span>{{ item }}</li>
+      }
+    </ul>
+  </div>
+
+  <div class="card card-tint">
+    <h2 class="plain">{{ step().trackerHeading }}</h2>
+    <p class="intro">{{ step().trackerIntro }}</p>
+
+    <div class="day-list">
+      @for (day of step().days; track day) {
+        <button type="button" class="day-row" [class.checked]="isChecked(day)" (click)="toggleDay(day)">
+          <span class="day-check">{{ isChecked(day) ? '✓' : '' }}</span>
+          <span>{{ day }}</span>
+        </button>
+      }
+    </div>
+  </div>
+
+  <div class="card card-tint tracker-card">
+    <h2 class="centered">{{ step().progressHeading }}</h2>
+    <p class="tracker-copy">You've completed <strong>{{ completedCount() }}/{{ totalDays() }}</strong> days this week!</p>
+    <div class="progress-bar">
+      <div class="progress-fill" [style.width.%]="progressPercent()"></div>
+    </div>
+  </div>
+
+  <button type="button" class="btn continue-btn" [disabled]="!allDaysChecked()" (click)="continued.emit()">
+    {{ step().continueLabel }}
+  </button>
+  @if (!allDaysChecked()) {
+    <p class="continue-hint">Tick off all 7 days to continue.</p>
+  }
+</div>

@@ -1,0 +1,46 @@
+<div class="wc-step">
+  <span class="wc-pill">{{ step().pillLabel }}</span>
+  <h1>{{ step().title }}</h1>
+  <p class="wc-subtitle">{{ step().subtitle }}</p>
+
+  <div class="wc-challenge-card">
+    <h2>{{ step().challengeHeading }}</h2>
+    <p class="wc-challenge-intro">{{ step().challengeIntro }}</p>
+
+    <div class="wc-days">
+      @for (day of step().days; track day; let i = $index) {
+        <button type="button" class="wc-day-row" [class.wc-day-row--checked]="isChecked(i)" (click)="toggleDay(i)">
+          <span class="wc-day-circle" [class.wc-day-circle--checked]="isChecked(i)">
+            @if (isChecked(i)) { ✓ }
+          </span>
+          <strong>{{ day }}</strong>
+        </button>
+      }
+    </div>
+
+    <p class="wc-parent-note">{{ step().parentNote }}</p>
+  </div>
+
+  <div class="wc-reflection">
+    <span class="wc-reflection-label">{{ step().reflectionLabel }}</span>
+    <p class="wc-reflection-quote">"{{ step().reflectionQuote }}"</p>
+  </div>
+
+  <div class="wc-mantra-card">
+    <span class="wc-mantra-label">{{ step().mantraIcon }} {{ step().mantraLabel }}</span>
+    <p class="wc-mantra-quote">"{{ step().mantraQuote }}"</p>
+  </div>
+
+  @if (!allDaysChecked()) {
+    <p class="wc-gate-hint">Tick off all {{ step().days.length }} days above to continue.</p>
+  }
+
+  <button
+    type="button"
+    class="btn btn-primary btn-lg-tappable wc-continue-btn"
+    [disabled]="!allDaysChecked()"
+    (click)="continued.emit()"
+  >
+    {{ step().continueLabel }}
+  </button>
+</div>

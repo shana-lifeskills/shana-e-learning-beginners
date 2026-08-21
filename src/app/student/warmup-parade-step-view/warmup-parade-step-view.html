@@ -1,0 +1,34 @@
+<div class="warmup-parade">
+  <div class="hero">
+    <span class="eyebrow">{{ step().eyebrow }}</span>
+    <h1>&quot;{{ step().title }}&quot;</h1>
+    <p class="description">{{ step().description }}</p>
+
+    <img class="hero-image" [src]="step().image" [alt]="step().imageAlt" />
+
+    <div class="dots">
+      <span class="dot active"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+    </div>
+
+    <button type="button" class="btn continue-btn" (click)="continued.emit()">
+      {{ step().continueLabel }} →
+    </button>
+  </div>
+
+  <div class="parent-note">
+    <h2>{{ step().parentNoteHeading }}</h2>
+    <p class="note-description">{{ step().parentNoteDescription }}</p>
+
+    <div class="items-grid">
+      @for (item of step().parentNoteItems; track item.title) {
+        <div class="item-card">
+          <span class="item-icon">{{ item.icon }}</span>
+          <strong>{{ item.title }}</strong>
+          <p>{{ item.description }}</p>
+        </div>
+      }
+    </div>
+  </div>
+</div>

@@ -1,0 +1,105 @@
+<div class="auth-page">
+  <div class="auth-form-panel">
+    <div class="auth-card">
+      <a routerLink="/welcome" class="back-link">← Back</a>
+
+      <div class="auth-tabs">
+        <a routerLink="/signup" class="active">Create account</a>
+        <a routerLink="/login">Log in</a>
+      </div>
+
+      <div class="eyebrow">✨ Let's get started</div>
+      <h1>Create your account</h1>
+
+      <div class="role-toggle">
+        <button type="button" [class.active]="role() === 'student'" (click)="chooseRole('student')">🦊 Learner</button>
+        <button type="button" [class.active]="role() === 'trainer'" (click)="chooseRole('trainer')">🦉 Trainer</button>
+      </div>
+
+      @if (errorMessage()) {
+        <app-friendly-alert [message]="errorMessage()" icon="💛" />
+      }
+
+      <form [formGroup]="form" (ngSubmit)="submit()" class="mt-3">
+        <div class="avatar-upload">
+          <label class="avatar-circle" for="avatarInput">
+            @if (avatarPreview(); as preview) {
+              <img [src]="preview" alt="Your profile photo" />
+            } @else {
+              <span>{{ role() === 'student' ? '🦊' : '🦉' }}</span>
+            }
+            <span class="camera-badge">📷</span>
+          </label>
+          <input id="avatarInput" type="file" accept="image/*" (change)="onAvatarSelected($event)" />
+          <span class="avatar-hint">Add a photo (optional)</span>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="firstName">{{ role() === 'student' ? "Kid's first name" : 'First name' }}</label>
+          <input id="firstName" type="text" class="form-control" formControlName="firstName" placeholder="Ava" />
+          @if (friendlyFieldMessage('firstName'); as msg) {
+            <app-friendly-alert class="d-block mt-2" [message]="msg" icon="✏️" />
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="lastName">Last name</label>
+          <input id="lastName" type="text" class="form-control" formControlName="lastName" placeholder="Stone" />
+          @if (friendlyFieldMessage('lastName'); as msg) {
+            <app-friendly-alert class="d-block mt-2" [message]="msg" icon="✏️" />
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="email">{{ role() === 'student' ? "Grown-up's email" : 'Email' }}</label>
+          <input id="email" type="email" class="form-control" formControlName="email" placeholder="parent@example.com" autocomplete="email" />
+          @if (friendlyFieldMessage('email'); as msg) {
+            <app-friendly-alert class="d-block mt-2" [message]="msg" icon="✉️" />
+          }
+        </div>
+
+        <div class="mb-4">
+          <label class="form-label" for="password">Secret password</label>
+          <div class="password-field">
+            <input
+              id="password"
+              [type]="showPassword() ? 'text' : 'password'"
+              class="form-control"
+              formControlName="password"
+              placeholder="••••••••"
+              autocomplete="new-password"
+            />
+            <button type="button" class="toggle-visibility" (click)="togglePasswordVisibility()" [attr.aria-label]="showPassword() ? 'Hide password' : 'Show password'">
+              {{ showPassword() ? '🙈' : '👁️' }}
+            </button>
+          </div>
+          @if (friendlyFieldMessage('password'); as msg) {
+            <app-friendly-alert class="d-block mt-2" [message]="msg" icon="🔒" />
+          }
+        </div>
+
+        @if (role() === 'student') {
+          <div class="age-group-field">
+            <label class="form-label">Pick an age group</label>
+            <div class="age-pills">
+              @for (group of ageGroups; track group.id) {
+                <button type="button" [class.active]="ageGroup() === group.id" (click)="chooseAgeGroup(group.id)">
+                  {{ group.label }}
+                  <small>{{ group.range }}</small>
+                </button>
+              }
+            </div>
+          </div>
+        }
+
+        <button type="submit" class="btn btn-primary w-100 btn-lg-tappable" [disabled]="submitting()">
+          @if (submitting()) { Creating your account… } @else { 📖 Start learning → }
+        </button>
+      </form>
+
+      <p class="fine-print">By continuing you agree to our kid-safe Terms &amp; Privacy Promise.</p>
+    </div>
+  </div>
+
+  <app-auth-hero />
+</div>

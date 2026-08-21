@@ -1,0 +1,48 @@
+<div class="confidence-badge">
+  <span class="eyebrow">✨ {{ step().eyebrow }}</span>
+  <h1>{{ step().title }}</h1>
+  <p class="subtitle">{{ step().subtitle }}</p>
+
+  <div class="badge-grid">
+    <div class="panel form-panel">
+      <h2>{{ step().promptHeading }}</h2>
+      <textarea
+        rows="6"
+        [attr.maxlength]="step().maxLength"
+        [placeholder]="step().placeholder"
+        [value]="text()"
+        (input)="updateText($any($event.target).value)"
+      ></textarea>
+      <span class="char-count">{{ text().length }}/{{ step().maxLength }} characters</span>
+      <p class="hint">✨ {{ step().hint }}</p>
+    </div>
+
+    <div class="panel preview-panel">
+      <span class="preview-label">{{ step().previewLabel }}</span>
+
+      <div class="certificate">
+        <span class="ribbon-icon">🎖️</span>
+        <h3>{{ step().certificateTitle }}</h3>
+        <span class="underline"></span>
+        <p class="certificate-intro">{{ step().certificateIntro }}</p>
+        <p class="certificate-answer">{{ text() || '…' }}</p>
+
+        <button type="button" class="btn download-btn" [disabled]="!canSubmit() || downloading()" (click)="downloadCertificate()">
+          @if (downloading()) { Preparing… } @else { ⬇ {{ step().downloadLabel }} }
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="badge-actions">
+    <button type="button" class="btn submit-btn" [disabled]="!canSubmit()" (click)="submit()">
+      @if (hasSubmitted()) { ✓ Reflection Submitted } @else { {{ step().submitLabel }} }
+    </button>
+    <button type="button" class="btn continue-btn" [disabled]="!hasSubmitted()" (click)="continued.emit()">
+      {{ step().continueLabel }} ➡
+    </button>
+  </div>
+  @if (!hasSubmitted()) {
+    <p class="continue-hint">Submit your reflection to unlock the next lesson.</p>
+  }
+</div>

@@ -1,0 +1,91 @@
+<div class="share-exercise">
+  <h2 class="prompt">{{ exercise().prompt }}</h2>
+
+  <div class="share-grid">
+    <div class="panel form-panel">
+      <h3>✨ Share your answer</h3>
+
+      @for (field of exercise().fields; track field.id) {
+        <div class="field">
+          <label [for]="field.id">{{ field.label }}</label>
+          <input
+            [id]="field.id"
+            type="text"
+            [disabled]="locked()"
+            [value]="draft()[field.id] ?? ''"
+            (input)="updateField(field.id, $any($event.target).value)"
+            [placeholder]="field.placeholder"
+          />
+        </div>
+      }
+
+      <button type="button" class="btn btn-primary w-100 btn-lg-tappable" [disabled]="locked() || !canSubmit()" (click)="submit()">
+        @if (locked()) { ✓ Shared! } @else { {{ exercise().submitLabel }} }
+      </button>
+
+      @if (locked() && exercise().offerCardDownload) {
+        <button type="button" class="btn btn-outline-primary w-100 btn-lg-tappable preview-toggle" (click)="togglePreview()">
+          {{ showPreview() ? 'Hide My Card' : '🖼️ Preview My Card' }}
+        </button>
+
+        <button type="button" class="btn btn-primary w-100 btn-lg-tappable continue-btn" (click)="continued.emit()">
+          Continue →
+        </button>
+      }
+
+      <div class="how-it-works">
+        <strong>How it works:</strong>
+        <ul>
+          @for (line of exercise().howItWorks; track line) {
+            <li>{{ line }}</li>
+          }
+        </ul>
+      </div>
+    </div>
+
+    <div class="panel group-panel">
+      @if (showPreview()) {
+        <div class="card-preview">
+          <strong class="preview-title">{{ exercise().cardTitle ?? 'My Card' }}</strong>
+          @for (field of exercise().fields; track field.id) {
+            <div class="preview-row">
+              <span class="preview-label">{{ field.label }}</span>
+              <span class="preview-value">{{ draft()[field.id] }}</span>
+            </div>
+          }
+        </div>
+
+        <button type="button" class="btn btn-primary w-100 btn-lg-tappable download-btn" [disabled]="downloading()" (click)="downloadCard()">
+          @if (downloading()) { Preparing… } @else { ⬇️ Download as Picture }
+        </button>
+      }
+
+      <div class="group-head">
+        <h3>👥 {{ exercise().groupLabel }}</h3>
+        <span class="count-chip">{{ entries().length }} shared</span>
+      </div>
+
+      @if (entries().length === 0) {
+        <p class="empty-copy">Be the first to share!</p>
+      } @else {
+        <ul class="entry-list">
+          @for (entry of entries(); track entry.studentName + entry.values[lastFieldId()]) {
+            <li [class.me]="entry.isMe">
+              <strong>{{ entry.studentName }}</strong>
+              <span>{{ entry.values[lastFieldId()] }}</span>
+            </li>
+          }
+        </ul>
+      }
+
+      <div class="follow-up">
+        <strong>🎓 Teacher follow-up</strong>
+        <p>"{{ exercise().teacherFollowUp }}"</p>
+        <div class="stats">
+          <div><span>{{ entries().length }}</span><small>Total shared</small></div>
+          <div><span>{{ uniqueLastFieldCount() }}</span><small>Unique answers</small></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

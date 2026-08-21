@@ -1,0 +1,169 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+.victory-dance {
+  max-width: 44rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.vd-pill {
+  display: inline-block;
+  background: #d7f2ef;
+  color: #2b6d66;
+  font-weight: 800;
+  font-size: 0.9rem;
+  padding: 0.45rem 1.3rem;
+  border-radius: v.$border-radius-pill;
+  margin-bottom: 1.5rem;
+}
+
+.victory-dance h1 {
+  @include m.playful-heading;
+  font-size: 2.5rem;
+  line-height: 1.15;
+  color: v.$color-navy-text;
+  margin-bottom: 0.4rem;
+}
+
+.vd-title-emoji {
+  display: block;
+  font-size: 1.4rem;
+  margin-bottom: 1.75rem;
+}
+
+.vd-image-wrap {
+  margin: 0 auto 1.75rem;
+  max-width: 34rem;
+  border-radius: v.$border-radius-xl;
+  overflow: hidden;
+  box-shadow: 0 2px 14px rgba(43, 45, 66, 0.08);
+
+  img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+}
+
+.vd-card {
+  background: v.$color-white;
+  border-radius: v.$border-radius-xl;
+  padding: 2rem 2.25rem;
+  text-align: left;
+  box-shadow: 0 2px 14px rgba(43, 45, 66, 0.06);
+  margin-bottom: 1.5rem;
+
+  h2 {
+    @include m.playful-heading;
+    font-size: 1.3rem;
+    color: v.$color-navy-text;
+    margin-bottom: 1.1rem;
+  }
+}
+
+.vd-steps {
+  list-style: none;
+  margin: 0 0 1.25rem;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    color: rgba(43, 45, 66, 0.8);
+    font-weight: 600;
+    font-size: 1.02rem;
+  }
+}
+
+.vd-step-number {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 0.45rem;
+  background: v.$color-navy-text;
+  color: v.$color-white;
+  font-weight: 800;
+  font-size: 0.85rem;
+}
+
+.vd-tagline {
+  text-align: center;
+  font-style: italic;
+  color: rgba(43, 45, 66, 0.55);
+  margin: 0;
+}
+
+.vd-parent-note {
+  background: linear-gradient(120deg, v.$color-sunshine, v.$color-sky);
+  border-radius: v.$border-radius-xl;
+  padding: 2rem 2.25rem;
+  text-align: left;
+  color: v.$color-navy-text;
+  margin-bottom: 1.5rem;
+
+  h2 {
+    @include m.playful-heading;
+    font-size: 1.15rem;
+    margin-bottom: 0.85rem;
+  }
+
+  p {
+    margin: 0 0 0.6rem;
+    line-height: 1.55;
+    font-weight: 600;
+
+    &:last-child { margin-bottom: 0; }
+  }
+}
+
+.vd-share-card {
+  margin-bottom: 0;
+
+  textarea {
+    width: 100%;
+    resize: vertical;
+    font: inherit;
+    color: v.$color-navy-text;
+    background: v.$color-white;
+    border: 2px solid #e2e5ec;
+    border-radius: v.$border-radius-sm;
+    padding: 0.9rem 1rem;
+
+    &:focus {
+      outline: none;
+      border-color: v.$color-sky;
+    }
+
+    &::placeholder { color: rgba(43, 45, 66, 0.4); }
+  }
+}
+
+.vd-char-count {
+  text-align: right;
+  color: rgba(43, 45, 66, 0.45);
+  font-size: 0.85rem;
+  margin: 0.5rem 0 1.25rem;
+}
+
+.vd-submit-btn {
+  @include m.tappable;
+  display: block;
+  width: 100%;
+  background: v.$color-sky;
+  color: v.$color-white;
+  border: none;
+  font-weight: 800;
+  font-size: 1.05rem;
+  padding: 0.9rem 2.25rem;
+  border-radius: v.$border-radius-sm;
+
+  &:hover:not(:disabled) { opacity: 0.92; }
+  &:disabled { opacity: 0.5; cursor: default; }
+}

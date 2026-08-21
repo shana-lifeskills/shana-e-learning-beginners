@@ -1,0 +1,135 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+.mgs-step {
+  max-width: 60rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.mgs-step h1 {
+  @include m.playful-heading;
+  font-size: 2.5rem;
+  color: v.$color-navy-text;
+  margin-bottom: 0.6rem;
+}
+
+.mgs-subtitle {
+  color: rgba(43, 45, 66, 0.55);
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+}
+
+.mgs-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  margin-bottom: 2rem;
+  text-align: left;
+}
+
+.mgs-step-row {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  border-radius: v.$border-radius-lg;
+  padding: 1.5rem 2rem;
+  overflow: hidden;
+
+  &--blue { background: #dce9fe; }
+  &--peach { background: #fce3d2; }
+  &--green { background: #dbf3df; }
+  &--purple { background: #e7dffb; }
+}
+
+.mgs-step-number {
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 2.75rem;
+  color: rgba(255, 255, 255, 0.65);
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.mgs-step-icon {
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+
+.mgs-step-copy {
+  strong {
+    display: block;
+    @include m.playful-heading;
+    font-size: 1.15rem;
+    color: v.$color-navy-text;
+    margin-bottom: 0.3rem;
+  }
+
+  p {
+    margin: 0;
+    color: rgba(43, 45, 66, 0.7);
+    font-size: 0.98rem;
+    line-height: 1.5;
+  }
+}
+
+.mgs-responses-card {
+  background: v.$color-white;
+  border-radius: v.$border-radius-xl;
+  padding: 1.75rem 2rem 2rem;
+  box-shadow: 0 2px 14px rgba(43, 45, 66, 0.06);
+  margin-bottom: 2rem;
+
+  h2 {
+    @include m.playful-heading;
+    font-size: 1.25rem;
+    color: v.$color-navy-text;
+    text-align: left;
+    margin-bottom: 1.1rem;
+  }
+}
+
+.mgs-responses-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.mgs-response-pill {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  border-radius: v.$border-radius-sm;
+  padding: 1rem 1rem;
+  font-weight: 700;
+  font-size: 1rem;
+  color: v.$color-navy-text;
+
+  &--blue { background: #dce9fe; }
+  &--yellow { background: #fbedc4; }
+  &--green { background: #dbf3df; }
+}
+
+.mgs-response-icon {
+  font-size: 1.1rem;
+}
+
+.mgs-continue-btn {
+  @include m.tappable;
+  background: #4d78f0;
+  color: v.$color-white;
+  border: none;
+  font-weight: 800;
+  font-size: 1.05rem;
+  padding: 0.9rem 2.25rem;
+  border-radius: v.$border-radius-pill;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.1);
+
+  &:hover { opacity: 0.92; }
+}

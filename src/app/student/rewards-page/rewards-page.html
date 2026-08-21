@@ -1,0 +1,40 @@
+<div class="rewards-page">
+  <a routerLink="/student" class="back-link">← My Modules</a>
+  <h1>My Treasure Box</h1>
+  <app-reward-shelf [totals]="details().totals" />
+
+  @if (!loading()) {
+    <section class="trophy-section">
+      <h2>🏆 Trophy Case</h2>
+      @if (details().trophies.length === 0) {
+        <p class="empty-copy">Finish a whole module to earn your first trophy!</p>
+      } @else {
+        <div class="tile-grid">
+          @for (trophy of details().trophies; track trophy.moduleTitle) {
+            <div class="tile trophy-tile">
+              <span class="tile-icon">{{ trophy.moduleIcon }}</span>
+              <strong>{{ trophy.moduleTitle }}</strong>
+            </div>
+          }
+        </div>
+      }
+    </section>
+
+    <section class="badge-section">
+      <h2>🎖️ Badge Collection</h2>
+      @if (details().badges.length === 0) {
+        <p class="empty-copy">Finish a lesson to earn your first badge!</p>
+      } @else {
+        <div class="tile-grid">
+          @for (badge of details().badges; track badge.lessonTitle + badge.moduleTitle) {
+            <div class="tile badge-tile">
+              <span class="tile-icon">{{ badge.moduleIcon }}</span>
+              <strong>{{ badge.lessonTitle }}</strong>
+              <small>{{ badge.moduleTitle }}</small>
+            </div>
+          }
+        </div>
+      }
+    </section>
+  }
+</div>

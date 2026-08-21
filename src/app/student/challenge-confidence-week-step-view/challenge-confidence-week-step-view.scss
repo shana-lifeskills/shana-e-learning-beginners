@@ -1,0 +1,159 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+$accent-blue: #4d78f0;
+
+.ccw {
+  max-width: 44rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.ccw-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: #e5ecfd;
+  color: $accent-blue;
+  font-weight: 800;
+  font-size: 0.9rem;
+  padding: 0.5rem 1.4rem;
+  border-radius: v.$border-radius-pill;
+  margin-bottom: 1.25rem;
+}
+
+.ccw h1 {
+  @include m.playful-heading;
+  font-size: 2.75rem;
+  color: v.$color-navy-text;
+  margin-bottom: 2rem;
+}
+
+.ccw-card {
+  background: v.$color-white;
+  border-radius: v.$border-radius-xl;
+  box-shadow: 0 4px 18px rgba(43, 45, 66, 0.08);
+  padding: 0.5rem 2rem;
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.ccw-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid rgba(43, 45, 66, 0.08);
+
+  &.no-border {
+    border-bottom: none;
+  }
+
+  strong {
+    display: block;
+    font-size: 1.15rem;
+    color: v.$color-navy-text;
+    margin-bottom: 0.4rem;
+  }
+
+  p {
+    color: rgba(43, 45, 66, 0.6);
+    font-size: 1rem;
+    line-height: 1.55;
+    margin: 0;
+  }
+}
+
+.ccw-item-icon {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: v.$border-radius-sm;
+  font-size: 1.3rem;
+
+  &--blue { background: #dbe4fb; }
+  &--peach { background: #fbe4c4; }
+  &--green { background: rgba(107, 203, 119, 0.2); }
+  &--purple { background: rgba(166, 109, 212, 0.18); }
+}
+
+.ccw-confidence-card {
+  background: v.$color-white;
+  border-radius: v.$border-radius-xl;
+  box-shadow: 0 4px 18px rgba(43, 45, 66, 0.08);
+  padding: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.ccw-confidence-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: #e08a3c;
+  font-weight: 800;
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
+}
+
+.ccw-confidence-quote {
+  @include m.playful-heading;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: v.$color-navy-text;
+  margin: 0 0 1.5rem;
+}
+
+.ccw-remember-toggle {
+  @include m.tappable;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: none;
+  border: none;
+  padding: 0;
+  color: rgba(43, 45, 66, 0.5);
+  font-weight: 700;
+  font-size: 1rem;
+
+  &.checked {
+    color: $accent-blue;
+  }
+}
+
+.ccw-remember-circle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.4rem;
+  height: 1.4rem;
+  border-radius: 50%;
+  border: 2px solid rgba(43, 45, 66, 0.25);
+  color: v.$color-white;
+  font-size: 0.85rem;
+  font-weight: 800;
+
+  .checked & {
+    background: $accent-blue;
+    border-color: $accent-blue;
+  }
+}
+
+.ccw-continue-btn {
+  @include m.tappable;
+  display: block;
+  width: 100%;
+  background: $accent-blue;
+  color: v.$color-white;
+  border: none;
+  font-weight: 800;
+  font-size: 1.15rem;
+  padding: 1.1rem;
+  border-radius: v.$border-radius;
+
+  &:hover { opacity: 0.92; }
+}

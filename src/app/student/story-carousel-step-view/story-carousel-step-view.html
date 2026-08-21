@@ -1,0 +1,42 @@
+<div class="story-carousel">
+  <h1>{{ step().heading }}</h1>
+  <p class="subtitle">{{ step().subtitle }}</p>
+
+  <div class="carousel-frame">
+    <button type="button" class="nav-arrow nav-prev" [disabled]="isFirst()" (click)="prev()" aria-label="Previous slide">
+      ‹
+    </button>
+
+    @if (currentSlide(); as slide) {
+      <div class="slide">
+        <div class="slide-image-wrap">
+          <img [src]="slide.image" [alt]="slide.title" />
+        </div>
+        <div class="slide-copy">
+          <h2>{{ slide.title }}</h2>
+          <p>{{ slide.text }}</p>
+        </div>
+      </div>
+    }
+
+    <button type="button" class="nav-arrow nav-next" [disabled]="isLast()" (click)="next()" aria-label="Next slide">
+      ›
+    </button>
+  </div>
+
+  <div class="dots">
+    @for (slide of step().slides; track $index; let i = $index) {
+      <button type="button" class="dot" [class.active]="i === activeIndex()" (click)="goTo(i)" [attr.aria-label]="'Go to slide ' + (i + 1)"></button>
+    }
+  </div>
+
+  <div class="carousel-controls">
+    <span class="slide-count">{{ activeIndex() + 1 }} of {{ step().slides.length }}</span>
+    <button type="button" class="btn btn-outline-primary auto-play-btn" (click)="toggleAutoPlay()">
+      {{ autoPlaying() ? '⏸ Pause' : '▶ Auto Play' }}
+    </button>
+    <button type="button" class="btn btn-primary next-lesson-btn" (click)="continued.emit()">
+      {{ step().continueLabel }}
+    </button>
+  </div>
+</div>

@@ -1,0 +1,28 @@
+<div class="smart-goals-lesson">
+  <span class="sgl-eyebrow">{{ step().eyebrow }}</span>
+  <h1>{{ step().heading }}</h1>
+  <p class="sgl-subtitle">{{ step().subtitle }}</p>
+
+  <div class="sgl-grid">
+    @for (card of step().cards; track card.letter) {
+      <div class="sgl-card" [class]="'sgl-card--' + card.color">
+        <div class="sgl-card-head">
+          <span class="sgl-letter">{{ card.letter }}</span>
+          <span class="sgl-icon">{{ card.icon }}</span>
+        </div>
+        <h2>{{ card.title }}</h2>
+        <p class="sgl-description">{{ card.description }}</p>
+        <div class="sgl-example">
+          <span class="sgl-example-label">Example:</span>
+          <p>"{{ card.example }}"</p>
+        </div>
+      </div>
+    }
+  </div>
+
+  <p class="sgl-parent-note">👪 {{ step().parentNote }}</p>
+
+  <button type="button" class="btn sgl-continue-btn" (click)="continued.emit()">
+    {{ step().continueLabel }}
+  </button>
+</div>

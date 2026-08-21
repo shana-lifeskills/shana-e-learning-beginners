@@ -1,0 +1,32 @@
+<div class="mgi-step">
+  <span class="mgi-badge">{{ step().badge }}</span>
+  <h1><span class="mgi-title-main">{{ step().titleStart }}</span>&nbsp;<span class="mgi-title-accent">{{ step().titleAccent }}</span>@if (step().titleAccentTail) {<span class="mgi-title-accent-tail">{{ step().titleAccentTail }}</span>}</h1>
+  <p class="mgi-subtitle">{{ step().subtitle }}</p>
+
+  <div class="mgi-tray-card">
+    <h2>{{ step().trayHeading }}</h2>
+    <div class="mgi-tray-grid">
+      @for (item of step().trayItems; track $index) {
+        <span class="mgi-tray-item">{{ item }}</span>
+      }
+    </div>
+    <p class="mgi-tray-caption">{{ step().trayCaption }}</p>
+  </div>
+
+  <div class="mgi-info-grid">
+    <div class="mgi-info-card">
+      <h3>{{ step().howItWorksTitle }}</h3>
+      <p>@for (run of step().howItWorksText; track $index) {<span [class.mgi-bold]="run.bold">{{ run.text }}</span>}</p>
+      <div class="mgi-callout">@for (run of step().howItWorksCallout; track $index) {<span [class.mgi-bold]="run.bold">{{ run.text }}</span>}</div>
+    </div>
+
+    <div class="mgi-info-card">
+      <h3>{{ step().onlineVersionTitle }}</h3>
+      <p>@for (run of step().onlineVersionText; track $index) {<span [class.mgi-bold]="run.bold">{{ run.text }}</span>}</p>
+    </div>
+  </div>
+
+  <button type="button" class="btn btn-primary btn-lg-tappable mgi-continue-btn" (click)="continued.emit()">
+    {{ step().continueLabel }}
+  </button>
+</div>

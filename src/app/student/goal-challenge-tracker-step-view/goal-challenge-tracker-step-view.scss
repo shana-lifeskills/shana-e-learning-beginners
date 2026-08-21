@@ -1,0 +1,296 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+$accent-blue: #4d78f0;
+
+.gct {
+  max-width: 44rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.gct-badge-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 4.25rem;
+  height: 4.25rem;
+  margin: 0 auto 1.25rem;
+  border-radius: 50%;
+  background: $accent-blue;
+  font-size: 2rem;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.08);
+}
+
+.gct h1 {
+  @include m.playful-heading;
+  font-size: 2.25rem;
+  color: v.$color-navy-text;
+  margin-bottom: 0.5rem;
+}
+
+.gct-subtitle {
+  color: rgba(43, 45, 66, 0.55);
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+}
+
+.gct-card {
+  background: v.$color-white;
+  border-radius: v.$border-radius-xl;
+  box-shadow: 0 2px 14px rgba(43, 45, 66, 0.06);
+  padding: 1.75rem 2rem;
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.gct-prompt-heading {
+  @include m.playful-heading;
+  font-size: 1.3rem;
+  color: $accent-blue;
+  margin: 0 0 0.4rem;
+}
+
+.gct-prompt-subtitle {
+  color: rgba(43, 45, 66, 0.55);
+  font-size: 0.98rem;
+  margin: 0 0 1.25rem;
+}
+
+.gct-goal-row {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.gct-goal-input {
+  flex: 1;
+  min-width: 14rem;
+  border: 2px solid $accent-blue;
+  border-radius: v.$border-radius-sm;
+  padding: 0.85rem 1.1rem;
+  font: inherit;
+  color: v.$color-navy-text;
+
+  &:focus { outline: none; }
+}
+
+.gct-start-btn {
+  @include m.tappable;
+  background: $accent-blue;
+  color: v.$color-white;
+  border: none;
+  font-weight: 800;
+  padding: 0.85rem 1.5rem;
+  border-radius: v.$border-radius-sm;
+  white-space: nowrap;
+
+  &:hover:not(:disabled) { opacity: 0.92; }
+  &:disabled { opacity: 0.5; cursor: default; }
+}
+
+.gct-goal-card {
+  text-align: center;
+}
+
+.gct-goal-label {
+  display: block;
+  color: rgba(43, 45, 66, 0.5);
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.gct-goal-text {
+  margin: 0;
+  font-weight: 800;
+  font-size: 1.2rem;
+  color: v.$color-navy-text;
+}
+
+.gct-tracker-card {
+  text-align: center;
+}
+
+.gct-tap-label {
+  @include m.playful-heading;
+  font-size: 1.05rem;
+  color: rgba(43, 45, 66, 0.7);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  margin: 0 0 1.5rem;
+}
+
+.gct-days {
+  display: flex;
+  justify-content: center;
+  gap: 2.5rem;
+  flex-wrap: wrap;
+}
+
+.gct-day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.gct-day-square {
+  @include m.tappable;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 5rem;
+  height: 5rem;
+  border: none;
+  border-radius: v.$border-radius;
+  background: rgba(43, 45, 66, 0.06);
+  color: rgba(43, 45, 66, 0.2);
+  font-size: 1.8rem;
+
+  &.done {
+    background: v.$color-sunshine;
+    color: v.$color-white;
+    box-shadow: 0 0 0 6px rgba(255, 201, 60, 0.25);
+  }
+}
+
+.gct-day-label {
+  font-weight: 700;
+  color: v.$color-navy-text;
+}
+
+.gct-progress {
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.gct-progress-label {
+  display: block;
+  font-weight: 700;
+  color: v.$color-navy-text;
+  margin-bottom: 0.5rem;
+}
+
+.gct-progress-track {
+  height: 0.6rem;
+  border-radius: v.$border-radius-pill;
+  background: rgba(43, 45, 66, 0.1);
+  overflow: hidden;
+  margin-bottom: 0.4rem;
+}
+
+.gct-progress-fill {
+  height: 100%;
+  background: $accent-blue;
+  border-radius: v.$border-radius-pill;
+  transition: width 0.2s ease;
+}
+
+.gct-progress-count {
+  display: block;
+  text-align: right;
+  font-weight: 800;
+  color: v.$color-navy-text;
+}
+
+.gct-quote-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  background: #e3ecfd;
+  border-radius: v.$border-radius-xl;
+  padding: 1.5rem 1.75rem;
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.gct-quote-icon {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: v.$border-radius-sm;
+  background: rgba(255, 255, 255, 0.6);
+  color: $accent-blue;
+  font-size: 1.3rem;
+}
+
+.gct-quote-label {
+  display: block;
+  color: rgba(43, 45, 66, 0.55);
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+}
+
+.gct-quote-text {
+  margin: 0 0 0.3rem;
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: v.$color-navy-text;
+}
+
+.gct-quote-caption {
+  color: rgba(43, 45, 66, 0.55);
+  font-size: 0.95rem;
+}
+
+.gct-parent-note {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  background: rgba(255, 201, 60, 0.22);
+  border-radius: v.$border-radius-sm;
+  padding: 0.85rem 1.1rem;
+  margin: 0 0 2rem;
+  color: #7a5c00;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.gct-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.gct-download-btn {
+  @include m.tappable;
+  background: linear-gradient(90deg, v.$color-grape, v.$color-bubble-pink);
+  color: v.$color-white;
+  border: none;
+  font-weight: 800;
+  font-size: 1rem;
+  padding: 0.85rem 1.75rem;
+  border-radius: v.$border-radius-pill;
+
+  &:hover:not(:disabled) { opacity: 0.92; }
+  &:disabled { opacity: 0.5; cursor: default; }
+}
+
+.gct-next-btn {
+  @include m.tappable;
+  background: $accent-blue;
+  color: v.$color-white;
+  border: none;
+  font-weight: 800;
+  font-size: 1rem;
+  padding: 0.85rem 1.75rem;
+  border-radius: v.$border-radius-pill;
+
+  &:hover:not(:disabled) { opacity: 0.92; }
+  &:disabled {
+    background: #9aa0b4;
+    cursor: default;
+  }
+}

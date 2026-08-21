@@ -1,0 +1,726 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+.confidence-link {
+  max-width: 76rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.badge {
+  display: inline-block;
+  background: v.$color-white;
+  color: v.$color-navy-text;
+  font-weight: 800;
+  font-size: 1.02rem;
+  padding: 0.4rem 1.1rem;
+  border-radius: v.$border-radius-pill;
+  box-shadow: 0 3px 0 rgba(0, 0, 0, 0.08);
+  margin-bottom: 1.5rem;
+}
+
+h1 {
+  @include m.playful-heading;
+  font-size: 2.8rem;
+  line-height: 1.1;
+  color: v.$color-navy-text;
+  margin-bottom: 1rem;
+
+  .accent { color: v.$color-sunshine; -webkit-text-stroke: 0.5px rgba(43, 45, 66, 0.15); }
+}
+
+.subtitle {
+  max-width: 38rem;
+  margin: 0 auto 2.25rem;
+  color: rgba(43, 45, 66, 0.65);
+  font-weight: 600;
+  font-size: 1.2rem;
+  line-height: 1.6;
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  text-align: left;
+  margin-bottom: 2rem;
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.trainer-card {
+  @include m.bouncy-card;
+  background: v.$color-white;
+  padding: 1.75rem;
+
+  &:hover { transform: none; box-shadow: 0 6px 0 rgba(0, 0, 0, 0.08); }
+}
+
+.trainer-head {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1.25rem;
+
+  .chat-icon {
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    background: v.$color-cream-bg;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  strong { color: v.$color-navy-text; }
+}
+
+blockquote {
+  margin: 0 0 1.25rem;
+  font-family: v.$headings-font-family;
+  font-weight: 700;
+  font-size: 1.45rem;
+  line-height: 1.4;
+  color: v.$color-navy-text;
+}
+
+.trainer-card .stars {
+  font-size: 1.35rem;
+}
+
+.takeaway-card {
+  @include m.bouncy-card;
+  position: relative;
+  background: linear-gradient(160deg, #{v.$color-sunshine}, #e8a020);
+  padding: 1.75rem;
+  overflow: hidden;
+
+  &:hover { transform: none; box-shadow: 0 6px 0 rgba(0, 0, 0, 0.08); }
+}
+
+.takeaway-label {
+  display: inline-block;
+  font-weight: 800;
+  font-size: 0.88rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: v.$color-navy-text;
+  margin-bottom: 1rem;
+}
+
+.takeaway-quote {
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 1.65rem;
+  line-height: 1.25;
+  color: v.$color-navy-text;
+  margin: 0 0 1.25rem;
+}
+
+.say-it-loud {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(43, 45, 66, 0.85);
+  color: v.$color-white;
+  font-weight: 700;
+  font-size: 0.95rem;
+  padding: 0.4rem 0.9rem;
+  border-radius: v.$border-radius-pill;
+}
+
+.mascot-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.25rem;
+}
+
+.mascot-image {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid v.$color-white;
+  box-shadow: 0 3px 0 rgba(0, 0, 0, 0.12);
+}
+
+// Hero-photo variant (when the step has a `heroImage`) — a two-column
+// heading+photo hero followed by a full-width "say it out loud" banner,
+// instead of the trainer/takeaway cards-grid used by the default layout.
+.hero-variant {
+  text-align: left;
+
+  .badge { margin-bottom: 1.5rem; }
+
+  .complete-btn { display: block; margin: 0 auto; }
+}
+
+.hero-row {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 2.5rem;
+  align-items: center;
+  margin-bottom: 2rem;
+
+  @media (max-width: 720px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.hero-text h1 {
+  @include m.playful-heading;
+  font-size: 2.8rem;
+  line-height: 1.15;
+  color: v.$color-navy-text;
+  margin-bottom: 1.25rem;
+}
+
+.accent-pill {
+  display: inline-block;
+  color: v.$color-white;
+  background: linear-gradient(135deg, #{v.$color-coral}, #e8862a);
+  padding: 0.15em 0.5em;
+  border-radius: v.$border-radius-sm;
+  margin-top: 0.2em;
+}
+
+.hero-image {
+  width: 100%;
+  max-height: 22rem;
+  object-fit: cover;
+  border-radius: v.$border-radius-lg;
+  border: 6px solid v.$color-white;
+  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.08);
+}
+
+.say-it-band {
+  @include m.bouncy-card;
+  background: v.$color-grape;
+  color: v.$color-white;
+  text-align: center;
+  padding: 2rem 1.5rem;
+  margin-bottom: 2rem;
+
+  &:hover { transform: none; box-shadow: 0 6px 0 rgba(0, 0, 0, 0.08); }
+}
+
+.say-it-loud-label {
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 800;
+  font-size: 0.9rem;
+  opacity: 0.85;
+  margin-bottom: 0.75rem;
+}
+
+.say-it-loud-quote {
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 1.7rem;
+  line-height: 1.3;
+  margin: 0;
+}
+
+.tagline {
+  color: rgba(43, 45, 66, 0.6);
+  font-weight: 700;
+  font-size: 1.08rem;
+  margin-bottom: 1.75rem;
+}
+
+.complete-btn {
+  font-size: 1.1rem;
+  padding: 0.9rem 2.25rem;
+}
+
+// Garden variant — plain eyebrow pill, a title with individually-accented
+// word runs, one wide photo, and a single CTA button (no cards/banner).
+.garden-variant {
+  max-width: 46rem;
+
+  .complete-btn {
+    background: v.$color-leaf;
+    border-color: v.$color-leaf;
+  }
+}
+
+.garden-eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.8rem;
+}
+
+.garden-title {
+  @include m.playful-heading;
+  font-size: 2.75rem;
+  line-height: 1.3;
+  color: v.$color-navy-text;
+  margin-bottom: 2rem;
+
+  .accent { color: v.$color-coral; }
+}
+
+.garden-image-wrap {
+  margin-bottom: 2.5rem;
+
+  img {
+    width: 100%;
+    max-height: 24rem;
+    object-fit: cover;
+    border-radius: v.$border-radius-lg;
+    box-shadow: 0 6px 0 rgba(0, 0, 0, 0.08);
+  }
+}
+
+// Cards variant — the standalone "Believe in Yourself"-style closing screen:
+// plain-text eyebrow pill, centered mascot, two tip cards, gradient banner.
+.cards-variant {
+  max-width: 48rem;
+}
+
+.eyebrow-pill {
+  display: inline-block;
+  background: v.$color-cream-bg;
+  color: v.$color-navy-text;
+  font-weight: 800;
+  font-size: 0.9rem;
+  padding: 0.5rem 1.25rem;
+  border-radius: v.$border-radius-pill;
+  margin-bottom: 1.5rem;
+}
+
+.cards-title {
+  @include m.playful-heading;
+  font-size: 3rem;
+  line-height: 1.1;
+  color: v.$color-navy-text;
+  margin-bottom: 1rem;
+}
+
+.cards-variant .subtitle {
+  max-width: 32rem;
+  margin: 0 auto 2.5rem;
+}
+
+.mascot-glow {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2.5rem;
+}
+
+.mascot-glow .mascot {
+  width: 12rem;
+  height: 12rem;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 0 rgba(0, 0, 0, 0.05));
+}
+
+// Photo-tags variant — a rounded photo on the left, and a card on the right
+// with a three-line title (middle line accented), a subtitle, and a row of
+// small affirmation pills.
+.photo-tags-variant {
+  max-width: 68rem;
+  text-align: left;
+}
+
+.photo-tags-eyebrow {
+  display: inline-block;
+  background: #fdf3cf;
+  color: v.$color-navy-text;
+  font-weight: 800;
+  font-size: 0.95rem;
+  padding: 0.5rem 1.25rem;
+  border-radius: v.$border-radius-pill;
+  margin-bottom: 1.5rem;
+}
+
+.photo-tags-row {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: 2.5rem;
+  align-items: center;
+  margin-bottom: 1.75rem;
+
+  @media (max-width: 800px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.photo-tags-image-wrap {
+  border-radius: v.$border-radius-xl;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+}
+
+.photo-tags-card {
+  background: v.$color-white;
+  border-radius: v.$border-radius-xl;
+  padding: 2.5rem;
+  box-shadow: 0 2px 14px rgba(43, 45, 66, 0.06);
+}
+
+.photo-tags-title {
+  @include m.playful-heading;
+  font-size: 2.6rem;
+  line-height: 1.25;
+  color: v.$color-navy-text;
+  margin-bottom: 1.25rem;
+
+  .accent { color: v.$color-coral; }
+}
+
+.photo-tags-variant .subtitle {
+  text-align: left;
+  margin: 0 0 1.75rem;
+  max-width: none;
+}
+
+.photo-tags-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.photo-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 700;
+  font-size: 0.98rem;
+  color: v.$color-navy-text;
+  padding: 0.6rem 1.1rem;
+  border-radius: v.$border-radius-pill;
+
+  &--green { background: #dcf3df; }
+  &--purple { background: #e7dffb; }
+  &--peach { background: #fce3d2; }
+}
+
+.photo-tags-variant .tagline {
+  text-align: center;
+}
+
+.tip-cards-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  text-align: left;
+  margin-bottom: 2rem;
+
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.tip-card {
+  @include m.bouncy-card;
+  background: v.$color-white;
+  padding: 1.5rem;
+
+  &:hover { transform: none; box-shadow: 0 6px 0 rgba(0, 0, 0, 0.08); }
+
+  .tip-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 50%;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+
+    &.confidence-icon { background: rgba(255, 143, 163, 0.25); }
+    &.planning-icon { background: rgba(78, 205, 196, 0.2); }
+  }
+
+  strong {
+    display: block;
+    color: v.$color-navy-text;
+    font-size: 1.15rem;
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    color: v.$color-navy-text;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+}
+
+.tip-pill {
+  display: block;
+  background: v.$color-cream-bg;
+  color: rgba(43, 45, 66, 0.7);
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 0.6rem 1rem;
+  border-radius: v.$border-radius-sm;
+}
+
+.closing-banner {
+  background: linear-gradient(120deg, #{v.$color-coral}33, #{v.$color-sky}33);
+  border-radius: v.$border-radius-lg;
+  padding: 2rem;
+  margin-bottom: 2rem;
+
+  h2 {
+    @include m.playful-heading;
+    font-size: 1.4rem;
+    color: v.$color-navy-text;
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    color: rgba(43, 45, 66, 0.65);
+    font-weight: 600;
+    margin: 0;
+  }
+}
+
+// Plan-tabs variant — a hero quote that toggles between a "day plan" grid
+// and a "brave words" affirmation card, all inside a soft gradient shell.
+$plan-tabs-blue: #4d78f0;
+
+.plan-tabs-variant {
+  background: linear-gradient(180deg, #e3f1fc 0%, #fdf7ea 100%);
+  border-radius: v.$border-radius-xl;
+  padding: 3rem 2.5rem;
+}
+
+.plan-tabs-eyebrow {
+  display: inline-block;
+  background: v.$color-cream-bg;
+  color: #8a6d1e;
+  font-weight: 800;
+  font-size: 0.9rem;
+  padding: 0.5rem 1.25rem;
+  border-radius: v.$border-radius-pill;
+  margin: 0 auto 2rem;
+}
+
+.plan-tabs-hero-row {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 2.5rem;
+  align-items: center;
+  text-align: left;
+
+  @media (max-width: 800px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.plan-tabs-quote {
+  @include m.playful-heading;
+  font-size: 2.5rem;
+  line-height: 1.3;
+  color: v.$color-navy-text;
+  margin-bottom: 1.25rem;
+
+  .accent { color: v.$color-coral; }
+}
+
+.plan-tabs-hero-copy .subtitle {
+  text-align: left;
+  margin: 0 0 2rem;
+}
+
+.plan-tabs-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.plan-tab-btn {
+  @include m.tappable;
+  border: none;
+  font-weight: 800;
+  font-size: 1rem;
+  padding: 0.85rem 1.75rem;
+  border-radius: v.$border-radius-pill;
+
+  &--primary {
+    background: v.$color-coral;
+    color: v.$color-white;
+  }
+
+  &--secondary {
+    background: #dceefc;
+    color: $plan-tabs-blue;
+  }
+
+  &:hover { opacity: 0.92; }
+}
+
+.plan-tabs-preview-card {
+  background: v.$color-white;
+  border-radius: v.$border-radius-xl;
+  padding: 1.5rem;
+  box-shadow: 0 4px 20px rgba(43, 45, 66, 0.08);
+}
+
+.plan-tabs-preview-title {
+  display: block;
+  font-weight: 800;
+  color: v.$color-navy-text;
+  margin-bottom: 1rem;
+}
+
+.plan-tabs-preview-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 0;
+  border-top: 1px solid rgba(43, 45, 66, 0.06);
+
+  &:first-of-type { border-top: none; }
+}
+
+.plan-tabs-preview-tag {
+  flex-shrink: 0;
+  font-weight: 800;
+  font-size: 0.75rem;
+  padding: 0.3rem 0.7rem;
+  border-radius: v.$border-radius-pill;
+  color: v.$color-navy-text;
+
+  &--yellow { background: #fde9b0; }
+  &--green { background: #bfe9d6; }
+  &--coral { background: #f6b8ab; }
+  &--blue { background: #bcd6f7; }
+}
+
+.plan-tabs-preview-label {
+  font-weight: 600;
+  color: v.$color-navy-text;
+  font-size: 0.9rem;
+}
+
+.plan-tabs-back {
+  @include m.tappable;
+  background: none;
+  border: none;
+  color: $plan-tabs-blue;
+  font-weight: 800;
+  font-size: 0.95rem;
+  padding: 0.5rem 0;
+  margin-bottom: 1.5rem;
+}
+
+.plan-tabs-heading {
+  @include m.playful-heading;
+  font-size: 2rem;
+  color: v.$color-navy-text;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.plan-tabs-day-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.plan-tabs-day-card {
+  background: v.$color-white;
+  border-radius: v.$border-radius-xl;
+  padding: 1.5rem;
+  box-shadow: 0 4px 20px rgba(43, 45, 66, 0.06);
+
+  h3 {
+    @include m.playful-heading;
+    font-size: 1.2rem;
+    color: v.$color-navy-text;
+    margin: 0.25rem 0 0.5rem;
+  }
+
+  p {
+    color: rgba(43, 45, 66, 0.6);
+    font-weight: 500;
+    margin: 0;
+  }
+}
+
+.plan-tabs-day-head {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.plan-tabs-day-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: v.$color-cream-bg;
+  color: v.$color-navy-text;
+  font-weight: 800;
+}
+
+.plan-tabs-day-tag {
+  font-weight: 800;
+  font-size: 0.8rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: v.$border-radius-pill;
+  color: v.$color-navy-text;
+}
+
+.plan-tabs-brave-card {
+  background: v.$color-sunshine;
+  border-radius: v.$border-radius-xl;
+  padding: 2.5rem;
+  text-align: center;
+  box-shadow: 0 6px 20px rgba(43, 45, 66, 0.1);
+
+  h1 {
+    @include m.playful-heading;
+    font-size: 2.25rem;
+    color: #4a3200;
+    margin-bottom: 1.75rem;
+  }
+}
+
+.plan-tabs-brave-grid {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.75rem;
+}
+
+.plan-tabs-brave-pill {
+  flex: 1 1 14rem;
+  background: v.$color-white;
+  color: v.$color-navy-text;
+  font-weight: 700;
+  border-radius: v.$border-radius-xl;
+  padding: 1.5rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  box-shadow: 0 3px 0 rgba(0, 0, 0, 0.06);
+}
+
+.plan-tabs-brave-footer {
+  color: #4a3200;
+  font-weight: 700;
+  margin: 0;
+}

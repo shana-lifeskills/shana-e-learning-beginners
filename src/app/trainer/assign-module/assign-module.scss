@@ -1,0 +1,113 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+.assign-page {
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: 2rem 2.5rem 4rem;
+}
+
+.back-link {
+  display: inline-block;
+  font-weight: 800;
+  color: v.$color-navy-text;
+  text-decoration: none;
+  margin-bottom: 1rem;
+}
+
+.loading-copy { font-weight: 600; color: rgba(43, 45, 66, 0.6); }
+
+.module-banner {
+  @include m.bouncy-card;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: v.$color-white;
+  border-left: 8px solid var(--accent, #{v.$color-coral});
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.25rem;
+
+  &:hover { transform: none; box-shadow: 0 6px 0 rgba(0, 0, 0, 0.08); }
+
+  .icon {
+    font-size: 2.1rem;
+    width: 4rem;
+    height: 4rem;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--accent, #{v.$color-coral});
+  }
+  h1 { font-family: v.$headings-font-family; font-size: 1.2rem; color: v.$color-navy-text; margin-bottom: 0.1rem; }
+  p { margin: 0; color: rgba(43, 45, 66, 0.6); font-weight: 600; font-size: 0.9rem; }
+}
+
+.saved-banner {
+  background: rgba(107, 203, 119, 0.2);
+  color: #2f7d3b;
+  font-weight: 700;
+  border-radius: v.$border-radius;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1.25rem;
+  animation: pop-in 0.3s ease;
+}
+
+.empty-copy { font-weight: 600; color: rgba(43, 45, 66, 0.6); }
+
+.student-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.student-row {
+  @include m.tappable;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: v.$color-white;
+  border: 2px solid rgba(43, 45, 66, 0.08);
+  border-radius: v.$border-radius-lg;
+  padding: 0.85rem 1.1rem;
+  width: 100%;
+  text-align: left;
+
+  .avatar {
+    font-size: 1.5rem;
+    background: v.$color-cream-bg;
+    border-radius: 50%;
+    width: 2.4rem;
+    height: 2.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .name { flex: 1; font-weight: 700; color: v.$color-navy-text; }
+
+  .tag {
+    font-size: 0.75rem;
+    font-weight: 800;
+    padding: 0.25rem 0.6rem;
+    border-radius: v.$border-radius-pill;
+    background: v.$color-cream-bg;
+    color: rgba(43, 45, 66, 0.6);
+  }
+
+  &.selected {
+    border-color: v.$color-leaf;
+    .tag.selected-tag { background: rgba(107, 203, 119, 0.25); color: #2f7d3b; }
+  }
+
+  &.locked {
+    cursor: default;
+    opacity: 0.75;
+    .tag.assigned { background: rgba(78, 205, 196, 0.2); color: #1f7a72; }
+  }
+}
+
+.save-btn { width: 100%; }

@@ -1,0 +1,186 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+.proud-moment {
+  max-width: 44rem;
+  margin: 0 auto;
+}
+
+.header-card {
+  @include m.bouncy-card;
+  background: v.$color-white;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.75rem 2rem;
+  margin-bottom: 1.5rem;
+
+  &:hover { transform: none; box-shadow: 0 6px 0 rgba(0, 0, 0, 0.08); }
+
+  .mascot {
+    width: 6rem;
+    height: 6rem;
+    object-fit: contain;
+    flex-shrink: 0;
+  }
+
+  h1 {
+    @include m.playful-heading;
+    font-size: 1.8rem;
+    color: v.$color-navy-text;
+    margin-bottom: 0.4rem;
+  }
+
+  p {
+    margin: 0;
+    color: rgba(43, 45, 66, 0.6);
+    font-weight: 600;
+    line-height: 1.5;
+  }
+}
+
+.prompts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+
+  @media (max-width: 560px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.prompt-card {
+  @include m.tappable;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: v.$color-white;
+  border: 2px solid rgba(43, 45, 66, 0.1);
+  border-radius: v.$border-radius;
+  padding: 1.1rem 1.25rem;
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: v.$color-navy-text;
+  text-align: left;
+
+  &.active { border-color: v.$color-coral; background: rgba(255, 111, 89, 0.06); }
+  .prompt-icon { font-size: 1.3rem; }
+}
+
+.text-card {
+  @include m.bouncy-card;
+  background: v.$color-white;
+  padding: 1.5rem;
+  margin-bottom: 1.25rem;
+  text-align: left;
+
+  &:hover { transform: none; box-shadow: 0 6px 0 rgba(0, 0, 0, 0.08); }
+
+  .text-card-label {
+    display: block;
+    font-weight: 700;
+    color: v.$color-navy-text;
+    margin-bottom: 0.75rem;
+  }
+
+  textarea {
+    width: 100%;
+    border: 2px solid rgba(43, 45, 66, 0.12);
+    border-radius: v.$border-radius-sm;
+    padding: 0.75rem 1rem;
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 1.02rem;
+    color: v.$color-navy-text;
+    resize: vertical;
+
+    &:focus { outline: none; border-color: v.$color-coral; }
+  }
+}
+
+.draw-card {
+  @include m.bouncy-card;
+  background: v.$color-white;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+
+  &:hover { transform: none; box-shadow: 0 6px 0 rgba(0, 0, 0, 0.08); }
+}
+
+.draw-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.draw-title {
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: v.$color-navy-text;
+}
+
+.swatches {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.swatch {
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+
+  &.selected { border-color: v.$color-navy-text; }
+}
+
+.draw-canvas {
+  display: block;
+  width: 100%;
+  aspect-ratio: 900 / 420;
+  border: 2px solid rgba(43, 45, 66, 0.15);
+  border-radius: v.$border-radius-sm;
+  background: v.$color-white;
+  touch-action: none;
+  cursor: crosshair;
+}
+
+.draw-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 0.9rem;
+}
+
+.brush-size {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-weight: 700;
+  color: rgba(43, 45, 66, 0.7);
+  font-size: 0.95rem;
+}
+
+.clear-btn {
+  padding: 0.5rem 1.1rem;
+  font-size: 0.95rem;
+}
+
+.submit-btn {
+  display: block;
+  width: 100%;
+  margin-bottom: 0.75rem;
+}
+
+.tip {
+  text-align: center;
+  color: rgba(43, 45, 66, 0.5);
+  font-weight: 600;
+  font-size: 0.92rem;
+}

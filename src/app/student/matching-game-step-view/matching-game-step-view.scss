@@ -1,0 +1,203 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+.matching-game {
+  max-width: 48rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+h1 {
+  @include m.playful-heading;
+  font-size: 2.4rem;
+  margin-bottom: 0.5rem;
+
+  .title-plain { color: v.$color-navy-text; }
+  .title-accent { color: v.$color-sky; }
+}
+
+.instruction {
+  color: rgba(43, 45, 66, 0.65);
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.how-to-play {
+  background: linear-gradient(155deg, #fff2c2 0%, #ffe29a 100%);
+  border-radius: v.$border-radius-lg;
+  padding: 1.75rem 1.5rem;
+  margin-bottom: 1.75rem;
+
+  h2 {
+    @include m.playful-heading;
+    font-size: 1.4rem;
+    color: v.$color-navy-text;
+    margin-bottom: 0.85rem;
+  }
+
+  p {
+    margin: 0 0 0.5rem;
+    color: rgba(43, 45, 66, 0.75);
+    font-weight: 600;
+
+    &:last-child { margin-bottom: 0; }
+
+    strong { color: v.$color-navy-text; }
+  }
+}
+
+.score-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5rem;
+  background: v.$color-white;
+  border-radius: v.$border-radius-lg;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.06);
+  padding: 1rem 1.5rem;
+  margin-bottom: 1.75rem;
+}
+
+.score-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .stat-value {
+    font-weight: 800;
+    font-size: 1.5rem;
+  }
+
+  .score-value { color: v.$color-sky; }
+  .matches-value { color: v.$color-leaf; }
+
+  .stat-label {
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: rgba(43, 45, 66, 0.55);
+  }
+}
+
+.reset-btn {
+  @include m.tappable;
+  margin-left: auto;
+  background: v.$color-cream-bg;
+  color: v.$color-navy-text;
+  border: none;
+  font-weight: 800;
+  font-size: 0.95rem;
+  padding: 0.65rem 1.25rem;
+  border-radius: v.$border-radius-pill;
+
+  &:hover { background: #ffd28a; }
+}
+
+.match-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.column-title {
+  @include m.playful-heading;
+  font-size: 1.15rem;
+  margin-bottom: 0.75rem;
+}
+
+.pictures-title { color: v.$color-sky; }
+.names-title { color: v.$color-leaf; }
+
+.match-card {
+  @include m.tappable;
+  display: block;
+  width: 100%;
+  background: v.$color-white;
+  border: 3px solid transparent;
+  border-radius: v.$border-radius;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.08);
+  padding: 0.9rem 0.75rem;
+  margin-bottom: 0.75rem;
+  font-family: v.$font-family-sans-serif;
+  font-weight: 700;
+  color: v.$color-navy-text;
+
+  &:hover:not(:disabled) { transform: translateY(-2px); }
+
+  &.selected {
+    border-color: v.$color-sky;
+    box-shadow: 0 4px 0 rgba(78, 205, 196, 0.4);
+  }
+
+  &.wrong {
+    border-color: v.$color-bubble-pink;
+    background: rgba(255, 143, 163, 0.15);
+    animation: shake 0.4s ease;
+  }
+
+  &.matched {
+    border-color: v.$color-leaf;
+    background: rgba(107, 203, 119, 0.15);
+    opacity: 0.75;
+    box-shadow: none;
+  }
+}
+
+.pair-image-ring {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 4.5rem;
+  height: 4.5rem;
+  margin: 0 auto;
+  border-radius: 50%;
+  background: v.$color-cream-bg;
+  border: 3px solid v.$color-sky;
+  overflow: hidden;
+}
+
+.picture-card .pair-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+}
+
+.picture-card.selected .pair-image-ring { border-color: v.$color-grape; }
+.picture-card.matched .pair-image-ring { border-color: v.$color-leaf; }
+.picture-card.wrong .pair-image-ring { border-color: v.$color-bubble-pink; }
+
+.finish-panel {
+  @include m.bouncy-card;
+  background: v.$color-white;
+  padding: 2rem 1.5rem;
+
+  &:hover { transform: none; box-shadow: 0 6px 0 rgba(0, 0, 0, 0.08); }
+}
+
+.finish-headline {
+  @include m.playful-heading;
+  font-size: 1.6rem;
+  color: v.$color-navy-text;
+  margin-bottom: 0.4rem;
+}
+
+.finish-subline {
+  color: rgba(43, 45, 66, 0.65);
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.finish-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}

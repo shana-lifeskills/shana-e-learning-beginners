@@ -1,0 +1,77 @@
+<div class="plan-relay">
+  <span class="pr-pill">✨ {{ step().pillLabel }}</span>
+  <h1>{{ step().title }}</h1>
+  <p class="pr-subtitle">{{ step().subtitle }}</p>
+
+  <span class="pr-section-label">{{ step().stepsHeading }}</span>
+  <div
+    class="pr-pool"
+    [class.drag-over]="dragOverPool()"
+    (dragover)="onDragOverPool($event)"
+    (dragleave)="onDragLeavePool()"
+    (drop)="onDropOnPool($event)"
+  >
+    @for (option of pool(); track option.id) {
+      <button
+        type="button"
+        class="pr-card"
+        draggable="true"
+        (click)="placeInNextSlot(option.id)"
+        (dragstart)="onDragStartFromPool($event, option.id)"
+        (dragend)="onDragEnd()"
+      >
+        <span class="pr-card-handle">⋮⋮</span>
+        <span class="pr-card-label">{{ option.label }}</span>
+      </button>
+    }
+  </div>
+
+  <span class="pr-section-label">{{ step().orderHeading }}</span>
+  <div class="pr-slots">
+    @for (id of slots(); track $index; let i = $index) {
+      <button
+        type="button"
+        class="pr-slot"
+        [class.filled]="id !== null"
+        [class.drag-over]="dragOverIndex() === i"
+        [class.mismatch]="checked() === 'incorrect' && id !== null"
+        [attr.draggable]="id !== null ? true : null"
+        (click)="id !== null ? removeFromSlot(i) : null"
+        (dragstart)="onDragStartFromSlot($event, i)"
+        (dragend)="onDragEnd()"
+        (dragover)="onDragOverSlot($event, i)"
+        (dragleave)="onDragLeaveSlot(i)"
+        (drop)="onDropOnSlot($event, i)"
+      >
+        <span class="pr-slot-number">{{ i + 1 }}</span>
+        @if (id !== null) {
+          <span class="pr-slot-label">{{ optionAt(id)?.label }}</span>
+        } @else {
+          <span class="pr-slot-placeholder">Drop a step here</span>
+        }
+      </button>
+    }
+  </div>
+
+  @if (checked() === 'correct') {
+    <p class="pr-message pr-message--success">{{ step().successMessage }}</p>
+  } @else if (checked() === 'incorrect') {
+    <p class="pr-message pr-message--error">{{ step().retryMessage }}</p>
+  }
+
+  <p class="pr-parent-note">👪 {{ step().parentNote }}</p>
+
+  <div class="pr-actions">
+    <button type="button" class="btn pr-check-btn" [disabled]="!allFilled()" (click)="checkAnswer()">✅ {{ step().checkLabel }}</button>
+    <button type="button" class="btn pr-retry-btn" (click)="reset()">🔄 {{ step().tryAgainLabel }}</button>
+  </div>
+
+  @if (checked() === 'correct') {
+    <div class="pr-actions pr-actions--continue">
+      <button type="button" class="btn pr-download-btn" [disabled]="downloading()" (click)="downloadPlan()">
+        @if (downloading()) { Preparing… } @else { ⬇ {{ step().downloadLabel }} }
+      </button>
+      <button type="button" class="btn pr-next-btn" (click)="next()">{{ step().continueLabel }} →</button>
+    </div>
+  }
+</div>

@@ -1,0 +1,22 @@
+<div class="warmup-game">
+  <div class="game-card">
+    <span class="corner-icon corner-left">🎉</span>
+    <span class="corner-icon corner-right">{{ step().titleIcon }}</span>
+
+    <span class="badge">{{ step().badgeIcon }} {{ step().badge }}</span>
+
+    <h1>{{ step().title }}<span class="title-icon">{{ step().titleIcon }}</span></h1>
+    <p class="description">{{ step().description }}</p>
+
+    <div class="game-image-wrap">
+      <img [src]="step().image" [alt]="step().imageAlt" />
+    </div>
+
+    <div class="continue-wrap">
+      <button type="button" class="btn continue-btn" (click)="continued.emit()">
+        {{ step().continueLabel }}
+      </button>
+      <span class="star-badge">⭐</span>
+    </div>
+  </div>
+</div>

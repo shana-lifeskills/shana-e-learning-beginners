@@ -1,0 +1,42 @@
+<div class="confidence-plan-card">
+  <span class="cp-icon">{{ step().icon }}</span>
+  <h1>{{ step().title }}</h1>
+  <p class="cp-subtitle">{{ step().subtitle }}</p>
+
+  @if (!hasSubmitted()) {
+    @for (field of step().fields; track field.id) {
+      <div class="cp-field">
+        <label [for]="field.id">{{ field.label }}</label>
+        <input
+          [id]="field.id"
+          type="text"
+          [value]="draft()[field.id] ?? ''"
+          (input)="updateField(field.id, $any($event.target).value)"
+          [placeholder]="field.placeholder"
+        />
+      </div>
+    }
+
+    <button type="button" class="btn cp-submit-btn" [disabled]="!canSubmit()" (click)="submit()">
+      {{ step().submitLabel }}
+    </button>
+  } @else {
+    <div class="cp-preview">
+      <span class="cp-preview-heading">{{ step().previewHeading }}</span>
+      @for (field of step().fields; track field.id) {
+        <div class="cp-preview-row">
+          <span class="cp-preview-label">{{ field.label }}</span>
+          <span class="cp-preview-value">{{ draft()[field.id] }}</span>
+        </div>
+      }
+    </div>
+
+    <button type="button" class="btn cp-download-btn" [disabled]="downloading()" (click)="downloadPlan()">
+      @if (downloading()) { Preparing… } @else { ⬇ {{ step().downloadLabel }} }
+    </button>
+
+    <button type="button" class="btn cp-continue-btn" (click)="continued.emit()">
+      {{ step().continueLabel }} 🏆
+    </button>
+  }
+</div>

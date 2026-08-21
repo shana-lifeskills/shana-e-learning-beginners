@@ -1,0 +1,41 @@
+<div class="victory-dance">
+  <span class="vd-pill">{{ step().pillLabel }}</span>
+  <h1>{{ step().title }}</h1>
+  <span class="vd-title-emoji">{{ step().titleEmoji }}</span>
+
+  <div class="vd-image-wrap">
+    <img [src]="step().image" [alt]="step().imageAlt" />
+  </div>
+
+  <div class="vd-card">
+    <h2>{{ step().howItWorksHeading }}</h2>
+    <ol class="vd-steps">
+      @for (item of step().howItWorksSteps; track item; let i = $index) {
+        <li><span class="vd-step-number">{{ i + 1 }}</span>{{ item }}</li>
+      }
+    </ol>
+    <p class="vd-tagline">{{ step().tagline }}</p>
+  </div>
+
+  <div class="vd-parent-note">
+    <h2>{{ step().parentNoteHeading }}</h2>
+    <p>{{ step().parentNoteDescription }}</p>
+    <p>{{ step().parentNoteCameraLine }}</p>
+  </div>
+
+  <div class="vd-card vd-share-card">
+    <h2>{{ step().shareHeading }}</h2>
+    <textarea
+      rows="4"
+      [placeholder]="step().placeholder"
+      [attr.maxlength]="step().maxLength"
+      [disabled]="locked()"
+      [value]="text()"
+      (input)="updateText($any($event.target).value)"
+    ></textarea>
+    <p class="vd-char-count">{{ text().length }}/{{ step().maxLength }} characters</p>
+    <button type="button" class="btn vd-submit-btn" [disabled]="!canSubmit() || locked()" (click)="submit()">
+      {{ step().submitLabel }}
+    </button>
+  </div>
+</div>

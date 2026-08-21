@@ -1,0 +1,33 @@
+<div class="module-list-page">
+  <div class="page-head">
+    <div>
+      <a routerLink="/trainer" class="back-link">← Dashboard</a>
+      <h1>My Modules</h1>
+    </div>
+    <a routerLink="/trainer/modules/new" class="btn btn-primary btn-lg-tappable">+ Create Module</a>
+  </div>
+
+  @if (loading()) {
+    <p class="loading-copy">Loading modules…</p>
+  } @else if (modules().length === 0) {
+    <div class="empty-state">
+      <span class="art">📚</span>
+      <p>You haven't created any modules yet.</p>
+      <a routerLink="/trainer/modules/new" class="btn btn-primary btn-lg-tappable">Create Your First Module</a>
+    </div>
+  } @else {
+    <div class="module-grid">
+      @for (module of modules(); track module.id) {
+        <div class="module-card" [style.--accent]="module.themeColor">
+          <span class="icon">{{ module.icon }}</span>
+          <div class="info">
+            <h3>{{ module.title }}</h3>
+            <p>{{ module.description }}</p>
+            <small>{{ lessonCount(module) }} lessons • {{ exerciseCount(module) }} questions</small>
+          </div>
+          <a [routerLink]="['/trainer/modules', module.id, 'assign']" class="btn btn-outline-primary">Assign</a>
+        </div>
+      }
+    </div>
+  }
+</div>

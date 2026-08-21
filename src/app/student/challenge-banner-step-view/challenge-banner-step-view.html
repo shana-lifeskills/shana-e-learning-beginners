@@ -1,0 +1,18 @@
+<div class="challenge-banner">
+  <h1>⭐ {{ step().heading }} ⭐</h1>
+
+  <div class="banner">
+    <h2>{{ step().title }}</h2>
+    <p class="description">
+      {{ step().descriptionBefore }}
+      @if (step().descriptionHighlight) { <strong>{{ step().descriptionHighlight }}</strong> }
+      @if (step().descriptionAfter) { {{ step().descriptionAfter }} }
+    </p>
+  </div>
+
+  <button type="button" class="btn continue-btn" (click)="continued.emit()">
+    {{ step().continueLabel }}
+  </button>
+
+  <p class="tip">{{ step().tip }}</p>
+</div>

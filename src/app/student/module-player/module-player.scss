@@ -1,0 +1,1995 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+.module-player-page {
+  max-width: 96rem;
+  margin: 0 auto;
+  padding: 2rem 2.5rem 4rem;
+}
+
+.map-view {
+  max-width: 88rem;
+  margin: 0 auto;
+}
+
+.welcome-shell {
+  width: 100%;
+}
+
+.breadcrumbs {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.crumb {
+  background: none;
+  border: none;
+  padding: 0.2rem 0.1rem;
+  color: rgba(43, 45, 66, 0.55);
+  cursor: pointer;
+
+  &:hover { color: v.$color-coral; text-decoration: underline; }
+}
+
+.crumb-sep {
+  color: rgba(43, 45, 66, 0.3);
+}
+
+.crumb.current {
+  color: v.$color-navy-text;
+  cursor: default;
+}
+
+.map-welcome {
+  text-align: center;
+  margin-bottom: 1.75rem;
+
+  .wave {
+    font-size: 2.25rem;
+    display: inline-block;
+    animation: wiggle 2.2s ease-in-out infinite;
+  }
+
+  h1 {
+    @include m.playful-heading;
+    font-size: 1.6rem;
+    color: v.$color-navy-text;
+    margin: 0.35rem 0 0.35rem;
+  }
+
+  p {
+    color: rgba(43, 45, 66, 0.65);
+    font-weight: 600;
+    margin: 0;
+
+    strong { color: v.$color-navy-text; }
+  }
+}
+
+.loading-copy {
+  text-align: center;
+  font-weight: 600;
+  color: rgba(43, 45, 66, 0.6);
+  margin-top: 3rem;
+}
+
+.back-link {
+  background: none;
+  border: none;
+  font-weight: 800;
+  color: v.$color-navy-text;
+  padding: 0;
+  margin-bottom: 1rem;
+  cursor: pointer;
+}
+
+.module-banner {
+  @include m.bouncy-card;
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+  background: v.$color-white;
+  border-left: 8px solid var(--accent, #{v.$color-coral});
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.5rem;
+
+  &:hover { transform: none; box-shadow: 0 6px 0 rgba(0, 0, 0, 0.08); }
+
+  .icon {
+    font-size: 2.25rem;
+    width: 4rem;
+    height: 4rem;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--accent, #{v.$color-coral});
+  }
+
+  h2 {
+    @include m.playful-heading;
+    font-size: 1.3rem;
+    color: v.$color-navy-text;
+    margin-bottom: 0.15rem;
+  }
+
+  p {
+    margin: 0;
+    color: rgba(43, 45, 66, 0.65);
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+}
+
+.lesson-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.85rem;
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// --- Lesson welcome screen (richer "hero card" layout) ---------------------
+
+.recap-welcome {
+  max-width: 56rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.recap-hero {
+  background: linear-gradient(180deg, #dbeafe 0%, #eef2ff 100%);
+  border-radius: v.$border-radius-xl;
+  padding: 3rem 2.5rem 2.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.05);
+}
+
+.recap-week-pill {
+  display: inline-block;
+  background: rgba(74, 95, 209, 0.12);
+  color: #4a5fd1;
+  font-weight: 800;
+  font-size: 0.9rem;
+  padding: 0.4rem 1.1rem;
+  border-radius: v.$border-radius-pill;
+  margin-bottom: 1.25rem;
+}
+
+.recap-welcome h1 {
+  @include m.playful-heading;
+  font-size: 2.75rem;
+  color: #4a5fd1;
+  margin-bottom: 0.75rem;
+}
+
+.recap-subtitle {
+  color: rgba(43, 45, 66, 0.6);
+  font-weight: 600;
+  margin-bottom: 2rem;
+}
+
+.recap-hero-image-wrap {
+  margin-bottom: 0;
+
+  img {
+    max-width: 26rem;
+    width: 100%;
+    height: auto;
+  }
+}
+
+.recap-card {
+  @include m.bouncy-card;
+  background: v.$color-white;
+  text-align: left;
+  padding: 1.75rem 2rem;
+  margin-bottom: 1.5rem;
+
+  &:hover { transform: none; box-shadow: 0 6px 0 rgba(0, 0, 0, 0.08); }
+}
+
+.recap-card-head {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.75rem;
+
+  .recap-card-icon { font-size: 1.3rem; }
+
+  h2 {
+    @include m.playful-heading;
+    font-size: 1.25rem;
+    color: #4a5fd1;
+    margin: 0;
+  }
+}
+
+.recap-card > p {
+  color: rgba(43, 45, 66, 0.7);
+  font-weight: 500;
+  margin: 0;
+}
+
+.recap-meta {
+  display: block;
+  color: rgba(43, 45, 66, 0.5);
+  font-weight: 700;
+  font-size: 0.9rem;
+  margin-bottom: 0.75rem;
+}
+
+.recap-card .recap-meta + p {
+  margin-bottom: 1.25rem;
+}
+
+.recap-question-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.recap-question-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  background: v.$color-cream-bg;
+  border-radius: v.$border-radius-sm;
+  padding: 1rem 1.25rem;
+
+  .recap-arrow {
+    color: #4a5fd1;
+    font-weight: 800;
+    margin-top: 0.15rem;
+  }
+
+  strong { display: block; color: v.$color-navy-text; margin-bottom: 0.25rem; }
+
+  p { margin: 0; color: rgba(43, 45, 66, 0.65); font-weight: 500; }
+}
+
+.recap-cta {
+  margin-top: 2rem;
+}
+
+.recap-start-btn {
+  @include m.tappable;
+  background: #4a5fd1;
+  color: v.$color-white;
+  border: none;
+  font-weight: 800;
+  font-size: 1.05rem;
+  padding: 0.9rem 2.25rem;
+  border-radius: v.$border-radius-pill;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.1);
+
+  &:hover { opacity: 0.92; }
+}
+
+.hero-card {
+  display: flex;
+  align-items: stretch;
+  gap: 2.5rem;
+  background: linear-gradient(155deg, #fdecae 0%, #fce29a 100%);
+  border-radius: v.$border-radius-xl;
+  padding: 3rem;
+  margin-bottom: 1.5rem;
+
+  @media (max-width: 780px) {
+    flex-direction: column;
+    padding: 2rem;
+    gap: 1.75rem;
+  }
+}
+
+.hero-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  gap: 0.35rem;
+  background: rgba(255, 255, 255, 0.7);
+  color: v.$color-navy-text;
+  font-weight: 800;
+  font-size: 1rem;
+  padding: 0.4rem 1rem;
+  border-radius: v.$border-radius-pill;
+  margin-bottom: 1.1rem;
+}
+
+.hero-content h1 {
+  @include m.playful-heading;
+  font-size: 2.5rem;
+  line-height: 1.15;
+  color: v.$color-navy-text;
+  margin-bottom: 1.1rem;
+}
+
+.hero-intro {
+  color: rgba(43, 45, 66, 0.72);
+  font-weight: 600;
+  font-size: 1.15rem;
+  line-height: 1.65;
+  max-width: 34rem;
+  margin-bottom: 2rem;
+
+  strong { color: v.$color-navy-text; }
+}
+
+.hero-start-btn {
+  @include m.tappable;
+  align-self: flex-start;
+  background: rgba(78, 205, 196, 0.28);
+  color: v.$color-navy-text;
+  border: none;
+  font-weight: 800;
+  font-size: 1.1rem;
+  padding: 1rem 2rem;
+  border-radius: v.$border-radius-pill;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.08);
+
+  &:hover { background: rgba(78, 205, 196, 0.4); }
+}
+
+.hero-image-wrap {
+  flex: 1;
+  border-radius: v.$border-radius-lg;
+  overflow: hidden;
+  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.06);
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  @media (max-width: 780px) {
+    min-height: 14rem;
+  }
+}
+
+.mission-section {
+  text-align: center;
+  margin-bottom: 1.5rem;
+
+  h2 {
+    @include m.playful-heading;
+    font-size: 1.8rem;
+    color: v.$color-navy-text;
+    margin-bottom: 0.5rem;
+  }
+}
+
+.mission-subtitle {
+  color: rgba(43, 45, 66, 0.6);
+  font-weight: 600;
+  margin-bottom: 1.75rem;
+}
+
+.mission-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+
+  @media (max-width: 680px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.mission-card {
+  @include m.bouncy-card;
+  background: v.$color-white;
+  text-align: left;
+  padding: 1.75rem;
+
+  &:hover { transform: none; box-shadow: 0 6px 0 rgba(0, 0, 0, 0.08); }
+
+  .mission-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 50%;
+    background: v.$color-cream-bg;
+    font-size: 1.2rem;
+    margin-bottom: 0.85rem;
+  }
+
+  strong { display: block; color: v.$color-navy-text; font-size: 1.1rem; margin-bottom: 0.5rem; }
+  p { margin: 0; color: rgba(43, 45, 66, 0.6); font-weight: 600; line-height: 1.55; }
+}
+
+.trainer-message-panel {
+  text-align: center;
+  background: linear-gradient(120deg, #eef8f4 0%, #fbf8f0 100%);
+  border-radius: v.$border-radius-xl;
+  padding: 3rem 2rem;
+
+  .tm-icon {
+    font-size: 2.5rem;
+    display: block;
+    margin-bottom: 0.75rem;
+  }
+
+  h2 {
+    @include m.playful-heading;
+    font-size: 1.6rem;
+    color: v.$color-navy-text;
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    color: rgba(43, 45, 66, 0.65);
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 1.75rem;
+  }
+}
+
+.tm-btn {
+  @include m.tappable;
+  background: v.$color-sunshine;
+  color: v.$color-navy-text;
+  border: none;
+  font-weight: 800;
+  font-size: 1.1rem;
+  padding: 1rem 2.25rem;
+  border-radius: v.$border-radius-pill;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.12);
+
+  &:hover { background: darken(#ffc93c, 6%); }
+}
+
+// --- Lesson welcome screen ("Learning Journey" layout, weeks without a custom welcomeCard) ---
+
+.journey-card {
+  background: linear-gradient(155deg, #eef6fb 0%, #fdeee7 100%);
+  border: 1px solid rgba(78, 205, 196, 0.25);
+  border-radius: v.$border-radius-xl;
+  padding: 2.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.journey-top {
+  display: flex;
+  align-items: center;
+  gap: 2.25rem;
+  margin-bottom: 2rem;
+
+  @media (max-width: 720px) {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+.journey-avatar {
+  flex-shrink: 0;
+  width: 9rem;
+  height: 9rem;
+  border-radius: 50%;
+  background: v.$color-white;
+  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.journey-content {
+  flex: 1;
+
+  h1 {
+    @include m.playful-heading;
+    font-size: 2.1rem;
+    line-height: 1.2;
+    color: v.$color-navy-text;
+    margin-bottom: 0.75rem;
+
+    .accent { color: v.$color-sky; }
+  }
+}
+
+.journey-greeting {
+  color: rgba(43, 45, 66, 0.72);
+  font-weight: 600;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.journey-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+
+  @media (max-width: 720px) {
+    justify-content: center;
+  }
+}
+
+.journey-btn-primary {
+  @include m.tappable;
+  background: v.$color-sky;
+  color: v.$color-white;
+  border: none;
+  font-weight: 800;
+  font-size: 1.05rem;
+  padding: 0.9rem 1.75rem;
+  border-radius: v.$border-radius-pill;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.1);
+
+  &:hover { background: #3fb5ac; }
+}
+
+.journey-tip {
+  background: rgba(107, 203, 119, 0.15);
+  border-left: 5px solid v.$color-leaf;
+  border-radius: v.$border-radius-sm;
+  padding: 1rem 1.25rem;
+  color: rgba(43, 45, 66, 0.75);
+  font-weight: 600;
+  font-size: 1rem;
+
+  strong { color: v.$color-navy-text; }
+}
+
+.journey-info-card {
+  @include m.bouncy-card;
+  background: v.$color-white;
+  padding: 2.5rem;
+
+  &:hover { transform: none; box-shadow: 0 6px 0 rgba(0, 0, 0, 0.08); }
+}
+
+.journey-info-head {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+
+  h2 {
+    @include m.playful-heading;
+    font-size: 1.75rem;
+    color: v.$color-navy-text;
+    margin: 0;
+  }
+}
+
+.journey-week-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  background: v.$color-sky;
+  color: v.$color-white;
+  font-weight: 800;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.stage-pill {
+  display: inline-block;
+  background: rgba(107, 203, 119, 0.18);
+  color: #3a8a45;
+  font-weight: 800;
+  font-size: 0.85rem;
+  padding: 0.3rem 0.8rem;
+  border-radius: v.$border-radius-pill;
+}
+
+.main-focus {
+  background: v.$color-cream-bg;
+  border-left: 5px solid v.$color-leaf;
+  border-radius: v.$border-radius-sm;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.75rem;
+
+  strong { display: block; color: v.$color-navy-text; margin-bottom: 0.5rem; font-size: 1.2rem; }
+  p { margin: 0; color: rgba(43, 45, 66, 0.7); font-size: 1.12rem; line-height: 1.55; }
+}
+
+.discover {
+  h3 {
+    @include m.playful-heading;
+    font-size: 1.3rem;
+    color: v.$color-navy-text;
+    margin-bottom: 0.85rem;
+  }
+
+  ul {
+    margin: 0;
+    padding-left: 1.3rem;
+    color: rgba(43, 45, 66, 0.7);
+    font-weight: 600;
+    font-size: 1.15rem;
+
+    li { margin-bottom: 0.55rem; }
+  }
+}
+
+// --- Lesson welcome screen (classic layout, no welcomeCard/journeyIntro/welcomeBackIntro) ---
+
+.classic-header {
+  text-align: center;
+  margin-bottom: 2rem;
+
+  h1 {
+    @include m.playful-heading;
+    font-size: 2.3rem;
+    color: v.$color-navy-text;
+    margin-bottom: 0.5rem;
+  }
+}
+
+.classic-subtitle {
+  color: rgba(43, 45, 66, 0.6);
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.welcome-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: stretch;
+  margin-bottom: 1.5rem;
+
+  @media (max-width: 720px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.welcome-card {
+  @include m.bouncy-card;
+  background: v.$color-white;
+  padding: 3rem;
+
+  &:hover { transform: none; box-shadow: 0 6px 0 rgba(0, 0, 0, 0.08); }
+
+  h2 {
+    @include m.playful-heading;
+    font-size: 2.1rem;
+    line-height: 1.15;
+    color: v.$color-navy-text;
+    margin-bottom: 0.5rem;
+  }
+}
+
+.week-pill {
+  display: inline-block;
+  background: rgba(78, 205, 196, 0.18);
+  color: v.$color-sky;
+  font-weight: 800;
+  font-size: 1rem;
+  padding: 0.35rem 0.9rem;
+  border-radius: v.$border-radius-pill;
+  margin-bottom: 1.1rem;
+}
+
+.tagline {
+  font-style: italic;
+  font-size: 1.25rem;
+  color: rgba(43, 45, 66, 0.6);
+  margin-bottom: 1.5rem;
+}
+
+.start-btn {
+  background: linear-gradient(120deg, #{v.$color-sky}, #{v.$color-coral});
+  color: v.$color-white;
+  font-size: 1.2rem;
+  padding-top: 0.9rem;
+  padding-bottom: 0.9rem;
+  border: none;
+
+  &:hover { opacity: 0.92; }
+}
+
+.welcome-art {
+  border-radius: v.$border-radius-lg;
+  overflow: hidden;
+  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.06);
+
+  .teacher-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  @media (max-width: 720px) {
+    min-height: 14rem;
+  }
+}
+
+.classic-footer {
+  text-align: center;
+  color: rgba(43, 45, 66, 0.65);
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.classic-footer-icons {
+  text-align: center;
+  font-size: 1.3rem;
+  letter-spacing: 0.5rem;
+}
+
+// --- Lesson welcome screen ("Welcome Back" banner layout — `welcomeBackIntro`) ---
+
+.backbanner-hero {
+  background: linear-gradient(120deg, #ff9f43, #ffc93c);
+  border-radius: v.$border-radius-xl v.$border-radius-xl 0 0;
+  text-align: center;
+  padding: 3rem 2rem 5rem;
+
+  h1 {
+    @include m.playful-heading;
+    font-size: 2.3rem;
+    color: v.$color-white;
+    margin-bottom: 0.75rem;
+  }
+}
+
+.backbanner-intro {
+  color: rgba(255, 255, 255, 0.92);
+  font-weight: 600;
+  font-size: 1.15rem;
+  max-width: 34rem;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.backbanner-card {
+  @include m.bouncy-card;
+  background: v.$color-white;
+  max-width: 42rem;
+  margin: -3rem auto 0;
+  padding: 2.5rem;
+  text-align: center;
+  position: relative;
+
+  &:hover { transform: none; box-shadow: 0 6px 0 rgba(0, 0, 0, 0.08); }
+}
+
+.backbanner-week-pill {
+  display: block;
+  background: linear-gradient(120deg, #ffb56b, #ffc93c);
+  border-radius: v.$border-radius;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.75rem;
+
+  strong {
+    @include m.playful-heading;
+    display: block;
+    color: v.$color-white;
+    font-size: 1.3rem;
+    letter-spacing: 0.03em;
+    margin-bottom: 0.35rem;
+  }
+
+  span {
+    display: block;
+    font-style: italic;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.92);
+    font-size: 1.1rem;
+  }
+}
+
+.backbanner-focus {
+  text-align: left;
+  margin-bottom: 2rem;
+
+  strong { color: v.$color-coral; font-size: 1.1rem; }
+  span { color: v.$color-navy-text; font-weight: 600; }
+}
+
+.backbanner-btn {
+  background: linear-gradient(120deg, #{v.$color-coral}, #ffb56b);
+  color: v.$color-white;
+  border: none;
+  font-weight: 800;
+  font-size: 1.1rem;
+  padding: 0.9rem 2.25rem;
+
+  &:hover { opacity: 0.92; }
+}
+
+// --- Lesson welcome screen ("mastery hero" layout — `heroSubtitle`) --------
+
+.mastery-hero {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+  background: v.$color-white;
+  border-radius: v.$border-radius-xl;
+  padding: 2.5rem;
+  margin-bottom: 1.5rem;
+
+  @media (max-width: 780px) {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+.mastery-content {
+  flex: 1;
+}
+
+.mastery-pill {
+  display: inline-block;
+  background: rgba(166, 109, 212, 0.15);
+  color: v.$color-coral;
+  font-weight: 800;
+  font-size: 0.95rem;
+  padding: 0.4rem 1.1rem;
+  border-radius: v.$border-radius-pill;
+  margin-bottom: 1.1rem;
+}
+
+.mastery-content h1 {
+  @include m.playful-heading;
+  font-size: 2.3rem;
+  line-height: 1.2;
+  color: v.$color-navy-text;
+  margin-bottom: 0.85rem;
+
+  .accent { color: #e0559b; }
+}
+
+.mastery-subtitle {
+  color: rgba(43, 45, 66, 0.65);
+  font-weight: 600;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.mastery-focus {
+  background: v.$color-cream-bg;
+  border-radius: v.$border-radius-sm;
+  padding: 1.1rem 1.4rem;
+  margin-bottom: 1.75rem;
+
+  strong { display: block; color: v.$color-navy-text; margin-bottom: 0.4rem; }
+  p { margin: 0; color: rgba(43, 45, 66, 0.7); font-weight: 600; }
+}
+
+.mastery-btn {
+  @include m.tappable;
+  background: v.$color-coral;
+  color: v.$color-white;
+  border: none;
+  font-weight: 800;
+  font-size: 1.05rem;
+  padding: 0.85rem 1.75rem;
+  border-radius: v.$border-radius-sm;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.1);
+
+  &:hover { opacity: 0.92; }
+}
+
+.mastery-image-wrap {
+  flex-shrink: 0;
+  width: 13rem;
+  height: 13rem;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.06);
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+// --- Story / video moment ---------------------------------------------------
+// No card/background of its own — it sits directly on the page, like every
+// other step in the lesson.
+
+.story-shell {
+  max-width: 76rem;
+  margin: 0 auto;
+  text-align: center;
+
+  .back-link {
+    display: block;
+    text-align: left;
+    margin-bottom: 1.5rem;
+  }
+}
+
+.story-badge {
+  display: inline-block;
+  background: v.$color-white;
+  color: v.$color-navy-text;
+  font-weight: 800;
+  font-size: 1.05rem;
+  padding: 0.5rem 1.25rem;
+  border-radius: v.$border-radius-pill;
+  box-shadow: 0 3px 0 rgba(0, 0, 0, 0.1);
+  margin-bottom: 1.5rem;
+}
+
+.story-shell h1 {
+  @include m.playful-heading;
+  font-size: 2.6rem;
+  color: v.$color-navy-text;
+  margin-bottom: 1.1rem;
+
+  .story-year {
+    color: v.$color-coral;
+    margin-left: 0.4rem;
+  }
+}
+
+.story-description {
+  max-width: 46rem;
+  margin: 0 auto 1.1rem;
+  color: rgba(43, 45, 66, 0.72);
+  font-weight: 600;
+  font-size: 1.18rem;
+  line-height: 1.65;
+}
+
+.story-instruction {
+  font-weight: 800;
+  font-size: 1.15rem;
+  color: v.$color-navy-text;
+  margin-bottom: 2rem;
+}
+
+.story-frame {
+  background: v.$color-white;
+  border-radius: v.$border-radius-lg;
+  padding: 1rem;
+  max-width: 44rem;
+  margin: 0 auto 2rem;
+  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.1);
+}
+
+.lesson-video {
+  width: 100%;
+  border-radius: v.$border-radius;
+  background: #000;
+  display: block;
+}
+
+.story-placeholder {
+  position: relative;
+  border-radius: v.$border-radius;
+  overflow: hidden;
+  line-height: 0;
+
+  img {
+    width: 100%;
+    max-height: 22rem;
+    object-fit: cover;
+    display: block;
+  }
+
+  .play-badge {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 4rem;
+    height: 4rem;
+    background: rgba(43, 45, 66, 0.55);
+    color: v.$color-white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+  }
+}
+
+.frame-caption {
+  margin: 0.75rem 0 0;
+  font-weight: 700;
+  color: rgba(43, 45, 66, 0.55);
+  font-size: 0.85rem;
+}
+
+.discussion-starters {
+  background: v.$color-white;
+  border-radius: v.$border-radius;
+  max-width: 44rem;
+  margin: 0 auto 2rem;
+  padding: 1.25rem 1.5rem;
+  text-align: left;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.05);
+
+  strong {
+    display: block;
+    color: v.$color-navy-text;
+    margin-bottom: 0.75rem;
+  }
+
+  ul {
+    margin: 0;
+    padding-left: 1.2rem;
+    color: rgba(43, 45, 66, 0.75);
+    font-weight: 600;
+
+    li { margin-bottom: 0.5rem; }
+  }
+}
+
+.proceed-btn {
+  font-size: 1.1rem;
+  padding: 0.9rem 2.25rem;
+}
+
+.exercise-shell {
+  @include m.bouncy-card;
+  max-width: 96rem;
+  margin: 0 auto;
+  background: v.$color-white;
+  padding: 2.5rem;
+
+  &:hover { transform: none; box-shadow: 0 6px 0 rgba(0, 0, 0, 0.08); }
+
+  // Steps whose own card already fills the width and carries its own
+  // background (e.g. Mirror Talk's blue card) don't need this shell's white
+  // background/padding doubling up around it.
+  &.flush {
+    background: transparent;
+    padding: 0;
+    box-shadow: none;
+  }
+}
+
+.celebration-panel {
+  text-align: center;
+  padding: 3rem 1rem;
+  animation: pop-in 0.35s ease;
+
+  h1 {
+    @include m.playful-heading;
+    font-size: 1.9rem;
+    color: v.$color-navy-text;
+    margin: 1rem 0 0.5rem;
+  }
+
+  .badge-line {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: rgba(43, 45, 66, 0.75);
+    margin-bottom: 1.5rem;
+  }
+}
+
+// --- Lesson-complete congratulations modal ----------------------------------
+
+.welcome-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(43, 45, 66, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1200;
+  padding: 1.5rem;
+  animation: fade-in 0.25s ease;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal-card {
+  background: v.$color-white;
+  border-radius: v.$border-radius-xl;
+  padding: 2.5rem 2rem;
+  max-width: 26rem;
+  text-align: center;
+  box-shadow: 0 12px 0 rgba(0, 0, 0, 0.12);
+  animation: bounce-in 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  h1 {
+    @include m.playful-heading;
+    font-size: 1.65rem;
+    color: v.$color-navy-text;
+    margin: 1rem 0 0.5rem;
+  }
+
+  p {
+    color: rgba(43, 45, 66, 0.7);
+    font-weight: 600;
+    font-size: 1.05rem;
+    margin: 0 0 0.75rem;
+  }
+
+  .next-line {
+    margin-bottom: 1.5rem;
+  }
+}
+
+.practice-welcome {
+  max-width: 56rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.pw-badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: #dceefc;
+  color: #1b4965;
+  font-weight: 800;
+  font-size: 0.9rem;
+  padding: 0.55rem 1.4rem;
+  border-radius: v.$border-radius-pill;
+  margin-bottom: 2rem;
+}
+
+.practice-welcome-hero {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 2.5rem;
+  align-items: center;
+  text-align: left;
+  margin-bottom: 2rem;
+
+  @media (max-width: 720px) {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+}
+
+.pw-image-wrap {
+  position: relative;
+  background: v.$color-white;
+  border-radius: v.$border-radius-xl;
+  box-shadow: 0 4px 20px rgba(43, 45, 66, 0.08);
+  padding: 1.5rem;
+  justify-self: start;
+
+  @media (max-width: 720px) {
+    justify-self: center;
+  }
+
+  img {
+    display: block;
+    width: 12rem;
+    height: auto;
+    margin: 0 auto;
+  }
+}
+
+.pw-image-badge {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: v.$color-cream-bg;
+  border-radius: 50%;
+  width: 2.25rem;
+  height: 2.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  box-shadow: 0 2px 8px rgba(43, 45, 66, 0.1);
+}
+
+.pw-week-label {
+  display: inline-block;
+  color: #4d78f0;
+  font-weight: 800;
+  font-size: 0.9rem;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+}
+
+.practice-welcome-copy h1 {
+  @include m.playful-heading;
+  font-size: 2.75rem;
+  line-height: 1.15;
+  color: v.$color-navy-text;
+  margin-bottom: 0.5rem;
+}
+
+.pw-subtitle {
+  color: rgba(43, 45, 66, 0.55);
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.pw-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+  text-align: left;
+  background: v.$color-white;
+  border-radius: v.$border-radius-xl;
+  padding: 1.75rem 2rem;
+  box-shadow: 0 2px 14px rgba(43, 45, 66, 0.06);
+  margin-bottom: 1.5rem;
+
+  h2 {
+    @include m.playful-heading;
+    font-size: 1.3rem;
+    color: v.$color-navy-text;
+    margin-bottom: 0.4rem;
+  }
+
+  p {
+    color: rgba(43, 45, 66, 0.6);
+    font-size: 1rem;
+    line-height: 1.5;
+    margin: 0;
+  }
+}
+
+.pw-card-icon {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  font-size: 1.3rem;
+  background: #e3ecfd;
+}
+
+.pw-recap-card {
+  background: #eaf2fe;
+  box-shadow: none;
+}
+
+.pw-recap-icon {
+  background: #4d78f0;
+  color: v.$color-white;
+}
+
+.pw-recap-btn {
+  @include m.tappable;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #4d78f0;
+  color: v.$color-white;
+  border: none;
+  font-weight: 800;
+  font-size: 1.05rem;
+  padding: 0.85rem 2rem;
+  border-radius: v.$border-radius-pill;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.1);
+  margin-top: 1rem;
+
+  &:hover { opacity: 0.92; }
+}
+
+.pw-footer-note {
+  color: rgba(43, 45, 66, 0.5);
+  font-weight: 600;
+  margin-top: 1.5rem;
+}
+
+.intro-welcome {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 3rem;
+  align-items: center;
+  max-width: 72rem;
+  margin: 1.5rem auto 0;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+.intro-welcome-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.iw-week-pill {
+  display: inline-block;
+  background: #dceefc;
+  color: #1b4965;
+  font-weight: 800;
+  font-size: 0.9rem;
+  padding: 0.45rem 1.3rem;
+  border-radius: v.$border-radius-pill;
+  margin-bottom: 1.25rem;
+}
+
+.intro-welcome-copy h1 {
+  @include m.playful-heading;
+  font-size: 3rem;
+  line-height: 1.15;
+  margin-bottom: 1rem;
+}
+
+.iw-title-main {
+  color: v.$color-navy-text;
+}
+
+.iw-title-accent {
+  color: #4d78f0;
+}
+
+.iw-subtitle {
+  color: rgba(43, 45, 66, 0.6);
+  font-size: 1.15rem;
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+  max-width: 30rem;
+}
+
+.iw-stage-pill {
+  display: inline-block;
+  background: #fdeee1;
+  color: #b5651d;
+  font-weight: 700;
+  font-size: 0.95rem;
+  padding: 0.55rem 1.25rem;
+  border-radius: v.$border-radius-pill;
+  margin-bottom: 1.5rem;
+}
+
+.iw-objective-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+  background: v.$color-white;
+  border-radius: v.$border-radius-xl;
+  padding: 1.75rem 2rem;
+  box-shadow: 0 2px 14px rgba(43, 45, 66, 0.06);
+  margin-bottom: 2rem;
+  width: 100%;
+
+  h2 {
+    @include m.playful-heading;
+    font-size: 1.25rem;
+    color: v.$color-navy-text;
+    margin-bottom: 0.4rem;
+  }
+
+  p {
+    color: rgba(43, 45, 66, 0.6);
+    font-size: 1rem;
+    line-height: 1.5;
+    margin: 0;
+  }
+}
+
+.iw-objective-icon {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: v.$border-radius-sm;
+  font-size: 1.4rem;
+  background: #e3ecfd;
+  color: #4d78f0;
+}
+
+.iw-start-btn {
+  @include m.tappable;
+  background: #4d78f0;
+  color: v.$color-white;
+  border: none;
+  font-weight: 800;
+  font-size: 1.05rem;
+  padding: 0.9rem 2.25rem;
+  border-radius: v.$border-radius-pill;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.1);
+
+  &:hover { opacity: 0.92; }
+}
+
+.intro-welcome-art {
+  position: relative;
+  justify-self: center;
+}
+
+.iw-image-wrap {
+  width: 100%;
+  max-width: 24rem;
+  border-radius: v.$border-radius-xl;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+}
+
+.iw-speech-bubble {
+  position: absolute;
+  top: -0.75rem;
+  right: -0.5rem;
+  background: v.$color-white;
+  color: v.$color-navy-text;
+  font-weight: 700;
+  font-size: 0.95rem;
+  padding: 0.55rem 1.1rem;
+  border-radius: v.$border-radius-pill;
+  box-shadow: 0 4px 14px rgba(43, 45, 66, 0.12);
+}
+
+.objectives-welcome {
+  max-width: 44rem;
+  margin: 1.5rem auto 0;
+  text-align: center;
+}
+
+.ow-week-pill {
+  display: inline-block;
+  background: #dceefc;
+  color: #1b4965;
+  font-weight: 800;
+  font-size: 0.9rem;
+  padding: 0.45rem 1.3rem;
+  border-radius: v.$border-radius-pill;
+  margin-bottom: 1.5rem;
+}
+
+.objectives-welcome h1 {
+  @include m.playful-heading;
+  font-size: 2.75rem;
+  line-height: 1.15;
+  color: v.$color-navy-text;
+  margin-bottom: 0.5rem;
+}
+
+.ow-subtitle {
+  color: v.$color-coral;
+  font-weight: 800;
+  font-size: 1.15rem;
+  margin-bottom: 2rem;
+}
+
+.ow-image-wrap {
+  margin: 0 auto 2.5rem;
+  max-width: 34rem;
+
+  img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+}
+
+.ow-card {
+  background: v.$color-white;
+  border-radius: v.$border-radius-xl;
+  padding: 2.25rem 2.5rem;
+  text-align: left;
+  box-shadow: 0 2px 14px rgba(43, 45, 66, 0.06);
+
+  h2 {
+    @include m.playful-heading;
+    font-size: 1.5rem;
+    color: v.$color-navy-text;
+    margin-bottom: 1.25rem;
+  }
+}
+
+.ow-objectives {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.85rem;
+    color: rgba(43, 45, 66, 0.75);
+    font-weight: 600;
+    font-size: 1.05rem;
+    line-height: 1.5;
+  }
+}
+
+.ow-check {
+  color: v.$color-navy-text;
+  font-weight: 800;
+  font-size: 1.05rem;
+  line-height: 1.5;
+}
+
+.ow-objectives-section {
+  text-align: center;
+
+  h2 {
+    @include m.playful-heading;
+    font-size: 2rem;
+    color: v.$color-navy-text;
+    margin-bottom: 0.75rem;
+  }
+}
+
+.ow-objectives-description {
+  color: rgba(43, 45, 66, 0.6);
+  font-size: 1.05rem;
+  line-height: 1.6;
+  max-width: 34rem;
+  margin: 0 auto 2.5rem;
+}
+
+.ow-objectives-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  text-align: left;
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.ow-objective-card {
+  background: v.$color-white;
+  border-radius: v.$border-radius-xl;
+  padding: 2rem;
+  box-shadow: 0 2px 14px rgba(43, 45, 66, 0.06);
+
+  h3 {
+    @include m.playful-heading;
+    font-size: 1.2rem;
+    color: v.$color-navy-text;
+    margin: 1.25rem 0 0.6rem;
+  }
+
+  p {
+    color: rgba(43, 45, 66, 0.6);
+    font-size: 0.98rem;
+    line-height: 1.55;
+    margin: 0;
+  }
+}
+
+.ow-obj-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: v.$border-radius-sm;
+  font-size: 1.4rem;
+
+  &--blue {
+    background: #e3ecfd;
+    color: #4d78f0;
+  }
+
+  &--peach {
+    background: #fdeee1;
+    color: #ef9948;
+  }
+}
+
+.ow-divider {
+  display: block;
+  width: 9rem;
+  height: 5px;
+  margin: 2.5rem auto 2rem;
+  border-radius: v.$border-radius-pill;
+  background: linear-gradient(90deg, v.$color-coral, v.$color-sky);
+}
+
+.ow-start-btn {
+  @include m.tappable;
+  background: #4d78f0;
+  color: v.$color-white;
+  border: none;
+  font-weight: 800;
+  font-size: 1.05rem;
+  padding: 0.9rem 2.25rem;
+  border-radius: v.$border-radius-sm;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.1);
+
+  &:hover { opacity: 0.92; }
+}
+
+.goal-welcome {
+  max-width: 46rem;
+  margin: 1.5rem auto 0;
+  text-align: center;
+}
+
+.gw-week-pill {
+  display: inline-block;
+  background: #dceefc;
+  color: #1b4965;
+  font-weight: 800;
+  font-size: 0.9rem;
+  padding: 0.45rem 1.3rem;
+  border-radius: v.$border-radius-pill;
+  margin-bottom: 1.5rem;
+}
+
+.goal-welcome h1 {
+  @include m.playful-heading;
+  font-size: 2.75rem;
+  line-height: 1.15;
+  color: v.$color-navy-text;
+  margin-bottom: 1.75rem;
+}
+
+.gw-image-wrap {
+  margin: 0 auto;
+  max-width: 36rem;
+  border-radius: v.$border-radius-xl;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+}
+
+.gw-image-caption {
+  color: rgba(43, 45, 66, 0.55);
+  font-size: 1rem;
+  margin: 1rem 0 2rem;
+}
+
+.gw-card {
+  background: #eef2fb;
+  border-radius: v.$border-radius-xl;
+  padding: 2rem 2.25rem;
+  text-align: left;
+  margin-bottom: 2.5rem;
+}
+
+.gw-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+
+  h2 {
+    @include m.playful-heading;
+    font-size: 1.25rem;
+    color: v.$color-navy-text;
+    margin-bottom: 0.4rem;
+  }
+
+  p {
+    color: rgba(43, 45, 66, 0.65);
+    font-size: 1.05rem;
+    line-height: 1.55;
+    margin: 0;
+  }
+}
+
+.gw-row-icon {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  font-size: 1.3rem;
+  background: #dbe4fb;
+  color: #4d78f0;
+}
+
+.gw-row-divider {
+  display: block;
+  height: 1px;
+  margin: 1.5rem 0;
+  background: rgba(43, 45, 66, 0.12);
+}
+
+.gw-focus-label {
+  display: block;
+  color: #4d78f0;
+  font-weight: 800;
+  font-size: 0.85rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+}
+
+.gw-start-btn {
+  @include m.tappable;
+  background: #4d78f0;
+  color: v.$color-white;
+  border: none;
+  font-weight: 800;
+  font-size: 1.05rem;
+  padding: 0.9rem 2.25rem;
+  border-radius: v.$border-radius-pill;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.1);
+
+  &:hover { opacity: 0.92; }
+}
+
+.celebrate-welcome {
+  max-width: 64rem;
+  margin: 1.5rem auto 0;
+  text-align: center;
+}
+
+.cw-image-wrap {
+  position: relative;
+  width: 9.5rem;
+  height: 9.5rem;
+  margin: 0 auto 1.5rem;
+  border-radius: v.$border-radius-xl;
+  border: 3px solid v.$color-leaf;
+  background: v.$color-white;
+  box-shadow: 0 10px 24px rgba(43, 45, 66, 0.1);
+  overflow: visible;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: calc(v.$border-radius-xl - 3px);
+  }
+}
+
+.cw-badge-number {
+  position: absolute;
+  top: -0.6rem;
+  right: -0.6rem;
+  width: 2.1rem;
+  height: 2.1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: v.$color-coral;
+  color: v.$color-white;
+  font-weight: 800;
+  font-size: 0.95rem;
+  border-radius: 50%;
+  border: 3px solid v.$color-white;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.08);
+}
+
+.celebrate-welcome h1 {
+  @include m.playful-heading;
+  font-size: 2.5rem;
+  line-height: 1.2;
+  margin-bottom: 0.75rem;
+}
+
+.cw-title-main {
+  color: v.$color-navy-text;
+}
+
+.cw-title-accent {
+  color: v.$color-coral;
+}
+
+.cw-subtitle {
+  max-width: 30rem;
+  margin: 0 auto 2.5rem;
+  color: rgba(43, 45, 66, 0.6);
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.cw-scrapbook {
+  background: rgba(255, 255, 255, 0.6);
+  border: 2px dashed rgba(43, 45, 66, 0.18);
+  border-radius: v.$border-radius-xl;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  text-align: left;
+}
+
+.cw-scrapbook-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+
+  h2 {
+    @include m.playful-heading;
+    font-size: 1.4rem;
+    color: v.$color-navy-text;
+    margin: 0;
+  }
+}
+
+.cw-scrapbook-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+
+  @media (max-width: 62rem) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.cw-card {
+  background: v.$color-white;
+  border-radius: v.$border-radius-lg;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(43, 45, 66, 0.08);
+  display: flex;
+  flex-direction: column;
+}
+
+.cw-card-image {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #eaf3fc;
+
+  &--pink { background: #fdeef1; }
+  &--green { background: #eaf7ec; }
+
+  img {
+    max-width: 78%;
+    max-height: 78%;
+    object-fit: contain;
+  }
+}
+
+.cw-card-badge {
+  position: absolute;
+  bottom: 0.75rem;
+  right: 0.75rem;
+  padding: 0.3rem 0.8rem;
+  border-radius: v.$border-radius-pill;
+  font-weight: 800;
+  font-size: 0.75rem;
+  color: v.$color-white;
+
+  &--blue { background: #4d9df0; }
+  &--pink { background: v.$color-coral; }
+  &--green { background: v.$color-leaf; }
+}
+
+.cw-card-body {
+  padding: 1.1rem 1.1rem 0.5rem;
+  flex: 1;
+
+  h3 {
+    @include m.playful-heading;
+    font-size: 1.05rem;
+    color: v.$color-navy-text;
+    margin-bottom: 0.4rem;
+  }
+
+  p {
+    color: rgba(43, 45, 66, 0.65);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin: 0;
+  }
+}
+
+.cw-card-footer {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.9rem 1.1rem;
+  border-top: 1px solid rgba(43, 45, 66, 0.08);
+}
+
+.cw-avatar {
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 50%;
+  flex-shrink: 0;
+
+  &--pink { background: v.$color-bubble-pink; }
+  &--blue { background: #4d9df0; }
+  &--yellow { background: v.$color-sunshine; }
+}
+
+.cw-card-credit {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: rgba(43, 45, 66, 0.55);
+}
+
+.cw-next-mission {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  background: v.$color-navy-text;
+  border-radius: v.$border-radius-pill;
+  padding: 0.9rem 0.9rem 0.9rem 1.75rem;
+
+  @media (max-width: 40rem) {
+    flex-direction: column;
+    align-items: stretch;
+    border-radius: v.$border-radius-lg;
+    text-align: center;
+  }
+}
+
+.cw-next-mission-copy {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+
+  @media (max-width: 40rem) {
+    text-align: center;
+  }
+}
+
+.cw-next-mission-label {
+  color: rgba(255, 255, 255, 0.55);
+  font-weight: 800;
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.cw-next-mission-copy strong {
+  color: v.$color-white;
+  font-size: 1.15rem;
+}
+
+.cw-start-btn {
+  @include m.tappable;
+  background: v.$color-leaf;
+  color: v.$color-white;
+  border: none;
+  font-weight: 800;
+  font-size: 1.05rem;
+  padding: 0.85rem 2rem;
+  border-radius: v.$border-radius-pill;
+  white-space: nowrap;
+
+  &:hover { opacity: 0.92; }
+}
+
+/** Lets a student (or a trainer testing new content) step back through an already-completed
+    lesson's exercises instead of only ever being funneled straight to the next week. */
+.review-lesson-link {
+  @include m.tappable;
+  display: block;
+  margin: 0.75rem auto 0;
+  background: none;
+  border: none;
+  color: rgba(43, 45, 66, 0.55);
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-decoration: underline;
+
+  &:hover { color: v.$color-navy-text; }
+}

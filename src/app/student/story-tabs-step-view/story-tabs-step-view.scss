@@ -1,0 +1,638 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+.story-tabs {
+  max-width: 76rem;
+  margin: 0 auto;
+}
+
+// --- Tab bar -----------------------------------------------------------
+
+.tab-bar {
+  display: flex;
+  gap: 0.5rem;
+  background: v.$color-white;
+  border-radius: v.$border-radius-pill;
+  padding: 0.35rem;
+  margin-bottom: 1.75rem;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.05);
+}
+
+.tab-btn {
+  @include m.tappable;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  border: none;
+  background: transparent;
+  border-radius: v.$border-radius-pill;
+  padding: 0.65rem 0.5rem;
+  font-weight: 800;
+  font-size: 1.02rem;
+  color: rgba(43, 45, 66, 0.55);
+
+  &.active {
+    background: v.$color-grape;
+    color: v.$color-white;
+    box-shadow: 0 3px 0 rgba(0, 0, 0, 0.1);
+  }
+
+  &.locked {
+    opacity: 0.55;
+    cursor: not-allowed;
+
+    &:active { transform: none; }
+  }
+}
+
+.tab-count {
+  font-size: 0.8rem;
+  font-weight: 800;
+  background: rgba(255, 255, 255, 0.35);
+  padding: 0.05rem 0.45rem;
+  border-radius: v.$border-radius-pill;
+}
+
+.tab-panel {
+  text-align: center;
+}
+
+// --- Tab 1: Mini Video ---------------------------------------------------
+
+.video-tab {
+  .story-badge {
+    display: inline-block;
+    background: v.$color-white;
+    color: v.$color-navy-text;
+    font-weight: 800;
+    font-size: 1.02rem;
+    padding: 0.4rem 1.1rem;
+    border-radius: v.$border-radius-pill;
+    box-shadow: 0 3px 0 rgba(0, 0, 0, 0.08);
+    margin-bottom: 1.25rem;
+  }
+
+  h1 {
+    @include m.playful-heading;
+    font-size: 2.2rem;
+    color: v.$color-navy-text;
+    margin-bottom: 1rem;
+
+    .story-year { color: v.$color-coral; margin-left: 0.4rem; }
+  }
+
+  .story-attribution {
+    margin: -0.5rem 0 1rem;
+    color: rgba(43, 45, 66, 0.55);
+    font-weight: 700;
+    font-size: 1rem;
+  }
+
+  .story-description {
+    max-width: 44rem;
+    margin: 0 auto 1rem;
+    color: rgba(43, 45, 66, 0.72);
+    font-weight: 600;
+    font-size: 1.15rem;
+    line-height: 1.6;
+  }
+
+  .story-credit {
+    max-width: 44rem;
+    margin: -0.5rem auto 1rem;
+    color: rgba(43, 45, 66, 0.5);
+    font-style: italic;
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+
+  .story-instruction {
+    font-weight: 800;
+    font-size: 1.12rem;
+    color: v.$color-navy-text;
+    margin-bottom: 1.5rem;
+  }
+}
+
+.story-frame {
+  background: v.$color-white;
+  border-radius: v.$border-radius-lg;
+  padding: 1rem;
+  max-width: 40rem;
+  margin: 0 auto 1.75rem;
+  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.1);
+}
+
+.lesson-video {
+  width: 100%;
+  border-radius: v.$border-radius;
+  background: #000;
+  display: block;
+}
+
+.story-placeholder {
+  position: relative;
+  border-radius: v.$border-radius;
+  overflow: hidden;
+  line-height: 0;
+
+  img { width: 100%; max-height: 18rem; object-fit: cover; display: block; }
+
+  .play-badge {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 3.5rem;
+    height: 3.5rem;
+    background: rgba(43, 45, 66, 0.55);
+    color: v.$color-white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+  }
+}
+
+.frame-caption {
+  margin: 0.65rem 0 0;
+  font-weight: 700;
+  color: rgba(43, 45, 66, 0.55);
+  font-size: 0.95rem;
+}
+
+.youtube-frame {
+  max-width: 40rem;
+  margin: 0 auto;
+  border-radius: v.$border-radius-lg;
+  overflow: hidden;
+  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.1);
+}
+
+.youtube-iframe {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  display: block;
+  border: none;
+}
+
+.youtube-placeholder {
+  @include m.tappable;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #4a4547;
+  border: none;
+  color: v.$color-white;
+  font-weight: 800;
+  font-size: 1.2rem;
+
+  &:hover { opacity: 0.92; }
+}
+
+.youtube-meta {
+  max-width: 40rem;
+  margin: 0.85rem auto 1.75rem;
+  text-align: left;
+}
+
+.youtube-duration {
+  margin: 0 0 0.35rem;
+  color: rgba(43, 45, 66, 0.65);
+  font-weight: 600;
+}
+
+.youtube-link {
+  margin: 0;
+  color: rgba(43, 45, 66, 0.65);
+  font-weight: 600;
+
+  a {
+    color: #3a5fd9;
+    font-weight: 700;
+    text-decoration: underline;
+  }
+}
+
+.locked-hint {
+  font-weight: 700;
+  color: rgba(43, 45, 66, 0.55);
+  font-size: 1.02rem;
+}
+
+// --- Tab 2: Discussion Starters -------------------------------------------
+
+.tab-intro {
+  color: rgba(43, 45, 66, 0.65);
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+}
+
+.starter-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  margin-bottom: 1.75rem;
+  text-align: left;
+}
+
+.starter-card {
+  background: v.$color-white;
+  border-radius: v.$border-radius;
+  padding: 1.25rem 1.5rem;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.05);
+}
+
+.starter-prompt {
+  font-weight: 800;
+  color: v.$color-navy-text;
+  font-size: 1.2rem;
+  margin-bottom: 0.9rem;
+}
+
+.starter-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.starter-option {
+  @include m.tappable;
+  flex: 1 1 auto;
+  min-width: 9rem;
+  border: 2px solid rgba(43, 45, 66, 0.12);
+  background: v.$color-cream-bg;
+  border-radius: v.$border-radius-sm;
+  padding: 0.7rem 0.9rem;
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: v.$color-navy-text;
+
+  &:hover { border-color: v.$color-sky; }
+
+  &.correct {
+    background: rgba(107, 203, 119, 0.4);
+    border-color: v.$color-leaf;
+  }
+
+  &.incorrect {
+    background: rgba(255, 143, 163, 0.4);
+    border-color: v.$color-bubble-pink;
+    animation: shake-no 0.4s ease;
+  }
+}
+
+.try-again {
+  margin: 0.75rem 0 0;
+  font-weight: 700;
+  font-size: 1.02rem;
+  color: #c2455c;
+}
+
+.correct-line {
+  margin: 0.75rem 0 0;
+  font-weight: 700;
+  font-size: 1.02rem;
+  color: #2f7d3b;
+}
+
+// --- Tab 3: Discussion Points ----------------------------------------------
+
+.points-tab h1 {
+  @include m.playful-heading;
+  font-size: 2rem;
+  color: v.$color-navy-text;
+  margin-bottom: 0.5rem;
+}
+
+.points-intro {
+  max-width: 40rem;
+  margin: 0 auto 1.75rem;
+  color: rgba(43, 45, 66, 0.65);
+  font-weight: 600;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.point-question-card {
+  background: rgba(78, 205, 196, 0.12);
+  border-radius: v.$border-radius;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.point-num {
+  display: block;
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: rgba(43, 45, 66, 0.55);
+  margin-bottom: 0.5rem;
+}
+
+.point-quote {
+  margin: 0;
+  font-family: v.$headings-font-family;
+  font-weight: 700;
+  font-size: 1.35rem;
+  color: v.$color-sky;
+}
+
+.point-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-width: 32rem;
+  margin: 0 auto 1.75rem;
+  text-align: left;
+}
+
+.point-option {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: v.$color-white;
+  border: 2px solid rgba(43, 45, 66, 0.1);
+  border-radius: v.$border-radius-sm;
+  padding: 0.9rem 1.1rem;
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: v.$color-navy-text;
+  cursor: pointer;
+  transition: border-color 0.15s ease;
+
+  &:has(input:checked) {
+    border-color: v.$color-sky;
+    background: rgba(78, 205, 196, 0.08);
+  }
+
+  input {
+    width: 1.15rem;
+    height: 1.15rem;
+    accent-color: v.$color-sky;
+    flex-shrink: 0;
+  }
+}
+
+.point-textarea {
+  display: block;
+  width: 100%;
+  max-width: 32rem;
+  margin: 0 auto 1.75rem;
+  border: 2px solid rgba(43, 45, 66, 0.12);
+  border-radius: v.$border-radius-sm;
+  padding: 0.75rem 1rem;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: v.$color-navy-text;
+  resize: vertical;
+
+  &:focus { outline: none; border-color: v.$color-sky; }
+}
+
+.trainer-tip-card {
+  background: v.$color-cream-bg;
+  border-radius: v.$border-radius;
+  padding: 1.25rem 1.5rem;
+  text-align: left;
+  margin-top: 2rem;
+  margin-bottom: 1.75rem;
+
+  .tip-label {
+    display: inline-block;
+    background: v.$color-leaf;
+    color: v.$color-white;
+    font-size: 0.78rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.25rem 0.7rem;
+    border-radius: v.$border-radius-pill;
+    margin-bottom: 0.6rem;
+  }
+
+  .tip-quote {
+    font-style: italic;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: v.$color-navy-text;
+    margin: 0 0 0.5rem;
+  }
+
+  .tip-body {
+    margin: 0;
+    color: rgba(43, 45, 66, 0.7);
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+}
+
+// --- Tab 3, activity mode (draw + caption) ----------------------------------
+
+.activity-tab h1 {
+  @include m.playful-heading;
+  font-size: 2.2rem;
+  color: v.$color-navy-text;
+  margin-bottom: 0.75rem;
+}
+
+.activity-text-card {
+  @include m.bouncy-card;
+  background: v.$color-white;
+  padding: 1.5rem;
+  margin-bottom: 1.25rem;
+  text-align: left;
+
+  &:hover { transform: none; box-shadow: 0 6px 0 rgba(0, 0, 0, 0.08); }
+
+  label {
+    display: block;
+    font-weight: 700;
+    color: v.$color-navy-text;
+    margin-bottom: 0.75rem;
+  }
+
+  textarea {
+    width: 100%;
+    border: 2px solid rgba(43, 45, 66, 0.12);
+    border-radius: v.$border-radius-sm;
+    padding: 0.75rem 1rem;
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 1.02rem;
+    color: v.$color-navy-text;
+    resize: vertical;
+
+    &:focus { outline: none; border-color: v.$color-coral; }
+  }
+}
+
+.tickets-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+
+  @media (max-width: 720px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.ticket-card {
+  @include m.bouncy-card;
+  background: v.$color-white;
+  border: 2px dashed rgba(255, 111, 89, 0.4);
+  padding: 1.25rem;
+  text-align: left;
+
+  &:hover { transform: none; box-shadow: 0 6px 0 rgba(0, 0, 0, 0.08); }
+
+  .ticket-icon {
+    display: block;
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+  }
+
+  label {
+    display: block;
+    font-weight: 700;
+    color: v.$color-navy-text;
+    margin-bottom: 0.6rem;
+    font-size: 0.95rem;
+  }
+
+  textarea {
+    width: 100%;
+    border: 2px solid rgba(43, 45, 66, 0.12);
+    border-radius: v.$border-radius-sm;
+    padding: 0.65rem 0.85rem;
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: v.$color-navy-text;
+    resize: vertical;
+
+    &:focus { outline: none; border-color: v.$color-coral; }
+  }
+}
+
+.tickets-preview-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+
+  @media (max-width: 720px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.ticket-stub {
+  @include m.bouncy-card;
+  background: linear-gradient(160deg, #{v.$color-sunshine}22, #{v.$color-coral}11);
+  border: 2px dashed rgba(255, 111, 89, 0.5);
+  padding: 1.25rem;
+  text-align: left;
+
+  &:hover { transform: none; box-shadow: 0 6px 0 rgba(0, 0, 0, 0.08); }
+
+  .ticket-icon {
+    display: block;
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+  }
+
+  strong {
+    display: block;
+    color: v.$color-navy-text;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    margin: 0;
+    color: v.$color-navy-text;
+    font-weight: 600;
+    font-style: italic;
+    line-height: 1.4;
+  }
+}
+
+.draw-card {
+  @include m.bouncy-card;
+  background: v.$color-white;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+
+  &:hover { transform: none; box-shadow: 0 6px 0 rgba(0, 0, 0, 0.08); }
+}
+
+.draw-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.draw-title {
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: v.$color-navy-text;
+}
+
+.swatches {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.swatch {
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+
+  &.selected { border-color: v.$color-navy-text; }
+}
+
+.draw-canvas {
+  display: block;
+  width: 100%;
+  aspect-ratio: 900 / 360;
+  border: 2px solid rgba(43, 45, 66, 0.15);
+  border-radius: v.$border-radius-sm;
+  background: v.$color-white;
+  touch-action: none;
+  cursor: crosshair;
+}
+
+.draw-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 0.9rem;
+}
+
+.brush-size {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-weight: 700;
+  color: rgba(43, 45, 66, 0.7);
+  font-size: 0.95rem;
+}
+
+.clear-btn {
+  padding: 0.5rem 1.1rem;
+  font-size: 0.95rem;
+}

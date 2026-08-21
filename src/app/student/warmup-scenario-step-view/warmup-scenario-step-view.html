@@ -1,0 +1,52 @@
+<div class="warmup-scenario">
+  <span class="badge-icon">{{ step().badgeIcon }}</span>
+  <h1>{{ step().title }}</h1>
+  <p class="subtitle">{{ step().subtitle }}</p>
+
+  <div class="timer-pill">
+    <span class="timer-icon">⏱️</span>
+    <span>{{ formattedTime() }}</span>
+  </div>
+
+  <div class="progress-wrap">
+    <div class="progress-track">
+      <div class="progress-fill" [style.width.%]="progressPercent()"></div>
+    </div>
+    <span class="progress-label">Scenario {{ activeIndex() }}/{{ total() }}</span>
+  </div>
+
+  @if (currentScenario(); as scenario) {
+    <div class="scenario-card">
+      <span class="scenario-emoji">{{ scenario.emoji }}</span>
+      <p class="scenario-prompt">{{ scenario.prompt }}</p>
+
+      <div class="scenario-options">
+        @for (option of scenario.options; track option.id) {
+          <button
+            type="button"
+            class="option-btn"
+            [class.selected]="isSelected(scenario.id, option.id)"
+            (click)="selectOption(scenario.id, option.id)"
+          >
+            <span class="option-emoji">{{ option.emoji }}</span>
+            <span>{{ option.label }}</span>
+          </button>
+        }
+      </div>
+    </div>
+  }
+
+  <div class="nav-row">
+    <button type="button" class="btn nav-btn prev" [disabled]="activeIndex() === 0" (click)="previous()">
+      ← Previous
+    </button>
+    <button
+      type="button"
+      class="btn nav-btn next"
+      [disabled]="!currentScenario() || !answers()[currentScenario()!.id]"
+      (click)="next()"
+    >
+      {{ isLast() ? step().continueLabel : 'Next →' }}
+    </button>
+  </div>
+</div>

@@ -1,0 +1,184 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+.editor-page {
+  max-width: 60rem;
+  margin: 0 auto;
+  padding: 2rem 2.5rem 5rem;
+}
+
+.back-link {
+  display: inline-block;
+  font-weight: 800;
+  color: v.$color-navy-text;
+  text-decoration: none;
+  margin-bottom: 0.75rem;
+}
+
+h1 {
+  @include m.playful-heading;
+  font-size: 1.5rem;
+  color: v.$color-navy-text;
+  margin-bottom: 0.15rem;
+}
+
+.subtitle {
+  color: rgba(43, 45, 66, 0.65);
+  font-weight: 600;
+  margin-bottom: 1.25rem;
+}
+
+.panel {
+  @include m.bouncy-card;
+  background: v.$color-white;
+  padding: 1.5rem;
+  margin-bottom: 1.25rem;
+
+  &:hover { transform: none; box-shadow: 0 6px 0 rgba(0, 0, 0, 0.06); }
+}
+
+.lesson-panel {
+  border-left: 6px solid v.$color-grape;
+}
+
+h2 {
+  font-family: v.$headings-font-family;
+  font-size: 1.1rem;
+  color: v.$color-navy-text;
+  margin-bottom: 1rem;
+}
+
+h3 {
+  font-family: v.$headings-font-family;
+  font-size: 0.95rem;
+  color: v.$color-navy-text;
+  margin-bottom: 0.5rem;
+}
+
+.panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.form-label {
+  font-weight: 700;
+  color: v.$color-navy-text;
+  font-size: 0.9rem;
+}
+
+.row-fields {
+  display: flex;
+  gap: 1rem;
+
+  .grow { flex: 1; }
+  .week-field { width: 6rem; }
+}
+
+.choice-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.choice-btn {
+  @include m.tappable;
+  border: 2px solid rgba(43, 45, 66, 0.1);
+  background: v.$color-white;
+  border-radius: v.$border-radius;
+
+  &.active { border-color: v.$color-navy-text; }
+}
+
+.icon-btn {
+  font-size: 1.4rem;
+  width: 3rem;
+  height: 3rem;
+}
+
+.color-btn {
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 50%;
+
+  &.active { border-color: v.$color-navy-text; border-width: 3px; }
+}
+
+.exercise-block {
+  background: v.$color-cream-bg;
+  border-radius: v.$border-radius;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.options-editor {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.option-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  .form-control { flex: 1; }
+}
+
+.star-btn {
+  @include m.tappable;
+  background: none;
+  border: 2px solid rgba(43, 45, 66, 0.15);
+  border-radius: 50%;
+  width: 2.3rem;
+  height: 2.3rem;
+  font-size: 1.1rem;
+  opacity: 0.4;
+  flex-shrink: 0;
+
+  &.active {
+    opacity: 1;
+    border-color: v.$color-sunshine;
+    background: rgba(255, 201, 60, 0.2);
+  }
+}
+
+.remove-option-btn {
+  background: none;
+  border: none;
+  color: rgba(43, 45, 66, 0.4);
+  font-weight: 800;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.remove-btn {
+  background: none;
+  border: none;
+  color: #c2455c;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.add-link {
+  background: none;
+  border: none;
+  color: v.$color-coral;
+  font-weight: 800;
+  font-size: 0.9rem;
+  cursor: pointer;
+  padding: 0;
+}
+
+.add-exercise { margin-top: 0.25rem; }
+
+.add-lesson-btn {
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+
+.submit-btn {
+  width: 100%;
+}

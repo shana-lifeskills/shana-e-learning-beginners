@@ -1,0 +1,30 @@
+<div class="ccw">
+  <span class="ccw-eyebrow">{{ step().eyebrowIcon }} {{ step().eyebrow }}</span>
+  <h1>{{ step().heading }}</h1>
+
+  <div class="ccw-card">
+    @for (item of step().items; track item.title; let last = $last) {
+      <div class="ccw-item" [class.no-border]="last">
+        <span class="ccw-item-icon" [class]="'ccw-item-icon--' + item.iconVariant">{{ item.icon }}</span>
+        <div>
+          <strong>{{ item.title }}</strong>
+          <p>{{ item.description }}</p>
+        </div>
+      </div>
+    }
+  </div>
+
+  <div class="ccw-confidence-card">
+    <span class="ccw-confidence-label">{{ step().confidenceIcon }} {{ step().confidenceLabel }}</span>
+    <p class="ccw-confidence-quote">&ldquo;{{ step().confidenceQuote }}&rdquo;</p>
+
+    <button type="button" class="ccw-remember-toggle" [class.checked]="remembered()" (click)="toggleRemembered()">
+      <span class="ccw-remember-circle">@if (remembered()) { ✓ }</span>
+      {{ step().rememberToggleLabel }}
+    </button>
+  </div>
+
+  <button type="button" class="btn ccw-continue-btn" (click)="continued.emit()">
+    {{ step().continueLabel }}
+  </button>
+</div>

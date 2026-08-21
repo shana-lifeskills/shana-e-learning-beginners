@@ -1,0 +1,31 @@
+<div class="challenge-step">
+  <div class="challenge-card">
+    <div class="stripe"></div>
+
+    <div class="challenge-body">
+      <span class="eyebrow">{{ step().eyebrow }}</span>
+      <h1>{{ step().title }}</h1>
+      <p class="description">{{ step().description }}</p>
+
+      <div class="items-grid">
+        @for (item of step().items; track item.title) {
+          <div class="item-card">
+            <span class="item-icon">{{ item.icon }}</span>
+            <strong>{{ item.title }}</strong>
+            <p>{{ item.description }}</p>
+          </div>
+        }
+      </div>
+
+      @if (step().note) {
+        <div class="note-bar">{{ step().note }}</div>
+      }
+    </div>
+  </div>
+
+  @if (step().tagline) { <p class="tagline">{{ step().tagline }}</p> }
+
+  <button type="button" class="btn btn-primary btn-lg-tappable" (click)="continued.emit()">
+    {{ step().continueLabel }}
+  </button>
+</div>

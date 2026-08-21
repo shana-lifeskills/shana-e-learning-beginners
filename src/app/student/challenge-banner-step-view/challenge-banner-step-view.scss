@@ -1,0 +1,64 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+.challenge-banner {
+  max-width: 40rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+h1 {
+  @include m.playful-heading;
+  font-size: 1.9rem;
+  color: v.$color-coral;
+  margin-bottom: 1.5rem;
+}
+
+.banner {
+  background: linear-gradient(120deg, #ff8fa3, #ffb347);
+  border-radius: v.$border-radius-lg;
+  padding: 1.75rem;
+  margin-bottom: 1.75rem;
+
+  h2 {
+    @include m.playful-heading;
+    color: v.$color-white;
+    font-size: 1.7rem;
+    margin-bottom: 1rem;
+  }
+}
+
+.description {
+  background: v.$color-cream-bg;
+  border-radius: v.$border-radius-sm;
+  padding: 1rem 1.25rem;
+  margin: 0;
+  color: v.$color-navy-text;
+  font-weight: 600;
+  line-height: 1.55;
+
+  strong {
+    color: v.$color-coral;
+    margin: 0 0.2em;
+  }
+}
+
+.continue-btn {
+  @include m.tappable;
+  background: v.$color-sky;
+  color: v.$color-navy-text;
+  border: none;
+  font-weight: 800;
+  font-size: 1.05rem;
+  padding: 0.85rem 2rem;
+  border-radius: v.$border-radius-pill;
+  margin-bottom: 1.25rem;
+
+  &:hover { background: #3fb5ac; }
+}
+
+.tip {
+  color: rgba(43, 45, 66, 0.55);
+  font-weight: 600;
+  font-size: 0.95rem;
+}

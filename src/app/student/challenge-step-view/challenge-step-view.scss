@@ -1,0 +1,116 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+.challenge-step {
+  max-width: 60rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.challenge-card {
+  @include m.bouncy-card;
+  background: v.$color-white;
+  overflow: hidden;
+  text-align: left;
+  margin-bottom: 1.5rem;
+
+  &:hover { transform: none; box-shadow: 0 6px 0 rgba(0, 0, 0, 0.08); }
+}
+
+.stripe {
+  height: 0.5rem;
+  background: linear-gradient(
+    90deg,
+    #{v.$color-leaf} 0% 20%,
+    #{v.$color-sky} 20% 40%,
+    #{v.$color-sunshine} 40% 60%,
+    #{v.$color-coral} 60% 80%,
+    #{v.$color-grape} 80% 100%
+  );
+}
+
+.challenge-body {
+  padding: 2rem 2.25rem 2.25rem;
+}
+
+.eyebrow {
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 800;
+  font-size: 0.88rem;
+  color: rgba(43, 45, 66, 0.55);
+  margin-bottom: 0.6rem;
+}
+
+h1 {
+  @include m.playful-heading;
+  font-size: 2.2rem;
+  color: v.$color-navy-text;
+  margin-bottom: 1rem;
+}
+
+.description {
+  color: rgba(43, 45, 66, 0.7);
+  font-weight: 600;
+  font-size: 1.15rem;
+  line-height: 1.6;
+  margin-bottom: 1.75rem;
+}
+
+.items-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.item-card {
+  background: v.$color-cream-bg;
+  border-radius: v.$border-radius-sm;
+  padding: 1.25rem 1.1rem;
+
+  .item-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 50%;
+    background: v.$color-white;
+    font-size: 1.3rem;
+    margin-bottom: 0.9rem;
+  }
+
+  strong {
+    display: block;
+    color: v.$color-navy-text;
+    font-size: 1.12rem;
+    margin-bottom: 0.35rem;
+  }
+
+  p {
+    margin: 0;
+    color: rgba(43, 45, 66, 0.65);
+    font-weight: 600;
+    font-size: 0.98rem;
+    line-height: 1.4;
+  }
+}
+
+.note-bar {
+  background: rgba(255, 201, 60, 0.28);
+  border-radius: v.$border-radius-pill;
+  padding: 0.9rem 1.5rem;
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: v.$color-navy-text;
+  text-align: center;
+}
+
+.tagline {
+  color: rgba(43, 45, 66, 0.55);
+  font-weight: 700;
+  font-size: 1.05rem;
+  margin-bottom: 1.5rem;
+}

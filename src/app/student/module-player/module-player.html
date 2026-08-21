@@ -1,0 +1,798 @@
+<div class="module-player-page">
+  @if (loading()) {
+    <p class="loading-copy">Getting your lesson ready…</p>
+  } @else {
+    <nav class="breadcrumbs">
+      <button type="button" class="crumb" (click)="goToDashboard()">🏠 My Modules</button>
+      @if (module(); as m) {
+        <span class="crumb-sep">›</span>
+        @if (view() === 'map') {
+          <span class="crumb current">{{ m.title }}</span>
+        } @else {
+          <button type="button" class="crumb" (click)="backToMap()">{{ m.title }}</button>
+        }
+      }
+      @if (activeLesson(); as lesson) {
+        <span class="crumb-sep">›</span>
+        @if (view() === 'exercise') {
+          <button type="button" class="crumb" (click)="enterLesson(lesson)">Week {{ lesson.week }}</button>
+        } @else {
+          <span class="crumb current">Week {{ lesson.week }}</span>
+        }
+      }
+      @if (view() === 'exercise') {
+        @if (activeExercise(); as exercise) {
+          <span class="crumb-sep">›</span>
+          <span class="crumb current">{{ stepLabel(exercise) }}</span>
+        }
+      }
+    </nav>
+
+    @switch (view()) {
+      @case ('map') {
+        <div class="map-view">
+          @if (student(); as s) {
+            <section class="map-welcome">
+              <span class="wave">👋</span>
+              <h1>Welcome back, {{ s.firstName }}!</h1>
+              <p>Ready to dive into <strong>{{ module()?.title }}</strong>? Pick a week below to keep going.</p>
+            </section>
+          }
+
+          <div class="module-banner" [style.--accent]="module()?.themeColor">
+            <span class="icon">{{ module()?.icon }}</span>
+            <div>
+              <h2>{{ module()?.title }}</h2>
+              <p>{{ module()?.description }}</p>
+            </div>
+          </div>
+
+          <div class="lesson-list">
+            @for (lesson of sortedLessons(); track lesson.id; let i = $index) {
+              <app-lesson-view
+                [lesson]="lesson"
+                [status]="lessonStatus(lesson)"
+                [index]="i"
+                (selected)="enterLesson(lesson)"
+              />
+            }
+          </div>
+        </div>
+      }
+
+      @case ('lesson-welcome') {
+        @if (activeLesson(); as lesson) {
+          <div class="welcome-shell">
+            @if (lesson.celebrateWelcome; as cw) {
+              <div class="celebrate-welcome">
+                <div class="cw-image-wrap">
+                  <img [src]="cw.image" [alt]="cw.imageAlt" />
+                  <span class="cw-badge-number">{{ cw.badgeNumber }}</span>
+                </div>
+
+                <h1><span class="cw-title-main">{{ cw.titleStart }}</span><span class="cw-title-accent">{{ cw.titleAccent }}</span></h1>
+                <p class="cw-subtitle">{{ cw.subtitle }}</p>
+
+                <div class="cw-scrapbook">
+                  <div class="cw-scrapbook-head">
+                    <h2>{{ cw.scrapbookHeading }}</h2>
+                  </div>
+
+                  <div class="cw-scrapbook-grid">
+                    @for (card of cw.scrapbookCards; track card.title) {
+                      <div class="cw-card">
+                        <div class="cw-card-image" [class]="'cw-card-image--' + card.badgeVariant">
+                          <img [src]="card.image" [alt]="card.imageAlt" />
+                          <span class="cw-card-badge" [class]="'cw-card-badge--' + card.badgeVariant">{{ card.badgeLabel }}</span>
+                        </div>
+                        <div class="cw-card-body">
+                          <h3>{{ card.title }}</h3>
+                          <p>&ldquo;{{ card.quote }}&rdquo;</p>
+                        </div>
+                        <div class="cw-card-footer">
+                          <span class="cw-avatar" [class]="'cw-avatar--' + card.avatarVariant"></span>
+                          <span class="cw-card-credit">{{ card.studentName.toUpperCase() }}, AGE {{ card.studentAge }}</span>
+                        </div>
+                      </div>
+                    }
+                  </div>
+                </div>
+
+                <div class="cw-next-mission">
+                  <div class="cw-next-mission-copy">
+                    <span class="cw-next-mission-label">{{ cw.nextMissionLabel }}</span>
+                    <strong>{{ cw.nextMissionTitle }}</strong>
+                  </div>
+                  @if (isCompletedLessonWelcome()) {
+                    @if (nextLesson(); as next) {
+                      <button type="button" class="btn cw-start-btn" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+                    } @else {
+                      <button type="button" class="btn cw-start-btn" (click)="backToMap()">Back to My Modules →</button>
+                    }
+                  } @else {
+                    <button type="button" class="btn cw-start-btn" (click)="beginLesson()">{{ cw.startLabel }}</button>
+                  }
+                </div>
+                @if (isCompletedLessonWelcome()) {
+                  <button type="button" class="review-lesson-link" (click)="beginLesson()">↺ Review this lesson</button>
+                }
+              </div>
+            } @else if (lesson.goalWelcome; as gw) {
+              <div class="goal-welcome">
+                <span class="gw-week-pill">{{ gw.weekPill }}</span>
+                <h1>{{ gw.title }}</h1>
+
+                <div class="gw-image-wrap">
+                  <img [src]="gw.image" [alt]="gw.imageAlt" />
+                </div>
+                <p class="gw-image-caption">{{ gw.imageCaption }}</p>
+
+                <div class="gw-card">
+                  <div class="gw-row">
+                    <span class="gw-row-icon">{{ gw.objectiveIcon }}</span>
+                    <div>
+                      <h2>{{ gw.objectiveHeading }}</h2>
+                      <p>{{ gw.objectiveText }}</p>
+                    </div>
+                  </div>
+
+                  <span class="gw-row-divider"></span>
+
+                  <div class="gw-row">
+                    <span class="gw-row-icon">{{ gw.focusIcon }}</span>
+                    <div>
+                      <span class="gw-focus-label">{{ gw.focusLabel }}</span>
+                      <p>{{ gw.focusText }}</p>
+                    </div>
+                  </div>
+                </div>
+
+                @if (isCompletedLessonWelcome()) {
+                  @if (nextLesson(); as next) {
+                    <button type="button" class="btn gw-start-btn" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+                  } @else {
+                    <button type="button" class="btn gw-start-btn" (click)="backToMap()">Back to My Modules →</button>
+                  }
+                  <button type="button" class="review-lesson-link" (click)="beginLesson()">↺ Review this lesson</button>
+                } @else {
+                  <button type="button" class="btn gw-start-btn" (click)="beginLesson()">{{ gw.startLabel }} →</button>
+                }
+              </div>
+            } @else if (lesson.practiceWelcome; as pw) {
+              <div class="practice-welcome">
+                <span class="pw-badge-pill">{{ pw.badgeIcon }} {{ pw.badgeLabel }}</span>
+
+                <div class="practice-welcome-hero">
+                  <div class="pw-image-wrap">
+                    <img [src]="pw.image" [alt]="pw.imageAlt" />
+                    @if (pw.imageBadge) {
+                      <span class="pw-image-badge">{{ pw.imageBadge }}</span>
+                    }
+                  </div>
+
+                  <div class="practice-welcome-copy">
+                    <span class="pw-week-label">{{ pw.weekPill }}</span>
+                    <h1>{{ pw.title }}</h1>
+                    <p class="pw-subtitle">{{ pw.subtitle }}</p>
+                  </div>
+                </div>
+
+                <div class="pw-card pw-objective-card">
+                  <span class="pw-card-icon">{{ pw.objectiveIcon }}</span>
+                  <div>
+                    <h2>{{ pw.objectiveHeading }}</h2>
+                    <p>{{ pw.objectiveText }}</p>
+                  </div>
+                </div>
+
+                <div class="pw-card pw-recap-card">
+                  <span class="pw-card-icon pw-recap-icon">{{ pw.recapIcon }}</span>
+                  <div>
+                    <h2>{{ pw.recapHeading }}</h2>
+                    <p>{{ pw.recapText }}</p>
+
+                    @if (isCompletedLessonWelcome()) {
+                      @if (nextLesson(); as next) {
+                        <button type="button" class="btn pw-recap-btn" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+                      } @else {
+                        <button type="button" class="btn pw-recap-btn" (click)="backToMap()">Back to My Modules →</button>
+                      }
+                      <button type="button" class="review-lesson-link" (click)="beginLesson()">↺ Review this lesson</button>
+                    } @else {
+                      <button type="button" class="btn pw-recap-btn" (click)="beginLesson()">{{ pw.recapButtonLabel }} →</button>
+                    }
+                  </div>
+                </div>
+
+                @if (pw.footerNote) {
+                  <p class="pw-footer-note">{{ pw.footerNote }}</p>
+                }
+              </div>
+            } @else if (lesson.introWelcome; as iw) {
+              <div class="intro-welcome">
+                <div class="intro-welcome-copy">
+                  <span class="iw-week-pill">{{ iw.weekPill }}</span>
+                  <h1><span class="iw-title-main">{{ iw.titleStart }}</span>&nbsp;<span class="iw-title-accent">{{ iw.titleAccent }}</span></h1>
+                  <p class="iw-subtitle">{{ iw.subtitle }}</p>
+                  <span class="iw-stage-pill">{{ iw.stageIcon }} {{ iw.stageLabel }}</span>
+
+                  <div class="iw-objective-card">
+                    <span class="iw-objective-icon">{{ iw.objectiveIcon }}</span>
+                    <div>
+                      <h2>{{ iw.objectiveHeading }}</h2>
+                      <p>{{ iw.objectiveText }}</p>
+                    </div>
+                  </div>
+
+                  @if (isCompletedLessonWelcome()) {
+                    @if (nextLesson(); as next) {
+                      <button type="button" class="btn iw-start-btn" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+                    } @else {
+                      <button type="button" class="btn iw-start-btn" (click)="backToMap()">Back to My Modules →</button>
+                    }
+                    <button type="button" class="review-lesson-link" (click)="beginLesson()">↺ Review this lesson</button>
+                  } @else {
+                    <button type="button" class="btn iw-start-btn" (click)="beginLesson()">{{ iw.startLabel }} →</button>
+                  }
+                </div>
+
+                <div class="intro-welcome-art">
+                  <div class="iw-image-wrap">
+                    <img [src]="iw.image" [alt]="iw.imageAlt" />
+                  </div>
+                  @if (iw.speechBubble) {
+                    <span class="iw-speech-bubble">{{ iw.speechBubble }}</span>
+                  }
+                </div>
+              </div>
+            } @else if (lesson.objectivesWelcome; as ow) {
+              <div class="objectives-welcome">
+                <span class="ow-week-pill">{{ ow.weekPill }}</span>
+                <h1>{{ ow.title }}</h1>
+                <p class="ow-subtitle">{{ ow.subtitle }}</p>
+
+                <div class="ow-image-wrap">
+                  <img [src]="ow.image" [alt]="ow.imageAlt" />
+                </div>
+
+                @if (ow.objectiveCards; as cards) {
+                  <div class="ow-objectives-section">
+                    <h2>{{ ow.sectionHeading || 'Our Objectives' }}</h2>
+                    @if (ow.sectionDescription) {
+                      <p class="ow-objectives-description">{{ ow.sectionDescription }}</p>
+                    }
+                    <div class="ow-objectives-grid">
+                      @for (card of cards; track card.title) {
+                        <div class="ow-objective-card">
+                          <span class="ow-obj-icon" [class]="'ow-obj-icon--' + card.variant">{{ card.icon }}</span>
+                          <h3>{{ card.title }}</h3>
+                          <p>{{ card.description }}</p>
+                        </div>
+                      }
+                    </div>
+                  </div>
+                } @else {
+                  <div class="ow-card">
+                    <h2>Objectives</h2>
+                    <ul class="ow-objectives">
+                      @for (objective of ow.objectives; track objective) {
+                        <li><span class="ow-check">✓</span>{{ objective }}</li>
+                      }
+                    </ul>
+                  </div>
+                }
+
+                <span class="ow-divider"></span>
+
+                @if (isCompletedLessonWelcome()) {
+                  @if (nextLesson(); as next) {
+                    <button type="button" class="btn ow-start-btn" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+                  } @else {
+                    <button type="button" class="btn ow-start-btn" (click)="backToMap()">Back to My Modules →</button>
+                  }
+                  <button type="button" class="review-lesson-link" (click)="beginLesson()">↺ Review this lesson</button>
+                } @else {
+                  <button type="button" class="btn ow-start-btn" (click)="beginLesson()">{{ ow.startLabel }} →</button>
+                }
+              </div>
+            } @else if (lesson.recapWelcome; as rw) {
+              <div class="recap-welcome">
+                <div class="recap-hero">
+                  <span class="recap-week-pill">{{ rw.weekPill }}</span>
+                  <h1>{{ rw.title }}</h1>
+                  <p class="recap-subtitle">{{ rw.subtitle }}</p>
+
+                  <div class="recap-hero-image-wrap">
+                    <img [src]="rw.image" [alt]="rw.imageAlt" />
+                  </div>
+                </div>
+
+                <div class="recap-card">
+                  <div class="recap-card-head">
+                    <span class="recap-card-icon">ℹ️</span>
+                    <h2>{{ rw.learningObjectiveHeading }}</h2>
+                  </div>
+                  <p>{{ rw.learningObjectiveText }}</p>
+                </div>
+
+                <div class="recap-card">
+                  <div class="recap-card-head">
+                    <span class="recap-card-icon">💡</span>
+                    <h2>{{ rw.recapHeading }}</h2>
+                  </div>
+                  <span class="recap-meta">{{ rw.recapMeta }}</span>
+                  <p>{{ rw.recapIntro }}</p>
+
+                  <div class="recap-question-list">
+                    @for (q of rw.recapQuestions; track q.number) {
+                      <div class="recap-question-row">
+                        <span class="recap-arrow">→</span>
+                        <div>
+                          <strong>Question {{ q.number }}</strong>
+                          <p>{{ q.question }}</p>
+                        </div>
+                      </div>
+                    }
+                  </div>
+                </div>
+
+                <div class="recap-cta">
+                  @if (isCompletedLessonWelcome()) {
+                    @if (nextLesson(); as next) {
+                      <button type="button" class="btn recap-start-btn" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+                    } @else {
+                      <button type="button" class="btn recap-start-btn" (click)="backToMap()">Back to My Modules →</button>
+                    }
+                    <button type="button" class="review-lesson-link" (click)="beginLesson()">↺ Review this lesson</button>
+                  } @else {
+                    <button type="button" class="btn recap-start-btn" (click)="beginLesson()">{{ rw.startLabel }}</button>
+                  }
+                </div>
+              </div>
+            } @else if (lesson.welcomeCard; as wc) {
+              <div class="hero-card">
+                <div class="hero-content">
+                  <span class="hero-badge">{{ wc.badge }}</span>
+                  <h1>{{ wc.headline }}</h1>
+                  <p class="hero-intro">{{ wc.intro }}</p>
+
+                  @if (wc.missionCards) {
+                    @if (isCompletedLessonWelcome()) {
+                      @if (nextLesson(); as next) {
+                        <button type="button" class="btn hero-start-btn" (click)="continueToNextLesson()">Continue to Week {{ next.week }} 🚀</button>
+                      } @else {
+                        <button type="button" class="btn hero-start-btn" (click)="backToMap()">Back to My Modules 🚀</button>
+                      }
+                      <button type="button" class="review-lesson-link" (click)="beginLesson()">↺ Review this lesson</button>
+                    } @else {
+                      <button type="button" class="btn hero-start-btn" (click)="beginLesson()">{{ wc.startLabel }}</button>
+                    }
+                  }
+                </div>
+
+                <div class="hero-image-wrap">
+                  <img [src]="wc.image" [alt]="wc.imageAlt" />
+                </div>
+              </div>
+
+              @if (wc.missionCards; as cards) {
+                <div class="mission-section">
+                  <h2>{{ wc.missionHeading }}</h2>
+                  <p class="mission-subtitle">{{ wc.missionSubtitle }}</p>
+                  <div class="mission-grid">
+                    @for (card of cards; track card.title) {
+                      <div class="mission-card">
+                        <span class="mission-icon">{{ card.icon }}</span>
+                        <strong>{{ card.title }}</strong>
+                        <p>{{ card.description }}</p>
+                      </div>
+                    }
+                  </div>
+                </div>
+              } @else {
+                <div class="trainer-message-panel">
+                  <span class="tm-icon">🧑‍🏫</span>
+                  <h2>Trainer's Message</h2>
+                  <p>{{ wc.trainerMessage }}</p>
+
+                  @if (isCompletedLessonWelcome()) {
+                    @if (nextLesson(); as next) {
+                      <button type="button" class="btn tm-btn" (click)="continueToNextLesson()">Continue to Week {{ next.week }} 🚀</button>
+                    } @else {
+                      <button type="button" class="btn tm-btn" (click)="backToMap()">Back to My Modules 🚀</button>
+                    }
+                    <button type="button" class="review-lesson-link" (click)="beginLesson()">↺ Review this lesson</button>
+                  } @else {
+                    <button type="button" class="btn tm-btn" (click)="beginLesson()">Begin Lessons 🚀</button>
+                  }
+                </div>
+              }
+            } @else if (lesson.welcomeBackIntro) {
+              <div class="backbanner-hero" [style.--accent]="module()?.themeColor">
+                <h1>Welcome Back, {{ student().firstName }}! 🌟</h1>
+                <p class="backbanner-intro">{{ lesson.welcomeBackIntro }}</p>
+              </div>
+
+              <div class="backbanner-card">
+                <div class="backbanner-week-pill">
+                  <strong>WEEK {{ lesson.week }} @if (lesson.stage) { – {{ lesson.stage.toUpperCase() }} }</strong>
+                  <span>{{ lessonQuotedTitle(lesson) }}</span>
+                </div>
+
+                @if (lesson.mainFocus) {
+                  <div class="backbanner-focus">
+                    <strong>🎯 Main Focus: </strong><span>{{ lesson.mainFocus }}</span>
+                  </div>
+                }
+
+                @if (isCompletedLessonWelcome()) {
+                  @if (nextLesson(); as next) {
+                    <button type="button" class="btn backbanner-btn" (click)="continueToNextLesson()">🚀 Continue to Week {{ next.week }}</button>
+                  } @else {
+                    <button type="button" class="btn backbanner-btn" (click)="backToMap()">🎉 Back to My Modules</button>
+                  }
+                  <button type="button" class="review-lesson-link" (click)="beginLesson()">↺ Review this lesson</button>
+                } @else {
+                  <button type="button" class="btn backbanner-btn" (click)="beginLesson()">🚀 Start Lesson</button>
+                }
+              </div>
+            } @else if (lesson.heroSubtitle) {
+              <div class="mastery-hero">
+                <div class="mastery-content">
+                  <span class="mastery-pill">Week {{ lesson.week }} @if (lesson.stage) { - {{ lesson.stage }} Level }</span>
+                  <h1>Welcome to <span class="accent">{{ lessonQuotedTitle(lesson) }}</span></h1>
+                  <p class="mastery-subtitle">{{ lesson.heroSubtitle }}</p>
+
+                  @if (lesson.mainFocus) {
+                    <div class="mastery-focus">
+                      <strong>🎯 Main Focus</strong>
+                      <p>{{ lesson.mainFocus }}</p>
+                    </div>
+                  }
+
+                  @if (isCompletedLessonWelcome()) {
+                    @if (nextLesson(); as next) {
+                      <button type="button" class="btn mastery-btn" (click)="continueToNextLesson()">Continue to Week {{ next.week }} ➡️</button>
+                    } @else {
+                      <button type="button" class="btn mastery-btn" (click)="backToMap()">Back to My Modules ➡️</button>
+                    }
+                    <button type="button" class="review-lesson-link" (click)="beginLesson()">↺ Review this lesson</button>
+                  } @else {
+                    <button type="button" class="btn mastery-btn" (click)="beginLesson()">Start Your Journey ➡️</button>
+                  }
+                </div>
+
+                @if (lesson.heroImage) {
+                  <div class="mastery-image-wrap">
+                    <img [src]="lesson.heroImage" [alt]="lesson.heroImageAlt ?? ''" />
+                  </div>
+                }
+              </div>
+            } @else if (lesson.journeyIntro) {
+              <div class="journey-card">
+                <div class="journey-top">
+                  <div class="journey-avatar">
+                    <img src="/assets/images/week3.jpg" alt="Your trainer, waving hello" />
+                  </div>
+
+                  <div class="journey-content">
+                    <h1>Welcome to Your <span class="accent">Learning Journey!</span></h1>
+                    <p class="journey-greeting">
+                      Hello, {{ student().firstName }}! I'm so excited to see you here today.
+                      {{ lesson.journeyIntro }}
+                    </p>
+
+                    <div class="journey-actions">
+                      @if (isCompletedLessonWelcome()) {
+                        @if (nextLesson(); as next) {
+                          <button type="button" class="btn journey-btn-primary" (click)="continueToNextLesson()">➡️ Continue to Week {{ next.week }}</button>
+                        } @else {
+                          <button type="button" class="btn journey-btn-primary" (click)="backToMap()">🎉 Back to My Modules</button>
+                        }
+                        <button type="button" class="review-lesson-link" (click)="beginLesson()">↺ Review this lesson</button>
+                      } @else {
+                        <button type="button" class="btn journey-btn-primary" (click)="beginLesson()">Let's Get Started!</button>
+                      }
+                    </div>
+                  </div>
+                </div>
+
+                <div class="journey-tip">
+                  <strong>Remember:</strong> There are no wrong answers here — only opportunities to learn and grow together! 🌱
+                </div>
+              </div>
+
+              <div class="journey-info-card">
+                <div class="journey-info-head">
+                  <span class="journey-week-number">{{ lesson.week }}</span>
+                  <h2>{{ lesson.title }}</h2>
+                  @if (lesson.stage) { <span class="stage-pill">{{ lesson.stage }} Week</span> }
+                </div>
+
+                @if (lesson.mainFocus) {
+                  <div class="main-focus">
+                    <strong>🎯 Main Focus:</strong>
+                    <p>{{ lesson.mainFocus }}</p>
+                  </div>
+                }
+
+                @if (lesson.discoverPoints?.length) {
+                  <div class="discover">
+                    <h3>📚 What You'll Discover</h3>
+                    <ul>
+                      @for (point of lesson.discoverPoints; track point) {
+                        <li>{{ point }}</li>
+                      }
+                    </ul>
+                  </div>
+                }
+              </div>
+            } @else {
+              <div class="classic-header">
+                <h1>👋 Welcome to Your Learning Journey!</h1>
+                <p class="classic-subtitle">Get ready to discover amazing things about yourself! ✨</p>
+              </div>
+
+              <div class="welcome-grid">
+                <div class="welcome-card">
+                  <span class="week-pill">Week {{ lesson.week }}</span>
+                  <h2>{{ lesson.title }}</h2>
+                  @if (lesson.tagline) { <p class="tagline">{{ lesson.tagline }}</p> }
+
+                  @if (lesson.mainFocus) {
+                    <div class="main-focus">
+                      <strong>🎯 Main Focus</strong>
+                      <p>{{ lesson.mainFocus }}</p>
+                    </div>
+                  }
+
+                  @if (lesson.discoverPoints?.length) {
+                    <div class="discover">
+                      <h3>📚 What You'll Discover</h3>
+                      <ul>
+                        @for (point of lesson.discoverPoints; track point) {
+                          <li>{{ point }}</li>
+                        }
+                      </ul>
+                    </div>
+                  }
+
+                  @if (isCompletedLessonWelcome()) {
+                    @if (nextLesson(); as next) {
+                      <button type="button" class="btn btn-lg-tappable w-100 start-btn" (click)="continueToNextLesson()">
+                        ➡️ Continue to Week {{ next.week }}
+                      </button>
+                    } @else {
+                      <button type="button" class="btn btn-lg-tappable w-100 start-btn" (click)="backToMap()">
+                        🎉 Back to My Modules
+                      </button>
+                    }
+                    <button type="button" class="review-lesson-link" (click)="beginLesson()">↺ Review this lesson</button>
+                  } @else {
+                    <button type="button" class="btn btn-lg-tappable w-100 start-btn" (click)="beginLesson()">
+                      🚀 Start My Journey of Discovery →
+                    </button>
+                  }
+                </div>
+
+                <div class="welcome-art">
+                  <img class="teacher-img" src="/assets/images/teacher-welcome.png" alt="Your trainer, ready to welcome you to class" />
+                </div>
+              </div>
+
+              <p class="classic-footer">Remember: You are amazing just the way you are! 💖</p>
+              <p class="classic-footer-icons">🌟 📚 🎭 💪 ✨</p>
+            }
+          </div>
+        }
+      }
+
+      @case ('exercise') {
+        @if (activeExercise(); as exercise) {
+          @if (exercise.type === 'story-tabs') {
+            <div class="story-shell">
+              <app-story-tabs-step-view
+                [step]="exercise"
+                [studentId]="student().id"
+                [moduleId]="module()!.id"
+                (continued)="onStoryTabsContinue($event)"
+              />
+            </div>
+          } @else if (exercise.type === 'confidence-link') {
+            <div class="story-shell">
+              <app-confidence-link-step-view [step]="exercise" (completed)="onStepContinue()" />
+            </div>
+          } @else if (exercise.type === 'matching-game') {
+            <div class="story-shell">
+              <app-matching-game-step-view [step]="exercise" (continued)="onStepContinue()" />
+            </div>
+          } @else if (exercise.type === 'story-carousel') {
+            <div class="story-shell">
+              <app-story-carousel-step-view [step]="exercise" (continued)="onStepContinue()" />
+            </div>
+          } @else if (exercise.type === 'warmup-parade') {
+            <div class="story-shell">
+              <app-warmup-parade-step-view [step]="exercise" (continued)="onStepContinue()" />
+            </div>
+          } @else if (exercise.type === 'victory-dance') {
+            <div class="story-shell">
+              <app-victory-dance-step-view [step]="exercise" (submitted)="onShared($event)" />
+            </div>
+          } @else if (exercise.type === 'challenge-tracker') {
+            <div class="story-shell">
+              <app-challenge-tracker-step-view [step]="exercise" (continued)="onStepContinue()" />
+            </div>
+          } @else if (exercise.type === 'confidence-planner') {
+            <div class="story-shell">
+              <app-confidence-planner-step-view [step]="exercise" (continued)="onStepContinue()" />
+            </div>
+          } @else if (exercise.type === 'challenge-minimal') {
+            <div class="story-shell">
+              <app-challenge-minimal-step-view [step]="exercise" (continued)="onStepContinue()" />
+            </div>
+          } @else if (exercise.type === 'memory-game-intro') {
+            <div class="story-shell">
+              <app-memory-game-intro-step-view [step]="exercise" (continued)="onStepContinue()" />
+            </div>
+          } @else if (exercise.type === 'memory-game-setup') {
+            <div class="story-shell">
+              <app-memory-game-setup-step-view [step]="exercise" (continued)="onStepContinue()" />
+            </div>
+          } @else if (exercise.type === 'activity-steps') {
+            <div class="story-shell">
+              <app-activity-steps-step-view [step]="exercise" (submitted)="onShared($event)" (continued)="onCardContinue()" />
+            </div>
+          } @else if (exercise.type === 'weekly-challenge') {
+            <div class="story-shell">
+              <app-weekly-challenge-step-view [step]="exercise" (continued)="onStepContinue()" />
+            </div>
+          } @else if (exercise.type === 'plan-it-race') {
+            <div class="story-shell">
+              <app-plan-it-race-step-view [step]="exercise" (submitted)="onShared($event)" />
+            </div>
+          } @else if (exercise.type === 'plan-relay') {
+            <div class="story-shell">
+              <app-plan-relay-step-view [step]="exercise" (submitted)="onShared($event)" />
+            </div>
+          } @else if (exercise.type === 'day-checklist-planner') {
+            <div class="story-shell">
+              <app-day-checklist-planner-step-view [step]="exercise" (submitted)="onShared($event)" />
+            </div>
+          } @else if (exercise.type === 'weekly-task-planner') {
+            <div class="story-shell">
+              <app-weekly-task-planner-step-view [step]="exercise" (submitted)="onShared($event)" />
+            </div>
+          } @else if (exercise.type === 'challenge-of-the-week') {
+            <div class="story-shell">
+              <app-challenge-of-the-week-step-view [step]="exercise" (continued)="onStepContinue()" />
+            </div>
+          } @else if (exercise.type === 'challenge-confidence-week') {
+            <div class="story-shell">
+              <app-challenge-confidence-week-step-view [step]="exercise" (continued)="onStepContinue()" />
+            </div>
+          } @else if (exercise.type === 'story') {
+            <div class="story-shell">
+              <span class="story-badge">{{ exercise.badge ?? '📖 Story Time!' }}</span>
+              <h1>
+                {{ exercise.title }}
+                @if (exercise.year) { <span class="story-year">{{ exercise.year }}</span> }
+              </h1>
+              @if (exercise.description) { <p class="story-description">{{ exercise.description }}</p> }
+              <p class="story-instruction">{{ exercise.instruction ?? 'Watch or listen, then tap the big button to keep going!' }}</p>
+
+              <div class="story-frame">
+                @if (exercise.videoUrl) {
+                  <video class="lesson-video" controls>
+                    <source [src]="exercise.videoUrl" />
+                  </video>
+                } @else {
+                  <div class="story-placeholder">
+                    <img src="/assets/images/hero-kids.png" alt="A group of kids ready for story time" />
+                    <span class="play-badge">▶</span>
+                  </div>
+                }
+                <p class="frame-caption">Tap ▶ to start the clip</p>
+              </div>
+
+              @if (exercise.discussionStarters?.length) {
+                <div class="discussion-starters">
+                  <strong>🗣️ Talk about it:</strong>
+                  <ul>
+                    @for (question of exercise.discussionStarters; track question) {
+                      <li>{{ question }}</li>
+                    }
+                  </ul>
+                </div>
+              }
+
+              <button type="button" class="btn btn-primary btn-lg-tappable proceed-btn" (click)="onStepContinue()">
+                {{ exercise.continueLabel }}
+              </button>
+            </div>
+          } @else {
+            <div class="exercise-shell" [class.flush]="exercise.type === 'mirror-talk' || exercise.type === 'sharing-circle'">
+              @if (exercise.type === 'multiple-choice') {
+                <app-exercise-view [exercise]="exercise" (answered)="onAnswered($event)" />
+              } @else if (exercise.type === 'share-prompt') {
+                <app-share-exercise-view [exercise]="exercise" (submitted)="onShared($event)" (continued)="onCardContinue()" />
+              } @else if (exercise.type === 'reflection') {
+                <app-reflection-step-view [step]="exercise" (continued)="onStepContinue()" />
+              } @else if (exercise.type === 'challenge') {
+                <app-challenge-step-view [step]="exercise" (continued)="onStepContinue()" />
+              } @else if (exercise.type === 'warmup-chat') {
+                <app-warmup-chat-step-view [step]="exercise" (submitted)="onShared($event)" />
+              } @else if (exercise.type === 'warmup-picker') {
+                <app-warmup-picker-step-view [step]="exercise" (submitted)="onShared($event)" />
+              } @else if (exercise.type === 'day-planner') {
+                <app-day-planner-step-view [step]="exercise" (submitted)="onShared($event)" (continued)="onCardContinue()" />
+              } @else if (exercise.type === 'warmup-game') {
+                <app-warmup-game-step-view [step]="exercise" (continued)="onStepContinue()" />
+              } @else if (exercise.type === 'warmup-scenario') {
+                <app-warmup-scenario-step-view [step]="exercise" (continued)="onStepContinue()" />
+              } @else if (exercise.type === 'discussion-mcq') {
+                <app-discussion-mcq-step-view [step]="exercise" (submitted)="onShared($event)" />
+              } @else if (exercise.type === 'proud-moment') {
+                <app-proud-moment-step-view [step]="exercise" (submitted)="onShared($event)" />
+              } @else if (exercise.type === 'challenge-checklist') {
+                <app-challenge-checklist-step-view [step]="exercise" (continued)="onStepContinue()" />
+              } @else if (exercise.type === 'identity-planner') {
+                <app-identity-planner-step-view [step]="exercise" (submitted)="onShared($event)" />
+              } @else if (exercise.type === 'challenge-banner') {
+                <app-challenge-banner-step-view [step]="exercise" (continued)="onStepContinue()" />
+              } @else if (exercise.type === 'mirror-talk') {
+                <app-mirror-talk-step-view [step]="exercise" (submitted)="onShared($event)" />
+              } @else if (exercise.type === 'challenge-confidence') {
+                <app-challenge-confidence-step-view [step]="exercise" (continued)="onStepContinue()" />
+              } @else if (exercise.type === 'sharing-circle') {
+                <app-sharing-circle-step-view [step]="exercise" (submitted)="onShared($event)" />
+              } @else if (exercise.type === 'discussion-quiz') {
+                <app-discussion-quiz-step-view [step]="exercise" (submitted)="onShared($event)" />
+              } @else if (exercise.type === 'goal-matchup') {
+                <app-goal-matchup-step-view [step]="exercise" (continued)="onStepContinue()" />
+              } @else if (exercise.type === 'smart-goals-lesson') {
+                <app-smart-goals-lesson-step-view [step]="exercise" (continued)="onStepContinue()" />
+              } @else if (exercise.type === 'smart-goal-builder') {
+                <app-smart-goal-builder-step-view [step]="exercise" (submitted)="onShared($event)" />
+              } @else if (exercise.type === 'goal-challenge-tracker') {
+                <app-goal-challenge-tracker-step-view [step]="exercise" (submitted)="onShared($event)" />
+              } @else if (exercise.type === 'confidence-goal-tracker') {
+                <app-confidence-goal-tracker-step-view [step]="exercise" (submitted)="onShared($event)" />
+              } @else if (exercise.type === 'confidence-badge') {
+                <app-confidence-badge-step-view [step]="exercise" (submitted)="onShared($event)" (continued)="onCardContinue()" />
+              } @else if (exercise.type === 'confidence-plan') {
+                <app-confidence-plan-step-view [step]="exercise" (submitted)="onShared($event)" (continued)="onCardContinue()" />
+              }
+            </div>
+          }
+        }
+      }
+
+      @case ('module-complete') {
+        <div class="celebration-panel">
+          <app-ollie-mascot [size]="160" />
+          <h1>Module complete!</h1>
+          <p class="badge-line">🏆 You earned a trophy for finishing "{{ module()?.title }}"!</p>
+          <button type="button" class="btn btn-primary btn-lg-tappable" (click)="goToDashboard()">Back to Dashboard</button>
+        </div>
+      }
+    }
+  }
+</div>
+
+@if (showCompletionModal()) {
+  <div class="welcome-overlay">
+    <div class="modal-card">
+      <app-ollie-mascot [size]="140" />
+      <h1>🎉 Congratulations!</h1>
+      <p>You've earned a badge for completing {{ completedLessonTitle() }}!</p>
+      @if (nextLesson(); as next) {
+        <p class="next-line">Now proceed to Week {{ next.week }} to earn more stars and badges!</p>
+        <button type="button" class="btn btn-primary btn-lg-tappable" (click)="continueToNextLesson()">
+          Proceed to Week {{ next.week }} ▶
+        </button>
+      } @else {
+        <button type="button" class="btn btn-primary btn-lg-tappable" (click)="backToMap()">Back to My Modules</button>
+      }
+    </div>
+  </div>
+}

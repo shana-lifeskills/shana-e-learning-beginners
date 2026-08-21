@@ -1,0 +1,30 @@
+<aside class="app-sidebar">
+  <nav>
+    @for (item of navItems(); track item.label) {
+      @if (item.link) {
+        <a [routerLink]="item.link" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: !!item.exact }" class="nav-item">
+          <span class="nav-icon">{{ item.icon }}</span>
+          <span class="nav-label">{{ item.label }}</span>
+        </a>
+      } @else {
+        <span class="nav-item soon" title="Coming soon">
+          <span class="nav-icon">{{ item.icon }}</span>
+          <span class="nav-label">{{ item.label }}</span>
+          <span class="soon-badge">Soon</span>
+        </span>
+      }
+    }
+  </nav>
+
+  @if (student(); as s) {
+    <div class="sidebar-tip">
+      <app-ollie-mascot [size]="72" />
+      <strong>Ollie says:</strong>
+      @if (s.streakCount > 1) {
+        <p>Finish one lesson today to keep your {{ s.streakCount }}-day streak alive!</p>
+      } @else {
+        <p>Finish a lesson today to start your streak!</p>
+      }
+    </div>
+  }
+</aside>

@@ -1,0 +1,32 @@
+<div class="identity-planner">
+  <div class="card">
+    <span class="badge-icon">⭐</span>
+    <h1>{{ step().heading }}</h1>
+    <p class="subtitle">{{ step().subtitle }}</p>
+
+    @for (field of step().fields; track field.id) {
+      <div class="field">
+        <label [for]="field.id"><span class="field-icon">{{ field.icon }}</span> {{ field.label }}</label>
+        <textarea
+          [id]="field.id"
+          rows="3"
+          [placeholder]="field.placeholder"
+          [disabled]="locked()"
+          [value]="draft()[field.id] ?? ''"
+          (input)="updateField(field.id, $any($event.target).value)"
+        ></textarea>
+      </div>
+    }
+
+    <p class="footer-note">{{ step().footerNote }}</p>
+
+    <div class="actions">
+      <button type="button" class="btn export-btn" [disabled]="!canProceed() || exporting()" (click)="exportPlan()">
+        @if (exporting()) { Preparing… } @else { ⬇️ {{ step().exportLabel }} }
+      </button>
+      <button type="button" class="btn continue-btn" [disabled]="!canProceed() || locked()" (click)="continue()">
+        🚀 {{ step().continueLabel }}
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,204 @@
+<div
+  class="confidence-link"
+  [class.hero-variant]="!!step().heroImage"
+  [class.cards-variant]="!!step().confidenceQuote"
+  [class.garden-variant]="!!step().titleSegments"
+  [class.photo-tags-variant]="!!step().photoImage"
+  [class.plan-tabs-variant]="!!step().daySteps"
+>
+  @if (step().daySteps; as daySteps) {
+    @if (planTabsView() === 'hero') {
+      <span class="eyebrow-pill plan-tabs-eyebrow">{{ step().badgeIcon ?? '⭐' }} {{ step().badge }}</span>
+
+      <div class="plan-tabs-hero-row">
+        <div class="plan-tabs-hero-copy">
+          <h1 class="plan-tabs-quote">
+            "{{ step().quoteLead }}
+            <span class="accent">{{ step().quoteAccent }}</span>
+            {{ step().quoteTail }}"
+          </h1>
+          <p class="subtitle">{{ step().subtitle }}</p>
+
+          <div class="plan-tabs-actions">
+            <button type="button" class="plan-tab-btn plan-tab-btn--primary" (click)="showPlanTab('day')">
+              {{ step().seeMyDayLabel }}
+            </button>
+            <button type="button" class="plan-tab-btn plan-tab-btn--secondary" (click)="showPlanTab('brave')">
+              {{ step().braveWordsLabel }}
+            </button>
+          </div>
+        </div>
+
+        <div class="plan-tabs-preview-card">
+          <span class="plan-tabs-preview-title">🗒️ My Daily Plan</span>
+          @for (day of daySteps; track day.number) {
+            <div class="plan-tabs-preview-row">
+              <span class="plan-tabs-preview-tag" [class]="'plan-tabs-preview-tag--' + day.tagVariant">{{ day.tagLabel }}</span>
+              <span class="plan-tabs-preview-label">{{ day.title }}</span>
+            </div>
+          }
+        </div>
+      </div>
+    } @else if (planTabsView() === 'day') {
+      <button type="button" class="plan-tabs-back" (click)="showPlanTab('hero')">← Back</button>
+      <h1 class="plan-tabs-heading">{{ step().dayHeading }}</h1>
+
+      <div class="plan-tabs-day-grid">
+        @for (day of daySteps; track day.number) {
+          <div class="plan-tabs-day-card">
+            <div class="plan-tabs-day-head">
+              <span class="plan-tabs-day-number">{{ day.number }}</span>
+              <span class="plan-tabs-day-tag" [class]="'plan-tabs-preview-tag--' + day.tagVariant">{{ day.tagLabel }}</span>
+            </div>
+            <h3>{{ day.title }}</h3>
+            <p>{{ day.description }}</p>
+          </div>
+        }
+      </div>
+    } @else {
+      <button type="button" class="plan-tabs-back" (click)="showPlanTab('hero')">← Back</button>
+
+      <div class="plan-tabs-brave-card">
+        <h1>{{ step().braveWordsHeading }}</h1>
+        <div class="plan-tabs-brave-grid">
+          @for (word of step().braveWords; track word) {
+            <span class="plan-tabs-brave-pill">{{ word }}</span>
+          }
+        </div>
+        <p class="plan-tabs-brave-footer">{{ step().braveWordsFooter }}</p>
+      </div>
+    }
+  } @else if (step().photoImage; as photo) {
+    <span class="eyebrow-pill photo-tags-eyebrow">{{ step().badgeIcon ?? '⭐' }} {{ step().badge }}</span>
+
+    <div class="photo-tags-row">
+      <div class="photo-tags-image-wrap">
+        <img [src]="photo" [alt]="step().photoImageAlt ?? ''" />
+      </div>
+
+      <div class="photo-tags-card">
+        <h1 class="photo-tags-title">
+          {{ step().titleLine1 }}<br />
+          <span class="accent">{{ step().titleLine2 }}</span><br />
+          {{ step().titleLine3 }}
+        </h1>
+        <p class="subtitle">{{ step().subtitle }}</p>
+
+        @if (step().tags; as tags) {
+          <div class="photo-tags-list">
+            @for (tag of tags; track tag.label) {
+              <span class="photo-tag" [class]="'photo-tag--' + tag.variant">{{ tag.icon }} {{ tag.label }}</span>
+            }
+          </div>
+        }
+      </div>
+    </div>
+
+    @if (step().footerTagline) { <p class="tagline">{{ step().footerTagline }}</p> }
+  } @else if (step().titleSegments; as segments) {
+    <span class="eyebrow-pill garden-eyebrow">{{ step().eyebrow }}</span>
+
+    <h1 class="garden-title">
+      @for (seg of segments; track $index) {
+        <span [class.accent]="seg.accent">{{ seg.text }}</span>
+      }
+    </h1>
+
+    @if (step().mascotImage) {
+      <div class="garden-image-wrap">
+        <img [src]="step().mascotImage" [alt]="step().mascotImageAlt ?? ''" />
+      </div>
+    }
+  } @else if (step().confidenceQuote) {
+    <span class="eyebrow-pill">{{ step().eyebrow }}</span>
+
+    <h1 class="cards-title">{{ step().title }}</h1>
+    <p class="subtitle">{{ step().subtitle }}</p>
+
+    @if (step().mascotImage) {
+      <div class="mascot-glow">
+        <img class="mascot" [src]="step().mascotImage" [alt]="step().mascotImageAlt ?? ''" />
+      </div>
+    }
+
+    <div class="tip-cards-grid">
+      <div class="tip-card">
+        <span class="tip-icon confidence-icon">⭐</span>
+        <strong>Confidence</strong>
+        <p>“{{ step().confidenceQuote }}”</p>
+        @if (step().confidenceTip) { <span class="tip-pill">{{ step().confidenceTip }}</span> }
+      </div>
+      <div class="tip-card">
+        <span class="tip-icon planning-icon">✏️</span>
+        <strong>Planning</strong>
+        <p>“{{ step().planningQuote }}”</p>
+        @if (step().planningTip) { <span class="tip-pill">{{ step().planningTip }}</span> }
+      </div>
+    </div>
+
+    @if (step().closingHeading) {
+      <div class="closing-banner">
+        <h2>{{ step().closingHeading }}</h2>
+        @if (step().closingText) { <p>{{ step().closingText }}</p> }
+      </div>
+    }
+  } @else {
+  <span class="badge">{{ step().badgeIcon ?? '⭐' }} {{ step().badge }}</span>
+
+  @if (step().heroImage) {
+    <div class="hero-row">
+      <div class="hero-text">
+        <h1>
+          {{ step().headingLine1 }}<br />
+          <span class="accent-pill">{{ step().headingLine2 }}</span>
+        </h1>
+        <p class="subtitle">{{ step().subtitle }}</p>
+      </div>
+      <img class="hero-image" [src]="step().heroImage" [alt]="step().heroImageAlt ?? ''" />
+    </div>
+
+    <div class="say-it-band">
+      <span class="say-it-loud-label">{{ step().sayItOutLoudLabel }}</span>
+      <p class="say-it-loud-quote">“{{ step().keyTakeawayQuote }}”</p>
+    </div>
+  } @else {
+    <h1>
+      {{ step().headingLine1 }}<br />
+      <span class="accent">{{ step().headingLine2 }}</span>
+    </h1>
+    <p class="subtitle">{{ step().subtitle }}</p>
+
+    <div class="cards-grid">
+      <div class="trainer-card">
+        <div class="trainer-head">
+          <span class="chat-icon">💬</span>
+          <strong>Trainer says</strong>
+        </div>
+        <blockquote>“{{ step().trainerQuote }}”</blockquote>
+        <div class="stars">⭐⭐⭐</div>
+      </div>
+
+      <div class="takeaway-card">
+        <span class="takeaway-label">★ {{ step().keyTakeawayLabel }}</span>
+        <p class="takeaway-quote">“{{ step().keyTakeawayQuote }}”</p>
+        <span class="say-it-loud">● {{ step().sayItOutLoudLabel }}</span>
+        <div class="mascot-wrap">
+          <img
+            class="mascot-image"
+            src="/assets/images/confidence-hero-rJrKgvUB.jpg"
+            alt="Confident kid"
+          />
+        </div>
+      </div>
+    </div>
+
+    <p class="tagline">{{ step().footerTagline }}</p>
+  }
+  }
+
+  @if (!step().daySteps || planTabsView() === 'hero') {
+    <button type="button" class="btn btn-primary btn-lg-tappable complete-btn" (click)="completed.emit()">
+      {{ step().completeLabel }}
+    </button>
+  }
+</div>

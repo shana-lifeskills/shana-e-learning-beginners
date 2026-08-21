@@ -1,0 +1,33 @@
+<div class="mgs-step">
+  <h1>{{ step().title }}</h1>
+  <p class="mgs-subtitle">{{ step().subtitle }}</p>
+
+  <div class="mgs-steps">
+    @for (item of step().steps; track $index) {
+      <div class="mgs-step-row" [class]="'mgs-step-row--' + item.variant">
+        <span class="mgs-step-number">{{ $index + 1 }}</span>
+        <span class="mgs-step-icon">{{ item.icon }}</span>
+        <div class="mgs-step-copy">
+          <strong>{{ item.title }}</strong>
+          <p>{{ item.description }}</p>
+        </div>
+      </div>
+    }
+  </div>
+
+  <div class="mgs-responses-card">
+    <h2>{{ step().responseHeading }}</h2>
+    <div class="mgs-responses-grid">
+      @for (option of step().responseOptions; track option.label) {
+        <span class="mgs-response-pill" [class]="'mgs-response-pill--' + option.variant">
+          <span class="mgs-response-icon">{{ option.icon }}</span>
+          {{ option.label }}
+        </span>
+      }
+    </div>
+  </div>
+
+  <button type="button" class="btn btn-primary btn-lg-tappable mgs-continue-btn" (click)="continued.emit()">
+    {{ step().continueLabel }}
+  </button>
+</div>

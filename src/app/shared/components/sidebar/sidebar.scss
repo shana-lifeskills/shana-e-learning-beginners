@@ -1,0 +1,105 @@
+@use '../../../../assets/styles/variables' as v;
+
+// The host element is a flex item of .app-shell-body, which stretches it to
+// the full row height — but that stretch only resizes the host's own box.
+// Without these, the .app-sidebar panel inside would stay shrink-to-fit and
+// stop short of the footer instead of filling the stretched host.
+:host {
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+
+  @media (max-width: 900px) {
+    display: none;
+  }
+}
+
+.app-sidebar {
+  width: 15rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 1rem;
+  background: linear-gradient(190deg, rgba(78, 205, 196, 0.5), rgba(166, 109, 212, 0.28));
+  box-shadow: inset -1px 0 0 rgba(43, 45, 66, 0.08);
+}
+
+nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.7rem 1rem;
+  border-radius: v.$border-radius;
+  color: v.$color-navy-text;
+  font-weight: 700;
+  text-decoration: none;
+  position: relative;
+  transition: background 0.15s ease, color 0.15s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.55);
+  }
+
+  &.active {
+    background: linear-gradient(90deg, #{v.$color-sky}, #{v.$color-grape});
+    color: v.$color-white;
+    box-shadow: 0 4px 0 rgba(0, 0, 0, 0.08);
+  }
+
+  &.soon {
+    opacity: 0.55;
+    cursor: default;
+  }
+}
+
+.nav-icon {
+  font-size: 1.15rem;
+  width: 1.5rem;
+  text-align: center;
+}
+
+.nav-label {
+  flex: 1;
+}
+
+.soon-badge {
+  font-size: 0.65rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  background: v.$color-cream-bg;
+  color: rgba(43, 45, 66, 0.6);
+  padding: 0.1rem 0.4rem;
+  border-radius: v.$border-radius-pill;
+}
+
+.sidebar-tip {
+  margin-top: auto;
+  background: v.$color-white;
+  border-radius: v.$border-radius-lg;
+  padding: 1.25rem 1rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.05);
+
+  strong {
+    color: v.$color-navy-text;
+    font-size: 0.9rem;
+  }
+
+  p {
+    margin: 0;
+    color: rgba(43, 45, 66, 0.65);
+    font-weight: 600;
+    font-size: 0.82rem;
+    line-height: 1.4;
+  }
+}

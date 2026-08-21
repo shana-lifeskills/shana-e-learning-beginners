@@ -1,0 +1,10 @@
+@if (visible()) {
+  <div class="sidekick-wrap">
+    <div class="speech-bubble" [ngClass]="'mood-' + mood()">
+      <button type="button" class="close-btn" (click)="dismiss()" aria-label="Close Ollie's message">×</button>
+      <p>{{ message() }}</p>
+    </div>
+
+    <app-bolt-avatar [mood]="mood()" [size]="88" (click)="dismiss()" />
+  </div>
+}

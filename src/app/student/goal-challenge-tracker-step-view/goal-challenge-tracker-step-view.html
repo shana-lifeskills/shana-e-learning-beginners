@@ -1,0 +1,85 @@
+<div class="gct">
+  <span class="gct-badge-icon">{{ step().icon }}</span>
+  <h1>{{ step().title }}</h1>
+  <p class="gct-subtitle">{{ step().subtitle }}</p>
+
+  @if (!started()) {
+    <div class="gct-card">
+      <h2 class="gct-prompt-heading">{{ step().goalPromptHeading }}</h2>
+      <p class="gct-prompt-subtitle">{{ step().goalPromptSubtitle }}</p>
+
+      <div class="gct-goal-row">
+        <input
+          type="text"
+          class="gct-goal-input"
+          [value]="goalText()"
+          (input)="updateGoal($any($event.target).value)"
+        />
+        <button type="button" class="btn gct-start-btn" [disabled]="!goalText().trim()" (click)="startChallenge()">
+          {{ step().startLabel }}
+        </button>
+      </div>
+    </div>
+
+    @if (currentQuote(); as quote) {
+      <div class="gct-quote-card">
+        <span class="gct-quote-icon">{{ step().confidenceIcon }}</span>
+        <div>
+          <span class="gct-quote-label">{{ step().confidenceLabel }}</span>
+          <p class="gct-quote-text">"{{ quote.quote }}"</p>
+          <span class="gct-quote-caption">{{ quote.caption }}</span>
+        </div>
+      </div>
+    }
+  } @else {
+    <div class="gct-card gct-goal-card">
+      <span class="gct-goal-label">{{ step().goalLabel }}</span>
+      <p class="gct-goal-text">{{ goalText() }}</p>
+    </div>
+
+    <div class="gct-card gct-tracker-card">
+      <h2 class="gct-tap-label">{{ step().tapLabel }}</h2>
+
+      <div class="gct-days">
+        @for (label of step().dayLabels; track label; let i = $index) {
+          <div class="gct-day">
+            <button type="button" class="gct-day-square" [class.done]="isDayDone(i)" (click)="toggleDay(i)">
+              @if (isDayDone(i)) { ✓ } @else { ★ }
+            </button>
+            <span class="gct-day-label">{{ label }}</span>
+          </div>
+        }
+      </div>
+    </div>
+
+    <div class="gct-progress">
+      <span class="gct-progress-label">{{ step().progressLabel }}</span>
+      <div class="gct-progress-track">
+        <div class="gct-progress-fill" [style.width.%]="progressPercent()"></div>
+      </div>
+      <span class="gct-progress-count">{{ completedCount() }}/{{ totalDays() }} days</span>
+    </div>
+
+    @if (currentQuote(); as quote) {
+      <div class="gct-quote-card">
+        <span class="gct-quote-icon">{{ step().confidenceIcon }}</span>
+        <div>
+          <span class="gct-quote-label">{{ step().confidenceLabel }}</span>
+          <p class="gct-quote-text">"{{ quote.quote }}"</p>
+          <span class="gct-quote-caption">{{ quote.caption }}</span>
+        </div>
+      </div>
+    }
+
+    <p class="gct-parent-note">👪 {{ step().parentNote }}</p>
+
+    <div class="gct-actions">
+      <button type="button" class="btn gct-download-btn" [disabled]="downloading()" (click)="downloadGoal()">
+        @if (downloading()) { Preparing… } @else { ⬇ {{ step().downloadLabel }} }
+      </button>
+      <button type="button" class="btn gct-next-btn" [disabled]="!allComplete()" (click)="next()">
+        {{ step().continueLabel }} →
+      </button>
+    </div>
+  }
+</div>

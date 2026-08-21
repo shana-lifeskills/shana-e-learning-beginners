@@ -1,0 +1,107 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+.trainer-page {
+  max-width: 96rem;
+  margin: 0 auto;
+  padding: 2rem 2.5rem 4rem;
+}
+
+h1 {
+  @include m.playful-heading;
+  color: v.$color-navy-text;
+  font-size: 1.6rem;
+  margin-bottom: 0.15rem;
+}
+
+h2 {
+  @include m.playful-heading;
+  color: v.$color-navy-text;
+  font-size: 1.3rem;
+  margin-bottom: 0.85rem;
+}
+
+.page-head {
+  margin-bottom: 1.75rem;
+}
+
+.section-sub {
+  color: rgba(43, 45, 66, 0.6);
+  font-weight: 600;
+  margin: 0;
+}
+
+.actions-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 2.25rem;
+}
+
+.action-card {
+  @include m.bouncy-card;
+  @include m.tappable;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: v.$color-white;
+  padding: 1.5rem;
+  text-decoration: none;
+
+  .art { font-size: 2.5rem; }
+
+  strong { display: block; color: v.$color-navy-text; font-family: v.$headings-font-family; }
+  small { color: rgba(43, 45, 66, 0.6); font-weight: 600; }
+
+  &.create { border-bottom: 6px solid v.$color-coral; }
+  &.manage { border-bottom: 6px solid v.$color-grape; }
+}
+
+.loading-copy { font-weight: 600; color: rgba(43, 45, 66, 0.6); }
+
+.empty-state {
+  @include m.bouncy-card;
+  background: v.$color-white;
+  padding: 2rem;
+  text-align: center;
+
+  .art { font-size: 2.5rem; display: block; margin-bottom: 0.5rem; }
+  p { color: rgba(43, 45, 66, 0.65); font-weight: 600; margin: 0; }
+}
+
+.student-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+  gap: 1rem;
+}
+
+.student-card {
+  @include m.bouncy-card;
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  background: v.$color-white;
+  padding: 1rem 1.25rem;
+
+  &:hover { transform: none; box-shadow: 0 6px 0 rgba(0, 0, 0, 0.06); }
+
+  .avatar {
+    font-size: 1.8rem;
+    background: v.$color-cream-bg;
+    border-radius: 50%;
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .student-info {
+    display: flex;
+    flex-direction: column;
+
+    strong { color: v.$color-navy-text; }
+    small { color: rgba(43, 45, 66, 0.55); font-weight: 600; }
+  }
+}

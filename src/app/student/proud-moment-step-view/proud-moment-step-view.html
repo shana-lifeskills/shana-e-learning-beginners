@@ -1,0 +1,85 @@
+<div class="proud-moment">
+  <div class="header-card">
+    <img class="mascot" [src]="step().mascotImage" [alt]="step().mascotAlt" />
+    <div class="header-copy">
+      <h1>{{ step().heading }}</h1>
+      <p>{{ step().subtitle }}</p>
+    </div>
+  </div>
+
+  <div class="prompts">
+    @for (prompt of step().prompts; track prompt.id) {
+      <button
+        type="button"
+        class="prompt-card"
+        [class.active]="selectedPromptId() === prompt.id"
+        [disabled]="locked()"
+        (click)="selectPrompt(prompt.id)"
+      >
+        <span class="prompt-icon">{{ prompt.icon }}</span>
+        <span>{{ prompt.label }}</span>
+      </button>
+    }
+  </div>
+
+  @if (selectedPromptId(); as promptId) {
+    @for (prompt of step().prompts; track prompt.id) {
+      @if (prompt.id === promptId) {
+        <div class="text-card">
+          <span class="text-card-label"><span class="prompt-icon">{{ prompt.icon }}</span> {{ prompt.label }}</span>
+          <textarea
+            rows="3"
+            placeholder="Type your story here, or draw it below!"
+            [disabled]="locked()"
+            [value]="textAnswer()"
+            (input)="updateText($any($event.target).value)"
+          ></textarea>
+        </div>
+      }
+    }
+  }
+
+  <div class="draw-card">
+    <div class="draw-head">
+      <span class="draw-title">🖌️ {{ step().drawSectionTitle }}</span>
+      <div class="swatches">
+        @for (color of colors; track color) {
+          <button
+            type="button"
+            class="swatch"
+            [style.background]="color"
+            [class.selected]="brushColor() === color"
+            [disabled]="locked()"
+            (click)="setColor(color)"
+            [attr.aria-label]="'Pick color ' + color"
+          ></button>
+        }
+      </div>
+    </div>
+
+    <canvas
+      #canvas
+      class="draw-canvas"
+      width="900"
+      height="420"
+      (pointerdown)="onPointerDown($event)"
+      (pointermove)="onPointerMove($event)"
+      (pointerup)="onPointerUp()"
+      (pointerleave)="onPointerUp()"
+    ></canvas>
+
+    <div class="draw-footer">
+      <label class="brush-size">
+        Brush size:
+        <input type="range" min="2" max="40" [value]="brushSize()" [disabled]="locked()" (input)="setBrushSize($any($event.target).value)" />
+        <span>{{ brushSize() }}px</span>
+      </label>
+      <button type="button" class="btn btn-outline-primary clear-btn" [disabled]="locked()" (click)="clearDrawing()">Clear drawing</button>
+    </div>
+  </div>
+
+  <button type="button" class="btn btn-primary btn-lg-tappable submit-btn" [disabled]="!canSubmit() || locked()" (click)="submit()">
+    @if (locked()) { ✓ Shared! } @else { ✨ {{ step().submitLabel }} }
+  </button>
+  <p class="tip">{{ step().tip }}</p>
+</div>

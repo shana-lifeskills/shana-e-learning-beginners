@@ -1,0 +1,83 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+.module-list-page {
+  max-width: 96rem;
+  margin: 0 auto;
+  padding: 2rem 2.5rem 4rem;
+}
+
+.page-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.back-link {
+  font-weight: 800;
+  color: v.$color-navy-text;
+  text-decoration: none;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+h1 {
+  @include m.playful-heading;
+  color: v.$color-navy-text;
+  font-size: 1.4rem;
+  margin: 0;
+}
+
+.loading-copy { font-weight: 600; color: rgba(43, 45, 66, 0.6); }
+
+.empty-state {
+  @include m.bouncy-card;
+  background: v.$color-white;
+  padding: 2.5rem;
+  text-align: center;
+
+  .art { font-size: 3rem; display: block; margin-bottom: 0.5rem; }
+  p { color: rgba(43, 45, 66, 0.65); font-weight: 600; margin-bottom: 1.25rem; }
+}
+
+.module-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.module-card {
+  @include m.bouncy-card;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: v.$color-white;
+  border-left: 8px solid var(--accent, #{v.$color-coral});
+  padding: 1.1rem 1.25rem;
+
+  &:hover { transform: none; box-shadow: 0 6px 0 rgba(0, 0, 0, 0.06); }
+
+  .icon {
+    font-size: 1.9rem;
+    width: 3.5rem;
+    height: 3.5rem;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--accent, #{v.$color-coral});
+  }
+
+  .info {
+    flex: 1;
+    min-width: 0;
+
+    h3 { font-family: v.$headings-font-family; color: v.$color-navy-text; margin-bottom: 0.15rem; font-size: 1.1rem; }
+    p { margin: 0 0 0.25rem; color: rgba(43, 45, 66, 0.65); font-size: 0.85rem; }
+    small { color: rgba(43, 45, 66, 0.5); font-weight: 600; }
+  }
+}

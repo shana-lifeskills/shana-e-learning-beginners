@@ -1,0 +1,46 @@
+<div class="activity-steps">
+  <span class="as-pill">✨ {{ step().pillLabel }}</span>
+  <h1>{{ step().title }}</h1>
+  <p class="as-subtitle">{{ step().subtitle }}</p>
+
+  @if (!hasSubmitted()) {
+    @for (item of step().steps; track $index; let i = $index) {
+      <div class="as-step-row">
+        <span class="as-step-number">{{ i + 1 }}</span>
+        <div class="as-step-panel" [class]="'as-step-panel--' + item.bg">
+          <span class="as-step-icon">{{ item.icon }}</span>
+          <input
+            type="text"
+            [value]="answerAt(i)"
+            (input)="updateAnswer(i, $any($event.target).value)"
+            [placeholder]="item.placeholder"
+          />
+        </div>
+      </div>
+    }
+
+    <p class="as-progress">{{ filledCount() }} / {{ step().steps.length }} {{ step().progressLabel }}</p>
+
+    <button type="button" class="btn as-submit-btn" [disabled]="!canSubmit()" (click)="submit()">
+      {{ step().submitLabel }}
+    </button>
+  } @else {
+    <div class="as-preview">
+      <span class="as-preview-heading">{{ step().previewHeading }}</span>
+      @for (item of step().steps; track $index; let i = $index) {
+        <div class="as-preview-row">
+          <span class="as-preview-label">{{ item.icon }} Step {{ i + 1 }}</span>
+          <span class="as-preview-value">{{ answerAt(i) }}</span>
+        </div>
+      }
+    </div>
+
+    <button type="button" class="btn as-download-btn" [disabled]="downloading()" (click)="downloadPlan()">
+      @if (downloading()) { Preparing… } @else { ⬇ {{ step().downloadLabel }} }
+    </button>
+
+    <button type="button" class="btn as-continue-btn" (click)="continued.emit()">
+      {{ step().continueLabel }} →
+    </button>
+  }
+</div>

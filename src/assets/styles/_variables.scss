@@ -1,0 +1,49 @@
+// Warm, playful palette for young learners — avoid anything clinical/corporate.
+$color-coral: #ff6f59;
+$color-sunshine: #ffc93c;
+$color-sky: #4ecdc4;
+$color-grape: #a66dd4;
+$color-leaf: #6bcb77;
+$color-bubble-pink: #ff8fa3;
+$color-navy-text: #2b2d42;
+$color-cream-bg: #ffe0b2;
+$color-white: #ffffff;
+
+// Bootstrap theme overrides — imported before `bootstrap/scss/bootstrap`.
+$primary: $color-coral;
+$secondary: $color-sky;
+$success: $color-leaf;
+$warning: $color-sunshine;
+$info: $color-grape;
+$danger: $color-bubble-pink;
+$light: $color-cream-bg;
+$dark: $color-navy-text;
+
+$body-bg: $color-cream-bg;
+$body-color: $color-navy-text;
+
+$font-family-sans-serif: 'Quicksand', 'Baloo 2', -apple-system, BlinkMacSystemFont, sans-serif;
+$headings-font-family: 'Baloo 2', 'Quicksand', -apple-system, sans-serif;
+$headings-font-weight: 700;
+
+$border-radius: 1.25rem;
+$border-radius-sm: 0.85rem;
+$border-radius-lg: 1.75rem;
+$border-radius-xl: 2.25rem;
+$border-radius-pill: 50rem;
+
+$btn-padding-y: 0.65rem;
+$btn-padding-x: 1.5rem;
+$btn-font-weight: 700;
+$btn-border-width: 2px;
+
+$card-border-width: 0;
+$card-border-radius: $border-radius-lg;
+
+$input-padding-y: 0.65rem;
+$input-padding-x: 1.1rem;
+$input-border-width: 2px;
+$input-border-radius: $border-radius-sm;
+
+$enable-shadows: false;
+$enable-negative-margins: true;

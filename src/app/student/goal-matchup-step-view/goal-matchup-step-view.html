@@ -1,0 +1,71 @@
+<div class="goal-matchup">
+  @if (!reviewing()) {
+    <span class="gm-badge-icon">{{ step().badgeIcon }}</span>
+    <h1>{{ step().title }}</h1>
+    <p class="gm-subtitle">{{ step().subtitleStart }}<span class="gm-accent">{{ step().subtitleAccent }}</span>{{ step().subtitleEnd }}</p>
+
+    <div class="gm-progress-row">
+      <div class="gm-progress-wrap">
+        <span class="gm-progress-label">Question {{ activeIndex() + 1 }} of {{ total() }}</span>
+        <div class="gm-progress-track">
+          <div class="gm-progress-fill" [style.width.%]="progressPercent()"></div>
+        </div>
+      </div>
+      <span class="gm-points">⭐ {{ points() }} POINTS</span>
+    </div>
+
+    @if (currentQuestion(); as question) {
+      <h2 class="gm-question-heading">{{ step().questionHeading }}</h2>
+
+      <div class="gm-options">
+        @for (option of question.options; track option.id; let i = $index) {
+          <button
+            type="button"
+            class="gm-option"
+            [class.correct]="optionState(option) === 'correct'"
+            [class.incorrect]="optionState(option) === 'incorrect'"
+            [disabled]="answered()"
+            (click)="selectOption(option)"
+          >
+            <span class="gm-option-letter">{{ optionLetter(i) }}</span>
+            <span class="gm-option-text">{{ option.text }}</span>
+          </button>
+        }
+      </div>
+
+      @if (answered()) {
+        <p class="gm-explanation">✅ Correct: {{ correctLetter() }} — {{ question.explanation }}</p>
+
+        <button type="button" class="btn gm-next-btn" (click)="next()">
+          {{ isLastQuestion() ? 'See My Results →' : 'Next Question →' }}
+        </button>
+      }
+    }
+  } @else {
+    <span class="gm-badge-icon">🏆</span>
+    <h1>{{ step().reviewHeading }}</h1>
+    <p class="gm-subtitle">You scored <span class="gm-accent">{{ points() }} of {{ total() }}</span> — here's what you picked.</p>
+
+    <div class="gm-results">
+      @for (result of results(); track result.question.id; let i = $index) {
+        <div class="gm-result-row" [class.correct]="result.correct" [class.incorrect]="!result.correct">
+          <div class="gm-result-head">
+            <span class="gm-result-num">Question {{ i + 1 }}</span>
+            <span class="gm-result-mark">{{ result.correct ? '✅ Correct' : '❌ Not quite' }}</span>
+          </div>
+          <p class="gm-result-answer">
+            <span class="gm-option-letter">{{ resultLetter(result) }}</span>
+            {{ result.selectedOption.text }}
+          </p>
+          @if (!result.correct) {
+            <p class="gm-result-explanation">✅ Correct: {{ resultCorrectLetter(result) }} — {{ result.question.explanation }}</p>
+          }
+        </div>
+      }
+    </div>
+
+    <button type="button" class="btn gm-next-btn" (click)="finish()">
+      {{ step().continueLabel }}
+    </button>
+  }
+</div>

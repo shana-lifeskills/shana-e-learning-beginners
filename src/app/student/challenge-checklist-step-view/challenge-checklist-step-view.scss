@@ -1,0 +1,109 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+.challenge-checklist {
+  max-width: 48rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.badge {
+  display: inline-block;
+  background: linear-gradient(120deg, #{v.$color-sunshine}, #ffb347);
+  color: v.$color-navy-text;
+  font-weight: 800;
+  font-size: 0.95rem;
+  padding: 0.5rem 1.25rem;
+  border-radius: v.$border-radius-pill;
+  margin-bottom: 1.25rem;
+}
+
+h1 {
+  @include m.playful-heading;
+  font-size: 2.4rem;
+  background: linear-gradient(100deg, #{v.$color-sunshine}, #{v.$color-coral});
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  margin-bottom: 0.6rem;
+}
+
+.subtitle {
+  color: rgba(43, 45, 66, 0.65);
+  font-weight: 600;
+  font-size: 1.1rem;
+  max-width: 34rem;
+  margin: 0 auto 2rem;
+  line-height: 1.6;
+}
+
+.items-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.75rem;
+
+  @media (max-width: 720px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.item-card {
+  @include m.tappable;
+  position: relative;
+  background: v.$color-white;
+  border: 2px solid rgba(43, 45, 66, 0.12);
+  border-radius: v.$border-radius;
+  padding: 1.75rem 1.25rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+
+  &.done {
+    border-color: v.$color-leaf;
+    background: rgba(107, 203, 119, 0.08);
+  }
+
+  .item-icon { font-size: 2rem; }
+  strong { color: v.$color-navy-text; font-size: 1.05rem; }
+  p { margin: 0; color: rgba(43, 45, 66, 0.6); font-weight: 600; font-size: 0.92rem; line-height: 1.45; }
+}
+
+.done-check {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.75rem;
+  color: v.$color-leaf;
+  font-weight: 800;
+  font-size: 1.15rem;
+}
+
+.progress-track {
+  height: 0.7rem;
+  background: v.$color-cream-bg;
+  border-radius: v.$border-radius-pill;
+  overflow: hidden;
+  margin-bottom: 0.6rem;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #{v.$color-sky}, #{v.$color-grape});
+  border-radius: v.$border-radius-pill;
+  transition: width 0.3s ease;
+}
+
+.progress-label {
+  font-weight: 700;
+  color: rgba(43, 45, 66, 0.6);
+  margin-bottom: 1.75rem;
+}
+
+.tip {
+  color: rgba(43, 45, 66, 0.5);
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-top: 0.75rem;
+}

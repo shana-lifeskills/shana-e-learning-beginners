@@ -1,0 +1,77 @@
+<div class="dashboard-page">
+  @if (student(); as s) {
+    <section class="welcome-banner">
+      <div class="banner-copy">
+        <span class="eyebrow">{{ greeting() }}</span>
+        <h1>Welcome back, {{ s.firstName }}!</h1>
+        @if (s.streakCount > 1) {
+          <p>You're on a {{ s.streakCount }}-day learning streak. Finish one more lesson today to keep it going!</p>
+        } @else {
+          <p>Ready to learn something fun today?</p>
+        }
+      </div>
+      <img class="banner-art" src="/assets/images/hero-kids.png" alt="A group of happy kids reading together" />
+    </section>
+  }
+
+  <section class="stats-row">
+    <app-reward-shelf [totals]="totals()" [highlights]="highlights()" />
+  </section>
+
+  <section class="modules-section">
+    <div class="section-head">
+      <div>
+        <h2>My Modules</h2>
+        <p class="section-sub">Pick a module and keep collecting stars.</p>
+      </div>
+      <a routerLink="/student/rewards" class="see-all-link">See all my rewards →</a>
+    </div>
+
+    @if (loading()) {
+      <p class="loading-copy">Loading your adventures…</p>
+    } @else if (tracks().length === 0) {
+      <div class="empty-state">
+        <div class="art">📦</div>
+        <p>No modules yet! Ask your trainer to assign one — it'll show up right here.</p>
+      </div>
+    } @else {
+      @for (track of tracks(); track track.trackName) {
+        <div class="track-group">
+          <h3 class="track-heading">{{ track.trackName }}</h3>
+          <div class="module-grid">
+            @for (module of track.modules; track module.id) {
+              <div class="module-card" [style.--accent]="module.themeColor">
+                <div class="module-icon" [style.background]="module.themeColor">{{ module.icon }}</div>
+                <h3>{{ module.title }}</h3>
+                <p>{{ module.description }}</p>
+
+                <div class="progress-line">
+                  <span>{{ module.lessonsCompleted }} of {{ module.lessonsTotal }} lessons</span>
+                  <strong>{{ module.progressPercent }}%</strong>
+                </div>
+                <div class="progress-track">
+                  <div class="progress-fill" [style.width.%]="module.progressPercent"></div>
+                </div>
+
+                <button type="button" class="btn btn-primary w-100 btn-lg-tappable" (click)="openModule(module.id)">
+                  ▷ {{ buttonLabel(module) }}
+                </button>
+              </div>
+            }
+          </div>
+        </div>
+      }
+    }
+  </section>
+</div>
+
+@if (showWelcome() && student(); as s) {
+  <div class="welcome-overlay">
+    <div class="welcome-card">
+      <app-ollie-mascot [size]="150" />
+      <h1>Hey {{ s.firstName }}, welcome to your learning adventure!</h1>
+      <p>I'm Ollie! I'll be your guide as you explore modules, earn stars, and collect badges. Ready?</p>
+      <button type="button" class="btn btn-primary btn-lg-tappable" (click)="dismissWelcome()">Let's Go! 🚀</button>
+    </div>
+  </div>
+}

@@ -1,0 +1,238 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+$accent-blue: #4d78f0;
+
+.cgt {
+  max-width: 64rem;
+  margin: 0 auto;
+}
+
+.cgt-hero {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: 3rem;
+  align-items: start;
+  margin-bottom: 2rem;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.cgt-hero-art {
+  border-radius: v.$border-radius-xl;
+  overflow: hidden;
+  background: #fdf6ec;
+
+  img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+}
+
+.cgt-eyebrow {
+  display: inline-block;
+  background: #fdeee1;
+  color: #b5651d;
+  font-weight: 800;
+  font-size: 0.9rem;
+  padding: 0.5rem 1.2rem;
+  border-radius: v.$border-radius-pill;
+  margin-bottom: 1.5rem;
+}
+
+.cgt-hero-copy h1 {
+  @include m.playful-heading;
+  font-size: 2.5rem;
+  line-height: 1.15;
+  color: v.$color-navy-text;
+  margin-bottom: 1.25rem;
+}
+
+.cgt-subtitle {
+  color: rgba(43, 45, 66, 0.6);
+  font-size: 1.1rem;
+  line-height: 1.5;
+  margin-bottom: 1.75rem;
+}
+
+.cgt-card {
+  background: v.$color-white;
+  border-radius: v.$border-radius-xl;
+  box-shadow: 0 2px 14px rgba(43, 45, 66, 0.06);
+  padding: 1.75rem;
+  margin-bottom: 1.5rem;
+
+  h2 {
+    @include m.playful-heading;
+    font-size: 1.3rem;
+    color: v.$color-navy-text;
+    margin: 0 0 0.4rem;
+  }
+}
+
+.cgt-card-subtitle {
+  color: rgba(43, 45, 66, 0.55);
+  font-size: 0.95rem;
+  margin: 0 0 1.25rem;
+}
+
+.cgt-add-row {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.cgt-add-row input {
+  flex: 1;
+  min-width: 0;
+  border: 1px solid rgba(43, 45, 66, 0.15);
+  border-radius: v.$border-radius-sm;
+  padding: 0.85rem 1.1rem;
+  font: inherit;
+  color: v.$color-navy-text;
+
+  &::placeholder { color: rgba(43, 45, 66, 0.4); }
+  &:focus { outline: 2px solid $accent-blue; }
+}
+
+.cgt-add-btn {
+  @include m.tappable;
+  background: #dbe4fb;
+  color: $accent-blue;
+  border: none;
+  font-weight: 800;
+  padding: 0.85rem 1.5rem;
+  border-radius: v.$border-radius-sm;
+  white-space: nowrap;
+
+  &:hover { opacity: 0.85; }
+}
+
+.cgt-goal-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.cgt-goal-row {
+  @include m.tappable;
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  background: rgba(255, 201, 60, 0.22);
+  border: none;
+  border-radius: v.$border-radius-pill;
+  padding: 0.85rem 1.25rem;
+  font: inherit;
+  font-weight: 600;
+  color: v.$color-navy-text;
+  text-align: left;
+
+  &.done {
+    background: rgba(107, 203, 119, 0.25);
+
+    .cgt-goal-label { text-decoration: line-through; color: rgba(43, 45, 66, 0.55); }
+  }
+}
+
+.cgt-goal-star {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  background: v.$color-sunshine;
+  color: v.$color-navy-text;
+  font-size: 0.85rem;
+
+  .done & {
+    background: v.$color-leaf;
+    color: v.$color-white;
+  }
+}
+
+.cgt-mode-badges {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.cgt-mode-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1;
+  min-width: 7rem;
+  border-radius: v.$border-radius-xl;
+  padding: 1.25rem 1rem;
+  font-weight: 700;
+  color: v.$color-navy-text;
+
+  &--pink { background: rgba(255, 143, 163, 0.22); }
+  &--blue { background: #e3ecfd; }
+  &--green { background: rgba(107, 203, 119, 0.2); }
+}
+
+.cgt-mode-icon {
+  font-size: 1.4rem;
+}
+
+.cgt-parent-note {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  background: rgba(255, 201, 60, 0.22);
+  border-radius: v.$border-radius-sm;
+  padding: 0.85rem 1.1rem;
+  margin: 0 0 2rem;
+  color: #7a5c00;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-align: center;
+}
+
+.cgt-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.cgt-download-btn {
+  @include m.tappable;
+  background: linear-gradient(90deg, v.$color-grape, v.$color-bubble-pink);
+  color: v.$color-white;
+  border: none;
+  font-weight: 800;
+  font-size: 1rem;
+  padding: 0.85rem 1.75rem;
+  border-radius: v.$border-radius-pill;
+
+  &:hover:not(:disabled) { opacity: 0.92; }
+  &:disabled { opacity: 0.5; cursor: default; }
+}
+
+.cgt-next-btn {
+  @include m.tappable;
+  background: $accent-blue;
+  color: v.$color-white;
+  border: none;
+  font-weight: 800;
+  font-size: 1rem;
+  padding: 0.85rem 1.75rem;
+  border-radius: v.$border-radius-pill;
+
+  &:hover:not(:disabled) { opacity: 0.92; }
+  &:disabled {
+    background: #9aa0b4;
+    cursor: default;
+  }
+}

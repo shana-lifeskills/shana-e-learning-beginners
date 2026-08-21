@@ -1,0 +1,27 @@
+<div class="exercise-view">
+  @if (exercise().mediaUrl) {
+    <img class="exercise-media" [src]="exercise().mediaUrl" alt="" />
+  }
+
+  <h2 class="prompt">{{ exercise().prompt }}</h2>
+
+  <div class="options-grid">
+    @for (option of exercise().options; track option.id) {
+      <button
+        type="button"
+        class="option-btn"
+        [class.correct]="optionState(option) === 'correct'"
+        [class.incorrect]="optionState(option) === 'incorrect'"
+        [disabled]="locked() && optionState(option) === null"
+        (click)="selectOption(option)"
+      >
+        @if (option.icon) { <span class="option-icon">{{ option.icon }}</span> }
+        <span class="option-text">{{ option.text }}</span>
+      </button>
+    }
+  </div>
+
+  @if (feedback() === 'incorrect') {
+    <p class="try-again">Not quite — give it another try! 💪</p>
+  }
+</div>

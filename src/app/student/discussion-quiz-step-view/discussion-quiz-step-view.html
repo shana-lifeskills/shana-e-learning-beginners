@@ -1,0 +1,48 @@
+<div class="discussion-quiz">
+  @if (!reviewing()) {
+    <h1>🧠 {{ step().heading }}</h1>
+    @if (step().subtitle) { <p class="subtitle">{{ step().subtitle }}</p> }
+
+    @if (currentQuestion(); as question) {
+      <div class="question-card">
+        <span class="q-num">Question {{ activeIndex() + 1 }} of {{ step().questions.length }}</span>
+        <p class="q-prompt">{{ question.prompt }}</p>
+      </div>
+
+      <div class="options">
+        @for (option of question.options; track option.id) {
+          <button
+            type="button"
+            class="option"
+            [class.correct]="optionState(option) === 'correct'"
+            [class.incorrect]="optionState(option) === 'incorrect'"
+            [disabled]="locked() && optionState(option) === null"
+            (click)="selectOption(option)"
+          >
+            {{ option.text }}
+          </button>
+        }
+      </div>
+
+      @if (feedback() === 'incorrect') {
+        <p class="try-again">Not quite — give it another try! 💪</p>
+      }
+    }
+  } @else {
+    <h1>✨ {{ step().reviewHeading }}</h1>
+    <p class="subtitle">Here's what you picked — tap Continue when you're ready.</p>
+
+    <div class="review-list">
+      @for (question of step().questions; track question.id) {
+        <div class="review-row">
+          <span class="review-q">{{ question.prompt }}</span>
+          <span class="review-a">{{ answers()[question.id] }}</span>
+        </div>
+      }
+    </div>
+
+    <button type="button" class="btn btn-primary btn-lg-tappable" (click)="finish()">
+      {{ step().continueLabel }}
+    </button>
+  }
+</div>

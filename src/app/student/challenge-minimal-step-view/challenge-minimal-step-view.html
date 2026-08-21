@@ -1,0 +1,9 @@
+<div class="challenge-minimal-card">
+  <span class="cm-pill">{{ step().pillLabel }}</span>
+  <h1>{{ step().title }}</h1>
+  <span class="cm-divider"></span>
+  <p class="cm-subtitle">{{ step().subtitle }}</p>
+  <button type="button" class="btn cm-continue-btn" (click)="continued.emit()">
+    {{ step().continueLabel }} →
+  </button>
+</div>

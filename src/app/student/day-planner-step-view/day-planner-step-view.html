@@ -1,0 +1,53 @@
+<div class="day-planner">
+  <h1>{{ step().heading }}</h1>
+  @if (step().intro) { <p class="intro">{{ step().intro }}</p> }
+
+  <div class="timeline">
+    @for (section of step().sections; track section.id; let i = $index; let last = $last) {
+      <div class="timeline-panel" [class]="'theme-' + (i % 3)">
+        <span class="panel-icon">{{ section.icon }}</span>
+        <span class="panel-label">{{ section.label }}</span>
+        <textarea
+          rows="3"
+          [placeholder]="section.placeholder"
+          [disabled]="locked()"
+          [value]="draft()[section.id] ?? ''"
+          (input)="updateSection(section.id, $any($event.target).value)"
+        ></textarea>
+      </div>
+
+      @if (!last) { <span class="timeline-arrow">→</span> }
+    }
+  </div>
+
+  @if (!locked()) {
+    <button type="button" class="btn btn-primary btn-lg-tappable" [disabled]="!canSubmit()" (click)="submit()">
+      {{ step().submitLabel }}
+    </button>
+  } @else {
+    <div class="card-actions">
+      <button type="button" class="btn btn-outline-primary btn-lg-tappable" (click)="togglePreview()">
+        {{ showPreview() ? 'Hide My Card' : '🖼️ Preview My Card' }}
+      </button>
+      <button type="button" class="btn btn-primary btn-lg-tappable" (click)="continued.emit()">
+        Continue →
+      </button>
+    </div>
+
+    @if (showPreview()) {
+      <div class="card-preview">
+        <strong class="preview-title">{{ step().heading }}</strong>
+        @for (section of step().sections; track section.id) {
+          <div class="preview-row">
+            <span class="preview-label">{{ section.label }}</span>
+            <span class="preview-value">{{ draft()[section.id] }}</span>
+          </div>
+        }
+      </div>
+
+      <button type="button" class="btn btn-primary btn-lg-tappable w-100 download-btn" [disabled]="downloading()" (click)="downloadCard()">
+        @if (downloading()) { Preparing… } @else { ⬇️ Download as Picture }
+      </button>
+    }
+  }
+</div>

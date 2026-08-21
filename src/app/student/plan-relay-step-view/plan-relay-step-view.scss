@@ -1,0 +1,252 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+$accent-blue: #4d78f0;
+$slot-border: #c7d2fb;
+
+.plan-relay {
+  max-width: 50rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.pr-pill {
+  display: inline-block;
+  background: #fbe4c4;
+  color: #b3711b;
+  font-weight: 800;
+  font-size: 0.9rem;
+  padding: 0.5rem 1.4rem;
+  border-radius: v.$border-radius-pill;
+  margin-bottom: 1.5rem;
+}
+
+.plan-relay h1 {
+  @include m.playful-heading;
+  font-size: 2.6rem;
+  color: v.$color-navy-text;
+  margin-bottom: 0.75rem;
+}
+
+.pr-subtitle {
+  color: rgba(43, 45, 66, 0.55);
+  font-size: 1.1rem;
+  line-height: 1.5;
+  max-width: 36rem;
+  margin: 0 auto 2rem;
+}
+
+.pr-section-label {
+  display: block;
+  text-align: left;
+  color: rgba(43, 45, 66, 0.45);
+  font-weight: 800;
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+.pr-pool {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  min-height: 3.5rem;
+  border-radius: v.$border-radius-xl;
+  padding: 0.25rem;
+  margin-bottom: 2rem;
+  transition: background 0.15s ease;
+
+  &.drag-over {
+    background: rgba(166, 109, 212, 0.1);
+  }
+}
+
+.pr-card {
+  @include m.tappable;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: v.$color-white;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  padding: 1rem 1.5rem;
+  box-shadow: 0 2px 10px rgba(43, 45, 66, 0.08);
+  cursor: grab;
+  font-size: 1.05rem;
+
+  &:hover { transform: translateY(-2px); }
+  &:active { cursor: grabbing; }
+}
+
+.pr-card-handle {
+  color: rgba(43, 45, 66, 0.3);
+  font-size: 1rem;
+  letter-spacing: -0.2em;
+}
+
+.pr-card-label {
+  font-weight: 800;
+  color: v.$color-navy-text;
+}
+
+.pr-slots {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.pr-slot {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: v.$color-white;
+  border: 2px dashed $slot-border;
+  border-radius: v.$border-radius-lg;
+  font: inherit;
+  cursor: pointer;
+  padding: 1.1rem 1.5rem;
+  text-align: left;
+
+  &.filled {
+    border-style: solid;
+    border-color: $accent-blue;
+    box-shadow: 0 2px 10px rgba(43, 45, 66, 0.08);
+    cursor: grab;
+  }
+
+  &.drag-over {
+    border-color: v.$color-grape;
+    background: rgba(166, 109, 212, 0.08);
+  }
+
+  &.mismatch {
+    border-color: v.$color-coral;
+    background: rgba(255, 111, 89, 0.06);
+  }
+}
+
+.pr-slot-number {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: #e4eafd;
+  color: $accent-blue;
+  font-weight: 800;
+  font-size: 0.9rem;
+}
+
+.pr-slot-placeholder {
+  color: rgba(43, 45, 66, 0.4);
+  font-style: italic;
+}
+
+.pr-slot-label {
+  font-weight: 800;
+  color: v.$color-navy-text;
+  font-size: 1.05rem;
+}
+
+.pr-message {
+  font-weight: 700;
+  border-radius: v.$border-radius-sm;
+  padding: 0.75rem 1.25rem;
+  margin: 0 0 1.25rem;
+}
+
+.pr-message--success {
+  background: rgba(46, 196, 182, 0.16);
+  color: #1a8377;
+}
+
+.pr-message--error {
+  background: rgba(255, 111, 89, 0.14);
+  color: #b3402c;
+}
+
+.pr-parent-note {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  background: rgba(255, 201, 60, 0.22);
+  border-radius: v.$border-radius-sm;
+  padding: 0.85rem 1.1rem;
+  margin: 0 0 2rem;
+  color: #7a5c00;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.pr-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+
+  &--continue {
+    margin-top: 1rem;
+  }
+}
+
+.pr-check-btn {
+  @include m.tappable;
+  background: $accent-blue;
+  color: v.$color-white;
+  border: none;
+  font-weight: 800;
+  font-size: 1rem;
+  padding: 0.85rem 1.75rem;
+  border-radius: v.$border-radius-pill;
+
+  &:hover:not(:disabled) { opacity: 0.92; }
+  &:disabled {
+    background: #9aa7d1;
+    cursor: default;
+  }
+}
+
+.pr-retry-btn {
+  @include m.tappable;
+  background: v.$color-white;
+  color: v.$color-navy-text;
+  border: 2px solid rgba(43, 45, 66, 0.15);
+  font-weight: 800;
+  font-size: 1rem;
+  padding: 0.85rem 1.75rem;
+  border-radius: v.$border-radius-pill;
+
+  &:hover { background: rgba(43, 45, 66, 0.04); }
+}
+
+.pr-download-btn {
+  @include m.tappable;
+  background: linear-gradient(90deg, v.$color-grape, v.$color-bubble-pink);
+  color: v.$color-white;
+  border: none;
+  font-weight: 800;
+  font-size: 1rem;
+  padding: 0.85rem 1.75rem;
+  border-radius: v.$border-radius-pill;
+
+  &:hover:not(:disabled) { opacity: 0.92; }
+  &:disabled { opacity: 0.5; cursor: default; }
+}
+
+.pr-next-btn {
+  @include m.tappable;
+  background: v.$color-leaf;
+  color: v.$color-white;
+  border: none;
+  font-weight: 800;
+  font-size: 1rem;
+  padding: 0.85rem 1.75rem;
+  border-radius: v.$border-radius-pill;
+
+  &:hover { opacity: 0.92; }
+}

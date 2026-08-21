@@ -1,0 +1,46 @@
+<div class="mirror-talk">
+  <span class="badge">{{ step().badge }}</span>
+  <h1>{{ step().heading }}</h1>
+  <p class="subtitle">{{ step().subtitle }}</p>
+
+  <div class="card">
+    @if (!added()) {
+      <div class="sparkle-circle">✨</div>
+      <p class="shine-label">Your turn to shine!</p>
+
+      <div class="input-row">
+        <input
+          type="text"
+          [value]="draft()"
+          [placeholder]="step().fieldPrefix"
+          (input)="updateDraft($any($event.target).value)"
+          (keyup.enter)="add()"
+        />
+        <button type="button" class="btn add-btn" [disabled]="!draft().trim()" (click)="add()">
+          {{ step().addLabel }}
+        </button>
+      </div>
+    } @else {
+      <div class="sparkle-circle done">🌟</div>
+      <p class="shine-label">Look at you shine!</p>
+      <p class="preview-answer">{{ step().fieldPrefix }} {{ draft() }}</p>
+      <button type="button" class="edit-link" (click)="editAgain()">✏️ Change my answer</button>
+    }
+  </div>
+
+  <p class="examples-label">Example:</p>
+  <div class="examples">
+    @for (example of step().examples; track example) {
+      <span class="example-chip">"{{ example }}"</span>
+    }
+  </div>
+
+  <p class="reminder"><strong>Remember:</strong> {{ step().reminderText }}</p>
+  <p class="tip">{{ step().tip }}</p>
+
+  @if (added()) {
+    <button type="button" class="btn btn-primary btn-lg-tappable continue-btn" (click)="finish()">
+      {{ step().continueLabel }}
+    </button>
+  }
+</div>

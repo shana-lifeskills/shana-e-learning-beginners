@@ -1,0 +1,50 @@
+<div class="trainer-page">
+  @if (trainer(); as t) {
+    <div class="page-head">
+      <h1>Welcome back, {{ t.firstName }}!</h1>
+      <p class="section-sub">Manage your modules and see how your students are doing.</p>
+    </div>
+  }
+
+  <section class="actions-row">
+    <a routerLink="/trainer/modules/new" class="action-card create">
+      <span class="art">✏️</span>
+      <div>
+        <strong>Create a Module</strong>
+        <small>Build a new set of lessons</small>
+      </div>
+    </a>
+    <a routerLink="/trainer/modules" class="action-card manage">
+      <span class="art">📚</span>
+      <div>
+        <strong>My Modules ({{ modules().length }})</strong>
+        <small>Edit and assign to students</small>
+      </div>
+    </a>
+  </section>
+
+  <section class="students-section">
+    <h2>My Students</h2>
+
+    @if (loading()) {
+      <p class="loading-copy">Loading your students…</p>
+    } @else if (students().length === 0) {
+      <div class="empty-state">
+        <span class="art">🧑‍🎓</span>
+        <p>No students have signed up yet. Once they do, they'll show up here.</p>
+      </div>
+    } @else {
+      <div class="student-grid">
+        @for (student of students(); track student.id) {
+          <div class="student-card">
+            <span class="avatar">{{ avatarEmoji[student.avatarId] ?? '🙂' }}</span>
+            <div class="student-info">
+              <strong>{{ student.firstName }} {{ student.lastName }}</strong>
+              <small>{{ assignedCount(student) }} module(s) assigned</small>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  </section>
+</div>

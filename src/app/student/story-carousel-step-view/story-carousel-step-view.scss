@@ -1,0 +1,137 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+.story-carousel {
+  max-width: 60rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+h1 {
+  @include m.playful-heading;
+  font-size: 2.6rem;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(100deg, #{v.$color-sky}, #{v.$color-leaf});
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.subtitle {
+  color: rgba(43, 45, 66, 0.6);
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+}
+
+.carousel-frame {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.nav-arrow {
+  @include m.tappable;
+  flex-shrink: 0;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  background: v.$color-white;
+  border: none;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.08);
+  font-size: 1.6rem;
+  color: v.$color-navy-text;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:disabled { opacity: 0.35; cursor: default; }
+  &:hover:not(:disabled) { background: v.$color-cream-bg; }
+}
+
+.slide {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  border-radius: v.$border-radius-lg;
+  overflow: hidden;
+  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.06);
+  min-height: 20rem;
+
+  @media (max-width: 680px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.slide-image-wrap {
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+.slide-copy {
+  background: linear-gradient(160deg, #fde3cf, #fbd0b0);
+  padding: 2.25rem 2rem;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  h2 {
+    @include m.playful-heading;
+    font-size: 1.7rem;
+    color: v.$color-navy-text;
+    margin-bottom: 0.85rem;
+  }
+
+  p {
+    margin: 0;
+    color: rgba(43, 45, 66, 0.75);
+    font-weight: 600;
+    font-size: 1.05rem;
+    line-height: 1.6;
+  }
+}
+
+.dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.dot {
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 50%;
+  background: rgba(43, 45, 66, 0.18);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+
+  &.active { background: v.$color-sky; width: 1.5rem; border-radius: v.$border-radius-pill; }
+}
+
+.carousel-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.slide-count {
+  font-weight: 700;
+  color: rgba(43, 45, 66, 0.6);
+}
+
+.auto-play-btn,
+.next-lesson-btn {
+  padding: 0.6rem 1.35rem;
+}

@@ -1,0 +1,76 @@
+<div class="matching-game">
+  <h1><span class="title-plain">Match Your </span><span class="title-accent">{{ step().title }}</span></h1>
+  <p class="instruction">{{ step().instruction }}</p>
+
+  <div class="how-to-play">
+    <h2>🎮 How to Play?</h2>
+    <p><strong>🎯 Click</strong> a picture, then click the name that matches it</p>
+    <p>✨ Find all {{ step().pairs.length }} matches to complete the game</p>
+    <p>🎉 Have fun and see how fast you can match them all!</p>
+  </div>
+
+  <div class="score-bar">
+    <div class="score-stat">
+      <span class="stat-value score-value">{{ score() }}</span>
+      <span class="stat-label">Score</span>
+    </div>
+    <div class="score-stat">
+      <span class="stat-value matches-value">{{ score() }}/{{ step().pairs.length }}</span>
+      <span class="stat-label">Matches</span>
+    </div>
+    <button type="button" class="reset-btn" (click)="playAgain()">Reset Game</button>
+  </div>
+
+  <div class="match-grid">
+    <div class="match-column">
+      <h2 class="column-title pictures-title">Pictures</h2>
+      @for (pair of pictureOrder(); track pair.id) {
+        <button
+          type="button"
+          class="match-card picture-card"
+          [class.matched]="cardState(pair.id, 'picture') === 'matched'"
+          [class.selected]="cardState(pair.id, 'picture') === 'selected'"
+          [class.wrong]="cardState(pair.id, 'picture') === 'wrong'"
+          [disabled]="cardState(pair.id, 'picture') === 'matched'"
+          (click)="selectPicture(pair.id)"
+        >
+          <span class="pair-image-ring">
+            <img class="pair-image" [src]="pair.image" [alt]="pair.imageAlt" />
+          </span>
+        </button>
+      }
+    </div>
+
+    <div class="match-column">
+      <h2 class="column-title names-title">Names</h2>
+      @for (pair of nameOrder(); track pair.id) {
+        <button
+          type="button"
+          class="match-card name-card"
+          [class.matched]="cardState(pair.id, 'name') === 'matched'"
+          [class.selected]="cardState(pair.id, 'name') === 'selected'"
+          [class.wrong]="cardState(pair.id, 'name') === 'wrong'"
+          [disabled]="cardState(pair.id, 'name') === 'matched'"
+          (click)="selectName(pair.id)"
+        >
+          {{ pair.label }}
+        </button>
+      }
+    </div>
+  </div>
+
+  @if (allMatched()) {
+    <div class="finish-panel">
+      <p class="finish-headline">🎉 You matched all {{ step().pairs.length }}!</p>
+      <p class="finish-subline">Score: {{ score() }} / {{ step().pairs.length }} · Attempts: {{ attempts() }}</p>
+      <div class="finish-actions">
+        <button type="button" class="btn btn-outline-primary btn-lg-tappable" (click)="playAgain()">
+          {{ step().playAgainLabel }}
+        </button>
+        <button type="button" class="btn btn-primary btn-lg-tappable" (click)="finish()">
+          {{ step().continueLabel }}
+        </button>
+      </div>
+    </div>
+  }
+</div>

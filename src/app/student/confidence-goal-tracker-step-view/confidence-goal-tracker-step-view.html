@@ -1,0 +1,58 @@
+<div class="cgt">
+  <div class="cgt-hero">
+    <div class="cgt-hero-art">
+      <img [src]="step().image" [alt]="step().imageAlt" />
+    </div>
+
+    <div class="cgt-hero-copy">
+      <span class="cgt-eyebrow">{{ step().eyebrowIcon }} {{ step().eyebrowLabel }}</span>
+      <h1>{{ step().heading }}</h1>
+      <p class="cgt-subtitle">{{ step().subtitle }}</p>
+
+      <div class="cgt-card">
+        <h2>{{ step().cardHeading }}</h2>
+        <p class="cgt-card-subtitle">{{ step().cardSubtitle }}</p>
+
+        <div class="cgt-add-row">
+          <input
+            type="text"
+            [placeholder]="step().inputPlaceholder"
+            [value]="draft()"
+            (input)="updateDraft($any($event.target).value)"
+            (keydown.enter)="addGoal()"
+          />
+          <button type="button" class="cgt-add-btn" (click)="addGoal()">{{ step().addButtonLabel }}</button>
+        </div>
+
+        <div class="cgt-goal-list">
+          @for (goal of goals(); track goal.id) {
+            <button type="button" class="cgt-goal-row" [class.done]="goal.done" (click)="toggleDone(goal.id)">
+              <span class="cgt-goal-star">{{ goal.done ? '✓' : '★' }}</span>
+              <span class="cgt-goal-label">{{ goal.label }}</span>
+            </button>
+          }
+        </div>
+      </div>
+
+      <div class="cgt-mode-badges">
+        @for (badge of step().modeBadges; track badge.label) {
+          <div class="cgt-mode-badge" [class]="'cgt-mode-badge--' + badge.color">
+            <span class="cgt-mode-icon">{{ badge.icon }}</span>
+            <span class="cgt-mode-label">{{ badge.label }}</span>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+
+  <p class="cgt-parent-note">👪 {{ step().parentNote }}</p>
+
+  <div class="cgt-actions">
+    <button type="button" class="btn cgt-download-btn" [disabled]="downloading() || !allDone()" (click)="downloadGoals()">
+      @if (downloading()) { Preparing… } @else { ⬇ {{ step().downloadLabel }} }
+    </button>
+    <button type="button" class="btn cgt-next-btn" [disabled]="!allDone()" (click)="next()">
+      {{ step().continueLabel }} →
+    </button>
+  </div>
+</div>

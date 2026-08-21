@@ -1,0 +1,131 @@
+<div class="confidence-planner">
+  <header class="app-header">
+    <div class="brand">
+      <img class="mascot-avatar" [src]="step().mascotImage" [alt]="step().mascotAlt" />
+      <div>
+        <span class="app-name">{{ step().appName }}</span>
+        <span class="app-tagline">{{ step().appTagline }}</span>
+      </div>
+    </div>
+    <span class="streak-pill">🔥 0 day streak</span>
+  </header>
+
+  <div class="hero">
+    <span class="mascot-pill">🦁 {{ step().mascotGreeting }}</span>
+    <h1>{{ step().titleBefore }} <span class="accent">{{ step().titleAccent }}</span></h1>
+    <p class="hero-copy">
+      Today is <strong>{{ todayLabel }}</strong>. Pick one brave thing to speak up about, then tick it off once you've shared it.
+      <br />
+      {{ step().starHint }}
+    </p>
+
+    <div class="hero-actions">
+      <button type="button" class="btn plan-btn" (click)="scrollToPlanner()">{{ step().planButtonLabel }} →</button>
+      <span class="shared-pill">⭐ {{ sharedCount() }}/{{ totalCount() }} shared today</span>
+    </div>
+
+    <div class="hero-image-wrap">
+      <img [src]="step().image" [alt]="step().imageAlt" />
+    </div>
+  </div>
+
+  <div class="week-strip">
+    @for (day of weekDays(); track day.key) {
+      <span class="day-chip" [class.today]="day.isToday">{{ day.label }}</span>
+    }
+  </div>
+
+  <div class="planner-grid">
+    <div class="panel">
+      <h2>{{ step().addSectionHeading }}</h2>
+      <p class="panel-subtitle">{{ step().addSectionSubtitle }}</p>
+
+      <div class="idea-chips">
+        @for (idea of step().ideaOptions; track idea.id) {
+          <button type="button" class="idea-chip" (click)="addIdea(idea)">
+            <span>{{ idea.icon }}</span> + {{ idea.label }}
+          </button>
+        }
+      </div>
+
+      <div class="custom-card">
+        <h3>{{ step().customHeading }}</h3>
+        <div class="emoji-picker">
+          @for (emoji of step().customEmojis; track emoji) {
+            <button
+              type="button"
+              class="emoji-option"
+              [class.selected]="customEmoji() === emoji || (customEmoji() === '' && emoji === step().customEmojis[0])"
+              (click)="selectCustomEmoji(emoji)"
+            >
+              {{ emoji }}
+            </button>
+          }
+        </div>
+
+        <input
+          type="text"
+          class="custom-input"
+          [placeholder]="step().customPlaceholder"
+          [value]="customText()"
+          (input)="updateCustomText($any($event.target).value)"
+        />
+
+        <button type="button" class="btn add-btn" [disabled]="!customText().trim()" (click)="addCustom()">
+          {{ step().addLabel }}
+        </button>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head">
+        <h2>{{ step().todaysPlanHeading }}</h2>
+        <span class="count-pill">{{ totalCount() }} moment{{ totalCount() === 1 ? '' : 's' }}</span>
+      </div>
+
+      @if (totalCount() === 0) {
+        <p class="empty-hint">Add a moment from the left to build today's plan.</p>
+      } @else {
+        <div class="plan-list">
+          @for (item of planItems(); track item.id) {
+            <div class="plan-row" [class.done]="item.done">
+              <button type="button" class="plan-check" [class.checked]="item.done" (click)="toggleDone(item.id)">
+                {{ item.done ? '✓' : item.icon }}
+              </button>
+              <span class="plan-label">{{ item.label }}</span>
+              <button type="button" class="remove-btn" (click)="removeItem(item.id)">✕</button>
+            </div>
+          }
+        </div>
+      }
+
+      @if (allDone()) {
+        <div class="celebration-pill">⭐ {{ celebrationText() }}</div>
+      }
+    </div>
+  </div>
+
+  <h2 class="how-it-works-heading">{{ step().howItWorksHeading }}</h2>
+  <div class="how-it-works">
+    @for (item of step().howItWorks; track item.title) {
+      <div class="how-card">
+        <span class="how-icon">{{ item.icon }}</span>
+        <strong>{{ item.title }}</strong>
+        <p>{{ item.description }}</p>
+      </div>
+    }
+  </div>
+
+  <div class="footer">
+    <img class="footer-mascot" [src]="step().mascotImage" [alt]="step().mascotAlt" />
+    <p class="footer-tagline">{{ step().footerTagline }}</p>
+    <p class="footer-note">{{ step().footerNote }}</p>
+  </div>
+
+  <button type="button" class="btn continue-btn" [disabled]="!allDone()" (click)="continued.emit()">
+    {{ step().continueLabel }}
+  </button>
+  @if (!allDone()) {
+    <p class="continue-hint">Add a moment to today's plan and tick it off to continue.</p>
+  }
+</div>

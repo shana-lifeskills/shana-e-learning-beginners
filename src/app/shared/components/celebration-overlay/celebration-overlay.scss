@@ -1,0 +1,73 @@
+@use 'sass:list';
+@use '../../../../assets/styles/variables' as v;
+
+:host {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  pointer-events: none;
+}
+
+.celebration-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(43, 45, 66, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+  animation: fade-in 0.2s ease;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.celebration-card {
+  background: v.$color-white;
+  border-radius: v.$border-radius-xl;
+  padding: 2rem 2.75rem;
+  text-align: center;
+  box-shadow: 0 10px 0 rgba(0, 0, 0, 0.12);
+  animation: bounce-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  .big-icon {
+    font-size: 4.5rem;
+    animation: wiggle 0.6s ease-in-out 2;
+  }
+
+  p {
+    margin: 0.5rem 0 0;
+    font-family: v.$headings-font-family;
+    font-weight: 800;
+    font-size: 1.3rem;
+    color: v.$color-navy-text;
+  }
+}
+
+.confetti-field {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.confetti-piece {
+  position: absolute;
+  top: -5%;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  animation: confetti-fall 1.8s ease-in forwards;
+}
+
+$confetti-colors: v.$color-coral, v.$color-sunshine, v.$color-sky, v.$color-grape, v.$color-leaf, v.$color-bubble-pink;
+
+@for $i from 1 through 12 {
+  .p#{$i} {
+    left: (($i - 1) * 8.3%);
+    background: list.nth($confetti-colors, (($i - 1) % 6) + 1);
+    animation-delay: ($i * 0.07s);
+    animation-duration: (1.4s + ($i % 4) * 0.2s);
+  }
+}

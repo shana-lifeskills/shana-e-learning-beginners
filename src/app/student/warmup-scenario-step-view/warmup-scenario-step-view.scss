@@ -1,0 +1,155 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+.warmup-scenario {
+  max-width: 40rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.badge-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 4rem;
+  height: 4rem;
+  margin: 0 auto 1rem;
+  border-radius: 50%;
+  background: v.$color-sky;
+  font-size: 1.8rem;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.08);
+}
+
+h1 {
+  @include m.playful-heading;
+  font-size: 1.9rem;
+  color: v.$color-navy-text;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  color: rgba(43, 45, 66, 0.65);
+  font-weight: 600;
+  margin-bottom: 1.25rem;
+}
+
+.timer-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: v.$color-white;
+  color: v.$color-navy-text;
+  font-weight: 800;
+  padding: 0.5rem 1.1rem;
+  border-radius: v.$border-radius-pill;
+  box-shadow: 0 3px 0 rgba(0, 0, 0, 0.06);
+  margin-bottom: 1.5rem;
+}
+
+.progress-wrap {
+  margin-bottom: 1.75rem;
+}
+
+.progress-track {
+  height: 0.5rem;
+  background: rgba(43, 45, 66, 0.1);
+  border-radius: v.$border-radius-pill;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.progress-fill {
+  height: 100%;
+  background: v.$color-sky;
+  border-radius: v.$border-radius-pill;
+  transition: width 0.25s ease;
+}
+
+.progress-label {
+  color: rgba(43, 45, 66, 0.55);
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.scenario-card {
+  @include m.bouncy-card;
+  background: v.$color-white;
+  padding: 2.5rem 2rem;
+  margin-bottom: 1.5rem;
+
+  &:hover { transform: none; box-shadow: 0 6px 0 rgba(0, 0, 0, 0.08); }
+}
+
+.scenario-emoji {
+  display: block;
+  font-size: 2.75rem;
+  margin-bottom: 1rem;
+}
+
+.scenario-prompt {
+  @include m.playful-heading;
+  font-size: 1.3rem;
+  color: v.$color-navy-text;
+  margin-bottom: 1.5rem;
+}
+
+.scenario-options {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.option-btn {
+  @include m.tappable;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  background: v.$color-cream-bg;
+  border: 3px solid transparent;
+  border-radius: v.$border-radius;
+  padding: 1rem 1.75rem;
+  font-weight: 700;
+  color: v.$color-navy-text;
+  min-width: 8rem;
+
+  .option-emoji { font-size: 1.5rem; }
+
+  &.selected {
+    background: v.$color-bubble-pink;
+    border-color: #8a2e2e;
+    color: #4a1c1c;
+  }
+
+  &:hover { opacity: 0.92; }
+}
+
+.nav-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.nav-btn {
+  @include m.tappable;
+  border: none;
+  font-weight: 800;
+  padding: 0.85rem 1.75rem;
+  border-radius: v.$border-radius-pill;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.1);
+
+  &.prev {
+    background: v.$color-white;
+    color: v.$color-navy-text;
+  }
+
+  &.next {
+    background: v.$color-sky;
+    color: v.$color-white;
+    margin-left: auto;
+  }
+
+  &:disabled { opacity: 0.5; cursor: default; }
+  &:hover:not(:disabled) { opacity: 0.92; }
+}

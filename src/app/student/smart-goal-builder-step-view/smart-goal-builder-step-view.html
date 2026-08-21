@@ -1,0 +1,82 @@
+<div class="sgb">
+  <h1>{{ step().title }}</h1>
+
+  <div class="sgb-card">
+    <h2 class="sgb-card-heading">{{ step().cardHeading }}</h2>
+
+    <div class="sgb-sentence">
+      "I will
+      <span class="sgb-select-wrap">
+        <select class="sgb-select" [value]="selectedActivity()" (change)="setActivity($any($event.target).value)">
+          @for (activity of step().options.activities; track activity) {
+            <option [value]="activity">{{ activity }}</option>
+          }
+        </select>
+      </span>
+      for
+      <span class="sgb-select-wrap">
+        <select class="sgb-select" [value]="selectedMinutes()" (change)="setMinutes($any($event.target).value)">
+          @for (m of step().options.minutes; track m) {
+            <option [value]="m">{{ m }}</option>
+          }
+        </select>
+      </span>
+      minutes
+      <span class="sgb-select-wrap">
+        <select class="sgb-select" [value]="selectedTime()" (change)="setTime($any($event.target).value)">
+          @for (t of step().options.times; track t) {
+            <option [value]="t">{{ t }}</option>
+          }
+        </select>
+      </span>
+      every day for
+      <span class="sgb-select-wrap">
+        <select class="sgb-select" [value]="selectedWeeks()" (change)="setWeeks($any($event.target).value)">
+          @for (w of step().options.weeks; track w) {
+            <option [value]="w">{{ w }}</option>
+          }
+        </select>
+      </span>
+      week(s)."
+    </div>
+
+    <label class="sgb-custom-label">{{ step().customActivityLabel }}</label>
+    <input
+      type="text"
+      class="sgb-custom-input"
+      [placeholder]="step().customActivityPlaceholder"
+      [value]="customActivity()"
+      (input)="updateCustomActivity($any($event.target).value)"
+    />
+
+    <div class="sgb-preview">
+      <span class="sgb-preview-label"><span class="sgb-preview-dot"></span>{{ step().previewLabel }}</span>
+      <p>{{ goalSentence() }}</p>
+    </div>
+
+    <button type="button" class="sgb-confirm" [class.checked]="confirmed()" (click)="toggleConfirmed()">
+      <span class="sgb-confirm-box">{{ confirmed() ? '✓' : '' }}</span>
+      {{ step().confirmLabel }}
+    </button>
+  </div>
+
+  <div class="sgb-card sgb-examples-card">
+    <h2 class="sgb-examples-heading"><span>{{ step().examplesIcon }}</span> {{ step().examplesHeading }}</h2>
+    <div class="sgb-examples-list">
+      @for (example of step().examples; track example) {
+        <p class="sgb-example-row">{{ example }}</p>
+      }
+    </div>
+  </div>
+
+  <p class="sgb-parent-note">👪 {{ step().parentNote }}</p>
+
+  <div class="sgb-actions">
+    <button type="button" class="btn sgb-download-btn" [disabled]="downloading()" (click)="downloadGoal()">
+      @if (downloading()) { Preparing… } @else { ⬇ {{ step().downloadLabel }} }
+    </button>
+    <button type="button" class="btn sgb-proceed-btn" [disabled]="!confirmed()" (click)="next()">
+      {{ step().continueLabel }} →
+    </button>
+  </div>
+</div>

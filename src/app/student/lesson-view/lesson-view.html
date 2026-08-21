@@ -1,0 +1,22 @@
+<button
+  type="button"
+  class="lesson-row"
+  [ngClass]="'status-' + status()"
+  [disabled]="status() === 'locked'"
+  (click)="activate()"
+>
+  <span class="badge-icon">
+    @if (status() === 'completed') { ✅ }
+    @else if (status() === 'locked') { 🔒 }
+    @else { {{ index() + 1 }} }
+  </span>
+
+  <span class="lesson-copy">
+    <strong>{{ lesson().title }}</strong>
+    <small>Week {{ lesson().week }} • {{ lesson().exercises.length }} questions</small>
+  </span>
+
+  @if (status() === 'current') {
+    <span class="play-hint">Play ▶</span>
+  }
+</button>

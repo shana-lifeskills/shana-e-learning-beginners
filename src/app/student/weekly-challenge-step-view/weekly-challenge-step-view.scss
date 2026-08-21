@@ -1,0 +1,193 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+.wc-step {
+  max-width: 42rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.wc-pill {
+  display: inline-block;
+  background: #e5ecfd;
+  color: #3b5be0;
+  font-weight: 800;
+  font-size: 0.9rem;
+  padding: 0.5rem 1.4rem;
+  border-radius: v.$border-radius-pill;
+  margin-bottom: 1.5rem;
+}
+
+.wc-step h1 {
+  @include m.playful-heading;
+  font-size: 2.4rem;
+  color: v.$color-navy-text;
+  margin-bottom: 0.6rem;
+}
+
+.wc-subtitle {
+  color: rgba(43, 45, 66, 0.55);
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+}
+
+.wc-challenge-card {
+  background: #eef3fd;
+  border-radius: v.$border-radius-xl;
+  padding: 2rem 2.25rem 2.25rem;
+  margin-bottom: 1.5rem;
+  text-align: left;
+
+  h2 {
+    @include m.playful-heading;
+    font-size: 1.6rem;
+    color: v.$color-navy-text;
+    margin-bottom: 0.4rem;
+  }
+}
+
+.wc-challenge-intro {
+  color: rgba(43, 45, 66, 0.6);
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.wc-days {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.wc-day-row {
+  @include m.tappable;
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  width: 100%;
+  background: v.$color-white;
+  border: none;
+  border-radius: v.$border-radius-sm;
+  padding: 1rem 1.25rem;
+  box-shadow: 0 2px 8px rgba(43, 45, 66, 0.05);
+
+  strong {
+    color: v.$color-navy-text;
+    font-size: 1.05rem;
+  }
+
+  &--checked {
+    background: #eaf5ec;
+  }
+}
+
+.wc-day-circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  flex-shrink: 0;
+  border-radius: 50%;
+  border: 2px solid #3b5be0;
+  color: v.$color-white;
+  font-size: 0.85rem;
+  font-weight: 800;
+
+  &--checked {
+    background: #3b5be0;
+  }
+}
+
+.wc-parent-note {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: rgba(255, 201, 60, 0.22);
+  border-radius: v.$border-radius-sm;
+  padding: 0.85rem 1.1rem;
+  margin: 1.25rem 0 0;
+  color: #7a5c00;
+  font-weight: 600;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.wc-reflection {
+  padding: 1.75rem 0;
+  margin-bottom: 1.5rem;
+  border-top: 1px solid rgba(43, 45, 66, 0.08);
+  border-bottom: 1px solid rgba(43, 45, 66, 0.08);
+}
+
+.wc-reflection-label {
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 800;
+  font-size: 0.8rem;
+  color: rgba(43, 45, 66, 0.45);
+  margin-bottom: 0.6rem;
+}
+
+.wc-reflection-quote {
+  font-style: italic;
+  font-size: 1.15rem;
+  color: v.$color-navy-text;
+  margin: 0;
+}
+
+.wc-mantra-card {
+  background: v.$color-white;
+  border-radius: v.$border-radius-xl;
+  padding: 1.75rem 2rem;
+  box-shadow: 0 2px 14px rgba(43, 45, 66, 0.06);
+  margin-bottom: 2rem;
+}
+
+.wc-mantra-label {
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 800;
+  font-size: 0.85rem;
+  color: #3b5be0;
+  margin-bottom: 0.75rem;
+}
+
+.wc-mantra-quote {
+  @include m.playful-heading;
+  font-size: 1.2rem;
+  color: v.$color-navy-text;
+  margin: 0;
+}
+
+.wc-gate-hint {
+  color: rgba(43, 45, 66, 0.5);
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-bottom: 0.9rem;
+}
+
+.wc-continue-btn {
+  @include m.tappable;
+  background: #3b5be0;
+  color: v.$color-white;
+  border: none;
+  font-weight: 800;
+  font-size: 1.05rem;
+  padding: 0.9rem 2.25rem;
+  border-radius: v.$border-radius-pill;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.1);
+
+  &:hover { opacity: 0.92; }
+
+  &:disabled {
+    background: rgba(43, 45, 66, 0.15);
+    color: rgba(43, 45, 66, 0.4);
+    box-shadow: none;
+    cursor: not-allowed;
+
+    &:hover { opacity: 1; }
+  }
+}

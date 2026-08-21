@@ -1,1 +1,49 @@
-/* You can add global styles to this file, and also import other style files */
+@import 'assets/styles/variables';
+@import 'bootstrap/scss/bootstrap';
+@import 'assets/styles/animations';
+
+html {
+  font-size: 105%;
+}
+
+html, body {
+  height: 100%;
+  background: linear-gradient(180deg, #fff8ed 0%, #fff1da 100%);
+}
+
+body {
+  min-height: 100vh;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: $headings-font-family;
+  font-weight: 800;
+}
+
+.btn {
+  border-radius: $border-radius-pill;
+}
+
+.btn-lg-tappable {
+  min-height: 56px;
+  font-size: 1.15rem;
+}
+
+.card {
+  border: none;
+}
+
+::selection {
+  background: $color-sunshine;
+}
+
+// Subtle, friendly focus ring instead of Bootstrap's default hard blue outline.
+:focus-visible {
+  outline: 3px solid $color-sky;
+  outline-offset: 2px;
+  border-radius: 0.5rem;
+}

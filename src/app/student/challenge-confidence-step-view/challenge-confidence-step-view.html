@@ -1,0 +1,58 @@
+<div class="challenge-confidence" [class.flat]="!step().image">
+  @if (step().image) {
+    <span class="badge">⭐ {{ step().badge }}</span>
+
+    <div class="hero-card">
+      <div class="hero-copy">
+        <h1>{{ step().title }}</h1>
+        <p class="description">{{ step().description }}</p>
+        @if (step().note) { <span class="note">💛 {{ step().note }}</span> }
+      </div>
+      <div class="hero-image-wrap">
+        <img [src]="step().image" [alt]="step().imageAlt" />
+      </div>
+    </div>
+  } @else {
+    <h1 class="flat-heading">
+      @if (headingLead()) { {{ headingLead() }} <span class="accent-last">{{ headingLast() }}</span> } @else { {{ headingLast() }} }
+    </h1>
+
+    <div class="flat-card">
+      <p class="flat-title">{{ step().title }}</p>
+      <p class="flat-description">{{ step().description }}</p>
+    </div>
+  }
+
+  @if (step().confidenceQuote) {
+    <div class="link-grid" [class.single]="!step().planningQuote">
+      <div class="link-card confidence">
+        <strong>{{ step().confidenceLabel ?? 'Confidence' }}</strong>
+        <p>“{{ step().confidenceQuote }}”</p>
+      </div>
+      @if (step().planningQuote) {
+        <div class="link-card planning">
+          <strong>📅 Planning</strong>
+          <p>“{{ step().planningQuote }}”</p>
+        </div>
+      }
+    </div>
+  }
+
+  @if (step().closingHeading) {
+    <div class="closing">
+      <span class="closing-icon">💜</span>
+      <h2>{{ step().closingHeading }}</h2>
+      <p>{{ step().closingText }}</p>
+
+      <button type="button" class="btn btn-primary btn-lg-tappable" (click)="continued.emit()">
+        {{ step().continueLabel }}
+      </button>
+    </div>
+  } @else {
+    <div class="closing-actions">
+      <button type="button" class="btn btn-primary btn-lg-tappable" (click)="continued.emit()">
+        {{ step().continueLabel }}
+      </button>
+    </div>
+  }
+</div>

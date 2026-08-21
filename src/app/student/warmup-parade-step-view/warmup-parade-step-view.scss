@@ -1,0 +1,129 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+.warmup-parade {
+  max-width: 46rem;
+  margin: 0 auto;
+}
+
+.hero {
+  background: linear-gradient(120deg, v.$color-sky, v.$color-sunshine);
+  border-radius: v.$border-radius-xl;
+  padding: 2.5rem 2rem;
+  text-align: center;
+  color: v.$color-white;
+  margin-bottom: 1.75rem;
+}
+
+.eyebrow {
+  display: block;
+  font-weight: 800;
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  opacity: 0.9;
+  margin-bottom: 0.75rem;
+}
+
+h1 {
+  @include m.playful-heading;
+  font-size: 2.2rem;
+  margin-bottom: 1rem;
+}
+
+.description {
+  max-width: 30rem;
+  margin: 0 auto 1.75rem;
+  font-weight: 600;
+  line-height: 1.5;
+  opacity: 0.95;
+}
+
+.hero-image {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto 1.5rem;
+}
+
+.dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.4rem;
+  margin-bottom: 1.75rem;
+
+  .dot {
+    width: 1.75rem;
+    height: 0.35rem;
+    border-radius: v.$border-radius-pill;
+    background: rgba(255, 255, 255, 0.4);
+
+    &.active { background: v.$color-white; }
+  }
+}
+
+.continue-btn {
+  @include m.tappable;
+  background: v.$color-white;
+  color: v.$color-navy-text;
+  border: none;
+  font-weight: 800;
+  font-size: 1.05rem;
+  padding: 0.85rem 2rem;
+  border-radius: v.$border-radius-pill;
+
+  &:hover { background: rgba(255, 255, 255, 0.85); }
+}
+
+.parent-note {
+  @include m.bouncy-card;
+  background: v.$color-cream-bg;
+  padding: 2rem;
+
+  &:hover { transform: none; box-shadow: 0 6px 0 rgba(0, 0, 0, 0.08); }
+
+  h2 {
+    @include m.playful-heading;
+    font-size: 1.4rem;
+    color: v.$color-navy-text;
+    margin-bottom: 0.75rem;
+  }
+}
+
+.note-description {
+  color: rgba(43, 45, 66, 0.7);
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+}
+
+.items-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: 1rem;
+}
+
+.item-card {
+  background: v.$color-white;
+  border-radius: v.$border-radius-sm;
+  padding: 1.25rem 1rem;
+  text-align: left;
+
+  .item-icon {
+    display: block;
+    font-size: 1.5rem;
+    color: v.$color-sky;
+    margin-bottom: 0.6rem;
+  }
+
+  strong {
+    display: block;
+    color: v.$color-navy-text;
+    margin-bottom: 0.35rem;
+  }
+
+  p {
+    margin: 0;
+    color: rgba(43, 45, 66, 0.65);
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+}

@@ -1,0 +1,56 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+.lesson-row {
+  @include m.tappable;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  background: v.$color-white;
+  border: none;
+  border-radius: v.$border-radius-lg;
+  padding: 1rem 1.25rem;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.06);
+  text-align: left;
+
+  .badge-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    background: v.$color-cream-bg;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    color: v.$color-navy-text;
+    flex-shrink: 0;
+  }
+
+  .lesson-copy {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+
+    strong { color: v.$color-navy-text; }
+    small { color: rgba(43, 45, 66, 0.55); font-weight: 600; }
+  }
+
+  .play-hint {
+    font-weight: 800;
+    color: v.$color-coral;
+  }
+
+  &.status-current {
+    border: 2px solid v.$color-coral;
+    box-shadow: 0 4px 0 rgba(255, 111, 89, 0.2);
+    .badge-icon { background: v.$color-coral; color: v.$color-white; }
+  }
+
+  &.status-completed .badge-icon { background: rgba(107, 203, 119, 0.35); }
+
+  &:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+}

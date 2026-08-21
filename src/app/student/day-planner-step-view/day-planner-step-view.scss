@@ -1,0 +1,179 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+.day-planner {
+  max-width: 60rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+h1 {
+  @include m.playful-heading;
+  font-size: 2.4rem;
+  color: v.$color-navy-text;
+  margin-bottom: 0.5rem;
+}
+
+.intro {
+  color: rgba(43, 45, 66, 0.6);
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+}
+
+.timeline {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+
+  @media (max-width: 780px) {
+    flex-direction: column;
+  }
+}
+
+.timeline-arrow {
+  align-self: center;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: rgba(43, 45, 66, 0.25);
+
+  @media (max-width: 780px) {
+    transform: rotate(90deg);
+  }
+}
+
+.timeline-panel {
+  flex: 1;
+  border-radius: v.$border-radius-lg;
+  padding: 1.75rem 1.5rem;
+  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+
+  .panel-icon {
+    font-size: 2.25rem;
+  }
+
+  .panel-label {
+    @include m.playful-heading;
+    font-size: 1.15rem;
+  }
+
+  textarea {
+    width: 100%;
+    margin-top: 0.5rem;
+    border: none;
+    border-radius: v.$border-radius-sm;
+    padding: 0.75rem 0.9rem;
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 0.98rem;
+    resize: vertical;
+    background: rgba(255, 255, 255, 0.55);
+
+    &:focus { outline: none; box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.7); }
+    &::placeholder { color: rgba(43, 45, 66, 0.4); }
+    &:disabled { opacity: 0.7; }
+  }
+}
+
+// Sunrise
+.theme-0 {
+  background: linear-gradient(160deg, #ffe29a 0%, #ffb56b 100%);
+  color: #6b3d10;
+
+  .panel-label { color: #6b3d10; }
+  textarea { color: #6b3d10; }
+}
+
+// Midday sky
+.theme-1 {
+  background: linear-gradient(160deg, #a6e3ff 0%, #4ecdc4 100%);
+  color: #0f3d3a;
+
+  .panel-label { color: #0f3d3a; }
+  textarea { color: #0f3d3a; }
+}
+
+// Night sky
+.theme-2 {
+  background: linear-gradient(160deg, #4b4a8e 0%, #241f47 100%);
+  color: #ffffff;
+  position: relative;
+  overflow: hidden;
+
+  .panel-label { color: #ffffff; }
+  textarea {
+    background: rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+  }
+
+  &::before {
+    content: '✦ ✧ ✦';
+    position: absolute;
+    top: 0.75rem;
+    right: 1rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.4rem;
+    color: rgba(255, 255, 255, 0.5);
+  }
+}
+
+.card-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.25rem;
+}
+
+.card-preview {
+  max-width: 26rem;
+  margin: 0 auto 1.1rem;
+  background: linear-gradient(135deg, #{v.$color-coral}, #{v.$color-grape});
+  border-radius: v.$border-radius;
+  padding: 1.25rem 1.4rem;
+  color: v.$color-white;
+  box-shadow: 0 5px 0 rgba(0, 0, 0, 0.12);
+  text-align: left;
+}
+
+.preview-title {
+  display: block;
+  font-family: v.$headings-font-family;
+  font-size: 1.3rem;
+  margin-bottom: 0.9rem;
+}
+
+.preview-row {
+  background: rgba(255, 248, 237, 0.15);
+  border-radius: v.$border-radius-sm;
+  padding: 0.55rem 0.85rem;
+  margin-bottom: 0.5rem;
+
+  &:last-child { margin-bottom: 0; }
+}
+
+.preview-label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.75);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.preview-value {
+  display: block;
+  font-weight: 800;
+  font-size: 1.18rem;
+}
+
+.download-btn {
+  max-width: 26rem;
+  margin: 0 auto;
+}

@@ -1,0 +1,27 @@
+<div class="game-player-page">
+  @if (loading()) {
+    <p class="loading-copy">Loading the game…</p>
+  } @else {
+    <button type="button" class="back-link" (click)="backToGames()">← Games</button>
+
+    @if (finished()) {
+      <div class="game-finished-panel">
+        <span class="finish-icon">🎉</span>
+        <h1>Nice playing, {{ student().firstName }}!</h1>
+        <p>Great job — want to go again?</p>
+        <div class="finish-actions">
+          <button type="button" class="btn btn-outline-primary btn-lg-tappable" (click)="playAgain()">🔁 Play Again</button>
+          <button type="button" class="btn btn-primary btn-lg-tappable" (click)="backToGames()">Back to Games</button>
+        </div>
+      </div>
+    } @else if (playing()) {
+      @if (currentExercise(); as exercise) {
+        @if (exercise.type === 'multiple-choice') {
+          <app-exercise-view [exercise]="exercise" (answered)="onAnswered($event)" />
+        } @else if (exercise.type === 'matching-game') {
+          <app-matching-game-step-view [step]="exercise" (continued)="onMatchingContinued()" />
+        }
+      }
+    }
+  }
+</div>

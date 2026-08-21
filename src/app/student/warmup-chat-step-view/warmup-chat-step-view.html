@@ -1,0 +1,56 @@
+<div class="warmup-chat">
+  <span class="badge">{{ step().badge }}</span>
+  <h1>{{ step().heading }}</h1>
+  <p class="subtitle">{{ step().subtitle }}</p>
+
+  <div class="mascot-block">
+    <div class="speech-bubble">{{ step().speechBubble }}</div>
+    <img class="mascot-image" [src]="step().mascotImage" [alt]="step().mascotName" />
+  </div>
+
+  <div class="questions-grid">
+    @for (q of step().questions; track q.id) {
+      <div class="question-card" [class.active]="activeQuestionId() === q.id" [class.answered]="isAnswered(q)">
+        <button type="button" class="question-tap" (click)="selectQuestion(q.id)">
+          <span class="q-icon">{{ q.icon }}</span>
+          <span class="q-label">{{ q.label }}</span>
+          @if (isAnswered(q)) { <span class="q-check">✓</span> }
+        </button>
+
+        @if (activeQuestionId() === q.id) {
+          <div class="answer-box">
+            <textarea
+              rows="2"
+              [placeholder]="q.placeholder"
+              [value]="answers()[q.id] ?? ''"
+              (input)="updateAnswer(q.id, $any($event.target).value)"
+            ></textarea>
+            <button
+              type="button"
+              class="btn btn-primary save-btn"
+              [disabled]="!(answers()[q.id] ?? '').trim()"
+              (click)="confirmAnswer(q.id)"
+            >
+              Save & Continue
+            </button>
+          </div>
+        }
+      </div>
+    }
+  </div>
+
+  @if (allAnswered()) {
+    <div class="recap-panel">
+      <strong>✨ Here's what you shared!</strong>
+      <ul>
+        @for (q of step().questions; track q.id) {
+          <li>{{ recapLine(q) }}</li>
+        }
+      </ul>
+    </div>
+
+    <button type="button" class="btn btn-primary btn-lg-tappable w-100 continue-btn" (click)="finish()">
+      {{ step().continueLabel }}
+    </button>
+  }
+</div>

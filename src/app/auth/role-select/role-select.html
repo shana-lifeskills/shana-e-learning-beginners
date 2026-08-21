@@ -1,0 +1,30 @@
+<div class="auth-page">
+  <div class="auth-form-panel">
+    <div class="auth-card">
+      <div class="eyebrow">✨ Learning made playful</div>
+      <h1>Ready for a learning adventure?</h1>
+      <p class="subtitle">Who's joining today?</p>
+
+      <div class="role-cards">
+        <a class="role-card student" [routerLink]="['/signup']" [queryParams]="{ role: 'student' }">
+          <div class="art">🦊</div>
+          <h2>I'm a Learner</h2>
+          <p>Play, learn, and collect stars!</p>
+        </a>
+
+        <a class="role-card trainer" [routerLink]="['/signup']" [queryParams]="{ role: 'trainer' }">
+          <div class="art">🦉</div>
+          <h2>I'm a Trainer</h2>
+          <p>Create lessons for your students</p>
+        </a>
+      </div>
+
+      <p class="signup-link">
+        Already have an account?
+        <a routerLink="/login">Log in here</a>
+      </p>
+    </div>
+  </div>
+
+  <app-auth-hero />
+</div>

@@ -1,0 +1,33 @@
+<div class="games-page">
+  <section class="games-banner">
+    <div class="banner-copy">
+      <span class="eyebrow">Game Time</span>
+      <h1>Learning Games</h1>
+      <p>Just for fun — no pressure, no lessons. Take a break and play!</p>
+    </div>
+    <span class="banner-icon">🎮</span>
+  </section>
+
+  @if (loading()) {
+    <p class="loading-copy">Loading your games…</p>
+  } @else if (games().length === 0) {
+    <div class="empty-state">
+      <div class="art">🎲</div>
+      <p>No games yet! Check back soon — your trainer is adding more.</p>
+    </div>
+  } @else {
+    <div class="game-grid">
+      @for (game of games(); track game.id) {
+        <div class="game-card" [style.--accent]="game.themeColor">
+          <div class="game-icon" [style.background]="game.themeColor">{{ game.icon }}</div>
+          <h3>{{ game.title }}</h3>
+          <p>{{ game.description }}</p>
+
+          <button type="button" class="btn btn-primary w-100 btn-lg-tappable" (click)="openGame(game.id)">
+            ▷ Play
+          </button>
+        </div>
+      }
+    </div>
+  }
+</div>

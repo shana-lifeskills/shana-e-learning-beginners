@@ -1,0 +1,43 @@
+<header class="app-header">
+  <a class="brand" [routerLink]="homeLink()">
+    <app-brand-logo [size]="42" />
+  </a>
+
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input type="search" placeholder="Search lessons…" aria-label="Search lessons" />
+  </div>
+
+  @if (user(); as u) {
+    <div class="header-actions">
+      <button type="button" class="icon-btn" title="Notifications" aria-label="Notifications">
+        🔔
+        <span class="ping"></span>
+      </button>
+
+      <div class="user-menu">
+        <button type="button" class="user-chip" (click)="toggleMenu()" [attr.aria-expanded]="menuOpen()">
+          @if (u.avatarUrl) {
+            <img class="avatar" [src]="u.avatarUrl" alt="" />
+          } @else {
+            <span class="avatar emoji">{{ avatarEmoji[u.avatarId] ?? '🙂' }}</span>
+          }
+          <span class="name">{{ u.firstName }}</span>
+          <span class="chevron">▾</span>
+        </button>
+
+        @if (menuOpen()) {
+          <div class="dropdown">
+            <div class="dropdown-header">
+              <strong>{{ u.firstName }} {{ u.lastName }}</strong>
+              <small>{{ u.email }}</small>
+            </div>
+            <button type="button" class="dropdown-item logout" (click)="logout()">
+              <span>🚪</span> Log out
+            </button>
+          </div>
+        }
+      </div>
+    </div>
+  }
+</header>

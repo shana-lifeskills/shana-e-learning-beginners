@@ -1,0 +1,56 @@
+<div class="dcp">
+  <span class="dcp-date-pill">📅 {{ dateLabel() }}</span>
+  <h1>{{ step().title }}</h1>
+  <p class="dcp-subtitle">{{ step().subtitle }}</p>
+
+  <div class="dcp-progress">
+    <div class="dcp-progress-track">
+      <div class="dcp-progress-fill" [style.width.%]="progressPercent()"></div>
+    </div>
+    <span class="dcp-progress-count">{{ doneCount() }}/{{ totalCount() }}</span>
+  </div>
+
+  <div class="dcp-sections">
+    @for (section of step().sections; track section.id) {
+      <div class="dcp-section" [class]="'dcp-section--' + section.theme">
+        <div class="dcp-section-head">
+          <span class="dcp-section-icon">{{ section.icon }}</span>
+          <h2>{{ section.label }}</h2>
+        </div>
+
+        <div class="dcp-tasks">
+          @for (task of tasksFor(section); track task.id) {
+            <button type="button" class="dcp-task" [class.done]="isDone(task.id)" (click)="toggle(task.id)">
+              <span class="dcp-task-check">{{ isDone(task.id) ? '✓' : '' }}</span>
+              <span class="dcp-task-label">{{ task.label }}</span>
+            </button>
+          }
+        </div>
+
+        <div class="dcp-add-row">
+          <input
+            type="text"
+            [placeholder]="step().addPlaceholder"
+            [value]="draftFor(section.id)"
+            (input)="updateDraft(section.id, $any($event.target).value)"
+            (keydown.enter)="addTask(section.id)"
+          />
+          <button type="button" class="dcp-add-btn" (click)="addTask(section.id)">{{ step().addButtonLabel }}</button>
+        </div>
+      </div>
+    }
+  </div>
+
+  <p class="dcp-footer-note">{{ step().footerNote }}</p>
+
+  <p class="dcp-parent-note">👪 {{ step().parentNote }}</p>
+
+  <div class="dcp-actions">
+    <button type="button" class="btn dcp-download-btn" [disabled]="downloading()" (click)="downloadPlan()">
+      @if (downloading()) { Preparing… } @else { ⬇ {{ step().downloadLabel }} }
+    </button>
+    <button type="button" class="btn dcp-next-btn" [disabled]="!allDone()" (click)="next()">
+      {{ step().continueLabel }} →
+    </button>
+  </div>
+</div>
