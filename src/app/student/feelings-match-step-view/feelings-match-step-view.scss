@@ -1,0 +1,219 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+.feelings-match {
+  max-width: 52rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.fm-badge {
+  display: inline-block;
+  background: #f6e4c1;
+  color: #4a3728;
+  font-weight: 800;
+  font-size: 0.85rem;
+  padding: 0.5rem 1.4rem;
+  border-radius: v.$border-radius-pill;
+  margin-bottom: 1.5rem;
+}
+
+.feelings-match h1 {
+  @include m.playful-heading;
+  font-size: 2.75rem;
+  color: #4a3728;
+  margin-bottom: 1rem;
+}
+
+.fm-instruction {
+  color: rgba(74, 55, 40, 0.65);
+  font-weight: 600;
+  font-size: 1.1rem;
+  line-height: 1.55;
+  max-width: 38rem;
+  margin: 0 auto 2rem;
+}
+
+.fm-progress {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 700;
+  color: rgba(74, 55, 40, 0.7);
+  margin-bottom: 0.5rem;
+}
+
+.fm-progress-bar {
+  height: 0.5rem;
+  border-radius: v.$border-radius-pill;
+  background: rgba(74, 55, 40, 0.12);
+  overflow: hidden;
+  margin-bottom: 2rem;
+}
+
+.fm-progress-fill {
+  height: 100%;
+  background: v.$color-sunshine;
+  border-radius: v.$border-radius-pill;
+  transition: width 0.3s ease;
+}
+
+.fm-faces {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 1.75rem;
+}
+
+.fm-face-card {
+  @include m.tappable;
+  background: v.$color-white;
+  border: 2px solid rgba(74, 55, 40, 0.15);
+  border-radius: v.$border-radius-lg;
+  padding: 1.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.85rem;
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+
+  &.matched {
+    background: rgba(107, 203, 119, 0.18);
+    border-color: rgba(107, 203, 119, 0.5);
+  }
+
+  &.wrong {
+    animation: fm-shake 0.4s ease;
+    border-color: v.$color-bubble-pink;
+  }
+}
+
+@keyframes fm-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  75% { transform: translateX(6px); }
+}
+
+.fm-face-avatar {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 4.5rem;
+  height: 4.5rem;
+  border-radius: 50%;
+  background: v.$color-cream-bg;
+  font-size: 2.25rem;
+}
+
+.fm-face-check {
+  position: absolute;
+  bottom: -0.2rem;
+  right: -0.2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 50%;
+  background: v.$color-white;
+  color: v.$color-leaf;
+  font-size: 0.9rem;
+  font-weight: 800;
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.08);
+}
+
+.fm-face-label {
+  font-weight: 800;
+  color: #4a3728;
+}
+
+.fm-face-placeholder {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  background: rgba(74, 55, 40, 0.08);
+  color: rgba(74, 55, 40, 0.45);
+  font-weight: 700;
+}
+
+.fm-feedback-card {
+  @include m.bouncy-card;
+  background: v.$color-white;
+  padding: 1.5rem 2rem;
+  margin-bottom: 1.75rem;
+
+  &:hover { transform: none; box-shadow: 0 6px 0 rgba(0, 0, 0, 0.08); }
+
+  p {
+    margin: 0;
+    color: #4a3728;
+    font-weight: 700;
+    font-size: 1.15rem;
+  }
+}
+
+.fm-word-bank {
+  border: 2px dashed rgba(230, 170, 120, 0.6);
+  border-radius: v.$border-radius-xl;
+  background: rgba(255, 255, 255, 0.5);
+  padding: 1.75rem 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.fm-word-bank-label {
+  color: rgba(74, 55, 40, 0.7);
+  font-weight: 700;
+  margin-bottom: 1.1rem;
+}
+
+.fm-words {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.85rem;
+  margin-bottom: 1.1rem;
+}
+
+.fm-word {
+  @include m.tappable;
+  background: v.$color-white;
+  border: 2px solid rgba(74, 55, 40, 0.2);
+  color: #4a3728;
+  font-weight: 800;
+  font-size: 1.05rem;
+  padding: 0.75rem 1.6rem;
+  border-radius: v.$border-radius-pill;
+  cursor: grab;
+
+  &.selected {
+    background: #fde9d8;
+    border-color: #e6a878;
+  }
+
+  &:active { cursor: grabbing; }
+}
+
+.fm-parent-note {
+  color: rgba(74, 55, 40, 0.55);
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.fm-start-over {
+  @include m.tappable;
+  background: none;
+  border: none;
+  color: rgba(74, 55, 40, 0.6);
+  font-weight: 700;
+  text-decoration: underline;
+  margin-bottom: 1rem;
+}
+
+.fm-continue-btn {
+  display: block;
+  margin: 0 auto;
+}

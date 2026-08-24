@@ -1,0 +1,141 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+.kwd {
+  max-width: 44rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.kwd-page-badge {
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 1.5rem;
+  color: #1e2a5e;
+  margin-bottom: 1.5rem;
+}
+
+.kwd-image-card {
+  @include m.bouncy-card;
+  background: v.$color-white;
+  padding: 0.75rem;
+  margin-bottom: 1.5rem;
+
+  &:hover { transform: none; box-shadow: 0 6px 0 rgba(0, 0, 0, 0.08); }
+
+  img {
+    width: 100%;
+    height: auto;
+    border-radius: v.$border-radius-lg;
+    display: block;
+  }
+}
+
+.kwd-card {
+  @include m.bouncy-card;
+  background: v.$color-white;
+  padding: 1.75rem 2rem;
+  margin-bottom: 1.5rem;
+  text-align: left;
+
+  &:hover { transform: none; box-shadow: 0 6px 0 rgba(0, 0, 0, 0.08); }
+}
+
+.kwd-card-badge {
+  display: inline-flex;
+  align-items: center;
+  background: #e7f0fe;
+  color: #4d8bf5;
+  font-weight: 800;
+  font-size: 0.85rem;
+  padding: 0.4rem 1rem;
+  border-radius: v.$border-radius-pill;
+  margin-bottom: 1rem;
+}
+
+.kwd-card h2 {
+  @include m.playful-heading;
+  font-size: 1.5rem;
+  color: #1e2a5e;
+  margin-bottom: 1.1rem;
+}
+
+.kwd-description-box {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: #eef6fd;
+  border-radius: v.$border-radius-lg;
+  padding: 1rem 1.25rem;
+
+  p {
+    margin: 0;
+    color: v.$color-navy-text;
+    font-weight: 500;
+  }
+}
+
+.kwd-footer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+  text-align: left;
+
+  @media (max-width: 620px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.kwd-footer-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  border-radius: v.$border-radius-lg;
+  padding: 1.25rem 1.4rem;
+
+  &--feedback { background: #fdf6dd; }
+  &--confidence { background: #eef6fd; }
+
+  p {
+    margin: 0;
+    font-weight: 600;
+    font-style: italic;
+    color: v.$color-navy-text;
+    line-height: 1.4;
+  }
+}
+
+.kwd-footer-icon {
+  font-size: 1.15rem;
+  flex-shrink: 0;
+}
+
+.kwd-footer-label {
+  display: block;
+  color: #4d8bf5;
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin-bottom: 0.3rem;
+}
+
+.kwd-complete-btn {
+  @include m.tappable;
+  background: v.$color-leaf;
+  color: v.$color-white;
+  border: none;
+  font-weight: 800;
+  font-size: 1.05rem;
+  padding: 1rem 2.5rem;
+  border-radius: v.$border-radius-pill;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.1);
+  margin-bottom: 1.25rem;
+
+  &:hover { opacity: 0.92; }
+}
+
+.kwd-note {
+  color: #4d8bf5;
+  font-weight: 600;
+  margin: 0;
+}

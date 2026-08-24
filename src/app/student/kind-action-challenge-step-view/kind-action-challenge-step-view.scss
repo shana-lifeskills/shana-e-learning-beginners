@@ -1,0 +1,201 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+.kac {
+  max-width: 62rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.kac-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: #fdf1d6;
+  color: #d98a2b;
+  font-weight: 800;
+  font-size: 0.9rem;
+  padding: 0.55rem 1.4rem;
+  border-radius: v.$border-radius-pill;
+  margin-bottom: 1.25rem;
+}
+
+.kac h1 {
+  @include m.playful-heading;
+  font-size: 2.4rem;
+  color: v.$color-navy-text;
+  margin-bottom: 0.6rem;
+}
+
+.kac-subtitle {
+  color: rgba(43, 45, 66, 0.65);
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+}
+
+.kac-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  align-items: stretch;
+  margin-bottom: 1.5rem;
+
+  @media (max-width: 780px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.kac-image-card {
+  @include m.bouncy-card;
+  background: v.$color-white;
+  border-radius: v.$border-radius-lg;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover { transform: none; box-shadow: 0 6px 0 rgba(0, 0, 0, 0.08); }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+.kac-input-card {
+  @include m.bouncy-card;
+  background: v.$color-white;
+  border-radius: v.$border-radius-lg;
+  padding: 1.75rem;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+
+  &:hover { transform: none; box-shadow: 0 6px 0 rgba(0, 0, 0, 0.08); }
+}
+
+.kac-input-heading {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+
+  h2 {
+    @include m.playful-heading;
+    font-size: 1.25rem;
+    color: v.$color-navy-text;
+    margin: 0;
+  }
+}
+
+.kac-heart {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 50%;
+  background: #ffe3e0;
+  font-size: 1.15rem;
+  flex-shrink: 0;
+}
+
+.kac-input {
+  width: 100%;
+  border: none;
+  background: #f4f6fb;
+  border-radius: v.$border-radius-pill;
+  padding: 0.9rem 1.4rem;
+  font-size: 1rem;
+  font-family: inherit;
+  color: v.$color-navy-text;
+  margin-bottom: 1.25rem;
+
+  &::placeholder { color: rgba(43, 45, 66, 0.45); }
+  &:focus { outline: 2px solid v.$color-coral; outline-offset: 2px; }
+  &:disabled { opacity: 0.7; }
+}
+
+.kac-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-bottom: 1.5rem;
+}
+
+.kac-chip {
+  @include m.tappable;
+  background: #fdf1d6;
+  color: #a3671a;
+  border: none;
+  font-weight: 700;
+  font-size: 0.9rem;
+  padding: 0.6rem 1.1rem;
+  border-radius: v.$border-radius-pill;
+
+  &:hover:not(:disabled) { opacity: 0.85; }
+  &:disabled { opacity: 0.5; cursor: default; }
+}
+
+.kac-submit-btn {
+  @include m.tappable;
+  align-self: flex-start;
+  margin-top: auto;
+  background: v.$color-coral;
+  color: v.$color-white;
+  border: none;
+  font-weight: 800;
+  font-size: 1rem;
+  padding: 0.9rem 1.75rem;
+  border-radius: v.$border-radius-pill;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.1);
+
+  &:hover:not(:disabled) { opacity: 0.92; }
+  &:disabled { opacity: 0.55; cursor: default; }
+}
+
+.kac-confidence-card {
+  @include m.bouncy-card;
+  background: linear-gradient(135deg, #fdf1d6, #efe4fb);
+  border-radius: v.$border-radius-lg;
+  padding: 2.5rem 2rem;
+  margin-bottom: 1.25rem;
+
+  &:hover { transform: none; box-shadow: 0 6px 0 rgba(0, 0, 0, 0.08); }
+
+  h2 {
+    @include m.playful-heading;
+    font-size: 1.4rem;
+    color: v.$color-navy-text;
+    margin-bottom: 0.9rem;
+  }
+
+  p {
+    color: v.$color-navy-text;
+    font-weight: 600;
+    font-size: 1.1rem;
+    max-width: 32rem;
+    margin: 0 auto;
+    line-height: 1.5;
+  }
+}
+
+.kac-confidence-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background: v.$color-white;
+  font-size: 1.4rem;
+  margin: 0 auto 1rem;
+}
+
+.kac-footer-tagline {
+  color: rgba(43, 45, 66, 0.6);
+  font-weight: 600;
+  font-size: 0.95rem;
+}

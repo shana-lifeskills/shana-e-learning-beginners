@@ -1,0 +1,74 @@
+<div class="dp">
+  <span class="dp-badge">{{ step().badge }}</span>
+  <h1>{{ step().title }}</h1>
+  <p class="dp-subtitle">{{ step().subtitle }}</p>
+
+  <div class="dp-name-field">
+    <span class="dp-name-icon">🖍️</span>
+    <input
+      type="text"
+      [placeholder]="step().namePlaceholder"
+      [value]="name()"
+      (input)="updateName($any($event.target).value)"
+    />
+  </div>
+
+  <p class="dp-choose-heading">{{ step().figuresHeading }} 👇</p>
+
+  <div class="dp-figure-grid">
+    @for (figure of step().figures; track figure.id) {
+      <button
+        type="button"
+        class="dp-figure-card"
+        [class.selected]="isSelected(figure.id)"
+        (click)="toggleFigure(figure.id)"
+      >
+        <span class="dp-figure-emoji">{{ figure.emoji }}</span>
+        <span class="dp-figure-label">{{ figure.label }}</span>
+      </button>
+    }
+  </div>
+
+  <div class="dp-upload-row">
+    <p class="dp-upload-heading">{{ step().uploadHeading }}</p>
+    <input #fileInput type="file" accept="image/*" class="dp-file-input" (change)="onFileSelected($event)" />
+    <button type="button" class="btn dp-upload-btn" (click)="choosePhoto()">📷 {{ step().uploadButtonLabel }}</button>
+  </div>
+
+  <p class="dp-poster-heading">{{ step().posterSectionHeading }} ✨</p>
+
+  <div class="dp-poster">
+    <span class="dp-poster-blob dp-poster-blob--pink"></span>
+    <span class="dp-poster-blob dp-poster-blob--cream"></span>
+    <span class="dp-poster-blob dp-poster-blob--blue"></span>
+    <span class="dp-poster-blob dp-poster-blob--green"></span>
+
+    <h2>{{ name() || 'We Are Different, We Are Friends' }}</h2>
+
+    @if (hasItems()) {
+      <div class="dp-poster-collage">
+        @for (figure of selectedFigures(); track figure.id) {
+          <span class="dp-poster-avatar dp-poster-avatar--emoji" [title]="figure.label">{{ figure.emoji }}</span>
+        }
+        @for (photo of photos(); track photo.id) {
+          <button type="button" class="dp-poster-avatar dp-poster-avatar--photo" (click)="removePhoto(photo.id)" title="Tap to remove">
+            <img [src]="photo.dataUrl" alt="Uploaded friend photo" />
+          </button>
+        }
+      </div>
+      <p class="dp-poster-footer">🤝 💛 🌍 💙 🤝</p>
+    } @else {
+      <p class="dp-poster-empty">{{ step().posterEmptyText }}</p>
+    }
+  </div>
+
+  <div class="dp-actions">
+    <button type="button" class="btn dp-reset-btn" (click)="startOver()">🔄 {{ step().startOverLabel }}</button>
+    <button type="button" class="btn dp-save-btn" [disabled]="!hasItems() || downloading()" (click)="savePoster()">
+      @if (downloading()) { Preparing… } @else { 📥 {{ step().saveLabel }} }
+    </button>
+  </div>
+
+  <p class="dp-footer-tagline">{{ step().footerTagline }}</p>
+  <p class="dp-parent-note">👪 {{ step().parentNote }}</p>
+</div>

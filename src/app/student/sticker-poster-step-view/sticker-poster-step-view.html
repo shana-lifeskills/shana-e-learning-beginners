@@ -1,0 +1,63 @@
+<div class="sp">
+  <h1>✨ {{ step().title }} ✨</h1>
+  <p class="sp-subtitle">{{ step().subtitle }}</p>
+
+  <div class="sp-name-field">
+    <span class="sp-name-icon">👏</span>
+    <input
+      type="text"
+      [placeholder]="step().namePlaceholder"
+      [value]="name()"
+      (input)="updateName($any($event.target).value)"
+    />
+  </div>
+
+  <p class="sp-choose-heading">{{ step().chooseHeading }} 👇</p>
+
+  <div class="sp-sticker-grid">
+    @for (sticker of step().stickers; track sticker.id) {
+      <button
+        type="button"
+        class="sp-sticker-card"
+        [class.selected]="isSelected(sticker.id)"
+        (click)="toggleSticker(sticker.id)"
+      >
+        <span class="sp-sticker-emoji">{{ sticker.emoji }}</span>
+        <strong>{{ sticker.label }}</strong>
+        <span class="sp-sticker-desc">{{ sticker.description }}</span>
+      </button>
+    }
+  </div>
+
+  <p class="sp-poster-heading">{{ step().posterSectionHeading }} ✨</p>
+
+  <div class="sp-poster">
+    <span class="sp-poster-blob sp-poster-blob--pink"></span>
+    <span class="sp-poster-blob sp-poster-blob--cream"></span>
+    <span class="sp-poster-blob sp-poster-blob--blue"></span>
+    <span class="sp-poster-blob sp-poster-blob--green"></span>
+
+    <h2>{{ step().posterTitle }}</h2>
+
+    @if (selectedStickers().length) {
+      <div class="sp-poster-stickers">
+        @for (sticker of selectedStickers(); track sticker.id) {
+          <span class="sp-poster-sticker">{{ sticker.emoji }}</span>
+        }
+      </div>
+      <p class="sp-poster-footer">{{ step().posterFooterIcons }}</p>
+    } @else {
+      <p class="sp-poster-empty">{{ step().posterEmptyText }}</p>
+    }
+  </div>
+
+  <div class="sp-actions">
+    <button type="button" class="btn sp-reset-btn" (click)="startOver()">🔄 {{ step().startOverLabel }}</button>
+    <button type="button" class="btn sp-save-btn" [disabled]="!selectedStickers().length || downloading()" (click)="savePoster()">
+      @if (downloading()) { Preparing… } @else { 📥 {{ step().saveLabel }} }
+    </button>
+  </div>
+
+  <p class="sp-footer-tagline">{{ step().footerTagline }}</p>
+  <p class="sp-parent-note">👪 {{ step().parentNote }}</p>
+</div>

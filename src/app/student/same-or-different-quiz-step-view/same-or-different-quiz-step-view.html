@@ -1,0 +1,59 @@
+<div class="sod">
+  <span class="sod-week-pill">✨ {{ step().weekPill }}</span>
+  <h1>{{ step().title }} <span class="sod-title-accent">{{ step().titleAccent }}</span></h1>
+  <p class="sod-subtitle">{{ step().subtitle }}</p>
+
+  <div class="sod-banner">
+    <span class="sod-banner-avatar">{{ step().bannerAvatar }}</span>
+    <div class="sod-banner-text">
+      <p class="sod-banner-title">{{ step().bannerTitle }}</p>
+      <p class="sod-banner-description">{{ step().bannerDescription }}</p>
+    </div>
+    <span class="sod-banner-count">{{ step().bannerCountIcon }} {{ step().bannerCountLabel }}</span>
+  </div>
+
+  @if (currentQuestion(); as question) {
+    <div class="sod-meta">
+      <span class="sod-count">Question {{ activeIndex() + 1 }} of {{ step().questions.length }}</span>
+      <span class="sod-score">{{ step().scoreLabel }}: {{ score() }} ⭐</span>
+    </div>
+
+    <div class="sod-progress-track">
+      <div class="sod-progress-fill" [style.width.%]="progressPercent()"></div>
+    </div>
+
+    <div class="sod-card">
+      <div class="sod-image-wrap">
+        <img [src]="question.image" [alt]="question.imageAlt" />
+      </div>
+
+      <p class="sod-prompt">{{ question.prompt }}</p>
+
+      <div class="sod-options">
+        @for (option of question.options; track option.id) {
+          <button
+            type="button"
+            class="sod-option"
+            [class.correct]="optionState(option) === 'correct'"
+            [class.incorrect]="optionState(option) === 'incorrect'"
+            [disabled]="locked() && optionState(option) === null"
+            (click)="selectOption(option)"
+          >
+            {{ option.text }}
+          </button>
+        }
+      </div>
+
+      @if (feedback() === 'incorrect') {
+        <p class="sod-try-again">Not quite — give it another try! 💪</p>
+      }
+    </div>
+  } @else {
+    <div class="sod-card sod-done">
+      <p class="sod-done-headline">{{ step().doneHeadline }}</p>
+      <button type="button" class="btn btn-primary btn-lg-tappable" (click)="finish()">
+        {{ step().continueLabel }}
+      </button>
+    </div>
+  }
+</div>

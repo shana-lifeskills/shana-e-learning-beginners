@@ -1,0 +1,41 @@
+<div class="kbc">
+  <div class="kbc-banner">
+    <span class="kbc-banner-icon">{{ step().bannerIcon }}</span>
+    <h1>{{ step().title }}</h1>
+    <p class="kbc-subtitle">{{ step().subtitle }}</p>
+  </div>
+
+  <div class="kbc-card">
+    <span class="kbc-challenge-badge">{{ step().challengeBadgeIcon }} {{ step().challengeLabel }} {{ step().challengeBadgeIcon }}</span>
+    <p class="kbc-challenge-text">
+      @for (segment of step().challengeSegments; track $index) {
+        @if (segment.color) {
+          <span class="kbc-segment" [class]="'kbc-segment--' + segment.color">{{ segment.text }}</span>
+        } @else {
+          {{ segment.text }}
+        }
+      }
+    </p>
+    <p class="kbc-challenge-icons">{{ step().challengeFooterIcons }}</p>
+  </div>
+
+  <div class="kbc-confidence">
+    <span class="kbc-confidence-icon">{{ step().confidenceIcon }}</span>
+    <div class="kbc-confidence-copy">
+      <span class="kbc-confidence-label">{{ step().confidenceLabel }}</span>
+      <p class="kbc-confidence-quote">
+        &quot;@for (segment of step().confidenceSegments; track $index) {
+          @if (segment.color) {
+            <span class="kbc-segment" [class]="'kbc-segment--' + segment.color">{{ segment.text }}</span>
+          } @else {
+            {{ segment.text }}
+          }
+        }&quot;
+      </p>
+    </div>
+  </div>
+
+  <button type="button" class="btn kbc-complete-btn" (click)="finish()">{{ step().completeLabel }}</button>
+
+  <p class="kbc-parent-note">👪 {{ step().parentNote }}</p>
+</div>

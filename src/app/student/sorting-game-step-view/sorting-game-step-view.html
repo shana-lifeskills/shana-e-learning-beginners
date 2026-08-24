@@ -1,0 +1,68 @@
+<div class="sg">
+  <h1>{{ step().title }}</h1>
+  <p class="sg-badge">{{ step().badgeIcon }} {{ step().badge }}</p>
+
+  <div class="sg-focus-card">
+    <h2>{{ step().focusIcon }} {{ step().focusHeading }}</h2>
+    <ul>
+      @for (point of step().focusPoints; track point) {
+        <li>{{ point }}</li>
+      }
+    </ul>
+  </div>
+
+  <p class="sg-instruction">{{ step().instruction }}</p>
+
+  <div class="sg-word-bank">
+    @for (item of wordBank(); track item.id) {
+      <button
+        type="button"
+        class="sg-item"
+        draggable="true"
+        [class.selected]="selectedItemId() === item.id"
+        (dragstart)="onItemDragStart($event, item.id)"
+        (click)="selectItem(item.id)"
+      >
+        {{ item.label }}
+      </button>
+    }
+  </div>
+
+  <div class="sg-bins">
+    @for (bin of step().bins; track bin.id) {
+      <div
+        class="sg-bin"
+        [class]="'sg-bin--' + bin.variant"
+        [class.wrong]="isBinWrong(bin.id)"
+        (dragover)="onBinDragOver($event)"
+        (drop)="onBinDrop($event, bin.id)"
+        (click)="selectBin(bin.id)"
+      >
+        <h3>{{ bin.icon }} {{ bin.label }}</h3>
+        @for (placed of itemsInBin(bin.id); track placed.id) {
+          <div class="sg-placed-item">
+            <span>{{ placed.label }}</span>
+            <span class="sg-placed-check">✅</span>
+          </div>
+        }
+      </div>
+    }
+  </div>
+
+  <div class="sg-progress-row">
+    <span class="sg-progress-label">{{ sortedCount() }} of {{ step().items.length }} sorted</span>
+  </div>
+  <div class="sg-progress-bar">
+    <div class="sg-progress-fill" [style.width.%]="progressPercent()"></div>
+  </div>
+
+  <p class="sg-parent-note">👪 {{ step().parentNote }}</p>
+
+  @if (allSorted()) {
+    <p class="sg-feedback">{{ step().feedbackText }}</p>
+  }
+
+  <button type="button" class="btn sg-continue-btn" [disabled]="!allSorted()" (click)="finish()">
+    {{ step().continueLabel }}
+  </button>
+</div>

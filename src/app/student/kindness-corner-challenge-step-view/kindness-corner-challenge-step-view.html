@@ -1,0 +1,27 @@
+<div class="kc">
+  <h1>{{ step().titleIcon }} {{ step().title }} {{ step().titleIcon }}</h1>
+  <p class="kc-subtitle">{{ step().subtitle }}</p>
+
+  <div class="kc-card">
+    <div class="kc-challenge">
+      <span class="kc-challenge-heading">{{ step().challengeIcon }} {{ step().challengeLabel }}</span>
+      <p class="kc-challenge-intro">{{ step().challengeIntro }}</p>
+      <div class="kc-words">
+        @for (word of step().words; track word) {
+          <span class="kc-word-pill">{{ word }}</span>
+        }
+      </div>
+    </div>
+
+    <div class="kc-image-wrap">
+      <img [src]="step().image" [alt]="step().imageAlt" />
+    </div>
+  </div>
+
+  <div class="kc-confidence">
+    <span class="kc-confidence-label">{{ step().confidenceIcon }} {{ step().confidenceLabel }}</span>
+    <p>&quot;{{ step().confidenceQuote }}&quot;</p>
+  </div>
+
+  <button type="button" class="btn kc-complete-btn" (click)="finish()">{{ step().completeLabel }}</button>
+</div>

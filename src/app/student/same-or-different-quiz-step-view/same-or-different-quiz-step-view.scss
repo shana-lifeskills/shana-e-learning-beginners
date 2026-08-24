@@ -1,0 +1,213 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+.sod {
+  max-width: 40rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.sod-week-pill {
+  display: inline-block;
+  background: #dbeafe;
+  color: #2563eb;
+  font-weight: 800;
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  padding: 0.4rem 1rem;
+  border-radius: v.$border-radius-pill;
+  margin-bottom: 0.9rem;
+}
+
+.sod h1 {
+  @include m.playful-heading;
+  font-size: 2.2rem;
+  color: v.$color-navy-text;
+  margin-bottom: 0.5rem;
+}
+
+.sod-title-accent {
+  color: #4d8bf5;
+}
+
+.sod-subtitle {
+  color: rgba(43, 45, 66, 0.6);
+  font-weight: 600;
+  font-size: 1.05rem;
+  margin-bottom: 1.75rem;
+}
+
+.sod-banner {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: #fff6de;
+  border-radius: v.$border-radius;
+  padding: 1.1rem 1.3rem;
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.sod-banner-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  background: #fde8c8;
+  font-size: 1.3rem;
+}
+
+.sod-banner-text {
+  flex: 1;
+}
+
+.sod-banner-title {
+  margin: 0;
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: v.$color-navy-text;
+}
+
+.sod-banner-description {
+  margin: 0.2rem 0 0;
+  color: rgba(43, 45, 66, 0.6);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.sod-banner-count {
+  flex-shrink: 0;
+  background: v.$color-white;
+  color: rgba(43, 45, 66, 0.7);
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding: 0.5rem 0.9rem;
+  border-radius: v.$border-radius-pill;
+  white-space: nowrap;
+}
+
+.sod-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.6rem;
+}
+
+.sod-count {
+  color: rgba(43, 45, 66, 0.55);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.sod-score {
+  color: #4d8bf5;
+  font-weight: 800;
+  font-size: 0.95rem;
+}
+
+.sod-progress-track {
+  height: 0.5rem;
+  border-radius: v.$border-radius-pill;
+  background: rgba(78, 139, 245, 0.15);
+  overflow: hidden;
+  margin-bottom: 1.75rem;
+}
+
+.sod-progress-fill {
+  height: 100%;
+  border-radius: v.$border-radius-pill;
+  background: linear-gradient(90deg, #4d8bf5, v.$color-sky);
+  transition: width 0.3s ease;
+}
+
+.sod-card {
+  @include m.bouncy-card;
+  background: v.$color-white;
+  padding: 2rem;
+
+  &:hover { transform: none; box-shadow: 0 6px 0 rgba(0, 0, 0, 0.08); }
+}
+
+.sod-image-wrap {
+  display: flex;
+  justify-content: center;
+  background: #fdf1ea;
+  border-radius: v.$border-radius-sm;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+
+  img {
+    max-width: 100%;
+    width: 100%;
+    max-height: 20rem;
+    object-fit: contain;
+    border-radius: v.$border-radius-sm;
+  }
+}
+
+.sod-prompt {
+  margin: 0 0 1.25rem;
+  font-family: v.$headings-font-family;
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: v.$color-navy-text;
+  text-align: left;
+}
+
+.sod-options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.sod-option {
+  @include m.tappable;
+  background: rgba(43, 45, 66, 0.04);
+  border: 2px solid transparent;
+  border-radius: v.$border-radius-sm;
+  padding: 1.1rem 1.25rem;
+  font-family: v.$headings-font-family;
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: v.$color-navy-text;
+  text-align: center;
+
+  &:hover:not(:disabled) { border-color: #4d8bf5; }
+  &:disabled { cursor: default; }
+
+  &.correct {
+    background: rgba(107, 203, 119, 0.3);
+    border-color: v.$color-leaf;
+    animation: bounce-in 0.4s ease;
+  }
+
+  &.incorrect {
+    background: rgba(255, 143, 163, 0.3);
+    border-color: v.$color-bubble-pink;
+    animation: shake-no 0.4s ease;
+  }
+}
+
+.sod-try-again {
+  font-weight: 700;
+  color: v.$color-coral;
+  margin: 0;
+}
+
+.sod-done {
+  text-align: center;
+}
+
+.sod-done-headline {
+  font-family: v.$headings-font-family;
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: v.$color-navy-text;
+  margin-bottom: 1.5rem;
+}

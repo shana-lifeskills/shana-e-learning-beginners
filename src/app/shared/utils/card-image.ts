@@ -86,6 +86,101 @@ export function buildCertificateSvg(title: string, introLine: string, answer: st
   `;
 }
 
+const POSTER_WIDTH = 640;
+const POSTER_HEIGHT = 480;
+
+/** Renders a decorative "sticker poster" card — a title and a centered row of emoji stickers. */
+export function buildStickerPosterSvg(title: string, emojis: string[]): string {
+  const centerX = POSTER_WIDTH / 2;
+  const rows: string[][] = [];
+  for (let i = 0; i < emojis.length; i += 6) rows.push(emojis.slice(i, i + 6));
+  const stickerMarkup = rows
+    .map((row, ri) => {
+      const rowY = 260 + ri * 70;
+      const rowWidth = (row.length - 1) * 70;
+      return row
+        .map((emoji, ci) => `<text x="${centerX - rowWidth / 2 + ci * 70}" y="${rowY}" text-anchor="middle" font-size="48">${escapeXml(emoji)}</text>`)
+        .join('');
+    })
+    .join('');
+
+  return `
+    <svg xmlns="http://www.w3.org/2000/svg" width="${POSTER_WIDTH}" height="${POSTER_HEIGHT}" viewBox="0 0 ${POSTER_WIDTH} ${POSTER_HEIGHT}">
+      <defs>
+        <linearGradient id="posterBg" x1="0" y1="0" x2="${POSTER_WIDTH}" y2="${POSTER_HEIGHT}" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#eef4ff" />
+          <stop offset="1" stop-color="#ffffff" />
+        </linearGradient>
+      </defs>
+      <rect width="${POSTER_WIDTH}" height="${POSTER_HEIGHT}" rx="32" fill="url(#posterBg)" stroke="rgba(77,139,245,0.2)" stroke-width="2" />
+      <circle cx="70" cy="70" r="46" fill="#ffd7dd" opacity="0.7" />
+      <circle cx="${POSTER_WIDTH - 70}" cy="90" r="34" fill="#ffedc2" opacity="0.8" />
+      <circle cx="${POSTER_WIDTH - 60}" cy="${POSTER_HEIGHT - 120}" r="40" fill="#d5ecff" opacity="0.8" />
+      <circle cx="80" cy="${POSTER_HEIGHT - 90}" r="44" fill="#d9f2df" opacity="0.7" />
+      <text x="${centerX}" y="120" text-anchor="middle" font-family="Baloo 2, sans-serif" font-size="34" font-weight="800" fill="#4d8bf5">${escapeXml(title)}</text>
+      ${stickerMarkup}
+    </svg>
+  `;
+}
+
+const COLLAGE_WIDTH = 640;
+const COLLAGE_CELL = 96;
+const COLLAGE_GAP = 22;
+const COLLAGE_COLS = 5;
+const COLLAGE_TOP_PADDING = 150;
+const COLLAGE_BOTTOM_PADDING = 60;
+
+/** One avatar in a collage poster — either a doodle emoji figure or an uploaded photo (rendered as a circular crop). */
+export type CollageItem = { kind: 'emoji'; emoji: string } | { kind: 'image'; dataUrl: string };
+
+/** Renders a "collage poster" card — a title banner over a wrapping grid of circular doodle/photo avatars. */
+export function buildCollagePosterSvg(title: string, subtitle: string, items: CollageItem[]): string {
+  const cols = Math.min(COLLAGE_COLS, Math.max(1, items.length));
+  const rows = Math.max(1, Math.ceil(items.length / COLLAGE_COLS));
+  const gridWidth = cols * COLLAGE_CELL + (cols - 1) * COLLAGE_GAP;
+  const startX = (COLLAGE_WIDTH - gridWidth) / 2;
+  const height = COLLAGE_TOP_PADDING + rows * COLLAGE_CELL + (rows - 1) * COLLAGE_GAP + COLLAGE_BOTTOM_PADDING;
+
+  const defs: string[] = [];
+  const cells = items
+    .map((item, i) => {
+      const col = i % COLLAGE_COLS;
+      const row = Math.floor(i / COLLAGE_COLS);
+      const cx = startX + col * (COLLAGE_CELL + COLLAGE_GAP) + COLLAGE_CELL / 2;
+      const cy = COLLAGE_TOP_PADDING + row * (COLLAGE_CELL + COLLAGE_GAP) + COLLAGE_CELL / 2;
+      const r = COLLAGE_CELL / 2;
+      if (item.kind === 'emoji') {
+        return `
+          <circle cx="${cx}" cy="${cy}" r="${r}" fill="#ffffff" opacity="0.92" />
+          <text x="${cx}" y="${cy + 17}" text-anchor="middle" font-size="50">${escapeXml(item.emoji)}</text>
+        `;
+      }
+      const clipId = `collageClip${i}`;
+      defs.push(`<clipPath id="${clipId}"><circle cx="${cx}" cy="${cy}" r="${r}" /></clipPath>`);
+      return `
+        <circle cx="${cx}" cy="${cy}" r="${r + 3}" fill="#ffffff" />
+        <image href="${item.dataUrl}" x="${cx - r}" y="${cy - r}" width="${r * 2}" height="${r * 2}" preserveAspectRatio="xMidYMid slice" clip-path="url(#${clipId})" />
+      `;
+    })
+    .join('');
+
+  return `
+    <svg xmlns="http://www.w3.org/2000/svg" width="${COLLAGE_WIDTH}" height="${height}" viewBox="0 0 ${COLLAGE_WIDTH} ${height}">
+      <defs>
+        <linearGradient id="collageBg" x1="0" y1="0" x2="${COLLAGE_WIDTH}" y2="${height}" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#4ecdc4" />
+          <stop offset="1" stop-color="#a66dd4" />
+        </linearGradient>
+        ${defs.join('')}
+      </defs>
+      <rect width="${COLLAGE_WIDTH}" height="${height}" rx="32" fill="url(#collageBg)" />
+      <text x="${COLLAGE_WIDTH / 2}" y="72" text-anchor="middle" font-family="Baloo 2, sans-serif" font-size="30" font-weight="800" fill="#ffffff">${escapeXml(title)}</text>
+      <text x="${COLLAGE_WIDTH / 2}" y="104" text-anchor="middle" font-family="Quicksand, sans-serif" font-size="15" font-weight="600" fill="rgba(255,255,255,0.85)">${escapeXml(subtitle)}</text>
+      ${cells}
+    </svg>
+  `;
+}
+
 /** Truncates a wrapped-line list to `max` lines, appending an ellipsis to the last kept line if any were cut. */
 function capLines(lines: string[], max: number): string[] {
   if (lines.length <= max) return lines;

@@ -1,0 +1,51 @@
+<div class="dfc">
+  <span class="dfc-badge">📅 {{ step().badge }}</span>
+  <h1><span class="dfc-title-plain">{{ step().titlePlain }}</span><span class="dfc-title-accent">{{ step().titleAccent }}</span></h1>
+  <p class="dfc-subtitle">{{ step().subtitle }}</p>
+
+  <div class="dfc-day-picker">
+    @for (day of days; track day.id) {
+      <button type="button" class="dfc-day" [class.selected]="selectedDayId() === day.id" (click)="selectDay(day.id)">
+        {{ day.label }}
+      </button>
+    }
+  </div>
+
+  @for (slot of step().timeSlots; track slot.id) {
+    <div class="dfc-card">
+      <h2>{{ slot.label }}</h2>
+      <p class="dfc-card-question">{{ slot.question }}</p>
+
+      <div class="dfc-moods">
+        @for (mood of step().moods; track mood.id) {
+          <button
+            type="button"
+            class="dfc-mood"
+            [class.selected]="moodFor(slot.id) === mood.id"
+            (click)="pickMood(slot.id, mood.id)"
+          >
+            <span class="dfc-mood-emoji">{{ mood.emoji }}</span>
+            <span class="dfc-mood-label">{{ mood.label }}</span>
+          </button>
+        }
+      </div>
+    </div>
+  }
+
+  <div class="dfc-footer">
+    <div class="dfc-feedback-card">
+      <span class="dfc-footer-head">💬 {{ step().feedbackLabel }}</span>
+      <p>&ldquo;{{ step().feedbackText }}&rdquo;</p>
+    </div>
+    <div class="dfc-confidence-card">
+      <span class="dfc-footer-head">💪 {{ step().confidenceLabel }}</span>
+      <p>&ldquo;{{ step().confidenceText }}&rdquo;</p>
+    </div>
+  </div>
+
+  @if (selectedDayComplete()) {
+    <button type="button" class="btn btn-primary btn-lg-tappable dfc-continue-btn" (click)="finish()">
+      {{ step().continueLabel }}
+    </button>
+  }
+</div>

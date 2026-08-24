@@ -1,0 +1,50 @@
+<div class="pfq">
+  <span class="pfq-badge">{{ step().badge }}</span>
+  <h1>{{ step().heading }}</h1>
+  <p class="pfq-subtitle">{{ step().subtitle }}</p>
+
+  @if (currentQuestion(); as question) {
+    <div class="pfq-card">
+      <div class="pfq-question-row">
+        <span class="pfq-num">{{ activeIndex() + 1 }}</span>
+        <p class="pfq-prompt">{{ question.prompt }}</p>
+      </div>
+
+      <div class="pfq-image-wrap">
+        <img [src]="question.image" [alt]="question.imageAlt" />
+      </div>
+
+      <div class="pfq-options">
+        @for (option of question.options; let i = $index; track option.id) {
+          <button
+            type="button"
+            class="pfq-option"
+            [class.correct]="optionState(option) === 'correct'"
+            [class.incorrect]="optionState(option) === 'incorrect'"
+            [disabled]="locked() && optionState(option) === null"
+            (click)="selectOption(option)"
+          >
+            <span class="pfq-option-letter">{{ letterFor(i) }}</span>
+            <span class="pfq-option-text">{{ option.text }}</span>
+          </button>
+        }
+      </div>
+
+      @if (feedback() === 'incorrect') {
+        <p class="pfq-try-again">Not quite — give it another try! 💪</p>
+      }
+      @if (feedback() === 'correct') {
+        <p class="pfq-feedback-correct">{{ question.feedbackText }}</p>
+      }
+
+      <p class="pfq-parent-note">👪 {{ step().parentNote }}</p>
+    </div>
+  } @else {
+    <div class="pfq-card pfq-done">
+      <p class="pfq-done-headline">🎉 Great job — you got every answer right!</p>
+      <button type="button" class="btn btn-primary btn-lg-tappable" (click)="finish()">
+        {{ step().continueLabel }}
+      </button>
+    </div>
+  }
+</div>

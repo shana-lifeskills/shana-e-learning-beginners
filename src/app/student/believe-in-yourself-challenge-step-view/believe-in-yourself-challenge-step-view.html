@@ -1,0 +1,56 @@
+<div class="biy">
+  <span class="biy-badge">{{ step().greetingBadge }}</span>
+  <h1>{{ step().title }}</h1>
+  <p class="biy-subtitle">{{ step().subtitle }}</p>
+  <span class="biy-week-pill">{{ step().weekPillLabel }}</span>
+
+  <div class="biy-row">
+    <div class="biy-card">
+      <div class="biy-image-wrap">
+        <img [src]="step().challengeImage" [alt]="step().challengeImageAlt" />
+      </div>
+      <h2>{{ step().challengeIcon }} {{ step().challengeHeading }}</h2>
+      <p class="biy-description">
+        {{ step().challengeDescription }} <strong>{{ step().challengeHighlight }}</strong>
+      </p>
+
+      <div class="biy-dots">
+        @for (day of days(); track day) {
+          <button
+            type="button"
+            class="biy-dot"
+            [class.done]="isDayDone(day)"
+            (click)="toggleDay(day)"
+            [attr.aria-label]="'Mark day ' + (day + 1) + (isDayDone(day) ? ' incomplete' : ' complete')"
+          >
+            @if (isDayDone(day)) { ✓ }
+          </button>
+        }
+      </div>
+      <p class="biy-progress-label">{{ completedCount() }} of {{ step().totalDays }} days completed</p>
+    </div>
+
+    <div class="biy-card">
+      <div class="biy-image-wrap">
+        <img [src]="step().confidenceImage" [alt]="step().confidenceImageAlt" />
+      </div>
+      <h2>{{ step().confidenceIcon }} {{ step().confidenceHeading }}</h2>
+      <p class="biy-quote">&ldquo;{{ currentQuote() }}&rdquo;</p>
+
+      <div class="biy-actions">
+        <button type="button" class="btn biy-share-btn" (click)="share()">
+          @if (copied()) { ✓ Copied! } @else { {{ step().shareLabel }} }
+        </button>
+        <button type="button" class="btn biy-quote-btn" [disabled]="step().confidenceQuotes.length <= 1" (click)="nextQuote()">
+          {{ step().newQuoteLabel }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <p class="biy-parent-note">👪 {{ step().parentNote }}</p>
+
+  <button type="button" class="btn biy-complete-btn" [disabled]="!canComplete()" (click)="complete()">
+    {{ step().completeLabel }}
+  </button>
+</div>

@@ -1,0 +1,139 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+.wcs {
+  max-width: 46rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.wcs h1 {
+  @include m.playful-heading;
+  font-size: 2.6rem;
+  color: v.$color-navy-text;
+  margin-bottom: 0.6rem;
+}
+
+.wcs-title-accent {
+  color: #4d78f0;
+}
+
+.wcs-subtitle {
+  color: rgba(43, 45, 66, 0.55);
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+}
+
+.wcs-card {
+  background: v.$color-white;
+  border-radius: v.$border-radius-xl;
+  box-shadow: 0 4px 16px rgba(43, 45, 66, 0.06);
+  padding: 2rem 2.25rem;
+  text-align: left;
+  margin-bottom: 1.75rem;
+}
+
+.wcs-challenge-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  background: #f5b942;
+  color: v.$color-white;
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.wcs-card h2 {
+  @include m.playful-heading;
+  font-size: 1.5rem;
+  color: v.$color-navy-text;
+  margin-bottom: 1rem;
+}
+
+.wcs-description {
+  color: rgba(43, 45, 66, 0.8);
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.wcs-segment {
+  font-weight: 800;
+
+  &--blue { color: #4d78f0; }
+  &--green { color: #2fae6e; }
+  &--purple { color: #8b5cf6; }
+}
+
+.wcs-image-wrap {
+  margin-bottom: 1.75rem;
+
+  img {
+    max-width: 100%;
+    max-height: 22rem;
+    border-radius: v.$border-radius-lg;
+  }
+}
+
+.wcs-confidence {
+  background: linear-gradient(135deg, #f5b942, #e8912a);
+  border-radius: v.$border-radius-xl;
+  padding: 1.75rem 2rem;
+  margin-bottom: 1.75rem;
+  text-align: left;
+}
+
+.wcs-confidence-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: v.$color-white;
+  font-size: 1.1rem;
+  margin-bottom: 0.85rem;
+}
+
+.wcs-confidence h2 {
+  @include m.playful-heading;
+  font-size: 1.3rem;
+  color: v.$color-navy-text;
+  margin-bottom: 0.6rem;
+}
+
+.wcs-confidence p {
+  color: v.$color-navy-text;
+  font-size: 1.05rem;
+  margin: 0;
+}
+
+.wcs-parent-note {
+  color: rgba(43, 45, 66, 0.55);
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin: 0 0 1.5rem;
+}
+
+.wcs-complete-btn {
+  @include m.tappable;
+  background: #f5b942;
+  color: v.$color-navy-text;
+  border: none;
+  font-weight: 800;
+  font-size: 1.05rem;
+  padding: 1rem 2.5rem;
+  border-radius: v.$border-radius-pill;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.1);
+
+  &:hover { opacity: 0.92; }
+}
+
+.wcs-footer-tagline {
+  color: rgba(43, 45, 66, 0.5);
+  font-weight: 600;
+  margin: 1.25rem 0 0;
+}

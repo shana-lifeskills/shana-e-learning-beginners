@@ -1,0 +1,56 @@
+<div class="psg">
+  <h1>{{ step().title }}</h1>
+  <p class="psg-subtitle">{{ step().subtitle }}</p>
+
+  <div class="psg-item-row">
+    @for (item of wordBank(); track item.id) {
+      <button
+        type="button"
+        class="psg-item"
+        draggable="true"
+        [class.selected]="selectedItemId() === item.id"
+        (dragstart)="onItemDragStart($event, item.id)"
+        (click)="selectItem(item.id)"
+      >
+        <span class="psg-item-icon">{{ item.icon }}</span>
+        <span class="psg-item-label">{{ item.label }}</span>
+        <span class="psg-item-hint">Drag me 👇</span>
+      </button>
+    }
+  </div>
+
+  <div class="psg-zones">
+    @for (zone of step().zones; track zone.id) {
+      <div
+        class="psg-zone"
+        [class]="'psg-zone--' + zone.variant"
+        [class.wrong]="isZoneWrong(zone.id)"
+        (dragover)="onZoneDragOver($event)"
+        (drop)="onZoneDrop($event, zone.id)"
+        (click)="selectZone(zone.id)"
+      >
+        <h2><span class="psg-zone-dot">{{ zone.icon }}</span> {{ zone.label }}</h2>
+        <div class="psg-zone-items">
+          @for (placed of itemsInZone(zone.id); track placed.id) {
+            <div class="psg-placed-item">
+              <span class="psg-item-icon">{{ placed.icon }}</span>
+              <span>{{ placed.label }}</span>
+            </div>
+          }
+        </div>
+      </div>
+    }
+  </div>
+
+  <div class="psg-actions">
+    <button type="button" class="btn psg-play-again-btn" (click)="playAgain()">
+      {{ step().playAgainLabel }} 🔄
+    </button>
+
+    @if (allSorted()) {
+      <button type="button" class="btn psg-continue-btn" (click)="finish()">
+        {{ step().continueLabel }}
+      </button>
+    }
+  </div>
+</div>

@@ -19,6 +19,11 @@ export type ExerciseType =
   | 'story-tabs'
   | 'confidence-link'
   | 'matching-game'
+  | 'feelings-match'
+  | 'picture-feelings-quiz'
+  | 'kind-watch-challenge'
+  | 'sorting-game'
+  | 'kind-words-challenge'
   | 'warmup-chat'
   | 'day-planner'
   | 'warmup-game'
@@ -52,10 +57,23 @@ export type ExerciseType =
   | 'weekly-task-planner'
   | 'challenge-of-the-week'
   | 'challenge-confidence-week'
+  | 'daily-feelings-checkin'
   | 'smart-goals-lesson'
   | 'smart-goal-builder'
   | 'goal-challenge-tracker'
-  | 'confidence-goal-tracker';
+  | 'confidence-goal-tracker'
+  | 'kind-action-challenge'
+  | 'yes-no-quiz'
+  | 'photo-upload-activity'
+  | 'believe-in-yourself-challenge'
+  | 'what-would-you-do-quiz'
+  | 'sticker-poster'
+  | 'kindness-corner-challenge'
+  | 'place-sort-game'
+  | 'weekly-challenge-showcase'
+  | 'same-or-different-quiz'
+  | 'diversity-poster'
+  | 'kindness-banner-challenge';
 
 export interface BaseExercise {
   id: string;
@@ -330,6 +348,198 @@ export interface MatchingGameStep extends BaseExercise {
   continueLabel: string;
 }
 
+/** One face-to-feeling-word pair inside a FeelingsMatchStep. */
+export interface FeelingsMatchPair {
+  id: string;
+  faceEmoji: string;
+  label: string;
+}
+
+/**
+ * A drag-and-drop warm-up game — drag each feeling word onto the face it
+ * matches (a tap-to-select-then-tap-to-place fallback is offered alongside
+ * for touch devices). Self-contained and un-graded by ProgressService; the
+ * "Continue" button only appears once every face has been matched
+ * correctly, so a student can't skip past the game unfinished.
+ */
+export interface FeelingsMatchStep extends BaseExercise {
+  type: 'feelings-match';
+  badge: string;
+  title: string;
+  instruction: string;
+  progressLabel: string;
+  pairs: FeelingsMatchPair[];
+  wordBankLabel: string;
+  feedbackText: string;
+  /** Shown near the word bank, e.g. reminding a parent/caregiver to help. */
+  parentNote: string;
+  startOverLabel: string;
+  continueLabel: string;
+}
+
+/** One lettered option inside a PictureFeelingsQuizQuestion. */
+export interface PictureFeelingsQuizOption {
+  id: string;
+  text: string;
+}
+
+/** One picture-prompted question inside a PictureFeelingsQuizStep. */
+export interface PictureFeelingsQuizQuestion {
+  id: string;
+  prompt: string;
+  image: string;
+  imageAlt: string;
+  options: PictureFeelingsQuizOption[];
+  correctOptionId: string;
+  /** When set, any of these option ids also counts as correct, alongside `correctOptionId`. */
+  acceptableOptionIds?: string[];
+  feedbackText: string;
+}
+
+/**
+ * A picture-prompted warm-up quiz — one question at a time, each showing an
+ * illustration and lettered (A/B/C…) options. Picking wrong shows feedback
+ * and lets the student try again instead of advancing, so a question only
+ * counts once answered correctly — the same "must get every answer right to
+ * proceed" rule as DiscussionQuizStep, just with its own picture-card look.
+ */
+export interface PictureFeelingsQuizStep extends BaseExercise {
+  type: 'picture-feelings-quiz';
+  badge: string;
+  heading: string;
+  subtitle: string;
+  questions: PictureFeelingsQuizQuestion[];
+  /** Shown near the bottom of each question card, e.g. reminding a parent/caregiver to help. */
+  parentNote: string;
+  continueLabel: string;
+}
+
+/**
+ * A "Challenge of the Week" closer — a photo card with a title/description
+ * and a decorative row of hearts, followed by a side-by-side Feedback quote
+ * and Confidence Link quote, and a single "Complete Lesson" button. Combines
+ * what would otherwise be a separate challenge step and confidence-link step
+ * into one closing screen.
+ */
+export interface KindWatchChallengeStep extends BaseExercise {
+  type: 'kind-watch-challenge';
+  badge: string;
+  image: string;
+  imageAlt: string;
+  titleIcon: string;
+  title: string;
+  description: string;
+  feedbackLabel: string;
+  feedbackIcon: string;
+  feedbackText: string;
+  confidenceLabel: string;
+  confidenceIcon: string;
+  confidenceText: string;
+  completeLabel: string;
+}
+
+/** One draggable action inside a SortingGameStep, e.g. "Sharing toys". */
+export interface SortingGameItem {
+  id: string;
+  label: string;
+  /** Which bin (by `SortingGameBin.id`) this item actually belongs in. */
+  correctBinId: string;
+}
+
+/** One drop target inside a SortingGameStep, e.g. the green "Kind" bin. */
+export interface SortingGameBin {
+  id: string;
+  icon: string;
+  label: string;
+  variant: 'positive' | 'negative';
+}
+
+/**
+ * A two-bin drag-and-drop sorting warm-up (a tap-to-select-then-tap-to-place
+ * fallback is offered alongside for touch devices) — drag each action card
+ * into the bin it belongs in. Dropping an item in the wrong bin bounces it
+ * back to the word bank instead of accepting it, so only correctly-sorted
+ * items count. Self-contained and un-graded by ProgressService; the
+ * "Continue" button only appears once every item has been sorted correctly.
+ */
+export interface SortingGameStep extends BaseExercise {
+  type: 'sorting-game';
+  title: string;
+  badgeIcon: string;
+  badge: string;
+  focusIcon: string;
+  focusHeading: string;
+  focusPoints: string[];
+  instruction: string;
+  items: SortingGameItem[];
+  bins: SortingGameBin[];
+  feedbackText: string;
+  /** Shown near the bottom, e.g. reminding a parent/caregiver to help. */
+  parentNote: string;
+  continueLabel: string;
+}
+
+/** One draggable, emoji-illustrated card inside a PlaceSortGameStep, e.g. "Shoes in hallway". */
+export interface PlaceSortItem {
+  id: string;
+  icon: string;
+  label: string;
+  /** Which zone (by `PlaceSortZone.id`) this item actually belongs in. */
+  correctZoneId: string;
+}
+
+/** One drop target inside a PlaceSortGameStep, e.g. the green "Right Place" zone. */
+export interface PlaceSortZone {
+  id: string;
+  icon: string;
+  label: string;
+  variant: 'positive' | 'negative';
+}
+
+/**
+ * A two-zone drag-and-drop classification warm-up, e.g. "Right Place or
+ * Wrong Place?" — drag each illustrated item card into the zone it belongs
+ * in. Dropping an item in the wrong zone bounces it back instead of
+ * accepting it. "Play Again" resets every item back to the top so the
+ * student can replay the round; "Continue" only appears once every item has
+ * been sorted correctly.
+ */
+export interface PlaceSortGameStep extends BaseExercise {
+  type: 'place-sort-game';
+  title: string;
+  subtitle: string;
+  items: PlaceSortItem[];
+  zones: PlaceSortZone[];
+  playAgainLabel: string;
+  continueLabel: string;
+}
+
+/**
+ * A "Challenge of the Week" closer — a plain-text page badge, a full-width
+ * photo card, then a card with a small pill badge, an icon title, and a
+ * description bubble, followed by a side-by-side tinted Feedback card and
+ * Confidence Link card, a "Complete Lesson" button, and a footer tagline.
+ */
+export interface KindWordsChallengeStep extends BaseExercise {
+  type: 'kind-words-challenge';
+  pageBadge: string;
+  image: string;
+  imageAlt: string;
+  cardBadge: string;
+  titleIcon: string;
+  title: string;
+  descriptionIcon: string;
+  description: string;
+  feedbackLabel: string;
+  feedbackIcon: string;
+  feedbackText: string;
+  confidenceLabel: string;
+  confidenceIcon: string;
+  confidenceText: string;
+  completeLabel: string;
+  footerNote: string;
+}
+
 /** One tappable question card inside a WarmupChatStep. */
 export interface WarmupQuestion {
   id: string;
@@ -442,6 +652,10 @@ export interface DiscussionQuizQuestion {
   prompt: string;
   options: ExerciseOption[];
   correctOptionId: string;
+  /** When set, any of these option ids also counts as correct — for a question with more than one right answer (e.g. "name one feeling you had today"), instead of just `correctOptionId`. */
+  acceptableOptionIds?: string[];
+  /** Shown briefly once the student picks a correct option, before the question advances. */
+  feedbackText?: string;
 }
 
 /**
@@ -1195,6 +1409,44 @@ export interface ChallengeConfidenceWeekStep extends BaseExercise {
   continueLabel: string;
 }
 
+/** One selectable mood option inside a DailyFeelingsCheckinStep, e.g. "😊 Happy". */
+export interface DailyFeelingsCheckinMood {
+  id: string;
+  emoji: string;
+  label: string;
+}
+
+/** One time-of-day slot inside a DailyFeelingsCheckinStep, e.g. "Morning". */
+export interface DailyFeelingsCheckinSlot {
+  id: string;
+  label: string;
+  question: string;
+}
+
+/**
+ * A "Challenge of the Week" mood tracker — a day selector (defaults to
+ * today) with a Morning/Afternoon/Evening card underneath, each letting the
+ * student tap the mood they felt. Logging every slot for the selected day is
+ * enough to unlock Continue, but the student's picks for every day persist
+ * (via ProgressService, keyed by this step's id) so they can come back later
+ * in the week and fill in another day without losing what they've already
+ * logged.
+ */
+export interface DailyFeelingsCheckinStep extends BaseExercise {
+  type: 'daily-feelings-checkin';
+  badge: string;
+  titlePlain: string;
+  titleAccent: string;
+  subtitle: string;
+  timeSlots: DailyFeelingsCheckinSlot[];
+  moods: DailyFeelingsCheckinMood[];
+  feedbackLabel: string;
+  feedbackText: string;
+  confidenceLabel: string;
+  confidenceText: string;
+  continueLabel: string;
+}
+
 /** One colored reference card inside a SmartGoalsLessonStep, e.g. the "S — Specific" card. */
 export interface SmartGoalsCard {
   letter: string;
@@ -1331,6 +1583,358 @@ export interface ConfidenceGoalTrackerStep extends BaseExercise {
   continueLabel: string;
 }
 
+/**
+ * A "Final Challenge" closer (e.g. "Empathy in Action") — a title/subtitle
+ * hero, a photo card paired side-by-side with a typed "what will you do
+ * today?" card (free text plus tappable suggestion chips), and a full-width
+ * Confidence Link quote card underneath. Submitting the typed action awards
+ * the star and completes the lesson/module in one step, like
+ * `KindWatchChallengeStep`.
+ */
+export interface KindActionChallengeStep extends BaseExercise {
+  type: 'kind-action-challenge';
+  badge: string;
+  title: string;
+  subtitle: string;
+  image: string;
+  imageAlt: string;
+  promptHeading: string;
+  placeholder: string;
+  suggestions: string[];
+  submitLabel: string;
+  confidenceLabel: string;
+  confidenceQuote: string;
+  footerTagline: string;
+}
+
+/** One prompt inside a YesNoQuizStep, e.g. "Eating healthy food helps my body." */
+export interface YesNoQuizQuestion {
+  id: string;
+  prompt: string;
+  correctAnswer: 'yes' | 'no';
+  feedbackText: string;
+}
+
+/**
+ * A "Yes or No?" warm-up quiz (e.g. "Respect Myself!") — one statement at a
+ * time, the student taps YES or NO to say whether it shows the target
+ * behavior. Picking wrong lets them try again; picking right shows the
+ * affirming feedback text and advances, the same "must get every answer
+ * right to proceed" rule as `PictureFeelingsQuizStep`/`DiscussionQuizStep`.
+ */
+export interface YesNoQuizStep extends BaseExercise {
+  type: 'yes-no-quiz';
+  badge: string;
+  heading: string;
+  subtitle: string;
+  questions: YesNoQuizQuestion[];
+  yesLabel: string;
+  noLabel: string;
+  continueLabel: string;
+}
+
+/** One "get inspired" example card inside a PhotoUploadActivityStep, e.g. "Sleeping Well". */
+export interface PhotoUploadIdea {
+  image: string;
+  imageAlt: string;
+  title: string;
+  description: string;
+}
+
+/**
+ * A "draw or upload a picture of yourself" activity (e.g. "Show Your Happy
+ * Self!") — a row of "get inspired" example cards, then an upload dropzone
+ * where the student picks an image file, previews it, and submits it (stored
+ * as a data URL, the same way `ProudMomentStep`'s canvas drawing is). Reaching
+ * the next lesson requires a picture to be chosen first.
+ *
+ * When `steps` is set instead of `inspireHeading`/`ideas`, the view renders a
+ * simpler layout — a numbered row of short instructions (e.g. "1 Pick your
+ * space") above the dropzone, with "Choose Photo"/upload-and-submit as two
+ * inline buttons — instead of the "get inspired" example gallery.
+ */
+export interface PhotoUploadActivityStep extends BaseExercise {
+  type: 'photo-upload-activity';
+  badge?: string;
+  titleStart: string;
+  /** Accent-colored middle part of the title, e.g. "Happy Self". */
+  titleAccent: string;
+  titleEnd: string;
+  subtitle: string;
+  inspireHeading?: string;
+  ideas?: PhotoUploadIdea[];
+  /** Short numbered instructions (e.g. "Pick your space") shown above the dropzone instead of the "get inspired" gallery. */
+  steps?: string[];
+  yourTurnHeading?: string;
+  uploadInstruction?: string;
+  uploadHeading?: string;
+  uploadDescription?: string;
+  chooseLabel: string;
+  changeLabel: string;
+  submitLabel: string;
+  /** Shown under the dropzone, e.g. reminding a parent/caregiver to help with this activity. */
+  parentNote?: string;
+}
+
+/**
+ * A "Challenge of the Week" + "Confidence Line" closer (e.g. "Believe in
+ * Yourself") — a greeting hero above two side-by-side cards: a tap-to-check
+ * 7-day challenge tracker, and a confidence-quote card with "Share"/"New
+ * Quote" actions. Reaching the next lesson only requires at least one day to
+ * be checked off, not the full week — the tracker stays open for ongoing
+ * self-reporting like `ChallengeTrackerStep`.
+ */
+export interface BelieveInYourselfChallengeStep extends BaseExercise {
+  type: 'believe-in-yourself-challenge';
+  greetingBadge: string;
+  title: string;
+  subtitle: string;
+  weekPillLabel: string;
+  challengeIcon: string;
+  challengeImage: string;
+  challengeImageAlt: string;
+  challengeHeading: string;
+  challengeDescription: string;
+  /** Bold, accent-colored trailing phrase of the description, e.g. "Practice makes perfect". */
+  challengeHighlight: string;
+  totalDays: number;
+  confidenceIcon: string;
+  confidenceImage: string;
+  confidenceImageAlt: string;
+  confidenceHeading: string;
+  /** One or more quotes the "New Quote" button cycles through. */
+  confidenceQuotes: string[];
+  shareLabel: string;
+  newQuoteLabel: string;
+  parentNote: string;
+  completeLabel: string;
+}
+
+/** One scenario inside a WhatWouldYouDoQuizStep — a two-option "which is respectful?" prompt. */
+export interface WhatWouldYouDoQuestion {
+  id: string;
+  prompt: string;
+  options: ExerciseOption[];
+  correctOptionId: string;
+  /** Shown briefly once the student picks the respectful option, before the question advances. */
+  feedbackText: string;
+}
+
+/**
+ * A "What Would You Do?" scenario quiz — a week pill, title, and icon
+ * subtitle above a "Question X of Y" counter with a star-per-question
+ * progress row and bar, then a card with the scenario and two full-width
+ * answer buttons. Picking wrong shows feedback and lets the student try
+ * again instead of advancing, the same "must get every answer right to
+ * proceed" rule as `DiscussionQuizStep`/`YesNoQuizStep`.
+ */
+export interface WhatWouldYouDoQuizStep extends BaseExercise {
+  type: 'what-would-you-do-quiz';
+  weekPillIcon: string;
+  weekPill: string;
+  title: string;
+  subtitleIcon: string;
+  subtitleText: string;
+  questions: WhatWouldYouDoQuestion[];
+  hintText: string;
+  continueLabel: string;
+}
+
+/** One choosable symbol inside a StickerPosterStep, e.g. "👂 Listening — I listen carefully". */
+export interface StickerOption {
+  id: string;
+  emoji: string;
+  label: string;
+  description: string;
+}
+
+/**
+ * A "build a mini poster" activity — the student names their poster, taps
+ * sticker cards to add/remove symbols, and watches them appear live on a
+ * poster preview below. "Save Poster" downloads the poster as a PNG and
+ * completes the step; at least one sticker must be picked first. There's no
+ * right/wrong combination, so any picked stickers are enough to finish.
+ */
+export interface StickerPosterStep extends BaseExercise {
+  type: 'sticker-poster';
+  title: string;
+  subtitle: string;
+  namePlaceholder: string;
+  chooseHeading: string;
+  stickers: StickerOption[];
+  posterSectionHeading: string;
+  posterTitle: string;
+  posterEmptyText: string;
+  posterFooterIcons: string;
+  footerTagline: string;
+  startOverLabel: string;
+  saveLabel: string;
+  /** Small callout encouraging a parent/guardian to help the student with this exercise. */
+  parentNote: string;
+}
+
+/**
+ * A "Challenge of the Week" + "Confidence Line" closer (e.g. "Kindness
+ * Corner") — a centered title/subtitle, then a single card split into two
+ * columns: the challenge (a short intro and a row of word pills) on the
+ * left, a photo on the right; a gradient "Confidence Line" quote banner sits
+ * beneath it, followed by a single "Complete Lesson" button.
+ */
+export interface KindnessCornerChallengeStep extends BaseExercise {
+  type: 'kindness-corner-challenge';
+  titleIcon: string;
+  title: string;
+  subtitle: string;
+  challengeIcon: string;
+  challengeLabel: string;
+  challengeIntro: string;
+  words: string[];
+  image: string;
+  imageAlt: string;
+  confidenceIcon: string;
+  confidenceLabel: string;
+  confidenceQuote: string;
+  completeLabel: string;
+}
+
+/** One colored word/phrase run inside a WeeklyChallengeShowcaseStep's challenge description, e.g. the "bag" in "your shoes, bag, books, or bed". */
+export interface WeeklyChallengeShowcaseTextSegment {
+  text: string;
+  color?: 'blue' | 'green' | 'purple';
+}
+
+/**
+ * A "Weekly Challenge" closer — a two-tone page heading and subtitle, a
+ * white "Challenge of the Week" card (star-icon heading + a description
+ * with individually colored word runs), a standalone photo, an amber
+ * "Confidence Line" quote card, and a "Complete Lesson" button under a
+ * closing tagline.
+ */
+export interface WeeklyChallengeShowcaseStep extends BaseExercise {
+  type: 'weekly-challenge-showcase';
+  titleStart: string;
+  /** Accent-colored second part of the page heading, e.g. "Challenge". */
+  titleAccent: string;
+  subtitle: string;
+  challengeIcon: string;
+  challengeHeading: string;
+  descriptionSegments: WeeklyChallengeShowcaseTextSegment[];
+  image: string;
+  imageAlt: string;
+  confidenceIcon: string;
+  confidenceLabel: string;
+  confidenceQuote: string;
+  /** Shown under the confidence card, e.g. reminding a parent/caregiver to help with this activity. */
+  parentNote: string;
+  completeLabel: string;
+  footerTagline: string;
+}
+
+/** One picture-pair question inside a SameOrDifferentQuizStep. */
+export interface SameOrDifferentQuizQuestion {
+  id: string;
+  image: string;
+  imageAlt: string;
+  prompt: string;
+  options: ExerciseOption[];
+  correctOptionId: string;
+}
+
+/**
+ * A "Week N intro + warm-up" combined page (e.g. "Respect for Differences")
+ * — a title/subtitle hero, a banner introducing the warm-up game (icon,
+ * heading, description, question-count pill), then the graded picture-pair
+ * quiz itself: a "Question X of Y" / running-score row, a progress bar, a
+ * photo of two children side by side, a prompt, and a 2x2 grid of lettered-
+ * free answer buttons. Picking wrong lets the student try again; picking
+ * right advances and adds a point to the score, the same "must get every
+ * answer right to proceed" rule as `PictureFeelingsQuizStep`.
+ */
+export interface SameOrDifferentQuizStep extends BaseExercise {
+  type: 'same-or-different-quiz';
+  weekPill: string;
+  title: string;
+  /** Accent-colored trailing word(s) of the title, e.g. "Differences". */
+  titleAccent: string;
+  subtitle: string;
+  bannerAvatar: string;
+  bannerTitle: string;
+  bannerDescription: string;
+  bannerCountIcon: string;
+  bannerCountLabel: string;
+  questions: SameOrDifferentQuizQuestion[];
+  scoreLabel: string;
+  doneHeadline: string;
+  continueLabel: string;
+}
+
+/** One tappable doodle "friend" figure inside a DiversityPosterStep, e.g. "🧒🏽 Kojo — loves football". */
+export interface DiversityPosterFigure {
+  id: string;
+  emoji: string;
+  label: string;
+}
+
+/**
+ * A "build a collage" activity (e.g. "We Are Different, We Are Friends
+ * Poster") — the student names their poster, taps doodle "friend" figures
+ * (different skin tones, hairstyles, and hobbies) to add them to a collage,
+ * and can also upload their own photos to add alongside the doodles. Every
+ * added figure/photo appears live on a poster preview below, individually
+ * removable. "Save Poster" renders the collage (doodles + uploaded photos,
+ * both as circular avatars) to a PNG and completes the step; at least one
+ * figure or photo must be added first.
+ */
+export interface DiversityPosterStep extends BaseExercise {
+  type: 'diversity-poster';
+  badge: string;
+  title: string;
+  subtitle: string;
+  namePlaceholder: string;
+  figuresHeading: string;
+  figures: DiversityPosterFigure[];
+  uploadHeading: string;
+  uploadButtonLabel: string;
+  posterSectionHeading: string;
+  posterEmptyText: string;
+  footerTagline: string;
+  startOverLabel: string;
+  saveLabel: string;
+  /** Small callout encouraging a parent/guardian to help the student with this exercise. */
+  parentNote: string;
+}
+
+/** One colored word/phrase run inside a KindnessBannerChallengeStep's challenge or confidence text, e.g. the "kind" in "Say something kind...". */
+export interface KindnessBannerTextSegment {
+  text: string;
+  color?: 'blue' | 'orange';
+}
+
+/**
+ * A "Challenge of the Week" closer — a textured cloud-pattern banner (an
+ * icon medallion overlapping a title + subtitle) above a white card with a
+ * pill-badged challenge sentence (individually colored word runs) and a
+ * decorative icon row, then a tinted "Confidence Line" quote panel, and a
+ * single gradient "Complete Lesson" button. The module completes (learner
+ * earns a trophy) once this step is finished.
+ */
+export interface KindnessBannerChallengeStep extends BaseExercise {
+  type: 'kindness-banner-challenge';
+  bannerIcon: string;
+  title: string;
+  subtitle: string;
+  challengeBadgeIcon: string;
+  challengeLabel: string;
+  challengeSegments: KindnessBannerTextSegment[];
+  challengeFooterIcons: string;
+  confidenceIcon: string;
+  confidenceLabel: string;
+  confidenceSegments: KindnessBannerTextSegment[];
+  completeLabel: string;
+  /** Small callout encouraging a parent/guardian to help the student with this exercise. */
+  parentNote: string;
+}
+
 export type Exercise =
   | MultipleChoiceExercise
   | SharePromptExercise
@@ -1340,6 +1944,11 @@ export type Exercise =
   | StoryTabsStep
   | ConfidenceLinkStep
   | MatchingGameStep
+  | FeelingsMatchStep
+  | PictureFeelingsQuizStep
+  | KindWatchChallengeStep
+  | SortingGameStep
+  | KindWordsChallengeStep
   | WarmupChatStep
   | DayPlannerStep
   | WarmupGameStep
@@ -1373,10 +1982,23 @@ export type Exercise =
   | WeeklyTaskPlannerStep
   | ChallengeOfTheWeekStep
   | ChallengeConfidenceWeekStep
+  | DailyFeelingsCheckinStep
   | SmartGoalsLessonStep
   | SmartGoalBuilderStep
   | GoalChallengeTrackerStep
-  | ConfidenceGoalTrackerStep;
+  | ConfidenceGoalTrackerStep
+  | KindActionChallengeStep
+  | YesNoQuizStep
+  | PhotoUploadActivityStep
+  | BelieveInYourselfChallengeStep
+  | WhatWouldYouDoQuizStep
+  | StickerPosterStep
+  | KindnessCornerChallengeStep
+  | PlaceSortGameStep
+  | WeeklyChallengeShowcaseStep
+  | SameOrDifferentQuizStep
+  | DiversityPosterStep
+  | KindnessBannerChallengeStep;
 
 /** Content for the newer, richer lesson-welcome layout. When a lesson has this, its welcome screen uses this design instead of the plain card. */
 /** One preview card inside a LessonWelcomeCard's "This Week's Mission" section. */
@@ -1561,6 +2183,171 @@ export interface LessonCelebrateWelcome {
   startLabel: string;
 }
 
+/** One selectable mood option inside a LessonFeelingsCheckWelcome's recap quiz, e.g. "😊 Happy". */
+export interface LessonFeelingsCheckOption {
+  id: string;
+  emoji: string;
+  label: string;
+}
+
+/**
+ * A "Week N feelings check" welcome layout — a dark pill (e.g. "Week 1"), a
+ * centered title, an "Objective" card, and below it a "Recap" mini-quiz where
+ * tapping a mood emoji instantly reveals a mascot feedback card with an
+ * affirming quote. Purely a warm-up moment — no right/wrong grading.
+ */
+export interface LessonFeelingsCheckWelcome {
+  weekPill: string;
+  title: string;
+  objectiveLabel: string;
+  objectiveText: string;
+  recapHeading: string;
+  recapQuestion: string;
+  options: LessonFeelingsCheckOption[];
+  /** Option selected by default, before the student taps anything. */
+  defaultSelectedOptionId: string;
+  feedbackText: string;
+  /** Emoji shown in the mascot avatar overlapping the feedback card, e.g. "🌞" — ignored when `mascotImage` is set. */
+  mascotEmoji: string;
+  /** When set, renders this image in the mascot avatar instead of `mascotEmoji`. */
+  mascotImage?: string;
+  mascotImageAlt?: string;
+  footerBrand: string;
+  startLabel: string;
+}
+
+/** One selectable mood option inside a LessonFeelingsReviewWelcome's recap quiz, e.g. "Happy 😊". */
+export interface LessonFeelingsReviewOption {
+  id: string;
+  emoji: string;
+  label: string;
+}
+
+/**
+ * A "Week N feelings review" welcome layout — a light-blue hero with a small
+ * "Week N" pill, a two-line title (plain + accent-colored second line), an
+ * "Objective" card, and a hero image, followed by a "Recap" card with a
+ * question, pill-style mood options, and an affirming feedback banner. Like
+ * `feelingsCheckWelcome`, this is a purely decorative recap — no right/wrong
+ * grading.
+ */
+export interface LessonFeelingsReviewWelcome {
+  weekPill: string;
+  titleLine1: string;
+  /** Second title line, rendered in the accent color. */
+  titleLine2: string;
+  objectiveIcon: string;
+  objectiveLabel: string;
+  objectiveText: string;
+  image: string;
+  imageAlt: string;
+  recapIcon: string;
+  recapEyebrow: string;
+  recapHeading: string;
+  recapQuestionIcon: string;
+  recapQuestion: string;
+  options: LessonFeelingsReviewOption[];
+  /** Option selected by default, before the student taps anything — omit to start with nothing selected, requiring the student to pick one before the feedback/Start button appear. */
+  defaultSelectedOptionId?: string;
+  feedbackText: string;
+  startLabel: string;
+}
+
+/** One selectable answer inside a LessonRecapQuizWelcome's recap quiz, e.g. "🤝 Sharing". */
+export interface LessonRecapQuizOption {
+  id: string;
+  emoji: string;
+  label: string;
+}
+
+/**
+ * A "Week N recap quiz" welcome layout — a light-blue page with a small
+ * icon+"Week N" pill, a two-tone centered title, a wide hero photo, a
+ * gradient "Objective" banner, and (in the same row on wide screens) a
+ * graded "Recap Quiz" card: picking the correct option shows the feedback
+ * quote and unlocks Start; picking wrong shows a "Try Again" prompt and
+ * resets so the student can pick again.
+ */
+export interface LessonRecapQuizWelcome {
+  weekPillIcon: string;
+  weekPill: string;
+  /** First title word(s), rendered in the accent color. */
+  titleAccent: string;
+  /** Remaining title words, in the plain dark color. */
+  titlePlain: string;
+  image: string;
+  imageAlt: string;
+  objectiveIcon: string;
+  objectiveLabel: string;
+  objectiveText: string;
+  recapBadge: string;
+  recapQuestion: string;
+  options: LessonRecapQuizOption[];
+  correctOptionId: string;
+  feedbackText: string;
+  tryAgainLabel: string;
+  footerNote: string;
+  startLabel: string;
+}
+
+/** One selectable answer card inside a LessonEmpathyJourneyWelcome's recap, e.g. an image of two kids sharing labeled "Sharing". */
+export interface LessonEmpathyJourneyOption {
+  id: string;
+  image: string;
+  imageAlt: string;
+  label: string;
+}
+
+/**
+ * A "Week N empathy journey" welcome layout — a light-blue centered page with
+ * a "journey" pill, a small "WEEK N" label, a two-tone underlined title, a
+ * tinted hero-image card, a white Objective card, then a graded recap: a
+ * Question card and a Sample Answer card with picture-and-label option cards
+ * the student taps to choose. Feedback and Start only appear once the
+ * student has picked an option — no default selection.
+ */
+export interface LessonEmpathyJourneyWelcome {
+  journeyBadge: string;
+  weekLabel: string;
+  titlePlain: string;
+  /** Second title portion, underlined and rendered in the accent color. */
+  titleAccent: string;
+  image: string;
+  imageAlt: string;
+  objectiveIcon: string;
+  objectiveLabel: string;
+  objectiveText: string;
+  questionBadge: string;
+  question: string;
+  sampleAnswerBadge: string;
+  options: LessonEmpathyJourneyOption[];
+  feedbackBadge: string;
+  feedbackText: string;
+  startLabel: string;
+}
+
+/**
+ * A "Week N intro + warm-up preview" welcome layout — a pill/title/subtitle
+ * hero above a single photo card that previews the warm-up game the student
+ * is about to play (activity pill, heading, description) and a "Start Quiz"
+ * button that begins the lesson's first exercise. Simpler than
+ * `recapQuizWelcome`/`empathyJourneyWelcome` — the preview isn't interactive,
+ * it's just a teaser for the real graded warm-up that follows.
+ */
+export interface LessonWarmupPreviewWelcome {
+  weekPillIcon: string;
+  weekPill: string;
+  title: string;
+  subtitle: string;
+  image: string;
+  imageAlt: string;
+  activityPillIcon: string;
+  activityPill: string;
+  activityHeading: string;
+  activityDescription: string;
+  startLabel: string;
+}
+
 export interface Lesson {
   id: string;
   title: string;
@@ -1595,6 +2382,16 @@ export interface Lesson {
   heroSubtitle?: string;
   heroImage?: string;
   heroImageAlt?: string;
+  /** When set, renders the "feelings check" welcome layout instead of any other welcome layout — takes priority over all other welcome fields, including `celebrateWelcome`. */
+  feelingsCheckWelcome?: LessonFeelingsCheckWelcome;
+  /** When set, renders the "feelings review" welcome layout instead of any other welcome layout — takes priority over all other welcome fields, including `feelingsCheckWelcome`. */
+  feelingsReviewWelcome?: LessonFeelingsReviewWelcome;
+  /** When set, renders the "recap quiz" welcome layout instead of any other welcome layout — takes priority over all other welcome fields, including `feelingsReviewWelcome`. */
+  recapQuizWelcome?: LessonRecapQuizWelcome;
+  /** When set, renders the "empathy journey" welcome layout instead of any other welcome layout — takes priority over all other welcome fields, including `recapQuizWelcome`. */
+  empathyJourneyWelcome?: LessonEmpathyJourneyWelcome;
+  /** When set, renders the "warm-up preview" welcome layout instead of any other welcome layout — takes priority over all other welcome fields, including `empathyJourneyWelcome`. */
+  warmupPreviewWelcome?: LessonWarmupPreviewWelcome;
   /** Ordered steps the student walks through — warm-up, story, discussion, activity, challenge, questions. */
   exercises: Exercise[];
 }

@@ -1,0 +1,71 @@
+<div class="feelings-match">
+  <span class="fm-badge">{{ step().badge }}</span>
+  <h1>{{ step().title }}</h1>
+  <p class="fm-instruction">{{ step().instruction }}</p>
+
+  <div class="fm-progress">
+    <span class="fm-progress-label">{{ step().progressLabel }}</span>
+    <span class="fm-progress-count">{{ matchedCount() }} of {{ step().pairs.length }} matched</span>
+  </div>
+  <div class="fm-progress-bar">
+    <div class="fm-progress-fill" [style.width.%]="progressPercent()"></div>
+  </div>
+
+  <div class="fm-faces">
+    @for (pair of step().pairs; track pair.id) {
+      <div
+        class="fm-face-card"
+        [class.matched]="isFaceMatched(pair.id)"
+        [class.wrong]="isFaceWrong(pair.id)"
+        (dragover)="onFaceDragOver($event)"
+        (drop)="onFaceDrop($event, pair.id)"
+        (click)="selectFace(pair.id)"
+      >
+        <span class="fm-face-avatar">
+          {{ pair.faceEmoji }}
+          @if (isFaceMatched(pair.id)) {
+            <span class="fm-face-check">✓</span>
+          }
+        </span>
+        @if (isFaceMatched(pair.id)) {
+          <span class="fm-face-label">{{ faceLabel(pair.id) }}</span>
+        } @else {
+          <span class="fm-face-placeholder">?</span>
+        }
+      </div>
+    }
+  </div>
+
+  @if (allMatched()) {
+    <div class="fm-feedback-card">
+      <p>&ldquo;{{ step().feedbackText }}&rdquo;</p>
+    </div>
+  }
+
+  <div class="fm-word-bank">
+    <p class="fm-word-bank-label">{{ step().wordBankLabel }}</p>
+    <div class="fm-words">
+      @for (pair of wordBank(); track pair.id) {
+        <button
+          type="button"
+          class="fm-word"
+          draggable="true"
+          [class.selected]="selectedWordId() === pair.id"
+          (dragstart)="onWordDragStart($event, pair.id)"
+          (click)="selectWord(pair.id)"
+        >
+          {{ pair.label }}
+        </button>
+      }
+    </div>
+    <p class="fm-parent-note">👪 {{ step().parentNote }}</p>
+  </div>
+
+  <button type="button" class="fm-start-over" (click)="startOver()">{{ step().startOverLabel }}</button>
+
+  @if (allMatched()) {
+    <button type="button" class="btn btn-primary btn-lg-tappable fm-continue-btn" (click)="finish()">
+      {{ step().continueLabel }}
+    </button>
+  }
+</div>

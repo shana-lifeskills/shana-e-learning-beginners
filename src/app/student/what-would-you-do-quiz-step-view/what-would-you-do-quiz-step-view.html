@@ -1,0 +1,55 @@
+<div class="wwyd">
+  <span class="wwyd-week-pill">✨ {{ step().weekPill }}</span>
+  <h1>{{ step().title }}</h1>
+  <p class="wwyd-subtitle">{{ step().subtitleIcon }} {{ step().subtitleText }}</p>
+
+  @if (currentQuestion(); as question) {
+    <div class="wwyd-meta">
+      <span class="wwyd-count">Question {{ activeIndex() + 1 }} of {{ step().questions.length }}</span>
+      <span class="wwyd-stars">
+        @for (n of starIndexes(); track n) {
+          <span class="wwyd-star" [class.filled]="n <= activeIndex() + 1">★</span>
+        }
+      </span>
+    </div>
+
+    <div class="wwyd-progress-track">
+      <div class="wwyd-progress-fill" [style.width.%]="progressPercent()"></div>
+    </div>
+
+    <div class="wwyd-card">
+      <p class="wwyd-prompt">{{ question.prompt }}</p>
+
+      <div class="wwyd-options">
+        @for (option of question.options; track option.id) {
+          <button
+            type="button"
+            class="wwyd-option"
+            [class.correct]="optionState(option) === 'correct'"
+            [class.incorrect]="optionState(option) === 'incorrect'"
+            [disabled]="locked() && optionState(option) === null"
+            (click)="selectOption(option)"
+          >
+            {{ option.text }}
+          </button>
+        }
+      </div>
+
+      @if (feedback() === 'incorrect') {
+        <p class="wwyd-try-again">Not quite — give it another try! 💪</p>
+      }
+      @if (feedback() === 'correct') {
+        <p class="wwyd-feedback-correct">{{ question.feedbackText }}</p>
+      } @else {
+        <p class="wwyd-hint">{{ step().hintText }}</p>
+      }
+    </div>
+  } @else {
+    <div class="wwyd-card wwyd-done">
+      <p class="wwyd-done-headline">🎉 Great job — you got every answer right!</p>
+      <button type="button" class="btn btn-primary btn-lg-tappable" (click)="finish()">
+        {{ step().continueLabel }}
+      </button>
+    </div>
+  }
+</div>

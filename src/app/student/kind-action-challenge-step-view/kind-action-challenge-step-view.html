@@ -1,0 +1,45 @@
+<div class="kac">
+  <span class="kac-badge">⭐ {{ step().badge }}</span>
+  <h1>{{ step().title }}</h1>
+  <p class="kac-subtitle">{{ step().subtitle }}</p>
+
+  <div class="kac-row">
+    <div class="kac-image-card">
+      <img [src]="step().image" [alt]="step().imageAlt" />
+    </div>
+
+    <div class="kac-input-card">
+      <div class="kac-input-heading">
+        <span class="kac-heart">🤍</span>
+        <h2>{{ step().promptHeading }}</h2>
+      </div>
+
+      <input
+        type="text"
+        class="kac-input"
+        [value]="draft()"
+        [placeholder]="step().placeholder"
+        [disabled]="locked()"
+        (input)="updateDraft($any($event.target).value)"
+      />
+
+      <div class="kac-chips">
+        @for (suggestion of step().suggestions; track suggestion) {
+          <button type="button" class="kac-chip" [disabled]="locked()" (click)="pick(suggestion)">{{ suggestion }}</button>
+        }
+      </div>
+
+      <button type="button" class="btn kac-submit-btn" [disabled]="!canSubmit() || locked()" (click)="submit()">
+        ✨ {{ locked() ? 'Recorded!' : step().submitLabel }}
+      </button>
+    </div>
+  </div>
+
+  <div class="kac-confidence-card">
+    <div class="kac-confidence-icon">✨</div>
+    <h2>{{ step().confidenceLabel }}</h2>
+    <p>&ldquo;{{ step().confidenceQuote }}&rdquo;</p>
+  </div>
+
+  <p class="kac-footer-tagline">{{ step().footerTagline }}</p>
+</div>

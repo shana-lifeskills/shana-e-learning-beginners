@@ -1,0 +1,208 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+.sp {
+  max-width: 42rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.sp h1 {
+  @include m.playful-heading;
+  font-size: 2.1rem;
+  color: #4d8bf5;
+  margin-bottom: 0.4rem;
+}
+
+.sp-subtitle {
+  color: rgba(43, 45, 66, 0.6);
+  font-weight: 600;
+  font-size: 1.02rem;
+  margin-bottom: 1.5rem;
+}
+
+.sp-name-field {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: v.$color-white;
+  border-radius: v.$border-radius;
+  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.06);
+  padding: 0.9rem 1.25rem;
+  max-width: 26rem;
+  margin: 0 auto 1.75rem;
+}
+
+.sp-name-icon {
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+
+.sp-name-field input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font: inherit;
+  font-weight: 600;
+  color: v.$color-navy-text;
+  outline: none;
+
+  &::placeholder { color: rgba(43, 45, 66, 0.4); }
+}
+
+.sp-choose-heading {
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  font-size: 0.85rem;
+  color: rgba(43, 45, 66, 0.55);
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+.sp-sticker-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 2rem;
+
+  @media (max-width: 640px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.sp-sticker-card {
+  @include m.tappable;
+  @include m.bouncy-card;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  background: v.$color-white;
+  border: 2px solid transparent;
+  border-radius: v.$border-radius;
+  padding: 1.25rem 0.75rem;
+
+  strong {
+    font-family: v.$headings-font-family;
+    color: #4d8bf5;
+    font-size: 1rem;
+  }
+
+  &.selected {
+    border-color: #4d8bf5;
+    background: rgba(78, 139, 245, 0.08);
+  }
+}
+
+.sp-sticker-emoji {
+  font-size: 2.1rem;
+}
+
+.sp-sticker-desc {
+  font-size: 0.8rem;
+  color: rgba(43, 45, 66, 0.55);
+  font-weight: 600;
+}
+
+.sp-poster-heading {
+  font-weight: 800;
+  color: rgba(43, 45, 66, 0.6);
+  margin-bottom: 1rem;
+}
+
+.sp-poster {
+  position: relative;
+  overflow: hidden;
+  background: v.$color-white;
+  border: 2px solid rgba(77, 139, 245, 0.25);
+  border-radius: v.$border-radius-xl;
+  padding: 3rem 2rem;
+  margin-bottom: 1.5rem;
+  min-height: 14rem;
+
+  h2 {
+    position: relative;
+    z-index: 1;
+    font-family: v.$headings-font-family;
+    font-weight: 800;
+    font-size: 1.6rem;
+    color: #4d8bf5;
+    margin-bottom: 2rem;
+  }
+}
+
+.sp-poster-blob {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.6;
+
+  &--pink { width: 5.5rem; height: 5.5rem; top: -1.5rem; left: -1.5rem; background: #ffd7dd; }
+  &--cream { width: 3.5rem; height: 3.5rem; top: 1.5rem; right: 1.5rem; background: #ffedc2; }
+  &--blue { width: 4.5rem; height: 4.5rem; bottom: 2rem; right: -1rem; background: #d5ecff; }
+  &--green { width: 5rem; height: 5rem; bottom: -1.5rem; left: 1rem; background: #d9f2df; }
+}
+
+.sp-poster-stickers {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  font-size: 2.6rem;
+  margin-bottom: 1.5rem;
+}
+
+.sp-poster-empty {
+  position: relative;
+  z-index: 1;
+  color: rgba(43, 45, 66, 0.4);
+  font-weight: 600;
+}
+
+.sp-poster-footer {
+  position: relative;
+  z-index: 1;
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+.sp-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.sp-reset-btn {
+  background: v.$color-white;
+  color: v.$color-navy-text;
+  border: 2px solid rgba(43, 45, 66, 0.12);
+  font-weight: 700;
+  border-radius: v.$border-radius-pill;
+  padding: 0.75rem 1.5rem;
+}
+
+.sp-save-btn {
+  background: #4d8bf5;
+  color: v.$color-white;
+  font-weight: 700;
+  border-radius: v.$border-radius-pill;
+  padding: 0.75rem 1.5rem;
+  border: none;
+
+  &:disabled { opacity: 0.5; cursor: default; }
+}
+
+.sp-footer-tagline {
+  color: rgba(43, 45, 66, 0.6);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.sp-parent-note {
+  color: rgba(43, 45, 66, 0.5);
+  font-weight: 600;
+  font-size: 0.9rem;
+}

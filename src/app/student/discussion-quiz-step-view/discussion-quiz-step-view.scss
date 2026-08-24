@@ -86,6 +86,12 @@ h1 {
   margin-bottom: 1.5rem;
 }
 
+.feedback-correct {
+  font-weight: 700;
+  color: v.$color-leaf;
+  margin-bottom: 1.5rem;
+}
+
 .review-list {
   display: flex;
   flex-direction: column;

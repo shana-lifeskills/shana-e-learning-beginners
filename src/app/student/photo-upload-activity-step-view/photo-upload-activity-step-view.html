@@ -1,0 +1,70 @@
+<div class="pua">
+  @if (step().badge; as badge) {
+    <span class="pua-badge">☀️ {{ badge }}</span>
+  }
+  <h1>{{ step().titleStart }}<span class="pua-title-accent">{{ step().titleAccent }}</span>{{ step().titleEnd }}</h1>
+  <p class="pua-subtitle">{{ step().subtitle }}</p>
+
+  @if (step().steps; as stepsList) {
+    <div class="pua-steps-row">
+      @for (s of stepsList; track $index) {
+        <div class="pua-step-card"><span class="pua-step-number">{{ $index + 1 }}</span> {{ s }}</div>
+      }
+    </div>
+  }
+
+  @if (step().inspireHeading; as inspireHeading) {
+    <h2 class="pua-section-heading">{{ inspireHeading }}</h2>
+    <div class="pua-ideas">
+      @for (idea of step().ideas; track idea.title) {
+        <div class="pua-idea-card">
+          <img [src]="idea.image" [alt]="idea.imageAlt" />
+          <h3>{{ idea.title }}</h3>
+          <p>{{ idea.description }}</p>
+        </div>
+      }
+    </div>
+  }
+
+  @if (step().yourTurnHeading; as yourTurnHeading) {
+    <h2 class="pua-section-heading">{{ yourTurnHeading }}</h2>
+  }
+  @if (step().uploadInstruction; as uploadInstruction) {
+    <p class="pua-upload-instruction">{{ uploadInstruction }}</p>
+  }
+
+  <div class="pua-dropzone" [class.pua-dropzone--simple]="!!step().steps">
+    <input #fileInput type="file" accept="image/*" hidden (change)="onFileSelected($event)" />
+
+    @if (previewUrl(); as preview) {
+      <img class="pua-preview" [src]="preview" alt="Your uploaded picture" />
+    } @else if (!step().steps) {
+      <span class="pua-upload-icon">⬆️</span>
+      <h3>{{ step().uploadHeading }}</h3>
+      <p>{{ step().uploadDescription }}</p>
+    }
+
+    @if (step().steps) {
+      <div class="pua-simple-actions">
+        <button type="button" class="btn pua-choose-btn" [disabled]="locked()" (click)="chooseFile()">📸 {{ step().chooseLabel }}</button>
+        <button type="button" class="btn pua-upload-btn" [disabled]="!canSubmit() || locked()" (click)="submit()">
+          @if (locked()) { ✓ Submitted! } @else { {{ step().submitLabel }} }
+        </button>
+      </div>
+    } @else if (previewUrl()) {
+      <button type="button" class="pua-change-link" [disabled]="locked()" (click)="chooseFile()">🔄 {{ step().changeLabel }}</button>
+    } @else {
+      <button type="button" class="btn pua-choose-btn" (click)="chooseFile()">{{ step().chooseLabel }}</button>
+    }
+  </div>
+
+  @if (!step().steps && previewUrl()) {
+    <button type="button" class="btn pua-submit-btn" [disabled]="!canSubmit() || locked()" (click)="submit()">
+      @if (locked()) { ✓ Submitted! } @else { ✨ {{ step().submitLabel }} }
+    </button>
+  }
+
+  @if (step().parentNote; as note) {
+    <p class="pua-parent-note">👪 {{ note }}</p>
+  }
+</div>

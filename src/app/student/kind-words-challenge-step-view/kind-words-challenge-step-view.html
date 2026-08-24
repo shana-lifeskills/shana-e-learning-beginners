@@ -1,0 +1,38 @@
+<div class="kwd">
+  <h1 class="kwd-page-badge">{{ step().pageBadge }}</h1>
+
+  <div class="kwd-image-card">
+    <img [src]="step().image" [alt]="step().imageAlt" />
+  </div>
+
+  <div class="kwd-card">
+    <span class="kwd-card-badge">{{ step().cardBadge }}</span>
+    <h2>{{ step().titleIcon }} {{ step().title }}</h2>
+    <div class="kwd-description-box">
+      <span>{{ step().descriptionIcon }}</span>
+      <p>{{ step().description }}</p>
+    </div>
+  </div>
+
+  <div class="kwd-footer">
+    <div class="kwd-footer-card kwd-footer-card--feedback">
+      <span class="kwd-footer-icon">{{ step().feedbackIcon }}</span>
+      <div>
+        <span class="kwd-footer-label">{{ step().feedbackLabel }}</span>
+        <p>&quot;{{ step().feedbackText }}&quot;</p>
+      </div>
+    </div>
+
+    <div class="kwd-footer-card kwd-footer-card--confidence">
+      <span class="kwd-footer-icon">{{ step().confidenceIcon }}</span>
+      <div>
+        <span class="kwd-footer-label">{{ step().confidenceLabel }}</span>
+        <p>&quot;{{ step().confidenceText }}&quot;</p>
+      </div>
+    </div>
+  </div>
+
+  <button type="button" class="btn kwd-complete-btn" (click)="finish()">{{ step().completeLabel }}</button>
+
+  <p class="kwd-note">{{ step().footerNote }}</p>
+</div>

@@ -1,0 +1,129 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+.kc {
+  max-width: 46rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.kc h1 {
+  @include m.playful-heading;
+  font-size: 2.1rem;
+  color: #1e2a5e;
+  margin-bottom: 0.5rem;
+}
+
+.kc-subtitle {
+  color: rgba(43, 45, 66, 0.55);
+  font-weight: 700;
+  font-size: 1.05rem;
+  margin-bottom: 2rem;
+}
+
+.kc-card {
+  @include m.bouncy-card;
+  background: v.$color-white;
+  display: flex;
+  align-items: stretch;
+  gap: 2rem;
+  padding: 2rem;
+  margin-bottom: 1.5rem;
+  text-align: left;
+
+  &:hover { transform: none; box-shadow: 0 6px 0 rgba(0, 0, 0, 0.08); }
+
+  @media (max-width: 640px) {
+    flex-direction: column;
+  }
+}
+
+.kc-challenge {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.kc-challenge-heading {
+  display: block;
+  color: #4d8bf5;
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+}
+
+.kc-challenge-intro {
+  font-weight: 700;
+  color: v.$color-navy-text;
+  margin: 0 0 1.1rem;
+}
+
+.kc-words {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.kc-word-pill {
+  background: #4d8bf5;
+  color: v.$color-white;
+  font-weight: 700;
+  padding: 0.6rem 1.25rem;
+  border-radius: v.$border-radius-pill;
+}
+
+.kc-image-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #eaf3fc;
+  border-radius: v.$border-radius-lg;
+  padding: 1rem;
+  min-width: 12rem;
+
+  img {
+    width: 100%;
+    height: auto;
+    border-radius: v.$border-radius-sm;
+    display: block;
+  }
+}
+
+.kc-confidence {
+  background: linear-gradient(135deg, #ffc93c, #f5a623);
+  border-radius: v.$border-radius-lg;
+  padding: 2rem;
+  margin-bottom: 1.75rem;
+
+  p {
+    margin: 0;
+    font-weight: 800;
+    font-style: italic;
+    font-size: 1.15rem;
+    color: #4a3200;
+  }
+}
+
+.kc-confidence-label {
+  display: block;
+  font-weight: 700;
+  color: #4a3200;
+  margin-bottom: 0.6rem;
+}
+
+.kc-complete-btn {
+  @include m.tappable;
+  background: v.$color-leaf;
+  color: v.$color-white;
+  border: none;
+  font-weight: 800;
+  font-size: 1.05rem;
+  padding: 1rem 2.5rem;
+  border-radius: v.$border-radius-pill;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.1);
+
+  &:hover { opacity: 0.92; }
+}

@@ -1,0 +1,160 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+.kbc {
+  max-width: 42rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.kbc-banner {
+  position: relative;
+  overflow: hidden;
+  border-radius: v.$border-radius-xl;
+  padding: 2.75rem 2rem 2.25rem;
+  margin-bottom: 1.75rem;
+  background-color: #7c93e8;
+  background-image:
+    radial-gradient(circle at 18% 28%, rgba(255, 255, 255, 0.28) 0%, transparent 46%),
+    radial-gradient(circle at 68% 62%, rgba(255, 255, 255, 0.22) 0%, transparent 42%),
+    radial-gradient(circle at 42% 82%, rgba(255, 255, 255, 0.16) 0%, transparent 38%),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.16) 0, rgba(255, 255, 255, 0.16) 1px, transparent 1px, transparent 12.5%),
+    linear-gradient(150deg, #8ea3ee, #6c85e2);
+  background-size: 240px 240px, 240px 240px, 240px 240px, 100% 100%, 100% 100%;
+  background-repeat: repeat, repeat, repeat, repeat, no-repeat;
+}
+
+.kbc-banner-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 4.5rem;
+  height: 4.5rem;
+  border-radius: 50%;
+  background: #4d6fe0;
+  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.12);
+  font-size: 1.9rem;
+  margin-bottom: 1rem;
+  position: relative;
+  z-index: 1;
+}
+
+.kbc-banner h1 {
+  position: relative;
+  z-index: 1;
+  @include m.playful-heading;
+  font-size: 2.1rem;
+  color: v.$color-navy-text;
+  margin-bottom: 0.4rem;
+}
+
+.kbc-subtitle {
+  position: relative;
+  z-index: 1;
+  color: rgba(43, 45, 66, 0.6);
+  font-weight: 600;
+  font-size: 1.05rem;
+  margin: 0;
+}
+
+.kbc-card {
+  @include m.bouncy-card;
+  background: v.$color-white;
+  padding: 2.25rem 2rem;
+  margin-bottom: 1.25rem;
+
+  &:hover { transform: none; box-shadow: 0 6px 0 rgba(0, 0, 0, 0.08); }
+}
+
+.kbc-challenge-badge {
+  display: inline-block;
+  background: #4d6fe0;
+  color: v.$color-white;
+  font-weight: 800;
+  font-size: 0.9rem;
+  padding: 0.5rem 1.25rem;
+  border-radius: v.$border-radius-pill;
+  margin-bottom: 1.5rem;
+}
+
+.kbc-challenge-text {
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 1.6rem;
+  line-height: 1.35;
+  color: v.$color-navy-text;
+  margin: 0 0 1.25rem;
+}
+
+.kbc-segment {
+  &--blue { color: #4d6fe0; }
+  &--orange { color: #f2994a; }
+}
+
+.kbc-challenge-icons {
+  font-size: 1.4rem;
+  margin: 0;
+}
+
+.kbc-confidence {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  text-align: left;
+  background: #eef2ff;
+  border-radius: v.$border-radius;
+  padding: 1.5rem 1.75rem;
+  margin-bottom: 1.75rem;
+}
+
+.kbc-confidence-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  background: #4d6fe0;
+  color: v.$color-white;
+  font-size: 1.1rem;
+}
+
+.kbc-confidence-copy {
+  flex: 1;
+}
+
+.kbc-confidence-label {
+  display: block;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  font-size: 0.8rem;
+  color: #4d6fe0;
+  text-transform: uppercase;
+  margin-bottom: 0.3rem;
+}
+
+.kbc-confidence-quote {
+  margin: 0;
+  font-family: v.$headings-font-family;
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: v.$color-navy-text;
+}
+
+.kbc-complete-btn {
+  background: linear-gradient(90deg, #4d8bf5, v.$color-sky);
+  color: v.$color-navy-text;
+  font-weight: 800;
+  border-radius: v.$border-radius-pill;
+  padding: 0.9rem 2.25rem;
+  border: none;
+  margin-bottom: 1rem;
+}
+
+.kbc-parent-note {
+  color: rgba(43, 45, 66, 0.5);
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin: 0;
+}

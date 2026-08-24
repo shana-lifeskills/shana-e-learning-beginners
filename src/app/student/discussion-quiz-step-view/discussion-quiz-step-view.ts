@@ -33,7 +33,7 @@ export class DiscussionQuizStepView {
     const question = this.currentQuestion();
     if (!question) return;
 
-    const correct = option.id === question.correctOptionId;
+    const correct = option.id === question.correctOptionId || (question.acceptableOptionIds?.includes(option.id) ?? false);
     this.selectedOptionId.set(option.id);
     this.feedback.set(correct ? 'correct' : 'incorrect');
     this.locked.set(true);
@@ -50,7 +50,7 @@ export class DiscussionQuizStepView {
         this.feedback.set(null);
         this.locked.set(false);
       }
-    }, 900);
+    }, correct && question.feedbackText ? 1800 : 900);
   }
 
   finish(): void {

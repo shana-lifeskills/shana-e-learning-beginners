@@ -1,0 +1,160 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+.wwyd {
+  max-width: 38rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.wwyd-week-pill {
+  display: inline-block;
+  background: #e0e7ff;
+  color: #4338ca;
+  font-weight: 800;
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  padding: 0.4rem 1rem;
+  border-radius: v.$border-radius-pill;
+  margin-bottom: 0.9rem;
+}
+
+.wwyd h1 {
+  @include m.playful-heading;
+  font-size: 2.1rem;
+  color: v.$color-navy-text;
+  margin-bottom: 0.4rem;
+}
+
+.wwyd-subtitle {
+  color: #4d8bf5;
+  font-weight: 700;
+  font-size: 1.05rem;
+  margin-bottom: 1.75rem;
+}
+
+.wwyd-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.6rem;
+}
+
+.wwyd-count {
+  color: rgba(43, 45, 66, 0.55);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.wwyd-stars {
+  display: flex;
+  gap: 0.2rem;
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.wwyd-star {
+  color: rgba(43, 45, 66, 0.2);
+
+  &.filled {
+    color: v.$color-leaf;
+  }
+}
+
+.wwyd-progress-track {
+  height: 0.5rem;
+  border-radius: v.$border-radius-pill;
+  background: rgba(78, 139, 245, 0.15);
+  overflow: hidden;
+  margin-bottom: 1.75rem;
+}
+
+.wwyd-progress-fill {
+  height: 100%;
+  border-radius: v.$border-radius-pill;
+  background: linear-gradient(90deg, #4d8bf5, v.$color-sky);
+  transition: width 0.3s ease;
+}
+
+.wwyd-card {
+  @include m.bouncy-card;
+  background: v.$color-white;
+  padding: 2rem;
+
+  &:hover { transform: none; box-shadow: 0 6px 0 rgba(0, 0, 0, 0.08); }
+}
+
+.wwyd-prompt {
+  margin: 0 0 1.5rem;
+  font-family: v.$headings-font-family;
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: v.$color-navy-text;
+}
+
+.wwyd-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.wwyd-option {
+  @include m.tappable;
+  background: rgba(78, 139, 245, 0.08);
+  border: 2px solid transparent;
+  border-radius: v.$border-radius-sm;
+  padding: 1rem 1.25rem;
+  font-family: v.$headings-font-family;
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: #3454a8;
+
+  &:hover:not(:disabled) { border-color: #4d8bf5; }
+  &:disabled { cursor: default; }
+
+  &.correct {
+    background: rgba(107, 203, 119, 0.3);
+    border-color: v.$color-leaf;
+    color: v.$color-navy-text;
+    animation: bounce-in 0.4s ease;
+  }
+
+  &.incorrect {
+    background: rgba(255, 143, 163, 0.3);
+    border-color: v.$color-bubble-pink;
+    color: v.$color-navy-text;
+    animation: shake-no 0.4s ease;
+  }
+}
+
+.wwyd-try-again {
+  font-weight: 700;
+  color: v.$color-coral;
+  margin: 0;
+}
+
+.wwyd-feedback-correct {
+  font-weight: 700;
+  color: v.$color-leaf;
+  margin: 0;
+}
+
+.wwyd-hint {
+  color: rgba(43, 45, 66, 0.5);
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+.wwyd-done {
+  text-align: center;
+}
+
+.wwyd-done-headline {
+  font-family: v.$headings-font-family;
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: v.$color-navy-text;
+  margin-bottom: 1.5rem;
+}

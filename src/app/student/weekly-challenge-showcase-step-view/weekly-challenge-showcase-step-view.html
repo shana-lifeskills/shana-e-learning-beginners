@@ -1,0 +1,34 @@
+<div class="wcs">
+  <h1>{{ step().titleStart }}<span class="wcs-title-accent">{{ step().titleAccent }}</span></h1>
+  <p class="wcs-subtitle">{{ step().subtitle }}</p>
+
+  <div class="wcs-card">
+    <span class="wcs-challenge-icon">{{ step().challengeIcon }}</span>
+    <h2>{{ step().challengeHeading }}</h2>
+    <p class="wcs-description">
+      @for (segment of step().descriptionSegments; track $index) {
+        @if (segment.color) {
+          <span class="wcs-segment" [class]="'wcs-segment--' + segment.color">{{ segment.text }}</span>
+        } @else {
+          {{ segment.text }}
+        }
+      }
+    </p>
+  </div>
+
+  <div class="wcs-image-wrap">
+    <img [src]="step().image" [alt]="step().imageAlt" />
+  </div>
+
+  <div class="wcs-confidence">
+    <span class="wcs-confidence-icon">{{ step().confidenceIcon }}</span>
+    <h2>{{ step().confidenceLabel }}</h2>
+    <p>&quot;{{ step().confidenceQuote }}&quot;</p>
+  </div>
+
+  <p class="wcs-parent-note">👪 {{ step().parentNote }}</p>
+
+  <button type="button" class="btn wcs-complete-btn" (click)="continued.emit()">{{ step().completeLabel }}</button>
+
+  <p class="wcs-footer-tagline">{{ step().footerTagline }}</p>
+</div>

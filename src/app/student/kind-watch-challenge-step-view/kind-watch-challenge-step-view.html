@@ -1,0 +1,37 @@
+<div class="kwc">
+  <span class="kwc-badge">✨ {{ step().badge }}</span>
+
+  <div class="kwc-card">
+    <div class="kwc-image-wrap">
+      <img [src]="step().image" [alt]="step().imageAlt" />
+    </div>
+
+    <h1>{{ step().titleIcon }} {{ step().title }}</h1>
+
+    <div class="kwc-description-box">
+      <p>{{ step().description }}</p>
+    </div>
+
+    <div class="kwc-hearts">🧡 🧡 🧡</div>
+  </div>
+
+  <div class="kwc-footer">
+    <div class="kwc-footer-card">
+      <span class="kwc-footer-icon kwc-footer-icon--feedback">{{ step().feedbackIcon }}</span>
+      <div>
+        <span class="kwc-footer-label">{{ step().feedbackLabel }}</span>
+        <p class="kwc-footer-quote kwc-footer-quote--italic">&ldquo;{{ step().feedbackText }}&rdquo;</p>
+      </div>
+    </div>
+
+    <div class="kwc-footer-card">
+      <span class="kwc-footer-icon kwc-footer-icon--confidence">{{ step().confidenceIcon }}</span>
+      <div>
+        <span class="kwc-footer-label">{{ step().confidenceLabel }}</span>
+        <p class="kwc-footer-quote">&ldquo;{{ step().confidenceText }}&rdquo;</p>
+      </div>
+    </div>
+  </div>
+
+  <button type="button" class="btn kwc-complete-btn" (click)="finish()">{{ step().completeLabel }}</button>
+</div>

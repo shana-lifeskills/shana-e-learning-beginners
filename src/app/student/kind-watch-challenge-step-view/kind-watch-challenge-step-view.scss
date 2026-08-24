@@ -1,0 +1,141 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+.kwc {
+  max-width: 44rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.kwc-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: #e7f0fe;
+  color: #4d8bf5;
+  font-weight: 800;
+  font-size: 0.9rem;
+  padding: 0.55rem 1.4rem;
+  border-radius: v.$border-radius-pill;
+  margin-bottom: 1.5rem;
+}
+
+.kwc-card {
+  @include m.bouncy-card;
+  background: v.$color-white;
+  padding: 2.5rem 2rem;
+  margin-bottom: 1.5rem;
+
+  &:hover { transform: none; box-shadow: 0 6px 0 rgba(0, 0, 0, 0.08); }
+}
+
+.kwc-image-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+
+  img {
+    max-width: 18rem;
+    width: 100%;
+    height: auto;
+  }
+}
+
+.kwc h1 {
+  @include m.playful-heading;
+  font-size: 1.85rem;
+  color: #4d8bf5;
+  margin-bottom: 1.5rem;
+}
+
+.kwc-description-box {
+  background: #f4f6fb;
+  border-radius: v.$border-radius-lg;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.5rem;
+
+  p {
+    margin: 0;
+    color: v.$color-navy-text;
+    font-weight: 500;
+    font-size: 1.05rem;
+    line-height: 1.5;
+  }
+}
+
+.kwc-hearts {
+  font-size: 1.5rem;
+  letter-spacing: 0.5rem;
+}
+
+.kwc-footer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+  text-align: left;
+
+  @media (max-width: 620px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.kwc-footer-card {
+  @include m.bouncy-card;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.9rem;
+  background: v.$color-white;
+  padding: 1.5rem;
+
+  &:hover { transform: none; box-shadow: 0 6px 0 rgba(0, 0, 0, 0.08); }
+}
+
+.kwc-footer-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: v.$border-radius;
+  font-size: 1.15rem;
+
+  &--feedback { background: #fdf1d6; }
+  &--confidence { background: #e7f0fe; }
+}
+
+.kwc-footer-label {
+  display: block;
+  color: rgba(43, 45, 66, 0.5);
+  font-weight: 800;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.4rem;
+}
+
+.kwc-footer-quote {
+  margin: 0;
+  color: v.$color-navy-text;
+  font-weight: 700;
+  line-height: 1.4;
+
+  &--italic {
+    font-style: italic;
+    font-weight: 500;
+  }
+}
+
+.kwc-complete-btn {
+  @include m.tappable;
+  background: v.$color-leaf;
+  color: v.$color-white;
+  border: none;
+  font-weight: 800;
+  font-size: 1.05rem;
+  padding: 1rem 2.5rem;
+  border-radius: v.$border-radius-pill;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.1);
+
+  &:hover { opacity: 0.92; }
+}

@@ -1,0 +1,51 @@
+<div class="ynq">
+  <span class="ynq-badge">✨ {{ step().badge }}</span>
+  <h1>{{ step().heading }}</h1>
+  <p class="ynq-subtitle">{{ step().subtitle }}</p>
+
+  @if (currentQuestion(); as question) {
+    <div class="ynq-card">
+      <div class="ynq-question-row">
+        <span class="ynq-num">{{ activeIndex() + 1 }}</span>
+        <p class="ynq-prompt">&ldquo;{{ question.prompt }}&rdquo;</p>
+      </div>
+
+      <div class="ynq-answers">
+        <button
+          type="button"
+          class="ynq-answer ynq-answer--yes"
+          [class.correct]="answerState('yes') === 'correct'"
+          [class.incorrect]="answerState('yes') === 'incorrect'"
+          [disabled]="locked() && answerState('yes') === null"
+          (click)="selectAnswer('yes')"
+        >
+          {{ step().yesLabel }}
+        </button>
+        <button
+          type="button"
+          class="ynq-answer ynq-answer--no"
+          [class.correct]="answerState('no') === 'correct'"
+          [class.incorrect]="answerState('no') === 'incorrect'"
+          [disabled]="locked() && answerState('no') === null"
+          (click)="selectAnswer('no')"
+        >
+          {{ step().noLabel }}
+        </button>
+      </div>
+
+      @if (feedback() === 'incorrect') {
+        <p class="ynq-try-again">Not quite — give it another try! 💪</p>
+      }
+      @if (feedback() === 'correct') {
+        <p class="ynq-feedback-correct">{{ question.feedbackText }}</p>
+      }
+    </div>
+  } @else {
+    <div class="ynq-card ynq-done">
+      <p class="ynq-done-headline">🎉 Great job — you got every answer right!</p>
+      <button type="button" class="btn btn-primary btn-lg-tappable" (click)="finish()">
+        {{ step().continueLabel }}
+      </button>
+    </div>
+  }
+</div>

@@ -17,6 +17,11 @@ import { ChallengeStepView } from '../challenge-step-view/challenge-step-view';
 import { StoryTabsStepView } from '../story-tabs-step-view/story-tabs-step-view';
 import { ConfidenceLinkStepView } from '../confidence-link-step-view/confidence-link-step-view';
 import { MatchingGameStepView } from '../matching-game-step-view/matching-game-step-view';
+import { FeelingsMatchStepView } from '../feelings-match-step-view/feelings-match-step-view';
+import { PictureFeelingsQuizStepView } from '../picture-feelings-quiz-step-view/picture-feelings-quiz-step-view';
+import { KindWatchChallengeStepView } from '../kind-watch-challenge-step-view/kind-watch-challenge-step-view';
+import { SortingGameStepView } from '../sorting-game-step-view/sorting-game-step-view';
+import { KindWordsChallengeStepView } from '../kind-words-challenge-step-view/kind-words-challenge-step-view';
 import { WarmupChatStepView } from '../warmup-chat-step-view/warmup-chat-step-view';
 import { DayPlannerStepView } from '../day-planner-step-view/day-planner-step-view';
 import { WarmupGameStepView } from '../warmup-game-step-view/warmup-game-step-view';
@@ -54,6 +59,19 @@ import { DayChecklistPlannerStepView } from '../day-checklist-planner-step-view/
 import { WeeklyTaskPlannerStepView } from '../weekly-task-planner-step-view/weekly-task-planner-step-view';
 import { ChallengeOfTheWeekStepView } from '../challenge-of-the-week-step-view/challenge-of-the-week-step-view';
 import { ChallengeConfidenceWeekStepView } from '../challenge-confidence-week-step-view/challenge-confidence-week-step-view';
+import { DailyFeelingsCheckinStepView } from '../daily-feelings-checkin-step-view/daily-feelings-checkin-step-view';
+import { KindActionChallengeStepView } from '../kind-action-challenge-step-view/kind-action-challenge-step-view';
+import { YesNoQuizStepView } from '../yes-no-quiz-step-view/yes-no-quiz-step-view';
+import { PhotoUploadActivityStepView } from '../photo-upload-activity-step-view/photo-upload-activity-step-view';
+import { BelieveInYourselfChallengeStepView } from '../believe-in-yourself-challenge-step-view/believe-in-yourself-challenge-step-view';
+import { WhatWouldYouDoQuizStepView } from '../what-would-you-do-quiz-step-view/what-would-you-do-quiz-step-view';
+import { StickerPosterStepView } from '../sticker-poster-step-view/sticker-poster-step-view';
+import { KindnessCornerChallengeStepView } from '../kindness-corner-challenge-step-view/kindness-corner-challenge-step-view';
+import { PlaceSortGameStepView } from '../place-sort-game-step-view/place-sort-game-step-view';
+import { WeeklyChallengeShowcaseStepView } from '../weekly-challenge-showcase-step-view/weekly-challenge-showcase-step-view';
+import { SameOrDifferentQuizStepView } from '../same-or-different-quiz-step-view/same-or-different-quiz-step-view';
+import { DiversityPosterStepView } from '../diversity-poster-step-view/diversity-poster-step-view';
+import { KindnessBannerChallengeStepView } from '../kindness-banner-challenge-step-view/kindness-banner-challenge-step-view';
 
 type PlayerView = 'map' | 'lesson-welcome' | 'exercise' | 'module-complete';
 
@@ -71,6 +89,11 @@ type PlayerView = 'map' | 'lesson-welcome' | 'exercise' | 'module-complete';
     StoryTabsStepView,
     ConfidenceLinkStepView,
     MatchingGameStepView,
+    FeelingsMatchStepView,
+    PictureFeelingsQuizStepView,
+    KindWatchChallengeStepView,
+    SortingGameStepView,
+    KindWordsChallengeStepView,
     WarmupChatStepView,
     DayPlannerStepView,
     WarmupGameStepView,
@@ -108,6 +131,19 @@ type PlayerView = 'map' | 'lesson-welcome' | 'exercise' | 'module-complete';
     WeeklyTaskPlannerStepView,
     ChallengeOfTheWeekStepView,
     ChallengeConfidenceWeekStepView,
+    DailyFeelingsCheckinStepView,
+    KindActionChallengeStepView,
+    YesNoQuizStepView,
+    PhotoUploadActivityStepView,
+    BelieveInYourselfChallengeStepView,
+    WhatWouldYouDoQuizStepView,
+    StickerPosterStepView,
+    KindnessCornerChallengeStepView,
+    PlaceSortGameStepView,
+    WeeklyChallengeShowcaseStepView,
+    SameOrDifferentQuizStepView,
+    DiversityPosterStepView,
+    KindnessBannerChallengeStepView,
   ],
   templateUrl: './module-player.html',
   styleUrl: './module-player.scss',
@@ -129,6 +165,11 @@ export class ModulePlayer implements OnInit {
   readonly completedLessonTitle = signal('');
   /** True while the "lesson complete" congratulations modal is showing, on top of whatever view was active. */
   readonly showCompletionModal = signal(false);
+  /** Which mood emoji is currently picked on a `feelingsCheckWelcome`/`feelingsReviewWelcome` screen — purely a decorative recap, not graded or saved. */
+  readonly feelingsCheckSelectedId = signal<string | null>(null);
+  /** Which option is currently picked on a `recapQuizWelcome` screen's graded mini-quiz. */
+  readonly recapQuizSelectedId = signal<string | null>(null);
+  readonly recapQuizFeedback = signal<'correct' | 'incorrect' | null>(null);
   /** Holds an already-committed advance result for a card-download step until the student clicks Continue. */
   private pendingAdvance: { progress: StudentProgress; lessonCompleted: boolean; moduleCompleted: boolean } | null = null;
 
@@ -196,11 +237,18 @@ export class ModulePlayer implements OnInit {
   /** A short, friendly name for the current step — used in the breadcrumb trail. */
   stepLabel(exercise: Exercise): string {
     switch (exercise.type) {
+      case 'feelings-match':
+      case 'picture-feelings-quiz':
+      case 'yes-no-quiz':
+      case 'sorting-game':
+      case 'place-sort-game':
+      case 'same-or-different-quiz':
       case 'warmup-chat':
       case 'warmup-game':
       case 'warmup-picker':
       case 'warmup-scenario':
       case 'warmup-parade':
+      case 'what-would-you-do-quiz':
       case 'plan-relay':
       case 'goal-matchup':
       case 'mirror-talk':
@@ -221,6 +269,9 @@ export class ModulePlayer implements OnInit {
       case 'activity-steps':
       case 'day-checklist-planner':
       case 'weekly-task-planner':
+      case 'photo-upload-activity':
+      case 'sticker-poster':
+      case 'diversity-poster':
         return 'My Activity';
       case 'reflection':
       case 'discussion-mcq':
@@ -236,6 +287,14 @@ export class ModulePlayer implements OnInit {
       case 'challenge-of-the-week':
       case 'challenge-confidence-week':
       case 'goal-challenge-tracker':
+      case 'daily-feelings-checkin':
+      case 'kind-watch-challenge':
+      case 'kind-words-challenge':
+      case 'kind-action-challenge':
+      case 'believe-in-yourself-challenge':
+      case 'kindness-corner-challenge':
+      case 'weekly-challenge-showcase':
+      case 'kindness-banner-challenge':
         return 'Challenge of the Week';
       case 'confidence-link':
       case 'confidence-planner':
@@ -266,7 +325,30 @@ export class ModulePlayer implements OnInit {
   enterLesson(lesson: Lesson): void {
     if (this.lessonStatus(lesson) === 'locked') return;
     this.activeLessonId.set(lesson.id);
+    this.feelingsCheckSelectedId.set(
+      lesson.feelingsCheckWelcome?.defaultSelectedOptionId ?? lesson.feelingsReviewWelcome?.defaultSelectedOptionId ?? null
+    );
+    this.recapQuizSelectedId.set(null);
+    this.recapQuizFeedback.set(null);
     this.view.set('lesson-welcome');
+  }
+
+  selectFeelingsOption(optionId: string): void {
+    this.feelingsCheckSelectedId.set(optionId);
+  }
+
+  selectRecapQuizOption(optionId: string, correctOptionId: string): void {
+    if (this.recapQuizFeedback() === 'correct') return;
+    const correct = optionId === correctOptionId;
+    this.recapQuizSelectedId.set(optionId);
+    this.recapQuizFeedback.set(correct ? 'correct' : 'incorrect');
+
+    if (!correct) {
+      setTimeout(() => {
+        this.recapQuizSelectedId.set(null);
+        this.recapQuizFeedback.set(null);
+      }, 900);
+    }
   }
 
   /** Starts the lesson's step sequence — warm-up, story, discussion, activity, challenge, questions — in the order the trainer script defines. */
@@ -395,6 +477,11 @@ export class ModulePlayer implements OnInit {
       return;
     }
     this.activeLessonId.set(lesson.id);
+    this.feelingsCheckSelectedId.set(
+      lesson.feelingsCheckWelcome?.defaultSelectedOptionId ?? lesson.feelingsReviewWelcome?.defaultSelectedOptionId ?? null
+    );
+    this.recapQuizSelectedId.set(null);
+    this.recapQuizFeedback.set(null);
     this.view.set('lesson-welcome');
   }
 

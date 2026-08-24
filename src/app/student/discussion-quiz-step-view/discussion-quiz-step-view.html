@@ -27,6 +27,9 @@
       @if (feedback() === 'incorrect') {
         <p class="try-again">Not quite — give it another try! 💪</p>
       }
+      @if (feedback() === 'correct' && question.feedbackText) {
+        <p class="feedback-correct">{{ question.feedbackText }}</p>
+      }
     }
   } @else {
     <h1>✨ {{ step().reviewHeading }}</h1>

@@ -1,0 +1,193 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+.biy {
+  max-width: 64rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.biy-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: #e3ecfd;
+  color: #4d78f0;
+  font-weight: 800;
+  font-size: 0.9rem;
+  padding: 0.55rem 1.4rem;
+  border-radius: v.$border-radius-pill;
+  margin-bottom: 1.5rem;
+}
+
+.biy h1 {
+  @include m.playful-heading;
+  font-size: 2.6rem;
+  color: v.$color-navy-text;
+  margin-bottom: 0.6rem;
+}
+
+.biy-subtitle {
+  color: rgba(43, 45, 66, 0.55);
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+}
+
+.biy-week-pill {
+  display: inline-block;
+  background: v.$color-sunshine;
+  color: v.$color-navy-text;
+  font-weight: 800;
+  font-size: 0.95rem;
+  padding: 0.55rem 1.5rem;
+  border-radius: v.$border-radius-pill;
+  margin-bottom: 2.5rem;
+}
+
+.biy-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+
+  @media (max-width: 780px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.biy-card {
+  @include m.bouncy-card;
+  background: v.$color-white;
+  padding: 2rem;
+  text-align: left;
+
+  &:hover { transform: none; box-shadow: 0 6px 0 rgba(0, 0, 0, 0.08); }
+}
+
+.biy-image-wrap {
+  width: 6rem;
+  height: 6rem;
+  border-radius: v.$border-radius-lg;
+  overflow: hidden;
+  margin-bottom: 1.25rem;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+.biy-card h2 {
+  @include m.playful-heading;
+  font-size: 1.5rem;
+  color: v.$color-navy-text;
+  margin-bottom: 0.9rem;
+}
+
+.biy-description {
+  color: rgba(43, 45, 66, 0.7);
+  font-size: 1rem;
+  line-height: 1.5;
+  margin-bottom: 1.75rem;
+
+  strong {
+    color: #2f6fed;
+  }
+}
+
+.biy-dots {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.9rem;
+}
+
+.biy-dot {
+  @include m.tappable;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  border: 2px solid rgba(43, 45, 66, 0.12);
+  background: rgba(43, 45, 66, 0.04);
+  color: v.$color-white;
+  font-weight: 800;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+
+  &:hover { border-color: #4d78f0; }
+
+  &.done {
+    background: #4d78f0;
+    border-color: #4d78f0;
+  }
+}
+
+.biy-progress-label {
+  color: rgba(43, 45, 66, 0.55);
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+.biy-quote {
+  font-style: italic;
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: v.$color-navy-text;
+  margin: 1.5rem 0 1.75rem;
+}
+
+.biy-actions {
+  display: flex;
+  gap: 0.9rem;
+}
+
+.biy-share-btn {
+  @include m.tappable;
+  background: #e3ecfd;
+  color: #4d78f0;
+  border: none;
+  font-weight: 800;
+  font-size: 0.95rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: v.$border-radius-pill;
+
+  &:hover { opacity: 0.88; }
+}
+
+.biy-quote-btn {
+  @include m.tappable;
+  background: #4d78f0;
+  color: v.$color-white;
+  border: none;
+  font-weight: 800;
+  font-size: 0.95rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: v.$border-radius-pill;
+
+  &:hover:not(:disabled) { opacity: 0.92; }
+  &:disabled { opacity: 0.5; cursor: default; }
+}
+
+.biy-parent-note {
+  color: rgba(43, 45, 66, 0.55);
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin: 0 0 1.75rem;
+}
+
+.biy-complete-btn {
+  @include m.tappable;
+  background: v.$color-leaf;
+  color: v.$color-white;
+  border: none;
+  font-weight: 800;
+  font-size: 1.05rem;
+  padding: 1rem 2.5rem;
+  border-radius: v.$border-radius-pill;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.1);
+
+  &:hover:not(:disabled) { opacity: 0.92; }
+  &:disabled { opacity: 0.5; cursor: default; }
+}
