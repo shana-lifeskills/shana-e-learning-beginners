@@ -62,6 +62,22 @@ import { WarmupParadeStepView } from '../warmup-parade-step-view/warmup-parade-s
 import { SharingCircleStepView } from '../sharing-circle-step-view/sharing-circle-step-view';
 import { DiscussionQuizStepView } from '../discussion-quiz-step-view/discussion-quiz-step-view';
 import { GoalMatchupStepView } from '../goal-matchup-step-view/goal-matchup-step-view';
+import { EtiquetteWarmupQuizStepView } from '../etiquette-warmup-quiz-step-view/etiquette-warmup-quiz-step-view';
+import { PoliteMessageChallengeStepView } from '../polite-message-challenge-step-view/polite-message-challenge-step-view';
+import { BehaviourMatchStepView } from '../behaviour-match-step-view/behaviour-match-step-view';
+import { KindCommentChallengeStepView } from '../kind-comment-challenge-step-view/kind-comment-challenge-step-view';
+import { TrueFalseWarmupStepView } from '../true-false-warmup-step-view/true-false-warmup-step-view';
+import { PauseBeforePostingStepView } from '../pause-before-posting-step-view/pause-before-posting-step-view';
+import { FillBlankWarmupStepView } from '../fill-blank-warmup-step-view/fill-blank-warmup-step-view';
+import { DigitalEtiquetteTrackerStepView } from '../digital-etiquette-tracker-step-view/digital-etiquette-tracker-step-view';
+import { ResponsibilityCircuitStepView } from '../responsibility-circuit-step-view/responsibility-circuit-step-view';
+import { ScreenTruthCheckStepView } from '../screen-truth-check-step-view/screen-truth-check-step-view';
+import { ScreenTimePlanChallengeStepView } from '../screen-time-plan-challenge-step-view/screen-time-plan-challenge-step-view';
+import { KindWordsFillBlankStepView } from '../kind-words-fill-blank-step-view/kind-words-fill-blank-step-view';
+import { DigitalResponsibilityTrackerStepView } from '../digital-responsibility-tracker-step-view/digital-responsibility-tracker-step-view';
+import { ThinkBeforeClickChallengeStepView } from '../think-before-click-challenge-step-view/think-before-click-challenge-step-view';
+import { PrivacyMatchStepView } from '../privacy-match-step-view/privacy-match-step-view';
+import { PrivacyProtectorChallengeStepView } from '../privacy-protector-challenge-step-view/privacy-protector-challenge-step-view';
 import { SmartGoalsLessonStepView } from '../smart-goals-lesson-step-view/smart-goals-lesson-step-view';
 import { SmartGoalBuilderStepView } from '../smart-goal-builder-step-view/smart-goal-builder-step-view';
 import { GoalChallengeTrackerStepView } from '../goal-challenge-tracker-step-view/goal-challenge-tracker-step-view';
@@ -158,6 +174,22 @@ type PlayerView = 'map' | 'lesson-welcome' | 'exercise' | 'module-complete';
     SharingCircleStepView,
     DiscussionQuizStepView,
     GoalMatchupStepView,
+    EtiquetteWarmupQuizStepView,
+    PoliteMessageChallengeStepView,
+    BehaviourMatchStepView,
+    KindCommentChallengeStepView,
+    TrueFalseWarmupStepView,
+    PauseBeforePostingStepView,
+    FillBlankWarmupStepView,
+    DigitalEtiquetteTrackerStepView,
+    ResponsibilityCircuitStepView,
+    ScreenTruthCheckStepView,
+    ScreenTimePlanChallengeStepView,
+    KindWordsFillBlankStepView,
+    DigitalResponsibilityTrackerStepView,
+    ThinkBeforeClickChallengeStepView,
+    PrivacyMatchStepView,
+    PrivacyProtectorChallengeStepView,
     SmartGoalsLessonStepView,
     SmartGoalBuilderStepView,
     GoalChallengeTrackerStepView,
@@ -301,6 +333,14 @@ export class ModulePlayer implements OnInit {
       case 'same-or-different-quiz':
       case 'warmup-chat':
       case 'warmup-game':
+      case 'etiquette-warmup-quiz':
+      case 'responsibility-circuit':
+      case 'screen-truth-check':
+      case 'kind-words-fill-blank':
+      case 'privacy-match':
+      case 'behaviour-match':
+      case 'true-false-warmup':
+      case 'fill-blank-warmup':
       case 'warmup-picker':
       case 'warmup-scenario':
       case 'warmup-parade':
@@ -361,7 +401,16 @@ export class ModulePlayer implements OnInit {
       case 'clear-sentence-practice':
       case 'feelings-tracker':
       case 'idea-presentation':
+      case 'polite-message-challenge':
+      case 'kind-comment-challenge':
+      case 'pause-before-posting':
+      case 'think-before-click-challenge':
+      case 'privacy-protector-challenge':
+      case 'screen-time-plan-challenge':
         return 'Challenge of the Week';
+      case 'digital-etiquette-tracker':
+      case 'digital-responsibility-tracker':
+        return 'Final Challenge';
       case 'confidence-link':
       case 'confidence-planner':
       case 'confidence-plan':

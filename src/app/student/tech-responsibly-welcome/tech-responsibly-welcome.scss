@@ -1,0 +1,307 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Responsible Tech control-panel welcome (trw) — Habits module, Week 1 ---- */
+$trw-navy: #0e1b3d;
+$trw-teal: #26d6c8;
+$trw-lime: #6ee7a8;
+$trw-violet: #7c8cff;
+
+.trw {
+  max-width: 60rem;
+  margin: 0 auto;
+  padding: 2.75rem clamp(1rem, 4vw, 2.75rem) 2.75rem;
+  text-align: center;
+  border-radius: v.$border-radius-xl;
+  background:
+    radial-gradient(120% 60% at 50% 0%, rgba($trw-teal, 0.22), transparent 70%),
+    linear-gradient(180deg, #0b1530 0%, #142a52 100%);
+  color: #eaf1ff;
+}
+
+.trw-week {
+  @include w.welcome-pill(rgba($trw-teal, 0.16), #9df3ec);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  border: 1px solid rgba($trw-teal, 0.4);
+}
+
+.trw h1 {
+  @include m.playful-heading;
+  font-size: clamp(2.1rem, 6vw, 3.3rem);
+  line-height: 1.1;
+  margin: 1.2rem 0 0.7rem;
+}
+
+.trw-title-start { color: #f4f8ff; }
+.trw-title-accent { color: $trw-teal; }
+
+.trw-intro {
+  max-width: 36rem;
+  margin: 0 auto;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: rgba(234, 241, 255, 0.78);
+}
+
+/* --- device control panel --- */
+.trw-panel {
+  max-width: 26rem;
+  margin: 2.5rem auto 0;
+  padding: 1.4rem 1.4rem 1.6rem;
+  border-radius: 1.9rem;
+  text-align: left;
+  background: linear-gradient(180deg, #10224a, #0a1631);
+  border: 1px solid rgba($trw-teal, 0.28);
+  box-shadow:
+    0 30px 60px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.trw-panel-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.trw-panel-label {
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 0.74rem;
+  letter-spacing: 0.12em;
+  color: rgba(157, 243, 236, 0.85);
+}
+
+.trw-signal {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 3px;
+
+  i {
+    width: 4px;
+    border-radius: 2px;
+    background: $trw-teal;
+    box-shadow: 0 0 8px rgba($trw-teal, 0.7);
+  }
+  i:nth-child(1) { height: 6px; }
+  i:nth-child(2) { height: 10px; }
+  i:nth-child(3) { height: 14px; }
+  i:nth-child(4) { height: 18px; }
+}
+
+.trw-gauge {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.3rem 0 0.4rem;
+
+  svg { width: 12rem; height: auto; overflow: visible; }
+}
+
+.trw-gauge-track {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.1);
+  stroke-width: 12;
+  stroke-linecap: round;
+}
+
+.trw-gauge-fill {
+  fill: none;
+  stroke: $trw-teal;
+  stroke-width: 12;
+  stroke-linecap: round;
+  stroke-dasharray: 276;
+  stroke-dashoffset: 92;
+  filter: drop-shadow(0 0 6px rgba($trw-teal, 0.6));
+}
+
+.trw-gauge-needle {
+  transform-box: fill-box;
+  transform-origin: 100px 104px;
+  transform: rotate(28deg);
+  animation: trw-needle 3.4s ease-in-out infinite alternate;
+
+  line { stroke: #f4f8ff; stroke-width: 4; stroke-linecap: round; }
+  circle { fill: #f4f8ff; }
+}
+
+@keyframes trw-needle {
+  from { transform: rotate(18deg); }
+  to { transform: rotate(40deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .trw-gauge-needle { animation: none; }
+}
+
+.trw-gauge-value {
+  margin-top: 0.3rem;
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 1.25rem;
+  color: $trw-lime;
+}
+
+.trw-gauge-label {
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(234, 241, 255, 0.55);
+}
+
+.trw-toggles {
+  list-style: none;
+  margin: 1.1rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.55rem;
+}
+
+.trw-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.7rem 0.85rem;
+  border-radius: v.$border-radius-lg;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.trw-toggle-icon {
+  @include w.icon-chip(2rem, 1rem, 0.7rem);
+  background: rgba($trw-violet, 0.2);
+}
+
+.trw-toggle-label {
+  flex: 1;
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: #eaf1ff;
+}
+
+.trw-toggle-switch {
+  position: relative;
+  width: 3rem;
+  height: 1.5rem;
+  border-radius: v.$border-radius-pill;
+  background: linear-gradient(90deg, rgba($trw-lime, 0.35), $trw-lime);
+  box-shadow: 0 0 10px rgba($trw-lime, 0.5);
+
+  b {
+    position: absolute;
+    left: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.6rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    color: $trw-navy;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0.16rem;
+    right: 0.16rem;
+    width: 1.18rem;
+    height: 1.18rem;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+}
+
+/* --- objective + pillars --- */
+.trw-objective {
+  background: rgba(255, 255, 255, 0.06);
+  border-left: 4px solid $trw-teal;
+  border-radius: v.$border-radius-lg;
+  padding: 1.35rem 1.6rem;
+  text-align: left;
+  max-width: 40rem;
+  margin: 2.4rem auto 1.6rem;
+
+  p {
+    margin: 0.45rem 0 0;
+    font-size: 1.12rem;
+    line-height: 1.5;
+    font-weight: 700;
+    color: #f4f8ff;
+  }
+}
+
+.trw-objective-label {
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #9df3ec;
+}
+
+.trw-pillars-heading {
+  margin: 0 0 0.85rem;
+  font-weight: 800;
+  color: rgba(234, 241, 255, 0.7);
+}
+
+.trw-pillars {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: 0.8rem;
+  max-width: 42rem;
+  margin: 0 auto;
+}
+
+.trw-pillar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 1.1rem 0.9rem;
+  border-radius: v.$border-radius-lg;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.03));
+  border: 1px solid rgba(255, 255, 255, 0.09);
+}
+
+.trw-pillar-icon { font-size: 1.6rem; }
+
+.trw-pillar-title {
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: $trw-teal;
+}
+
+.trw-pillar-text {
+  font-size: 0.82rem;
+  line-height: 1.35;
+  color: rgba(234, 241, 255, 0.72);
+}
+
+.trw-start {
+  @include w.welcome-cta-btn(linear-gradient(120deg, $trw-teal, $trw-violet), $trw-navy);
+  margin-top: 2.4rem;
+  font-size: 1.15rem;
+  padding: 1rem 2.75rem;
+  box-shadow: 0 0 24px rgba($trw-teal, 0.4);
+}
+
+.trw-review {
+  display: block;
+  margin: 0.9rem auto 0;
+  background: none;
+  border: none;
+  color: #9df3ec;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.trw-footer {
+  margin: 1.5rem 0 0;
+  font-size: 0.95rem;
+  color: rgba(234, 241, 255, 0.55);
+}

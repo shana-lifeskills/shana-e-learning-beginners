@@ -1,0 +1,73 @@
+<div class="stc">
+  <header class="stc-head">
+    <span class="stc-kicker">Warm-Up · Screen-Health Scan</span>
+    <h2>{{ step().title }}</h2>
+    <p class="stc-intro">{{ step().intro }}</p>
+  </header>
+
+  <div class="stc-scan">
+    <div class="stc-ring" role="progressbar" [attr.aria-valuenow]="lockedCount()" [attr.aria-valuemin]="0"
+      [attr.aria-valuemax]="total()">
+      <svg viewBox="0 0 120 120">
+        <circle class="stc-ring-track" cx="60" cy="60" r="54" />
+        <circle class="stc-ring-fill" cx="60" cy="60" r="54"
+          stroke-dasharray="339.29" [attr.stroke-dashoffset]="ringOffset()" />
+      </svg>
+      <span class="stc-ring-label">
+        <b>{{ lockedCount() }}<span>/{{ total() }}</span></b>
+        readings clear
+      </span>
+    </div>
+    <p class="stc-scan-note">Rule every reading correctly to finish the scan.</p>
+  </div>
+
+  <ul class="stc-list">
+    @for (s of step().statements; track s.id; let i = $index) {
+      <li class="stc-row" [class.is-locked]="isLocked(s.id)" [class.is-miss]="missFor(s.id)" [style.--i]="i">
+        <span class="stc-row-index" aria-hidden="true">{{ i + 1 }}</span>
+
+        <div class="stc-row-body">
+          <p class="stc-row-text">{{ s.text }}</p>
+
+          @if (isLocked(s.id)) {
+            <p class="stc-row-insight"><span aria-hidden="true">💡</span> {{ s.insight }}</p>
+          } @else if (missFor(s.id)) {
+            <p class="stc-row-hint">Re-scan — read it once more and try the other reading.</p>
+          }
+        </div>
+
+        @if (isLocked(s.id)) {
+          <span class="stc-row-verdict" [class.is-true]="s.answer">
+            {{ s.answer ? step().trueLabel : step().falseLabel }}
+            <span aria-hidden="true">{{ s.answer ? '✔' : '✘' }}</span>
+          </span>
+        } @else {
+          <div class="stc-switch" role="group" [attr.aria-label]="s.text">
+            <button type="button" class="stc-switch-btn stc-switch-btn--true"
+              [class.is-miss]="missFor(s.id) === 'true'" (click)="rule(s, 'true')">
+              {{ step().trueLabel }}
+            </button>
+            <button type="button" class="stc-switch-btn stc-switch-btn--false"
+              [class.is-miss]="missFor(s.id) === 'false'" (click)="rule(s, 'false')">
+              {{ step().falseLabel }}
+            </button>
+          </div>
+        }
+      </li>
+    }
+  </ul>
+
+  @if (allLocked()) {
+    <div class="stc-done" aria-live="polite">
+      <span class="stc-done-icon" aria-hidden="true">🩺</span>
+      <h3>{{ step().scanCompleteHeading }}</h3>
+      <p>{{ step().scanCompleteText }}</p>
+    </div>
+  }
+
+  <p class="stc-parent"><span aria-hidden="true">👪</span> {{ step().parentNote }}</p>
+
+  <button type="button" class="stc-continue" [disabled]="!allLocked()" (click)="finish()">
+    {{ step().completeLabel }} →
+  </button>
+</div>

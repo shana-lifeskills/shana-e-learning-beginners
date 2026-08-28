@@ -1,0 +1,59 @@
+<div class="kwb">
+  <header class="kwb-head">
+    <span class="kwb-kicker">Warm-Up · Finish the Message</span>
+    <h2>{{ step().title }}</h2>
+    <p class="kwb-intro">{{ step().intro }}</p>
+  </header>
+
+  <div class="kwb-meter" role="progressbar" [attr.aria-valuenow]="doneCount()" [attr.aria-valuemin]="0"
+    [attr.aria-valuemax]="total()">
+    <span class="kwb-meter-fill" [style.width.%]="progressPercent()"></span>
+    <span class="kwb-meter-text">💛 {{ doneCount() }} / {{ total() }} messages sent</span>
+  </div>
+
+  <ol class="kwb-thread">
+    @for (view of views(); track view.sentence.id) {
+      <li class="kwb-msg" [class.is-sent]="filledWord(view.sentence.id)" [class.is-miss]="missWord(view.sentence.id)">
+        <p class="kwb-bubble">
+          {{ view.sentence.before }}
+          @if (filledWord(view.sentence.id); as word) {
+            <span class="kwb-slot is-filled">{{ word }}</span>
+          } @else {
+            <span class="kwb-slot">?</span>
+          }
+          {{ view.sentence.after }}
+        </p>
+
+        @if (filledWord(view.sentence.id)) {
+          <p class="kwb-praise"><span aria-hidden="true">✅</span> {{ view.sentence.praise }}</p>
+        } @else {
+          @if (missWord(view.sentence.id)) {
+            <p class="kwb-nudge">Not quite — read the message again and pick the kinder word.</p>
+          }
+          <div class="kwb-chips" role="group" [attr.aria-label]="view.sentence.before + ' … ' + view.sentence.after">
+            @for (chip of view.chips; track chip) {
+              <button type="button" class="kwb-chip" [class.is-miss]="missWord(view.sentence.id) === chip"
+                (click)="pick(view.sentence, chip)">
+                {{ chip }}
+              </button>
+            }
+          </div>
+        }
+      </li>
+    }
+  </ol>
+
+  @if (allDone()) {
+    <div class="kwb-done" aria-live="polite">
+      <span class="kwb-done-icon" aria-hidden="true">💬</span>
+      <h3>{{ step().completeHeading }}</h3>
+      <p>{{ step().completeText }}</p>
+    </div>
+  }
+
+  <p class="kwb-parent"><span aria-hidden="true">👪</span> {{ step().parentNote }}</p>
+
+  <button type="button" class="kwb-continue" [disabled]="!allDone()" (click)="finish()">
+    {{ step().completeLabel }} →
+  </button>
+</div>

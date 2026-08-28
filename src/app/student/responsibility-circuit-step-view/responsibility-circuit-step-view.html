@@ -1,0 +1,64 @@
+<div class="rc">
+  <header class="rc-head">
+    <span class="rc-badge">🔌 Warm-Up · Circuit</span>
+    <h2>{{ step().title }}</h2>
+    <p class="rc-intro">{{ step().intro }}</p>
+  </header>
+
+  <div class="rc-rail" role="progressbar" [attr.aria-valuenow]="poweredCount()" [attr.aria-valuemax]="total()">
+    <span class="rc-rail-label">{{ step().railLabel }}</span>
+    <ol class="rc-nodes">
+      @for (question of step().questions; track question.id; let i = $index) {
+        <li class="rc-node" [class]="'is-' + nodeState(i)">
+          <span class="rc-node-dot">
+            @if (nodeState(i) === 'lit') { ⚡ } @else { {{ i + 1 }} }
+          </span>
+          <span class="rc-node-label">{{ question.nodeLabel }}</span>
+        </li>
+      }
+    </ol>
+    <div class="rc-rail-meter"><span [style.width.%]="(poweredCount() / total()) * 100"></span></div>
+  </div>
+
+  @for (question of step().questions; track question.id; let i = $index) {
+    @if (nodeState(i) === 'active') {
+      <section class="rc-panel" [class.spark]="sparked()">
+        <p class="rc-panel-kicker">{{ question.nodeLabel }} · powering up</p>
+        <p class="rc-prompt">{{ question.prompt }}</p>
+        <ul class="rc-options">
+          @for (option of question.options; track option.id; let oi = $index) {
+            <li>
+              <button type="button" class="rc-option" [class]="optionClass(question, option)"
+                (click)="pick(question, option)">
+                <span class="rc-letter">{{ optionLetter(oi) }}</span>
+                <span class="rc-option-text">{{ option.text }}</span>
+              </button>
+            </li>
+          }
+        </ul>
+        @if (sparked()) {
+          <p class="rc-nudge">✗ That connection sparks. Pick the safe, wise choice and try again.</p>
+        }
+      </section>
+    }
+  }
+
+  @if (allPowered()) {
+    <section class="rc-complete">
+      <span class="rc-complete-bolt">⚡</span>
+      <h3>{{ step().completeHeading }}</h3>
+      <p>{{ step().completeText }}</p>
+      <ul class="rc-sparks">
+        @for (question of step().questions; track question.id) {
+          <li>{{ question.spark }}</li>
+        }
+      </ul>
+    </section>
+  }
+
+  <p class="rc-parent-note">👪 {{ step().parentNote }}</p>
+
+  <button type="button" class="rc-finish" [disabled]="!allPowered()" (click)="finish()">
+    @if (allPowered()) { {{ step().completeLabel }} → } @else { Power all {{ total() }} nodes to continue }
+  </button>
+</div>

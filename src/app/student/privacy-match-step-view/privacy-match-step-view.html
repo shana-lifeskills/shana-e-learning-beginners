@@ -1,0 +1,60 @@
+<div class="pm">
+  <header class="pm-head">
+    <span class="pm-badge">🧩 Warm-Up · Matching</span>
+    <h2>{{ step().title }}</h2>
+    <p class="pm-intro">{{ step().intro }}</p>
+    <div class="pm-tally">
+      <span>{{ lockedCount() }} / {{ step().items.length }} matched</span>
+      <div class="pm-tally-bar"><span [style.width.%]="(lockedCount() / step().items.length) * 100"></span></div>
+    </div>
+  </header>
+
+  <p class="pm-board-label">{{ step().boardLabel }}</p>
+
+  <ul class="pm-rows">
+    @for (item of step().items; track item.id) {
+      <li class="pm-row" [class.is-locked]="isLocked(item.id)" [class.is-buzzing]="buzzing() === item.id">
+        <div class="pm-item">
+          <span class="pm-item-icon">{{ item.icon }}</span>
+          <span class="pm-item-label">{{ item.label }}</span>
+        </div>
+
+        <span class="pm-link" aria-hidden="true">
+          <span class="pm-link-dot"></span>
+          <span class="pm-link-line"></span>
+          <span class="pm-link-dot"></span>
+        </span>
+
+        @if (isLocked(item.id)) {
+          <div class="pm-result">
+            <span class="pm-result-action">✓ {{ lockedActionText(item.id) }}</span>
+            <span class="pm-result-why">{{ item.why }}</span>
+          </div>
+        } @else {
+          <div class="pm-actions">
+            @for (action of step().actions; track action.id) {
+              <button type="button" class="pm-action" (click)="pick(item, action)">{{ action.text }}</button>
+            }
+          </div>
+        }
+      </li>
+    }
+  </ul>
+
+  @if (buzzing()) {
+    <p class="pm-buzz-note">✗ {{ step().unsafeFeedback }}</p>
+  }
+
+  @if (allLocked()) {
+    <section class="pm-complete">
+      <h3>{{ step().completeHeading }}</h3>
+      <p>{{ step().completeText }}</p>
+    </section>
+  }
+
+  <p class="pm-parent-note">👪 {{ step().parentNote }}</p>
+
+  <button type="button" class="pm-finish" [disabled]="!allLocked()" (click)="finish()">
+    @if (allLocked()) { {{ step().completeLabel }} → } @else { Match all {{ step().items.length }} to continue }
+  </button>
+</div>

@@ -1,0 +1,79 @@
+<div class="tbc">
+  <header class="tbc-head">
+    <span class="tbc-badge">🛡️ {{ step().badge }}</span>
+    <h2>{{ step().title }}</h2>
+    <p class="tbc-intro">{{ step().intro }}</p>
+    <div class="tbc-progress">
+      <span>{{ sealedCount() }} / {{ step().dayCount }} shields sealed</span>
+      <div class="tbc-progress-bar"><span [style.width.%]="(sealedCount() / step().dayCount) * 100"></span></div>
+    </div>
+  </header>
+
+  <ol class="tbc-days">
+    @for (day of days(); track $index; let i = $index) {
+      <li class="tbc-day" [class.is-sealed]="day.sealed">
+        <div class="tbc-shield" aria-hidden="true">
+          @if (day.sealed) { 🔒 } @else { {{ i + 1 }} }
+        </div>
+
+        <div class="tbc-day-body">
+          <p class="tbc-day-label">{{ step().dayLabel }} {{ i + 1 }}</p>
+
+          @if (day.sealed) {
+            <p class="tbc-sealed-note">✓ {{ step().sealedLabel }}</p>
+            <dl class="tbc-log-summary">
+              <dt>{{ step().safeDecisionLabel }}</dt>
+              <dd>{{ day.safe }}</dd>
+              <dt>{{ step().avoidedLabel }}</dt>
+              <dd>{{ day.avoided }}</dd>
+            </dl>
+          } @else {
+            <p class="tbc-pause-heading">{{ step().pauseHeading }}</p>
+            <ul class="tbc-checks">
+              @for (check of step().checks; track check; let ci = $index) {
+                <li>
+                  <button type="button" class="tbc-check" [class.on]="day.checks[ci]" (click)="toggleCheck(i, ci)">
+                    <span class="tbc-check-box">{{ day.checks[ci] ? '✓' : '' }}</span>
+                    <span>{{ check }}</span>
+                  </button>
+                </li>
+              }
+            </ul>
+
+            <label class="tbc-field">
+              <span>{{ step().safeDecisionLabel }}</span>
+              <textarea rows="2" [placeholder]="step().safeDecisionPlaceholder"
+                [value]="day.safe" (input)="setSafe(i, $any($event.target).value)"></textarea>
+            </label>
+
+            <label class="tbc-field">
+              <span>{{ step().avoidedLabel }}</span>
+              <textarea rows="2" [placeholder]="step().avoidedPlaceholder"
+                [value]="day.avoided" (input)="setAvoided(i, $any($event.target).value)"></textarea>
+            </label>
+
+            <button type="button" class="tbc-seal" [disabled]="!canSeal(i)" (click)="seal(i)">
+              {{ step().sealLabel }}
+            </button>
+          }
+        </div>
+      </li>
+    }
+  </ol>
+
+  @if (allSealed()) {
+    <section class="tbc-confidence">
+      <span class="tbc-confidence-label">{{ step().confidenceHeading }}</span>
+      <blockquote>“{{ step().confidenceQuote }}”</blockquote>
+      <p>{{ step().confidenceText }}</p>
+    </section>
+  }
+
+  <p class="tbc-parent-note">👪 {{ step().parentNote }}</p>
+
+  <button type="button" class="tbc-finish" [disabled]="!allSealed()" (click)="finish()">
+    @if (allSealed()) { {{ step().completeLabel }} → } @else { {{ step().lockedCompleteLabel }} }
+  </button>
+
+  <p class="tbc-footer">{{ step().footerText }}</p>
+</div>

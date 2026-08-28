@@ -1,0 +1,55 @@
+<div class="ewq">
+  <header class="ewq-head">
+    <span class="ewq-badge">⚡ Warm-Up Game</span>
+    <h2>{{ step().title }}</h2>
+    <p class="ewq-intro">{{ step().intro }}</p>
+
+    <div class="ewq-track" role="progressbar" [attr.aria-valuenow]="solvedCount()" [attr.aria-valuemax]="total()">
+      <div class="ewq-track-fill" [style.width.%]="progressPercent()"></div>
+      <span class="ewq-track-label">{{ solvedCount() }} / {{ total() }} solved</span>
+    </div>
+  </header>
+
+  <ol class="ewq-list">
+    @for (question of step().questions; track question.id; let i = $index) {
+      <li class="ewq-card" [class]="'state-' + questionState(i)">
+        <div class="ewq-card-top">
+          <span class="ewq-num">
+            @if (questionState(i) === 'done') { ✓ } @else { {{ i + 1 }} }
+          </span>
+          <p class="ewq-prompt">{{ question.prompt }}</p>
+        </div>
+
+        @if (questionState(i) === 'done') {
+          <div class="ewq-done">
+            <p class="ewq-answer">{{ chosenOptionText(question) }}</p>
+            <p class="ewq-praise">{{ question.praise }}</p>
+          </div>
+        } @else if (questionState(i) === 'active') {
+          <ul class="ewq-options" [class.shake]="wrong()">
+            @for (option of question.options; track option.id; let oi = $index) {
+              <li>
+                <button type="button" class="ewq-option" [class]="optionClass(question, option)"
+                  (click)="pick(question, option)">
+                  <span class="ewq-letter">{{ optionLetter(oi) }}</span>
+                  <span class="ewq-option-text">{{ option.text }}</span>
+                </button>
+              </li>
+            }
+          </ul>
+          @if (wrong()) {
+            <p class="ewq-nudge">Not quite — think about the kindest choice, then try again.</p>
+          }
+        } @else {
+          <p class="ewq-locked-note">🔒 Answer the question above to unlock this one.</p>
+        }
+      </li>
+    }
+  </ol>
+
+  <p class="ewq-parent-note">👪 {{ step().parentNote }}</p>
+
+  <button type="button" class="ewq-finish" [disabled]="!allSolved()" (click)="finish()">
+    @if (allSolved()) { {{ step().completeLabel }} → } @else { Answer all {{ total() }} to continue }
+  </button>
+</div>

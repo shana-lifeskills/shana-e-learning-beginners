@@ -1,0 +1,93 @@
+<div class="det">
+  <header class="det-head">
+    <span class="det-kicker">Final Challenge</span>
+    <h2>{{ step().title }}</h2>
+    <p class="det-intro">{{ step().intro }}</p>
+  </header>
+
+  <div class="det-progress" role="progressbar" [attr.aria-valuenow]="setCells()" [attr.aria-valuemin]="0"
+    [attr.aria-valuemax]="totalCells()">
+    <span class="det-progress-fill" [style.width.%]="progressPercent()"></span>
+    <span class="det-progress-text">{{ setCells() }} / {{ totalCells() }} ticked</span>
+  </div>
+
+  <!-- report-card grid -->
+  <div class="det-card">
+    <div class="det-grid-scroll">
+      <table class="det-grid">
+        <thead>
+          <tr>
+            <th scope="col" class="det-grid-corner">This week</th>
+            @for (day of days(); track day) {
+              <th scope="col">Day {{ day }}</th>
+            }
+          </tr>
+        </thead>
+        <tbody>
+          @for (habit of step().habits; track habit; let h = $index) {
+            <tr>
+              <th scope="row">{{ habit }}</th>
+              @for (day of days(); track day; let d = $index) {
+                <td>
+                  <span class="det-seg" role="radiogroup" [attr.aria-label]="habit + ', day ' + day">
+                    <button type="button" class="det-seg-btn det-seg-btn--yes"
+                      [class.is-on]="cellValue(h, d) === true" [attr.aria-checked]="cellValue(h, d) === true"
+                      role="radio" (click)="setCell(h, d, true)">{{ step().yesLabel }}</button>
+                    <button type="button" class="det-seg-btn det-seg-btn--no"
+                      [class.is-on]="cellValue(h, d) === false" [attr.aria-checked]="cellValue(h, d) === false"
+                      role="radio" (click)="setCell(h, d, false)">{{ step().noLabel }}</button>
+                  </span>
+                </td>
+              }
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- structured reflection -->
+  <section class="det-reflect">
+    <h3>{{ step().reflectionHeading }}</h3>
+    <ul>
+      @for (field of step().reflectionFields; track field.id) {
+        <li>
+          <label>
+            <span>{{ field.label }}</span>
+            <textarea rows="2" [value]="reflections()[field.id] || ''" [placeholder]="field.placeholder"
+              (input)="setReflection(field.id, $any($event.target).value)"></textarea>
+          </label>
+        </li>
+      }
+    </ul>
+  </section>
+
+  <!-- confidence link -->
+  <section class="det-confidence">
+    <span class="det-confidence-label">{{ step().confidenceLabel }}</span>
+    <p class="det-confidence-quote">"{{ step().confidenceStatement }}"</p>
+    <button type="button" class="det-pledge" [class.is-on]="pledged()" role="checkbox"
+      [attr.aria-checked]="pledged()" (click)="togglePledge()">
+      <span class="det-pledge-box" aria-hidden="true">{{ pledged() ? '✓' : '' }}</span>
+      {{ step().pledgeLabel }}
+    </button>
+  </section>
+
+  <!-- final module outcome -->
+  @if (workComplete()) {
+    <section class="det-outcome">
+      <span class="det-outcome-seal" aria-hidden="true">🎓</span>
+      <h3>{{ step().outcomeHeading }}</h3>
+      <p class="det-outcome-intro">{{ step().outcomeIntro }}</p>
+      <ul>
+        @for (outcome of step().outcomes; track outcome) {
+          <li><span aria-hidden="true">✓</span>{{ outcome }}</li>
+        }
+      </ul>
+    </section>
+  }
+
+  <button type="button" class="det-complete" [disabled]="!readyToFinish()" (click)="complete()">
+    {{ step().completeLabel }} →
+  </button>
+</div>

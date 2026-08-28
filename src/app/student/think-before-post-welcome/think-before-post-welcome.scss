@@ -1,0 +1,230 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Think Before You Post welcome (tbp) — Etiquette module, Week 3 ---- */
+$tbp-amber: #f5a524;
+$tbp-indigo: #4f46e5;
+$tbp-ink: #211d54;
+
+.tbp {
+  max-width: 60rem;
+  margin: 0 auto;
+  padding: 2.5rem clamp(1rem, 4vw, 2.75rem) 2.75rem;
+  text-align: center;
+  border-radius: v.$border-radius-xl;
+  background: linear-gradient(165deg, #fdf1dc 0%, #f4ecfb 55%, #e9e7fb 100%);
+}
+
+.tbp-week {
+  @include w.welcome-pill(rgba($tbp-indigo, 0.14), #3b32c0);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.tbp h1 {
+  @include m.playful-heading;
+  font-size: clamp(2.1rem, 6vw, 3.3rem);
+  line-height: 1.1;
+  margin: 1.2rem 0 0.7rem;
+}
+
+.tbp-title-start { color: $tbp-ink; }
+.tbp-title-accent { color: $tbp-amber; }
+
+.tbp-intro {
+  max-width: 34rem;
+  margin: 0 auto;
+  font-size: 1.1rem;
+  line-height: 1.55;
+  color: w.navy(0.72);
+}
+
+/* --- funnel --- */
+.tbp-funnel {
+  max-width: 34rem;
+  margin: 2.25rem auto 0;
+}
+
+.tbp-draft {
+  background: v.$color-white;
+  border: 2px dashed rgba($tbp-amber, 0.75);
+  border-radius: v.$border-radius-lg;
+  padding: 1.1rem 1.3rem;
+  box-shadow: 0 12px 26px w.navy(0.09);
+  text-align: left;
+
+  p {
+    margin: 0.35rem 0 0;
+    font-size: 1.02rem;
+    font-style: italic;
+    color: $tbp-ink;
+  }
+}
+
+.tbp-draft-label {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #b9791a;
+}
+
+.tbp-arrow {
+  display: block;
+  font-size: 1.4rem;
+  line-height: 1;
+  margin: 0.5rem 0;
+  color: rgba($tbp-indigo, 0.55);
+}
+
+.tbp-gates-heading {
+  margin: 0 0 0.9rem;
+  font-weight: 800;
+  color: w.navy(0.75);
+}
+
+.tbp-gates {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.tbp-gate {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  text-align: left;
+  background: v.$color-white;
+  border-radius: v.$border-radius-lg;
+  padding: 0.7rem 0.95rem;
+  box-shadow: 0 8px 20px w.navy(0.07);
+  border-left: 5px solid rgba($tbp-indigo, calc(0.35 + var(--i) * 0.14));
+}
+
+.tbp-gate-badge {
+  flex: none;
+  width: 2.6rem;
+  height: 2.6rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: linear-gradient(135deg, $tbp-indigo, #7c74f2);
+  color: v.$color-white;
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 1.2rem;
+  box-shadow: 0 8px 16px rgba($tbp-indigo, 0.28);
+}
+
+.tbp-gate-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.tbp-gate-word {
+  font-weight: 800;
+  color: $tbp-ink;
+}
+
+.tbp-gate-q {
+  font-size: 0.9rem;
+  color: w.navy(0.62);
+}
+
+.tbp-publish {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0.7rem 1.4rem;
+  border-radius: v.$border-radius-pill;
+  background: linear-gradient(120deg, #1f9d55, #45c07d);
+  color: v.$color-white;
+  font-weight: 800;
+  box-shadow: 0 12px 24px rgba(31, 157, 85, 0.28);
+}
+
+/* --- objective + signals --- */
+.tbp-objective {
+  background: v.$color-white;
+  border-left: 5px solid $tbp-indigo;
+  border-radius: v.$border-radius-lg;
+  padding: 1.35rem 1.6rem;
+  box-shadow: 0 12px 28px w.navy(0.08);
+  text-align: left;
+  max-width: 40rem;
+  margin: 2.25rem auto 1.5rem;
+
+  p {
+    margin: 0.5rem 0 0;
+    font-size: 1.15rem;
+    line-height: 1.5;
+    font-weight: 700;
+    color: $tbp-ink;
+  }
+}
+
+.tbp-objective-label {
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $tbp-indigo;
+}
+
+.tbp-signals-heading {
+  margin: 0 0 0.75rem;
+  font-weight: 800;
+  color: w.navy(0.75);
+}
+
+.tbp-signals {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem;
+}
+
+.tbp-signal {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: v.$color-white;
+  border: 2px solid rgba($tbp-amber, 0.35);
+  border-radius: v.$border-radius-pill;
+  padding: 0.5rem 0.95rem;
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: $tbp-ink;
+}
+
+.tbp-start {
+  @include w.welcome-cta-btn(linear-gradient(120deg, $tbp-indigo, $tbp-amber));
+  margin-top: 2.25rem;
+  font-size: 1.15rem;
+  padding: 1rem 2.75rem;
+}
+
+.tbp-review {
+  display: block;
+  margin: 0.9rem auto 0;
+  background: none;
+  border: none;
+  color: #3b32c0;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.tbp-footer {
+  margin: 1.5rem 0 0;
+  font-size: 0.95rem;
+  color: w.navy(0.6);
+}

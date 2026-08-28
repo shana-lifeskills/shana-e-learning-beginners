@@ -2,6 +2,14 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
 import { Lesson } from '../../core/models/module.model';
 import { TvwWelcome } from '../tvw-welcome/tvw-welcome';
 import { GrowKinderWelcome } from '../grow-kinder-welcome/grow-kinder-welcome';
+import { PoliteOnlineWelcome } from '../polite-online-welcome/polite-online-welcome';
+import { RespectCircleWelcome } from '../respect-circle-welcome/respect-circle-welcome';
+import { ThinkBeforePostWelcome } from '../think-before-post-welcome/think-before-post-welcome';
+import { DigitalMannersWelcome } from '../digital-manners-welcome/digital-manners-welcome';
+import { TechResponsiblyWelcome } from '../tech-responsibly-welcome/tech-responsibly-welcome';
+import { PrivacyVaultWelcome } from '../privacy-vault-welcome/privacy-vault-welcome';
+import { ScreenBalanceWelcome } from '../screen-balance-welcome/screen-balance-welcome';
+import { RespectRippleWelcome } from '../respect-ripple-welcome/respect-ripple-welcome';
 import { LittleLanternWelcome } from '../little-lantern-welcome/little-lantern-welcome';
 import { SpeakUpClubWelcome } from '../speak-up-club-welcome/speak-up-club-welcome';
 import { SpeakUpWelcome } from '../speak-up-welcome/speak-up-welcome';
@@ -40,6 +48,14 @@ import { ClassicWelcome } from '../classic-welcome/classic-welcome';
   imports: [
     TvwWelcome,
     GrowKinderWelcome,
+    PoliteOnlineWelcome,
+    RespectCircleWelcome,
+    ThinkBeforePostWelcome,
+    DigitalMannersWelcome,
+    TechResponsiblyWelcome,
+    PrivacyVaultWelcome,
+    ScreenBalanceWelcome,
+    RespectRippleWelcome,
     LittleLanternWelcome,
     SpeakUpClubWelcome,
     SpeakUpWelcome,

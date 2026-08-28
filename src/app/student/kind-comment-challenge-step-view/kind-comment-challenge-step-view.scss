@@ -1,0 +1,311 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Kind Comment Challenge (kcc) — 5-entry kindness journal ---- */
+$kcc-sun: #f2994a;
+$kcc-rose: #e26d9b;
+$kcc-leaf: #3aa76d;
+$kcc-ink: #3a2b23;
+
+.kcc {
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 1.5rem clamp(0.75rem, 3vw, 1.5rem) 2.5rem;
+}
+
+.kcc-head { text-align: center; }
+
+.kcc-badge {
+  @include w.welcome-pill(rgba($kcc-leaf, 0.14), #227a4c);
+  letter-spacing: 0.05em;
+}
+
+.kcc-head h2 {
+  @include m.playful-heading;
+  font-size: clamp(1.6rem, 4.5vw, 2.2rem);
+  color: $kcc-ink;
+  margin: 0.9rem 0 0.4rem;
+}
+
+.kcc-intro {
+  margin: 0 auto 1.1rem;
+  max-width: 30rem;
+  color: w.navy(0.7);
+  line-height: 1.5;
+}
+
+.kcc-streak {
+  display: flex;
+  justify-content: center;
+  gap: 0.4rem;
+  font-size: 1.5rem;
+  margin-bottom: 0.9rem;
+}
+
+.kcc-bud {
+  filter: grayscale(0.6);
+  opacity: 0.6;
+  transition: transform 0.25s ease;
+
+  &.bloomed {
+    filter: none;
+    opacity: 1;
+    transform: scale(1.15);
+  }
+}
+
+.kcc-meter {
+  position: relative;
+  height: 1.4rem;
+  border-radius: v.$border-radius-pill;
+  background: rgba($kcc-leaf, 0.12);
+  overflow: hidden;
+
+  span {
+    position: relative;
+    display: block;
+    text-align: center;
+    line-height: 1.4rem;
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: $kcc-ink;
+  }
+}
+
+.kcc-meter-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  background: linear-gradient(90deg, $kcc-leaf, #6fce9d);
+  transition: width 0.35s ease;
+}
+
+.kcc-journal {
+  margin-top: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.kcc-entry {
+  border: 2px solid rgba($kcc-ink, 0.1);
+  border-radius: v.$border-radius-lg;
+  background: v.$color-white;
+  overflow: hidden;
+  transition: border-color 0.15s ease;
+
+  &.is-open { border-color: $kcc-sun; }
+  &.is-done { background: #fbf6f0; border-color: rgba($kcc-leaf, 0.4); }
+}
+
+.kcc-entry-tab {
+  @include m.tappable;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.9rem 1rem;
+  background: none;
+  border: none;
+  font: inherit;
+  text-align: left;
+  color: $kcc-ink;
+}
+
+.kcc-day-chip {
+  flex: none;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  background: rgba($kcc-sun, 0.18);
+  color: #b96a24;
+
+  .is-done & { background: $kcc-leaf; color: v.$color-white; }
+}
+
+.kcc-day-name { flex: 1; font-weight: 800; }
+
+.kcc-day-hint {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: w.navy(0.5);
+}
+
+.kcc-entry-body {
+  padding: 0 1.1rem 1.15rem;
+}
+
+.kcc-section-label {
+  margin: 0.6rem 0 0.5rem;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: w.navy(0.55);
+}
+
+.kcc-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 0.3rem;
+}
+
+.kcc-action {
+  @include m.tappable;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.6rem 0.85rem;
+  border-radius: v.$border-radius-sm;
+  border: 2px solid rgba($kcc-leaf, 0.25);
+  background: v.$color-white;
+  font: inherit;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: $kcc-ink;
+  text-align: left;
+
+  &.on { background: rgba($kcc-leaf, 0.12); border-color: $kcc-leaf; }
+}
+
+.kcc-check-box {
+  flex: none;
+  width: 1.2rem;
+  height: 1.2rem;
+  border-radius: 0.35rem;
+  border: 2px solid rgba($kcc-leaf, 0.4);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  color: $kcc-leaf;
+
+  .on & { background: $kcc-leaf; border-color: $kcc-leaf; color: v.$color-white; }
+}
+
+.kcc-field-label {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: $kcc-ink;
+  margin: 0.6rem 0 0.3rem;
+}
+
+.kcc-field {
+  width: 100%;
+  border-radius: v.$border-radius-sm;
+  border: 2px solid rgba($kcc-ink, 0.14);
+  padding: 0.6rem 0.8rem;
+  font: inherit;
+  resize: vertical;
+  color: $kcc-ink;
+
+  &:focus { outline: none; border-color: $kcc-sun; }
+}
+
+.kcc-save {
+  @include m.tappable;
+  margin-top: 0.9rem;
+  padding: 0.6rem 1.4rem;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  font-weight: 800;
+  font-size: 0.92rem;
+  color: v.$color-white;
+  background: $kcc-sun;
+
+  &:disabled { background: rgba($kcc-ink, 0.18); cursor: not-allowed; }
+}
+
+.kcc-logged {
+  margin: 0.5rem 0 0;
+  font-size: 0.95rem;
+  line-height: 1.45;
+  color: $kcc-ink;
+
+  span {
+    display: block;
+    font-size: 0.78rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: w.navy(0.5);
+  }
+}
+
+.kcc-confidence {
+  margin-top: 1.25rem;
+  padding: 1.4rem 1.5rem;
+  border-radius: v.$border-radius-lg;
+  text-align: center;
+  background: repeating-linear-gradient(135deg, rgba($kcc-sun, 0.08) 0 12px, rgba($kcc-rose, 0.08) 12px 24px);
+  border: 2px dashed rgba($kcc-sun, 0.35);
+
+  &.unlocked {
+    background: linear-gradient(120deg, rgba($kcc-sun, 0.16), rgba($kcc-rose, 0.16));
+    border-style: solid;
+  }
+}
+
+.kcc-confidence-label {
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #227a4c;
+}
+
+.kcc-statement {
+  margin: 0.5rem 0 0.9rem;
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 1.2rem;
+  color: $kcc-ink;
+
+  &.locked {
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: w.navy(0.55);
+    margin-bottom: 0;
+  }
+}
+
+.kcc-pledge {
+  @include m.tappable;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 1.1rem;
+  border-radius: v.$border-radius-pill;
+  border: 2px solid rgba($kcc-leaf, 0.3);
+  background: v.$color-white;
+  font-weight: 700;
+  color: $kcc-ink;
+
+  &.on { background: rgba($kcc-leaf, 0.16); border-color: $kcc-leaf; }
+
+  .kcc-check-box { border-color: rgba($kcc-leaf, 0.4); }
+}
+
+.kcc-complete {
+  @include m.tappable;
+  display: block;
+  width: 100%;
+  margin-top: 1.25rem;
+  padding: 1rem 1.5rem;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: v.$color-white;
+  background: linear-gradient(120deg, $kcc-leaf, $kcc-sun);
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.1);
+
+  &:disabled { background: rgba($kcc-ink, 0.18); box-shadow: none; cursor: not-allowed; }
+}

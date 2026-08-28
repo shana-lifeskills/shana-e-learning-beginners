@@ -96,7 +96,23 @@ export type ExerciseType =
   | 'yes-no-checklist'
   | 'listening-body-tracker'
   | 'feelings-picture-choice'
-  | 'challenge-feeling-report';
+  | 'challenge-feeling-report'
+  | 'etiquette-warmup-quiz'
+  | 'polite-message-challenge'
+  | 'behaviour-match'
+  | 'kind-comment-challenge'
+  | 'true-false-warmup'
+  | 'pause-before-posting'
+  | 'fill-blank-warmup'
+  | 'digital-etiquette-tracker'
+  | 'responsibility-circuit'
+  | 'screen-truth-check'
+  | 'screen-time-plan-challenge'
+  | 'kind-words-fill-blank'
+  | 'digital-responsibility-tracker'
+  | 'think-before-click-challenge'
+  | 'privacy-match'
+  | 'privacy-protector-challenge';
 
 export interface BaseExercise {
   id: string;
@@ -1781,6 +1797,584 @@ export interface DiscussionQuizStep extends BaseExercise {
   questions: DiscussionQuizQuestion[];
   reviewHeading: string;
   continueLabel: string;
+  /** Optional recap card shown on the review screen — a heading over a short bullet list. */
+  recapHeading?: string;
+  recapPoints?: string[];
+}
+
+/** One question inside an EtiquetteWarmupQuizStep. */
+export interface EtiquetteWarmupQuizQuestion {
+  id: string;
+  prompt: string;
+  options: ExerciseOption[];
+  correctOptionId: string;
+  /** Short affirmation shown once the learner picks the right option. */
+  praise: string;
+}
+
+/**
+ * A "warm-up" multiple-choice quiz built as a single vertical worksheet
+ * (Etiquette module) — every question is a numbered card in one scroll, but
+ * only the current card is interactive: earlier cards collapse to a green
+ * "answered" summary, later cards stay locked and dimmed. A wrong pick shakes
+ * and shows a nudge to try again; the card only unlocks the next once its
+ * correct option is chosen. The Continue button stays disabled until all
+ * questions are answered correctly, so the learner cannot skip ahead. A
+ * parent-assist note sits at the foot of the step.
+ */
+export interface EtiquetteWarmupQuizStep extends BaseExercise {
+  type: 'etiquette-warmup-quiz';
+  title: string;
+  intro: string;
+  questions: EtiquetteWarmupQuizQuestion[];
+  parentNote: string;
+  completeLabel: string;
+}
+
+/** One node on the "responsibility circuit" warm-up board. */
+export interface ResponsibilityCircuitQuestion {
+  id: string;
+  /** Short label under the circuit node, e.g. "Node 1". */
+  nodeLabel: string;
+  prompt: string;
+  options: ExerciseOption[];
+  correctOptionId: string;
+  /** Spark line shown once the learner powers the node with the right option. */
+  spark: string;
+}
+
+/**
+ * A "warm-up" multiple-choice quiz (Habits module) themed as a circuit board on
+ * blueprint paper: the questions are nodes on a horizontal power rail, and each
+ * correct answer "powers" its node and lights the wire to the next one. Only the
+ * first unpowered node is interactive; earlier nodes show a lit summary, later
+ * ones stay dim. A wrong pick sparks and shakes so the learner tries again — the
+ * node only powers on its correct option. The finish button stays disabled until
+ * every node is powered, so the learner cannot skip ahead, and a parent-assist
+ * note sits at the foot of the step.
+ */
+export interface ResponsibilityCircuitStep extends BaseExercise {
+  type: 'responsibility-circuit';
+  title: string;
+  intro: string;
+  railLabel: string;
+  questions: ResponsibilityCircuitQuestion[];
+  completeHeading: string;
+  completeText: string;
+  parentNote: string;
+  completeLabel: string;
+}
+
+/** One personal-info card on the "privacy match" board. */
+export interface PrivacyMatchItem {
+  id: string;
+  icon: string;
+  label: string;
+  /** Id from the step's `actions` pool that is the right match for this item. */
+  correctOptionId: string;
+  /** Other action ids that also count as correct for this item, if any. */
+  acceptableOptionIds?: string[];
+  /** Short reason shown when the item is correctly matched, e.g. "A password is a key others could use." */
+  why: string;
+}
+
+/**
+ * A "Match the Safe Action" warm-up (Habits module) — a linked two-column
+ * board. Each row is a personal-info item (password, full name, home address…)
+ * that the learner links to one action chip from a shared pool. Picking the
+ * right action for that item locks the row shut with a glowing connector line
+ * and a one-line reason; picking a wrong action buzzes the row and clears it so
+ * the learner tries again. The Continue button stays disabled until every row
+ * is matched correctly, so the learner cannot skip ahead, and a parent-assist
+ * note sits at the foot of the step.
+ */
+export interface PrivacyMatchStep extends BaseExercise {
+  type: 'privacy-match';
+  title: string;
+  intro: string;
+  boardLabel: string;
+  /** The shared chip pool shown for every row. */
+  actions: ExerciseOption[];
+  items: PrivacyMatchItem[];
+  /** Shown briefly after a wrong pick, prompting a retry. */
+  unsafeFeedback: string;
+  completeHeading: string;
+  completeText: string;
+  parentNote: string;
+  completeLabel: string;
+}
+
+/**
+ * A "Privacy Protector" challenge-of-the-week (Habits module, Week 2) — styled
+ * as a secret-agent dossier on manila paper with a red "CONFIDENTIAL" stamp.
+ * It has three filed sections: a numbered "Never Share" list of five lines the
+ * learner fills in, a "Power Phrase" card ("I cannot share that") with a
+ * tap-to-confirm "I practised saying it out loud" button, and a five-day
+ * "Watch Log" where each day the learner marks whether they were asked to
+ * share information (Yes/No) and types what they said or did. When every line
+ * is filled, the phrase is practised, and all five days are logged, a
+ * "Confidence Link" panel unlocks with the week's affirmation and the finish
+ * button — disabled until then — completes the step. Distinct look from the
+ * Week 1 shield-log challenge.
+ */
+export interface PrivacyProtectorChallengeStep extends BaseExercise {
+  type: 'privacy-protector-challenge';
+  badge: string;
+  title: string;
+  intro: string;
+  listHeading: string;
+  listInstruction: string;
+  listItemPlaceholder: string;
+  listCount: number;
+  phraseHeading: string;
+  phrase: string;
+  phraseInstruction: string;
+  practiceLabel: string;
+  practisedLabel: string;
+  logHeading: string;
+  logInstruction: string;
+  dayCount: number;
+  dayLabel: string;
+  askedQuestion: string;
+  yesLabel: string;
+  noLabel: string;
+  responseLabel: string;
+  responsePlaceholder: string;
+  confidenceHeading: string;
+  confidenceQuote: string;
+  confidenceText: string;
+  lockedCompleteLabel: string;
+  completeLabel: string;
+  parentNote: string;
+  footerText: string;
+}
+
+/**
+ * A "Think Before You Click" challenge-of-the-week tracker (Habits module) — a
+ * vertical stack of five "checkpoint" cards, each with a shield that seals shut
+ * once its day is logged. Each day the learner ticks a short "pause and ask"
+ * safety check (every box required), then types one safe decision they made and
+ * one thing they avoided (both required) before that day's shield can be sealed.
+ * When all five shields are sealed a "Confidence Link" panel unlocks with the
+ * week's affirmation, and the finish button — disabled until then — completes the
+ * step (and, as the module's last step, the module). Distinct look from the
+ * other trackers: emerald "security log" cards with a sealing-shield motif.
+ */
+export interface ThinkBeforeClickChallengeStep extends BaseExercise {
+  type: 'think-before-click-challenge';
+  badge: string;
+  title: string;
+  intro: string;
+  /** Number of checkpoint days, e.g. 5. */
+  dayCount: number;
+  /** Short prefix on each card, e.g. "Day" → "Day 1". */
+  dayLabel: string;
+  pauseHeading: string;
+  /** The "pause and ask" questions the learner ticks each day, e.g. "Is this safe?". */
+  checks: string[];
+  safeDecisionLabel: string;
+  safeDecisionPlaceholder: string;
+  avoidedLabel: string;
+  avoidedPlaceholder: string;
+  sealLabel: string;
+  sealedLabel: string;
+  confidenceHeading: string;
+  confidenceQuote: string;
+  confidenceText: string;
+  lockedCompleteLabel: string;
+  completeLabel: string;
+  parentNote: string;
+  footerText: string;
+}
+
+/** One habit tracked across the Digital Responsibility Tracker's 5-day grid, e.g. "I was kind online". */
+export interface DigitalResponsibilityHabit {
+  id: string;
+  icon: string;
+  label: string;
+}
+
+/** One sentence-completion line in the tracker's final structured reflection. */
+export interface DigitalResponsibilityReflectionField {
+  id: string;
+  /** The sentence stem the learner completes, e.g. "I made safe choices:". */
+  label: string;
+  placeholder: string;
+}
+
+/**
+ * The module's "Final Challenge" — a Digital Responsibility Tracker (Habits
+ * module, Week 4) that draws the four weeks together. A report-card dashboard
+ * on the module's teal: a grid of four habit rows (safe use, privacy, screen
+ * time, kindness) across five day columns, each cell a YES / NO tick, with a
+ * per-habit streak strip. Once every cell is logged (either answer counts) a
+ * structured final reflection unfolds — three sentence-completion fields, all
+ * required, no free-form box — followed by a "Confidence Link" panel with the
+ * closing affirmation to tick. The finish button, disabled until the grid,
+ * reflection and pledge are all done, completes the step and the module.
+ * Distinct look from the weekly trackers: a four-pillar grid dashboard, not a
+ * day-card stack.
+ */
+export interface DigitalResponsibilityTrackerStep extends BaseExercise {
+  type: 'digital-responsibility-tracker';
+  badge: string;
+  title: string;
+  intro: string;
+  habitsHeading: string;
+  habits: DigitalResponsibilityHabit[];
+  dayCount: number;
+  dayLabel: string;
+  yesLabel: string;
+  noLabel: string;
+  trackNote: string;
+  reflectionHeading: string;
+  reflectionInstruction: string;
+  reflectionFields: DigitalResponsibilityReflectionField[];
+  confidenceHeading: string;
+  confidenceQuote: string;
+  confidenceText: string;
+  pledgeLabel: string;
+  lockedCompleteLabel: string;
+  completeLabel: string;
+  parentNote: string;
+  footerText: string;
+}
+
+/** One editable line in the learner's screen-time plan, e.g. "Daily screen limit". */
+export interface ScreenTimePlanField {
+  id: string;
+  label: string;
+  placeholder: string;
+}
+
+/**
+ * A "Screen Time Plan" challenge-of-the-week tracker (Habits module, Week 3).
+ * Two phases on a phone-dashboard surface. First the learner fills in a short
+ * plan card styled like a device settings screen — three rows (daily limit,
+ * "no screens before", "break after"), all required. Filling the plan unlocks
+ * a 5-day streak strip below it: each day is a chip with a "Did I follow my
+ * plan?" YES / NO answer, and every day must be logged (either answer counts —
+ * the point is honest tracking). Once all five days are logged a "Confidence
+ * Link" panel appears with the week's affirmation to tick. The finish button —
+ * disabled until the plan is set, all days logged and the pledge ticked —
+ * completes the step and, as the module's last step, the module. Distinct look
+ * from the Week-1 shields and Week-2 dossier: an indigo device dashboard with a
+ * settings-style plan card and a calendar streak strip.
+ */
+export interface ScreenTimePlanChallengeStep extends BaseExercise {
+  type: 'screen-time-plan-challenge';
+  badge: string;
+  title: string;
+  intro: string;
+  planHeading: string;
+  planInstruction: string;
+  planFields: ScreenTimePlanField[];
+  trackHeading: string;
+  trackInstruction: string;
+  dayCount: number;
+  dayLabel: string;
+  followQuestion: string;
+  yesLabel: string;
+  noLabel: string;
+  confidenceHeading: string;
+  confidenceQuote: string;
+  confidenceText: string;
+  pledgeLabel: string;
+  lockedCompleteLabel: string;
+  completeLabel: string;
+  parentNote: string;
+  footerText: string;
+}
+
+/**
+ * A "Challenge of the Week" tracker (Etiquette module) built as a five-day
+ * timeline. Each day is a card with the same two-point "before you send" check
+ * (both must be ticked) and a box to rewrite one message more politely (must
+ * be filled) before that day can be marked done. When all five days are done,
+ * a "Confidence Link" panel unfurls with an affirmation the learner ticks to
+ * finish the week. Distinct look from the other trackers — vertical rail,
+ * per-day rewrite journal, closing pledge.
+ */
+export interface PoliteMessageChallengeStep extends BaseExercise {
+  type: 'polite-message-challenge';
+  title: string;
+  intro: string;
+  /** The recurring "check before you send" points, e.g. ["Is it kind?", "Is it respectful?"]. */
+  checkItems: string[];
+  rewritePrompt: string;
+  rewritePlaceholder: string;
+  /** Number of day cards, e.g. 5. */
+  dayCount: number;
+  confidenceLabel: string;
+  confidenceStatement: string;
+  pledgeLabel: string;
+  completeLabel: string;
+}
+
+/** One free-text field logged for each day of a KindCommentChallengeStep. */
+export interface KindCommentTrackField {
+  id: string;
+  label: string;
+  placeholder: string;
+}
+
+/**
+ * A "Challenge of the Week" tracker (Etiquette module, Week 2) shaped as a
+ * five-entry kindness journal. Each day is an expanding journal card (only one
+ * open at a time): the learner ticks the day's kind actions and writes a short
+ * log for each track field, then saves the entry. Completed days bloom into a
+ * streak of icons. When all five entries are logged, a "Confidence Link" panel
+ * unfurls with an affirmation to tick before finishing. Distinct look from the
+ * Week 1 challenge rail — warm journal cards, a growth streak, closing pledge.
+ */
+export interface KindCommentChallengeStep extends BaseExercise {
+  type: 'kind-comment-challenge';
+  title: string;
+  intro: string;
+  /** The daily kind-action checkboxes, both required to complete a day. */
+  dailyActions: string[];
+  /** The short log prompts filled in for each day. */
+  trackFields: KindCommentTrackField[];
+  dayCount: number;
+  confidenceLabel: string;
+  confidenceStatement: string;
+  pledgeLabel: string;
+  completeLabel: string;
+}
+
+/** One behaviour/meaning pair in a BehaviourMatchStep. */
+export interface BehaviourMatchPair {
+  id: string;
+  /** The behaviour word, e.g. "Respect". */
+  behaviour: string;
+  /** An emoji avatar that pictures the behaviour, e.g. "🤝". */
+  avatar: string;
+  /** The meaning the learner must match to it, e.g. "Treating others well". */
+  meaning: string;
+}
+
+/**
+ * A "match the meaning to the behaviour" warm-up (Etiquette module) — behaviour
+ * cards (each with an emoji avatar) on the left, the meanings shuffled into a
+ * pool on the right. The learner taps a behaviour then its meaning; a correct
+ * pair locks with a shared colour, a wrong pair flashes and clears. The
+ * Continue button stays disabled until every pair is matched, so nothing is
+ * skippable. A parent-assist note sits at the foot of the step.
+ */
+export interface BehaviourMatchStep extends BaseExercise {
+  type: 'behaviour-match';
+  title: string;
+  intro: string;
+  behaviourHeading: string;
+  meaningHeading: string;
+  pairs: BehaviourMatchPair[];
+  parentNote: string;
+  completeLabel: string;
+}
+
+/** One statement the learner stamps True or False in a TrueFalseWarmupStep. */
+export interface TrueFalseWarmupStatement {
+  id: string;
+  text: string;
+  /** The correct verdict for this statement. */
+  answer: boolean;
+  /** Short affirmation shown once the learner stamps it correctly. */
+  praise: string;
+}
+
+/**
+ * A "fact check" True/False warm-up (Etiquette module, Week 3) built as a
+ * single-card verdict deck. One statement shows at a time on a scanner-style
+ * card with a big TRUE and a big FALSE stamp button. A correct stamp thuds
+ * down, the card flips to a green confirmed state with its praise line, and
+ * drops onto a growing "sorted" board split into True and False columns; a
+ * wrong stamp shakes the card and shows a nudge to look again. The Continue
+ * button stays disabled until every statement is stamped correctly, so nothing
+ * is skippable. A parent-assist note sits at the foot of the step.
+ */
+export interface TrueFalseWarmupStep extends BaseExercise {
+  type: 'true-false-warmup';
+  title: string;
+  intro: string;
+  statements: TrueFalseWarmupStatement[];
+  trueLabel: string;
+  falseLabel: string;
+  parentNote: string;
+  completeLabel: string;
+}
+
+/** One reading the learner rules TRUE or FALSE on the screen-health scanner. */
+export interface ScreenTruthCheckStatement {
+  id: string;
+  text: string;
+  /** The correct verdict for this reading. */
+  answer: boolean;
+  /** One-line takeaway revealed once the learner rules on it correctly. */
+  insight: string;
+}
+
+/**
+ * A "screen-health scan" True/False warm-up (Habits module, Week 3). Every
+ * reading is listed at once as a row on a phone-diagnostics panel, each with a
+ * TRUE / FALSE segmented switch on the right and a circular "scan progress"
+ * ring at the top. A correct ruling locks the row green, reveals its insight
+ * line and advances the ring; a wrong ruling buzzes the row red with a
+ * "re-scan" hint and does not lock. The Continue button stays disabled until
+ * every row is ruled correctly, so nothing is skippable. A parent-assist note
+ * sits at the foot. Deliberately unlike the Week-1 circuit rail and the
+ * Etiquette fact-check card deck — a static diagnostics list, not a one-card
+ * deck.
+ */
+export interface ScreenTruthCheckStep extends BaseExercise {
+  type: 'screen-truth-check';
+  title: string;
+  intro: string;
+  statements: ScreenTruthCheckStatement[];
+  trueLabel: string;
+  falseLabel: string;
+  scanCompleteHeading: string;
+  scanCompleteText: string;
+  parentNote: string;
+  completeLabel: string;
+}
+
+/**
+ * A "Challenge of the Week" tracker (Etiquette module, Week 3) shaped as a
+ * five-light signal strip. Each day is a stop light that starts red: the
+ * learner flips both "before posting" checks (styled as switches) to clear it
+ * to amber, then writes one good decision they made that day to turn it green
+ * and log the day. Only one day console is open at a time; cleared days stay
+ * green in the strip. When all five lights are green, a "Confidence Link" panel
+ * unfurls with an affirmation to tick before finishing. Distinct look from the
+ * Week 1 rail and Week 2 journal — a signal strip, a pause console, switch
+ * toggles.
+ */
+export interface PauseBeforePostingStep extends BaseExercise {
+  type: 'pause-before-posting';
+  title: string;
+  intro: string;
+  /** Heading over the recurring checks, e.g. "Before posting, ask:". */
+  checkPrompt: string;
+  /** The recurring checks, both required — e.g. ["Is it respectful?", "Did I get permission?"]. */
+  checkItems: string[];
+  decisionPrompt: string;
+  decisionPlaceholder: string;
+  dayCount: number;
+  confidenceLabel: string;
+  confidenceStatement: string;
+  pledgeLabel: string;
+  completeLabel: string;
+}
+
+/** One draft message with a missing word in a KindWordsFillBlankStep. */
+export interface KindWordsBlankSentence {
+  id: string;
+  /** Sentence text before the blank. */
+  before: string;
+  /** Sentence text after the blank. */
+  after: string;
+  /** Words that correctly fill the blank — more than one when the sentence accepts alternatives. */
+  answers: string[];
+  /** Wrong words shown alongside the answers as tappable chips. */
+  distractors: string[];
+  /** Short affirmation shown once the blank is filled correctly. */
+  praise: string;
+}
+
+/**
+ * A "kind words" fill-in-the-blank warm-up (Habits module, Week 4) shaped as a
+ * phone message thread. Each sentence is a half-typed chat bubble with a
+ * glowing gap; under it sits a shuffled row of word chips (that sentence's
+ * answers plus a couple of distractors). Tapping the right word drops it into
+ * the gap, the bubble "sends" with a kind-hearted glow and its praise line
+ * shows; a wrong chip buzzes and clears. A heart meter fills as bubbles are
+ * sent. The Continue button stays disabled until every message is completed, so
+ * nothing is skippable. A parent-assist note sits at the foot. Deliberately
+ * unlike the Etiquette chalkboard word-bank — a chat composer with per-sentence
+ * chips, and sentences that can accept more than one right word.
+ */
+export interface KindWordsFillBlankStep extends BaseExercise {
+  type: 'kind-words-fill-blank';
+  title: string;
+  intro: string;
+  sentences: KindWordsBlankSentence[];
+  parentNote: string;
+  completeHeading: string;
+  completeText: string;
+  completeLabel: string;
+}
+
+/** One sentence with a single blank in a FillBlankWarmupStep. */
+export interface FillBlankSentence {
+  id: string;
+  /** Sentence text before the blank. */
+  before: string;
+  /** Sentence text after the blank. */
+  after: string;
+  /** The word that belongs in the blank. */
+  answer: string;
+  /** Short affirmation shown once the blank is filled correctly. */
+  praise: string;
+}
+
+/**
+ * A "fill in the blank" warm-up (Etiquette module, Week 4) built as a
+ * chalkboard word-bank game. All the answer words sit shuffled in a word bank;
+ * each sentence below has one empty slot. The learner taps a word, then taps a
+ * blank — a right word snaps in and the slot turns green, a wrong word shakes
+ * the slot and clears the pick. Used words leave the bank. The Continue button
+ * stays disabled until every blank is filled, so nothing is skippable. A
+ * parent-assist note sits at the foot of the step.
+ */
+export interface FillBlankWarmupStep extends BaseExercise {
+  type: 'fill-blank-warmup';
+  title: string;
+  intro: string;
+  wordBankLabel: string;
+  sentences: FillBlankSentence[];
+  parentNote: string;
+  completeLabel: string;
+}
+
+/** One structured sentence-completion field in a DigitalEtiquetteTrackerStep's final reflection. */
+export interface DigitalEtiquetteReflectionField {
+  id: string;
+  /** The sentence stem, e.g. "I showed respect by:". */
+  label: string;
+  placeholder: string;
+}
+
+/**
+ * The Etiquette module's Final Challenge (Week 4) — a "report card" grid
+ * tracker. The 5 days run across as columns and the tracked habits down as
+ * rows; every cell is a Yes/No segmented control the learner sets each day.
+ * Below the grid, a structured final reflection asks the learner to complete a
+ * few fixed sentence stems (no open writing), then a "Confidence Link"
+ * affirmation to tick. Once the grid is fully filled and the reflection
+ * complete, a "Final Module Outcome" panel unfurls listing what the learner
+ * can now do, and the finish button ends the module. Distinct look from the
+ * three weekly challenges — a matrix card, a reflection worksheet, an outcome
+ * certificate.
+ */
+export interface DigitalEtiquetteTrackerStep extends BaseExercise {
+  type: 'digital-etiquette-tracker';
+  title: string;
+  intro: string;
+  /** The tracked habits, one grid row each. */
+  habits: string[];
+  dayCount: number;
+  yesLabel: string;
+  noLabel: string;
+  reflectionHeading: string;
+  reflectionFields: DigitalEtiquetteReflectionField[];
+  confidenceLabel: string;
+  confidenceStatement: string;
+  pledgeLabel: string;
+  outcomeHeading: string;
+  outcomeIntro: string;
+  /** What the learner can do at the end of the module. */
+  outcomes: string[];
+  completeLabel: string;
 }
 
 /** One "A vs B" goal choice inside a GoalMatchupStep. */
@@ -3190,7 +3784,23 @@ export type Exercise =
   | YesNoChecklistStep
   | ListeningBodyTrackerStep
   | FeelingsPictureChoiceStep
-  | ChallengeFeelingReportStep;
+  | ChallengeFeelingReportStep
+  | EtiquetteWarmupQuizStep
+  | PoliteMessageChallengeStep
+  | BehaviourMatchStep
+  | KindCommentChallengeStep
+  | TrueFalseWarmupStep
+  | PauseBeforePostingStep
+  | FillBlankWarmupStep
+  | DigitalEtiquetteTrackerStep
+  | ResponsibilityCircuitStep
+  | ScreenTruthCheckStep
+  | ScreenTimePlanChallengeStep
+  | KindWordsFillBlankStep
+  | DigitalResponsibilityTrackerStep
+  | ThinkBeforeClickChallengeStep
+  | PrivacyMatchStep
+  | PrivacyProtectorChallengeStep;
 
 /** Content for the newer, richer lesson-welcome layout. When a lesson has this, its welcome screen uses this design instead of the plain card. */
 /** One preview card inside a LessonWelcomeCard's "This Week's Mission" section. */
@@ -3674,6 +4284,22 @@ export interface Lesson {
   littleLanternWelcome?: LessonLittleLanternWelcome;
   /** When set, renders the "grow kinder" welcome layout (centered week pill, two-tone title, illustration with a speech bubble, a "What We'll Learn" objective card with coloured word runs, a row of three focus cards, a start button, and a heart-flanked tagline) — takes priority over all other welcome fields. */
   growKinderWelcome?: LessonGrowKinderWelcome;
+  /** When set, renders the "polite online" welcome layout (gradient page, two-tone title, decorative chat card, objective card, manners chips) — takes priority over all other welcome fields. */
+  politeOnlineWelcome?: LessonPoliteOnlineWelcome;
+  /** When set, renders the "respect circle" welcome layout (gradient page, orbit diagram, objective card, practice chips) — takes priority over all other welcome fields. */
+  respectCircleWelcome?: LessonRespectCircleWelcome;
+  /** When set, renders the "think before you post" welcome layout (gradient page, a draft-post card funnelling down through the T.H.I.N.K. gate stack to a "ready to post" chip, objective card, "time to pause when…" signal chips) — takes priority over all other welcome fields. */
+  thinkBeforePostWelcome?: LessonThinkBeforePostWelcome;
+  /** When set, renders the "digital manners" welcome layout (gradient page, a phone home-screen of everyday-app tiles each captioned with the manner it calls for, objective card, everyday-habit chips) — takes priority over all other welcome fields. */
+  digitalMannersWelcome?: LessonDigitalMannersWelcome;
+  /** When set, renders the "responsible tech control panel" welcome layout (deep-navy page, a dark glowing device panel with a balance gauge and ON toggles, objective card, principle cards) — takes priority over all other welcome fields. */
+  techResponsiblyWelcome?: LessonTechResponsiblyWelcome;
+  /** When set, renders the "personal info vault" welcome layout (cream page, a combination-dial vault with padlocked "valuables" cards, objective card, "keep it private" habit chips) — takes priority over all other welcome fields. */
+  privacyVaultWelcome?: LessonPrivacyVaultWelcome;
+  /** When set, renders the "screen-time balance clock" welcome layout (dawn-to-dusk gradient page, an SVG day-clock donut whose coloured wedges show how screen time fits around school, play, family and sleep, a "self-control charge" battery meter, objective card, self-control strategy cards) — takes priority over all other welcome fields. */
+  screenBalanceWelcome?: LessonScreenBalanceWelcome;
+  /** When set, renders the "ripple of respect" welcome layout (warm rose-to-amber gradient page, an SVG ripple diagram where one kind message spreads out through a ring of friend nodes that light up in turn, objective card, "respect online looks like…" practice cards) — takes priority over all other welcome fields. */
+  respectRippleWelcome?: LessonRespectRippleWelcome;
   /** Ordered steps the student walks through — warm-up, story, discussion, activity, challenge, questions. */
   exercises: Exercise[];
 }
@@ -3796,6 +4422,328 @@ export interface LessonGrowKinderWelcome {
   cards: GrowKinderCard[];
   startLabel: string;
   footerTagline: string;
+}
+
+/** One message bubble in the decorative chat preview of the "polite online" welcome. */
+export interface PoliteOnlineMessage {
+  /** `them` renders left-aligned/neutral, `me` renders right-aligned/accent. */
+  from: 'them' | 'me';
+  text: string;
+  /** Optional emoji reaction pinned to the bubble, e.g. "💜". */
+  reaction?: string;
+}
+
+/** One "good manners" chip below the objective card in the "polite online" welcome. */
+export interface PoliteOnlineChip {
+  icon: string;
+  text: string;
+}
+
+/**
+ * The "polite online" welcome layout (Etiquette module, Week 1) — a soft
+ * violet-to-sky gradient page with a week label pill, a two-tone title, a
+ * short intro line, then a decorative phone-style chat card showing a kind
+ * back-and-forth (bubbles with optional emoji reactions), an "Our Objective"
+ * card, a wrapping row of "good manners" chips, a start button, and a small
+ * footer note. Purely presentational — the chat is not interactive.
+ */
+export interface LessonPoliteOnlineWelcome {
+  weekLabel: string;
+  titleStart: string;
+  titleAccent: string;
+  intro: string;
+  chatTitle: string;
+  messages: PoliteOnlineMessage[];
+  objectiveLabel: string;
+  objectiveText: string;
+  chipsHeading: string;
+  chips: PoliteOnlineChip[];
+  startLabel: string;
+  footerNote: string;
+}
+
+/** One node orbiting the centre of the "respect circle" welcome diagram. */
+export interface RespectCircleNode {
+  icon: string;
+  label: string;
+}
+
+/** One respectful-practice chip in the "respect circle" welcome. */
+export interface RespectCirclePractice {
+  icon: string;
+  text: string;
+}
+
+/**
+ * The "respect circle" welcome layout (Etiquette module, Week 2) — a
+ * teal-to-gold gradient page with a week label pill, a two-tone title, a short
+ * intro, then a circular "orbit" diagram (a centre disc labelled e.g. "YOU"
+ * with people/space nodes evenly spaced around a ring), an "Our Objective"
+ * card, a row of respectful-practice chips, a start button, and a footer note.
+ * Purely presentational.
+ */
+export interface LessonRespectCircleWelcome {
+  weekLabel: string;
+  titleStart: string;
+  titleAccent: string;
+  intro: string;
+  centerLabel: string;
+  orbitNodes: RespectCircleNode[];
+  objectiveLabel: string;
+  objectiveText: string;
+  practicesHeading: string;
+  practices: RespectCirclePractice[];
+  startLabel: string;
+  footerNote: string;
+}
+
+/** One gate in the T.H.I.N.K. filter stack of the "think before you post" welcome. */
+export interface ThinkGate {
+  /** The gate's initial, e.g. "T". */
+  letter: string;
+  /** The word it stands for, e.g. "True". */
+  word: string;
+  /** The question the learner asks at this gate, e.g. "Is it true?". */
+  question: string;
+}
+
+/** One "time to pause" signal chip in the "think before you post" welcome. */
+export interface ThinkPauseSignal {
+  icon: string;
+  text: string;
+}
+
+/**
+ * The "think before you post" welcome layout (Etiquette module, Week 3) — an
+ * amber-to-indigo gradient page with a week label pill, a two-tone title, a
+ * short intro, then a vertical funnel: a "draft post" card at the top drops
+ * through a stack of T.H.I.N.K. gates (each a lettered badge with a word and a
+ * check question) down to a "ready to post" chip. Below sit an "Our Objective"
+ * card and a wrapping row of "time to pause when…" signal chips, then a start
+ * button and a footer note. Purely presentational — the funnel is not
+ * interactive.
+ */
+export interface LessonThinkBeforePostWelcome {
+  weekLabel: string;
+  titleStart: string;
+  titleAccent: string;
+  intro: string;
+  draftLabel: string;
+  draftText: string;
+  gatesHeading: string;
+  gates: ThinkGate[];
+  publishLabel: string;
+  objectiveLabel: string;
+  objectiveText: string;
+  signalsHeading: string;
+  signals: ThinkPauseSignal[];
+  startLabel: string;
+  footerNote: string;
+}
+
+/** One app tile on the phone home-screen of the "digital manners" welcome. */
+export interface DigitalMannersApp {
+  icon: string;
+  name: string;
+  /** The manner this everyday app calls for, e.g. "Greet before you ask". */
+  manner: string;
+}
+
+/** One everyday-habit chip in the "digital manners" welcome. */
+export interface DigitalMannersHabit {
+  icon: string;
+  text: string;
+}
+
+/**
+ * The "digital manners" welcome layout (Etiquette module, Week 4) — a
+ * rose-to-sky gradient page with a week label pill, a two-tone title, a short
+ * intro, then a decorative phone home-screen: a grid of everyday-app tiles
+ * (Messages, Group Chat, Video Call, Photos, Games, Email…) each captioned with
+ * the good manner it calls for. Below sit an "Our Objective" card and a
+ * wrapping row of everyday-habit chips, then a start button and a footer note.
+ * Purely presentational — the phone is not interactive.
+ */
+export interface LessonDigitalMannersWelcome {
+  weekLabel: string;
+  titleStart: string;
+  titleAccent: string;
+  intro: string;
+  phoneLabel: string;
+  apps: DigitalMannersApp[];
+  objectiveLabel: string;
+  objectiveText: string;
+  habitsHeading: string;
+  habits: DigitalMannersHabit[];
+  startLabel: string;
+  footerNote: string;
+}
+
+/** One glowing status toggle on the "responsible tech" control panel, e.g. "Safe mode · ON". */
+export interface TechResponsiblyToggle {
+  icon: string;
+  label: string;
+  /** Short state word shown in the glowing pill, e.g. "ON". */
+  state: string;
+}
+
+/** One principle card under the "responsible tech" control panel. */
+export interface TechResponsiblyPillar {
+  icon: string;
+  title: string;
+  text: string;
+}
+
+/**
+ * The "responsible tech control panel" welcome layout (Habits module, Week 1) —
+ * a deep-navy page with a week pill and two-tone title, then a dark, softly
+ * glowing "device control panel": a status bar with signal dots, a semicircular
+ * SVG balance gauge with an animated needle, and a stack of toggle rows that
+ * each sit in the "ON" position. Below the panel are an "Our Objective" card
+ * and a row of principle cards, then a start button and a footer note. Purely
+ * presentational — nothing on the panel is interactive.
+ */
+export interface LessonTechResponsiblyWelcome {
+  weekLabel: string;
+  titleStart: string;
+  titleAccent: string;
+  intro: string;
+  panelLabel: string;
+  gaugeLabel: string;
+  gaugeValueLabel: string;
+  toggles: TechResponsiblyToggle[];
+  objectiveLabel: string;
+  objectiveText: string;
+  pillarsHeading: string;
+  pillars: TechResponsiblyPillar[];
+  startLabel: string;
+  footerNote: string;
+}
+
+/** One friend node in the ripple diagram on the "digital respect & kindness" welcome. */
+export interface RespectRippleNode {
+  icon: string;
+  /** The kind act that reaches this friend, e.g. "A friendly reply". */
+  label: string;
+}
+
+/** One "respect online looks like…" practice card on the "digital respect & kindness" welcome. */
+export interface RespectRipplePractice {
+  icon: string;
+  title: string;
+  text: string;
+}
+
+/**
+ * The "ripple of respect" welcome layout (Habits module, Week 4) — a warm
+ * rose-to-amber gradient page with a week pill and two-tone title, then a
+ * decorative SVG ripple diagram: a glowing central "one kind message" heart
+ * with expanding rings, encircled by friend nodes that light up one after
+ * another as the kindness spreads. Below sit an "Our Objective" card and a row
+ * of "respect online looks like…" practice cards, then a start button and a
+ * footer note. Purely presentational — nothing in the diagram is interactive.
+ */
+export interface LessonRespectRippleWelcome {
+  weekLabel: string;
+  titleStart: string;
+  titleAccent: string;
+  intro: string;
+  rippleLabel: string;
+  centerIcon: string;
+  rippleCaption: string;
+  nodes: RespectRippleNode[];
+  objectiveLabel: string;
+  objectiveText: string;
+  practicesHeading: string;
+  practices: RespectRipplePractice[];
+  startLabel: string;
+  footerNote: string;
+}
+
+/** One wedge of the day-clock donut on the "screen-time balance" welcome, e.g. a 2-hour "Screens" slice. */
+export interface ScreenBalanceSegment {
+  label: string;
+  /** Hours this slice takes up in the child's day — the wedges are drawn proportionally. */
+  hours: number;
+  /** Hex colour for the wedge. */
+  color: string;
+  icon: string;
+  /** True for the slice that represents screen time — it gets the highlighted, pulsing treatment. */
+  screen?: boolean;
+}
+
+/** One self-control strategy card under the balance clock, e.g. "Set a timer". */
+export interface ScreenBalanceStrategy {
+  icon: string;
+  title: string;
+  text: string;
+}
+
+/**
+ * The "screen-time balance clock" welcome layout (Habits module, Week 3) — a
+ * dawn-to-dusk gradient page (peach → periwinkle → deep indigo) with a week
+ * pill and two-tone title, then a decorative SVG "day clock": a donut whose
+ * coloured wedges show how a balanced day is shared between school, play,
+ * family, sleep and a modest screen-time slice (the screen wedge pulses and is
+ * called out with a leader label). Beside it sits a "self-control charge"
+ * battery meter that fills to `meterPercent`. Below are an "Our Objective" card
+ * and a row of self-control strategy cards, then a start button and a footer
+ * note. Purely presentational — nothing on the clock is interactive.
+ */
+export interface LessonScreenBalanceWelcome {
+  weekLabel: string;
+  titleStart: string;
+  titleAccent: string;
+  intro: string;
+  clockLabel: string;
+  clockCaption: string;
+  segments: ScreenBalanceSegment[];
+  meterLabel: string;
+  meterValueLabel: string;
+  /** How full the self-control battery is drawn, 0–100. */
+  meterPercent: number;
+  objectiveLabel: string;
+  objectiveText: string;
+  strategiesHeading: string;
+  strategies: ScreenBalanceStrategy[];
+  startLabel: string;
+  footerNote: string;
+}
+
+/** One "valuable" locked inside the privacy vault, e.g. a padlocked "Home address" card. */
+export interface PrivacyVaultValuable {
+  icon: string;
+  label: string;
+}
+
+/** One "keep it private" habit chip under the privacy vault. */
+export interface PrivacyVaultHabit {
+  icon: string;
+  text: string;
+}
+
+/**
+ * The "personal info vault" welcome layout (Habits module, Week 2) — a cream
+ * page with a week pill and two-tone title, then a decorative vault: a big
+ * circular combination dial ringed with bolts, and a grid of padlocked
+ * "valuables" cards (name, home address, passwords, photos…) sitting inside it.
+ * Below are an "Our Objective" card and a wrapping row of "keep it private"
+ * habit chips, then a start button and a footer note. Purely presentational —
+ * the vault is not interactive.
+ */
+export interface LessonPrivacyVaultWelcome {
+  weekLabel: string;
+  titleStart: string;
+  titleAccent: string;
+  intro: string;
+  vaultLabel: string;
+  valuables: PrivacyVaultValuable[];
+  objectiveLabel: string;
+  objectiveText: string;
+  keepPrivateHeading: string;
+  keepPrivate: PrivacyVaultHabit[];
+  startLabel: string;
+  footerNote: string;
 }
 
 /**

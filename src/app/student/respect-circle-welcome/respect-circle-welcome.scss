@@ -1,0 +1,202 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Respect Circle welcome (rcw) — Etiquette module, Week 2 ---- */
+$rcw-teal: #128c7e;
+$rcw-gold: #e8a33d;
+$rcw-ink: #143b39;
+
+.rcw {
+  max-width: 60rem;
+  margin: 0 auto;
+  padding: 2.5rem clamp(1rem, 4vw, 2.75rem) 2.75rem;
+  text-align: center;
+  border-radius: v.$border-radius-xl;
+  background: linear-gradient(160deg, #e6f4f1 0%, #eef7ee 50%, #fdf3e3 100%);
+}
+
+.rcw-week {
+  @include w.welcome-pill(rgba($rcw-teal, 0.14), #0c6b60);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.rcw h1 {
+  @include m.playful-heading;
+  font-size: clamp(2.1rem, 6vw, 3.3rem);
+  line-height: 1.1;
+  margin: 1.2rem 0 0.7rem;
+}
+
+.rcw-title-start { color: $rcw-ink; }
+.rcw-title-accent { color: $rcw-teal; }
+
+.rcw-intro {
+  max-width: 34rem;
+  margin: 0 auto;
+  font-size: 1.1rem;
+  line-height: 1.55;
+  color: w.navy(0.72);
+}
+
+/* --- orbit diagram --- */
+.rcw-orbit {
+  --r: 8.5rem;
+  position: relative;
+  width: calc(var(--r) * 2 + 4rem);
+  height: calc(var(--r) * 2 + 4rem);
+  margin: 2.5rem auto;
+
+  @media (max-width: 560px) {
+    --r: 6.2rem;
+    width: calc(var(--r) * 2 + 3.5rem);
+    height: calc(var(--r) * 2 + 3.5rem);
+  }
+}
+
+.rcw-ring {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: calc(var(--r) * 2);
+  height: calc(var(--r) * 2);
+  transform: translate(-50%, -50%);
+  border: 2px dashed rgba($rcw-teal, 0.4);
+  border-radius: 50%;
+}
+
+.rcw-center {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 5.5rem;
+  height: 5.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: linear-gradient(135deg, $rcw-teal, #3bb3a2);
+  color: v.$color-white;
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 1.1rem;
+  box-shadow: 0 12px 28px rgba($rcw-teal, 0.3);
+}
+
+.rcw-node {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 5rem;
+  transform:
+    translate(-50%, -50%)
+    rotate(calc(var(--i) * (360deg / var(--n))))
+    translateY(calc(var(--r) * -1))
+    rotate(calc(var(--i) * (-360deg / var(--n))));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.rcw-node-icon {
+  width: 3rem;
+  height: 3rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: v.$color-white;
+  border: 2px solid rgba($rcw-gold, 0.6);
+  font-size: 1.3rem;
+  box-shadow: 0 8px 18px w.navy(0.1);
+}
+
+.rcw-node-label {
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: $rcw-ink;
+  line-height: 1.2;
+}
+
+/* --- objective + practices --- */
+.rcw-objective {
+  background: v.$color-white;
+  border-left: 5px solid $rcw-teal;
+  border-radius: v.$border-radius-lg;
+  padding: 1.35rem 1.6rem;
+  box-shadow: 0 12px 28px w.navy(0.08);
+  text-align: left;
+  max-width: 40rem;
+  margin: 0 auto 1.5rem;
+
+  p {
+    margin: 0.5rem 0 0;
+    font-size: 1.15rem;
+    line-height: 1.5;
+    font-weight: 700;
+    color: $rcw-ink;
+  }
+}
+
+.rcw-objective-label {
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $rcw-teal;
+}
+
+.rcw-practices-heading {
+  margin: 0 0 0.75rem;
+  font-weight: 800;
+  color: w.navy(0.75);
+}
+
+.rcw-practices {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem;
+}
+
+.rcw-practice {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: v.$color-white;
+  border: 2px solid rgba($rcw-teal, 0.2);
+  border-radius: v.$border-radius-pill;
+  padding: 0.5rem 0.95rem;
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: $rcw-ink;
+}
+
+.rcw-start {
+  @include w.welcome-cta-btn(linear-gradient(120deg, $rcw-teal, $rcw-gold));
+  margin-top: 2.25rem;
+  font-size: 1.15rem;
+  padding: 1rem 2.75rem;
+}
+
+.rcw-review {
+  display: block;
+  margin: 0.9rem auto 0;
+  background: none;
+  border: none;
+  color: #0c6b60;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.rcw-footer {
+  margin: 1.5rem 0 0;
+  font-size: 0.95rem;
+  color: w.navy(0.6);
+}

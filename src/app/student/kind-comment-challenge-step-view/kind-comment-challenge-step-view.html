@@ -1,0 +1,84 @@
+<div class="kcc">
+  <header class="kcc-head">
+    <span class="kcc-badge">🌱 Challenge of the Week</span>
+    <h2>{{ step().title }}</h2>
+    <p class="kcc-intro">{{ step().intro }}</p>
+
+    <div class="kcc-streak" aria-hidden="true">
+      @for (entry of entries(); track $index) {
+        <span class="kcc-bud" [class.bloomed]="entry.done">{{ entry.done ? '🌸' : '🌱' }}</span>
+      }
+    </div>
+    <div class="kcc-meter">
+      <div class="kcc-meter-fill" [style.width.%]="progressPercent()"></div>
+      <span>{{ doneCount() }} of {{ total() }} days logged</span>
+    </div>
+  </header>
+
+  <div class="kcc-journal">
+    @for (entry of entries(); track $index; let i = $index) {
+      <div class="kcc-entry" [class.is-open]="openDay() === i" [class.is-done]="entry.done">
+        <button type="button" class="kcc-entry-tab" (click)="toggleOpen(i)">
+          <span class="kcc-day-chip">{{ entry.done ? '✓' : i + 1 }}</span>
+          <span class="kcc-day-name">Day {{ i + 1 }}</span>
+          <span class="kcc-day-hint">
+            @if (entry.done) { Logged } @else if (openDay() === i) { — } @else { Tap to open }
+          </span>
+        </button>
+
+        @if (openDay() === i && !entry.done) {
+          <div class="kcc-entry-body">
+            <p class="kcc-section-label">Today I will…</p>
+            <div class="kcc-actions">
+              @for (action of step().dailyActions; track action; let ai = $index) {
+                <button type="button" class="kcc-action" [class.on]="entry.actions[ai]"
+                  (click)="toggleAction(i, ai)">
+                  <span class="kcc-check-box">@if (entry.actions[ai]) { ✓ }</span>
+                  {{ action }}
+                </button>
+              }
+            </div>
+
+            <p class="kcc-section-label">My kindness log</p>
+            @for (field of step().trackFields; track field.id) {
+              <label class="kcc-field-label" [attr.for]="'kcc-' + i + '-' + field.id">{{ field.label }}</label>
+              <textarea class="kcc-field" [id]="'kcc-' + i + '-' + field.id" rows="2"
+                [placeholder]="field.placeholder"
+                [value]="entry.fields[field.id]"
+                (input)="setField(i, field.id, $any($event.target).value)"></textarea>
+            }
+
+            <button type="button" class="kcc-save" [disabled]="!canSaveDay(i)" (click)="saveDay(i)">
+              Save Day {{ i + 1 }}
+            </button>
+          </div>
+        }
+
+        @if (openDay() === i && entry.done) {
+          <div class="kcc-entry-body">
+            @for (field of step().trackFields; track field.id) {
+              <p class="kcc-logged"><span>{{ field.label }}</span>{{ entry.fields[field.id] }}</p>
+            }
+          </div>
+        }
+      </div>
+    }
+  </div>
+
+  <div class="kcc-confidence" [class.unlocked]="allDone()">
+    <span class="kcc-confidence-label">{{ step().confidenceLabel }}</span>
+    @if (allDone()) {
+      <p class="kcc-statement">“{{ step().confidenceStatement }}”</p>
+      <button type="button" class="kcc-pledge" [class.on]="pledged()" (click)="togglePledge()">
+        <span class="kcc-check-box">@if (pledged()) { ✓ }</span>
+        {{ step().pledgeLabel }}
+      </button>
+    } @else {
+      <p class="kcc-statement locked">🔒 Log all {{ total() }} days to unlock your confidence link.</p>
+    }
+  </div>
+
+  <button type="button" class="kcc-complete" [disabled]="!allDone() || !pledged()" (click)="complete()">
+    {{ step().completeLabel }} →
+  </button>
+</div>

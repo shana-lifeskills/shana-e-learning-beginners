@@ -1,0 +1,76 @@
+<div class="pbp">
+  <header class="pbp-head">
+    <span class="pbp-kicker">Challenge of the Week</span>
+    <h2>{{ step().title }}</h2>
+    <p class="pbp-intro">{{ step().intro }}</p>
+  </header>
+
+  <!-- signal strip -->
+  <ol class="pbp-strip">
+    @for (day of days(); track $index; let i = $index) {
+      <li>
+        <button type="button" class="pbp-light" [class]="'is-' + lightState(i)"
+          [class.is-open]="openDay() === i" (click)="selectDay(i)"
+          [attr.aria-label]="'Day ' + (i + 1) + ', ' + lightState(i)">
+          <span class="pbp-light-lamp" aria-hidden="true"></span>
+          <span class="pbp-light-day">Day {{ i + 1 }}</span>
+        </button>
+      </li>
+    }
+  </ol>
+
+  <p class="pbp-count">{{ doneCount() }} of {{ total() }} days logged</p>
+
+  <!-- console for the open day -->
+  @if (days()[openDay()]; as day) {
+    <section class="pbp-console" [class.is-locked]="day.done">
+      <div class="pbp-console-title">
+        <span class="pbp-console-icon" aria-hidden="true">{{ day.done ? '🟢' : '⏸️' }}</span>
+        <h3>Day {{ openDay() + 1 }}{{ day.done ? ' · logged' : '' }}</h3>
+      </div>
+
+      <p class="pbp-check-prompt">{{ step().checkPrompt }}</p>
+      <ul class="pbp-checks">
+        @for (item of step().checkItems; track item; let ci = $index) {
+          <li>
+            <button type="button" class="pbp-switch" role="switch" [attr.aria-checked]="day.checks[ci]"
+              [class.is-on]="day.checks[ci]" [disabled]="day.done" (click)="toggleCheck(openDay(), ci)">
+              <span class="pbp-switch-track" aria-hidden="true"><span class="pbp-switch-knob"></span></span>
+              <span class="pbp-switch-label">{{ item }}</span>
+            </button>
+          </li>
+        }
+      </ul>
+
+      <label class="pbp-decision">
+        <span>{{ step().decisionPrompt }}</span>
+        <textarea rows="2" [value]="day.decision" [disabled]="day.done"
+          [placeholder]="step().decisionPlaceholder"
+          (input)="setDecision(openDay(), $any($event.target).value)"></textarea>
+      </label>
+
+      @if (!day.done) {
+        <button type="button" class="pbp-log" [disabled]="!canLogDay(openDay())" (click)="logDay(openDay())">
+          Turn the light green →
+        </button>
+      }
+    </section>
+  }
+
+  <!-- confidence link -->
+  @if (allDone()) {
+    <section class="pbp-confidence">
+      <span class="pbp-confidence-label">{{ step().confidenceLabel }}</span>
+      <p class="pbp-confidence-quote">"{{ step().confidenceStatement }}"</p>
+      <button type="button" class="pbp-pledge" [class.is-on]="pledged()"
+        role="checkbox" [attr.aria-checked]="pledged()" (click)="togglePledge()">
+        <span class="pbp-pledge-box" aria-hidden="true">{{ pledged() ? '✓' : '' }}</span>
+        {{ step().pledgeLabel }}
+      </button>
+    </section>
+  }
+
+  <button type="button" class="pbp-complete" [disabled]="!allDone() || !pledged()" (click)="complete()">
+    {{ step().completeLabel }} →
+  </button>
+</div>

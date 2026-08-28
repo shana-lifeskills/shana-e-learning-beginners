@@ -1,0 +1,192 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Digital Manners welcome (dmw) — Etiquette module, Week 4 ---- */
+$dmw-rose: #e8506e;
+$dmw-sky: #3f8efc;
+$dmw-ink: #2a2447;
+
+.dmw {
+  max-width: 60rem;
+  margin: 0 auto;
+  padding: 2.5rem clamp(1rem, 4vw, 2.75rem) 2.75rem;
+  text-align: center;
+  border-radius: v.$border-radius-xl;
+  background: linear-gradient(160deg, #ffe9ef 0%, #f1ecfb 48%, #e4f0fe 100%);
+}
+
+.dmw-week {
+  @include w.welcome-pill(rgba($dmw-rose, 0.14), #c23354);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.dmw h1 {
+  @include m.playful-heading;
+  font-size: clamp(2.1rem, 6vw, 3.3rem);
+  line-height: 1.1;
+  margin: 1.2rem 0 0.7rem;
+}
+
+.dmw-title-start { color: $dmw-ink; }
+.dmw-title-accent { color: $dmw-rose; }
+
+.dmw-intro {
+  max-width: 34rem;
+  margin: 0 auto;
+  font-size: 1.1rem;
+  line-height: 1.55;
+  color: w.navy(0.72);
+}
+
+/* --- phone home-screen --- */
+.dmw-phone {
+  position: relative;
+  max-width: 22rem;
+  margin: 2.5rem auto 0;
+  padding: 2.1rem 1.1rem 1.4rem;
+  border-radius: 2.6rem;
+  background: linear-gradient(170deg, #ffffff, #eef2fb);
+  border: 3px solid rgba($dmw-ink, 0.12);
+  box-shadow: 0 26px 50px w.navy(0.16);
+}
+
+.dmw-phone-notch {
+  position: absolute;
+  top: 0.85rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 5rem;
+  height: 0.4rem;
+  border-radius: v.$border-radius-pill;
+  background: rgba($dmw-ink, 0.18);
+}
+
+.dmw-phone-label {
+  display: block;
+  margin-bottom: 1rem;
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  color: $dmw-ink;
+}
+
+.dmw-apps {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.7rem;
+}
+
+.dmw-app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  padding: 0.85rem 0.5rem 0.7rem;
+  border-radius: v.$border-radius-lg;
+  background: v.$color-white;
+  box-shadow: 0 8px 18px w.navy(0.08);
+}
+
+.dmw-app-icon {
+  width: 2.9rem;
+  height: 2.9rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.9rem;
+  background: linear-gradient(135deg, rgba($dmw-rose, 0.16), rgba($dmw-sky, 0.16));
+  font-size: 1.4rem;
+}
+
+.dmw-app-name {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: $dmw-ink;
+}
+
+.dmw-app-manner {
+  font-size: 0.72rem;
+  line-height: 1.25;
+  color: w.navy(0.6);
+}
+
+/* --- objective + habits --- */
+.dmw-objective {
+  background: v.$color-white;
+  border-left: 5px solid $dmw-sky;
+  border-radius: v.$border-radius-lg;
+  padding: 1.35rem 1.6rem;
+  box-shadow: 0 12px 28px w.navy(0.08);
+  text-align: left;
+  max-width: 40rem;
+  margin: 2.25rem auto 1.5rem;
+
+  p {
+    margin: 0.5rem 0 0;
+    font-size: 1.15rem;
+    line-height: 1.5;
+    font-weight: 700;
+    color: $dmw-ink;
+  }
+}
+
+.dmw-objective-label {
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $dmw-sky;
+}
+
+.dmw-habits-heading {
+  margin: 0 0 0.75rem;
+  font-weight: 800;
+  color: w.navy(0.75);
+}
+
+.dmw-habits {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem;
+}
+
+.dmw-habit {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: v.$color-white;
+  border: 2px solid rgba($dmw-rose, 0.22);
+  border-radius: v.$border-radius-pill;
+  padding: 0.5rem 0.95rem;
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: $dmw-ink;
+}
+
+.dmw-start {
+  @include w.welcome-cta-btn(linear-gradient(120deg, $dmw-rose, $dmw-sky));
+  margin-top: 2.25rem;
+  font-size: 1.15rem;
+  padding: 1rem 2.75rem;
+}
+
+.dmw-review {
+  display: block;
+  margin: 0.9rem auto 0;
+  background: none;
+  border: none;
+  color: #c23354;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.dmw-footer {
+  margin: 1.5rem 0 0;
+  font-size: 0.95rem;
+  color: w.navy(0.6);
+}

@@ -1,0 +1,54 @@
+<div class="fbw">
+  <header class="fbw-head">
+    <span class="fbw-kicker">Warm-Up · Fill the Blank</span>
+    <h2>{{ step().title }}</h2>
+    <p class="fbw-intro">{{ step().intro }}</p>
+  </header>
+
+  <div class="fbw-progress" role="progressbar" [attr.aria-valuenow]="filledCount()" [attr.aria-valuemin]="0"
+    [attr.aria-valuemax]="total()">
+    <span class="fbw-progress-fill" [style.width.%]="progressPercent()"></span>
+    <span class="fbw-progress-text">{{ filledCount() }} / {{ total() }} filled</span>
+  </div>
+
+  <div class="fbw-board">
+    <p class="fbw-bank-label">{{ step().wordBankLabel }}</p>
+    @if (remainingBank().length) {
+      <ul class="fbw-bank">
+        @for (word of remainingBank(); track $index) {
+          <li>
+            <button type="button" class="fbw-tile" [class.is-picked]="picked() === word" (click)="pickWord(word)">
+              {{ word }}
+            </button>
+          </li>
+        }
+      </ul>
+    } @else {
+      <p class="fbw-bank-empty">🎉 Every word placed!</p>
+    }
+
+    @if (lastPraise(); as praise) {
+      <p class="fbw-praise" aria-live="polite">✅ {{ praise }}</p>
+    }
+
+    <ol class="fbw-sentences">
+      @for (sentence of step().sentences; track sentence.id) {
+        <li class="fbw-sentence" [class.is-done]="filled().has(sentence.id)">
+          <span>{{ sentence.before }}</span>
+          <button type="button" class="fbw-blank" [class.is-filled]="filled().has(sentence.id)"
+            [class.is-rejected]="rejectedId() === sentence.id" [class.is-armed]="picked() && !filled().has(sentence.id)"
+            [disabled]="filled().has(sentence.id)" (click)="placeInBlank(sentence)">
+            {{ wordFor(sentence) || '_____' }}
+          </button>
+          <span>{{ sentence.after }}</span>
+        </li>
+      }
+    </ol>
+  </div>
+
+  <p class="fbw-parent"><span aria-hidden="true">👪</span> {{ step().parentNote }}</p>
+
+  <button type="button" class="fbw-continue" [disabled]="!allFilled()" (click)="finish()">
+    {{ step().completeLabel }} →
+  </button>
+</div>

@@ -1,0 +1,48 @@
+<div class="dmw">
+  <span class="dmw-week">{{ dmw.weekLabel }}</span>
+
+  <h1>
+    <span class="dmw-title-start">{{ dmw.titleStart }}</span>
+    <span class="dmw-title-accent">{{ dmw.titleAccent }}</span>
+  </h1>
+  <p class="dmw-intro">{{ dmw.intro }}</p>
+
+  <div class="dmw-phone" aria-hidden="true">
+    <span class="dmw-phone-notch"></span>
+    <span class="dmw-phone-label">{{ dmw.phoneLabel }}</span>
+    <div class="dmw-apps">
+      @for (app of dmw.apps; track app.name) {
+        <span class="dmw-app">
+          <span class="dmw-app-icon">{{ app.icon }}</span>
+          <span class="dmw-app-name">{{ app.name }}</span>
+          <span class="dmw-app-manner">{{ app.manner }}</span>
+        </span>
+      }
+    </div>
+  </div>
+
+  <div class="dmw-objective">
+    <span class="dmw-objective-label">{{ dmw.objectiveLabel }}</span>
+    <p>{{ dmw.objectiveText }}</p>
+  </div>
+
+  <p class="dmw-habits-heading">{{ dmw.habitsHeading }}</p>
+  <ul class="dmw-habits">
+    @for (habit of dmw.habits; track habit.text) {
+      <li class="dmw-habit"><span aria-hidden="true">{{ habit.icon }}</span>{{ habit.text }}</li>
+    }
+  </ul>
+
+  @if (isCompletedLessonWelcome()) {
+    @if (nextLesson(); as next) {
+      <button type="button" class="dmw-start" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+    } @else {
+      <button type="button" class="dmw-start" (click)="backToMap()">Back to My Modules →</button>
+    }
+    <button type="button" class="dmw-review" (click)="beginLesson()">↺ Review this lesson</button>
+  } @else {
+    <button type="button" class="dmw-start" (click)="beginLesson()">{{ dmw.startLabel }} →</button>
+  }
+
+  <p class="dmw-footer">{{ dmw.footerNote }}</p>
+</div>

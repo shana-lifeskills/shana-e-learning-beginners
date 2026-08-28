@@ -1,0 +1,97 @@
+<div class="drt">
+  <header class="drt-head">
+    <span class="drt-badge">🏅 {{ step().badge }}</span>
+    <h2>{{ step().title }}</h2>
+    <p class="drt-intro">{{ step().intro }}</p>
+  </header>
+
+  <section class="drt-grid-wrap">
+    <div class="drt-grid-head">
+      <p class="drt-grid-title">{{ step().habitsHeading }}</p>
+      <span class="drt-grid-count">{{ loggedCount() }} / {{ cellTotal() }} ticks logged</span>
+    </div>
+
+    <div class="drt-scroll">
+      <table class="drt-grid">
+        <thead>
+          <tr>
+            <th scope="col" class="drt-corner">Habit</th>
+            @for (day of days(); track day) {
+              <th scope="col">{{ step().dayLabel }} {{ day + 1 }}</th>
+            }
+            <th scope="col" class="drt-streak-col">YES</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (habit of step().habits; track trackHabit($index, habit)) {
+            <tr>
+              <th scope="row" class="drt-habit">
+                <span class="drt-habit-icon" aria-hidden="true">{{ habit.icon }}</span>
+                <span>{{ habit.label }}</span>
+              </th>
+              @for (day of days(); track day) {
+                <td>
+                  <div class="drt-cell" role="group" [attr.aria-label]="habit.label + ' — ' + step().dayLabel + ' ' + (day + 1)">
+                    <button type="button" class="drt-yn drt-yn--yes"
+                      [class.on]="tickFor(habit.id, day) === 'yes'"
+                      (click)="setTick(habit.id, day, 'yes')">{{ step().yesLabel }}</button>
+                    <button type="button" class="drt-yn drt-yn--no"
+                      [class.on]="tickFor(habit.id, day) === 'no'"
+                      (click)="setTick(habit.id, day, 'no')">{{ step().noLabel }}</button>
+                  </div>
+                </td>
+              }
+              <td class="drt-streak-col">
+                <span class="drt-streak">
+                  @for (day of days(); track day) {
+                    <i [class.on]="tickFor(habit.id, day) === 'yes'"></i>
+                  }
+                </span>
+                <b>{{ yesDays(habit.id) }}</b>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <p class="drt-track-note">{{ step().trackNote }}</p>
+  </section>
+
+  <section class="drt-reflect" [class.is-locked]="!gridComplete()">
+    <p class="drt-reflect-heading">{{ step().reflectionHeading }}</p>
+    <p class="drt-reflect-instruction">{{ step().reflectionInstruction }}</p>
+
+    <div class="drt-fields">
+      @for (field of step().reflectionFields; track field.id) {
+        <label class="drt-field" [class.is-done]="(reflection()[field.id] ?? '').trim().length > 0">
+          <span class="drt-field-label">{{ field.label }}</span>
+          <input type="text" [placeholder]="field.placeholder"
+            [value]="reflection()[field.id] ?? ''"
+            [disabled]="!gridComplete()"
+            (input)="setReflection(field.id, $any($event.target).value)" />
+        </label>
+      }
+    </div>
+  </section>
+
+  @if (gridComplete() && reflectionComplete()) {
+    <section class="drt-confidence">
+      <span class="drt-confidence-label">{{ step().confidenceHeading }}</span>
+      <blockquote>“{{ step().confidenceQuote }}”</blockquote>
+      <p>{{ step().confidenceText }}</p>
+      <button type="button" class="drt-pledge" [class.on]="pledged()" (click)="togglePledge()">
+        <span class="drt-pledge-box" aria-hidden="true">{{ pledged() ? '✓' : '' }}</span>
+        {{ step().pledgeLabel }}
+      </button>
+    </section>
+  }
+
+  <p class="drt-parent">👪 {{ step().parentNote }}</p>
+
+  <button type="button" class="drt-finish" [disabled]="!ready()" (click)="finish()">
+    @if (ready()) { {{ step().completeLabel }} → } @else { {{ step().lockedCompleteLabel }} }
+  </button>
+
+  <p class="drt-footer">{{ step().footerText }}</p>
+</div>

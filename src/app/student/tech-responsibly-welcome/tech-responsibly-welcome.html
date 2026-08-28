@@ -1,0 +1,70 @@
+<div class="trw">
+  <span class="trw-week">{{ trw.weekLabel }}</span>
+
+  <h1>
+    <span class="trw-title-start">{{ trw.titleStart }}</span>
+    <span class="trw-title-accent">{{ trw.titleAccent }}</span>
+  </h1>
+  <p class="trw-intro">{{ trw.intro }}</p>
+
+  <div class="trw-panel" aria-hidden="true">
+    <div class="trw-panel-bar">
+      <span class="trw-panel-label">{{ trw.panelLabel }}</span>
+      <span class="trw-signal">
+        <i></i><i></i><i></i><i></i>
+      </span>
+    </div>
+
+    <div class="trw-gauge">
+      <svg viewBox="0 0 200 116" role="img">
+        <path class="trw-gauge-track" d="M12 104 A88 88 0 0 1 188 104" />
+        <path class="trw-gauge-fill" d="M12 104 A88 88 0 0 1 188 104" />
+        <g class="trw-gauge-needle">
+          <line x1="100" y1="104" x2="100" y2="34" />
+          <circle cx="100" cy="104" r="7" />
+        </g>
+      </svg>
+      <span class="trw-gauge-value">{{ trw.gaugeValueLabel }}</span>
+      <span class="trw-gauge-label">{{ trw.gaugeLabel }}</span>
+    </div>
+
+    <ul class="trw-toggles">
+      @for (toggle of trw.toggles; track toggle.label) {
+        <li class="trw-toggle">
+          <span class="trw-toggle-icon">{{ toggle.icon }}</span>
+          <span class="trw-toggle-label">{{ toggle.label }}</span>
+          <span class="trw-toggle-switch"><b>{{ toggle.state }}</b></span>
+        </li>
+      }
+    </ul>
+  </div>
+
+  <div class="trw-objective">
+    <span class="trw-objective-label">{{ trw.objectiveLabel }}</span>
+    <p>{{ trw.objectiveText }}</p>
+  </div>
+
+  <p class="trw-pillars-heading">{{ trw.pillarsHeading }}</p>
+  <div class="trw-pillars">
+    @for (pillar of trw.pillars; track pillar.title) {
+      <div class="trw-pillar">
+        <span class="trw-pillar-icon">{{ pillar.icon }}</span>
+        <span class="trw-pillar-title">{{ pillar.title }}</span>
+        <span class="trw-pillar-text">{{ pillar.text }}</span>
+      </div>
+    }
+  </div>
+
+  @if (isCompletedLessonWelcome()) {
+    @if (nextLesson(); as next) {
+      <button type="button" class="trw-start" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+    } @else {
+      <button type="button" class="trw-start" (click)="backToMap()">Back to My Modules →</button>
+    }
+    <button type="button" class="trw-review" (click)="beginLesson()">↺ Review this lesson</button>
+  } @else {
+    <button type="button" class="trw-start" (click)="beginLesson()">{{ trw.startLabel }} →</button>
+  }
+
+  <p class="trw-footer">{{ trw.footerNote }}</p>
+</div>

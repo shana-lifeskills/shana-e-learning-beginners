@@ -1,0 +1,322 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Screen-Time & Self-Control welcome (sbw) — Habits module, Week 3 ---- */
+$sbw-dawn: #ffd9a8;
+$sbw-noon: #b9c4ff;
+$sbw-dusk: #2b2560;
+$sbw-amber: #f39a2b;
+$sbw-ink: #241f52;
+
+.sbw {
+  max-width: 62rem;
+  margin: 0 auto;
+  padding: 2.5rem clamp(1rem, 4vw, 2.75rem) 2.75rem;
+  text-align: center;
+  border-radius: v.$border-radius-xl;
+  background: linear-gradient(170deg, $sbw-dawn 0%, #f3e6ff 42%, $sbw-noon 74%, $sbw-dusk 100%);
+}
+
+.sbw-week {
+  @include w.welcome-pill(rgba($sbw-dusk, 0.16), #3a327f);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.sbw h1 {
+  @include m.playful-heading;
+  font-size: clamp(2.1rem, 6vw, 3.2rem);
+  line-height: 1.1;
+  margin: 1.2rem 0 0.7rem;
+}
+
+.sbw-title-start { color: $sbw-ink; }
+.sbw-title-accent { color: $sbw-amber; }
+
+.sbw-intro {
+  max-width: 36rem;
+  margin: 0 auto;
+  font-size: 1.1rem;
+  line-height: 1.55;
+  color: w.navy(0.74);
+}
+
+/* --- stage: clock + meter --- */
+.sbw-stage {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  align-items: stretch;
+  justify-content: center;
+  margin: 2.25rem auto 0;
+}
+
+.sbw-clock {
+  @include w.soft-card;
+  flex: 1 1 22rem;
+  max-width: 30rem;
+  padding: 1.5rem 1.35rem 1.35rem;
+}
+
+.sbw-clock-label,
+.sbw-meter-label {
+  display: block;
+  font-weight: 800;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: w.navy(0.55);
+}
+
+.sbw-dial {
+  position: relative;
+  width: clamp(13rem, 46vw, 17rem);
+  margin: 1rem auto 0.75rem;
+
+  svg { width: 100%; height: auto; display: block; }
+}
+
+.sbw-dial-track {
+  fill: none;
+  stroke: rgba($sbw-dusk, 0.1);
+  stroke-width: 16;
+}
+
+.sbw-arc {
+  fill: none;
+  stroke-width: 16;
+  stroke-linecap: round;
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+}
+
+.sbw-arc-screen {
+  animation: sbw-pulse 2.4s ease-in-out infinite;
+}
+
+.sbw-dial-core {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.15rem;
+}
+
+.sbw-dial-core-icon { font-size: 1.6rem; }
+
+.sbw-dial-core-text {
+  font-weight: 800;
+  font-size: 0.82rem;
+  line-height: 1.2;
+  color: w.navy(0.7);
+}
+
+.sbw-clock-caption {
+  margin: 0.25rem 0 1rem;
+  font-size: 0.98rem;
+  font-style: italic;
+  color: w.navy(0.66);
+}
+
+.sbw-legend {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.4rem;
+}
+
+.sbw-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.4rem 0.6rem;
+  border-radius: v.$border-radius-sm;
+  background: rgba($sbw-noon, 0.14);
+  font-size: 0.95rem;
+  color: w.navy(0.8);
+  text-align: left;
+
+  &.is-screen {
+    background: rgba($sbw-amber, 0.16);
+    font-weight: 700;
+  }
+}
+
+.sbw-legend-dot {
+  width: 0.85rem;
+  height: 0.85rem;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.sbw-legend-label { flex: 1; }
+
+.sbw-legend-hours {
+  font-weight: 800;
+  color: w.navy(0.6);
+}
+
+/* --- self-control battery --- */
+.sbw-meter {
+  @include w.soft-card;
+  flex: 0 1 12rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 1.5rem 1.25rem;
+}
+
+.sbw-battery {
+  position: relative;
+  width: 4.5rem;
+  flex: 1;
+  min-height: 9rem;
+  border: 3px solid $sbw-dusk;
+  border-radius: 0.9rem;
+  overflow: hidden;
+  background: rgba($sbw-dusk, 0.06);
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -0.7rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1.9rem;
+    height: 0.55rem;
+    border-radius: 0.3rem 0.3rem 0 0;
+    background: $sbw-dusk;
+  }
+}
+
+.sbw-battery-fill {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background: linear-gradient(0deg, #2fbf71, #7be0a6);
+  transition: height 0.6s ease;
+}
+
+.sbw-battery-bolt {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+}
+
+.sbw-meter-value {
+  font-weight: 800;
+  color: #1f8a52;
+}
+
+/* --- objective --- */
+.sbw-objective {
+  @include w.soft-card;
+  max-width: 40rem;
+  margin: 1.5rem auto 0;
+  padding: 1.15rem 1.4rem;
+  text-align: left;
+
+  p {
+    margin: 0.3rem 0 0;
+    font-size: 1.02rem;
+    line-height: 1.5;
+    color: w.navy(0.8);
+  }
+}
+
+.sbw-objective-label {
+  font-weight: 800;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $sbw-amber;
+}
+
+/* --- strategies --- */
+.sbw-strategies-heading {
+  margin: 1.9rem 0 0.9rem;
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: $sbw-ink;
+}
+
+.sbw-strategies {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
+  gap: 0.85rem;
+  max-width: 44rem;
+  margin: 0 auto;
+}
+
+.sbw-strategy {
+  @include w.static-bouncy-card;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 1.1rem 0.9rem;
+  background: v.$color-white;
+  animation: sbw-rise 0.5s ease both;
+  animation-delay: calc(var(--i, 0) * 90ms);
+}
+
+.sbw-strategy-icon { font-size: 1.7rem; }
+
+.sbw-strategy-title {
+  font-weight: 800;
+  color: $sbw-ink;
+}
+
+.sbw-strategy-text {
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: w.navy(0.66);
+}
+
+/* --- actions --- */
+.sbw-start {
+  @include w.welcome-cta-btn(linear-gradient(120deg, $sbw-amber, #e2662c));
+  margin: 2rem auto 0;
+  display: block;
+  font-size: 1.15rem;
+}
+
+.sbw-review {
+  @include m.tappable;
+  display: block;
+  margin: 0.8rem auto 0;
+  background: none;
+  border: none;
+  font-weight: 700;
+  color: w.navy(0.62);
+}
+
+.sbw-footer {
+  margin: 1.4rem 0 0;
+  font-size: 0.92rem;
+  color: w.navy(0.6);
+}
+
+@keyframes sbw-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.55; }
+}
+
+@keyframes sbw-rise {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sbw-arc-screen,
+  .sbw-strategy { animation: none; }
+}

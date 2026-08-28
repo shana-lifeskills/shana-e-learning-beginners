@@ -178,6 +178,14 @@
             <div class="story-shell">
               <app-listening-promise-tracker-step-view [step]="exercise" (continued)="onStepContinue()" />
             </div>
+          } @else if (exercise.type === 'think-before-click-challenge') {
+            <div class="story-shell">
+              <app-think-before-click-challenge-step-view [step]="exercise" (continued)="onStepContinue()" />
+            </div>
+          } @else if (exercise.type === 'privacy-protector-challenge') {
+            <div class="story-shell">
+              <app-privacy-protector-challenge-step-view [step]="exercise" (continued)="onStepContinue()" />
+            </div>
           } @else if (exercise.type === 'yes-no-quiz') {
             <div class="story-shell">
               <app-yes-no-quiz-step-view [step]="exercise" (continued)="onStepContinue()" />
@@ -370,6 +378,34 @@
                 <app-day-planner-step-view [step]="exercise" (submitted)="onShared($event)" (continued)="onCardContinue()" />
               } @else if (exercise.type === 'warmup-game') {
                 <app-warmup-game-step-view [step]="exercise" (continued)="onStepContinue()" />
+              } @else if (exercise.type === 'etiquette-warmup-quiz') {
+                <app-etiquette-warmup-quiz-step-view [step]="exercise" (continued)="onStepContinue()" />
+              } @else if (exercise.type === 'responsibility-circuit') {
+                <app-responsibility-circuit-step-view [step]="exercise" (continued)="onStepContinue()" />
+              } @else if (exercise.type === 'privacy-match') {
+                <app-privacy-match-step-view [step]="exercise" (continued)="onStepContinue()" />
+              } @else if (exercise.type === 'screen-truth-check') {
+                <app-screen-truth-check-step-view [step]="exercise" (continued)="onStepContinue()" />
+              } @else if (exercise.type === 'screen-time-plan-challenge') {
+                <app-screen-time-plan-challenge-step-view [step]="exercise" (continued)="onStepContinue()" />
+              } @else if (exercise.type === 'kind-words-fill-blank') {
+                <app-kind-words-fill-blank-step-view [step]="exercise" (continued)="onStepContinue()" />
+              } @else if (exercise.type === 'digital-responsibility-tracker') {
+                <app-digital-responsibility-tracker-step-view [step]="exercise" (continued)="onStepContinue()" />
+              } @else if (exercise.type === 'polite-message-challenge') {
+                <app-polite-message-challenge-step-view [step]="exercise" (submitted)="onShared($event)" />
+              } @else if (exercise.type === 'behaviour-match') {
+                <app-behaviour-match-step-view [step]="exercise" (continued)="onStepContinue()" />
+              } @else if (exercise.type === 'true-false-warmup') {
+                <app-true-false-warmup-step-view [step]="exercise" (continued)="onStepContinue()" />
+              } @else if (exercise.type === 'fill-blank-warmup') {
+                <app-fill-blank-warmup-step-view [step]="exercise" (continued)="onStepContinue()" />
+              } @else if (exercise.type === 'kind-comment-challenge') {
+                <app-kind-comment-challenge-step-view [step]="exercise" (submitted)="onShared($event)" />
+              } @else if (exercise.type === 'pause-before-posting') {
+                <app-pause-before-posting-step-view [step]="exercise" (submitted)="onShared($event)" />
+              } @else if (exercise.type === 'digital-etiquette-tracker') {
+                <app-digital-etiquette-tracker-step-view [step]="exercise" (submitted)="onShared($event)" />
               } @else if (exercise.type === 'warmup-scenario') {
                 <app-warmup-scenario-step-view [step]="exercise" (continued)="onStepContinue()" />
               } @else if (exercise.type === 'discussion-mcq') {

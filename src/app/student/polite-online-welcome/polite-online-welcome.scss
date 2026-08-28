@@ -1,0 +1,230 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Polite Online welcome (pow) — Etiquette module, Week 1 ---- */
+$pow-violet: #6c63ff;
+$pow-sky: #33c1e8;
+$pow-ink: #2c2a68;
+
+.pow {
+  max-width: 62rem;
+  margin: 0 auto;
+  padding: 2.5rem clamp(1rem, 4vw, 2.75rem) 2.75rem;
+  text-align: center;
+  border-radius: v.$border-radius-xl;
+  background: linear-gradient(155deg, #efeaff 0%, #eaf7fc 55%, #fef1f7 100%);
+}
+
+.pow-week {
+  @include w.welcome-pill(rgba($pow-violet, 0.12), #5249d6);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.pow h1 {
+  @include m.playful-heading;
+  font-size: clamp(2.2rem, 6vw, 3.4rem);
+  line-height: 1.1;
+  margin: 1.25rem 0 0.75rem;
+}
+
+.pow-title-start { color: $pow-ink; }
+.pow-title-accent {
+  color: $pow-violet;
+  position: relative;
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0.05em;
+    height: 0.28em;
+    background: rgba($pow-sky, 0.35);
+    border-radius: v.$border-radius-pill;
+    z-index: -1;
+  }
+}
+
+.pow-intro {
+  max-width: 34rem;
+  margin: 0 auto 2rem;
+  font-size: 1.1rem;
+  line-height: 1.55;
+  color: w.navy(0.72);
+}
+
+.pow-body {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: 1.5rem;
+  text-align: left;
+
+  @media (max-width: 780px) { grid-template-columns: 1fr; }
+}
+
+/* --- decorative chat card --- */
+.pow-chat {
+  background: v.$color-white;
+  border-radius: v.$border-radius-xl;
+  box-shadow: 0 18px 40px rgba($pow-violet, 0.16);
+  overflow: hidden;
+  align-self: start;
+}
+
+.pow-chat-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.85rem 1.15rem;
+  background: linear-gradient(120deg, $pow-violet, $pow-sky);
+  color: v.$color-white;
+  font-weight: 800;
+}
+
+.pow-chat-dot {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.28);
+  flex: none;
+}
+
+.pow-chat-name { flex: 1; }
+
+.pow-chat-online {
+  font-size: 0.75rem;
+  font-weight: 700;
+  opacity: 0.85;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.pow-chat-log {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.35rem 1.15rem 1.6rem;
+}
+
+.pow-msg {
+  position: relative;
+  max-width: 82%;
+  align-self: flex-start;
+}
+
+.pow-bubble {
+  margin: 0;
+  padding: 0.7rem 1rem;
+  border-radius: 1.1rem 1.1rem 1.1rem 0.25rem;
+  background: #f1f0fb;
+  color: $pow-ink;
+  font-size: 0.98rem;
+  line-height: 1.45;
+}
+
+.pow-reaction {
+  position: absolute;
+  right: -0.5rem;
+  bottom: -0.7rem;
+  background: v.$color-white;
+  border-radius: v.$border-radius-pill;
+  padding: 0.1rem 0.4rem;
+  font-size: 0.85rem;
+  box-shadow: 0 4px 12px w.navy(0.14);
+}
+
+.pow-msg-me {
+  align-self: flex-end;
+
+  .pow-bubble {
+    background: linear-gradient(120deg, $pow-violet, #8a80ff);
+    color: v.$color-white;
+    border-radius: 1.1rem 1.1rem 0.25rem 1.1rem;
+  }
+
+  .pow-reaction { right: auto; left: -0.5rem; }
+}
+
+/* --- objective + chips --- */
+.pow-side {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.pow-objective {
+  background: v.$color-white;
+  border-left: 5px solid $pow-violet;
+  border-radius: v.$border-radius-lg;
+  padding: 1.35rem 1.5rem;
+  box-shadow: 0 12px 28px w.navy(0.08);
+
+  p {
+    margin: 0.5rem 0 0;
+    font-size: 1.15rem;
+    line-height: 1.5;
+    color: $pow-ink;
+    font-weight: 700;
+  }
+}
+
+.pow-objective-label {
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $pow-violet;
+}
+
+.pow-chips-heading {
+  margin: 0;
+  font-weight: 800;
+  color: w.navy(0.75);
+}
+
+.pow-chips {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.pow-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: v.$color-white;
+  border: 2px solid rgba($pow-violet, 0.2);
+  border-radius: v.$border-radius-pill;
+  padding: 0.5rem 0.95rem;
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: $pow-ink;
+}
+
+/* --- actions --- */
+.pow-start {
+  @include w.welcome-cta-btn(linear-gradient(120deg, $pow-violet, $pow-sky));
+  margin-top: 2.25rem;
+  font-size: 1.15rem;
+  padding: 1rem 2.75rem;
+}
+
+.pow-review {
+  display: block;
+  margin: 0.9rem auto 0;
+  background: none;
+  border: none;
+  color: #5249d6;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.pow-footer {
+  margin: 1.5rem 0 0;
+  font-size: 0.95rem;
+  color: w.navy(0.6);
+}

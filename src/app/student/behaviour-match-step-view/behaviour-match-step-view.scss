@@ -1,0 +1,193 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Behaviour match (bmt) — tap-to-pair warm-up ---- */
+$bmt-indigo: #4b57c6;
+$bmt-coral: #f0654e;
+$bmt-ink: #22284a;
+
+.bmt {
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: 1.5rem clamp(0.75rem, 3vw, 1.5rem) 2.5rem;
+}
+
+.bmt-head { text-align: center; }
+
+.bmt-badge {
+  @include w.welcome-pill(rgba($bmt-indigo, 0.14), $bmt-indigo);
+  letter-spacing: 0.05em;
+}
+
+.bmt-head h2 {
+  @include m.playful-heading;
+  font-size: clamp(1.6rem, 4.5vw, 2.2rem);
+  color: $bmt-ink;
+  margin: 0.9rem 0 0.4rem;
+}
+
+.bmt-intro {
+  margin: 0 auto 1.3rem;
+  max-width: 30rem;
+  color: w.navy(0.7);
+  line-height: 1.5;
+}
+
+.bmt-meter {
+  position: relative;
+  height: 1.4rem;
+  border-radius: v.$border-radius-pill;
+  background: rgba($bmt-indigo, 0.12);
+  overflow: hidden;
+
+  span {
+    position: relative;
+    display: block;
+    text-align: center;
+    line-height: 1.4rem;
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: $bmt-ink;
+  }
+}
+
+.bmt-meter-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  background: linear-gradient(90deg, $bmt-indigo, #6f7ae0);
+  transition: width 0.35s ease;
+}
+
+.bmt-board {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.9rem;
+  margin-top: 1.75rem;
+}
+
+.bmt-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.bmt-col-head {
+  margin: 0 0 0.2rem;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: w.navy(0.55);
+  text-align: center;
+}
+
+%bmt-card {
+  @include m.tappable;
+  width: 100%;
+  border: 2px solid rgba($bmt-ink, 0.12);
+  border-radius: v.$border-radius-sm;
+  background: v.$color-white;
+  padding: 0.8rem 0.9rem;
+  font: inherit;
+  font-weight: 700;
+  color: $bmt-ink;
+  text-align: left;
+  position: relative;
+  transition: transform 0.1s ease, border-color 0.15s ease, background 0.15s ease;
+
+  &:disabled { cursor: default; }
+  &.is-picked { border-color: $bmt-indigo; background: rgba($bmt-indigo, 0.08); }
+  &.is-wrong { border-color: $bmt-coral; background: rgba($bmt-coral, 0.1); animation: bmt-shake 0.4s ease; }
+}
+
+.bmt-behaviour {
+  @extend %bmt-card;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  min-height: 4rem;
+}
+
+.bmt-meaning {
+  @extend %bmt-card;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  min-height: 4rem;
+}
+
+.bmt-avatar {
+  flex: none;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  background: rgba($bmt-indigo, 0.1);
+}
+
+.bmt-behaviour-name { flex: 1; }
+
+.bmt-tick {
+  flex: none;
+  font-weight: 900;
+  color: currentColor;
+}
+
+/* matched-pair colour slots — shared between the two columns */
+@mixin bmt-slot($c) {
+  border-color: $c;
+  background: rgba($c, 0.16);
+  color: $bmt-ink;
+}
+
+.bmt-behaviour.slot-0, .bmt-meaning.slot-0 { @include bmt-slot(#2fa37d); }
+.bmt-behaviour.slot-1, .bmt-meaning.slot-1 { @include bmt-slot(#d98a2b); }
+.bmt-behaviour.slot-2, .bmt-meaning.slot-2 { @include bmt-slot(#7d5bd0); }
+.bmt-behaviour.slot-3, .bmt-meaning.slot-3 { @include bmt-slot(#d5507e); }
+.bmt-behaviour.slot-4, .bmt-meaning.slot-4 { @include bmt-slot(#3d90c4); }
+
+.bmt-nudge {
+  margin: 0.9rem 0 0;
+  text-align: center;
+  font-weight: 700;
+  color: $bmt-coral;
+}
+
+.bmt-parent-note {
+  margin: 1.75rem 0 0;
+  padding: 0.85rem 1rem;
+  border-radius: v.$border-radius-sm;
+  background: rgba($bmt-indigo, 0.09);
+  border: 1px dashed rgba($bmt-indigo, 0.5);
+  font-size: 0.88rem;
+  color: $bmt-indigo;
+  text-align: center;
+}
+
+.bmt-finish {
+  @include m.tappable;
+  display: block;
+  width: 100%;
+  margin-top: 1.25rem;
+  padding: 1rem 1.5rem;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: v.$color-white;
+  background: linear-gradient(120deg, $bmt-indigo, $bmt-coral);
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.1);
+
+  &:disabled { background: rgba($bmt-ink, 0.18); box-shadow: none; cursor: not-allowed; }
+}
+
+@keyframes bmt-shake {
+  0%, 100% { transform: translateX(0); }
+  25%, 75% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+}

@@ -1,0 +1,281 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Polite Message Challenge (pmc) — 5-day rewrite rail ---- */
+$pmc-plum: #7b3fa0;
+$pmc-rose: #ef6ba8;
+$pmc-ink: #33244a;
+
+.pmc {
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 1.5rem clamp(0.75rem, 3vw, 1.5rem) 2.5rem;
+}
+
+.pmc-head { text-align: center; }
+
+.pmc-badge {
+  @include w.welcome-pill(rgba($pmc-plum, 0.14), $pmc-plum);
+  letter-spacing: 0.05em;
+}
+
+.pmc-head h2 {
+  @include m.playful-heading;
+  font-size: clamp(1.6rem, 4.5vw, 2.2rem);
+  color: $pmc-ink;
+  margin: 0.9rem 0 0.4rem;
+}
+
+.pmc-intro {
+  margin: 0 auto 1.3rem;
+  max-width: 30rem;
+  color: w.navy(0.7);
+  line-height: 1.5;
+}
+
+.pmc-meter {
+  position: relative;
+  height: 1.4rem;
+  border-radius: v.$border-radius-pill;
+  background: rgba($pmc-plum, 0.12);
+  overflow: hidden;
+
+  span {
+    position: relative;
+    display: block;
+    text-align: center;
+    line-height: 1.4rem;
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: $pmc-ink;
+  }
+}
+
+.pmc-meter-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  background: linear-gradient(90deg, $pmc-plum, $pmc-rose);
+  transition: width 0.35s ease;
+}
+
+.pmc-rail {
+  list-style: none;
+  margin: 1.75rem 0 0;
+  padding: 0;
+}
+
+.pmc-day {
+  display: grid;
+  grid-template-columns: 2.4rem 1fr;
+  gap: 0.9rem;
+  padding-bottom: 1.25rem;
+}
+
+.pmc-day-marker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &::after {
+    content: '';
+    flex: 1;
+    width: 2px;
+    margin-top: 0.4rem;
+    background: rgba($pmc-plum, 0.2);
+  }
+}
+
+.pmc-day:last-child .pmc-day-marker::after { display: none; }
+
+.pmc-day-dot {
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  background: v.$color-white;
+  border: 2px solid rgba($pmc-plum, 0.35);
+  color: $pmc-plum;
+
+  .is-done & { background: $pmc-plum; border-color: $pmc-plum; color: v.$color-white; }
+}
+
+.pmc-day-body {
+  background: v.$color-white;
+  border: 2px solid rgba($pmc-ink, 0.08);
+  border-radius: v.$border-radius-lg;
+  padding: 1.1rem 1.2rem;
+
+  .is-done & { background: #faf5fc; border-color: rgba($pmc-plum, 0.3); }
+}
+
+.pmc-day-title {
+  margin: 0;
+  font-weight: 800;
+  color: $pmc-ink;
+}
+
+.pmc-day-summary {
+  margin: 0.5rem 0 0.3rem;
+  font-style: italic;
+  color: $pmc-plum;
+  line-height: 1.45;
+}
+
+.pmc-day-tag {
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: w.navy(0.55);
+}
+
+.pmc-check-label {
+  margin: 0.75rem 0 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: w.navy(0.6);
+}
+
+.pmc-checks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.9rem;
+}
+
+.pmc-check {
+  @include m.tappable;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.45rem 0.85rem;
+  border-radius: v.$border-radius-pill;
+  border: 2px solid rgba($pmc-plum, 0.25);
+  background: v.$color-white;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: $pmc-ink;
+
+  &.on { background: rgba($pmc-rose, 0.14); border-color: $pmc-rose; }
+}
+
+.pmc-check-box {
+  width: 1.2rem;
+  height: 1.2rem;
+  border-radius: 0.35rem;
+  border: 2px solid rgba($pmc-plum, 0.4);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  color: $pmc-plum;
+
+  .on & { background: $pmc-rose; border-color: $pmc-rose; color: v.$color-white; }
+}
+
+.pmc-rewrite-label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: w.navy(0.6);
+  margin-bottom: 0.35rem;
+}
+
+.pmc-rewrite {
+  width: 100%;
+  border-radius: v.$border-radius-sm;
+  border: 2px solid rgba($pmc-ink, 0.14);
+  padding: 0.65rem 0.8rem;
+  font: inherit;
+  resize: vertical;
+  color: $pmc-ink;
+
+  &:focus { outline: none; border-color: $pmc-plum; }
+}
+
+.pmc-day-done {
+  @include m.tappable;
+  margin-top: 0.8rem;
+  padding: 0.55rem 1.2rem;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  font-weight: 800;
+  font-size: 0.9rem;
+  color: v.$color-white;
+  background: $pmc-plum;
+
+  &:disabled { background: rgba($pmc-ink, 0.18); cursor: not-allowed; }
+}
+
+.pmc-confidence {
+  margin-top: 1.25rem;
+  padding: 1.4rem 1.5rem;
+  border-radius: v.$border-radius-lg;
+  text-align: center;
+  background: repeating-linear-gradient(135deg, rgba($pmc-plum, 0.08) 0 12px, rgba($pmc-rose, 0.08) 12px 24px);
+  border: 2px dashed rgba($pmc-plum, 0.3);
+
+  &.unlocked {
+    background: linear-gradient(120deg, rgba($pmc-plum, 0.16), rgba($pmc-rose, 0.16));
+    border-style: solid;
+  }
+}
+
+.pmc-confidence-label {
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $pmc-plum;
+}
+
+.pmc-statement {
+  margin: 0.5rem 0 0.9rem;
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 1.2rem;
+  color: $pmc-ink;
+
+  &.locked {
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: w.navy(0.55);
+    margin-bottom: 0;
+  }
+}
+
+.pmc-pledge {
+  @include m.tappable;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 1.1rem;
+  border-radius: v.$border-radius-pill;
+  border: 2px solid rgba($pmc-plum, 0.3);
+  background: v.$color-white;
+  font-weight: 700;
+  color: $pmc-ink;
+
+  &.on { background: rgba($pmc-rose, 0.16); border-color: $pmc-rose; }
+}
+
+.pmc-complete {
+  @include m.tappable;
+  display: block;
+  width: 100%;
+  margin-top: 1.25rem;
+  padding: 1rem 1.5rem;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: v.$color-white;
+  background: linear-gradient(120deg, $pmc-plum, $pmc-rose);
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.1);
+
+  &:disabled { background: rgba($pmc-ink, 0.18); box-shadow: none; cursor: not-allowed; }
+}

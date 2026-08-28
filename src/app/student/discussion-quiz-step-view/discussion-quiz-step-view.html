@@ -44,6 +44,17 @@
       }
     </div>
 
+    @if (step().recapHeading && step().recapPoints?.length) {
+      <div class="recap-card">
+        <h2>📌 {{ step().recapHeading }}</h2>
+        <ul>
+          @for (point of step().recapPoints; track point) {
+            <li>{{ point }}</li>
+          }
+        </ul>
+      </div>
+    }
+
     <button type="button" class="btn btn-primary btn-lg-tappable" (click)="finish()">
       {{ step().continueLabel }}
     </button>

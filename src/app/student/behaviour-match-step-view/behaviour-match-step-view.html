@@ -1,0 +1,47 @@
+<div class="bmt">
+  <header class="bmt-head">
+    <span class="bmt-badge">🧩 Warm-Up · Matching</span>
+    <h2>{{ step().title }}</h2>
+    <p class="bmt-intro">{{ step().intro }}</p>
+
+    <div class="bmt-meter">
+      <div class="bmt-meter-fill" [style.width.%]="progressPercent()"></div>
+      <span>{{ matchedCount() }} of {{ total() }} matched</span>
+    </div>
+  </header>
+
+  <div class="bmt-board">
+    <div class="bmt-col">
+      <p class="bmt-col-head">{{ step().behaviourHeading }}</p>
+      @for (pair of step().pairs; track pair.id) {
+        <button type="button" class="bmt-behaviour" [class]="behaviourClass(pair)"
+          [disabled]="isMatched(pair.id)" (click)="pickBehaviour(pair)">
+          <span class="bmt-avatar">{{ pair.avatar }}</span>
+          <span class="bmt-behaviour-name">{{ pair.behaviour }}</span>
+          @if (isMatched(pair.id)) { <span class="bmt-tick">✓</span> }
+        </button>
+      }
+    </div>
+
+    <div class="bmt-col">
+      <p class="bmt-col-head">{{ step().meaningHeading }}</p>
+      @for (card of meanings(); track card.pairId) {
+        <button type="button" class="bmt-meaning" [class]="meaningClass(card)"
+          [disabled]="isMatched(card.pairId)" (click)="pickMeaning(card)">
+          {{ card.meaning }}
+          @if (isMatched(card.pairId)) { <span class="bmt-tick">✓</span> }
+        </button>
+      }
+    </div>
+  </div>
+
+  @if (wrongFlash()) {
+    <p class="bmt-nudge">Not a match — try pairing them another way.</p>
+  }
+
+  <p class="bmt-parent-note">👪 {{ step().parentNote }}</p>
+
+  <button type="button" class="bmt-finish" [disabled]="!allMatched()" (click)="finish()">
+    @if (allMatched()) { {{ step().completeLabel }} → } @else { Match all {{ total() }} to continue }
+  </button>
+</div>

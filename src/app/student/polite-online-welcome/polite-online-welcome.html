@@ -1,0 +1,56 @@
+<div class="pow">
+  <span class="pow-week">{{ pow.weekLabel }}</span>
+
+  <h1>
+    <span class="pow-title-start">{{ pow.titleStart }}</span>
+    <span class="pow-title-accent">{{ pow.titleAccent }}</span>
+  </h1>
+  <p class="pow-intro">{{ pow.intro }}</p>
+
+  <div class="pow-body">
+    <div class="pow-chat" aria-hidden="true">
+      <div class="pow-chat-bar">
+        <span class="pow-chat-dot"></span>
+        <span class="pow-chat-name">{{ pow.chatTitle }}</span>
+        <span class="pow-chat-online">online</span>
+      </div>
+      <div class="pow-chat-log">
+        @for (msg of pow.messages; track $index) {
+          <div class="pow-msg" [class.pow-msg-me]="msg.from === 'me'">
+            <p class="pow-bubble">{{ msg.text }}</p>
+            @if (msg.reaction) {
+              <span class="pow-reaction">{{ msg.reaction }}</span>
+            }
+          </div>
+        }
+      </div>
+    </div>
+
+    <div class="pow-side">
+      <div class="pow-objective">
+        <span class="pow-objective-label">{{ pow.objectiveLabel }}</span>
+        <p>{{ pow.objectiveText }}</p>
+      </div>
+
+      <p class="pow-chips-heading">{{ pow.chipsHeading }}</p>
+      <ul class="pow-chips">
+        @for (chip of pow.chips; track chip.text) {
+          <li class="pow-chip"><span aria-hidden="true">{{ chip.icon }}</span>{{ chip.text }}</li>
+        }
+      </ul>
+    </div>
+  </div>
+
+  @if (isCompletedLessonWelcome()) {
+    @if (nextLesson(); as next) {
+      <button type="button" class="pow-start" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+    } @else {
+      <button type="button" class="pow-start" (click)="backToMap()">Back to My Modules →</button>
+    }
+    <button type="button" class="pow-review" (click)="beginLesson()">↺ Review this lesson</button>
+  } @else {
+    <button type="button" class="pow-start" (click)="beginLesson()">{{ pow.startLabel }} →</button>
+  }
+
+  <p class="pow-footer">{{ pow.footerNote }}</p>
+</div>

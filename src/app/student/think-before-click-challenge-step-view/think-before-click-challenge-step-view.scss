@@ -1,0 +1,307 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- Think Before You Click — 5-day shield log (tbc) — Habits module, Week 1 ---- */
+$tbc-emerald: #0f9d6b;
+$tbc-deep: #0b3d2e;
+$tbc-sand: #fbf6ec;
+$tbc-line: rgba(15, 157, 107, 0.28);
+
+.tbc {
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: 1.75rem clamp(1rem, 4vw, 2.25rem) 2rem;
+  border-radius: v.$border-radius-xl;
+  color: $tbc-deep;
+  background:
+    radial-gradient(140% 50% at 50% 0%, rgba(15, 157, 107, 0.12), transparent 70%),
+    $tbc-sand;
+  border: 1px solid $tbc-line;
+}
+
+.tbc-head { text-align: center; }
+
+.tbc-badge {
+  display: inline-block;
+  background: $tbc-deep;
+  color: #d9f7e9;
+  font-weight: 800;
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  padding: 0.4rem 1rem;
+  border-radius: v.$border-radius-pill;
+}
+
+.tbc h2 {
+  @include m.playful-heading;
+  font-size: clamp(1.5rem, 4.5vw, 2.15rem);
+  margin: 0.9rem 0 0.4rem;
+}
+
+.tbc-intro {
+  max-width: 30rem;
+  margin: 0 auto 1.2rem;
+  line-height: 1.55;
+  color: rgba(11, 61, 46, 0.75);
+}
+
+.tbc-progress {
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: rgba(11, 61, 46, 0.6);
+}
+
+.tbc-progress-bar {
+  margin: 0.4rem auto 0;
+  max-width: 18rem;
+  height: 7px;
+  border-radius: v.$border-radius-pill;
+  background: rgba(15, 157, 107, 0.16);
+  overflow: hidden;
+
+  span {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, $tbc-emerald, #7bd3a6);
+    transition: width 0.35s ease;
+  }
+}
+
+/* --- checkpoint days --- */
+.tbc-days {
+  list-style: none;
+  margin: 1.8rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 1rem;
+}
+
+.tbc-day {
+  position: relative;
+  display: flex;
+  gap: 0.9rem;
+  padding: 1.1rem 1.1rem 1.2rem;
+  border-radius: v.$border-radius-lg;
+  background: #fff;
+  border: 2px solid $tbc-line;
+  box-shadow: 0 10px 24px rgba(11, 61, 46, 0.08);
+}
+
+.tbc-day.is-sealed {
+  border-color: $tbc-emerald;
+  background: linear-gradient(180deg, rgba(15, 157, 107, 0.1), #fff);
+}
+
+.tbc-shield {
+  flex: none;
+  width: 2.6rem;
+  height: 2.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: #fff;
+  background: rgba(11, 61, 46, 0.35);
+  /* shield outline */
+  clip-path: polygon(50% 0, 100% 18%, 100% 62%, 50% 100%, 0 62%, 0 18%);
+}
+
+.tbc-day.is-sealed .tbc-shield {
+  background: linear-gradient(160deg, $tbc-emerald, $tbc-deep);
+}
+
+.tbc-day-body { flex: 1; min-width: 0; }
+
+.tbc-day-label {
+  margin: 0 0 0.6rem;
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 1.05rem;
+}
+
+.tbc-pause-heading {
+  margin: 0 0 0.55rem;
+  font-weight: 700;
+  color: rgba(11, 61, 46, 0.8);
+}
+
+.tbc-checks {
+  list-style: none;
+  margin: 0 0 0.9rem;
+  padding: 0;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.tbc-check {
+  @include m.tappable;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  text-align: left;
+  padding: 0.6rem 0.8rem;
+  border-radius: v.$border-radius-sm;
+  border: 2px solid $tbc-line;
+  background: $tbc-sand;
+  font: inherit;
+  font-weight: 600;
+  color: $tbc-deep;
+  cursor: pointer;
+}
+
+.tbc-check-box {
+  flex: none;
+  width: 1.4rem;
+  height: 1.4rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.45rem;
+  border: 2px solid $tbc-emerald;
+  background: #fff;
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: $tbc-emerald;
+}
+
+.tbc-check.on {
+  border-color: $tbc-emerald;
+  background: rgba(15, 157, 107, 0.14);
+}
+.tbc-check.on .tbc-check-box { background: $tbc-emerald; color: #fff; }
+
+.tbc-field {
+  display: block;
+  margin-bottom: 0.7rem;
+
+  span {
+    display: block;
+    margin-bottom: 0.3rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: rgba(11, 61, 46, 0.75);
+  }
+
+  textarea {
+    width: 100%;
+    resize: vertical;
+    padding: 0.6rem 0.75rem;
+    border-radius: v.$border-radius-sm;
+    border: 2px solid $tbc-line;
+    background: $tbc-sand;
+    font: inherit;
+    color: $tbc-deep;
+
+    &:focus {
+      outline: none;
+      border-color: $tbc-emerald;
+    }
+  }
+}
+
+.tbc-seal {
+  @include m.tappable;
+  width: 100%;
+  margin-top: 0.2rem;
+  padding: 0.7rem 1rem;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  font-weight: 800;
+  color: #fff;
+  background: linear-gradient(120deg, $tbc-emerald, $tbc-deep);
+  cursor: pointer;
+
+  &:disabled {
+    background: rgba(11, 61, 46, 0.2);
+    cursor: not-allowed;
+  }
+}
+
+.tbc-sealed-note {
+  margin: 0 0 0.6rem;
+  font-weight: 800;
+  color: $tbc-emerald;
+}
+
+.tbc-log-summary {
+  margin: 0;
+  display: grid;
+  gap: 0.15rem;
+
+  dt {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: rgba(11, 61, 46, 0.6);
+  }
+  dd {
+    margin: 0 0 0.5rem;
+    font-weight: 600;
+  }
+}
+
+/* --- confidence link --- */
+.tbc-confidence {
+  margin-top: 1.5rem;
+  text-align: center;
+  padding: 1.6rem 1.3rem;
+  border-radius: v.$border-radius-lg;
+  background: linear-gradient(160deg, $tbc-deep, #12664b);
+  color: #eafaf2;
+
+  blockquote {
+    @include m.playful-heading;
+    margin: 0.5rem 0;
+    font-size: 1.4rem;
+    color: #fff;
+  }
+
+  p { margin: 0; color: rgba(234, 250, 242, 0.8); }
+}
+
+.tbc-confidence-label {
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #8fe6c2;
+}
+
+.tbc-parent-note {
+  margin: 1.4rem 0 0;
+  text-align: center;
+  font-size: 0.9rem;
+  color: rgba(11, 61, 46, 0.7);
+}
+
+.tbc-finish {
+  @include m.tappable;
+  display: block;
+  width: 100%;
+  margin-top: 1rem;
+  padding: 1rem 1.5rem;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: #fff;
+  background: linear-gradient(120deg, $tbc-emerald, $tbc-deep);
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+
+  &:disabled {
+    background: rgba(11, 61, 46, 0.22);
+    box-shadow: none;
+    cursor: not-allowed;
+  }
+}
+
+.tbc-footer {
+  margin: 1rem 0 0;
+  text-align: center;
+  font-size: 0.9rem;
+  color: rgba(11, 61, 46, 0.6);
+}

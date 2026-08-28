@@ -1,0 +1,60 @@
+<div class="tbp">
+  <span class="tbp-week">{{ tbp.weekLabel }}</span>
+
+  <h1>
+    <span class="tbp-title-start">{{ tbp.titleStart }}</span>
+    <span class="tbp-title-accent">{{ tbp.titleAccent }}</span>
+  </h1>
+  <p class="tbp-intro">{{ tbp.intro }}</p>
+
+  <div class="tbp-funnel">
+    <div class="tbp-draft">
+      <span class="tbp-draft-label">{{ tbp.draftLabel }}</span>
+      <p>{{ tbp.draftText }}</p>
+    </div>
+
+    <span class="tbp-arrow" aria-hidden="true">▾</span>
+
+    <p class="tbp-gates-heading">{{ tbp.gatesHeading }}</p>
+    <ol class="tbp-gates">
+      @for (gate of tbp.gates; track gate.letter; let i = $index) {
+        <li class="tbp-gate" [style.--i]="i">
+          <span class="tbp-gate-badge">{{ gate.letter }}</span>
+          <span class="tbp-gate-body">
+            <span class="tbp-gate-word">{{ gate.word }}</span>
+            <span class="tbp-gate-q">{{ gate.question }}</span>
+          </span>
+        </li>
+      }
+    </ol>
+
+    <span class="tbp-arrow" aria-hidden="true">▾</span>
+
+    <p class="tbp-publish"><span aria-hidden="true">✅</span>{{ tbp.publishLabel }}</p>
+  </div>
+
+  <div class="tbp-objective">
+    <span class="tbp-objective-label">{{ tbp.objectiveLabel }}</span>
+    <p>{{ tbp.objectiveText }}</p>
+  </div>
+
+  <p class="tbp-signals-heading">{{ tbp.signalsHeading }}</p>
+  <ul class="tbp-signals">
+    @for (signal of tbp.signals; track signal.text) {
+      <li class="tbp-signal"><span aria-hidden="true">{{ signal.icon }}</span>{{ signal.text }}</li>
+    }
+  </ul>
+
+  @if (isCompletedLessonWelcome()) {
+    @if (nextLesson(); as next) {
+      <button type="button" class="tbp-start" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+    } @else {
+      <button type="button" class="tbp-start" (click)="backToMap()">Back to My Modules →</button>
+    }
+    <button type="button" class="tbp-review" (click)="beginLesson()">↺ Review this lesson</button>
+  } @else {
+    <button type="button" class="tbp-start" (click)="beginLesson()">{{ tbp.startLabel }} →</button>
+  }
+
+  <p class="tbp-footer">{{ tbp.footerNote }}</p>
+</div>

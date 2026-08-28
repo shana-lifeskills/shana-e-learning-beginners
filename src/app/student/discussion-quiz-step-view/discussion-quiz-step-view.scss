@@ -121,3 +121,33 @@ h1 {
   color: v.$color-navy-text;
   font-size: 1.1rem;
 }
+
+.recap-card {
+  background: rgba(78, 205, 196, 0.12);
+  border-radius: v.$border-radius;
+  padding: 1.5rem 1.75rem;
+  margin-bottom: 2rem;
+  text-align: left;
+
+  h2 {
+    font-family: v.$headings-font-family;
+    font-weight: 800;
+    font-size: 1.3rem;
+    color: v.$color-sky;
+    margin: 0 0 0.75rem;
+  }
+
+  ul {
+    margin: 0;
+    padding-left: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  li {
+    color: v.$color-navy-text;
+    font-weight: 600;
+    line-height: 1.45;
+  }
+}

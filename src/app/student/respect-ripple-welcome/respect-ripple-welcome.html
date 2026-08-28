@@ -1,0 +1,59 @@
+<div class="rrw">
+  <span class="rrw-week">{{ rrw.weekLabel }}</span>
+
+  <h1>
+    <span class="rrw-title-start">{{ rrw.titleStart }}</span>
+    <span class="rrw-title-accent">{{ rrw.titleAccent }}</span>
+  </h1>
+  <p class="rrw-intro">{{ rrw.intro }}</p>
+
+  <div class="rrw-stage" aria-hidden="true">
+    <span class="rrw-ripple rrw-ripple--1"></span>
+    <span class="rrw-ripple rrw-ripple--2"></span>
+    <span class="rrw-ripple rrw-ripple--3"></span>
+
+    <span class="rrw-core">
+      <span class="rrw-core-icon">{{ rrw.centerIcon }}</span>
+      <span class="rrw-core-label">{{ rrw.rippleLabel }}</span>
+    </span>
+
+    @for (placed of placedNodes; track placed.node.label) {
+      <span class="rrw-node" [style.left.%]="placed.x" [style.top.%]="placed.y"
+        [style.--delay]="placed.delay + 's'">
+        <span class="rrw-node-icon">{{ placed.node.icon }}</span>
+        <span class="rrw-node-label">{{ placed.node.label }}</span>
+      </span>
+    }
+  </div>
+
+  <p class="rrw-caption">{{ rrw.rippleCaption }}</p>
+
+  <div class="rrw-objective">
+    <span class="rrw-objective-label">{{ rrw.objectiveLabel }}</span>
+    <p>{{ rrw.objectiveText }}</p>
+  </div>
+
+  <p class="rrw-practices-heading">{{ rrw.practicesHeading }}</p>
+  <div class="rrw-practices">
+    @for (practice of rrw.practices; track practice.title; let i = $index) {
+      <div class="rrw-practice" [style.--i]="i">
+        <span class="rrw-practice-icon" aria-hidden="true">{{ practice.icon }}</span>
+        <span class="rrw-practice-title">{{ practice.title }}</span>
+        <span class="rrw-practice-text">{{ practice.text }}</span>
+      </div>
+    }
+  </div>
+
+  @if (isCompletedLessonWelcome()) {
+    @if (nextLesson(); as next) {
+      <button type="button" class="rrw-start" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+    } @else {
+      <button type="button" class="rrw-start" (click)="backToMap()">Back to My Modules →</button>
+    }
+    <button type="button" class="rrw-review" (click)="beginLesson()">↺ Review this lesson</button>
+  } @else {
+    <button type="button" class="rrw-start" (click)="beginLesson()">{{ rrw.startLabel }} →</button>
+  }
+
+  <p class="rrw-footer">{{ rrw.footerNote }}</p>
+</div>

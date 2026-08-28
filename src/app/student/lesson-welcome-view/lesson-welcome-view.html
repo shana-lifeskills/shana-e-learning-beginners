@@ -1,5 +1,29 @@
 <div class="welcome-shell">
-  @if (lesson.tinyVoicesWelcome; as tvw) {
+  @if (lesson.techResponsiblyWelcome; as trw) {
+    <app-tech-responsibly-welcome [trw]="trw" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.privacyVaultWelcome; as pvw) {
+    <app-privacy-vault-welcome [pvw]="pvw" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.screenBalanceWelcome; as sbw) {
+    <app-screen-balance-welcome [sbw]="sbw" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.respectRippleWelcome; as rrw) {
+    <app-respect-ripple-welcome [rrw]="rrw" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.politeOnlineWelcome; as pow) {
+    <app-polite-online-welcome [pow]="pow" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.respectCircleWelcome; as rcw) {
+    <app-respect-circle-welcome [rcw]="rcw" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.thinkBeforePostWelcome; as tbp) {
+    <app-think-before-post-welcome [tbp]="tbp" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.digitalMannersWelcome; as dmw) {
+    <app-digital-manners-welcome [dmw]="dmw" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.tinyVoicesWelcome; as tvw) {
     <app-tvw-welcome [tvw]="tvw" [completed]="completed" [next]="next" [firstName]="firstName"
       (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
   } @else if (lesson.growKinderWelcome; as gkw) {

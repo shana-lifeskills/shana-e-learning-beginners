@@ -1,0 +1,85 @@
+<div class="stp">
+  <header class="stp-head">
+    <span class="stp-badge">📱 {{ step().badge }}</span>
+    <h2>{{ step().title }}</h2>
+    <p class="stp-intro">{{ step().intro }}</p>
+  </header>
+
+  <!-- Phase 1: build the plan, styled as a device settings card -->
+  <section class="stp-device">
+    <div class="stp-device-bar" aria-hidden="true">
+      <span class="stp-dot"></span><span class="stp-dot"></span><span class="stp-dot"></span>
+    </div>
+    <div class="stp-device-screen">
+      <p class="stp-plan-heading">{{ step().planHeading }}</p>
+      <p class="stp-plan-instruction">{{ step().planInstruction }}</p>
+
+      <ul class="stp-rows">
+        @for (field of step().planFields; track field.id) {
+          <li class="stp-row" [class.is-set]="(plan()[field.id] ?? '').trim().length > 0">
+            <span class="stp-row-check" aria-hidden="true">
+              {{ (plan()[field.id] ?? '').trim().length > 0 ? '✔' : '' }}
+            </span>
+            <label class="stp-row-field">
+              <span class="stp-row-label">{{ field.label }}</span>
+              <input type="text" [placeholder]="field.placeholder"
+                [value]="plan()[field.id] ?? ''"
+                (input)="setPlan(field.id, $any($event.target).value)" />
+            </label>
+          </li>
+        }
+      </ul>
+
+      <p class="stp-plan-status" [class.is-ready]="planComplete()">
+        @if (planComplete()) { Plan set — your 5-day tracker is unlocked below. }
+        @else { Fill in all three lines to unlock your tracker. }
+      </p>
+    </div>
+  </section>
+
+  <!-- Phase 2: 5-day streak strip -->
+  <section class="stp-track" [class.is-locked]="!planComplete()">
+    <p class="stp-track-heading">{{ step().trackHeading }}</p>
+    <p class="stp-track-instruction">{{ step().trackInstruction }}</p>
+
+    <div class="stp-strip">
+      @for (day of days(); track day) {
+        <div class="stp-day" [class.is-yes]="answerFor(day) === 'yes'" [class.is-no]="answerFor(day) === 'no'">
+          <span class="stp-day-label">{{ step().dayLabel }} {{ day + 1 }}</span>
+          <span class="stp-day-mark" aria-hidden="true">
+            @if (answerFor(day) === 'yes') { ✓ } @else if (answerFor(day) === 'no') { – } @else { {{ day + 1 }} }
+          </span>
+          <p class="stp-day-q">{{ step().followQuestion }}</p>
+          <div class="stp-day-btns" role="group" [attr.aria-label]="step().followQuestion">
+            <button type="button" class="stp-yn stp-yn--yes" [class.on]="answerFor(day) === 'yes'"
+              [disabled]="!planComplete()" (click)="log(day, 'yes')">{{ step().yesLabel }}</button>
+            <button type="button" class="stp-yn stp-yn--no" [class.on]="answerFor(day) === 'no'"
+              [disabled]="!planComplete()" (click)="log(day, 'no')">{{ step().noLabel }}</button>
+          </div>
+        </div>
+      }
+    </div>
+
+    <p class="stp-track-count">{{ loggedCount() }} / {{ step().dayCount }} days logged · followed the plan {{ followedCount() }} {{ followedCount() === 1 ? 'day' : 'days' }}</p>
+  </section>
+
+  @if (planComplete() && allLogged()) {
+    <section class="stp-confidence">
+      <span class="stp-confidence-label">{{ step().confidenceHeading }}</span>
+      <blockquote>“{{ step().confidenceQuote }}”</blockquote>
+      <p>{{ step().confidenceText }}</p>
+      <button type="button" class="stp-pledge" [class.on]="pledged()" (click)="togglePledge()">
+        <span class="stp-pledge-box" aria-hidden="true">{{ pledged() ? '✓' : '' }}</span>
+        {{ step().pledgeLabel }}
+      </button>
+    </section>
+  }
+
+  <p class="stp-parent">👪 {{ step().parentNote }}</p>
+
+  <button type="button" class="stp-finish" [disabled]="!ready()" (click)="finish()">
+    @if (ready()) { {{ step().completeLabel }} → } @else { {{ step().lockedCompleteLabel }} }
+  </button>
+
+  <p class="stp-footer">{{ step().footerText }}</p>
+</div>

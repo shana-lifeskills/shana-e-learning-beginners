@@ -1,0 +1,54 @@
+<div class="pvw">
+  <span class="pvw-week">{{ pvw.weekLabel }}</span>
+
+  <h1>
+    <span class="pvw-title-start">{{ pvw.titleStart }}</span>
+    <span class="pvw-title-accent">{{ pvw.titleAccent }}</span>
+  </h1>
+  <p class="pvw-intro">{{ pvw.intro }}</p>
+
+  <div class="pvw-vault" aria-hidden="true">
+    <div class="pvw-vault-door">
+      <span class="pvw-dial"><i></i></span>
+      <span class="pvw-bolt pvw-bolt-tl"></span>
+      <span class="pvw-bolt pvw-bolt-tr"></span>
+      <span class="pvw-bolt pvw-bolt-bl"></span>
+      <span class="pvw-bolt pvw-bolt-br"></span>
+    </div>
+    <span class="pvw-vault-label">{{ pvw.vaultLabel }}</span>
+    <div class="pvw-valuables">
+      @for (item of pvw.valuables; track item.label) {
+        <span class="pvw-valuable">
+          <span class="pvw-valuable-icon">{{ item.icon }}</span>
+          <span class="pvw-valuable-label">{{ item.label }}</span>
+          <span class="pvw-valuable-lock">🔒</span>
+        </span>
+      }
+    </div>
+  </div>
+
+  <div class="pvw-objective">
+    <span class="pvw-objective-label">{{ pvw.objectiveLabel }}</span>
+    <p>{{ pvw.objectiveText }}</p>
+  </div>
+
+  <p class="pvw-keep-heading">{{ pvw.keepPrivateHeading }}</p>
+  <ul class="pvw-keep">
+    @for (habit of pvw.keepPrivate; track habit.text) {
+      <li class="pvw-keep-chip"><span aria-hidden="true">{{ habit.icon }}</span>{{ habit.text }}</li>
+    }
+  </ul>
+
+  @if (isCompletedLessonWelcome()) {
+    @if (nextLesson(); as next) {
+      <button type="button" class="pvw-start" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+    } @else {
+      <button type="button" class="pvw-start" (click)="backToMap()">Back to My Modules →</button>
+    }
+    <button type="button" class="pvw-review" (click)="beginLesson()">↺ Review this lesson</button>
+  } @else {
+    <button type="button" class="pvw-start" (click)="beginLesson()">{{ pvw.startLabel }} →</button>
+  }
+
+  <p class="pvw-footer">{{ pvw.footerNote }}</p>
+</div>

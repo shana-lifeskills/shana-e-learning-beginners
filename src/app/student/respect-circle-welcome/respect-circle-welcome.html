@@ -1,0 +1,45 @@
+<div class="rcw">
+  <span class="rcw-week">{{ rcw.weekLabel }}</span>
+
+  <h1>
+    <span class="rcw-title-start">{{ rcw.titleStart }}</span>
+    <span class="rcw-title-accent">{{ rcw.titleAccent }}</span>
+  </h1>
+  <p class="rcw-intro">{{ rcw.intro }}</p>
+
+  <div class="rcw-orbit" [style.--n]="rcw.orbitNodes.length" aria-hidden="true">
+    <span class="rcw-ring"></span>
+    <span class="rcw-center">{{ rcw.centerLabel }}</span>
+    @for (node of rcw.orbitNodes; track node.label; let i = $index) {
+      <span class="rcw-node" [style.--i]="i">
+        <span class="rcw-node-icon">{{ node.icon }}</span>
+        <span class="rcw-node-label">{{ node.label }}</span>
+      </span>
+    }
+  </div>
+
+  <div class="rcw-objective">
+    <span class="rcw-objective-label">{{ rcw.objectiveLabel }}</span>
+    <p>{{ rcw.objectiveText }}</p>
+  </div>
+
+  <p class="rcw-practices-heading">{{ rcw.practicesHeading }}</p>
+  <ul class="rcw-practices">
+    @for (practice of rcw.practices; track practice.text) {
+      <li class="rcw-practice"><span aria-hidden="true">{{ practice.icon }}</span>{{ practice.text }}</li>
+    }
+  </ul>
+
+  @if (isCompletedLessonWelcome()) {
+    @if (nextLesson(); as next) {
+      <button type="button" class="rcw-start" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+    } @else {
+      <button type="button" class="rcw-start" (click)="backToMap()">Back to My Modules →</button>
+    }
+    <button type="button" class="rcw-review" (click)="beginLesson()">↺ Review this lesson</button>
+  } @else {
+    <button type="button" class="rcw-start" (click)="beginLesson()">{{ rcw.startLabel }} →</button>
+  }
+
+  <p class="rcw-footer">{{ rcw.footerNote }}</p>
+</div>

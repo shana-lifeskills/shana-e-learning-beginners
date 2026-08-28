@@ -1,0 +1,69 @@
+<div class="pmc">
+  <header class="pmc-head">
+    <span class="pmc-badge">🎯 Challenge of the Week</span>
+    <h2>{{ step().title }}</h2>
+    <p class="pmc-intro">{{ step().intro }}</p>
+
+    <div class="pmc-meter">
+      <div class="pmc-meter-fill" [style.width.%]="progressPercent()"></div>
+      <span>{{ doneCount() }} of {{ total() }} days done</span>
+    </div>
+  </header>
+
+  <ol class="pmc-rail">
+    @for (day of days(); track $index; let i = $index) {
+      <li class="pmc-day" [class.is-done]="day.done">
+        <div class="pmc-day-marker">
+          <span class="pmc-day-dot">@if (day.done) { ✓ } @else { {{ i + 1 }} }</span>
+        </div>
+
+        <div class="pmc-day-body">
+          <p class="pmc-day-title">Day {{ i + 1 }}</p>
+
+          @if (day.done) {
+            <p class="pmc-day-summary">“{{ day.rewrite }}”</p>
+            <p class="pmc-day-tag">Checked: kind ✓ · respectful ✓</p>
+          } @else {
+            <p class="pmc-check-label">Before you send, check:</p>
+            <div class="pmc-checks">
+              @for (item of step().checkItems; track item; let ci = $index) {
+                <button type="button" class="pmc-check" [class.on]="day.checks[ci]"
+                  (click)="toggleCheck(i, ci)">
+                  <span class="pmc-check-box">@if (day.checks[ci]) { ✓ }</span>
+                  {{ item }}
+                </button>
+              }
+            </div>
+
+            <label class="pmc-rewrite-label" [attr.for]="'pmc-rw-' + i">{{ step().rewritePrompt }}</label>
+            <textarea class="pmc-rewrite" [id]="'pmc-rw-' + i" rows="2"
+              [placeholder]="step().rewritePlaceholder"
+              [value]="day.rewrite"
+              (input)="setRewrite(i, $any($event.target).value)"></textarea>
+
+            <button type="button" class="pmc-day-done" [disabled]="!canFinishDay(i)" (click)="finishDay(i)">
+              Mark Day {{ i + 1 }} done
+            </button>
+          }
+        </div>
+      </li>
+    }
+  </ol>
+
+  <div class="pmc-confidence" [class.unlocked]="allDone()">
+    <span class="pmc-confidence-label">{{ step().confidenceLabel }}</span>
+    @if (allDone()) {
+      <p class="pmc-statement">“{{ step().confidenceStatement }}”</p>
+      <button type="button" class="pmc-pledge" [class.on]="pledged()" (click)="togglePledge()">
+        <span class="pmc-check-box">@if (pledged()) { ✓ }</span>
+        {{ step().pledgeLabel }}
+      </button>
+    } @else {
+      <p class="pmc-statement locked">🔒 Finish all {{ total() }} days to unlock your confidence link.</p>
+    }
+  </div>
+
+  <button type="button" class="pmc-complete" [disabled]="!allDone() || !pledged()" (click)="complete()">
+    {{ step().completeLabel }} →
+  </button>
+</div>

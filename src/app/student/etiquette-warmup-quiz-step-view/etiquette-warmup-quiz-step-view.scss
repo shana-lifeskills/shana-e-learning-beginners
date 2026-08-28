@@ -1,0 +1,230 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Etiquette warm-up quiz (ewq) — vertical unlock worksheet ---- */
+$ewq-teal: #0f9d8f;
+$ewq-amber: #f5a623;
+$ewq-ink: #17323a;
+$ewq-wrong: #e0567a;
+
+.ewq {
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: 1.5rem clamp(0.75rem, 3vw, 1.5rem) 2.5rem;
+}
+
+.ewq-head { text-align: center; }
+
+.ewq-badge {
+  @include w.welcome-pill(rgba($ewq-amber, 0.16), #b9791a);
+  letter-spacing: 0.05em;
+}
+
+.ewq-head h2 {
+  @include m.playful-heading;
+  font-size: clamp(1.6rem, 4.5vw, 2.2rem);
+  color: $ewq-ink;
+  margin: 0.9rem 0 0.4rem;
+}
+
+.ewq-intro {
+  margin: 0 auto 1.4rem;
+  max-width: 30rem;
+  color: w.navy(0.7);
+  line-height: 1.5;
+}
+
+.ewq-track {
+  position: relative;
+  height: 1.4rem;
+  border-radius: v.$border-radius-pill;
+  background: rgba($ewq-teal, 0.14);
+  overflow: hidden;
+}
+
+.ewq-track-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  background: linear-gradient(90deg, $ewq-teal, #38c6b4);
+  border-radius: inherit;
+  transition: width 0.35s ease;
+}
+
+.ewq-track-label {
+  position: relative;
+  display: block;
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 800;
+  line-height: 1.4rem;
+  color: $ewq-ink;
+}
+
+.ewq-list {
+  list-style: none;
+  margin: 1.75rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.ewq-card {
+  border-radius: v.$border-radius-lg;
+  background: v.$color-white;
+  border: 2px solid rgba($ewq-ink, 0.08);
+  padding: 1.15rem 1.25rem;
+  transition: opacity 0.2s ease, border-color 0.2s ease;
+
+  &.state-locked { opacity: 0.5; }
+  &.state-active { border-color: $ewq-teal; box-shadow: 0 12px 28px rgba($ewq-teal, 0.15); }
+  &.state-done { border-color: rgba($ewq-teal, 0.4); background: #f2fbf9; }
+}
+
+.ewq-card-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.ewq-num {
+  flex: none;
+  width: 1.9rem;
+  height: 1.9rem;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.95rem;
+  background: rgba($ewq-ink, 0.1);
+  color: $ewq-ink;
+
+  .state-active & { background: $ewq-teal; color: v.$color-white; }
+  .state-done & { background: $ewq-teal; color: v.$color-white; }
+}
+
+.ewq-prompt {
+  margin: 0.2rem 0 0;
+  font-weight: 700;
+  color: $ewq-ink;
+  line-height: 1.45;
+}
+
+.ewq-options {
+  list-style: none;
+  margin: 1rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.55rem;
+
+  &.shake { animation: ewq-shake 0.4s ease; }
+}
+
+.ewq-option {
+  @include m.tappable;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  text-align: left;
+  padding: 0.7rem 0.9rem;
+  border-radius: v.$border-radius-sm;
+  border: 2px solid rgba($ewq-ink, 0.12);
+  background: v.$color-white;
+  font-size: 0.98rem;
+  color: $ewq-ink;
+
+  &:hover { border-color: $ewq-teal; }
+  &.is-picked { border-color: $ewq-teal; background: rgba($ewq-teal, 0.08); }
+  &.is-wrong { border-color: $ewq-wrong; background: rgba($ewq-wrong, 0.08); }
+  &.is-correct { border-color: $ewq-teal; background: rgba($ewq-teal, 0.14); }
+}
+
+.ewq-letter {
+  flex: none;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 0.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.8rem;
+  background: rgba($ewq-amber, 0.2);
+  color: #a56a12;
+}
+
+.ewq-option-text { flex: 1; }
+
+.ewq-nudge {
+  margin: 0.75rem 0 0;
+  font-weight: 700;
+  color: $ewq-wrong;
+  font-size: 0.9rem;
+}
+
+.ewq-done {
+  margin-top: 0.75rem;
+  padding-left: 2.65rem;
+}
+
+.ewq-answer {
+  margin: 0;
+  font-weight: 800;
+  color: $ewq-teal;
+
+  &::before { content: '✓ '; }
+}
+
+.ewq-praise {
+  margin: 0.3rem 0 0;
+  color: w.navy(0.65);
+  font-size: 0.9rem;
+}
+
+.ewq-locked-note {
+  margin: 0.75rem 0 0;
+  padding-left: 2.65rem;
+  font-size: 0.85rem;
+  color: w.navy(0.55);
+}
+
+.ewq-parent-note {
+  margin: 1.75rem 0 0;
+  padding: 0.85rem 1rem;
+  border-radius: v.$border-radius-sm;
+  background: rgba($ewq-amber, 0.12);
+  border: 1px dashed rgba($ewq-amber, 0.6);
+  font-size: 0.88rem;
+  color: #8a5a12;
+  text-align: center;
+}
+
+.ewq-finish {
+  @include m.tappable;
+  display: block;
+  width: 100%;
+  margin-top: 1.25rem;
+  padding: 1rem 1.5rem;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: v.$color-white;
+  background: linear-gradient(120deg, $ewq-teal, #38c6b4);
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.1);
+
+  &:disabled {
+    background: rgba($ewq-ink, 0.18);
+    box-shadow: none;
+    cursor: not-allowed;
+  }
+}
+
+@keyframes ewq-shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-6px); }
+  40%, 80% { transform: translateX(6px); }
+}

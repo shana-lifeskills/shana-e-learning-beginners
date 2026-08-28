@@ -1,0 +1,79 @@
+<div class="ppc">
+  <div class="ppc-stamp" aria-hidden="true">CONFIDENTIAL</div>
+
+  <header class="ppc-head">
+    <span class="ppc-badge">🕵️ {{ step().badge }}</span>
+    <h2>{{ step().title }}</h2>
+    <p class="ppc-intro">{{ step().intro }}</p>
+  </header>
+
+  <!-- Section 1: never-share list -->
+  <section class="ppc-section">
+    <p class="ppc-section-no">FILE 01</p>
+    <h3>{{ step().listHeading }}</h3>
+    <p class="ppc-section-hint">{{ step().listInstruction }}</p>
+    <ol class="ppc-list">
+      @for (item of listItems(); track $index; let i = $index) {
+        <li>
+          <span class="ppc-list-num">{{ i + 1 }}</span>
+          <input type="text" [placeholder]="step().listItemPlaceholder"
+            [value]="item" (input)="setListItem(i, $any($event.target).value)" />
+        </li>
+      }
+    </ol>
+    <p class="ppc-mini-tally">{{ filledCount() }} / {{ step().listCount }} listed</p>
+  </section>
+
+  <!-- Section 2: power phrase -->
+  <section class="ppc-section ppc-phrase" [class.is-done]="practised()">
+    <p class="ppc-section-no">FILE 02</p>
+    <h3>{{ step().phraseHeading }}</h3>
+    <blockquote>“{{ step().phrase }}”</blockquote>
+    <p class="ppc-section-hint">{{ step().phraseInstruction }}</p>
+    <button type="button" class="ppc-practice" [class.on]="practised()" (click)="togglePractised()">
+      <span class="ppc-practice-check">{{ practised() ? '✓' : '🎤' }}</span>
+      {{ practised() ? step().practisedLabel : step().practiceLabel }}
+    </button>
+  </section>
+
+  <!-- Section 3: 5-day watch log -->
+  <section class="ppc-section">
+    <p class="ppc-section-no">FILE 03</p>
+    <h3>{{ step().logHeading }}</h3>
+    <p class="ppc-section-hint">{{ step().logInstruction }}</p>
+    <ol class="ppc-days">
+      @for (day of days(); track $index; let i = $index) {
+        <li class="ppc-day" [class.is-done]="day.asked !== null && day.response.trim().length > 0">
+          <p class="ppc-day-label">{{ step().dayLabel }} {{ i + 1 }}</p>
+          <p class="ppc-asked">{{ step().askedQuestion }}</p>
+          <div class="ppc-yn">
+            <button type="button" [class.on]="day.asked === 'yes'" (click)="setAsked(i, 'yes')">{{ step().yesLabel }}</button>
+            <button type="button" [class.on]="day.asked === 'no'" (click)="setAsked(i, 'no')">{{ step().noLabel }}</button>
+          </div>
+          <label class="ppc-field">
+            <span>{{ step().responseLabel }}</span>
+            <textarea rows="2" [placeholder]="step().responsePlaceholder"
+              [value]="day.response" (input)="setResponse(i, $any($event.target).value)"></textarea>
+          </label>
+        </li>
+      }
+    </ol>
+    <p class="ppc-mini-tally">{{ loggedCount() }} / {{ step().dayCount }} days logged</p>
+  </section>
+
+  @if (allDone()) {
+    <section class="ppc-confidence">
+      <span class="ppc-confidence-label">{{ step().confidenceHeading }}</span>
+      <blockquote>“{{ step().confidenceQuote }}”</blockquote>
+      <p>{{ step().confidenceText }}</p>
+    </section>
+  }
+
+  <p class="ppc-parent-note">👪 {{ step().parentNote }}</p>
+
+  <button type="button" class="ppc-finish" [disabled]="!allDone()" (click)="finish()">
+    @if (allDone()) { {{ step().completeLabel }} → } @else { {{ step().lockedCompleteLabel }} }
+  </button>
+
+  <p class="ppc-footer">{{ step().footerText }}</p>
+</div>

@@ -1,0 +1,316 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Digital Etiquette Tracker (det) — final report-card challenge, Etiquette Week 4 ---- */
+$det-navy: #1f2d54;
+$det-gold: #d8a53a;
+$det-green: #2f9e6b;
+$det-red: #d8607c;
+$det-paper: #fbf7ec;
+
+.det {
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: 1.5rem clamp(0.75rem, 3vw, 1.5rem) 2.5rem;
+}
+
+.det-head { text-align: center; }
+
+.det-kicker {
+  @include w.welcome-pill(rgba($det-gold, 0.2), #9a6f18);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.det-head h2 {
+  @include m.playful-heading;
+  font-size: clamp(1.6rem, 4.5vw, 2.2rem);
+  color: $det-navy;
+  margin: 0.9rem 0 0.4rem;
+}
+
+.det-intro {
+  margin: 0 auto 1.3rem;
+  max-width: 32rem;
+  color: w.navy(0.7);
+  line-height: 1.5;
+}
+
+.det-progress {
+  position: relative;
+  height: 1.7rem;
+  border-radius: v.$border-radius-pill;
+  background: rgba($det-navy, 0.12);
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+.det-progress-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  background: linear-gradient(90deg, $det-gold, $det-green);
+  transition: width 0.35s ease;
+}
+
+.det-progress-text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: $det-navy;
+}
+
+/* --- report card --- */
+.det-card {
+  border-radius: v.$border-radius-lg;
+  padding: 1.1rem;
+  background: $det-paper;
+  border: 2px solid rgba($det-navy, 0.14);
+  box-shadow: 0 18px 40px w.navy(0.12);
+}
+
+.det-grid-scroll {
+  overflow-x: auto;
+}
+
+.det-grid {
+  border-collapse: separate;
+  border-spacing: 0.35rem;
+  width: 100%;
+  min-width: 32rem;
+
+  th {
+    font-family: v.$headings-font-family;
+    color: $det-navy;
+    font-size: 0.82rem;
+  }
+
+  thead th {
+    padding-bottom: 0.3rem;
+    text-align: center;
+  }
+
+  tbody th[scope='row'] {
+    text-align: left;
+    padding-right: 0.6rem;
+    font-size: 0.86rem;
+    line-height: 1.3;
+    min-width: 9rem;
+  }
+
+  td { text-align: center; }
+}
+
+.det-grid-corner {
+  font-size: 0.72rem !important;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba($det-navy, 0.55) !important;
+}
+
+.det-seg {
+  display: inline-flex;
+  border-radius: v.$border-radius-pill;
+  background: rgba($det-navy, 0.08);
+  padding: 0.15rem;
+}
+
+.det-seg-btn {
+  border: none;
+  background: transparent;
+  border-radius: v.$border-radius-pill;
+  padding: 0.3rem 0.55rem;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: rgba($det-navy, 0.5);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.det-seg-btn--yes.is-on {
+  background: $det-green;
+  color: v.$color-white;
+}
+
+.det-seg-btn--no.is-on {
+  background: $det-red;
+  color: v.$color-white;
+}
+
+/* --- reflection --- */
+.det-reflect {
+  margin-top: 1.6rem;
+  padding: 1.4rem clamp(1rem, 3.5vw, 1.6rem);
+  border-radius: v.$border-radius-lg;
+  background: v.$color-white;
+  border-left: 5px solid $det-navy;
+  box-shadow: 0 12px 28px w.navy(0.08);
+
+  h3 {
+    margin: 0 0 1rem;
+    font-family: v.$headings-font-family;
+    color: $det-navy;
+  }
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  label span {
+    display: block;
+    margin-bottom: 0.35rem;
+    font-weight: 800;
+    color: w.navy(0.75);
+  }
+
+  textarea {
+    width: 100%;
+    resize: vertical;
+    padding: 0.65rem 0.8rem;
+    border-radius: v.$border-radius-sm;
+    border: 2px solid rgba($det-navy, 0.15);
+    font: inherit;
+    line-height: 1.45;
+  }
+
+  textarea:focus {
+    outline: none;
+    border-color: rgba($det-gold, 0.7);
+  }
+}
+
+/* --- confidence --- */
+.det-confidence {
+  margin-top: 1.4rem;
+  padding: 1.4rem;
+  text-align: center;
+  border-radius: v.$border-radius-lg;
+  background: linear-gradient(150deg, rgba($det-gold, 0.16), rgba($det-green, 0.14));
+  border: 2px dashed rgba($det-gold, 0.6);
+}
+
+.det-confidence-label {
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #9a6f18;
+}
+
+.det-confidence-quote {
+  margin: 0.55rem 0 1rem;
+  font-family: v.$headings-font-family;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: $det-navy;
+}
+
+.det-pledge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 1.1rem;
+  border: 2px solid rgba($det-gold, 0.7);
+  border-radius: v.$border-radius-pill;
+  background: v.$color-white;
+  font-weight: 800;
+  color: $det-navy;
+  cursor: pointer;
+}
+
+.det-pledge.is-on { background: rgba($det-gold, 0.16); }
+
+.det-pledge-box {
+  width: 1.4rem;
+  height: 1.4rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.4rem;
+  border: 2px solid $det-gold;
+  color: #9a6f18;
+  font-weight: 900;
+}
+
+/* --- final outcome --- */
+.det-outcome {
+  position: relative;
+  margin-top: 1.5rem;
+  padding: 1.75rem 1.5rem 1.6rem;
+  text-align: center;
+  border-radius: v.$border-radius-xl;
+  color: v.$color-white;
+  background:
+    radial-gradient(circle at 15% 10%, rgba(255, 255, 255, 0.12), transparent 55%),
+    linear-gradient(155deg, $det-navy, #33437a);
+  box-shadow: 0 22px 46px rgba($det-navy, 0.35);
+
+  h3 {
+    margin: 0.4rem 0 0.3rem;
+    font-family: v.$headings-font-family;
+    font-size: 1.3rem;
+    letter-spacing: 0.02em;
+  }
+
+  ul {
+    list-style: none;
+    margin: 1rem auto 0;
+    padding: 0;
+    max-width: 26rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    text-align: left;
+  }
+
+  li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    padding: 0.6rem 0.85rem;
+    border-radius: v.$border-radius-sm;
+    background: rgba(255, 255, 255, 0.1);
+    font-weight: 600;
+    line-height: 1.35;
+  }
+
+  li span {
+    flex: none;
+    color: $det-gold;
+    font-weight: 900;
+  }
+}
+
+.det-outcome-seal {
+  font-size: 2.6rem;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+}
+
+.det-outcome-intro {
+  margin: 0;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.det-complete {
+  @include w.welcome-cta-btn(linear-gradient(120deg, $det-gold, $det-green));
+  display: block;
+  width: 100%;
+  margin-top: 1.6rem;
+  font-size: 1.1rem;
+  padding: 0.95rem 1.5rem;
+
+  &:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+}

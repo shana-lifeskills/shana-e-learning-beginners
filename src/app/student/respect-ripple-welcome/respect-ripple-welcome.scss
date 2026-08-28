@@ -1,0 +1,242 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Digital Respect & Kindness welcome (rrw) — Habits module, Week 4 ---- */
+$rrw-rose: #ff7a9c;
+$rrw-amber: #f7b733;
+$rrw-plum: #6a2c5a;
+$rrw-ink: #4a1f43;
+
+.rrw {
+  max-width: 62rem;
+  margin: 0 auto;
+  padding: 2.5rem clamp(1rem, 4vw, 2.75rem) 2.75rem;
+  text-align: center;
+  border-radius: v.$border-radius-xl;
+  background: linear-gradient(165deg, #ffe3d0 0%, #ffd9e4 45%, #f4e0f4 100%);
+}
+
+.rrw-week {
+  @include w.welcome-pill(rgba($rrw-plum, 0.14), $rrw-plum);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.rrw h1 {
+  @include m.playful-heading;
+  font-size: clamp(2.1rem, 6vw, 3.2rem);
+  line-height: 1.1;
+  margin: 1.2rem 0 0.7rem;
+}
+
+.rrw-title-start { color: $rrw-ink; }
+.rrw-title-accent { color: $rrw-rose; }
+
+.rrw-intro {
+  max-width: 36rem;
+  margin: 0 auto;
+  font-size: 1.1rem;
+  line-height: 1.55;
+  color: w.navy(0.74);
+}
+
+/* --- ripple stage --- */
+.rrw-stage {
+  position: relative;
+  width: clamp(17rem, 78vw, 24rem);
+  aspect-ratio: 1;
+  margin: 2.5rem auto 0;
+}
+
+.rrw-ripple {
+  position: absolute;
+  inset: 50% auto auto 50%;
+  border-radius: 50%;
+  border: 2px solid rgba($rrw-rose, 0.5);
+  transform: translate(-50%, -50%);
+  animation: rrw-pulse 3.4s ease-out infinite;
+}
+
+.rrw-ripple--1 { width: 34%; height: 34%; animation-delay: 0s; }
+.rrw-ripple--2 { width: 62%; height: 62%; animation-delay: 0.5s; }
+.rrw-ripple--3 { width: 92%; height: 92%; animation-delay: 1s; }
+
+.rrw-core {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 30%;
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.15rem;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #fff, #ffd9c8);
+  box-shadow: 0 0 0 6px rgba(v.$color-white, 0.55), 0 14px 30px rgba($rrw-plum, 0.25);
+}
+
+.rrw-core-icon { font-size: clamp(1.5rem, 6vw, 2.1rem); }
+
+.rrw-core-label {
+  font-weight: 800;
+  font-size: 0.52rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: $rrw-plum;
+  line-height: 1.1;
+}
+
+.rrw-node {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  width: 6rem;
+  animation: rrw-light 3.4s ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+}
+
+.rrw-node-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 50%;
+  background: v.$color-white;
+  font-size: 1.3rem;
+  box-shadow: 0 6px 16px rgba($rrw-plum, 0.2);
+}
+
+.rrw-node-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: $rrw-ink;
+  background: rgba(v.$color-white, 0.75);
+  border-radius: v.$border-radius-pill;
+  padding: 0.1rem 0.45rem;
+}
+
+.rrw-caption {
+  max-width: 30rem;
+  margin: 1.25rem auto 0;
+  font-size: 1rem;
+  font-style: italic;
+  color: w.navy(0.66);
+}
+
+/* --- objective --- */
+.rrw-objective {
+  @include w.soft-card;
+  max-width: 40rem;
+  margin: 1.6rem auto 0;
+  padding: 1.15rem 1.4rem;
+  text-align: left;
+
+  p {
+    margin: 0.3rem 0 0;
+    font-size: 1.02rem;
+    line-height: 1.5;
+    color: w.navy(0.8);
+  }
+}
+
+.rrw-objective-label {
+  font-weight: 800;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $rrw-rose;
+}
+
+/* --- practices --- */
+.rrw-practices-heading {
+  margin: 1.9rem 0 0.9rem;
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: $rrw-ink;
+}
+
+.rrw-practices {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
+  gap: 0.85rem;
+  max-width: 44rem;
+  margin: 0 auto;
+}
+
+.rrw-practice {
+  @include w.static-bouncy-card;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 1.1rem 0.9rem;
+  background: v.$color-white;
+  animation: rrw-rise 0.5s ease both;
+  animation-delay: calc(var(--i, 0) * 90ms);
+}
+
+.rrw-practice-icon { font-size: 1.7rem; }
+
+.rrw-practice-title {
+  font-weight: 800;
+  color: $rrw-ink;
+}
+
+.rrw-practice-text {
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: w.navy(0.66);
+}
+
+/* --- actions --- */
+.rrw-start {
+  @include w.welcome-cta-btn(linear-gradient(120deg, $rrw-rose, $rrw-amber));
+  margin: 2rem auto 0;
+  display: block;
+  font-size: 1.15rem;
+}
+
+.rrw-review {
+  @include m.tappable;
+  display: block;
+  margin: 0.8rem auto 0;
+  background: none;
+  border: none;
+  font-weight: 700;
+  color: w.navy(0.62);
+}
+
+.rrw-footer {
+  margin: 1.4rem 0 0;
+  font-size: 0.92rem;
+  color: w.navy(0.6);
+}
+
+@keyframes rrw-pulse {
+  0% { width: 20%; height: 20%; opacity: 0.9; }
+  100% { width: 100%; height: 100%; opacity: 0; }
+}
+
+@keyframes rrw-light {
+  0%, 40% { opacity: 0.35; transform: translate(-50%, -50%) scale(0.9); }
+  55%, 100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+@keyframes rrw-rise {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rrw-ripple { display: none; }
+  .rrw-node, .rrw-practice { animation: none; opacity: 1; }
+}

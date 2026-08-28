@@ -1,0 +1,88 @@
+<div class="sbw">
+  <span class="sbw-week">{{ sbw.weekLabel }}</span>
+
+  <h1>
+    <span class="sbw-title-start">{{ sbw.titleStart }}</span>
+    <span class="sbw-title-accent">{{ sbw.titleAccent }}</span>
+  </h1>
+  <p class="sbw-intro">{{ sbw.intro }}</p>
+
+  <div class="sbw-stage">
+    <div class="sbw-clock">
+      <span class="sbw-clock-label">{{ sbw.clockLabel }}</span>
+
+      <div class="sbw-dial">
+        <svg viewBox="0 0 160 160" role="img" [attr.aria-label]="sbw.clockCaption">
+          <circle class="sbw-dial-track" cx="80" cy="80" [attr.r]="radius" />
+          @for (wedge of wedges; track wedge.seg.label) {
+            <circle
+              class="sbw-arc"
+              [class.sbw-arc-screen]="wedge.seg.screen"
+              cx="80"
+              cy="80"
+              [attr.r]="radius"
+              [attr.stroke]="wedge.seg.color"
+              [attr.stroke-dasharray]="wedge.dash"
+              [attr.stroke-dashoffset]="wedge.offset"
+            />
+          }
+        </svg>
+        <span class="sbw-dial-core">
+          <span class="sbw-dial-core-icon" aria-hidden="true">☀️</span>
+          <span class="sbw-dial-core-text">a day in<br />balance</span>
+        </span>
+      </div>
+
+      <p class="sbw-clock-caption">{{ sbw.clockCaption }}</p>
+
+      <ul class="sbw-legend">
+        @for (seg of sbw.segments; track seg.label) {
+          <li class="sbw-legend-item" [class.is-screen]="seg.screen">
+            <span class="sbw-legend-dot" [style.background]="seg.color" aria-hidden="true"></span>
+            <span class="sbw-legend-icon" aria-hidden="true">{{ seg.icon }}</span>
+            <span class="sbw-legend-label">{{ seg.label }}</span>
+            <span class="sbw-legend-hours">{{ seg.hours }}h</span>
+          </li>
+        }
+      </ul>
+    </div>
+
+    <div class="sbw-meter" aria-hidden="true">
+      <span class="sbw-meter-label">{{ sbw.meterLabel }}</span>
+      <div class="sbw-battery">
+        <span class="sbw-battery-fill" [style.height.%]="meterFill"></span>
+        <span class="sbw-battery-bolt">⚡</span>
+      </div>
+      <span class="sbw-meter-value">{{ sbw.meterValueLabel }}</span>
+    </div>
+  </div>
+
+  <div class="sbw-objective">
+    <span class="sbw-objective-label">{{ sbw.objectiveLabel }}</span>
+    <p>{{ sbw.objectiveText }}</p>
+  </div>
+
+  <p class="sbw-strategies-heading">{{ sbw.strategiesHeading }}</p>
+  <div class="sbw-strategies">
+    @for (strategy of sbw.strategies; track strategy.title; let i = $index) {
+      <div class="sbw-strategy" [style.--i]="i">
+        <span class="sbw-strategy-icon" aria-hidden="true">{{ strategy.icon }}</span>
+        <span class="sbw-strategy-title">{{ strategy.title }}</span>
+        <span class="sbw-strategy-text">{{ strategy.text }}</span>
+      </div>
+    }
+  </div>
+
+  @if (isCompletedLessonWelcome()) {
+    @if (nextLesson(); as next) {
+      <button type="button" class="sbw-start" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+    } @else {
+      <button type="button" class="sbw-start" (click)="backToMap()">Back to My Modules →</button>
+    }
+    <button type="button" class="sbw-review" (click)="beginLesson()">↺ Review this lesson</button>
+  } @else {
+    <button type="button" class="sbw-start" (click)="beginLesson()">{{ sbw.startLabel }} →</button>
+  }
+
+  <p class="sbw-footer">{{ sbw.footerNote }}</p>
+</div>

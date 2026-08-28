@@ -1,0 +1,71 @@
+<div class="tfw">
+  <header class="tfw-head">
+    <span class="tfw-kicker">Warm-Up · Fact Check</span>
+    <h2>{{ step().title }}</h2>
+    <p class="tfw-intro">{{ step().intro }}</p>
+  </header>
+
+  <div class="tfw-meter" role="progressbar" [attr.aria-valuenow]="solvedCount()" [attr.aria-valuemin]="0"
+    [attr.aria-valuemax]="total()">
+    <span class="tfw-meter-fill" [style.width.%]="progressPercent()"></span>
+    <span class="tfw-meter-text">{{ solvedCount() }} / {{ total() }} checked</span>
+  </div>
+
+  @if (activeStatement(); as active) {
+    @if (lastPraise(); as praise) {
+      <p class="tfw-praise" aria-live="polite">✅ {{ praise }}</p>
+    }
+
+    <div class="tfw-card" [class.is-wrong]="wrongVerdict() !== null" [class.is-true]="active.answer">
+      <span class="tfw-card-tag">Statement {{ activeNumber() }}</span>
+      <p class="tfw-statement">"{{ active.text }}"</p>
+
+      @if (wrongVerdict() !== null) {
+        <p class="tfw-nudge">Not quite — read it once more and try the other stamp.</p>
+      }
+
+      <div class="tfw-stamps">
+        <button type="button" class="tfw-stamp tfw-stamp--true"
+          [class.is-miss]="wrongVerdict() === true" (click)="stamp(active, true)">
+          <span class="tfw-stamp-icon" aria-hidden="true">✔</span>{{ step().trueLabel }}
+        </button>
+        <button type="button" class="tfw-stamp tfw-stamp--false"
+          [class.is-miss]="wrongVerdict() === false" (click)="stamp(active, false)">
+          <span class="tfw-stamp-icon" aria-hidden="true">✘</span>{{ step().falseLabel }}
+        </button>
+      </div>
+    </div>
+  } @else {
+    <div class="tfw-card tfw-card--cleared">
+      <span class="tfw-card-icon" aria-hidden="true">🎉</span>
+      <p class="tfw-statement">Deck cleared! Every statement sorted correctly.</p>
+    </div>
+  }
+
+  <div class="tfw-board" [class.is-empty]="solvedCount() === 0">
+    <section class="tfw-column tfw-column--true">
+      <h3><span aria-hidden="true">✔</span> {{ step().trueLabel }}</h3>
+      <ul>
+        @for (s of sortedInto(true); track s.id) {
+          <li>{{ s.text }}</li>
+        }
+      </ul>
+    </section>
+    <section class="tfw-column tfw-column--false">
+      <h3><span aria-hidden="true">✘</span> {{ step().falseLabel }}</h3>
+      <ul>
+        @for (s of sortedInto(false); track s.id) {
+          <li>{{ s.text }}</li>
+        }
+      </ul>
+    </section>
+  </div>
+
+  <p class="tfw-parent">
+    <span aria-hidden="true">👪</span> {{ step().parentNote }}
+  </p>
+
+  <button type="button" class="tfw-continue" [disabled]="!allSolved()" (click)="finish()">
+    {{ step().completeLabel }} →
+  </button>
+</div>

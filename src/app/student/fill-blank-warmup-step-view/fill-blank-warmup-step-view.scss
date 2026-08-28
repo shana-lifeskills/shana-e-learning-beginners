@@ -1,0 +1,230 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Fill-in-the-blank warm-up (fbw) — chalkboard word bank, Etiquette Week 4 ---- */
+$fbw-board: #21463c;
+$fbw-chalk: #f4efe3;
+$fbw-tile: #f7e9c9;
+$fbw-tile-ink: #6b4a1c;
+$fbw-green: #35b37e;
+$fbw-red: #e5657f;
+
+.fbw {
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: 1.5rem clamp(0.75rem, 3vw, 1.5rem) 2.5rem;
+}
+
+.fbw-head { text-align: center; }
+
+.fbw-kicker {
+  @include w.welcome-pill(rgba($fbw-board, 0.14), $fbw-board);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.fbw-head h2 {
+  @include m.playful-heading;
+  font-size: clamp(1.6rem, 4.5vw, 2.2rem);
+  color: $fbw-board;
+  margin: 0.9rem 0 0.4rem;
+}
+
+.fbw-intro {
+  margin: 0 auto 1.3rem;
+  max-width: 30rem;
+  color: w.navy(0.7);
+  line-height: 1.5;
+}
+
+.fbw-progress {
+  position: relative;
+  height: 1.7rem;
+  border-radius: v.$border-radius-pill;
+  background: rgba($fbw-board, 0.12);
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+.fbw-progress-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  background: linear-gradient(90deg, $fbw-green, #8fd694);
+  transition: width 0.35s ease;
+}
+
+.fbw-progress-text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: $fbw-board;
+}
+
+/* --- chalkboard --- */
+.fbw-board {
+  border-radius: v.$border-radius-xl;
+  padding: 1.5rem clamp(1rem, 3.5vw, 1.9rem) 1.75rem;
+  background:
+    radial-gradient(circle at 20% 15%, rgba(255, 255, 255, 0.06), transparent 60%),
+    linear-gradient(160deg, #2a5749, $fbw-board);
+  border: 6px solid #7c5a37;
+  box-shadow: 0 22px 46px rgba($fbw-board, 0.35);
+  color: $fbw-chalk;
+}
+
+.fbw-bank-label {
+  margin: 0 0 0.75rem;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba($fbw-chalk, 0.7);
+}
+
+.fbw-bank {
+  list-style: none;
+  margin: 0 0 1.4rem;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.fbw-tile {
+  padding: 0.55rem 1rem;
+  border: none;
+  border-radius: 0.6rem;
+  background: linear-gradient(180deg, $fbw-tile, #ecd9ac);
+  color: $fbw-tile-ink;
+  font-family: v.$headings-font-family;
+  font-size: 1.05rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 4px 0 #c9ab72, 0 8px 14px rgba(0, 0, 0, 0.25);
+  transition: transform 0.12s ease;
+}
+
+.fbw-tile:hover { transform: translateY(-2px); }
+
+.fbw-tile.is-picked {
+  transform: translateY(-3px) scale(1.04);
+  box-shadow: 0 0 0 3px $fbw-green, 0 8px 14px rgba(0, 0, 0, 0.25);
+}
+
+.fbw-bank-empty {
+  margin: 0 0 1.4rem;
+  font-family: v.$headings-font-family;
+  font-weight: 700;
+}
+
+.fbw-praise {
+  margin: 0 0 1rem;
+  font-weight: 700;
+  color: #a9e8c4;
+}
+
+.fbw-sentences {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.95rem;
+  counter-reset: fbw;
+}
+
+.fbw-sentence {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 1.08rem;
+  line-height: 1.6;
+
+  &::before {
+    counter-increment: fbw;
+    content: counter(fbw);
+    flex: none;
+    width: 1.6rem;
+    height: 1.6rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba($fbw-chalk, 0.15);
+    font-size: 0.8rem;
+    font-weight: 800;
+  }
+}
+
+.fbw-sentence.is-done { opacity: 0.82; }
+
+.fbw-blank {
+  min-width: 5.5rem;
+  padding: 0.15rem 0.7rem;
+  border: none;
+  border-bottom: 3px dashed rgba($fbw-chalk, 0.6);
+  background: transparent;
+  color: $fbw-chalk;
+  font-family: v.$headings-font-family;
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+}
+
+.fbw-blank.is-armed {
+  border-bottom-color: $fbw-green;
+  background: rgba($fbw-green, 0.16);
+}
+
+.fbw-blank.is-filled {
+  border-bottom: 3px solid $fbw-green;
+  background: rgba($fbw-green, 0.22);
+  color: #d6f6e4;
+  cursor: default;
+}
+
+.fbw-blank.is-rejected {
+  animation: fbw-shake 0.4s ease;
+  border-bottom-color: $fbw-red;
+  background: rgba($fbw-red, 0.2);
+}
+
+@keyframes fbw-shake {
+  25% { transform: translateX(-6px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-3px); }
+}
+
+.fbw-parent {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 1.6rem 0 0;
+  padding: 0.75rem 1rem;
+  border-radius: v.$border-radius-sm;
+  background: rgba($fbw-board, 0.1);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: $fbw-board;
+}
+
+.fbw-continue {
+  @include w.welcome-cta-btn(linear-gradient(120deg, $fbw-green, $fbw-board));
+  display: block;
+  width: 100%;
+  margin-top: 1.5rem;
+  font-size: 1.1rem;
+  padding: 0.95rem 1.5rem;
+
+  &:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+}

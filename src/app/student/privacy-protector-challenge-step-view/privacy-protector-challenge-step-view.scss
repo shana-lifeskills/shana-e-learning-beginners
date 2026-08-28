@@ -1,0 +1,339 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- Privacy Protector challenge (ppc) — Habits module, Week 2 ---- */
+$ppc-kraft: #efe2c4;
+$ppc-ink: #43331c;
+$ppc-stamp: #c23b34;
+$ppc-teal: #147d74;
+$ppc-line: rgba(67, 51, 28, 0.22);
+
+.ppc {
+  position: relative;
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: 2rem clamp(1rem, 4vw, 2.25rem) 2rem;
+  border-radius: v.$border-radius-lg;
+  color: $ppc-ink;
+  overflow: hidden;
+  background:
+    repeating-linear-gradient(0deg, rgba(67, 51, 28, 0.04) 0 1.6rem, transparent 1.6rem 3.2rem),
+    linear-gradient(160deg, #f4e9cf, $ppc-kraft);
+  border: 1px solid $ppc-line;
+  box-shadow: 0 18px 40px rgba(67, 51, 28, 0.18);
+}
+
+.ppc-stamp {
+  position: absolute;
+  top: 1.6rem;
+  right: -2.6rem;
+  transform: rotate(14deg);
+  padding: 0.3rem 3rem;
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  font-size: 0.85rem;
+  color: rgba($ppc-stamp, 0.75);
+  border: 3px solid rgba($ppc-stamp, 0.6);
+  border-radius: 0.3rem;
+  pointer-events: none;
+}
+
+.ppc-head { text-align: center; }
+
+.ppc-badge {
+  display: inline-block;
+  background: $ppc-ink;
+  color: #f2e6c9;
+  font-weight: 800;
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  padding: 0.4rem 1rem;
+  border-radius: v.$border-radius-pill;
+}
+
+.ppc h2 {
+  @include m.playful-heading;
+  font-size: clamp(1.5rem, 4.5vw, 2.15rem);
+  margin: 0.9rem 0 0.4rem;
+}
+
+.ppc-intro {
+  max-width: 30rem;
+  margin: 0 auto;
+  line-height: 1.55;
+  color: rgba(67, 51, 28, 0.78);
+}
+
+/* --- sections --- */
+.ppc-section {
+  position: relative;
+  margin-top: 1.4rem;
+  padding: 1.3rem 1.2rem 1.4rem;
+  border-radius: v.$border-radius-sm;
+  background: rgba(255, 252, 244, 0.85);
+  border: 1px solid $ppc-line;
+}
+
+.ppc-section-no {
+  margin: 0 0 0.2rem;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  color: rgba(67, 51, 28, 0.45);
+}
+
+.ppc-section h3 {
+  @include m.playful-heading;
+  margin: 0 0 0.3rem;
+  font-size: 1.2rem;
+}
+
+.ppc-section-hint {
+  margin: 0 0 0.9rem;
+  font-size: 0.9rem;
+  color: rgba(67, 51, 28, 0.7);
+}
+
+.ppc-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.55rem;
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  input {
+    flex: 1;
+    min-width: 0;
+    padding: 0.55rem 0.7rem;
+    border: none;
+    border-bottom: 2px dashed $ppc-line;
+    background: transparent;
+    font: inherit;
+    color: $ppc-ink;
+
+    &:focus { outline: none; border-bottom-color: $ppc-teal; }
+  }
+}
+
+.ppc-list-num {
+  flex: none;
+  width: 1.6rem;
+  height: 1.6rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: $ppc-ink;
+  color: $ppc-kraft;
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
+.ppc-mini-tally {
+  margin: 0.8rem 0 0;
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: rgba(67, 51, 28, 0.55);
+}
+
+/* --- power phrase --- */
+.ppc-phrase blockquote {
+  @include m.playful-heading;
+  margin: 0.6rem 0;
+  font-size: 1.5rem;
+  color: $ppc-stamp;
+  text-align: center;
+}
+
+.ppc-phrase.is-done {
+  border-color: $ppc-teal;
+  background: rgba(20, 125, 116, 0.08);
+}
+
+.ppc-practice {
+  @include m.tappable;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.8rem 1rem;
+  border: 2px solid $ppc-line;
+  border-radius: v.$border-radius-pill;
+  background: #fff;
+  font: inherit;
+  font-weight: 800;
+  color: $ppc-ink;
+  cursor: pointer;
+}
+
+.ppc-practice.on {
+  border-color: $ppc-teal;
+  background: $ppc-teal;
+  color: #fff;
+}
+
+.ppc-practice-check {
+  display: inline-flex;
+  width: 1.5rem;
+  height: 1.5rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.08);
+}
+.ppc-practice.on .ppc-practice-check { background: rgba(255, 255, 255, 0.25); }
+
+/* --- watch log --- */
+.ppc-days {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.7rem;
+}
+
+.ppc-day {
+  padding: 0.9rem 1rem 1rem;
+  border-radius: v.$border-radius-sm;
+  background: #fff;
+  border: 2px solid $ppc-line;
+}
+
+.ppc-day.is-done {
+  border-color: $ppc-teal;
+  background: rgba(20, 125, 116, 0.07);
+}
+
+.ppc-day-label {
+  margin: 0 0 0.4rem;
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+}
+
+.ppc-asked {
+  margin: 0 0 0.5rem;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: rgba(67, 51, 28, 0.8);
+}
+
+.ppc-yn {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.7rem;
+
+  button {
+    @include m.tappable;
+    flex: 1;
+    padding: 0.5rem 0.6rem;
+    border: 2px solid $ppc-line;
+    border-radius: v.$border-radius-sm;
+    background: $ppc-kraft;
+    font: inherit;
+    font-weight: 800;
+    color: $ppc-ink;
+    cursor: pointer;
+  }
+
+  button.on {
+    border-color: $ppc-teal;
+    background: $ppc-teal;
+    color: #fff;
+  }
+}
+
+.ppc-field {
+  display: block;
+
+  span {
+    display: block;
+    margin-bottom: 0.3rem;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: rgba(67, 51, 28, 0.7);
+  }
+
+  textarea {
+    width: 100%;
+    resize: vertical;
+    padding: 0.55rem 0.7rem;
+    border: 2px solid $ppc-line;
+    border-radius: v.$border-radius-sm;
+    background: $ppc-kraft;
+    font: inherit;
+    color: $ppc-ink;
+
+    &:focus { outline: none; border-color: $ppc-teal; }
+  }
+}
+
+/* --- confidence link --- */
+.ppc-confidence {
+  margin-top: 1.5rem;
+  text-align: center;
+  padding: 1.6rem 1.3rem;
+  border-radius: v.$border-radius-lg;
+  background: linear-gradient(160deg, $ppc-ink, #5c4626);
+  color: #f4ead0;
+
+  blockquote {
+    @include m.playful-heading;
+    margin: 0.5rem 0;
+    font-size: 1.4rem;
+    color: #fff;
+  }
+
+  p { margin: 0; color: rgba(244, 234, 208, 0.82); }
+}
+
+.ppc-confidence-label {
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #e6b7b2;
+}
+
+.ppc-parent-note {
+  margin: 1.4rem 0 0;
+  text-align: center;
+  font-size: 0.9rem;
+  color: rgba(67, 51, 28, 0.72);
+}
+
+.ppc-finish {
+  @include m.tappable;
+  display: block;
+  width: 100%;
+  margin-top: 1rem;
+  padding: 1rem 1.5rem;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: #fff;
+  background: linear-gradient(120deg, $ppc-teal, $ppc-ink);
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+
+  &:disabled {
+    background: rgba(67, 51, 28, 0.24);
+    box-shadow: none;
+    cursor: not-allowed;
+  }
+}
+
+.ppc-footer {
+  margin: 1rem 0 0;
+  text-align: center;
+  font-size: 0.88rem;
+  color: rgba(67, 51, 28, 0.6);
+}
