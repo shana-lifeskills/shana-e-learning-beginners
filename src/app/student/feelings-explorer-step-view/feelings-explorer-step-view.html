@@ -1,0 +1,137 @@
+<div class="fex">
+  <header class="fex-topbar">
+    <span class="fex-brand">
+      <span class="fex-brand-badge" aria-hidden="true">☀</span>
+      <span class="fex-brand-text">
+        <strong>{{ step().brandName }}</strong>
+        <small>{{ step().brandTagline }}</small>
+      </span>
+    </span>
+    <span class="fex-made-for">♥ {{ step().madeForLabel }}</span>
+  </header>
+
+  <!-- ── Hero ── -->
+  <section class="fex-hero">
+    <div class="fex-hero-copy">
+      <span class="fex-eyebrow">{{ step().trailEyebrow }}</span>
+      <h1 class="fex-display">
+        <span>{{ step().titleStart }}</span>
+        <span class="fex-accent">{{ step().titleAccent }}</span>
+      </h1>
+      <p class="fex-hero-text">{{ step().introText }}</p>
+      <div class="fex-hero-actions">
+        @if (phase() === 'idle') {
+          <button type="button" class="fex-btn" (click)="start()">{{ step().beginLabel }} <span aria-hidden="true">→</span></button>
+        } @else {
+          <button type="button" class="fex-btn" (click)="start()">{{ step().backLabel }} <span aria-hidden="true">→</span></button>
+        }
+        <span class="fex-pace">{{ step().paceNote }}</span>
+      </div>
+    </div>
+    <div class="fex-hero-art">
+      <img [src]="step().image" [alt]="step().imageAlt" />
+      <span class="fex-hero-bubble">
+        <strong>{{ step().bubbleName }}</strong>
+        {{ step().bubbleText }}
+      </span>
+    </div>
+  </section>
+
+  <hr class="fex-rule" />
+
+  <!-- ── Your turn ── -->
+  <section class="fex-turn">
+    <div class="fex-turn-head">
+      <div>
+        <span class="fex-eyebrow">{{ step().yourTurnEyebrow }}</span>
+        <h2 class="fex-display">{{ step().yourTurnTitle }}</h2>
+      </div>
+      <p class="fex-turn-help">{{ step().yourTurnHelp }}</p>
+    </div>
+
+    <div class="fex-turn-body">
+      <aside class="fex-trail">
+        <div class="fex-trail-head">
+          <span class="fex-trail-label">{{ step().trailLabel }}</span>
+          <span class="fex-trail-count">{{ phase() === 'complete' ? 'All done' : doneCount() + ' of ' + total() }}</span>
+        </div>
+        <span class="fex-trail-track"><span class="fex-trail-fill" [style.width.%]="progressPercent()"></span></span>
+        <div class="fex-trail-dots">
+          @for (moment of step().moments; let i = $index; track moment.id) {
+            <span class="fex-trail-dot" [class]="'is-' + stepDotState(i)">
+              {{ stepDotState(i) === 'done' ? '✓' : i + 1 }}
+            </span>
+          }
+        </div>
+        <p class="fex-trail-note">♥ {{ step().trailNote }}</p>
+        <p class="fex-parent-note">👪 {{ step().parentNote }}</p>
+      </aside>
+
+      <div class="fex-card">
+        @if (phase() === 'idle') {
+          <div class="fex-start">
+            <span class="fex-start-badge" aria-hidden="true">✦</span>
+            <h3 class="fex-display">{{ step().startHeading }}</h3>
+            <p>{{ step().startText }}</p>
+            <button type="button" class="fex-btn" (click)="start()">{{ step().startLabel }} <span aria-hidden="true">→</span></button>
+          </div>
+        } @else if (phase() === 'playing') {
+          @if (currentMoment(); as moment) {
+            <div class="fex-moment-head">
+              <span class="fex-moment-num">{{ step().momentLabel }} {{ momentNumber(activeIndex()) }}</span>
+              <span class="fex-pick-one">{{ step().pickOneLabel }}</span>
+            </div>
+            <h3 class="fex-display fex-moment-prompt">{{ moment.prompt }}</h3>
+
+            <div class="fex-options">
+              @for (option of moment.options; let i = $index; track option.id) {
+                <button
+                  type="button"
+                  class="fex-option"
+                  [class.correct]="optionState(option) === 'correct'"
+                  [class.incorrect]="optionState(option) === 'incorrect'"
+                  [class.selected]="selectedOptionId() === option.id && !feedback()"
+                  [disabled]="locked() && optionState(option) !== 'correct'"
+                  (click)="selectOption(option)"
+                >
+                  <span class="fex-option-letter">{{ letterFor(i) }}</span>
+                  <span class="fex-option-text">{{ option.text }}</span>
+                </button>
+              }
+            </div>
+
+            @if (feedback() === 'correct') {
+              <div class="fex-feedback">
+                <span>✓ {{ step().correctFeedback }}</span>
+                <button type="button" class="fex-btn fex-btn--sm" (click)="nextMoment()">
+                  {{ step().nextLabel }} <span aria-hidden="true">→</span>
+                </button>
+              </div>
+            }
+            @if (feedback() === 'incorrect') {
+              <div class="fex-feedback fex-feedback--try">
+                <span>{{ step().tryAgainFeedback }}</span>
+                <button type="button" class="fex-btn fex-btn--sm" (click)="tryAgain()">↺ Try again</button>
+              </div>
+            }
+          }
+        } @else {
+          <div class="fex-complete">
+            <span class="fex-complete-badge" aria-hidden="true">✓</span>
+            <h3 class="fex-display">{{ step().completeHeading }}</h3>
+            <p>{{ step().completeText }}</p>
+            <span class="fex-complete-stat">★ {{ total() }} OF {{ total() }} {{ step().completeStatNoun }}</span>
+            <div class="fex-complete-actions">
+              <button type="button" class="fex-btn" (click)="exploreAgain()">↺ {{ step().exploreAgainLabel }}</button>
+              <button type="button" class="fex-btn fex-btn--ghost" (click)="toggleShareHint()">⇗ {{ step().shareLabel }}</button>
+            </div>
+            @if (showShareHint()) {
+              <p class="fex-share-hint">{{ step().shareHint }}</p>
+            }
+            <button type="button" class="fex-btn fex-btn--wide" (click)="finish()">{{ step().continueLabel }} <span aria-hidden="true">→</span></button>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+</div>

@@ -1,0 +1,264 @@
+<div class="bos">
+  <header class="bos-header">
+    <span class="bos-star" aria-hidden="true">⭐</span>
+    <div>
+      <h1>{{ step().headerTitle }}</h1>
+      <p>{{ step().headerSubtitle }}</p>
+    </div>
+  </header>
+
+  <ol class="bos-stepper">
+    @for (label of step().stepLabels; let i = $index; track label) {
+      <li class="bos-step" [class.done]="i < stepIndex()" [class.active]="i === stepIndex()">
+        <span class="bos-step-bar"></span>
+        <span class="bos-step-label">{{ label }}</span>
+      </li>
+    }
+  </ol>
+
+  <!-- ─── Warm-Up intro ─── -->
+  @if (phase() === 'intro') {
+    <div class="bos-intro">
+      <div class="bos-mascot">
+        <span class="bos-mascot-star" aria-hidden="true">⭐</span>
+        <span class="bos-bubble">{{ step().introBubble }}</span>
+      </div>
+      <div class="bos-card bos-intro-card">
+        <h2>{{ step().introHeading }}</h2>
+        <p class="bos-intro-lead">{{ step().introLead }}</p>
+        <p class="bos-intro-sub">{{ step().introSub }}</p>
+
+        <div class="bos-chips">
+          @for (chip of step().introChips; track chip.label) {
+            <div class="bos-chip">
+              <span class="bos-chip-icon" [class]="'tone-' + chip.tone">{{ chip.icon }}</span>
+              <span class="bos-chip-label">{{ chip.label }}</span>
+            </div>
+          }
+        </div>
+
+        <button type="button" class="bos-btn bos-btn--go" (click)="next()">{{ step().introStartLabel }} →</button>
+      </div>
+    </div>
+  }
+
+  <!-- ─── Step 1: Look and Choose ─── -->
+  @if (phase() === 'look') {
+    <div class="bos-section">
+      <div class="bos-section-head">
+        <span class="bos-num">1</span>
+        <div>
+          <h2>{{ step().lookHeading }}</h2>
+          <p>{{ step().lookInstruction }}</p>
+        </div>
+      </div>
+
+      @for (q of step().pictureQuestions; let qi = $index; track q.id) {
+        <div class="bos-card bos-q-card">
+          <h3>Question {{ qi + 1 }}</h3>
+          <p class="bos-q-prompt">{{ q.prompt }}</p>
+
+          <div class="bos-picture-row">
+            <div class="bos-picture">
+              @if (q.image && !imageFailed(q.id)) {
+                <img [src]="q.image" [alt]="q.imageCaption" (error)="onImageError(q.id)" />
+              } @else {
+                <div class="bos-picture-placeholder" aria-hidden="true"></div>
+              }
+              <span class="bos-picture-caption">{{ q.imageCaption }}</span>
+            </div>
+
+            <div class="bos-answer-list">
+              @for (option of q.options; let oi = $index; track option.id) {
+                <button
+                  type="button"
+                  class="bos-answer"
+                  [class.correct]="pictureState(q, option) === 'correct'"
+                  [class.incorrect]="pictureState(q, option) === 'incorrect'"
+                  (click)="selectPicture(q, option)"
+                >
+                  <span>{{ ['A', 'B', 'C'][oi] }}. {{ option.text }}</span>
+                  @if (pictureState(q, option) === 'correct') { <span class="bos-mark">✓</span> }
+                  @if (pictureState(q, option) === 'incorrect') { <span class="bos-mark bos-mark--x">✕</span> }
+                </button>
+              }
+            </div>
+          </div>
+
+          @if (pictureFeedback(q); as fb) {
+            <div class="bos-feedback bos-feedback--green">
+              <span class="bos-feedback-icon">✨</span>
+              <p>{{ fb }}</p>
+            </div>
+          }
+        </div>
+      }
+    </div>
+  }
+
+  <!-- ─── Step 2: Voice and Breath ─── -->
+  @if (phase() === 'voice') {
+    <div class="bos-section">
+      <div class="bos-section-head">
+        <span class="bos-num">2</span>
+        <div>
+          <h2>{{ step().voiceHeading }}</h2>
+          <p>{{ step().voiceInstruction }}</p>
+        </div>
+      </div>
+
+      <div class="bos-card bos-q-card">
+        <h3>Question 3</h3>
+        <p class="bos-q-prompt">{{ step().voiceQuestion.prompt }}</p>
+
+        <div class="bos-clip-row">
+          <button type="button" class="bos-clip bos-clip--a" (click)="playClip(step().voiceQuestion.clipA.description, 1.6)">
+            <span class="bos-clip-icon">🔊</span>
+            <span>
+              <strong>{{ step().voiceQuestion.clipA.label }}</strong>
+              <small>{{ step().voiceQuestion.clipA.description }}</small>
+            </span>
+          </button>
+          <button type="button" class="bos-clip bos-clip--b" (click)="playClip(step().voiceQuestion.clipB.description, 0.75)">
+            <span class="bos-clip-icon">🔊</span>
+            <span>
+              <strong>{{ step().voiceQuestion.clipB.label }}</strong>
+              <small>{{ step().voiceQuestion.clipB.description }}</small>
+            </span>
+          </button>
+        </div>
+
+        <div class="bos-answer-list bos-answer-list--grid">
+          @for (option of step().voiceQuestion.options; let oi = $index; track option.id) {
+            <button
+              type="button"
+              class="bos-answer"
+              [class.correct]="voiceState(option) === 'correct'"
+              [class.incorrect]="voiceState(option) === 'incorrect'"
+              (click)="selectVoice(option)"
+            >
+              <span>{{ ['A', 'B', 'C'][oi] }}. {{ option.text }}</span>
+              @if (voiceState(option) === 'correct') { <span class="bos-mark">✓</span> }
+              @if (voiceState(option) === 'incorrect') { <span class="bos-mark bos-mark--x">✕</span> }
+            </button>
+          }
+        </div>
+
+        @if (voiceFeedback(); as fb) {
+          <div class="bos-feedback" [class.bos-feedback--green]="voiceFeedbackCorrect()" [class.bos-feedback--amber]="!voiceFeedbackCorrect()">
+            <span class="bos-feedback-icon">✨</span>
+            <p>{{ fb }}</p>
+          </div>
+        }
+      </div>
+    </div>
+  }
+
+  <!-- ─── Step 3: Try It Yourself ─── -->
+  @if (phase() === 'try') {
+    <div class="bos-section">
+      <div class="bos-section-head">
+        <span class="bos-num">3</span>
+        <div>
+          <h2>{{ step().tryHeading }}</h2>
+          <p>{{ step().tryInstruction }}</p>
+        </div>
+      </div>
+
+      <div class="bos-card bos-q-card">
+        <ol class="bos-try-list">
+          @for (ts of step().trySteps; let ti = $index; track ti) {
+            <li [class.checked]="tryDone()">
+              <span class="bos-try-tick">{{ tryDone() ? '✓' : (ti + 1) + '.' }}</span>
+              <span class="bos-try-text">{{ ts.text }}@if (ts.highlight) {&nbsp;<strong>{{ ts.highlight }}</strong>}</span>
+            </li>
+          }
+        </ol>
+
+        <div class="bos-try-mascot">
+          <span class="bos-mascot-star" aria-hidden="true">⭐</span>
+          <p>{{ step().tryMascotMessage }}</p>
+        </div>
+
+        @if (!tryDone()) {
+          <button type="button" class="bos-try-done" (click)="markTryDone()">✓ {{ step().tryDoneLabel }}</button>
+        } @else {
+          <p class="bos-try-feedback-title">✓ {{ step().tryFeedbackTitle }}</p>
+          <div class="bos-feedback bos-feedback--green">
+            <span class="bos-feedback-icon">✨</span>
+            <p>{{ step().tryFeedbackText }}</p>
+          </div>
+        }
+      </div>
+    </div>
+  }
+
+  <!-- ─── Step 4: Reflect ─── -->
+  @if (phase() === 'reflect') {
+    <div class="bos-section">
+      <div class="bos-section-head">
+        <span class="bos-num">4</span>
+        <div>
+          <h2>{{ step().reflectHeading }}</h2>
+          <p>{{ step().reflectInstruction }}</p>
+        </div>
+      </div>
+
+      <div class="bos-card bos-q-card">
+        <h3>Question 4</h3>
+        <p class="bos-q-prompt">{{ step().reflectQuestion.prompt }}</p>
+
+        <div class="bos-reflect-row">
+          <button type="button" class="bos-reflect" [class.selected]="reflectAnswer() === 'yes'" (click)="selectReflect('yes')">
+            <span class="bos-reflect-icon">✓</span>
+            <span>{{ step().reflectQuestion.yesLabel }}</span>
+          </button>
+          <button type="button" class="bos-reflect" [class.selected]="reflectAnswer() === 'no'" (click)="selectReflect('no')">
+            <span class="bos-reflect-icon">♡</span>
+            <span>{{ step().reflectQuestion.noLabel }}</span>
+          </button>
+        </div>
+
+        @if (reflectComplete()) {
+          <div class="bos-feedback bos-feedback--green">
+            <span class="bos-feedback-icon">✨</span>
+            <p>{{ step().reflectQuestion.feedbackText }}</p>
+          </div>
+        }
+      </div>
+    </div>
+  }
+
+  <!-- ─── Completion ─── -->
+  @if (phase() === 'done') {
+    <div class="bos-card bos-done">
+      <span class="bos-done-confetti" aria-hidden="true">🎉</span>
+      <span class="bos-done-star" aria-hidden="true">⭐</span>
+      <h2>{{ step().completeTitle }}</h2>
+      <p class="bos-done-lead">{{ step().completeLead }}</p>
+      <p class="bos-done-sub">{{ step().completeSub }}</p>
+
+      <div class="bos-chips bos-chips--wrap">
+        @for (chip of step().completeChips; track chip.label) {
+          <span class="bos-done-chip" [class]="'tone-' + chip.tone">{{ chip.icon }} {{ chip.label }}</span>
+        }
+      </div>
+
+      <div class="bos-done-actions">
+        <button type="button" class="bos-btn bos-btn--replay" (click)="playAgain()">↺ {{ step().playAgainLabel }}</button>
+        <button type="button" class="bos-btn bos-btn--go" (click)="finish()">{{ step().continueLabel }} →</button>
+      </div>
+    </div>
+  }
+
+  @if (phase() !== 'intro' && phase() !== 'done') {
+    <p class="bos-parent-note">👪 {{ step().parentNote }}</p>
+
+    <div class="bos-nav">
+      <button type="button" class="bos-btn bos-btn--back" (click)="back()">← Back</button>
+      <button type="button" class="bos-btn bos-btn--go" [disabled]="!canAdvance()" (click)="next()">
+        {{ nextLabel() }} →
+      </button>
+    </div>
+  }
+</div>

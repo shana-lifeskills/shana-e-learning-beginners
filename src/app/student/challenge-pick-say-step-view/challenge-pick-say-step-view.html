@@ -1,0 +1,51 @@
+<div class="cps">
+  <div class="cps-mascot">
+    <img [src]="step().mascotImage" [alt]="step().mascotImageAlt" />
+    <span class="cps-pill">{{ step().pillLabel }}</span>
+  </div>
+
+  <h1 class="cps-title">
+    <span>{{ step().titleMain }}</span>
+    <span class="cps-title-accent">{{ step().titleAccent }}</span>
+  </h1>
+  <p class="cps-subtitle">{{ step().subtitle }}</p>
+
+  <div class="cps-card">
+    <p class="cps-pick-heading">{{ step().pickHeading }}</p>
+
+    <div class="cps-options">
+      @for (option of step().options; let i = $index; track option.id) {
+        <button
+          type="button"
+          class="cps-option"
+          [class.selected]="selectedId() === option.id"
+          [attr.data-index]="i"
+          [disabled]="done()"
+          (click)="select(option)"
+        >
+          <span class="cps-option-letter">{{ letterFor(i) }}</span>
+          <span class="cps-option-text">{{ option.text }}</span>
+        </button>
+      }
+    </div>
+
+    @if (done()) {
+      <p class="cps-feedback">{{ step().autoFeedback }}</p>
+    }
+  </div>
+
+  <p class="cps-parent-note">👪 {{ step().parentNote }}</p>
+
+  @if (!done()) {
+    <button type="button" class="cps-done" [disabled]="!canFinish()" (click)="markDone()">
+      ✓ {{ step().doneLabel }}
+    </button>
+  } @else {
+    <button type="button" class="cps-done" (click)="finish()">{{ step().continueLabel }}</button>
+  }
+
+  <div class="cps-confidence">
+    <span class="cps-confidence-label">{{ step().confidenceLabel }}</span>
+    <div class="cps-confidence-bubble">💬 “{{ step().confidenceQuote }}”</div>
+  </div>
+</div>

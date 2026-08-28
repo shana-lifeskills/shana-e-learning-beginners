@@ -1,0 +1,84 @@
+<div class="foc">
+  <div class="foc-sky" aria-hidden="true">
+    <span class="foc-sun"></span>
+    <span class="foc-cloud foc-cloud--1"></span>
+    <span class="foc-cloud foc-cloud--2"></span>
+    <span class="foc-cloud foc-cloud--3"></span>
+    <span class="foc-hill"></span>
+  </div>
+
+  <div class="foc-content">
+    <span class="foc-pill">✦ {{ step().pillLabel }} ✦</span>
+    <h1 class="foc-title">{{ step().title }}</h1>
+
+    @if (phase() === 'intro') {
+      <div class="foc-card foc-intro">
+        <img class="foc-intro-img" [src]="step().introImage" [alt]="step().introImageAlt" />
+        <h2>{{ step().introHeading }}</h2>
+        <p>{{ step().introText }}</p>
+        <button type="button" class="foc-btn foc-btn--play" (click)="play()">{{ step().playLabel }}</button>
+      </div>
+    }
+
+    @if (phase() === 'question') {
+      <div class="foc-card foc-question">
+        <div class="foc-instruction">
+          <span class="foc-instruction-icon" aria-hidden="true">🔊</span>
+          <div>
+            <span class="foc-instruction-label">{{ step().instructionLabel }}</span>
+            <p>{{ step().instructionText }}</p>
+          </div>
+        </div>
+
+        <h2 class="foc-q-prompt">{{ step().questionPrompt }}</h2>
+
+        <div class="foc-options">
+          @for (option of step().options; let i = $index; track option.id) {
+            <button
+              type="button"
+              class="foc-option"
+              [class.correct]="isCorrect(option)"
+              [class.wrong]="isWrong(option)"
+              [disabled]="answered && !isCorrect(option)"
+              (click)="select(option)"
+            >
+              <span class="foc-option-letter">{{ isCorrect(option) ? '✓' : LETTERS[i] }}</span>
+              <span class="foc-option-text">{{ option.text }}</span>
+              @if (isCorrect(option)) { <span class="foc-option-star" aria-hidden="true">⭐</span> }
+            </button>
+          }
+        </div>
+
+        @if (wrongId()) {
+          <p class="foc-try-again">Not quite — try again! 💪</p>
+        }
+
+        @if (answered) {
+          <p class="foc-great">{{ step().correctToast }}</p>
+          <button type="button" class="foc-btn foc-btn--why" (click)="seeWhy()">{{ step().seeWhyLabel }}</button>
+        }
+
+        <p class="foc-parent-note">👪 {{ step().parentNote }}</p>
+      </div>
+    }
+
+    @if (phase() === 'done') {
+      <div class="foc-card foc-done">
+        <span class="foc-stars" aria-hidden="true">⭐⭐⭐</span>
+        <h2>{{ step().completeTitle }}</h2>
+        <div class="foc-feedback-box">{{ step().feedbackText }}</div>
+        <img class="foc-done-img" [src]="step().completeImage" [alt]="step().completeImageAlt" />
+        <div class="foc-done-actions">
+          <button type="button" class="foc-btn foc-btn--replay" (click)="playAgain()">↻ {{ step().playAgainLabel }}</button>
+          <button type="button" class="foc-btn foc-btn--play" (click)="finish()">{{ step().continueLabel }} →</button>
+        </div>
+      </div>
+    }
+  </div>
+
+  <div class="foc-scene" aria-hidden="true">
+    @for (img of step().sceneImages; track img.src) {
+      <img [src]="img.src" [alt]="img.alt" />
+    }
+  </div>
+</div>

@@ -1,0 +1,80 @@
+<div class="ftk">
+  <div class="ftk-hero">
+    <div class="ftk-hero-copy">
+      <span class="ftk-pill">{{ step().challengePill }}</span>
+      <h1>{{ step().title }}</h1>
+      <p>{{ step().description }}</p>
+    </div>
+    <div class="ftk-hero-art">
+      <img [src]="step().image" [alt]="step().imageAlt" />
+    </div>
+  </div>
+
+  <div class="ftk-example">
+    <span class="ftk-example-label">{{ step().exampleLabel }}</span>
+    <p class="ftk-example-text">"{{ step().exampleText }}"</p>
+  </div>
+
+  <h2 class="ftk-days-heading">{{ step().daysHeading }}</h2>
+
+  <p class="ftk-parent-note">👪 {{ step().parentNote }}</p>
+
+  <div class="ftk-days">
+    @for (day of days(); track day) {
+      <div class="ftk-day" [class.done]="isDayFilled(day)">
+        <span class="ftk-day-num" [attr.data-day]="day">{{ day }}</span>
+        <div class="ftk-day-fields">
+          <label class="ftk-field">
+            <span class="ftk-field-label">{{ step().feelingLabel }}</span>
+            <input
+              type="text"
+              class="ftk-input ftk-input--feeling"
+              [placeholder]="step().feelingPlaceholder"
+              [value]="entryFor(day).feeling"
+              (input)="update(day, 'feeling', $any($event.target).value)"
+            />
+          </label>
+          <label class="ftk-field">
+            <span class="ftk-field-label">{{ step().whyLabel }}</span>
+            <input
+              type="text"
+              class="ftk-input"
+              [placeholder]="step().whyPlaceholder"
+              [value]="entryFor(day).why"
+              (input)="update(day, 'why', $any($event.target).value)"
+            />
+          </label>
+          <label class="ftk-field">
+            <span class="ftk-field-label">{{ step().sayLabel }}</span>
+            <input
+              type="text"
+              class="ftk-input"
+              [placeholder]="step().sayPlaceholder"
+              [value]="entryFor(day).say"
+              (input)="update(day, 'say', $any($event.target).value)"
+            />
+          </label>
+        </div>
+      </div>
+    }
+  </div>
+
+  <div class="ftk-confidence">
+    @if (step().confidenceImage) {
+      <img class="ftk-confidence-img" [src]="step().confidenceImage" [alt]="step().confidenceImageAlt" />
+    }
+    <div>
+      <h3>{{ step().confidenceHeading }}</h3>
+      <p class="ftk-confidence-quote">"{{ step().confidenceQuote }}"</p>
+      <p class="ftk-confidence-text">{{ step().confidenceText }}</p>
+    </div>
+  </div>
+
+  @if (allFilled()) {
+    <button type="button" class="btn btn-primary btn-lg-tappable ftk-continue" (click)="finish()">
+      {{ step().continueLabel }}
+    </button>
+  } @else {
+    <p class="ftk-locked-note">Fill in all three lines for every day to keep going.</p>
+  }
+</div>

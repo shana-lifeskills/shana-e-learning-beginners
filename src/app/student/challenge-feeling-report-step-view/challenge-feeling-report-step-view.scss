@@ -1,0 +1,244 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+.cfr {
+  max-width: 40rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.cfr-badge {
+  display: inline-block;
+  background: v.$color-sunshine;
+  color: v.$color-navy-text;
+  font-weight: 800;
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  padding: 0.55rem 1.5rem;
+  border: 2px solid v.$color-navy-text;
+  border-radius: v.$border-radius-pill;
+  margin-bottom: 1rem;
+}
+
+.cfr h1 {
+  @include m.playful-heading;
+  font-size: 2.75rem;
+  color: v.$color-coral;
+  margin-bottom: 1rem;
+}
+
+.cfr-title-emoji {
+  display: inline-block;
+}
+
+.cfr-subtitle {
+  color: v.$color-navy-text;
+  font-weight: 600;
+  font-size: 1.15rem;
+  line-height: 1.5;
+  max-width: 30rem;
+  margin: 0 auto 2rem;
+}
+
+.cfr-highlight {
+  color: v.$color-coral;
+  text-decoration: underline wavy rgba(255, 111, 89, 0.5);
+  text-underline-offset: 3px;
+}
+
+.cfr-card {
+  text-align: left;
+  background: v.$color-white;
+  border: 3px solid v.$color-navy-text;
+  border-radius: v.$border-radius-xl;
+  padding: 2rem;
+  box-shadow: 6px 6px 0 rgba(43, 45, 66, 0.15);
+  margin-bottom: 1.5rem;
+}
+
+.cfr-mission {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+  margin-bottom: 1.75rem;
+
+  h2 {
+    @include m.playful-heading;
+    font-size: 1.3rem;
+    color: v.$color-navy-text;
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    margin: 0;
+    color: v.$color-navy-text;
+    font-size: 1.05rem;
+    line-height: 1.5;
+
+    strong {
+      color: v.$color-coral;
+    }
+  }
+}
+
+.cfr-mission-icon {
+  flex-shrink: 0;
+  font-size: 2.5rem;
+  line-height: 1;
+}
+
+.cfr-sample-box {
+  border: 2px dashed #9bdaac;
+  background: #eaf6ee;
+  border-radius: v.$border-radius-xl;
+  padding: 1.5rem 1.75rem;
+  margin-bottom: 1.75rem;
+
+  h3 {
+    @include m.playful-heading;
+    font-size: 1.05rem;
+    color: v.$color-navy-text;
+    margin-bottom: 1rem;
+  }
+}
+
+.cfr-sample-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.cfr-sample-chip {
+  flex: 1 1 8rem;
+  background: v.$color-white;
+  border: 2px solid v.$color-navy-text;
+  border-radius: v.$border-radius-sm;
+  padding: 0.75rem 1rem;
+  font-weight: 700;
+  color: v.$color-navy-text;
+  text-align: center;
+}
+
+.cfr-report-heading {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+
+  h3 {
+    @include m.playful-heading;
+    font-size: 1.2rem;
+    color: v.$color-navy-text;
+    margin: 0;
+  }
+}
+
+.cfr-report-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: v.$color-sunshine;
+  border: 2px solid v.$color-navy-text;
+  font-weight: 800;
+  font-size: 0.95rem;
+}
+
+.cfr-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+
+  label {
+    font-weight: 700;
+    color: v.$color-navy-text;
+    font-size: 0.95rem;
+  }
+
+  input {
+    background: #fdf6ea;
+    border: 2px solid v.$color-navy-text;
+    border-radius: v.$border-radius-sm;
+    padding: 0.75rem 1rem;
+    font-family: inherit;
+    font-size: 1rem;
+    color: v.$color-navy-text;
+
+    &::placeholder { color: rgba(43, 45, 66, 0.4); font-style: italic; }
+    &:focus { outline: none; border-color: v.$color-coral; }
+  }
+}
+
+.cfr-field-full {
+  margin-bottom: 1.25rem;
+}
+
+.cfr-field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+
+  @media (max-width: 560px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.cfr-confidence-card {
+  background: v.$color-white;
+  border: 2px solid v.$color-navy-text;
+  border-right: 4px solid v.$color-coral;
+  border-radius: v.$border-radius-lg;
+  padding: 1.1rem 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.cfr-confidence-label {
+  display: block;
+  color: rgba(43, 45, 66, 0.5);
+  font-weight: 800;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.3rem;
+}
+
+.cfr-confidence-quote {
+  margin: 0;
+  color: v.$color-coral;
+  font-weight: 800;
+  font-size: 1.3rem;
+}
+
+.cfr-complete-btn {
+  @include m.tappable;
+  background: v.$color-coral;
+  color: v.$color-white;
+  border: 2px solid v.$color-navy-text;
+  font-weight: 800;
+  font-size: 1.05rem;
+  padding: 0.9rem 2.25rem;
+  border-radius: v.$border-radius-pill;
+
+  &:hover:not(:disabled) { opacity: 0.92; }
+  &:disabled { opacity: 0.5; cursor: not-allowed; }
+}
+
+.cfr-gate-hint {
+  color: rgba(43, 45, 66, 0.5);
+  font-size: 0.9rem;
+  margin-top: 0.75rem;
+}
+
+.cfr-footer-text {
+  color: rgba(43, 45, 66, 0.5);
+  font-size: 0.9rem;
+  margin-top: 1rem;
+}
+
+.cfr-parent-note {
+  color: rgba(43, 45, 66, 0.5);
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-top: 0.4rem;
+}

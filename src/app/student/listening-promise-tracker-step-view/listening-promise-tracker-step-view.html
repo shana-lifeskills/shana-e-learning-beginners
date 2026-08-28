@@ -1,0 +1,226 @@
+<div class="lp">
+  @if (phase() === 'form') {
+    <div class="lp-hero">
+      <div class="lp-hero-copy">
+        <span class="lp-badge">🏅 {{ step().badgeLabel }}</span>
+        <h1>{{ step().title }}</h1>
+        <p class="lp-subtitle">{{ step().subtitle }}</p>
+      </div>
+      <div class="lp-hero-image-wrap">
+        <img [src]="step().heroImage" [alt]="step().heroImageAlt" />
+      </div>
+    </div>
+
+    <div class="lp-progress-bar">
+      <span class="lp-progress-label">🎯 Your progress</span>
+      <span class="lp-progress-pill">🎗️ Habit {{ habitProgress() }}/1</span>
+      <span class="lp-progress-pill">📅 Daily Log {{ dailyLogProgress() }}/{{ step().days.length }}</span>
+      <span class="lp-progress-pill">📊 Mid-Week {{ midWeekProgress() }}/{{ step().midWeekQuestions.length }}</span>
+      <span class="lp-progress-pill">🏆 Reflection {{ endWeekProgress() }}/{{ step().endWeekQuestions.length }}</span>
+      <span class="lp-progress-pill">✅ Success {{ successProgress() }}/{{ step().successCriteria.length }}</span>
+    </div>
+
+    <div class="lp-section">
+      <h2><span class="lp-num">1</span>{{ step().habitHeading }}</h2>
+      <p class="lp-section-subtitle">{{ step().habitSubtitle }}</p>
+
+      <div class="lp-habit-grid">
+        @for (option of step().habitOptions; track option.id) {
+          <button
+            type="button"
+            class="lp-habit-card"
+            [class.selected]="selectedHabitId() === option.id"
+            (click)="selectHabit(option)"
+          >
+            <span class="lp-habit-icon">{{ option.icon }}</span>
+            <span class="lp-habit-label">{{ option.label }}</span>
+          </button>
+        }
+      </div>
+
+      <label class="lp-promise-label" for="lp-promise-input">{{ step().promiseLabel }}</label>
+      <textarea
+        id="lp-promise-input"
+        class="lp-promise-input"
+        rows="2"
+        [value]="promiseText()"
+        (input)="setPromiseText($any($event.target).value)"
+        [placeholder]="step().promisePlaceholder"
+      ></textarea>
+    </div>
+
+    <div class="lp-section">
+      <h2><span class="lp-num">2</span>{{ step().dailyLogHeading }}</h2>
+      <p class="lp-section-subtitle">{{ step().dailyLogSubtitle }}</p>
+
+      <div class="lp-day-tabs">
+        @for (day of step().days; track day.id) {
+          <button type="button" class="lp-day-tab" [class.active]="activeDayId() === day.id" (click)="selectDay(day.id)">
+            {{ day.label }}
+          </button>
+        }
+      </div>
+
+      <div class="lp-day-card">
+        @if (step().whoQuestion; as q) {
+          <div class="lp-question">
+            <p class="lp-question-label">{{ q.label }}</p>
+            <div class="lp-option-row">
+              @for (option of q.options; track option.id) {
+                <button type="button" class="lp-option" [class.selected]="dailyOptionState('who', option)" (click)="selectDailyAnswer('who', option)">
+                  <span>{{ option.icon }}</span>{{ option.label }}
+                </button>
+              }
+            </div>
+          </div>
+        }
+        @if (step().topicQuestion; as q) {
+          <div class="lp-question">
+            <p class="lp-question-label">{{ q.label }}</p>
+            <div class="lp-option-row">
+              @for (option of q.options; track option.id) {
+                <button type="button" class="lp-option" [class.selected]="dailyOptionState('topic', option)" (click)="selectDailyAnswer('topic', option)">
+                  <span>{{ option.icon }}</span>{{ option.label }}
+                </button>
+              }
+            </div>
+          </div>
+        }
+        @if (step().keptPromiseQuestion; as q) {
+          <div class="lp-question">
+            <p class="lp-question-label">{{ q.label }}</p>
+            <div class="lp-option-row">
+              @for (option of q.options; track option.id) {
+                <button type="button" class="lp-option" [class.selected]="dailyOptionState('keptPromise', option)" (click)="selectDailyAnswer('keptPromise', option)">
+                  <span>{{ option.icon }}</span>{{ option.label }}
+                </button>
+              }
+            </div>
+          </div>
+        }
+        @if (step().wentWellQuestion; as q) {
+          <div class="lp-question">
+            <p class="lp-question-label">{{ q.label }}</p>
+            <div class="lp-option-row">
+              @for (option of q.options; track option.id) {
+                <button type="button" class="lp-option" [class.selected]="dailyOptionState('wentWell', option)" (click)="selectDailyAnswer('wentWell', option)">
+                  <span>{{ option.icon }}</span>{{ option.label }}
+                </button>
+              }
+            </div>
+          </div>
+        }
+        @if (step().difficultQuestion; as q) {
+          <div class="lp-question">
+            <p class="lp-question-label">{{ q.label }}</p>
+            <div class="lp-option-row">
+              @for (option of q.options; track option.id) {
+                <button type="button" class="lp-option" [class.selected]="dailyOptionState('difficult', option)" (click)="selectDailyAnswer('difficult', option)">
+                  <span>{{ option.icon }}</span>{{ option.label }}
+                </button>
+              }
+            </div>
+          </div>
+        }
+        @if (step().emojiReflectionQuestion; as q) {
+          <div class="lp-question">
+            <p class="lp-question-label">{{ q.label }}</p>
+            <div class="lp-option-row">
+              @for (option of q.options; track option.id) {
+                <button type="button" class="lp-option" [class.selected]="dailyOptionState('emojiReflection', option)" (click)="selectDailyAnswer('emojiReflection', option)">
+                  <span>{{ option.icon }}</span>{{ option.label }}
+                </button>
+              }
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+
+    <div class="lp-section">
+      <h2><span class="lp-num">3</span>{{ step().midWeekHeading }}</h2>
+
+      @for (question of step().midWeekQuestions; track question.id) {
+        <div class="lp-question">
+          <p class="lp-question-label">{{ question.label }}</p>
+          <div class="lp-option-row">
+            @for (option of question.options; track option.id) {
+              <button
+                type="button"
+                class="lp-option"
+                [class.selected]="midWeekAnswers()[question.id] === option.id"
+                (click)="selectMidWeek(question, option)"
+              >
+                <span>{{ option.icon }}</span>{{ option.label }}
+              </button>
+            }
+          </div>
+        </div>
+      }
+
+      <div class="lp-sample-answer">
+        <p class="lp-sample-label">Sample answer:</p>
+        <p class="lp-sample-text">"{{ step().midWeekSampleAnswer }}"</p>
+      </div>
+    </div>
+
+    <div class="lp-section">
+      <h2><span class="lp-num">4</span>{{ step().endWeekHeading }}</h2>
+
+      @for (question of step().endWeekQuestions; track question.id) {
+        <div class="lp-question">
+          <p class="lp-question-label">{{ question.label }}</p>
+          <div class="lp-option-row">
+            @for (option of question.options; track option.id) {
+              <button
+                type="button"
+                class="lp-option"
+                [class.selected]="endWeekAnswers()[question.id] === option.id"
+                (click)="selectEndWeek(question, option)"
+              >
+                <span>{{ option.icon }}</span>{{ option.label }}
+              </button>
+            }
+          </div>
+        </div>
+      }
+
+      <div class="lp-sample-answer">
+        <p class="lp-sample-label">Sample answer:</p>
+        <p class="lp-sample-text">"{{ step().endWeekSampleAnswer }}"</p>
+      </div>
+    </div>
+
+    <div class="lp-section lp-success-section">
+      <h2><span class="lp-num">5</span>{{ step().successHeading }}</h2>
+      <p class="lp-section-subtitle">{{ step().successSubtitle }}</p>
+
+      <div class="lp-criteria-list">
+        @for (criterion of step().successCriteria; track criterion.id) {
+          <button type="button" class="lp-criterion" [class.checked]="checkedCriteria().has(criterion.id)" (click)="toggleCriterion(criterion)">
+            <span class="lp-criterion-check"></span>
+            <span class="lp-criterion-icon">{{ criterion.icon }}</span>
+            <span class="lp-criterion-label">{{ criterion.label }}</span>
+          </button>
+        }
+      </div>
+
+      <p class="lp-parent-note">👪 {{ step().parentNote }}</p>
+
+      <button type="button" class="btn lp-complete-btn" [disabled]="!allCriteriaChecked()" (click)="complete()">
+        {{ allCriteriaChecked() ? step().completeLabel : step().lockedCompleteLabel }}
+      </button>
+    </div>
+  } @else {
+    <div class="lp-done">
+      <div class="lp-done-image-wrap">
+        <img [src]="step().confidenceImage" [alt]="step().confidenceImageAlt" />
+      </div>
+      <h1>{{ step().completionHeading }}</h1>
+      <p class="lp-done-quote">{{ step().confidenceQuote }}</p>
+      <button type="button" class="btn lp-restart-btn" (click)="restart()">
+        🔄 {{ step().restartLabel }}
+      </button>
+    </div>
+  }
+</div>

@@ -1,0 +1,246 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+$red: #e8545f;
+
+.fc2 {
+  position: relative;
+  padding: 2.5rem 1.5rem 3rem;
+  border-radius: v.$border-radius-xl;
+  overflow: hidden;
+  background: linear-gradient(180deg, #bfe0f7 0%, #cfe8fa 100%);
+  min-height: 44rem;
+}
+
+.fc2-stars { position: absolute; inset: 0; z-index: 0; }
+
+.fc2-star {
+  position: absolute;
+  font-size: 1.4rem;
+  &--1 { top: 2rem; right: 3rem; }
+  &--2 { top: 9rem; right: 6rem; }
+}
+
+.fc2-cloud {
+  position: absolute;
+  top: 5rem;
+  left: 3rem;
+  width: 3.5rem;
+  height: 1.3rem;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 999px;
+
+  &::before {
+    content: '';
+    position: absolute;
+    width: 1.6rem;
+    height: 1.6rem;
+    border-radius: 50%;
+    background: inherit;
+    top: -0.7rem;
+    left: 0.7rem;
+  }
+}
+
+.fc2-content {
+  position: relative;
+  z-index: 1;
+  max-width: 40rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.fc2-level-pill {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.92);
+  color: v.$color-navy-text;
+  font-weight: 800;
+  font-size: 0.85rem;
+  padding: 0.5rem 1.25rem;
+  border-radius: v.$border-radius-pill;
+  margin-bottom: 0.75rem;
+}
+
+.fc2-banner {
+  position: relative;
+  display: inline-block;
+  background: $red;
+  padding: 0.6rem 2.5rem;
+  border-radius: 0.4rem;
+  box-shadow: 0 6px 0 rgba(160, 50, 60, 0.4);
+
+  &::before, &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    border: 1.1rem solid transparent;
+  }
+  &::before { left: -1.6rem; border-right-color: #c8434e; border-bottom-width: 0; }
+  &::after { right: -1.6rem; border-left-color: #c8434e; border-bottom-width: 0; }
+
+  h1 {
+    @include m.playful-heading;
+    color: v.$color-white;
+    font-size: 2.4rem;
+    margin: 0;
+  }
+}
+
+.fc2-script {
+  font-family: 'Comic Sans MS', 'Segoe Print', cursive;
+  color: $red;
+  font-weight: 700;
+  font-size: 1.3rem;
+  margin: 0.75rem 0 1.5rem;
+}
+
+.fc2-figure {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  margin-bottom: -1.5rem;
+
+  img { width: 20rem; max-width: 100%; height: auto; }
+}
+
+.fc2-dots {
+  position: absolute;
+  left: 50%;
+  bottom: 1.5rem;
+  transform: translateX(-50%);
+  color: #f0a83c;
+  letter-spacing: 0.3rem;
+  font-size: 1.2rem;
+}
+
+.fc2-mission {
+  position: relative;
+  background: v.$color-white;
+  border: 2px solid #f4d98a;
+  border-radius: v.$border-radius-xl;
+  padding: 2.5rem 2rem 2rem;
+  box-shadow: 0 12px 30px rgba(43, 45, 66, 0.12);
+  margin-bottom: 1.5rem;
+
+  h2 {
+    @include m.playful-heading;
+    font-size: 1.6rem;
+    color: v.$color-navy-text;
+    margin: 1rem 0 0.75rem;
+  }
+
+  > p {
+    color: rgba(43, 45, 66, 0.65);
+    line-height: 1.5;
+    margin: 0 0 1.5rem;
+  }
+}
+
+.fc2-corner-star {
+  position: absolute;
+  top: -1.1rem;
+  font-size: 2rem;
+  &--l { left: 1rem; }
+  &--r { right: 1rem; }
+}
+
+.fc2-mission-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  background: #f4cf5a;
+  font-size: 1.5rem;
+}
+
+.fc2-mission-steps {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.fc2-mstep {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 700;
+  font-size: 0.95rem;
+  padding: 0.4rem 1rem 0.4rem 0.4rem;
+  border-radius: v.$border-radius-pill;
+
+  &.tone-blue { background: #dcecfb; color: #3d7fc4; }
+  &.tone-red { background: #fbdde0; color: $red; }
+  &.tone-green { background: #d9f2e2; color: #3f9f63; }
+}
+
+.fc2-mstep-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  color: v.$color-white;
+  font-size: 0.8rem;
+
+  .tone-blue & { background: #4f96e0; }
+  .tone-red & { background: $red; }
+  .tone-green & { background: #4faa76; }
+}
+
+.fc2-confidence {
+  background: linear-gradient(160deg, #fdecec, #fdf4e4);
+  border: 2px solid $red;
+  border-radius: v.$border-radius-xl;
+  padding: 1.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.fc2-confidence-label {
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: $red;
+}
+
+.fc2-confidence-quote {
+  font-family: 'Comic Sans MS', 'Segoe Print', cursive;
+  font-weight: 700;
+  font-size: 1.4rem;
+  color: v.$color-navy-text;
+  margin: 0.75rem 0 1rem;
+}
+
+.fc2-try-another {
+  @include m.tappable;
+  background: #dcecfb;
+  color: #3d7fc4;
+  border: none;
+  font-weight: 800;
+  font-size: 0.9rem;
+  padding: 0.5rem 1.25rem;
+  border-radius: v.$border-radius-pill;
+}
+
+.fc2-parent-note {
+  color: rgba(43, 45, 66, 0.55);
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin: 0 0 1.5rem;
+}
+
+.fc2-done-btn {
+  @include m.tappable;
+  background: linear-gradient(120deg, #63c281, #4caf6c);
+  color: v.$color-white;
+  border: none;
+  font-weight: 800;
+  font-size: 1.1rem;
+  padding: 1rem 2.5rem;
+  border-radius: v.$border-radius-pill;
+  box-shadow: 0 5px 0 rgba(43, 45, 66, 0.15);
+}

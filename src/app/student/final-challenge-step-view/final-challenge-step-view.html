@@ -1,0 +1,43 @@
+<div class="fc2">
+  <div class="fc2-stars" aria-hidden="true">
+    <span class="fc2-star fc2-star--1">⭐</span>
+    <span class="fc2-star fc2-star--2">⭐</span>
+    <span class="fc2-cloud"></span>
+  </div>
+
+  <div class="fc2-content">
+    <span class="fc2-level-pill">✦ {{ step().levelCompleteLabel }} ✦</span>
+    <div class="fc2-banner"><h1>{{ step().bannerTitle }}</h1></div>
+    <p class="fc2-script">{{ step().scriptSubtitle }}</p>
+
+    <div class="fc2-figure">
+      <img [src]="step().image" [alt]="step().imageAlt" />
+      <span class="fc2-dots" aria-hidden="true">•••••</span>
+    </div>
+
+    <div class="fc2-mission">
+      <span class="fc2-corner-star fc2-corner-star--l" aria-hidden="true">⭐</span>
+      <span class="fc2-corner-star fc2-corner-star--r" aria-hidden="true">⭐</span>
+      <span class="fc2-mission-icon" aria-hidden="true">💡</span>
+      <h2>{{ step().missionHeading }}</h2>
+      <p>{{ step().missionText }}</p>
+      <div class="fc2-mission-steps">
+        @for (ms of step().missionSteps; let i = $index; track ms.label) {
+          <span class="fc2-mstep" [class]="'tone-' + ms.tone">
+            <span class="fc2-mstep-num">{{ i + 1 }}</span>{{ ms.label }}
+          </span>
+        }
+      </div>
+    </div>
+
+    <div class="fc2-confidence">
+      <span class="fc2-confidence-label">💬 {{ step().confidenceLabel }}</span>
+      <p class="fc2-confidence-quote">“{{ quote() }}”</p>
+      <button type="button" class="fc2-try-another" (click)="tryAnother()">✦ {{ step().tryAnotherLabel }}</button>
+    </div>
+
+    <p class="fc2-parent-note">👪 {{ step().parentNote }}</p>
+
+    <button type="button" class="fc2-done-btn" (click)="finish()">👍 {{ step().completeLabel }}</button>
+  </div>
+</div>

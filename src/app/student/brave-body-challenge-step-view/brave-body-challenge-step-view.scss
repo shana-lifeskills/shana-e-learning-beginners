@@ -1,0 +1,406 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+$green: #5cb87f;
+$blue: #6aa7f0;
+$yellow: #e9b84e;
+
+.bbc {
+  max-width: 46rem;
+  margin: 0 auto;
+}
+
+.bbc-header {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-bottom: 1.5rem;
+
+  h1 {
+    @include m.playful-heading;
+    font-size: 1.7rem;
+    color: $green;
+    margin: 0;
+  }
+
+  p {
+    color: rgba(43, 45, 66, 0.55);
+    font-weight: 600;
+    margin: 0;
+  }
+}
+
+.bbc-star { font-size: 2rem; }
+
+.bbc-card {
+  background: v.$color-white;
+  border-radius: v.$border-radius-xl;
+  padding: 1.75rem;
+  margin-bottom: 1.25rem;
+  box-shadow: 0 2px 14px rgba(43, 45, 66, 0.06);
+
+  h2 {
+    @include m.playful-heading;
+    font-size: 1.2rem;
+    color: v.$color-navy-text;
+    margin: 0 0 0.75rem;
+  }
+}
+
+/* Here's What To Do */
+.bbc-todo {
+  display: flex;
+  gap: 1rem;
+
+  p { margin: 0; color: rgba(43, 45, 66, 0.75); line-height: 1.55; }
+  .tone-green { color: $green; font-weight: 800; }
+  .tone-orange { color: #e07a3c; font-weight: 800; }
+}
+
+.bbc-todo-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  background: $green;
+  font-size: 1.2rem;
+}
+
+/* This Week */
+.bbc-week-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  h2 { margin: 0; }
+}
+
+.bbc-streak {
+  font-weight: 800;
+  color: #e07a3c;
+}
+
+.bbc-week-strip {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.5rem;
+  margin: 1.25rem 0 1rem;
+}
+
+.bbc-day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 0.25rem;
+  border-radius: v.$border-radius-lg;
+
+  &.today {
+    background: #e7f7ec;
+    box-shadow: inset 0 0 0 2px #a9dfbb;
+  }
+}
+
+.bbc-day-name {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: rgba(43, 45, 66, 0.5);
+}
+
+.bbc-day-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: rgba(43, 45, 66, 0.08);
+  font-weight: 700;
+  color: rgba(43, 45, 66, 0.6);
+
+  &.checked { background: $green; color: v.$color-white; }
+}
+
+.bbc-week-bar {
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(43, 45, 66, 0.1);
+  overflow: hidden;
+
+  span {
+    display: block;
+    height: 100%;
+    background: $green;
+    border-radius: 999px;
+    transition: width 0.3s ease;
+  }
+}
+
+/* Today's Practice */
+.bbc-practice-head {
+  text-align: center;
+  margin-bottom: 0.5rem !important;
+}
+
+.bbc-practice-figure {
+  text-align: center;
+
+  img {
+    width: 11rem;
+    max-width: 100%;
+    height: auto;
+    display: inline-block;
+  }
+}
+
+.bbc-tracker {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 1rem 0 1.5rem;
+}
+
+.bbc-tracker-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  width: 5.5rem;
+}
+
+.bbc-tracker-dot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  font-size: 1.1rem;
+  background: rgba(43, 45, 66, 0.08);
+  color: rgba(43, 45, 66, 0.4);
+
+  .bbc-tracker-node.done & {
+    background: $green;
+    color: v.$color-white;
+  }
+}
+
+.bbc-tracker-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-align: center;
+  color: rgba(43, 45, 66, 0.4);
+
+  .bbc-tracker-node.done & { color: $green; }
+}
+
+.bbc-tracker-line {
+  flex: 0 0 2.5rem;
+  height: 3px;
+  margin-top: 1.5rem;
+  border-radius: 999px;
+  background: rgba(43, 45, 66, 0.12);
+
+  &.filled { background: $green; }
+}
+
+.bbc-step-panel {
+  border-radius: v.$border-radius-xl;
+  padding: 2rem;
+  text-align: center;
+
+  &.tone-green { background: #eef9f1; box-shadow: inset 0 0 0 1px #cdebd6; }
+  &.tone-blue { background: #eef3fd; box-shadow: inset 0 0 0 1px #d3e2fa; }
+  &.tone-yellow { background: #fdf8e6; box-shadow: inset 0 0 0 1px #f0e4b6; }
+}
+
+.bbc-step-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  font-family: v.$headings-font-family;
+  font-weight: 700;
+  font-size: 1.15rem;
+  margin: 0 0 0.5rem;
+
+  .tone-green & { color: $green; }
+  .tone-blue & { color: $blue; }
+  .tone-yellow & { color: #c79427; }
+}
+
+.bbc-step-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 50%;
+  font-size: 0.8rem;
+  background: rgba(255, 255, 255, 0.8);
+
+  .tone-green & { color: $green; }
+  .tone-blue & { color: $blue; }
+  .tone-yellow & { color: #c79427; }
+}
+
+.bbc-step-instruction {
+  color: rgba(43, 45, 66, 0.7);
+  margin: 0 0 1.25rem;
+}
+
+.bbc-step-orb {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  margin-bottom: 1.25rem;
+
+  &.tone-blue { background: #d9e6fb; }
+  &.tone-green { background: #d7efdf; }
+  &.tone-yellow { background: #f6ecc6; }
+}
+
+.bbc-alldone-title {
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 1.3rem;
+  color: $green;
+  margin: 0 0 0.5rem;
+}
+
+.bbc-say-box {
+  background: v.$color-white;
+  border: 2px solid #f0e4b6;
+  border-radius: v.$border-radius-lg;
+  padding: 1.5rem;
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 1.4rem;
+  color: #d9772f;
+  margin-bottom: 1.25rem;
+}
+
+.bbc-say-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* Completion */
+.bbc-complete {
+  text-align: center;
+
+  h2 { font-size: 1.4rem; margin-top: 0.75rem; }
+}
+
+.bbc-complete-star { font-size: 2.5rem; }
+
+.bbc-complete-text {
+  color: rgba(43, 45, 66, 0.6);
+  margin: 0 0 1.25rem;
+}
+
+.bbc-confidence {
+  background: #eef9f1;
+  border: 1px solid #cdebd6;
+  border-radius: v.$border-radius-lg;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.bbc-confidence-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: rgba(43, 45, 66, 0.45);
+  margin-bottom: 0.35rem;
+}
+
+.bbc-confidence-quote {
+  font-weight: 800;
+  color: $green;
+}
+
+.bbc-comeback {
+  color: rgba(43, 45, 66, 0.5);
+  font-weight: 600;
+  margin: 0;
+}
+
+/* Badges */
+.bbc-badge-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.bbc-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 700;
+  font-size: 0.9rem;
+  padding: 0.5rem 1rem;
+  border-radius: v.$border-radius-pill;
+  background: rgba(43, 45, 66, 0.06);
+  color: rgba(43, 45, 66, 0.4);
+
+  &.active {
+    background: #e7f7ec;
+    color: $green;
+    box-shadow: inset 0 0 0 1px #a9dfbb;
+  }
+}
+
+/* Buttons */
+.bbc-parent-note {
+  color: rgba(43, 45, 66, 0.5);
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin: 0.5rem 0 1.25rem;
+}
+
+.bbc-nav {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.bbc-btn {
+  @include m.tappable;
+  border: none;
+  font-weight: 800;
+  font-size: 1rem;
+  padding: 0.9rem 2rem;
+  border-radius: v.$border-radius-pill;
+  color: v.$color-white;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.1);
+
+  &--green { background: linear-gradient(120deg, #6fc98d, #4faf74); }
+  &--blue { background: linear-gradient(120deg, #7db2f2, #5a92e0); }
+  &--yellow { background: linear-gradient(120deg, #6fc98d, #4faf74); }
+  &--say { background: linear-gradient(120deg, #f2a33c, #e5822f); }
+
+  &--ghost {
+    background: v.$color-white;
+    color: #d9772f;
+    box-shadow: 0 4px 0 rgba(0, 0, 0, 0.06);
+  }
+
+  &:disabled {
+    background: rgba(43, 45, 66, 0.12);
+    color: rgba(43, 45, 66, 0.4);
+    box-shadow: none;
+    cursor: default;
+  }
+}

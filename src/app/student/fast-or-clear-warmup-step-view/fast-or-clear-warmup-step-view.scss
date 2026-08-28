@@ -1,0 +1,308 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+$green: #57b26f;
+
+.foc {
+  position: relative;
+  padding: 2rem 1.5rem 0;
+  border-radius: v.$border-radius-xl;
+  overflow: hidden;
+  min-height: 46rem;
+}
+
+/* ── Background scene ── */
+.foc-sky {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #8fd0f4 0%, #b6e3f6 55%, #d9f0e4 100%);
+  z-index: 0;
+}
+
+.foc-sun {
+  position: absolute;
+  top: 1.5rem;
+  right: 2rem;
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  background: #f8e06a;
+  box-shadow: 0 0 60px 20px rgba(248, 224, 106, 0.5);
+}
+
+.foc-cloud {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 999px;
+  filter: blur(0.5px);
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    background: inherit;
+    border-radius: 50%;
+  }
+
+  &--1 { top: 3rem; left: 3rem; width: 7rem; height: 2.2rem;
+    &::before { width: 3rem; height: 3rem; top: -1.2rem; left: 1rem; }
+    &::after { width: 2.4rem; height: 2.4rem; top: -0.8rem; right: 1rem; } }
+  &--2 { top: 7rem; left: 40%; width: 5rem; height: 1.6rem;
+    &::before { width: 2.2rem; height: 2.2rem; top: -0.9rem; left: 0.8rem; } }
+  &--3 { top: 5rem; right: 8rem; width: 6rem; height: 2rem;
+    &::before { width: 2.6rem; height: 2.6rem; top: -1rem; left: 1rem; } }
+}
+
+.foc-hill {
+  position: absolute;
+  left: -10%;
+  right: -10%;
+  bottom: 0;
+  height: 12rem;
+  background: linear-gradient(180deg, #8fd678, #6ec267);
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+}
+
+/* ── Foreground ── */
+.foc-content {
+  position: relative;
+  z-index: 1;
+  max-width: 40rem;
+  margin: 0 auto;
+  text-align: center;
+  padding-bottom: 14rem;
+}
+
+.foc-pill {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.9);
+  color: $green;
+  font-weight: 800;
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  padding: 0.5rem 1.25rem;
+  border-radius: v.$border-radius-pill;
+  margin-bottom: 1rem;
+}
+
+.foc-title {
+  @include m.playful-heading;
+  font-size: 2.75rem;
+  color: v.$color-white;
+  text-shadow: 0 3px 0 rgba(43, 45, 66, 0.15);
+  margin: 0 0 2rem;
+}
+
+.foc-card {
+  background: linear-gradient(180deg, #eef7fb, #eafaf1);
+  border-radius: v.$border-radius-xl;
+  padding: 2.5rem 2rem;
+  box-shadow: 0 16px 40px rgba(43, 45, 66, 0.15);
+  text-align: center;
+
+  h2 {
+    @include m.playful-heading;
+    font-size: 1.9rem;
+    color: v.$color-navy-text;
+    margin: 1rem 0 0.75rem;
+  }
+
+  > p {
+    color: rgba(43, 45, 66, 0.6);
+    font-size: 1.05rem;
+    line-height: 1.5;
+    margin: 0 0 1.75rem;
+  }
+}
+
+.foc-intro-img,
+.foc-done-img {
+  width: 6rem;
+  height: auto;
+  display: inline-block;
+}
+
+/* Instruction banner */
+.foc-instruction {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: #fdf6dd;
+  border: 2px solid #f2dd94;
+  border-radius: v.$border-radius-lg;
+  padding: 1rem 1.25rem;
+  text-align: left;
+  margin-bottom: 1.75rem;
+
+  p { margin: 0; font-weight: 800; color: #b06a1e; }
+}
+
+.foc-instruction-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #eeb43e;
+  color: v.$color-white;
+}
+
+.foc-instruction-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #d9962f;
+}
+
+.foc-q-prompt {
+  font-size: 1.6rem !important;
+  margin-top: 0 !important;
+}
+
+.foc-options {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.foc-option {
+  @include m.tappable;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: v.$color-white;
+  border: 2px solid transparent;
+  border-radius: v.$border-radius-lg;
+  padding: 1.1rem 1.25rem;
+  text-align: left;
+  box-shadow: 0 4px 0 rgba(43, 45, 66, 0.06);
+
+  &:hover:not(:disabled):not(.correct) { border-color: #9cc7f2; }
+  &:disabled { cursor: default; opacity: 0.55; }
+
+  &.correct {
+    border-color: $green;
+    background: #ecfaf0;
+    box-shadow: 0 4px 0 rgba(87, 178, 111, 0.3);
+  }
+
+  &.wrong {
+    border-color: #ec9aa8;
+    background: #fdeef0;
+    animation: shake-no 0.4s ease;
+  }
+}
+
+.foc-option-letter {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: v.$border-radius-sm;
+  background: #dcebfb;
+  color: #3d7fc4;
+  font-weight: 800;
+
+  .foc-option.correct & { background: $green; color: v.$color-white; }
+}
+
+.foc-option-text {
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: v.$color-navy-text;
+
+  .foc-option:disabled & { color: rgba(43, 45, 66, 0.5); }
+}
+
+.foc-option-star {
+  position: absolute;
+  right: -0.6rem;
+  top: -0.6rem;
+  font-size: 1.5rem;
+}
+
+.foc-try-again {
+  font-weight: 700;
+  color: v.$color-coral;
+  margin: 0 0 0.5rem;
+}
+
+.foc-great {
+  font-weight: 800;
+  color: $green;
+  font-size: 1.15rem;
+  margin: 0.5rem 0 1rem;
+}
+
+.foc-parent-note {
+  color: rgba(43, 45, 66, 0.5);
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin: 1.5rem 0 0;
+}
+
+/* Completion */
+.foc-stars { font-size: 2.5rem; letter-spacing: 0.2rem; }
+
+.foc-feedback-box {
+  background: #ecfaf0;
+  border: 1px solid #bfe6cb;
+  border-radius: v.$border-radius-lg;
+  padding: 1.5rem;
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 1.3rem;
+  color: #2f8a52;
+  margin: 1rem 0 2rem;
+}
+
+.foc-done-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}
+
+/* Buttons */
+.foc-btn {
+  @include m.tappable;
+  border: none;
+  font-weight: 800;
+  font-size: 1.05rem;
+  padding: 0.95rem 2.25rem;
+  border-radius: v.$border-radius-pill;
+  color: v.$color-white;
+  box-shadow: 0 5px 0 rgba(43, 45, 66, 0.12);
+
+  &--play { background: linear-gradient(120deg, #4f96e0, #57b26f); }
+  &--why { background: $green; }
+  &--replay {
+    background: #6ab0e6;
+  }
+}
+
+.foc-scene {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 1.5rem;
+  z-index: 1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: clamp(2rem, 12vw, 9rem);
+
+  img {
+    width: clamp(4rem, 9vw, 6rem);
+    height: auto;
+    display: block;
+  }
+}

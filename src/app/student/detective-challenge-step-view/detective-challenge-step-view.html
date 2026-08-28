@@ -1,0 +1,98 @@
+<div class="dc">
+  @if (phase() === 'intro') {
+    <div class="dc-hero">
+      <div class="dc-hero-eyebrow">{{ step().eyebrow }}</div>
+      <div class="dc-hero-body">
+        <div class="dc-hero-copy">
+          <span class="dc-mission-pill">{{ step().missionPill }}</span>
+          <h1>
+            {{ step().titleStart }}
+            <span class="dc-title-accent">{{ step().titleAccent }}</span>
+            <span class="dc-title-strike">{{ step().titleStrike }}</span>
+          </h1>
+          <p class="dc-hero-description">{{ step().description }}</p>
+          <div class="dc-hero-actions">
+            <button type="button" class="btn dc-start-btn" (click)="startMission()">{{ step().startLabel }}</button>
+            <button type="button" class="btn dc-goals-btn" (click)="startMission()">{{ step().goalsLabel }}</button>
+          </div>
+        </div>
+        <div class="dc-hero-image-wrap">
+          <img [src]="step().heroImage" [alt]="step().heroImageAlt" />
+        </div>
+      </div>
+    </div>
+  }
+
+  @if (phase() === 'mission') {
+    <div class="dc-steps-card">
+      <h2>{{ step().stepsHeading }}</h2>
+      <p class="dc-steps-subtitle">{{ step().stepsSubtitle }}</p>
+
+      <div class="dc-steps-grid">
+        @for (card of step().steps; let i = $index; track card.title) {
+          <div class="dc-step-card" [class]="'variant-' + (i % 4)">
+            <span class="dc-step-icon">{{ card.icon }}</span>
+            <div>
+              <h3>{{ i + 1 }}. {{ card.title }}</h3>
+              <p>{{ card.description }}</p>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+
+    <div class="dc-reflection">
+      <h2>{{ step().reflectionHeading }}</h2>
+      <div class="dc-reflection-grid">
+        @for (q of step().reflectionQuestions; let i = $index; track q.id) {
+          <div class="dc-reflection-card">
+            <span class="dc-reflection-num">{{ i + 1 }}</span>
+            <p>{{ q.text }}</p>
+          </div>
+        }
+      </div>
+    </div>
+
+    <div class="dc-success-card">
+      <h2>⭐ {{ step().successHeading }} ⭐</h2>
+
+      <div class="dc-success-list">
+        @for (item of step().successCriteria; track item.id) {
+          <button type="button" class="dc-success-item" [class.checked]="isChecked(item.id)" (click)="toggleCriterion(item.id)">
+            <span class="dc-success-check">{{ isChecked(item.id) ? '✓' : '' }}</span>
+            <span>{{ item.text }}</span>
+          </button>
+        }
+      </div>
+
+      <p class="dc-success-footer">{{ step().successFooter }}</p>
+
+      <p class="dc-parent-note">👪 {{ step().parentNote }}</p>
+
+      <button type="button" class="btn dc-mission-continue-btn" [disabled]="!allChecked()" (click)="finishMission()">
+        {{ step().continueLabel }}
+      </button>
+    </div>
+  }
+
+  @if (phase() === 'confidence') {
+    <div class="dc-confidence-banner">
+      <span class="dc-confidence-badge">🏅</span>
+      <div>
+        <span class="dc-confidence-label">{{ step().confidenceLabel }}</span>
+        <h2>"{{ step().confidenceQuote }}"</h2>
+        <p>{{ step().confidenceDescription }}</p>
+      </div>
+    </div>
+
+    <p class="dc-encouragement">{{ step().encouragement }}</p>
+    <div class="dc-tags">
+      @for (tag of step().tags; let last = $last; track tag) {
+        <span class="dc-tag">{{ tag }}</span>
+        @if (!last) { <span class="dc-tag-dot">·</span> }
+      }
+    </div>
+
+    <button type="button" class="btn dc-final-btn" (click)="finish()">Complete Lesson →</button>
+  }
+</div>

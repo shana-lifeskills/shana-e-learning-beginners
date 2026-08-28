@@ -1,0 +1,102 @@
+<div class="wcs">
+  <div class="wcs-scene" aria-hidden="true">
+    <span class="wcs-sun"></span>
+    <span class="wcs-cloud wcs-cloud--1"></span>
+    <span class="wcs-cloud wcs-cloud--2"></span>
+    <span class="wcs-cloud wcs-cloud--3"></span>
+    <span class="wcs-star wcs-star--1">⭐</span>
+    <span class="wcs-star wcs-star--2">✦</span>
+    <span class="wcs-hill"></span>
+  </div>
+
+  <div class="wcs-content">
+    <span class="wcs-pill">✦ {{ step().pillLabel }}</span>
+    <h1 class="wcs-title">{{ step().title }}</h1>
+    <p class="wcs-subtitle">{{ step().subtitle }}</p>
+
+    <div class="wcs-card">
+      <div class="wcs-choose-head">
+        <span class="wcs-choose-icon" aria-hidden="true">💡</span>
+        <h2>{{ step().chooseHeading }}</h2>
+      </div>
+
+      <div class="wcs-ideas">
+        @for (idea of step().ideas; track idea.id) {
+          <button
+            type="button"
+            class="wcs-idea"
+            [class]="'tone-' + idea.tone"
+            [class.selected]="selectedIdeaId() === idea.id"
+            (click)="chooseIdea(idea.id)"
+          >
+            <span class="wcs-idea-emoji">{{ idea.emoji }}</span>
+            @if (selectedIdeaId() === idea.id) { <span class="wcs-idea-check" aria-hidden="true">✓</span> }
+            <span class="wcs-idea-title">{{ idea.icon }} {{ idea.title }}</span>
+            <span class="wcs-idea-desc">{{ idea.description }}</span>
+          </button>
+        }
+      </div>
+
+      @if (selectedIdea(); as idea) {
+        <label class="wcs-field-label" for="wcs-name">{{ step().nameLabel }}</label>
+        <input
+          id="wcs-name"
+          type="text"
+          class="wcs-input"
+          [placeholder]="step().namePlaceholder"
+          [ngModel]="name()"
+          (ngModelChange)="name.set($event)"
+        />
+
+        <label class="wcs-field-label" for="wcs-reflection">{{ idea.fieldLabel }}</label>
+        <textarea
+          id="wcs-reflection"
+          class="wcs-textarea"
+          rows="4"
+          [placeholder]="idea.fieldPlaceholder"
+          [ngModel]="reflection()"
+          (ngModelChange)="onReflectionInput($event)"
+        ></textarea>
+        <span class="wcs-counter">{{ reflection().length }}/{{ step().maxChars }}</span>
+      }
+
+      <button type="button" class="wcs-share-btn" [disabled]="!canShare()" (click)="share()">
+        ✈ {{ step().shareLabel }}
+      </button>
+
+      @if (justShared()) {
+        <p class="wcs-feedback">💡 {{ step().feedbackText }}</p>
+      }
+    </div>
+
+    <p class="wcs-parent-note">👪 {{ step().parentNote }}</p>
+
+    <h2 class="wcs-friends-head">💗 {{ step().friendsHeading }}</h2>
+    <div class="wcs-friends-card">
+      @if (shares().length === 0) {
+        <span class="wcs-balloon" aria-hidden="true">🎈</span>
+        <p class="wcs-empty">{{ step().emptyText }}</p>
+      } @else {
+        <ul class="wcs-share-list">
+          @for (entry of shares(); track $index) {
+            <li>
+              <span class="wcs-share-emoji">{{ entry.emoji }}</span>
+              <div>
+                <strong>{{ entry.name }} · {{ entry.title }}</strong>
+                <p>{{ entry.text }}</p>
+              </div>
+            </li>
+          }
+        </ul>
+      }
+    </div>
+
+    <p class="wcs-footer">{{ step().footerText }} 💡</p>
+
+    @if (canFinish()) {
+      <div class="wcs-nav">
+        <button type="button" class="wcs-continue-btn" (click)="finish()">{{ step().continueLabel }} →</button>
+      </div>
+    }
+  </div>
+</div>

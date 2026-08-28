@@ -1,0 +1,97 @@
+<div class="ipr">
+  <header class="ipr-head">
+    <span class="ipr-badge">🏆 {{ step().badgeLabel }}</span>
+    <h1>{{ step().title }}</h1>
+    <p class="ipr-intro">{{ step().intro }}</p>
+    <p class="ipr-parent-note">👪 {{ step().parentNote }}</p>
+  </header>
+
+  <!-- 1. Topic -->
+  <section class="ipr-section">
+    <h2 class="ipr-section-title"><span class="ipr-step-num">1</span> {{ step().topicHeading }}</h2>
+    <div class="ipr-topics">
+      @for (topic of step().topics; track topic.id) {
+        <button
+          type="button"
+          class="ipr-topic"
+          [class.selected]="topicId() === topic.id"
+          (click)="selectTopic(topic)"
+        >
+          <span class="ipr-topic-icon" aria-hidden="true">{{ topic.icon }}</span>
+          <span class="ipr-topic-label">{{ topic.label }}</span>
+        </button>
+      }
+    </div>
+  </section>
+
+  <!-- 2. Build -->
+  <section class="ipr-section">
+    <h2 class="ipr-section-title"><span class="ipr-step-num">2</span> {{ step().buildHeading }}</h2>
+    <div class="ipr-fields">
+      @for (field of step().buildFields; track field.id) {
+        <label class="ipr-field">
+          <span class="ipr-field-label">{{ field.label }}</span>
+          <input
+            type="text"
+            class="ipr-input"
+            [placeholder]="field.placeholder"
+            [value]="buildValue(field.id)"
+            (input)="onBuild(field.id, $any($event.target).value)"
+          />
+        </label>
+      }
+    </div>
+  </section>
+
+  <!-- 3. Present -->
+  <section class="ipr-section">
+    <h2 class="ipr-section-title"><span class="ipr-step-num">3</span> {{ step().presentHeading }}</h2>
+    <button
+      type="button"
+      class="ipr-checkbox"
+      [class.checked]="presented()"
+      (click)="togglePresented()"
+    >
+      <span class="ipr-checkbox-box" aria-hidden="true">{{ presented() ? '✓' : '' }}</span>
+      <span>{{ step().presentLabel }}</span>
+    </button>
+  </section>
+
+  <!-- 4. Reflect -->
+  <section class="ipr-section">
+    <h2 class="ipr-section-title"><span class="ipr-step-num">4</span> {{ step().reflectHeading }}</h2>
+    <div class="ipr-fields">
+      @for (field of step().reflectFields; track field.id) {
+        <label class="ipr-field">
+          <span class="ipr-field-label">{{ field.label }}</span>
+          <input
+            type="text"
+            class="ipr-input"
+            [placeholder]="field.placeholder"
+            [value]="reflectValue(field.id)"
+            (input)="onReflect(field.id, $any($event.target).value)"
+          />
+        </label>
+      }
+    </div>
+  </section>
+
+  <!-- Recap -->
+  <div class="ipr-recap">
+    <h2>{{ step().recapHeading }}</h2>
+    <p class="ipr-recap-intro">{{ step().recapIntro }}</p>
+    <ul class="ipr-recap-list">
+      @for (item of step().recapItems; track item.text) {
+        <li><span class="ipr-recap-icon" aria-hidden="true">{{ item.icon }}</span> {{ item.text }}</li>
+      }
+    </ul>
+  </div>
+
+  @if (allDone()) {
+    <button type="button" class="btn btn-primary btn-lg-tappable ipr-complete" (click)="finish()">
+      {{ step().completeLabel }}
+    </button>
+  } @else {
+    <p class="ipr-locked-note">{{ step().lockedNote }}</p>
+  }
+</div>

@@ -12,6 +12,24 @@ export interface ExerciseOption {
  */
 export type ExerciseType =
   | 'multiple-choice'
+  | 'warmup-quiz'
+  | 'warmup-voice-check'
+  | 'brave-or-shy-warmup'
+  | 'brave-body-challenge'
+  | 'fast-or-clear-warmup'
+  | 'slow-talk-challenge'
+  | 'what-can-i-share'
+  | 'final-challenge'
+  | 'challenge-pick-say'
+  | 'warmup-what-should-i-do'
+  | 'warmup-finish-sentence'
+  | 'clear-sentence-practice'
+  | 'feelings-explorer'
+  | 'feelings-tracker'
+  | 'polite-or-not'
+  | 'idea-presentation'
+  | 'listening-promise-tracker'
+  | 'detective-challenge'
   | 'share-prompt'
   | 'reflection'
   | 'challenge'
@@ -73,7 +91,12 @@ export type ExerciseType =
   | 'weekly-challenge-showcase'
   | 'same-or-different-quiz'
   | 'diversity-poster'
-  | 'kindness-banner-challenge';
+  | 'kindness-banner-challenge'
+  | 'mission-briefing'
+  | 'yes-no-checklist'
+  | 'listening-body-tracker'
+  | 'feelings-picture-choice'
+  | 'challenge-feeling-report';
 
 export interface BaseExercise {
   id: string;
@@ -412,6 +435,1093 @@ export interface PictureFeelingsQuizStep extends BaseExercise {
   /** Shown near the bottom of each question card, e.g. reminding a parent/caregiver to help. */
   parentNote: string;
   continueLabel: string;
+}
+
+/** One lettered option inside a WarmupQuizQuestion. */
+export interface WarmupQuizOption {
+  id: string;
+  text: string;
+}
+
+/** One question inside a WarmupQuizStep. */
+export interface WarmupQuizQuestion {
+  id: string;
+  prompt: string;
+  options: WarmupQuizOption[];
+  correctOptionId: string;
+  feedbackText: string;
+}
+
+/**
+ * A text-only warm-up quiz with a single hero image in its header (unlike
+ * PictureFeelingsQuizStep, which shows a new picture per question) — one
+ * question at a time with lettered (A/B/C/D) options in a grid. Picking
+ * wrong shows feedback and lets the student try again instead of advancing,
+ * so a question only counts once answered correctly.
+ */
+/** One tappable-info card inside a MissionBriefingStep. */
+export interface MissionBriefingCard {
+  icon: string;
+  /** Background color for the icon square, e.g. "#6bcb77". */
+  iconBg: string;
+  title: string;
+  description: string;
+}
+
+/**
+ * A pre-warm-up "mission briefing" splash — a centered heading, a row of
+ * mission cards previewing what the student is about to practice, an
+ * outlined "Ready to Start" button, and a short time estimate underneath.
+ */
+export interface MissionBriefingStep extends BaseExercise {
+  type: 'mission-briefing';
+  heading: string;
+  cards: MissionBriefingCard[];
+  startLabel: string;
+  durationLabel: string;
+}
+
+/** One statement inside a YesNoChecklistStep, e.g. "Looking at the speaker". */
+export interface YesNoChecklistQuestion {
+  id: string;
+  icon: string;
+  prompt: string;
+  correctAnswer: 'yes' | 'no';
+}
+
+/**
+ * A "Show or Not Show?" warm-up — a single hero image, then every statement
+ * shown at once as its own card with independent Yes/No buttons (unlike
+ * YesNoQuizStep, which steps through one statement at a time). Picking wrong
+ * on a card resets it after a beat so the student can try again; once every
+ * card is answered correctly, a shared feedback line and Continue button
+ * appear.
+ */
+export interface YesNoChecklistStep extends BaseExercise {
+  type: 'yes-no-checklist';
+  badge: string;
+  heading: string;
+  subtitle: string;
+  heroImage: string;
+  heroImageAlt: string;
+  questions: YesNoChecklistQuestion[];
+  yesLabel: string;
+  noLabel: string;
+  feedbackText: string;
+  parentNote: string;
+  continueLabel: string;
+}
+
+/** One repeatable checklist row inside a ListeningBodyTrackerStep, e.g. "I looked at the speaker". */
+export interface ListeningBodyChecklistItem {
+  id: string;
+  label: string;
+}
+
+/**
+ * A "Challenge of the Week" self-tracker — a mascot-narrated hero, two
+ * identical "Conversation N" cards each with a Yes!/Not yet checklist plus
+ * free-text easiest/hardest/why reflection fields, and a closing Confidence
+ * Link card whose Continue button stays disabled until every checklist item
+ * across both conversations has been answered.
+ */
+export interface ListeningBodyTrackerStep extends BaseExercise {
+  type: 'listening-body-tracker';
+  badge: string;
+  heading: string;
+  instructions: string;
+  mascotIcon: string;
+  mascotName: string;
+  mascotMessage: string;
+  yesLabel: string;
+  notYetLabel: string;
+  conversationTitlePrefix: string;
+  conversationInstruction: string;
+  checklistItems: ListeningBodyChecklistItem[];
+  easiestLabel: string;
+  hardestLabel: string;
+  whyLabel: string;
+  confidenceHeading: string;
+  confidenceQuote: string;
+  confidenceDescription: string;
+  lockedContinueLabel: string;
+  continueLabel: string;
+  footerText: string;
+  footerMascotMessage: string;
+  parentNote: string;
+}
+
+/** One of the six emotion choices offered for every question in a FeelingsPictureChoiceStep, e.g. "Happy". */
+export interface FeelingsPictureChoiceOption {
+  id: string;
+  emoji: string;
+  label: string;
+  /** Border/fill color for this option's card, e.g. "#4d8bf5" for Happy. */
+  color: string;
+}
+
+/** One picture prompt inside a FeelingsPictureChoiceStep. */
+export interface FeelingsPictureChoiceQuestion {
+  id: string;
+  image: string;
+  imageAlt: string;
+  /** Id from the step's shared `options` list. */
+  correctOptionId: string;
+  /** Shown once the correct option is picked, e.g. "Yes! This child looks happy." */
+  feedbackText: string;
+}
+
+/**
+ * A "How Do They Feel?" picture-choice warm-up — one picture at a time, the
+ * same six emotion cards shown every round. Picking wrong shakes the card and
+ * resets so the student must try again; picking right reveals a feedback
+ * line and a Next/Finish button, so a question only advances once answered
+ * correctly. Finishing every question shows a small celebration screen with
+ * a Play Again option alongside the real Continue button.
+ */
+export interface FeelingsPictureChoiceStep extends BaseExercise {
+  type: 'feelings-picture-choice';
+  badge: string;
+  heading: string;
+  subtitle: string;
+  instructionLabel: string;
+  instructionText: string;
+  /** The same six emotion cards shown for every question. */
+  options: FeelingsPictureChoiceOption[];
+  questions: FeelingsPictureChoiceQuestion[];
+  /** Generic tip shown (with `feedbackBannerLabel`) while a question is unanswered, e.g. "Listening helps us notice feelings." */
+  feedbackBannerLabel: string;
+  feedbackBannerText: string;
+  /** Small hint shown under the feedback banner while a question is unanswered. */
+  idleHintText: string;
+  nextLabel: string;
+  finishLabel: string;
+  completionHeading: string;
+  completionText: string;
+  playAgainLabel: string;
+  continueLabel: string;
+  /** Callout encouraging a parent/guardian to help the student with this exercise. */
+  parentNote: string;
+}
+
+/**
+ * A "Challenge of the Week" that combines an at-home mission, a few sample
+ * sentences the student can say, a short typed "Feeling Report" (what feeling
+ * they noticed, what they said, how the person responded), and a closing
+ * Confidence Link quote — all on one screen. Completing the challenge is
+ * gated on every report field being filled in, matching IdentityPlannerStep's
+ * "can't proceed until typed" pattern.
+ */
+export interface ChallengeFeelingReportStep extends BaseExercise {
+  type: 'challenge-feeling-report';
+  badge: string;
+  title: string;
+  /** Decorative emoji shown after the title, e.g. "😎". */
+  titleEmoji?: string;
+  subtitleBefore: string;
+  subtitleHighlight: string;
+  subtitleAfter: string;
+  /** Decorative emoji/icon shown next to the mission heading, e.g. "🎧". */
+  missionIcon: string;
+  missionHeading: string;
+  /** Mission description as text runs so individual words (e.g. "ears", "eyes", "heart") can be bolded. */
+  missionText: TextRun[];
+  sampleHeading: string;
+  sampleSentences: string[];
+  reportIcon: string;
+  reportHeading: string;
+  fields: ShareField[];
+  confidenceLabel: string;
+  confidenceQuote: string;
+  completeLabel: string;
+  footerText: string;
+  /** Callout encouraging a parent/guardian to help the student with this exercise. */
+  parentNote: string;
+}
+
+export interface WarmupQuizStep extends BaseExercise {
+  type: 'warmup-quiz';
+  badge: string;
+  heading: string;
+  subtitle: string;
+  heroImage: string;
+  heroImageAlt: string;
+  questions: WarmupQuizQuestion[];
+  /** Encouraging tip shown under the question card, e.g. "Keep practicing your listening ears! 👂✨". */
+  footerNote: string;
+  /** Callout encouraging a parent/guardian to help the student with this exercise. */
+  parentNote: string;
+  continueLabel: string;
+}
+
+/** One numbered mission pill in the Final Challenge card. */
+export interface FinalChallengeMissionStep {
+  label: string;
+  tone: 'blue' | 'red' | 'green';
+}
+
+/**
+ * The end-of-module "Final Challenge" card — a "Level Complete!" pill, a red
+ * banner title, two child illustrations, a "Your Mission" card with three
+ * numbered step pills, a confidence-link card with a "Try another" button
+ * that cycles the quotes, and an "I Shared My Idea!" finish button.
+ */
+export interface FinalChallengeStep extends BaseExercise {
+  type: 'final-challenge';
+  levelCompleteLabel: string;
+  bannerTitle: string;
+  scriptSubtitle: string;
+  image: string;
+  imageAlt: string;
+  missionHeading: string;
+  missionText: string;
+  missionSteps: FinalChallengeMissionStep[];
+  confidenceLabel: string;
+  confidenceQuotes: string[];
+  tryAnotherLabel: string;
+  completeLabel: string;
+  /** Callout encouraging a parent/guardian to help the child with this exercise. */
+  parentNote: string;
+}
+
+/** One idea a child can pick to talk about in the "What Can I Share?" warm-up. */
+export interface ShareIdeaOption {
+  id: string;
+  /** Big emoji shown on the card, e.g. "🍔". */
+  emoji: string;
+  /** Small emoji beside the title, e.g. "🍴". */
+  icon: string;
+  title: string;
+  description: string;
+  tone: 'yellow' | 'blue' | 'green';
+  /** Label above the reflection box once this idea is chosen, e.g. "Tell us about your food!". */
+  fieldLabel: string;
+  fieldPlaceholder: string;
+}
+
+/**
+ * The "What Can I Share?" warm-up — a colourful sky-and-grass scene, three
+ * idea cards to choose from, a nickname field and a reflection box, a
+ * "Share with friends!" button, and a "What our friends shared" feed that
+ * fills in with the child's own share. An idea, a name and a reflection are
+ * all required before the lesson can be finished.
+ */
+export interface WhatCanIShareStep extends BaseExercise {
+  type: 'what-can-i-share';
+  pillLabel: string;
+  title: string;
+  subtitle: string;
+  chooseHeading: string;
+  nameLabel: string;
+  namePlaceholder: string;
+  shareLabel: string;
+  maxChars: number;
+  feedbackText: string;
+  friendsHeading: string;
+  emptyText: string;
+  footerText: string;
+  ideas: ShareIdeaOption[];
+  /** Callout encouraging a parent/guardian to help the child with this exercise. */
+  parentNote: string;
+  continueLabel: string;
+}
+
+/** One tip card at the bottom of the Slow Talk challenge. */
+export interface SlowTalkTip {
+  icon: string;
+  title: string;
+  text: string;
+}
+
+/**
+ * The "Slow Talk Challenge" weekly tracker — a toad mascot, a "Challenge of
+ * the Week" pill, a yellow confidence-link card, a tappable Mon–Sun week
+ * strip with a progress bar and a "Start over" reset, and three tip cards.
+ * At least one day must be marked before the lesson can be finished.
+ */
+export interface SlowTalkChallengeStep extends BaseExercise {
+  type: 'slow-talk-challenge';
+  pillLabel: string;
+  title: string;
+  subtitle: string;
+  image: string;
+  imageAlt: string;
+  confidenceLabel: string;
+  confidenceQuote: string;
+  weekHeading: string;
+  startOverLabel: string;
+  tips: SlowTalkTip[];
+  footerText: string;
+  /** Callout encouraging a parent/guardian to help the child with this exercise. */
+  parentNote: string;
+  continueLabel: string;
+}
+
+/** One lettered answer in the Fast or Clear? warm-up. */
+export interface FastOrClearOption {
+  id: string;
+  text: string;
+}
+
+/**
+ * The "Fast or Clear?" warm-up game — a colourful sky-and-hill scene with
+ * animal friends along the bottom, an owl-narrated intro card, a single
+ * "listen and choose" question that must be answered correctly to pass, and
+ * a 3-star "You did it!" completion card.
+ */
+export interface FastOrClearWarmupStep extends BaseExercise {
+  type: 'fast-or-clear-warmup';
+  pillLabel: string;
+  title: string;
+  introImage: string;
+  introImageAlt: string;
+  introHeading: string;
+  introText: string;
+  playLabel: string;
+  instructionLabel: string;
+  instructionText: string;
+  questionPrompt: string;
+  options: FastOrClearOption[];
+  correctOptionId: string;
+  correctToast: string;
+  seeWhyLabel: string;
+  feedbackText: string;
+  completeTitle: string;
+  completeImage: string;
+  completeImageAlt: string;
+  playAgainLabel: string;
+  continueLabel: string;
+  /** Decorative characters sitting on the grass, e.g. bunny / owl / toad. */
+  sceneImages: { src: string; alt: string }[];
+  /** Callout encouraging a parent/guardian to help the child with this exercise. */
+  parentNote: string;
+}
+
+/** One coloured text run in the "Here's What To Do" line. */
+export interface BraveBodySegment {
+  text: string;
+  tone?: 'green' | 'orange';
+}
+
+/** One of the three daily practice steps in the Brave Body challenge. */
+export interface BraveBodyStep {
+  id: string;
+  /** Short label under the tracker dot, e.g. 'Stand Tall'. */
+  shortLabel: string;
+  /** Panel heading, e.g. 'Take One Deep Breath'. */
+  heading: string;
+  instruction: string;
+  /** Button that marks the step done, e.g. "I'm Standing Tall!". */
+  buttonLabel: string;
+  tone: 'green' | 'blue' | 'yellow';
+  icon: string;
+  /** Only the "say it out loud" step: the sentence to say and the listen-button label. */
+  sentence?: string;
+  hearLabel?: string;
+}
+
+/**
+ * A "Challenge of the Week" daily practice tracker — a green star header, a
+ * "Here's What To Do" card, a 7-day week strip with a streak count, and a
+ * "Today's Practice" card that walks the child through three tap-to-confirm
+ * steps before a "Tap Done!" button. Once today is marked done a completion
+ * card with a confidence line shows, and the badge row lights the first
+ * badge. Today must be marked done before the lesson can be finished.
+ */
+export interface BraveBodyChallengeStep extends BaseExercise {
+  type: 'brave-body-challenge';
+  headerTitle: string;
+  headerSubtitle: string;
+  whatToDoHeading: string;
+  whatToDoSegments: BraveBodySegment[];
+  weekHeading: string;
+  practiceHeading: string;
+  practiceImage: string;
+  practiceImageAlt: string;
+  steps: BraveBodyStep[];
+  allDoneHeading: string;
+  allDoneText: string;
+  tapDoneLabel: string;
+  doneHeading: string;
+  doneText: string;
+  confidenceLabel: string;
+  confidenceQuote: string;
+  comeBackText: string;
+  badgesHeading: string;
+  badges: { icon: string; label: string }[];
+  /** Callout encouraging a parent/guardian to help the child with this exercise. */
+  parentNote: string;
+  continueLabel: string;
+}
+
+/** One lettered answer inside a Brave-or-Shy warm-up question. */
+export interface BraveOrShyOption {
+  id: string;
+  text: string;
+}
+
+/** A "look at the posture, is it brave or shy?" picture question. */
+export interface BraveOrShyPictureQuestion {
+  id: string;
+  prompt: string;
+  /** Picture of the posture, e.g. "brave.png" / "shy.png"; a placeholder panel shows when empty or the file fails to load. */
+  image: string;
+  imageCaption: string;
+  options: BraveOrShyOption[];
+  correctOptionId: string;
+  feedbackText: string;
+}
+
+/** One of the two spoken sample clips compared in the Voice & Breath step. */
+export interface BraveOrShyVoiceClip {
+  label: string;
+  description: string;
+}
+
+/** The "which voice sounds more confident?" question. */
+export interface BraveOrShyVoiceQuestion {
+  id: string;
+  prompt: string;
+  clipA: BraveOrShyVoiceClip;
+  clipB: BraveOrShyVoiceClip;
+  options: BraveOrShyOption[];
+  correctOptionId: string;
+  feedbackText: string;
+  wrongFeedbackText: string;
+}
+
+/** One instruction line in the "Try It Yourself" step. */
+export interface BraveOrShyTryStep {
+  text: string;
+  /** Optional phrase shown bold/coloured at the end of the line, e.g. the sentence to say out loud. */
+  highlight?: string;
+}
+
+/** The closing yes / not-sure reflection question. */
+export interface BraveOrShyReflectQuestion {
+  id: string;
+  prompt: string;
+  yesLabel: string;
+  noLabel: string;
+  feedbackText: string;
+}
+
+/** One coloured icon chip used in the intro and completion screens. */
+export interface BraveOrShyChip {
+  icon: string;
+  label: string;
+  tone: 'green' | 'blue' | 'yellow' | 'pink';
+}
+
+/**
+ * The "Brave or Shy? Body & Voice Check" warm-up game — a star-mascot header
+ * with a 5-segment stepper (Warm-Up → Look & Choose → Voice & Breath → Try
+ * It! → Reflect), a Back/Next footer, and a "You Did It!" completion card.
+ * The learner must answer every question and tap Done on the action prompt
+ * before the game can be finished.
+ */
+export interface BraveOrShyWarmupStep extends BaseExercise {
+  type: 'brave-or-shy-warmup';
+  headerTitle: string;
+  headerSubtitle: string;
+  stepLabels: string[];
+  introBubble: string;
+  introHeading: string;
+  introLead: string;
+  introSub: string;
+  introChips: BraveOrShyChip[];
+  introStartLabel: string;
+  lookHeading: string;
+  lookInstruction: string;
+  pictureQuestions: BraveOrShyPictureQuestion[];
+  voiceHeading: string;
+  voiceInstruction: string;
+  voiceQuestion: BraveOrShyVoiceQuestion;
+  tryHeading: string;
+  tryInstruction: string;
+  trySteps: BraveOrShyTryStep[];
+  tryMascotMessage: string;
+  tryDoneLabel: string;
+  tryFeedbackTitle: string;
+  tryFeedbackText: string;
+  reflectHeading: string;
+  reflectInstruction: string;
+  reflectQuestion: BraveOrShyReflectQuestion;
+  completeTitle: string;
+  completeLead: string;
+  completeSub: string;
+  completeChips: BraveOrShyChip[];
+  playAgainLabel: string;
+  /** Callout encouraging a parent/guardian to help the child with this exercise. */
+  parentNote: string;
+  continueLabel: string;
+}
+
+/** One pickable sentence inside a ChallengePickSayStep. */
+export interface ChallengePickSayOption {
+  id: string;
+  text: string;
+}
+
+/**
+ * A "Challenge of the Week" practice step — a "Practice Mode" pill over a
+ * mascot, a two-line title, a light card where the child picks one sentence
+ * to practise saying out loud, and a "Done" button that only unlocks once a
+ * sentence is chosen. Tapping Done shows an encouraging auto-feedback line
+ * and a Continue button; a confidence-line speech bubble sits at the bottom
+ * throughout.
+ */
+export interface ChallengePickSayStep extends BaseExercise {
+  type: 'challenge-pick-say';
+  /** Small pill above the mascot, e.g. "Practice Mode". */
+  pillLabel: string;
+  mascotImage: string;
+  mascotImageAlt: string;
+  /** First line of the title, e.g. "Challenge of the Week:". */
+  titleMain: string;
+  /** Second line of the title, e.g. "My Clear Voice Practice". */
+  titleAccent: string;
+  subtitle: string;
+  /** Uppercase label above the option list, e.g. "PICK YOUR FAVORITE SENTENCE". */
+  pickHeading: string;
+  options: ChallengePickSayOption[];
+  doneLabel: string;
+  /** Encouraging line shown after the child taps Done. */
+  autoFeedback: string;
+  confidenceLabel: string;
+  confidenceQuote: string;
+  /** Callout encouraging a parent/guardian to help the child with this exercise. */
+  parentNote: string;
+  continueLabel: string;
+}
+
+/** One emoji-tile answer inside a WarmupVoiceCheckQuestion, e.g. "🤫 Whispering". */
+export interface WarmupVoiceCheckOption {
+  id: string;
+  icon: string;
+  text: string;
+}
+
+/** One "listen then choose" question inside a WarmupVoiceCheckStep. */
+export interface WarmupVoiceCheckQuestion {
+  id: string;
+  prompt: string;
+  /** Sentence spoken aloud (via the browser's speech synthesis) when the child taps the Listen button. */
+  listenText: string;
+  options: WarmupVoiceCheckOption[];
+  correctOptionId: string;
+  feedbackText: string;
+}
+
+/**
+ * A "Voice Check" warm-up — a centered star title, an intro card with a mascot
+ * image and a friendly instruction, then one or more questions. Each question
+ * has a big round "Listen" speaker button and a row of emoji answer tiles
+ * (lettered A/B/C). Picking the correct tile shows the feedback line and
+ * advances; a wrong tile asks the child to try again. Same "must get every
+ * answer right to proceed" rule as WarmupQuizStep.
+ */
+export interface WarmupVoiceCheckStep extends BaseExercise {
+  type: 'warmup-voice-check';
+  /** Centered heading beside the star badge, e.g. "Warm-Up: Voice Check". */
+  title: string;
+  introImage: string;
+  introImageAlt: string;
+  introHeading: string;
+  introText: string;
+  /** Label under the round speaker button, e.g. "Listen". */
+  listenLabel: string;
+  /** Encouraging tip shown centered under the question card. */
+  footerNote: string;
+  /** Callout encouraging a parent/guardian to help the child with this exercise. */
+  parentNote: string;
+  continueLabel: string;
+  questions: WarmupVoiceCheckQuestion[];
+}
+
+/** One tappable answer inside a WarmupWhatShouldIDoQuestion, e.g. "👂 Listen". */
+export interface WarmupWhatShouldIDoOption {
+  id: string;
+  icon: string;
+  label: string;
+}
+
+/** One "someone is doing X, what should you do?" scenario inside a WarmupWhatShouldIDoStep. */
+export interface WarmupWhatShouldIDoQuestion {
+  id: string;
+  /** Small uppercase label above the scenario text, e.g. "WHAT SHOULD I DO?". */
+  eyebrow: string;
+  /** Plain, dark first line of the scenario, e.g. "Someone is talking." */
+  scenarioText: string;
+  /** Accent-colored second line asking for the student's choice, e.g. "What should you do?" */
+  promptText: string;
+  options: WarmupWhatShouldIDoOption[];
+  correctOptionId: string;
+  feedbackText: string;
+}
+
+/**
+ * A "What Should I Do?" warm-up scenario quiz — a mascot avatar beside a
+ * scenario card, three icon-tile answer options (lettered A/B/C), and a
+ * "Try Again" retry button. Picking the correct option shows a checkmark, a
+ * "YES!" flag, and the feedback text before advancing; picking wrong requires
+ * tapping Try Again to retry the same question — the same "must get every
+ * answer right to proceed" rule as `WarmupQuizStep`.
+ */
+export interface WarmupWhatShouldIDoStep extends BaseExercise {
+  type: 'warmup-what-should-i-do';
+  badgeIcon: string;
+  badgeLabel: string;
+  mascotImage: string;
+  mascotImageAlt: string;
+  questions: WarmupWhatShouldIDoQuestion[];
+  /** Callout encouraging a parent/guardian to help the student with this exercise. */
+  parentNote: string;
+  continueLabel: string;
+}
+
+/** One "finish the sentence" prompt inside a WarmupFinishSentenceStep. */
+export interface WarmupFinishSentenceItem {
+  id: string;
+  /** Emoji shown in the coloured tile beside the sentence, e.g. "📖". */
+  icon: string;
+  /** Colour theme for the card, cycling through the palette in the design. */
+  tone: 'blue' | 'yellow' | 'pink' | 'green';
+  /** Text before the blank, e.g. "I like". Ignored when `frame` is set. */
+  prefix: string;
+  /** Text after the blank, usually just punctuation, e.g. ".". Ignored when `frame` is set. */
+  suffix: string;
+  /**
+   * Full sentence frame with its own blanks written in, e.g.
+   * "I think we should ______ because ______." When set, the card shows this
+   * verbatim and the child types one answer that completes the whole frame,
+   * instead of the single prefix/blank/suffix line.
+   */
+  frame?: string;
+  /** Revealed when the child taps the hint — the sample answer, e.g. "I like reading." */
+  sampleAnswer: string;
+}
+
+/**
+ * A "Finish the Sentence" warm-up game — a cheerful header, a progress pill
+ * ("N of M done!"), and a stack of coloured sentence cards. Each card has a
+ * sentence with a blank, a free-text input, a "Check" button that locks the
+ * answer in once something is typed, and a tappable hint that reveals the
+ * sample answer. The child must check every sentence before the Continue
+ * button appears — the same "complete every task to proceed" rule as the
+ * other warm-ups.
+ */
+export interface WarmupFinishSentenceStep extends BaseExercise {
+  type: 'warmup-finish-sentence';
+  title: string;
+  subtitle: string;
+  inputPlaceholder: string;
+  checkLabel: string;
+  hintLabel: string;
+  progressNoun: string;
+  items: WarmupFinishSentenceItem[];
+  feedbackText: string;
+  /** Callout encouraging a parent/guardian to help the child with this exercise. */
+  parentNote: string;
+  continueLabel: string;
+}
+
+/** One selectable topic in an IdeaPresentationStep. */
+export interface IdeaPresentationTopic {
+  id: string;
+  icon: string;
+  label: string;
+}
+
+/** One labelled text field in an IdeaPresentationStep (build or reflect). */
+export interface IdeaPresentationField {
+  id: string;
+  label: string;
+  placeholder: string;
+}
+
+/** One line in the IdeaPresentationStep's final recap. */
+export interface IdeaPresentationRecapItem {
+  icon: string;
+  text: string;
+}
+
+/**
+ * A "My Idea Presentation" final challenge — the module's closing task. The
+ * child picks a topic, structures a short idea with sentence starters,
+ * confirms they presented it to one person, and writes two reflections. A
+ * "Final Recap" summarises what expression means. Every part must be
+ * completed to finish — and finishing this step completes the module (and
+ * earns its trophy).
+ */
+export interface IdeaPresentationStep extends BaseExercise {
+  type: 'idea-presentation';
+  badgeLabel: string;
+  title: string;
+  intro: string;
+  topicHeading: string;
+  topics: IdeaPresentationTopic[];
+  buildHeading: string;
+  buildFields: IdeaPresentationField[];
+  presentHeading: string;
+  presentLabel: string;
+  reflectHeading: string;
+  reflectFields: IdeaPresentationField[];
+  recapHeading: string;
+  recapIntro: string;
+  recapItems: IdeaPresentationRecapItem[];
+  /** Callout encouraging a parent/guardian to help the child with this exercise. */
+  parentNote: string;
+  lockedNote: string;
+  completeLabel: string;
+}
+
+/** One "was that kind?" moment inside a PoliteOrNotStep. */
+export interface PoliteOrNotMoment {
+  id: string;
+  /** The line a character says, e.g. "Give me that!". */
+  quote: string;
+  /** Whether the polite answer is the correct one for this quote. */
+  isPolite: boolean;
+}
+
+/** One coloured word run inside a PoliteOrNot end-screen title. */
+export interface PoliteOrNotSegment {
+  text: string;
+  accent?: boolean;
+}
+
+/** One numbered tip in the PoliteOrNot end screen. */
+export interface PoliteOrNotTip {
+  title: string;
+  text: string;
+}
+
+/**
+ * A "Polite or Not?" warm-up game — a three-screen kindness adventure. A
+ * cosy hero intro, then five "moments" where a character says something and
+ * the child decides whether it sounds polite or not (a wrong guess asks them
+ * to try again; the answer can be revealed for help), and finally a keepsake
+ * end screen with three tips and a "pocket note". Every moment must be
+ * answered correctly before the child can proceed — same "finish every task
+ * to proceed" rule as the other warm-ups.
+ */
+export interface PoliteOrNotStep extends BaseExercise {
+  type: 'polite-or-not';
+  brandName: string;
+  brandTagline: string;
+  withLabel: string;
+  chapterEyebrowA: string;
+  chapterEyebrowB: string;
+  titleStart: string;
+  titleAccent: string;
+  introText: string;
+  startLabel: string;
+  momentsCountLabel: string;
+  sunLabelTop: string;
+  sunLabelBottom: string;
+  stickyNoteOne: string;
+  stickyNoteTwo: string;
+  playTitle: string;
+  choicesNoun: string;
+  momentWord: string;
+  readyLabel: string;
+  mascotName: string;
+  mascotImage: string;
+  mascotImageAlt: string;
+  mascotCaption: string;
+  promptQuestion: string;
+  promptSub: string;
+  politeLabel: string;
+  notPoliteLabel: string;
+  revealLabel: string;
+  nextLabel: string;
+  correctFeedback: string;
+  tryAgainFeedback: string;
+  moments: PoliteOrNotMoment[];
+  endEyebrow: string;
+  endTitleSegments: PoliteOrNotSegment[];
+  endText: string;
+  tips: PoliteOrNotTip[];
+  pocketNoteLabel: string;
+  pocketNoteQuote: string;
+  pocketNoteSub: string;
+  footerBrand: string;
+  footerTagline: string;
+  restartLabel: string;
+  /** Callout encouraging a parent/guardian to help the child with this exercise. */
+  parentNote: string;
+  continueLabel: string;
+}
+
+/**
+ * A "Feelings Tracker" challenge-of-the-week — a hero card, a coral "example"
+ * speech bubble, and five numbered day cards. Each day the child fills three
+ * dashed fields: the feeling, why they felt it, and a "say it out loud"
+ * sentence frame. A dashed "Confidence Link" card closes it. Every field on
+ * every day must be filled before the child can proceed — same "finish every
+ * part to proceed" rule as the other challenges.
+ */
+export interface FeelingsTrackerStep extends BaseExercise {
+  type: 'feelings-tracker';
+  challengePill: string;
+  title: string;
+  description: string;
+  image: string;
+  imageAlt: string;
+  exampleLabel: string;
+  exampleText: string;
+  daysHeading: string;
+  dayCount: number;
+  feelingLabel: string;
+  feelingPlaceholder: string;
+  whyLabel: string;
+  whyPlaceholder: string;
+  sayLabel: string;
+  sayPlaceholder: string;
+  confidenceHeading: string;
+  confidenceQuote: string;
+  confidenceText: string;
+  /** May be blank until the mascot art is supplied. */
+  confidenceImage: string;
+  confidenceImageAlt: string;
+  /** Callout encouraging a parent/guardian to help the child with this exercise. */
+  parentNote: string;
+  continueLabel: string;
+}
+
+/** One answer option inside a FeelingsExplorerMoment. The letter (A/B/C) is derived from position. */
+export interface FeelingsExplorerOption {
+  id: string;
+  text: string;
+}
+
+/** One "everyday moment" the child names a feeling for inside a FeelingsExplorerStep. */
+export interface FeelingsExplorerMoment {
+  id: string;
+  /** The little scenario, e.g. "When you lose a game, you may feel:". */
+  prompt: string;
+  options: FeelingsExplorerOption[];
+  correctOptionId: string;
+  /** When more than one option is a best fit (e.g. "Nervous or Calm"), any of these also counts. */
+  acceptableOptionIds?: string[];
+}
+
+/**
+ * A "Feelings Explorer" warm-up game — a cosy practice nook. A hero
+ * introduces Pip and the trail, then the child works through five everyday
+ * "moments", picking the feeling that fits best. A wrong pick asks them to
+ * notice again; a right pick shows kind feedback and a "Next moment" button.
+ * A side trail tracks progress. Every moment must be answered with a best-fit
+ * feeling before the trail completes — the same "finish every task to
+ * proceed" rule as the other warm-ups.
+ */
+export interface FeelingsExplorerStep extends BaseExercise {
+  type: 'feelings-explorer';
+  brandName: string;
+  brandTagline: string;
+  madeForLabel: string;
+  trailEyebrow: string;
+  titleStart: string;
+  titleAccent: string;
+  introText: string;
+  beginLabel: string;
+  backLabel: string;
+  paceNote: string;
+  image: string;
+  imageAlt: string;
+  bubbleName: string;
+  bubbleText: string;
+  yourTurnEyebrow: string;
+  yourTurnTitle: string;
+  yourTurnHelp: string;
+  trailLabel: string;
+  trailNote: string;
+  startHeading: string;
+  startText: string;
+  startLabel: string;
+  momentLabel: string;
+  pickOneLabel: string;
+  moments: FeelingsExplorerMoment[];
+  correctFeedback: string;
+  tryAgainFeedback: string;
+  nextLabel: string;
+  completeHeading: string;
+  completeText: string;
+  completeStatNoun: string;
+  exploreAgainLabel: string;
+  shareLabel: string;
+  shareHint: string;
+  /** Callout encouraging a parent/guardian to help the child with this exercise. */
+  parentNote: string;
+  continueLabel: string;
+}
+
+/** One of the three "invitation" prompts (doors) a child picks from on a ClearSentencePractice day. */
+export interface ClearSentenceDoor {
+  id: string;
+  tone: 'yellow' | 'blue' | 'pink';
+  icon: string;
+  /** Small uppercase kicker, e.g. "SOMETHING YOU LIKE". */
+  kicker: string;
+  /** The invitation question itself. */
+  text: string;
+}
+
+/** One day page inside a ClearSentencePracticeStep — a label plus its three invitation doors. */
+export interface ClearSentenceDay {
+  id: string;
+  /** Short name shown on the day card, e.g. "Notice". */
+  label: string;
+  /** Small label beside "DAY 0N /" on the detail card, e.g. "Look closer". */
+  detailEyebrow: string;
+  /** Right-aligned aside on the detail card, e.g. "Take your time". */
+  detailAside: string;
+  /** Big heading on the detail card, e.g. "Three doors into one clear thought." */
+  detailHeading: string;
+  doors: ClearSentenceDoor[];
+}
+
+/** One end-of-week reflection prompt inside a ClearSentencePracticeStep. */
+export interface ClearSentenceReflection {
+  id: string;
+  label: string;
+  placeholder: string;
+}
+
+/**
+ * A "Clear Sentence Practice Companion" challenge-of-the-week — a cosy
+ * five-day journal. It opens on a hero intro, then a day chooser where the
+ * child picks one of five days, reads three invitation "doors", and writes a
+ * clear sentence into the "Expression Log". Every day must be marked complete
+ * before the end-of-week page unlocks, where the child answers two reflection
+ * prompts. A closing confidence line ties it together. Same "finish every
+ * part to proceed" rule as the other challenges.
+ */
+export interface ClearSentencePracticeStep extends BaseExercise {
+  type: 'clear-sentence-practice';
+  brandName: string;
+  brandTagline: string;
+  daysDoneNoun: string;
+  eyebrow: string;
+  titleStart: string;
+  titleAccent: string;
+  introText: string;
+  ctaLabel: string;
+  image: string;
+  imageAlt: string;
+  chooserEyebrow: string;
+  chooserTitleStart: string;
+  chooserTitleAccent: string;
+  chooserSubtitle: string;
+  days: ClearSentenceDay[];
+  logHeading: string;
+  logIntro: string;
+  logPlaceholder: string;
+  savedLabel: string;
+  markDayLabel: string;
+  dayCompleteLabel: string;
+  toEndOfWeekLabel: string;
+  endEyebrow: string;
+  endIntro: string;
+  endTitleStart: string;
+  endTitleAccent: string;
+  endReflections: ClearSentenceReflection[];
+  keepClosePrefix: string;
+  keepCloseText: string;
+  /** Callout encouraging a parent/guardian to help the child with this exercise. */
+  parentNote: string;
+  /** The "Confidence Link" line the week builds toward. */
+  confidenceQuote: string;
+  finishLabel: string;
+}
+
+/** One selectable option inside a ListeningPromiseTrackerStep question (habit, daily log, check-in, or reflection). */
+export interface ListeningPromiseOption {
+  id: string;
+  icon: string;
+  label: string;
+}
+
+/** One reflection question inside a ListeningPromiseTrackerStep's daily log, mid-week check-in, or end-of-week reflection — a label plus a row of tappable options. */
+export interface ListeningPromiseQuestion {
+  id: string;
+  label: string;
+  options: ListeningPromiseOption[];
+}
+
+/** One weekday tab inside a ListeningPromiseTrackerStep's daily log. */
+export interface ListeningPromiseDay {
+  id: string;
+  label: string;
+  dayNumber: number;
+}
+
+/** One tickable box inside a ListeningPromiseTrackerStep's success criteria list. */
+export interface ListeningPromiseCriterion {
+  id: string;
+  icon: string;
+  label: string;
+}
+
+/**
+ * A "final challenge" weekly promise tracker — a hero with a multi-pill
+ * progress summary, then five numbered sections on one scrolling worksheet:
+ * pick-a-habit (plus a free-text promise), a 5-day log (day tabs, each day
+ * answering the same set of reflection questions), a mid-week check-in, an
+ * end-of-week reflection (both with a sample-answer callout), and a
+ * success-criteria checklist that gates the "Complete Challenge" button.
+ * Completing it shows a celebration screen with a confidence-link quote;
+ * since this is the module's last step, finishing it awards the module's
+ * trophy — the same automatic module-completion rule as every other step.
+ */
+export interface ListeningPromiseTrackerStep extends BaseExercise {
+  type: 'listening-promise-tracker';
+  badgeIcon: string;
+  badgeLabel: string;
+  title: string;
+  subtitle: string;
+  heroImage: string;
+  heroImageAlt: string;
+
+  habitHeading: string;
+  habitSubtitle: string;
+  habitOptions: ListeningPromiseOption[];
+  promiseLabel: string;
+  promisePlaceholder: string;
+
+  dailyLogHeading: string;
+  dailyLogSubtitle: string;
+  days: ListeningPromiseDay[];
+  whoQuestion: ListeningPromiseQuestion;
+  topicQuestion: ListeningPromiseQuestion;
+  keptPromiseQuestion: ListeningPromiseQuestion;
+  wentWellQuestion: ListeningPromiseQuestion;
+  difficultQuestion: ListeningPromiseQuestion;
+  emojiReflectionQuestion: ListeningPromiseQuestion;
+
+  midWeekHeading: string;
+  midWeekQuestions: ListeningPromiseQuestion[];
+  midWeekSampleAnswer: string;
+
+  endWeekHeading: string;
+  endWeekQuestions: ListeningPromiseQuestion[];
+  endWeekSampleAnswer: string;
+
+  successHeading: string;
+  successSubtitle: string;
+  successCriteria: ListeningPromiseCriterion[];
+  lockedCompleteLabel: string;
+  completeLabel: string;
+
+  /** Callout encouraging a parent/guardian to help the student with this exercise. */
+  parentNote: string;
+
+  confidenceImage: string;
+  confidenceImageAlt: string;
+  completionHeading: string;
+  confidenceQuote: string;
+  restartLabel: string;
 }
 
 /**
@@ -1409,6 +2519,65 @@ export interface ChallengeConfidenceWeekStep extends BaseExercise {
   continueLabel: string;
 }
 
+/** One colored instruction card inside a DetectiveChallengeStep's step-by-step list. */
+export interface DetectiveChallengeCard {
+  icon: string;
+  title: string;
+  description: string;
+}
+
+/** One reflection question inside a DetectiveChallengeStep. */
+export interface DetectiveChallengeQuestion {
+  id: string;
+  text: string;
+}
+
+/** One checkable success-criteria item inside a DetectiveChallengeStep. */
+export interface DetectiveChallengeCriterion {
+  id: string;
+  text: string;
+}
+
+/**
+ * A "Detective Mission"-style weekly challenge — a hero banner (mission pill,
+ * struck-through/accent title, illustration, Start/Goals buttons), a "you
+ * must" instructions card with a 2x2 grid of colored step cards, a Reflection
+ * Questions grid, a Success Criteria card the student must check off in full
+ * before continuing, and a closing Confidence Link banner with quote and tags.
+ * Unlike `ChallengeOfTheWeekStep`/`ChallengeConfidenceWeekStep`, the continue
+ * button here is gated: it stays disabled until every success-criteria item
+ * is checked.
+ */
+export interface DetectiveChallengeStep extends BaseExercise {
+  type: 'detective-challenge';
+  eyebrow: string;
+  missionPill: string;
+  titleStart: string;
+  titleAccent: string;
+  titleStrike: string;
+  description: string;
+  heroImage: string;
+  heroImageAlt: string;
+  startLabel: string;
+  goalsLabel: string;
+  stepsHeading: string;
+  stepsSubtitle: string;
+  steps: DetectiveChallengeCard[];
+  reflectionHeading: string;
+  reflectionQuestions: DetectiveChallengeQuestion[];
+  successHeading: string;
+  successCriteria: DetectiveChallengeCriterion[];
+  successFooter: string;
+  confidenceLabel: string;
+  confidenceQuote: string;
+  confidenceDescription: string;
+  encouragement: string;
+  tags: string[];
+  /** Small callout encouraging a parent/guardian to help the student with this exercise. */
+  parentNote: string;
+  continueLabel: string;
+}
+
 /** One selectable mood option inside a DailyFeelingsCheckinStep, e.g. "😊 Happy". */
 export interface DailyFeelingsCheckinMood {
   id: string;
@@ -1998,7 +3167,30 @@ export type Exercise =
   | WeeklyChallengeShowcaseStep
   | SameOrDifferentQuizStep
   | DiversityPosterStep
-  | KindnessBannerChallengeStep;
+  | KindnessBannerChallengeStep
+  | WarmupQuizStep
+  | WarmupVoiceCheckStep
+  | BraveOrShyWarmupStep
+  | BraveBodyChallengeStep
+  | FastOrClearWarmupStep
+  | SlowTalkChallengeStep
+  | WhatCanIShareStep
+  | FinalChallengeStep
+  | ChallengePickSayStep
+  | WarmupWhatShouldIDoStep
+  | WarmupFinishSentenceStep
+  | ClearSentencePracticeStep
+  | FeelingsExplorerStep
+  | FeelingsTrackerStep
+  | PoliteOrNotStep
+  | IdeaPresentationStep
+  | ListeningPromiseTrackerStep
+  | DetectiveChallengeStep
+  | MissionBriefingStep
+  | YesNoChecklistStep
+  | ListeningBodyTrackerStep
+  | FeelingsPictureChoiceStep
+  | ChallengeFeelingReportStep;
 
 /** Content for the newer, richer lesson-welcome layout. When a lesson has this, its welcome screen uses this design instead of the plain card. */
 /** One preview card inside a LessonWelcomeCard's "This Week's Mission" section. */
@@ -2086,22 +3278,40 @@ export interface LessonObjectivesWelcome {
  * left; a mascot illustration with a speech-bubble greeting on the right.
  */
 export interface LessonIntroWelcome {
+  /** 'split' (default) is the two-column layout; 'centered' stacks a star-flanked week label, a top image, a plain title, and full-width Objective/Recap cards above a dark Start button. */
+  layout?: 'split' | 'centered';
   weekPill: string;
   /** Plain part of the title, e.g. "Planning". */
   titleStart: string;
   /** Accent-colored part of the title, e.g. "Power". */
   titleAccent: string;
   subtitle: string;
-  stageIcon: string;
-  stageLabel: string;
+  stageIcon?: string;
+  stageLabel?: string;
   objectiveIcon: string;
   objectiveHeading: string;
   objectiveText: string;
+  /** Optional row of 3 icon+label+sublabel chips shown under the Objective card, e.g. Ears/Eyes/Mind. */
+  chips?: { icon: string; label: string; sublabel: string }[];
+  /** Optional dashed "Recap" card shown under the chip row, above the Start button. */
+  recapIcon?: string;
+  recapHeading?: string;
+  recapText?: string;
   startLabel: string;
+  /** Start button color; defaults to blue when omitted. */
+  startBtnColor?: 'blue' | 'coral';
+  /** Week pill color; defaults to blue when omitted. */
+  weekPillColor?: 'blue' | 'rose' | 'sand';
+  /** Title accent word color; defaults to blue when omitted. 'coral' also warms the main title and adds a hand-drawn underline. */
+  titleAccentColor?: 'blue' | 'coral';
+  /** Objective/goal card icon badge color; defaults to blue when omitted. */
+  objectiveIconColor?: 'blue' | 'coral';
   image: string;
   imageAlt: string;
   /** Small speech-bubble greeting overlapping the image, e.g. "👋 Hi there!". */
   speechBubble?: string;
+  /** Small pill caption under the image, e.g. "Meet Ms. Maple!". */
+  imageCaption?: string;
 }
 
 /**
@@ -2348,6 +3558,64 @@ export interface LessonWarmupPreviewWelcome {
   startLabel: string;
 }
 
+/** One preview card inside a QuickRecapWelcome, e.g. "Feelings Matter" with a heart icon. */
+export interface QuickRecapPreviewCard {
+  icon: string;
+  iconBg: string;
+  title: string;
+  description: string;
+}
+
+/**
+ * A "welcome back" hero (eyebrow badge + two-column image/copy + Start button
+ * + dashed Objective pill) followed, on the same screen, by a "Quick Recap"
+ * card listing short reminder items, a couple of preview cards teasing this
+ * week's new ideas, and a closing gradient banner inviting the student into
+ * the week.
+ */
+export interface LessonQuickRecapWelcome {
+  weekPill: string;
+  eyebrow: string;
+  titleStart: string;
+  titleAccent: string;
+  subtitle: string;
+  startLabel: string;
+  objectiveIcon: string;
+  objectiveLabel: string;
+  objectiveText: string;
+  image: string;
+  imageAlt: string;
+  recapIcon: string;
+  recapHeading: string;
+  recapIntro: string;
+  recapItems: { icon: string; label: string }[];
+  previewCards: QuickRecapPreviewCard[];
+  bannerIcon: string;
+  bannerHeading: string;
+  bannerText: string;
+}
+
+/**
+ * A centered "Week N daily practice" welcome layout — a small pill badge
+ * (icon + label), a two-tone title (plain + accent-colored phrase), a
+ * subtitle, and a side-by-side pair of Objective/Recap cards, followed by a
+ * single CTA button. No image — simpler than `practiceWelcome`/`goalWelcome`.
+ */
+export interface LessonDailyGoalWelcome {
+  badgeIcon: string;
+  badgeLabel: string;
+  titleMain: string;
+  titleAccent: string;
+  subtitle: string;
+  objectiveIcon: string;
+  objectiveHeading: string;
+  objectiveText: string;
+  recapIcon: string;
+  recapHeading: string;
+  recapText: string;
+  startLabel: string;
+}
+
 export interface Lesson {
   id: string;
   title: string;
@@ -2392,8 +3660,192 @@ export interface Lesson {
   empathyJourneyWelcome?: LessonEmpathyJourneyWelcome;
   /** When set, renders the "warm-up preview" welcome layout instead of any other welcome layout — takes priority over all other welcome fields, including `empathyJourneyWelcome`. */
   warmupPreviewWelcome?: LessonWarmupPreviewWelcome;
+  /** When set, renders the "welcome back hero + Quick Recap + preview cards + banner" welcome layout instead of any other welcome layout — takes priority over all other welcome fields, including `warmupPreviewWelcome`. */
+  quickRecapWelcome?: LessonQuickRecapWelcome;
+  /** When set, renders the "daily goal" welcome layout (badge + two-tone title + side-by-side Objective/Recap cards) instead of any other welcome layout — takes priority over all other welcome fields, including `quickRecapWelcome`. */
+  dailyGoalWelcome?: LessonDailyGoalWelcome;
+  /** When set, renders the "speak up" welcome layout (week pill + side-by-side title/illustration card and "What We'll Learn" card, then a full-width recap-from-last-time card, a start button, and a Hoot line) — takes priority over all other welcome fields. */
+  speakUpWelcome?: LessonSpeakUpWelcome;
+  /** When set, renders the "Speak Up Club" welcome layout (branded top bar, two-column hero, Today's Goal bar, Let's Recap card, "What We'll Do Today" step cards, and a coral CTA banner) — takes priority over all other welcome fields. */
+  speakUpClubWelcome?: LessonSpeakUpClubWelcome;
+  /** When set, renders the "Tiny Voices" welcome layout (branded top bar with a week badge, a two-column hero — week-lesson pill, two-tone title, subtitle, an "Our Goal" card and a "Let's Begin" gradient button, plus an illustration card with a speech bubble — and a footer row of reassurance checks) — takes priority over all other welcome fields. */
+  tinyVoicesWelcome?: LessonTinyVoicesWelcome;
+  /** When set, renders the "Little Lantern" welcome layout (branded top bar with a "Week N of M" marker, a two-column hero — dotted eyebrow, two-tone title, subtitle, a "Start this lesson" button and a "safe space" lock line, plus an illustration with a speech bubble — and a full-width "Our objective" card) — takes priority over all other welcome fields. */
+  littleLanternWelcome?: LessonLittleLanternWelcome;
+  /** When set, renders the "grow kinder" welcome layout (centered week pill, two-tone title, illustration with a speech bubble, a "What We'll Learn" objective card with coloured word runs, a row of three focus cards, a start button, and a heart-flanked tagline) — takes priority over all other welcome fields. */
+  growKinderWelcome?: LessonGrowKinderWelcome;
   /** Ordered steps the student walks through — warm-up, story, discussion, activity, challenge, questions. */
   exercises: Exercise[];
+}
+
+/**
+ * The "speak up" welcome layout — a centered WEEK N pill sitting over a card
+ * whose left column is a two-line title, a teacher illustration, and a
+ * welcome-back paragraph; its right column ("What We'll Learn") is an
+ * objective line above a numbered list. Below, a full-width "Recap From Last
+ * Time" card with Hoot the owl and a quote, then a big start button, a
+ * caption, and a Hoot one-liner.
+ */
+export interface LessonSpeakUpWelcome {
+  weekPill: string;
+  title: string;
+  image: string;
+  imageAlt: string;
+  subtitle: string;
+  learnHeading: string;
+  learnIntro: string;
+  learnPoints: string[];
+  recapLabel: string;
+  recapQuote: string;
+  recapText: string;
+  startLabel: string;
+  startCaption: string;
+  hootMessage: string;
+}
+
+/** One coloured run in the Speak Up Club intro paragraph. */
+export interface SpeakUpClubSegment {
+  text: string;
+  bold?: boolean;
+}
+
+/** One "from last time" recap tile in the Speak Up Club welcome. */
+export interface SpeakUpClubRecapCard {
+  icon: string;
+  label: string;
+  text: string;
+  tone: 'coral' | 'blue' | 'green';
+}
+
+/** One numbered "what we'll do today" step card in the Speak Up Club welcome. */
+export interface SpeakUpClubStepCard {
+  icon: string;
+  title: string;
+  text: string;
+  tone: 'yellow' | 'pink' | 'green';
+}
+
+/**
+ * The "Speak Up Club" welcome layout — a branded top bar with a "Week N of M"
+ * pill, a two-column hero (week pill, two-tone underlined title, an intro
+ * paragraph, Begin/Listen buttons, an age/duration meta line, and a mascot
+ * illustration with a speech bubble), a full-width "Today's Goal" gradient
+ * bar, a "Let's Recap" card of three tiles, a "What We'll Do Today" row of
+ * three numbered step cards, and a coral call-to-action banner.
+ */
+export interface LessonSpeakUpClubWelcome {
+  brandName: string;
+  brandTagline: string;
+  weekOfLabel: string;
+  weekPill: string;
+  titleStart: string;
+  titleAccent: string;
+  introSegments: SpeakUpClubSegment[];
+  beginLabel: string;
+  listenLabel: string;
+  ageLabel: string;
+  durationLabel: string;
+  image: string;
+  imageAlt: string;
+  speechBubble: string;
+  goalHeading: string;
+  goalText: string;
+  recapHeading: string;
+  recapEyebrow: string;
+  recapCards: SpeakUpClubRecapCard[];
+  stepsHeading: string;
+  stepsSub: string;
+  steps: SpeakUpClubStepCard[];
+  ctaHeading: string;
+  ctaText: string;
+  ctaButtonLabel: string;
+  footerText: string;
+}
+
+/** One coloured word run inside a GrowKinder objective line. */
+export interface GrowKinderSegment {
+  text: string;
+  color?: 'orange' | 'pink';
+}
+
+/** One focus card in the "grow kinder" welcome layout. */
+export interface GrowKinderCard {
+  icon: string;
+  tone: 'yellow' | 'pink' | 'green';
+  title: string;
+  text: string;
+}
+
+/**
+ * The "grow kinder" welcome layout — a centered "Week N" pill, a two-tone
+ * title, a decorated illustration with a two-line speech bubble, a white
+ * "What We'll Learn" card whose objective sentence has individually coloured
+ * word runs, a row of three focus cards, a start button, and a
+ * heart-flanked tagline.
+ */
+export interface LessonGrowKinderWelcome {
+  weekPill: string;
+  titleStart: string;
+  titleAccent: string;
+  image: string;
+  imageAlt: string;
+  speechBubbleStrong: string;
+  speechBubbleText: string;
+  learnHeading: string;
+  objectiveSegments: GrowKinderSegment[];
+  cards: GrowKinderCard[];
+  startLabel: string;
+  footerTagline: string;
+}
+
+/**
+ * The "Little Lantern" welcome layout — a branded top bar (heart badge +
+ * brand name on the left, a "Week N of M" marker on the right), a two-column
+ * hero whose left column has a dotted "WEEK N · TOPIC" eyebrow, a two-tone
+ * title, a subtitle, a "Start this lesson" button and a small lock reassurance
+ * line, and whose right column is a circle-backed illustration with a speech
+ * bubble, followed by a full-width "Our objective" card with a "TODAY'S FOCUS"
+ * kicker.
+ */
+export interface LessonLittleLanternWelcome {
+  brandName: string;
+  weekMarker: string;
+  eyebrow: string;
+  titleStart: string;
+  titleAccent: string;
+  subtitle: string;
+  startLabel: string;
+  lockLine: string;
+  image: string;
+  imageAlt: string;
+  speechBubble: string;
+  objectiveKicker: string;
+  objectiveHeading: string;
+  objectiveText: string;
+}
+
+/**
+ * The "Tiny Voices" welcome layout — a branded top bar (book badge + brand
+ * name on the left, a "Week N" badge on the right), a two-column hero whose
+ * left column has a sand "Week N Lesson" pill, a two-tone title, a subtitle,
+ * an "Our Goal" card and a gradient "Let's Begin" button, and whose right
+ * column is a rounded illustration card with a small speech bubble, followed
+ * by a footer row of short reassurance checks (e.g. "Short & fun").
+ */
+export interface LessonTinyVoicesWelcome {
+  brandName: string;
+  weekBadge: string;
+  weekLessonPill: string;
+  titleStart: string;
+  titleAccent: string;
+  subtitle: string;
+  goalHeading: string;
+  goalText: string;
+  startLabel: string;
+  image: string;
+  imageAlt: string;
+  speechBubble: string;
+  footerChecks: string[];
 }
 
 /** 'game' modules show up on the Games page instead of the main module list. */

@@ -34,7 +34,25 @@ export class ProgressService {
   /** Fetches existing progress, or creates+starts a fresh record for this module. */
   startModule(studentId: string, module: Module): Observable<StudentProgress> {
     const existing = this.getProgress(studentId, module.id);
-    if (existing) return of(existing).pipe(delay(100));
+    if (existing) {
+      // Self-heal: a lesson can be added to a module after a student already started it
+      // with zero lessons, leaving `currentLessonId: null` stuck forever. Pick up the
+      // first not-yet-completed lesson so the student isn't permanently locked out.
+      if (existing.status !== 'completed' && existing.currentLessonId === null) {
+        const nextLesson = [...module.lessons]
+          .sort((a, b) => a.order - b.order)
+          .find((lesson) => !existing.completedLessonIds.includes(lesson.id));
+        if (nextLesson) {
+          const nextExercise = [...nextLesson.exercises].sort((a, b) => a.order - b.order)[0] ?? null;
+          const healed = this.db.update<StudentProgress>(COLLECTIONS.progress, existing.id, {
+            currentLessonId: nextLesson.id,
+            currentExerciseId: nextExercise?.id ?? null,
+          });
+          if (healed) return of(healed).pipe(delay(100));
+        }
+      }
+      return of(existing).pipe(delay(100));
+    }
 
     const firstLesson = [...module.lessons].sort((a, b) => a.order - b.order)[0];
     const firstExercise = firstLesson ? [...firstLesson.exercises].sort((a, b) => a.order - b.order)[0] : null;

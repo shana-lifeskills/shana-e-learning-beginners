@@ -1,0 +1,64 @@
+<div class="wsid">
+  <span class="wsid-badge">{{ step().badgeIcon }} {{ step().badgeLabel }}</span>
+
+  @if (currentQuestion(); as question) {
+    <div class="wsid-hero">
+      <div class="wsid-mascot-wrap">
+        <img [src]="step().mascotImage" [alt]="step().mascotImageAlt" />
+      </div>
+      <div class="wsid-scenario-card">
+        <span class="wsid-eyebrow">{{ question.eyebrow }}</span>
+        <p class="wsid-scenario-text">{{ question.scenarioText }}</p>
+        <p class="wsid-prompt-text">{{ question.promptText }}</p>
+      </div>
+    </div>
+
+    <div class="wsid-options">
+      @for (option of question.options; let i = $index; track option.id) {
+        <button
+          type="button"
+          class="wsid-option"
+          [class.correct]="optionState(option) === 'correct'"
+          [class.incorrect]="optionState(option) === 'incorrect'"
+          [disabled]="locked() && optionState(option) === null"
+          (click)="selectOption(option)"
+        >
+          <span class="wsid-option-letter">{{ letterFor(i) }}</span>
+          @if (optionState(option) === 'correct') {
+            <span class="wsid-yes-flag">YES!</span>
+          }
+          <span class="wsid-option-icon">
+            @if (optionState(option) === 'correct') { ✓ } @else { {{ option.icon }} }
+          </span>
+          <span class="wsid-option-label">{{ option.label }}</span>
+        </button>
+      }
+    </div>
+
+    @if (feedback() === 'correct') {
+      <p class="wsid-feedback">✨ {{ question.feedbackText }} ✨</p>
+    }
+    @if (feedback() === 'incorrect') {
+      <p class="wsid-feedback wsid-feedback--incorrect">Not quite — give it another try!</p>
+    }
+
+    @if (feedback()) {
+      <button type="button" class="wsid-try-again" (click)="tryAgain()">🔄 Try again</button>
+    }
+
+    <p class="wsid-parent-note">👪 {{ step().parentNote }}</p>
+
+    <div class="wsid-dots">
+      @for (question of step().questions; let i = $index; track question.id) {
+        <span class="wsid-dot" [class.active]="i === activeIndex()"></span>
+      }
+    </div>
+  } @else {
+    <div class="wsid-done">
+      <p class="wsid-done-headline">🎉 Great job — you got every answer right!</p>
+      <button type="button" class="btn btn-primary btn-lg-tappable" (click)="finish()">
+        {{ step().continueLabel }}
+      </button>
+    </div>
+  }
+</div>

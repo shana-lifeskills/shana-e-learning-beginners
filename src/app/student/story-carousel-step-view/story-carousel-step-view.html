@@ -10,7 +10,11 @@
     @if (currentSlide(); as slide) {
       <div class="slide">
         <div class="slide-image-wrap">
-          <img [src]="slide.image" [alt]="slide.title" />
+          @if (slide.image) {
+            <img [src]="slide.image" [alt]="slide.title" />
+          } @else {
+            <div class="slide-image-placeholder" aria-hidden="true"></div>
+          }
         </div>
         <div class="slide-copy">
           <h2>{{ slide.title }}</h2>

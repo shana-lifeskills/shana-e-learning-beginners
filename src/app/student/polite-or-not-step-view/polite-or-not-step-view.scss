@@ -1,0 +1,648 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+$ink: #3a3230;
+$coral: #d67a5c;
+$teal: #3f7d6e;
+$cream: #f7f0e0;
+
+:host {
+  display: block;
+  position: relative;
+}
+
+:host::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background: #f7f0e0;
+}
+
+.pon-green-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: #3f7d6e;
+}
+
+.pon {
+  position: relative;
+  max-width: 66rem;
+  margin: 0 auto;
+  text-align: left;
+  color: $ink;
+}
+
+.pon--playing { color: v.$color-white; }
+
+/* ── topbar ── */
+.pon-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 1.1rem;
+  border-bottom: 1px solid rgba(58, 50, 48, 0.15);
+  margin-bottom: 3rem;
+
+  .pon--playing & { border-color: rgba(255, 255, 255, 0.25); }
+}
+
+.pon-brand { display: flex; align-items: center; gap: 0.8rem; }
+
+.pon-brand-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.7rem;
+  height: 2.7rem;
+  border-radius: 0.85rem 0.85rem 0.85rem 0.2rem;
+  background: $teal;
+  color: v.$color-white;
+  font-size: 1.05rem;
+
+  &--sm { width: 2rem; height: 2rem; font-size: 0.85rem; }
+}
+
+.pon-brand-text strong {
+  display: block;
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 1.2rem;
+}
+
+.pon-brand-text small {
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-weight: 700;
+  font-size: 0.7rem;
+  color: rgba(58, 50, 48, 0.5);
+}
+
+.pon-with {
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: $coral;
+
+  .pon--playing & { color: rgba(255, 255, 255, 0.9); }
+}
+
+/* ── shared ── */
+.pon-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-weight: 800;
+  font-size: 0.8rem;
+  color: $coral;
+  margin-bottom: 1.5rem;
+}
+
+.pon-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: $coral;
+}
+
+.pon-eyebrow-rule {
+  display: inline-block;
+  width: 3rem;
+  height: 2px;
+  background: currentColor;
+  opacity: 0.5;
+
+  &--yellow { background: #eac95f; opacity: 1; }
+}
+
+/* ── intro ── */
+.pon-intro {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+
+  @media (max-width: 880px) { grid-template-columns: 1fr; }
+}
+
+.pon-intro-copy h1 {
+  @include m.playful-heading;
+  font-size: 4rem;
+  line-height: 1.03;
+  margin-bottom: 1.5rem;
+
+  span { display: block; }
+}
+
+.pon-title-main { color: $ink; }
+.pon-title-accent { color: $coral; }
+
+.pon-intro-text {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: rgba(58, 50, 48, 0.7);
+  margin-bottom: 2rem;
+  max-width: 27rem;
+}
+
+.pon-start-btn {
+  @include m.tappable;
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  background: $coral;
+  color: v.$color-white;
+  border: none;
+  font-weight: 800;
+  font-size: 1.25rem;
+  padding: 1.1rem 1.25rem 1.1rem 2rem;
+  border-radius: v.$border-radius-pill;
+  box-shadow: 0 6px 0 rgba(58, 50, 48, 0.25);
+}
+
+.pon-start-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 50%;
+  background: #eac95f;
+  color: $ink;
+}
+
+.pon-moments-count {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin: 1.5rem 0 0;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-weight: 700;
+  font-size: 0.78rem;
+  color: rgba(58, 50, 48, 0.5);
+}
+
+.pon-parent-note {
+  margin-top: 1.5rem;
+  background: rgba(255, 255, 255, 0.65);
+  border: 1px dashed rgba(58, 50, 48, 0.25);
+  border-radius: v.$border-radius-sm;
+  padding: 0.7rem 1rem;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: rgba(58, 50, 48, 0.7);
+}
+
+/* ── intro decorative scene ── */
+.pon-intro-scene {
+  position: relative;
+  height: 26rem;
+  border-radius: v.$border-radius-lg;
+  overflow: hidden;
+
+  @media (max-width: 880px) { height: 18rem; }
+}
+
+.pon-sun-word {
+  position: absolute;
+  top: 1rem;
+  right: 3rem;
+  width: 8rem;
+  height: 8rem;
+  border-radius: 50%;
+  background: #eac95f;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: $ink;
+  transform: rotate(-8deg);
+
+  strong { font-size: 1.15rem; }
+}
+
+.pon-sun-small {
+  position: absolute;
+  top: 10rem;
+  right: 5.5rem;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background: #eac95f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $ink;
+}
+
+.pon-cloud {
+  position: absolute;
+  height: 1.5rem;
+  border-radius: v.$border-radius-pill;
+  background: #f0e6c8;
+
+  &--1 { width: 8rem; top: 8rem; left: 2rem; }
+  &--2 { width: 6rem; top: 12rem; right: 8rem; }
+}
+
+.pon-hills {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 9rem;
+  background: #7fb0a0;
+  border-radius: 50% 50% 0 0 / 3rem 3rem 0 0;
+}
+
+.pon-sticky {
+  position: absolute;
+  font-family: 'Courier New', monospace;
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 0.5rem 0.85rem;
+  border-radius: 0.3rem;
+  box-shadow: 0 6px 14px rgba(58, 50, 48, 0.15);
+  transform: rotate(-3deg);
+
+  &--1 { bottom: 1.5rem; left: 1rem; background: #d7e7e0; color: $teal; }
+  &--2 { bottom: 3rem; right: 1rem; background: #f4dcd4; color: $coral; transform: rotate(4deg); }
+}
+
+/* ── playing ── */
+.pon-play-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.pon-play-title {
+  @include m.playful-heading;
+  font-size: 3rem;
+  color: v.$color-white;
+  margin: 0;
+}
+
+.pon-choices-pill {
+  background: #eac95f;
+  color: $ink;
+  font-weight: 800;
+  font-size: 0.95rem;
+  padding: 0.6rem 1.2rem;
+  border-radius: v.$border-radius-pill;
+}
+
+.pon-card {
+  background: $cream;
+  border-radius: v.$border-radius-xl;
+  padding: 2.5rem;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.2);
+}
+
+.pon-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-weight: 700;
+  font-size: 0.8rem;
+  color: rgba(58, 50, 48, 0.55);
+}
+
+.pon-moment-label { color: $teal; span { color: rgba(58, 50, 48, 0.5); } }
+
+.pon-stepper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 1.25rem 0 2rem;
+
+  &::before, &::after { content: none; }
+}
+
+.pon-step {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 50%;
+  background: #ece0c4;
+  font-weight: 800;
+  font-size: 0.9rem;
+  color: rgba(58, 50, 48, 0.5);
+  flex-shrink: 0;
+  position: relative;
+
+  &:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 100%;
+    width: 100%;
+    height: 2px;
+    background: #ddd0b4;
+  }
+
+  &.is-active { background: v.$color-white; border: 2px solid $teal; color: $teal; }
+  &.is-done { background: $teal; color: v.$color-white; }
+}
+
+.pon-moment-body {
+  display: grid;
+  grid-template-columns: 14rem 1fr;
+  gap: 2rem;
+  align-items: start;
+
+  @media (max-width: 760px) { grid-template-columns: 1fr; }
+}
+
+.pon-mascot {
+  text-align: center;
+
+  img { width: 11rem; max-width: 100%; height: auto; }
+}
+
+.pon-mascot-caption {
+  display: block;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9rem;
+  color: rgba(58, 50, 48, 0.55);
+  margin-top: 0.5rem;
+}
+
+.pon-quote {
+  position: relative;
+  background: v.$color-white;
+  border-radius: v.$border-radius-lg;
+  padding: 2.5rem 2rem;
+  margin: 0 0 1.75rem;
+  text-align: center;
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 2rem;
+  color: $ink;
+  box-shadow: 0 12px 30px rgba(58, 50, 48, 0.1);
+
+  &::before, &::after {
+    font-size: 2.5rem;
+    color: $coral;
+    line-height: 0;
+  }
+  &::before { content: '\201C'; position: absolute; top: 1.5rem; left: 1.25rem; }
+  &::after { content: '\201D'; position: absolute; bottom: 0.25rem; right: 1.25rem; }
+}
+
+.pon-prompt-q {
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 1.4rem;
+  color: $teal;
+  margin: 0 0 0.35rem;
+}
+
+.pon-prompt-sub {
+  color: rgba(58, 50, 48, 0.6);
+  font-size: 1rem;
+  margin: 0 0 1.25rem;
+}
+
+.pon-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+
+  @media (max-width: 560px) { grid-template-columns: 1fr; }
+}
+
+.pon-option {
+  @include m.tappable;
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  border: 2px solid transparent;
+  border-radius: v.$border-radius-lg;
+  padding: 1.1rem 1.25rem;
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: $ink;
+
+  &--no { background: #f4dcd4; }
+  &--yes { background: #d7e7e0; }
+
+  &.chosen { border-color: rgba(58, 50, 48, 0.4); }
+  &.correct { border-color: $teal; box-shadow: 0 0 0 3px rgba(63, 125, 110, 0.25); }
+  &.wrong { border-color: v.$color-bubble-pink; }
+  &.hint { border-color: $teal; border-style: dashed; }
+  &:disabled { cursor: default; }
+}
+
+.pon-option-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.1rem;
+  height: 2.1rem;
+  border-radius: 0.6rem;
+  background: rgba(255, 255, 255, 0.6);
+  font-size: 0.95rem;
+
+  .pon-option--no & { color: $coral; }
+  .pon-option--yes & { color: $teal; }
+}
+
+.pon-feedback {
+  margin: 1.15rem 0 0;
+  font-weight: 800;
+  color: $teal;
+
+  &--try { color: #b5566d; }
+}
+
+.pon-card-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.pon-reveal {
+  background: none;
+  border: none;
+  padding: 0;
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: $teal;
+  cursor: pointer;
+}
+
+.pon-next {
+  @include m.tappable;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: $coral;
+  color: v.$color-white;
+  border: none;
+  font-weight: 800;
+  font-size: 1rem;
+  padding: 0.9rem 1.6rem;
+  border-radius: v.$border-radius-lg;
+  box-shadow: 0 4px 0 rgba(58, 50, 48, 0.25);
+
+  &:disabled { background: #cdbfa0; box-shadow: none; cursor: not-allowed; }
+}
+
+/* ── end ── */
+.pon-end-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: start;
+
+  @media (max-width: 880px) { grid-template-columns: 1fr; }
+}
+
+.pon-end-copy h1 {
+  @include m.playful-heading;
+  font-size: 3.25rem;
+  line-height: 1.05;
+  margin-bottom: 1.25rem;
+
+  .pon-title-accent { color: $coral; }
+}
+
+.pon-end-text {
+  font-size: 1.15rem;
+  line-height: 1.6;
+  color: rgba(58, 50, 48, 0.7);
+  margin-bottom: 2rem;
+  max-width: 26rem;
+}
+
+.pon-tips {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  li {
+    display: grid;
+    grid-template-columns: 2.5rem 1fr;
+    gap: 1rem;
+    padding: 1.25rem 0;
+    border-top: 1px solid rgba(58, 50, 48, 0.15);
+  }
+
+  h3 {
+    font-family: v.$headings-font-family;
+    font-weight: 800;
+    font-size: 1.2rem;
+    color: $teal;
+    margin: 0 0 0.25rem;
+  }
+
+  p { margin: 0; color: rgba(58, 50, 48, 0.65); font-size: 0.98rem; }
+}
+
+.pon-tip-num {
+  font-weight: 800;
+  font-size: 0.85rem;
+  color: $coral;
+  padding-top: 0.35rem;
+}
+
+/* pocket note */
+.pon-pocket {
+  position: relative;
+  justify-self: center;
+  max-width: 22rem;
+  width: 100%;
+}
+
+.pon-pocket-tape {
+  position: absolute;
+  top: -0.75rem;
+  left: 50%;
+  transform: translateX(-50%) rotate(-2deg);
+  width: 7rem;
+  height: 1.75rem;
+  background: rgba(234, 201, 95, 0.7);
+  z-index: 2;
+}
+
+.pon-pocket-card {
+  background: #cdc6ec;
+  border-radius: v.$border-radius-lg;
+  padding: 2.5rem 2rem 2rem;
+  text-align: center;
+  transform: rotate(2deg);
+  box-shadow: 0 18px 40px rgba(58, 50, 48, 0.18);
+  outline: 2px dashed rgba(58, 50, 48, 0.3);
+  outline-offset: -0.9rem;
+}
+
+.pon-pocket-heart { color: $coral; font-size: 1.4rem; }
+
+.pon-pocket-label {
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-weight: 700;
+  font-size: 0.78rem;
+  color: $teal;
+  margin: 0.5rem 0 1rem;
+}
+
+.pon-pocket-quote {
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 1.9rem;
+  color: $ink;
+  margin: 0 0 0.75rem;
+}
+
+.pon-pocket-sub {
+  font-weight: 700;
+  color: rgba(58, 50, 48, 0.6);
+  transform: rotate(-2deg);
+  margin: 0;
+}
+
+.pon-end-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(58, 50, 48, 0.15);
+  font-weight: 800;
+  color: $teal;
+}
+
+.pon-footer-brand { display: inline-flex; align-items: center; gap: 0.6rem; }
+.pon-footer-tagline { color: rgba(58, 50, 48, 0.6); }
+
+.pon-restart {
+  background: none;
+  border: none;
+  font-weight: 800;
+  color: $teal;
+  cursor: pointer;
+}
+
+.pon-continue {
+  display: block;
+  margin: 2rem auto 0;
+}

@@ -1,0 +1,82 @@
+<div class="fpc">
+  <div class="fpc-progress-row">
+    <span class="fpc-progress-badge">{{ currentQuestion() ? activeIndex() + 1 : '⭐' }}</span>
+    <div class="fpc-progress-track">
+      <div class="fpc-progress-fill" [style.width.%]="currentQuestion() ? progressPercent() : 100"></div>
+    </div>
+    <span class="fpc-progress-star">⭐</span>
+  </div>
+
+  <span class="fpc-badge">{{ step().badge }}</span>
+  <h1>{{ step().heading }}</h1>
+  <p class="fpc-subtitle">{{ step().subtitle }}</p>
+
+  @if (currentQuestion(); as question) {
+    <div class="fpc-body">
+      <div class="fpc-image-wrap">
+        <img [src]="question.image" [alt]="question.imageAlt" />
+      </div>
+
+      <div class="fpc-panel">
+        <div class="fpc-instruction">
+          <strong>{{ step().instructionLabel }}</strong>
+          <p>{{ step().instructionText }}</p>
+        </div>
+
+        <div class="fpc-options">
+          @for (option of step().options; track option.id) {
+            <button
+              type="button"
+              class="fpc-option"
+              [style.--option-color]="option.color"
+              [class.selected]="selectedOptionId() === option.id && feedback() === 'correct'"
+              [class.incorrect]="selectedOptionId() === option.id && feedback() === 'incorrect'"
+              [disabled]="locked() && selectedOptionId() !== option.id"
+              (click)="selectOption(option)"
+            >
+              <span class="fpc-option-emoji">{{ option.emoji }}</span>
+              <span class="fpc-option-label">{{ option.label }}</span>
+            </button>
+          }
+        </div>
+
+        @if (feedback() === 'correct') {
+          <p class="fpc-feedback-text">{{ question.feedbackText }}</p>
+          <button type="button" class="btn fpc-next-btn" (click)="nextQuestion()">
+            {{ isLastQuestion() ? step().finishLabel : step().nextLabel }}
+          </button>
+        } @else {
+          <div class="fpc-banner">
+            <span class="fpc-banner-icon">ℹ️</span>
+            <div>
+              <span class="fpc-banner-label">{{ step().feedbackBannerLabel }}</span>
+              <p>{{ step().feedbackBannerText }}</p>
+            </div>
+          </div>
+          <p class="fpc-idle-hint">{{ step().idleHintText }}</p>
+        }
+      </div>
+    </div>
+
+    <p class="fpc-parent-note">👪 {{ step().parentNote }}</p>
+  } @else {
+    <div class="fpc-done">
+      <span class="fpc-done-icon">🎉</span>
+      <h2>{{ step().completionHeading }}</h2>
+      <p>{{ step().completionText }}</p>
+
+      <div class="fpc-done-actions">
+        <button type="button" class="btn fpc-play-again-btn" (click)="playAgain()">{{ step().playAgainLabel }}</button>
+        <button type="button" class="btn fpc-continue-btn" (click)="finish()">{{ step().continueLabel }}</button>
+      </div>
+
+      <div class="fpc-banner">
+        <span class="fpc-banner-icon">ℹ️</span>
+        <div>
+          <span class="fpc-banner-label">{{ step().feedbackBannerLabel }}</span>
+          <p>{{ step().feedbackBannerText }}</p>
+        </div>
+      </div>
+    </div>
+  }
+</div>

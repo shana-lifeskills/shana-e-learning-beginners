@@ -1,0 +1,229 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+.vc {
+  max-width: 46rem;
+  margin: 0 auto;
+}
+
+.vc-title {
+  @include m.playful-heading;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  text-align: center;
+  font-size: 2rem;
+  color: #3f2a20;
+  margin-bottom: 2rem;
+}
+
+.vc-title-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 50%;
+  background: #f6dd8b;
+  font-size: 1.3rem;
+}
+
+.vc-intro {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  background: v.$color-white;
+  border-radius: v.$border-radius-xl;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 10px 30px rgba(120, 170, 140, 0.16);
+
+  @media (max-width: 640px) {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+.vc-intro-image {
+  flex-shrink: 0;
+  width: 10rem;
+  border-radius: v.$border-radius-xl;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+}
+
+.vc-intro-copy {
+  flex: 1;
+}
+
+.vc-intro-heading {
+  font-family: v.$headings-font-family;
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: v.$color-navy-text;
+  margin: 0 0 0.6rem;
+}
+
+.vc-intro-text {
+  color: rgba(43, 45, 66, 0.6);
+  font-weight: 600;
+  font-size: 1.05rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.vc-card {
+  @include m.bouncy-card;
+  background: v.$color-white;
+  padding: 2.5rem 2rem;
+
+  &:hover { transform: none; box-shadow: 0 6px 0 rgba(0, 0, 0, 0.08); }
+}
+
+.vc-prompt {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin: 0 0 2rem;
+  font-family: v.$headings-font-family;
+  font-weight: 700;
+  font-size: 1.4rem;
+  color: v.$color-navy-text;
+}
+
+.vc-prompt-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: #d7e8fb;
+  color: #2b5f8e;
+  font-size: 0.95rem;
+}
+
+.vc-listen {
+  @include m.tappable;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  width: 8.5rem;
+  height: 8.5rem;
+  margin: 0 auto 2rem;
+  border: none;
+  border-radius: 50%;
+  background: v.$color-coral;
+  color: v.$color-white;
+  box-shadow: 0 12px 26px rgba(224, 122, 95, 0.4);
+
+  &:hover { opacity: 0.94; }
+}
+
+.vc-listen-icon {
+  font-size: 1.8rem;
+}
+
+.vc-listen-label {
+  font-weight: 800;
+  font-size: 1rem;
+}
+
+.vc-options {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+
+  @media (max-width: 560px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.vc-option {
+  @include m.tappable;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  background: v.$color-white;
+  border: 2px solid rgba(43, 45, 66, 0.12);
+  border-radius: v.$border-radius-xl;
+  padding: 1.5rem 1rem;
+  text-align: center;
+
+  &:hover:not(:disabled) { border-color: v.$color-coral; }
+  &:disabled { cursor: default; }
+
+  &.correct {
+    background: rgba(107, 203, 119, 0.2);
+    border-color: v.$color-leaf;
+    animation: bounce-in 0.4s ease;
+  }
+
+  &.incorrect {
+    background: rgba(255, 143, 163, 0.2);
+    border-color: v.$color-bubble-pink;
+    animation: shake-no 0.4s ease;
+  }
+}
+
+.vc-option-icon {
+  font-size: 1.9rem;
+}
+
+.vc-option-text {
+  font-weight: 800;
+  font-size: 1rem;
+  color: v.$color-navy-text;
+}
+
+.vc-try-again {
+  text-align: center;
+  font-weight: 700;
+  color: v.$color-coral;
+  margin: 0 0 1rem;
+}
+
+.vc-feedback-correct {
+  text-align: center;
+  font-weight: 700;
+  color: v.$color-leaf;
+  margin: 0 0 1rem;
+}
+
+.vc-parent-note {
+  color: rgba(43, 45, 66, 0.5);
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.vc-footer-note {
+  text-align: center;
+  color: rgba(43, 45, 66, 0.55);
+  font-weight: 600;
+  font-size: 1rem;
+  margin: 1.5rem 0 0;
+}
+
+.vc-done {
+  text-align: center;
+}
+
+.vc-done-headline {
+  font-family: v.$headings-font-family;
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: v.$color-navy-text;
+  margin-bottom: 1.5rem;
+}

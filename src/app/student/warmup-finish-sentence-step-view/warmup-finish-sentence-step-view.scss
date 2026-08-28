@@ -1,0 +1,263 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+:host {
+  display: block;
+  position: relative;
+}
+
+/* Full-bleed colourful background for this warm-up. */
+:host::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(180deg, #bfe0fb 0%, #cfe9f7 45%, #dff1e6 100%);
+}
+
+.wufs {
+  max-width: 46rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.wufs-head h1 {
+  @include m.playful-heading;
+  font-size: 2.6rem;
+  color: v.$color-coral;
+  margin-bottom: 0.75rem;
+}
+
+.wufs-subtitle {
+  color: rgba(43, 45, 66, 0.7);
+  font-weight: 600;
+  font-size: 1.1rem;
+  line-height: 1.5;
+  max-width: 28rem;
+  margin: 0 auto 1.5rem;
+}
+
+.wufs-progress {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: v.$color-white;
+  border: 2px solid #f6e2a8;
+  border-radius: v.$border-radius-pill;
+  padding: 0.55rem 1.1rem;
+  box-shadow: 0 6px 16px rgba(43, 45, 66, 0.1);
+}
+
+.wufs-progress-label {
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: v.$color-navy-text;
+  white-space: nowrap;
+}
+
+.wufs-progress-track {
+  width: 7rem;
+  height: 0.6rem;
+  border-radius: v.$border-radius-pill;
+  background: #e8e8e8;
+  overflow: hidden;
+}
+
+.wufs-progress-fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #f6c953, #f0952f);
+  transition: width 0.3s ease;
+}
+
+.wufs-parent-note {
+  margin: 1.25rem auto 0;
+  max-width: 30rem;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: v.$border-radius-lg;
+  padding: 0.7rem 1rem;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: rgba(43, 45, 66, 0.7);
+}
+
+/* ── Cards ── */
+.wufs-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.wufs-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1.25rem;
+  align-items: start;
+  text-align: left;
+  padding: 1.5rem 1.75rem;
+  border-radius: v.$border-radius-xl;
+  box-shadow: 0 10px 26px rgba(43, 45, 66, 0.1);
+
+  &.tone-blue { background: linear-gradient(180deg, #dbecfb, #eef5fd); }
+  &.tone-yellow { background: linear-gradient(180deg, #fdeec2, #fdf6df); }
+  &.tone-pink { background: linear-gradient(180deg, #fcdde2, #fdeef0); }
+  &.tone-green { background: linear-gradient(180deg, #d9efdb, #edf7ed); }
+
+  &.done { opacity: 0.92; }
+}
+
+.wufs-card-num {
+  position: absolute;
+  top: 0.9rem;
+  right: 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.9rem;
+  height: 1.9rem;
+  border-radius: 50%;
+  background: v.$color-white;
+  color: rgba(43, 45, 66, 0.5);
+  font-weight: 800;
+  font-size: 0.9rem;
+  box-shadow: 0 3px 8px rgba(43, 45, 66, 0.12);
+}
+
+.wufs-card-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.25rem;
+  height: 3.25rem;
+  border-radius: v.$border-radius-lg;
+  background: rgba(255, 255, 255, 0.8);
+  font-size: 1.6rem;
+}
+
+.wufs-card-body { min-width: 0; }
+
+.wufs-sentence {
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 1.35rem;
+  color: v.$color-navy-text;
+  margin: 0.25rem 0 1rem;
+  line-height: 1.4;
+}
+
+.wufs-blank {
+  color: #4d8bf5;
+  border-bottom: 3px solid currentColor;
+  padding: 0 0.35rem;
+  word-break: break-word;
+
+  .tone-yellow &,
+  .tone-green & { color: #e0952f; }
+  .tone-pink & { color: #e2607a; }
+}
+
+.wufs-answer-row {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.wufs-input-wrap {
+  position: relative;
+  flex: 1 1 14rem;
+  display: flex;
+  align-items: center;
+}
+
+.wufs-input-pencil {
+  position: absolute;
+  left: 0.85rem;
+  font-size: 0.9rem;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.wufs-input {
+  width: 100%;
+  border: 2px solid rgba(43, 45, 66, 0.12);
+  border-radius: v.$border-radius-lg;
+  background: v.$color-white;
+  padding: 0.8rem 1rem 0.8rem 2.4rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: v.$color-navy-text;
+
+  &:focus {
+    outline: none;
+    border-color: #f0952f;
+    box-shadow: 0 0 0 3px rgba(240, 149, 47, 0.2);
+  }
+
+  &:disabled { background: rgba(255, 255, 255, 0.6); }
+}
+
+.wufs-check-btn {
+  @include m.tappable;
+  flex: 0 0 auto;
+  border: none;
+  border-radius: v.$border-radius-lg;
+  padding: 0.8rem 1.5rem;
+  font-weight: 800;
+  font-size: 1rem;
+  color: v.$color-white;
+  background: #6bcb77;
+
+  &:disabled {
+    background: #c9c9c9;
+    cursor: not-allowed;
+  }
+}
+
+.wufs-hint-link {
+  margin-top: 0.85rem;
+  background: none;
+  border: none;
+  padding: 0;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: rgba(43, 45, 66, 0.6);
+  cursor: pointer;
+
+  &:hover { color: v.$color-navy-text; }
+}
+
+.wufs-hint-text {
+  margin-top: 0.85rem;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: #b9762a;
+}
+
+.wufs-your-answer {
+  margin: 0.35rem 0 0.9rem;
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: #2f8f5b;
+}
+
+/* ── Footer ── */
+.wufs-done {
+  margin-top: 1rem;
+}
+
+.wufs-feedback {
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 1.2rem;
+  color: #2f8f5b;
+  margin-bottom: 1.25rem;
+}
+
+.wufs-locked-note {
+  color: rgba(43, 45, 66, 0.55);
+  font-weight: 700;
+  font-size: 0.95rem;
+}

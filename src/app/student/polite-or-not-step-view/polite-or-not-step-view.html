@@ -1,0 +1,178 @@
+@if (phase() === 'playing') {
+  <span class="pon-green-bg" aria-hidden="true"></span>
+}
+
+<div class="pon" [class.pon--playing]="phase() === 'playing'">
+  <header class="pon-topbar">
+    <span class="pon-brand">
+      <span class="pon-brand-badge" aria-hidden="true">📖</span>
+      <span class="pon-brand-text">
+        <strong>{{ step().brandName }}</strong>
+        <small>{{ step().brandTagline }}</small>
+      </span>
+    </span>
+    <span class="pon-with">★ {{ step().withLabel }}</span>
+  </header>
+
+  <!-- ── INTRO ── -->
+  @if (phase() === 'intro') {
+    <section class="pon-intro">
+      <div class="pon-intro-copy">
+        <span class="pon-eyebrow">
+          <span class="pon-dot" aria-hidden="true"></span>{{ step().chapterEyebrowA }}
+          <span class="pon-eyebrow-rule" aria-hidden="true"></span>{{ step().chapterEyebrowB }}
+        </span>
+        <h1>
+          <span class="pon-title-main">{{ step().titleStart }}</span>
+          <span class="pon-title-accent">{{ step().titleAccent }}</span>
+        </h1>
+        <p class="pon-intro-text">{{ step().introText }}</p>
+        <button type="button" class="pon-start-btn" (click)="start()">
+          {{ step().startLabel }} <span class="pon-start-arrow" aria-hidden="true">→</span>
+        </button>
+        <p class="pon-moments-count"><span class="pon-eyebrow-rule pon-eyebrow-rule--yellow" aria-hidden="true"></span>{{ step().momentsCountLabel }}</p>
+        <p class="pon-parent-note">👪 {{ step().parentNote }}</p>
+      </div>
+
+      <div class="pon-intro-scene" aria-hidden="true">
+        <span class="pon-sun-word">{{ step().sunLabelTop }}<strong>{{ step().sunLabelBottom }}</strong></span>
+        <span class="pon-sun-small">✳</span>
+        <span class="pon-cloud pon-cloud--1"></span>
+        <span class="pon-cloud pon-cloud--2"></span>
+        <span class="pon-hills"></span>
+        <span class="pon-sticky pon-sticky--1">{{ step().stickyNoteOne }}</span>
+        <span class="pon-sticky pon-sticky--2">{{ step().stickyNoteTwo }}</span>
+      </div>
+    </section>
+  }
+
+  <!-- ── PLAYING ── -->
+  @if (phase() === 'playing') {
+    <section class="pon-play">
+      <div class="pon-play-head">
+        <h1 class="pon-play-title">{{ step().playTitle }}</h1>
+        <span class="pon-choices-pill">★ {{ kindChoices() }} {{ step().choicesNoun }}</span>
+      </div>
+
+      @if (currentMoment(); as moment) {
+        <div class="pon-card">
+          <div class="pon-card-head">
+            <span class="pon-moment-label">{{ step().momentWord }} {{ activeIndex() + 1 }} <span>OF {{ total() }}</span></span>
+            <span class="pon-ready">{{ step().readyLabel }}</span>
+          </div>
+
+          <div class="pon-stepper">
+            @for (m of step().moments; let i = $index; track m.id) {
+              <span class="pon-step" [class]="'is-' + dotState(i)">{{ i + 1 }}</span>
+            }
+          </div>
+
+          <div class="pon-moment-body">
+            <div class="pon-mascot">
+              <img [src]="step().mascotImage" [alt]="step().mascotImageAlt" />
+              <span class="pon-mascot-caption">{{ step().mascotCaption }}</span>
+            </div>
+
+            <div class="pon-moment-main">
+              <blockquote class="pon-quote">{{ moment.quote }}</blockquote>
+
+              <h2 class="pon-prompt-q">{{ step().promptQuestion }}</h2>
+              <p class="pon-prompt-sub">{{ step().promptSub }}</p>
+
+              <div class="pon-options">
+                <button
+                  type="button"
+                  class="pon-option pon-option--no"
+                  [class.chosen]="choice() === 'not-polite'"
+                  [class.correct]="feedback() === 'correct' && choice() === 'not-polite'"
+                  [class.wrong]="feedback() === 'incorrect' && choice() === 'not-polite'"
+                  [class.hint]="revealed() && correctChoiceFor(moment) === 'not-polite'"
+                  [disabled]="answeredCorrectly()"
+                  (click)="pick('not-polite')"
+                >
+                  <span class="pon-option-icon" aria-hidden="true">✕</span> {{ step().notPoliteLabel }}
+                </button>
+                <button
+                  type="button"
+                  class="pon-option pon-option--yes"
+                  [class.chosen]="choice() === 'polite'"
+                  [class.correct]="feedback() === 'correct' && choice() === 'polite'"
+                  [class.wrong]="feedback() === 'incorrect' && choice() === 'polite'"
+                  [class.hint]="revealed() && correctChoiceFor(moment) === 'polite'"
+                  [disabled]="answeredCorrectly()"
+                  (click)="pick('polite')"
+                >
+                  <span class="pon-option-icon" aria-hidden="true">♥</span> {{ step().politeLabel }}
+                </button>
+              </div>
+
+              @if (feedback() === 'correct') {
+                <p class="pon-feedback">✓ {{ step().correctFeedback }}</p>
+              }
+              @if (feedback() === 'incorrect') {
+                <p class="pon-feedback pon-feedback--try">{{ step().tryAgainFeedback }}</p>
+              }
+
+              <div class="pon-card-actions">
+                <button type="button" class="pon-reveal" (click)="reveal()">✦ {{ step().revealLabel }}</button>
+                <button
+                  type="button"
+                  class="pon-next"
+                  [disabled]="!answeredCorrectly()"
+                  (click)="nextMoment()"
+                >
+                  {{ step().nextLabel }} <span aria-hidden="true">→</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+    </section>
+  }
+
+  <!-- ── END ── -->
+  @if (phase() === 'end') {
+    <section class="pon-end">
+      <div class="pon-end-grid">
+        <div class="pon-end-copy">
+          <span class="pon-eyebrow"><span class="pon-dot" aria-hidden="true"></span>{{ step().endEyebrow }}</span>
+          <h1>@for (seg of step().endTitleSegments; track $index) {<span [class.pon-title-accent]="seg.accent">{{ seg.text }}</span>}</h1>
+          <p class="pon-end-text">{{ step().endText }}</p>
+
+          <ol class="pon-tips">
+            @for (tip of step().tips; let i = $index; track tip.title) {
+              <li>
+                <span class="pon-tip-num">{{ (i + 1).toString().padStart(2, '0') }}</span>
+                <div>
+                  <h3>{{ tip.title }}</h3>
+                  <p>{{ tip.text }}</p>
+                </div>
+              </li>
+            }
+          </ol>
+        </div>
+
+        <div class="pon-pocket">
+          <span class="pon-pocket-tape" aria-hidden="true"></span>
+          <div class="pon-pocket-card">
+            <span class="pon-pocket-heart" aria-hidden="true">♥</span>
+            <span class="pon-pocket-label">{{ step().pocketNoteLabel }}</span>
+            <p class="pon-pocket-quote">"{{ step().pocketNoteQuote }}"</p>
+            <p class="pon-pocket-sub">{{ step().pocketNoteSub }}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="pon-end-footer">
+        <span class="pon-footer-brand"><span class="pon-brand-badge pon-brand-badge--sm" aria-hidden="true">📖</span> {{ step().footerBrand }}</span>
+        <span class="pon-footer-tagline">{{ step().footerTagline }} ♥</span>
+        <button type="button" class="pon-restart" (click)="restart()">← {{ step().restartLabel }}</button>
+      </div>
+
+      <button type="button" class="btn btn-primary btn-lg-tappable pon-continue" (click)="finish()">
+        {{ step().continueLabel }}
+      </button>
+    </section>
+  }
+</div>

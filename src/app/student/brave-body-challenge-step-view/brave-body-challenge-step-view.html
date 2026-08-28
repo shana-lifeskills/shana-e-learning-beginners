@@ -1,0 +1,122 @@
+<div class="bbc">
+  <header class="bbc-header">
+    <span class="bbc-star" aria-hidden="true">⭐</span>
+    <div>
+      <h1>{{ step().headerTitle }}</h1>
+      <p>{{ step().headerSubtitle }}</p>
+    </div>
+  </header>
+
+  <!-- Here's What To Do -->
+  <div class="bbc-card bbc-todo">
+    <span class="bbc-todo-icon" aria-hidden="true">✨</span>
+    <div>
+      <h2>{{ step().whatToDoHeading }}</h2>
+      <p>@for (seg of step().whatToDoSegments; track $index) {<span
+          [class.tone-green]="seg.tone === 'green'"
+          [class.tone-orange]="seg.tone === 'orange'"
+        >{{ seg.text }}</span>}</p>
+    </div>
+  </div>
+
+  <!-- This Week -->
+  <div class="bbc-card bbc-week">
+    <div class="bbc-week-head">
+      <h2>📅 {{ step().weekHeading }}</h2>
+      <span class="bbc-streak">🔥 {{ streakDone() }}/7 days</span>
+    </div>
+    <div class="bbc-week-strip">
+      @for (d of week(); track d.name) {
+        <div class="bbc-day" [class.today]="d.isToday">
+          <span class="bbc-day-name">{{ d.name }}</span>
+          <span class="bbc-day-num" [class.checked]="d.isToday && todayDone()">
+            {{ d.isToday && todayDone() ? '✓' : d.date }}
+          </span>
+        </div>
+      }
+    </div>
+    <div class="bbc-week-bar"><span [style.width.%]="(streakDone() / 7) * 100"></span></div>
+  </div>
+
+  <!-- Today's Practice -->
+  <div class="bbc-card bbc-practice">
+    <h2 class="bbc-practice-head">☀️ {{ step().practiceHeading }}</h2>
+
+    <div class="bbc-practice-figure">
+      <img [src]="step().practiceImage" [alt]="step().practiceImageAlt" />
+    </div>
+
+    <div class="bbc-tracker">
+      @for (s of step().steps; let i = $index; track s.id) {
+        @if (i > 0) {
+          <span class="bbc-tracker-line" [class.filled]="stepDone(step().steps[i - 1].id)"></span>
+        }
+        <div class="bbc-tracker-node" [class.done]="stepDone(s.id)">
+          <span class="bbc-tracker-dot" [class]="'tone-' + s.tone">{{ stepDone(s.id) ? '✓' : s.icon }}</span>
+          <span class="bbc-tracker-label">{{ s.shortLabel }}</span>
+        </div>
+      }
+    </div>
+
+    @if (currentStep(); as s) {
+      <div class="bbc-step-panel" [class]="'tone-' + s.tone">
+        <p class="bbc-step-title">
+          <span class="bbc-step-num">{{ step().steps.indexOf(s) + 1 }}</span>
+          {{ s.heading }}
+        </p>
+        <p class="bbc-step-instruction">{{ s.instruction }}</p>
+
+        @if (s.sentence) {
+          <div class="bbc-say-box">“{{ s.sentence }}”</div>
+          <div class="bbc-say-actions">
+            <button type="button" class="bbc-btn bbc-btn--ghost" (click)="hearSentence(s.sentence)">🔊 {{ s.hearLabel }}</button>
+            <button type="button" class="bbc-btn bbc-btn--say" (click)="markStep(s.id)">✓ {{ s.buttonLabel }}</button>
+          </div>
+        } @else {
+          <span class="bbc-step-orb" [class]="'tone-' + s.tone" aria-hidden="true">{{ s.icon }}</span>
+          <button type="button" class="bbc-btn" [class]="'bbc-btn--' + s.tone" (click)="markStep(s.id)">
+            {{ s.icon }} {{ s.buttonLabel }}
+          </button>
+        }
+      </div>
+    } @else if (!todayDone()) {
+      <div class="bbc-step-panel tone-green">
+        <p class="bbc-alldone-title">✓ {{ step().allDoneHeading }}</p>
+        <p class="bbc-step-instruction">{{ step().allDoneText }}</p>
+        <button type="button" class="bbc-btn bbc-btn--green" (click)="tapDone()">✓ {{ step().tapDoneLabel }}</button>
+      </div>
+    }
+  </div>
+
+  <!-- Completion -->
+  @if (todayDone()) {
+    <div class="bbc-card bbc-complete">
+      <span class="bbc-complete-star" aria-hidden="true">⭐</span>
+      <h2>{{ step().doneHeading }}</h2>
+      <p class="bbc-complete-text">{{ step().doneText }}</p>
+      <div class="bbc-confidence">
+        <span class="bbc-confidence-label">{{ step().confidenceLabel }}</span>
+        <div class="bbc-confidence-quote">💚 “{{ step().confidenceQuote }}”</div>
+      </div>
+      <p class="bbc-comeback">{{ step().comeBackText }}</p>
+    </div>
+  }
+
+  <!-- Badges -->
+  <div class="bbc-card bbc-badges">
+    <h2>🎖️ {{ step().badgesHeading }}</h2>
+    <div class="bbc-badge-row">
+      @for (b of step().badges; let i = $index; track b.label) {
+        <span class="bbc-badge" [class.active]="i === 0 && todayDone()">{{ b.icon }} {{ b.label }}</span>
+      }
+    </div>
+  </div>
+
+  <p class="bbc-parent-note">👪 {{ step().parentNote }}</p>
+
+  <div class="bbc-nav">
+    <button type="button" class="bbc-btn bbc-btn--green" [disabled]="!todayDone()" (click)="finish()">
+      {{ step().continueLabel }} →
+    </button>
+  </div>
+</div>

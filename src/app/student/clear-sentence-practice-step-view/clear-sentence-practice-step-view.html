@@ -1,0 +1,188 @@
+<div class="csp">
+  <span class="csp-stripe" aria-hidden="true"></span>
+
+  <!-- ─────────────  INTRO  ───────────── -->
+  @if (phase() === 'intro') {
+    <div class="csp-intro">
+      <header class="csp-topbar">
+        <span class="csp-brand">
+          <span class="csp-brand-badge" aria-hidden="true">📖</span>
+          <span class="csp-brand-text">
+            <strong>{{ step().brandName }}</strong>
+            <small>{{ step().brandTagline }}</small>
+          </span>
+        </span>
+        <span class="csp-days-pill">☀ {{ doneCount() }} OF {{ totalDays() }} {{ step().daysDoneNoun }}</span>
+      </header>
+
+      <div class="csp-intro-hero">
+        <div class="csp-intro-copy">
+          <span class="csp-eyebrow">{{ step().eyebrow }}</span>
+          <h1 class="csp-display">
+            <span>{{ step().titleStart }}</span>
+            <span class="csp-accent">{{ step().titleAccent }}</span>
+          </h1>
+          <p class="csp-intro-text">{{ step().introText }}</p>
+          <button type="button" class="csp-cta" (click)="start()">
+            ✦ {{ step().ctaLabel }} <span aria-hidden="true">→</span>
+          </button>
+          <p class="csp-parent-note">👪 {{ step().parentNote }}</p>
+        </div>
+        <div class="csp-intro-art">
+          <img [src]="step().image" [alt]="step().imageAlt" />
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- ─────────────  DAY CHOOSER + LOG  ───────────── -->
+  @if (phase() === 'days') {
+    <div class="csp-days">
+      <div class="csp-days-head">
+        <div>
+          <span class="csp-eyebrow csp-eyebrow--dash">{{ step().chooserEyebrow }}</span>
+          <h1 class="csp-display">
+            <span>{{ step().chooserTitleStart }}</span>
+            <span class="csp-accent">{{ step().chooserTitleAccent }}</span>
+          </h1>
+        </div>
+        <p class="csp-days-sub">{{ step().chooserSubtitle }}</p>
+      </div>
+
+      <div class="csp-day-cards">
+        @for (day of step().days; let i = $index; track day.id) {
+          <button
+            type="button"
+            class="csp-day-card"
+            [class.active]="day.id === activeDayId()"
+            [class.done]="isDayComplete(day)"
+            (click)="selectDay(day)"
+          >
+            <span class="csp-day-card-num">DAY {{ dayNumberLabel(i) }}</span>
+            <span class="csp-day-card-label">{{ day.label }}</span>
+            <span class="csp-day-card-check" aria-hidden="true">{{ isDayComplete(day) ? '●' : '○' }}</span>
+          </button>
+        }
+      </div>
+
+      <p class="csp-parent-note csp-parent-note--inline">👪 {{ step().parentNote }}</p>
+
+      @if (activeDay(); as day) {
+        <div class="csp-day-body">
+          <div class="csp-detail-card">
+            <div class="csp-detail-head">
+              <span class="csp-detail-eyebrow">DAY {{ dayNumberLabel(activeDayNumber() - 1) }} / {{ day.detailEyebrow }}</span>
+              <span class="csp-detail-aside">{{ day.detailAside }}</span>
+            </div>
+            <h2 class="csp-display csp-detail-heading">{{ day.detailHeading }}</h2>
+
+            <div class="csp-doors">
+              @for (door of day.doors; track door.id) {
+                <div class="csp-door" [class]="'tone-' + door.tone">
+                  <span class="csp-door-icon" aria-hidden="true">{{ door.icon }}</span>
+                  <div>
+                    <span class="csp-door-kicker">{{ door.kicker }}</span>
+                    <p class="csp-door-text">{{ door.text }}</p>
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+
+          <div class="csp-log-card">
+            <div class="csp-log-head">
+              <span class="csp-log-icon" aria-hidden="true">✏️</span>
+              <h2 class="csp-display">{{ step().logHeading }}</h2>
+            </div>
+            <p class="csp-log-intro">{{ step().logIntro }}</p>
+
+            <textarea
+              class="csp-log-input"
+              rows="7"
+              [placeholder]="step().logPlaceholder"
+              [value]="activeLog()"
+              [disabled]="activeDayComplete()"
+              (input)="onLogInput($any($event.target).value)"
+            ></textarea>
+
+            <div class="csp-log-meta">
+              <span>{{ activeLogLength() }} characters</span>
+              @if (activeLogLength() > 0) {
+                <span class="csp-saved">● {{ step().savedLabel }}</span>
+              }
+            </div>
+
+            <button
+              type="button"
+              class="csp-mark-btn"
+              [class.done]="activeDayComplete()"
+              [disabled]="activeLogLength() === 0 || activeDayComplete()"
+              (click)="markDayComplete()"
+            >
+              {{ activeDayComplete() ? '✓ ' + step().dayCompleteLabel : '○ ' + step().markDayLabel }}
+            </button>
+          </div>
+        </div>
+      }
+
+      @if (allDaysDone()) {
+        <button type="button" class="csp-cta csp-cta--wide" (click)="goToEndOfWeek()">
+          {{ step().toEndOfWeekLabel }} <span aria-hidden="true">→</span>
+        </button>
+      } @else {
+        <p class="csp-locked-note">Mark all {{ totalDays() }} days complete to open your end-of-week page.</p>
+      }
+    </div>
+  }
+
+  <!-- ─────────────  END OF WEEK  ───────────── -->
+  @if (phase() === 'end') {
+    <div class="csp-end">
+      <div class="csp-end-head">
+        <span class="csp-pill">✦ {{ step().endEyebrow }}</span>
+        <p class="csp-end-intro">{{ step().endIntro }}</p>
+      </div>
+
+      <h1 class="csp-display csp-end-title">
+        <span>{{ step().endTitleStart }}</span>
+        <span>{{ step().endTitleAccent }}</span>
+      </h1>
+
+      <div class="csp-reflect-card">
+        @for (reflection of step().endReflections; let i = $index; track reflection.id) {
+          <div class="csp-reflect-col">
+            <span class="csp-reflect-num">{{ dayNumberLabel(i) }} / REFLECTION</span>
+            <h2 class="csp-display csp-reflect-q">{{ reflection.label }}</h2>
+            <textarea
+              class="csp-reflect-input"
+              rows="4"
+              [placeholder]="reflection.placeholder"
+              [value]="reflectionFor(reflection.id)"
+              (input)="onReflectionInput(reflection.id, $any($event.target).value)"
+            ></textarea>
+          </div>
+        }
+      </div>
+
+      <p class="csp-keep-close">
+        <strong>{{ step().keepClosePrefix }}</strong> {{ step().keepCloseText }}
+      </p>
+
+      <div class="csp-confidence">
+        <span class="csp-confidence-label">Confidence Link</span>
+        <p class="csp-confidence-quote">"{{ step().confidenceQuote }}"</p>
+      </div>
+
+      <p class="csp-parent-note csp-parent-note--inline">👪 {{ step().parentNote }}</p>
+
+      <button
+        type="button"
+        class="csp-cta csp-cta--wide"
+        [disabled]="!allReflectionsDone()"
+        (click)="finish()"
+      >
+        {{ step().finishLabel }} <span aria-hidden="true">→</span>
+      </button>
+    </div>
+  }
+</div>

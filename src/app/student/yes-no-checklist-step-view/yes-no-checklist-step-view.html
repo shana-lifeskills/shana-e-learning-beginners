@@ -1,0 +1,62 @@
+<div class="ynl">
+  <span class="ynl-badge">✨ {{ step().badge }}</span>
+  <h1>{{ step().heading }}</h1>
+  <p class="ynl-subtitle">
+    Choose <span class="ynl-yes-word">{{ step().yesLabel }}</span> or <span class="ynl-no-word">{{ step().noLabel }}</span>.
+  </p>
+
+  <div class="ynl-hero-wrap">
+    <img [src]="step().heroImage" [alt]="step().heroImageAlt" />
+  </div>
+
+  <div class="ynl-questions">
+    @for (question of step().questions; track question.id) {
+      <div class="ynl-card">
+        <div class="ynl-question-row">
+          <span class="ynl-icon">{{ question.icon }}</span>
+          <p class="ynl-prompt">{{ question.prompt }}</p>
+        </div>
+
+        <div class="ynl-answers">
+          <button
+            type="button"
+            class="ynl-answer ynl-answer--yes"
+            [class.selected]="selectionFor(question.id) === 'yes'"
+            [class.correct]="selectionFor(question.id) === 'yes' && stateFor(question.id) === 'correct'"
+            [class.incorrect]="selectionFor(question.id) === 'yes' && stateFor(question.id) === 'incorrect'"
+            [disabled]="isLocked(question.id) || stateFor(question.id) === 'correct'"
+            (click)="selectAnswer(question.id, 'yes', question.correctAnswer)"
+          >
+            ✓ {{ step().yesLabel }}
+          </button>
+          <button
+            type="button"
+            class="ynl-answer ynl-answer--no"
+            [class.selected]="selectionFor(question.id) === 'no'"
+            [class.correct]="selectionFor(question.id) === 'no' && stateFor(question.id) === 'correct'"
+            [class.incorrect]="selectionFor(question.id) === 'no' && stateFor(question.id) === 'incorrect'"
+            [disabled]="isLocked(question.id) || stateFor(question.id) === 'correct'"
+            (click)="selectAnswer(question.id, 'no', question.correctAnswer)"
+          >
+            ✕ {{ step().noLabel }}
+          </button>
+        </div>
+
+        @if (stateFor(question.id) === 'incorrect') {
+          <p class="ynl-try-again">Not quite — give it another try! 💪</p>
+        }
+      </div>
+    }
+  </div>
+
+  <p class="ynl-parent-note">👪 {{ step().parentNote }}</p>
+
+  @if (allCorrect()) {
+    <div class="ynl-done">
+      <p class="ynl-done-headline">🎉 {{ step().feedbackText }}</p>
+      <button type="button" class="btn btn-primary btn-lg-tappable" (click)="finish()">
+        {{ step().continueLabel }}
+      </button>
+    </div>
+  }
+</div>

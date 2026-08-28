@@ -1,0 +1,116 @@
+<div class="lbt">
+  <div class="lbt-hero">
+    <span class="lbt-cloud lbt-cloud--left">☁️</span>
+    <span class="lbt-sun">☀️</span>
+
+    <span class="lbt-badge">{{ step().badge }}</span>
+    <h1><span class="lbt-hero-icon">🦉</span>{{ step().heading }}<span class="lbt-hero-icon">👂</span></h1>
+    <p class="lbt-instructions">{{ step().instructions }}</p>
+
+    <div class="lbt-speech-row">
+      <span class="lbt-mascot-avatar">{{ step().mascotIcon }}</span>
+      <div class="lbt-speech-bubble">
+        <p>
+          @for (segment of mascotMessageSegments(); track $index) {
+            @if (segment.highlight === 'yes') {
+              <span class="lbt-highlight-yes">{{ segment.text }}</span>
+            } @else if (segment.highlight === 'no') {
+              <span class="lbt-highlight-no">{{ segment.text }}</span>
+            } @else {
+              {{ segment.text }}
+            }
+          }
+        </p>
+      </div>
+    </div>
+  </div>
+
+  @for (ci of conversationIndices; track ci) {
+    <div class="lbt-conversation-card">
+      <span class="lbt-conversation-num">{{ ci + 1 }}</span>
+
+      <h2>{{ step().conversationTitlePrefix }} {{ ci + 1 }}</h2>
+      <p class="lbt-conversation-instruction">{{ step().conversationInstruction }}</p>
+
+      <div class="lbt-checklist">
+        @for (item of step().checklistItems; let i = $index; track item.id) {
+          <div class="lbt-checklist-row">
+            <span class="lbt-item-num">{{ i + 1 }}</span>
+            <span class="lbt-item-label">{{ item.label }}</span>
+            <button
+              type="button"
+              class="lbt-toggle"
+              [class.answered-yes]="answerFor(ci, item.id) === 'yes'"
+              [class.answered-not-yet]="answerFor(ci, item.id) === 'not-yet'"
+              (click)="cycleAnswer(ci, item.id)"
+            >
+              @if (answerFor(ci, item.id) === 'yes') {
+                ✓ {{ step().yesLabel }}
+              } @else if (answerFor(ci, item.id) === 'not-yet') {
+                ✕ {{ step().notYetLabel }}
+              } @else {
+                ? Tap to choose
+              }
+            </button>
+          </div>
+        }
+      </div>
+
+      <span class="lbt-divider"></span>
+
+      <div class="lbt-reflection">
+        <h3>⭐ Now think about it…</h3>
+
+        <label>
+          {{ step().easiestLabel }}
+          <input
+            type="text"
+            placeholder="Type your answer here..."
+            [value]="reflectionFor(ci).easiest"
+            (input)="updateReflection(ci, 'easiest', $any($event.target).value)"
+          />
+        </label>
+
+        <label>
+          {{ step().hardestLabel }}
+          <input
+            type="text"
+            placeholder="Type your answer here..."
+            [value]="reflectionFor(ci).hardest"
+            (input)="updateReflection(ci, 'hardest', $any($event.target).value)"
+          />
+        </label>
+
+        <label>
+          {{ step().whyLabel }}
+          <textarea
+            rows="3"
+            placeholder="Tell us why..."
+            [value]="reflectionFor(ci).why"
+            (input)="updateReflection(ci, 'why', $any($event.target).value)"
+          ></textarea>
+        </label>
+      </div>
+    </div>
+  }
+
+  <p class="lbt-parent-note">👪 {{ step().parentNote }}</p>
+
+  <div class="lbt-confidence-card">
+    <h2>{{ step().confidenceHeading }}</h2>
+    <div class="lbt-stars">⭐⭐⭐</div>
+    <p class="lbt-quote">&ldquo;{{ step().confidenceQuote }}&rdquo;</p>
+    <p class="lbt-description">{{ step().confidenceDescription }}</p>
+
+    @if (allChecked()) {
+      <button type="button" class="lbt-continue-btn lbt-continue-btn--active" (click)="finish()">
+        {{ step().continueLabel }}
+      </button>
+    } @else {
+      <button type="button" class="lbt-continue-btn" disabled>{{ step().lockedContinueLabel }}</button>
+    }
+  </div>
+
+  <p class="lbt-footer-text">{{ step().footerText }}</p>
+  <p class="lbt-footer-mascot">{{ step().mascotIcon }} {{ step().footerMascotMessage }}</p>
+</div>

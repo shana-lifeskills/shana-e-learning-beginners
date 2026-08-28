@@ -19,6 +19,29 @@ import { ConfidenceLinkStepView } from '../confidence-link-step-view/confidence-
 import { MatchingGameStepView } from '../matching-game-step-view/matching-game-step-view';
 import { FeelingsMatchStepView } from '../feelings-match-step-view/feelings-match-step-view';
 import { PictureFeelingsQuizStepView } from '../picture-feelings-quiz-step-view/picture-feelings-quiz-step-view';
+import { WarmupQuizStepView } from '../warmup-quiz-step-view/warmup-quiz-step-view';
+import { WarmupVoiceCheckStepView } from '../warmup-voice-check-step-view/warmup-voice-check-step-view';
+import { ChallengePickSayStepView } from '../challenge-pick-say-step-view/challenge-pick-say-step-view';
+import { BraveOrShyWarmupStepView } from '../brave-or-shy-warmup-step-view/brave-or-shy-warmup-step-view';
+import { BraveBodyChallengeStepView } from '../brave-body-challenge-step-view/brave-body-challenge-step-view';
+import { FastOrClearWarmupStepView } from '../fast-or-clear-warmup-step-view/fast-or-clear-warmup-step-view';
+import { SlowTalkChallengeStepView } from '../slow-talk-challenge-step-view/slow-talk-challenge-step-view';
+import { WhatCanIShareStepView } from '../what-can-i-share-step-view/what-can-i-share-step-view';
+import { FinalChallengeStepView } from '../final-challenge-step-view/final-challenge-step-view';
+import { WarmupWhatShouldIDoStepView } from '../warmup-what-should-i-do-step-view/warmup-what-should-i-do-step-view';
+import { WarmupFinishSentenceStepView } from '../warmup-finish-sentence-step-view/warmup-finish-sentence-step-view';
+import { ClearSentencePracticeStepView } from '../clear-sentence-practice-step-view/clear-sentence-practice-step-view';
+import { FeelingsExplorerStepView } from '../feelings-explorer-step-view/feelings-explorer-step-view';
+import { FeelingsTrackerStepView } from '../feelings-tracker-step-view/feelings-tracker-step-view';
+import { PoliteOrNotStepView } from '../polite-or-not-step-view/polite-or-not-step-view';
+import { IdeaPresentationStepView } from '../idea-presentation-step-view/idea-presentation-step-view';
+import { ListeningPromiseTrackerStepView } from '../listening-promise-tracker-step-view/listening-promise-tracker-step-view';
+import { DetectiveChallengeStepView } from '../detective-challenge-step-view/detective-challenge-step-view';
+import { MissionBriefingStepView } from '../mission-briefing-step-view/mission-briefing-step-view';
+import { YesNoChecklistStepView } from '../yes-no-checklist-step-view/yes-no-checklist-step-view';
+import { ListeningBodyTrackerStepView } from '../listening-body-tracker-step-view/listening-body-tracker-step-view';
+import { FeelingsPictureChoiceStepView } from '../feelings-picture-choice-step-view/feelings-picture-choice-step-view';
+import { ChallengeFeelingReportStepView } from '../challenge-feeling-report-step-view/challenge-feeling-report-step-view';
 import { KindWatchChallengeStepView } from '../kind-watch-challenge-step-view/kind-watch-challenge-step-view';
 import { SortingGameStepView } from '../sorting-game-step-view/sorting-game-step-view';
 import { KindWordsChallengeStepView } from '../kind-words-challenge-step-view/kind-words-challenge-step-view';
@@ -91,6 +114,29 @@ type PlayerView = 'map' | 'lesson-welcome' | 'exercise' | 'module-complete';
     MatchingGameStepView,
     FeelingsMatchStepView,
     PictureFeelingsQuizStepView,
+    WarmupQuizStepView,
+    WarmupVoiceCheckStepView,
+    ChallengePickSayStepView,
+    BraveOrShyWarmupStepView,
+    BraveBodyChallengeStepView,
+    FastOrClearWarmupStepView,
+    SlowTalkChallengeStepView,
+    WhatCanIShareStepView,
+    FinalChallengeStepView,
+    WarmupWhatShouldIDoStepView,
+    WarmupFinishSentenceStepView,
+    ClearSentencePracticeStepView,
+    FeelingsExplorerStepView,
+    FeelingsTrackerStepView,
+    PoliteOrNotStepView,
+    IdeaPresentationStepView,
+    ListeningPromiseTrackerStepView,
+    DetectiveChallengeStepView,
+    MissionBriefingStepView,
+    YesNoChecklistStepView,
+    ListeningBodyTrackerStepView,
+    FeelingsPictureChoiceStepView,
+    ChallengeFeelingReportStepView,
     KindWatchChallengeStepView,
     SortingGameStepView,
     KindWordsChallengeStepView,
@@ -239,6 +285,19 @@ export class ModulePlayer implements OnInit {
     switch (exercise.type) {
       case 'feelings-match':
       case 'picture-feelings-quiz':
+      case 'warmup-quiz':
+      case 'warmup-voice-check':
+      case 'challenge-pick-say':
+      case 'brave-or-shy-warmup':
+      case 'brave-body-challenge':
+      case 'fast-or-clear-warmup':
+      case 'slow-talk-challenge':
+      case 'what-can-i-share':
+      case 'final-challenge':
+      case 'warmup-what-should-i-do':
+      case 'warmup-finish-sentence':
+      case 'feelings-explorer':
+      case 'polite-or-not':
       case 'yes-no-quiz':
       case 'sorting-game':
       case 'place-sort-game':
@@ -255,6 +314,9 @@ export class ModulePlayer implements OnInit {
       case 'victory-dance':
       case 'memory-game-intro':
       case 'memory-game-setup':
+      case 'mission-briefing':
+      case 'yes-no-checklist':
+      case 'feelings-picture-choice':
         return 'Warm-Up';
       case 'story':
       case 'story-tabs':
@@ -286,6 +348,7 @@ export class ModulePlayer implements OnInit {
       case 'weekly-challenge':
       case 'challenge-of-the-week':
       case 'challenge-confidence-week':
+      case 'detective-challenge':
       case 'goal-challenge-tracker':
       case 'daily-feelings-checkin':
       case 'kind-watch-challenge':
@@ -295,6 +358,12 @@ export class ModulePlayer implements OnInit {
       case 'kindness-corner-challenge':
       case 'weekly-challenge-showcase':
       case 'kindness-banner-challenge':
+      case 'listening-body-tracker':
+      case 'challenge-feeling-report':
+      case 'listening-promise-tracker':
+      case 'clear-sentence-practice':
+      case 'feelings-tracker':
+      case 'idea-presentation':
         return 'Challenge of the Week';
       case 'confidence-link':
       case 'confidence-planner':
@@ -352,6 +421,16 @@ export class ModulePlayer implements OnInit {
   }
 
   /** Starts the lesson's step sequence — warm-up, story, discussion, activity, challenge, questions — in the order the trainer script defines. */
+  /** Reads a short line aloud with the browser's speech synthesis, for "Listen" buttons on welcome screens. */
+  speakText(text: string): void {
+    const speech = typeof window !== 'undefined' ? window.speechSynthesis : undefined;
+    if (!speech) return;
+    speech.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.rate = 0.95;
+    speech.speak(utterance);
+  }
+
   beginLesson(): void {
     const lesson = this.activeLesson();
     const progress = this.progress();

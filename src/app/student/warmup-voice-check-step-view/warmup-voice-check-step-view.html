@@ -1,0 +1,61 @@
+<div class="vc">
+  <h1 class="vc-title"><span class="vc-title-badge">⭐</span>{{ step().title }}</h1>
+
+  <div class="vc-intro">
+    <div class="vc-intro-image">
+      <img [src]="step().introImage" [alt]="step().introImageAlt" />
+    </div>
+    <div class="vc-intro-copy">
+      <p class="vc-intro-heading">{{ step().introHeading }}</p>
+      <p class="vc-intro-text">{{ step().introText }}</p>
+    </div>
+  </div>
+
+  @if (currentQuestion(); as question) {
+    <div class="vc-card">
+      <p class="vc-prompt">
+        <span class="vc-prompt-number">{{ activeIndex() + 1 }}</span>
+        {{ question.prompt }}
+      </p>
+
+      <button type="button" class="vc-listen" (click)="listen()">
+        <span class="vc-listen-icon" aria-hidden="true">🔊</span>
+        <span class="vc-listen-label">{{ step().listenLabel }}</span>
+      </button>
+
+      <div class="vc-options">
+        @for (option of question.options; let i = $index; track option.id) {
+          <button
+            type="button"
+            class="vc-option"
+            [class.correct]="optionState(option) === 'correct'"
+            [class.incorrect]="optionState(option) === 'incorrect'"
+            [disabled]="locked() && optionState(option) === null"
+            (click)="selectOption(option)"
+          >
+            <span class="vc-option-icon">{{ option.icon }}</span>
+            <span class="vc-option-text">{{ letterFor(i) }}. {{ option.text }}</span>
+          </button>
+        }
+      </div>
+
+      @if (feedback() === 'incorrect') {
+        <p class="vc-try-again">Not quite — give it another try! 💪</p>
+      }
+      @if (feedback() === 'correct') {
+        <p class="vc-feedback-correct">{{ question.feedbackText }}</p>
+      }
+
+      <p class="vc-parent-note">👪 {{ step().parentNote }}</p>
+    </div>
+
+    <p class="vc-footer-note">{{ step().footerNote }}</p>
+  } @else {
+    <div class="vc-card vc-done">
+      <p class="vc-done-headline">🎉 Great job — you got every answer right!</p>
+      <button type="button" class="btn btn-primary btn-lg-tappable" (click)="finish()">
+        {{ step().continueLabel }}
+      </button>
+    </div>
+  }
+</div>

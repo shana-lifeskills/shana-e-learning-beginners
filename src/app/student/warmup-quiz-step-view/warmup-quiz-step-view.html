@@ -1,0 +1,52 @@
+<div class="wq">
+  <div class="wq-hero">
+    <div class="wq-hero-copy">
+      <span class="wq-badge">{{ step().badge }}</span>
+      <h1>{{ step().heading }}</h1>
+      <p class="wq-subtitle">{{ step().subtitle }}</p>
+    </div>
+    <div class="wq-hero-image-wrap">
+      <img [src]="step().heroImage" [alt]="step().heroImageAlt" />
+    </div>
+  </div>
+
+  @if (currentQuestion(); as question) {
+    <div class="wq-card">
+      <p class="wq-prompt">Q{{ activeIndex() + 1 }}. {{ question.prompt }}</p>
+
+      <div class="wq-options">
+        @for (option of question.options; let i = $index; track option.id) {
+          <button
+            type="button"
+            class="wq-option"
+            [class.correct]="optionState(option) === 'correct'"
+            [class.incorrect]="optionState(option) === 'incorrect'"
+            [disabled]="locked() && optionState(option) === null"
+            (click)="selectOption(option)"
+          >
+            <span class="wq-option-letter">{{ letterFor(i) }}</span>
+            <span class="wq-option-text">{{ option.text }}</span>
+          </button>
+        }
+      </div>
+
+      @if (feedback() === 'incorrect') {
+        <p class="wq-try-again">Not quite — give it another try! 💪</p>
+      }
+      @if (feedback() === 'correct') {
+        <p class="wq-feedback-correct">{{ question.feedbackText }}</p>
+      }
+
+      <p class="wq-parent-note">👪 {{ step().parentNote }}</p>
+    </div>
+
+    <p class="wq-footer-note">{{ step().footerNote }}</p>
+  } @else {
+    <div class="wq-card wq-done">
+      <p class="wq-done-headline">🎉 Great job — you got every answer right!</p>
+      <button type="button" class="btn btn-primary btn-lg-tappable" (click)="finish()">
+        {{ step().continueLabel }}
+      </button>
+    </div>
+  }
+</div>

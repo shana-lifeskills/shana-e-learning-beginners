@@ -1,0 +1,90 @@
+<div class="cfr">
+  <span class="cfr-badge">{{ step().badge }}</span>
+  <h1>
+    {{ step().title }}
+    @if (step().titleEmoji) {
+      <span class="cfr-title-emoji">{{ step().titleEmoji }}</span>
+    }
+  </h1>
+  <p class="cfr-subtitle">
+    {{ step().subtitleBefore }}<span class="cfr-highlight">{{ step().subtitleHighlight }}</span>{{ step().subtitleAfter }}
+  </p>
+
+  <div class="cfr-card">
+    <div class="cfr-mission">
+      <span class="cfr-mission-icon">{{ step().missionIcon }}</span>
+      <div>
+        <h2>{{ step().missionHeading }}</h2>
+        <p>
+          @for (run of step().missionText; track $index) {
+            @if (run.bold) {
+              <strong>{{ run.text }}</strong>
+            } @else {
+              {{ run.text }}
+            }
+          }
+        </p>
+      </div>
+    </div>
+
+    <div class="cfr-sample-box">
+      <h3>{{ step().sampleHeading }}</h3>
+      <div class="cfr-sample-row">
+        @for (sentence of step().sampleSentences; track sentence) {
+          <span class="cfr-sample-chip">"{{ sentence }}"</span>
+        }
+      </div>
+    </div>
+
+    <div class="cfr-report-heading">
+      <span class="cfr-report-icon">{{ step().reportIcon }}</span>
+      <h3>{{ step().reportHeading }}</h3>
+    </div>
+
+    @if (step().fields[0]; as first) {
+      <div class="cfr-field cfr-field-full">
+        <label [for]="first.id">{{ first.label }}</label>
+        <input
+          type="text"
+          [id]="first.id"
+          [placeholder]="first.placeholder"
+          [disabled]="locked()"
+          [value]="draft()[first.id] ?? ''"
+          (input)="updateField(first.id, $any($event.target).value)"
+        />
+      </div>
+    }
+
+    <div class="cfr-field-row">
+      @for (field of step().fields.slice(1); track field.id) {
+        <div class="cfr-field">
+          <label [for]="field.id">{{ field.label }}</label>
+          <input
+            type="text"
+            [id]="field.id"
+            [placeholder]="field.placeholder"
+            [disabled]="locked()"
+            [value]="draft()[field.id] ?? ''"
+            (input)="updateField(field.id, $any($event.target).value)"
+          />
+        </div>
+      }
+    </div>
+  </div>
+
+  <div class="cfr-confidence-card">
+    <span class="cfr-confidence-label">{{ step().confidenceLabel }}</span>
+    <p class="cfr-confidence-quote">"{{ step().confidenceQuote }}"</p>
+  </div>
+
+  <button type="button" class="btn cfr-complete-btn" [disabled]="!canProceed() || locked()" (click)="finish()">
+    🔊 {{ step().completeLabel }}
+  </button>
+
+  @if (!canProceed()) {
+    <p class="cfr-gate-hint">Fill in all three answers above to finish your challenge.</p>
+  }
+
+  <p class="cfr-footer-text">{{ step().footerText }}</p>
+  <p class="cfr-parent-note">👪 {{ step().parentNote }}</p>
+</div>

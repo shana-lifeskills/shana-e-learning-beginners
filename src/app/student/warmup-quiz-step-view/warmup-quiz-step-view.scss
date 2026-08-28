@@ -1,0 +1,180 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+.wq {
+  max-width: 46rem;
+  margin: 0 auto;
+}
+
+.wq-hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  background: linear-gradient(120deg, #d9ecdf, #f7edc9);
+  border-radius: v.$border-radius-xl;
+  padding: 2.25rem;
+  margin-bottom: 2rem;
+
+  @media (max-width: 640px) {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+.wq-hero-copy {
+  flex: 1;
+}
+
+.wq-badge {
+  display: inline-block;
+  background: v.$color-white;
+  color: v.$color-coral;
+  font-weight: 800;
+  font-size: 0.9rem;
+  padding: 0.5rem 1.25rem;
+  border-radius: v.$border-radius-pill;
+  margin-bottom: 1rem;
+}
+
+.wq-hero-copy h1 {
+  @include m.playful-heading;
+  font-size: 2.1rem;
+  color: v.$color-navy-text;
+  margin-bottom: 0.6rem;
+}
+
+.wq-subtitle {
+  color: rgba(43, 45, 66, 0.6);
+  font-weight: 600;
+  font-size: 1.05rem;
+  margin: 0;
+  max-width: 24rem;
+}
+
+.wq-hero-image-wrap {
+  flex-shrink: 0;
+  width: 14rem;
+  border-radius: v.$border-radius-xl;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(43, 45, 66, 0.1);
+
+  img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+}
+
+.wq-card {
+  @include m.bouncy-card;
+  background: v.$color-white;
+  padding: 2rem;
+
+  &:hover { transform: none; box-shadow: 0 6px 0 rgba(0, 0, 0, 0.08); }
+}
+
+.wq-prompt {
+  margin: 0 0 1.5rem;
+  font-family: v.$headings-font-family;
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: v.$color-navy-text;
+}
+
+.wq-options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+
+  @media (max-width: 560px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.wq-option {
+  @include m.tappable;
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  background: #faf1de;
+  border: 2px solid transparent;
+  border-radius: v.$border-radius-pill;
+  padding: 0.85rem 1.25rem;
+  text-align: left;
+
+  &:hover:not(:disabled) { border-color: #4d8bf5; }
+  &:disabled { cursor: default; }
+
+  &.correct {
+    background: rgba(107, 203, 119, 0.2);
+    border-color: v.$color-leaf;
+    animation: bounce-in 0.4s ease;
+  }
+
+  &.incorrect {
+    background: rgba(255, 143, 163, 0.2);
+    border-color: v.$color-bubble-pink;
+    animation: shake-no 0.4s ease;
+  }
+}
+
+.wq-option-letter {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 2.1rem;
+  height: 2.1rem;
+  border-radius: 50%;
+  background: v.$color-white;
+  color: v.$color-navy-text;
+  font-weight: 800;
+  font-size: 0.95rem;
+}
+
+.wq-option-text {
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: v.$color-navy-text;
+}
+
+.wq-try-again {
+  font-weight: 700;
+  color: v.$color-coral;
+  margin: 0 0 1rem;
+}
+
+.wq-feedback-correct {
+  font-weight: 700;
+  color: v.$color-leaf;
+  margin: 0 0 1rem;
+}
+
+.wq-parent-note {
+  color: rgba(43, 45, 66, 0.5);
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.wq-footer-note {
+  text-align: center;
+  color: rgba(43, 45, 66, 0.55);
+  font-weight: 600;
+  font-size: 1rem;
+  margin: 1.5rem 0 0;
+}
+
+.wq-done {
+  text-align: center;
+}
+
+.wq-done-headline {
+  font-family: v.$headings-font-family;
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: v.$color-navy-text;
+  margin-bottom: 1.5rem;
+}

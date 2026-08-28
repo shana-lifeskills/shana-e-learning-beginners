@@ -63,7 +63,388 @@
       @case ('lesson-welcome') {
         @if (activeLesson(); as lesson) {
           <div class="welcome-shell">
-            @if (lesson.warmupPreviewWelcome; as wpw) {
+            @if (lesson.tinyVoicesWelcome; as tvw) {
+              <div class="tvw">
+                <header class="tvw-topbar">
+                  <span class="tvw-brand">
+                    <span class="tvw-brand-badge" aria-hidden="true">📖</span>
+                    <strong>{{ tvw.brandName }}</strong>
+                  </span>
+                  <span class="tvw-week-badge">✦ {{ tvw.weekBadge }}</span>
+                </header>
+
+                <div class="tvw-hero">
+                  <div class="tvw-hero-copy">
+                    <span class="tvw-week-pill">{{ tvw.weekLessonPill }}</span>
+                    <h1><span class="tvw-title-main">{{ tvw.titleStart }}</span>&nbsp;<span class="tvw-title-accent">{{ tvw.titleAccent }}</span></h1>
+                    <p class="tvw-subtitle">{{ tvw.subtitle }}</p>
+
+                    <div class="tvw-goal-card">
+                      <span class="tvw-goal-icon" aria-hidden="true">✏️</span>
+                      <div>
+                        <h2>{{ tvw.goalHeading }}</h2>
+                        <p>{{ tvw.goalText }}</p>
+                      </div>
+                    </div>
+
+                    @if (isCompletedLessonWelcome()) {
+                      @if (nextLesson(); as next) {
+                        <button type="button" class="btn tvw-start-btn" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+                      } @else {
+                        <button type="button" class="btn tvw-start-btn" (click)="backToMap()">Back to My Modules →</button>
+                      }
+                      <button type="button" class="review-lesson-link" (click)="beginLesson()">↺ Review this lesson</button>
+                    } @else {
+                      <button type="button" class="btn tvw-start-btn" (click)="beginLesson()">{{ tvw.startLabel }} →</button>
+                    }
+                  </div>
+
+                  <div class="tvw-hero-art">
+                    <span class="tvw-hero-bubble">{{ tvw.speechBubble }}</span>
+                    <div class="tvw-hero-image"><img [src]="tvw.image" [alt]="tvw.imageAlt" /></div>
+                  </div>
+                </div>
+
+                <div class="tvw-footer">
+                  @for (check of tvw.footerChecks; track check) {
+                    <span class="tvw-footer-check">✓ {{ check }}</span>
+                  }
+                </div>
+              </div>
+            } @else if (lesson.growKinderWelcome; as gkw) {
+              <div class="gkw">
+                <span class="gkw-week-pill">✦ {{ gkw.weekPill }}</span>
+                <h1><span class="gkw-title-main">{{ gkw.titleStart }}</span><br /><span class="gkw-title-accent">{{ gkw.titleAccent }}</span></h1>
+
+                <div class="gkw-art">
+                  <img [src]="gkw.image" [alt]="gkw.imageAlt" />
+                  <span class="gkw-bubble">
+                    <strong>{{ gkw.speechBubbleStrong }}</strong>
+                    {{ gkw.speechBubbleText }}
+                  </span>
+                </div>
+
+                <div class="gkw-learn-card">
+                  <div class="gkw-learn-head">
+                    <span class="gkw-learn-icon" aria-hidden="true">✦</span>
+                    <h2>{{ gkw.learnHeading }}</h2>
+                  </div>
+                  <p class="gkw-objective">@for (seg of gkw.objectiveSegments; track $index) {<span [class.orange]="seg.color === 'orange'" [class.pink]="seg.color === 'pink'">{{ seg.text }}</span>}</p>
+                </div>
+
+                <div class="gkw-cards">
+                  @for (card of gkw.cards; track card.title) {
+                    <div class="gkw-card">
+                      <span class="gkw-card-icon" [class]="'tone-' + card.tone" aria-hidden="true">{{ card.icon }}</span>
+                      <h3>{{ card.title }}</h3>
+                      <p>{{ card.text }}</p>
+                    </div>
+                  }
+                </div>
+
+                @if (isCompletedLessonWelcome()) {
+                  @if (nextLesson(); as next) {
+                    <button type="button" class="btn gkw-start-btn" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+                  } @else {
+                    <button type="button" class="btn gkw-start-btn" (click)="backToMap()">Back to My Modules →</button>
+                  }
+                  <button type="button" class="review-lesson-link" (click)="beginLesson()">↺ Review this lesson</button>
+                } @else {
+                  <button type="button" class="btn gkw-start-btn" (click)="beginLesson()">{{ gkw.startLabel }} →</button>
+                }
+
+                <p class="gkw-tagline">♡ {{ gkw.footerTagline }} ♡</p>
+              </div>
+            } @else if (lesson.littleLanternWelcome; as llw) {
+              <div class="llw">
+                <header class="llw-topbar">
+                  <span class="llw-brand">
+                    <span class="llw-brand-badge" aria-hidden="true">💛</span>
+                    <strong>{{ llw.brandName }}</strong>
+                  </span>
+                  <span class="llw-week-marker">● {{ llw.weekMarker }}</span>
+                </header>
+
+                <div class="llw-hero">
+                  <div class="llw-hero-copy">
+                    <span class="llw-eyebrow">{{ llw.eyebrow }}</span>
+                    <h1><span class="llw-title-main">{{ llw.titleStart }}</span> <span class="llw-title-accent">{{ llw.titleAccent }}</span></h1>
+                    <p class="llw-subtitle">{{ llw.subtitle }}</p>
+
+                    @if (isCompletedLessonWelcome()) {
+                      @if (nextLesson(); as next) {
+                        <button type="button" class="btn llw-start-btn" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+                      } @else {
+                        <button type="button" class="btn llw-start-btn" (click)="backToMap()">Back to My Modules →</button>
+                      }
+                      <button type="button" class="review-lesson-link" (click)="beginLesson()">↺ Review this lesson</button>
+                    } @else {
+                      <button type="button" class="btn llw-start-btn" (click)="beginLesson()">{{ llw.startLabel }} <span aria-hidden="true">→</span></button>
+                    }
+
+                    <p class="llw-lock-line">🔒 {{ llw.lockLine }}</p>
+                  </div>
+
+                  <div class="llw-hero-art">
+                    <span class="llw-hero-bubble">{{ llw.speechBubble }}</span>
+                    <div class="llw-hero-image"><img [src]="llw.image" [alt]="llw.imageAlt" /></div>
+                  </div>
+                </div>
+
+                <div class="llw-objective-card">
+                  <div class="llw-objective-head">
+                    <span class="llw-objective-kicker">{{ llw.objectiveKicker }}</span>
+                    <h2>{{ llw.objectiveHeading }}</h2>
+                  </div>
+                  <p>{{ llw.objectiveText }}</p>
+                </div>
+              </div>
+            } @else if (lesson.speakUpClubWelcome; as scw) {
+              <div class="scw">
+                <header class="scw-topbar">
+                  <span class="scw-brand">
+                    <span class="scw-brand-badge" aria-hidden="true">✦</span>
+                    <span>
+                      <strong>{{ scw.brandName }}</strong>
+                      <small>{{ scw.brandTagline }}</small>
+                    </span>
+                  </span>
+                  <span class="scw-week-of">📖 {{ scw.weekOfLabel }}</span>
+                </header>
+
+                <div class="scw-hero">
+                  <div class="scw-hero-copy">
+                    <span class="scw-week-pill">✦ {{ scw.weekPill }}</span>
+                    <h1><span class="scw-title-main">{{ scw.titleStart }}</span>&nbsp;<span class="scw-title-accent">{{ scw.titleAccent }}</span></h1>
+                    <p class="scw-intro">@for (seg of scw.introSegments; track $index) {<span [class.bold]="seg.bold">{{ seg.text }}</span>}</p>
+                    <div class="scw-hero-actions">
+                      <button type="button" class="btn scw-begin-btn" (click)="beginLesson()">{{ scw.beginLabel }} →</button>
+                      <button type="button" class="scw-listen-btn" (click)="speakText(scw.goalText)">🔊 {{ scw.listenLabel }}</button>
+                    </div>
+                    <p class="scw-meta">
+                      <span>👥 {{ scw.ageLabel }}</span>
+                      <span class="scw-meta-dot">•</span>
+                      <span>🎤 {{ scw.durationLabel }}</span>
+                    </p>
+                  </div>
+                  <div class="scw-hero-art">
+                    <div class="scw-hero-image"><img [src]="scw.image" [alt]="scw.imageAlt" /></div>
+                    <span class="scw-hero-bubble">{{ scw.speechBubble }}</span>
+                  </div>
+                </div>
+
+                <div class="scw-goal">
+                  <span class="scw-goal-icon" aria-hidden="true">💡</span>
+                  <div>
+                    <h2>{{ scw.goalHeading }}</h2>
+                    <p>{{ scw.goalText }}</p>
+                  </div>
+                </div>
+
+                <div class="scw-recap">
+                  <div class="scw-recap-head">
+                    <span class="scw-recap-icon" aria-hidden="true">🔊</span>
+                    <h2>{{ scw.recapHeading }}</h2>
+                  </div>
+                  <span class="scw-recap-eyebrow">{{ scw.recapEyebrow }}</span>
+                  <div class="scw-recap-grid">
+                    @for (card of scw.recapCards; track card.label) {
+                      <div class="scw-recap-card" [class]="'tone-' + card.tone">
+                        <span class="scw-recap-card-label">{{ card.icon }} {{ card.label }}</span>
+                        <p>{{ card.text }}</p>
+                      </div>
+                    }
+                  </div>
+                </div>
+
+                <div class="scw-steps">
+                  <h2>{{ scw.stepsHeading }}</h2>
+                  <p class="scw-steps-sub">{{ scw.stepsSub }}</p>
+                  <div class="scw-steps-grid">
+                    @for (stepCard of scw.steps; let i = $index; track stepCard.title) {
+                      <div class="scw-step-card">
+                        <span class="scw-step-num">{{ i + 1 }}</span>
+                        <span class="scw-step-icon" [class]="'tone-' + stepCard.tone" aria-hidden="true">{{ stepCard.icon }}</span>
+                        <h3>{{ stepCard.title }}</h3>
+                        <p>{{ stepCard.text }}</p>
+                      </div>
+                    }
+                  </div>
+                </div>
+
+                <div class="scw-cta">
+                  <h2>{{ scw.ctaHeading }}</h2>
+                  <p>{{ scw.ctaText }}</p>
+                  @if (isCompletedLessonWelcome()) {
+                    @if (nextLesson(); as next) {
+                      <button type="button" class="scw-cta-btn" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+                    } @else {
+                      <button type="button" class="scw-cta-btn" (click)="backToMap()">Back to My Modules →</button>
+                    }
+                  } @else {
+                    <button type="button" class="scw-cta-btn" (click)="beginLesson()">{{ scw.ctaButtonLabel }} →</button>
+                  }
+                </div>
+
+                <p class="scw-footer">{{ scw.footerText }}</p>
+              </div>
+            } @else if (lesson.speakUpWelcome; as suw) {
+              <div class="speakup-welcome">
+                <span class="suw-week-pill">{{ suw.weekPill }}</span>
+
+                <div class="suw-row">
+                  <div class="suw-card suw-title-card">
+                    <h1>{{ suw.title }}</h1>
+                    <div class="suw-illustration">
+                      <img [src]="suw.image" [alt]="suw.imageAlt" />
+                      <span class="suw-bubble" aria-hidden="true">
+                        <span class="suw-bubble-dots">•••</span>
+                        <span class="suw-owl">🦉</span>
+                      </span>
+                    </div>
+                    <p class="suw-subtitle">{{ suw.subtitle }}</p>
+                  </div>
+
+                  <div class="suw-card suw-learn-card">
+                    <div class="suw-learn-head">
+                      <span class="suw-learn-icon" aria-hidden="true">📢</span>
+                      <h2>{{ suw.learnHeading }}</h2>
+                    </div>
+                    <p class="suw-learn-intro">{{ suw.learnIntro }}</p>
+                    <ol class="suw-learn-list">
+                      @for (point of suw.learnPoints; let i = $index; track point) {
+                        <li><span class="suw-learn-num">{{ i + 1 }}</span>{{ point }}</li>
+                      }
+                    </ol>
+                  </div>
+                </div>
+
+                <div class="suw-card suw-recap-card">
+                  <div class="suw-recap-head">
+                    <span class="suw-recap-icon" aria-hidden="true">📖</span>
+                    <h2>{{ suw.recapLabel }}</h2>
+                  </div>
+                  <div class="suw-recap-box">
+                    <span class="suw-recap-owl" aria-hidden="true">🦉</span>
+                    <div>
+                      <p class="suw-recap-quote">“{{ suw.recapQuote }}”</p>
+                      <p class="suw-recap-text">{{ suw.recapText }}</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="suw-cta">
+                  @if (isCompletedLessonWelcome()) {
+                    @if (nextLesson(); as next) {
+                      <button type="button" class="btn suw-start-btn" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+                    } @else {
+                      <button type="button" class="btn suw-start-btn" (click)="backToMap()">Back to My Modules →</button>
+                    }
+                    <button type="button" class="review-lesson-link" (click)="beginLesson()">↺ Review this lesson</button>
+                  } @else {
+                    <button type="button" class="btn suw-start-btn" (click)="beginLesson()">📣 {{ suw.startLabel }}</button>
+                    <p class="suw-start-caption">{{ suw.startCaption }}</p>
+                  }
+                </div>
+
+                <p class="suw-hoot"><span class="suw-owl" aria-hidden="true">🦉</span> {{ suw.hootMessage }}</p>
+              </div>
+            } @else if (lesson.dailyGoalWelcome; as dgw) {
+              <div class="daily-goal-welcome">
+                <span class="dgw-badge-pill">{{ dgw.badgeIcon }} {{ dgw.badgeLabel }}</span>
+                <h1><span class="dgw-title-main">{{ dgw.titleMain }}</span> <span class="dgw-title-accent">{{ dgw.titleAccent }}</span></h1>
+                <p class="dgw-subtitle">{{ dgw.subtitle }}</p>
+
+                <div class="dgw-cards">
+                  <div class="dgw-card">
+                    <span class="dgw-card-icon dgw-card-icon--blue">{{ dgw.objectiveIcon }}</span>
+                    <h2>{{ dgw.objectiveHeading }}</h2>
+                    <p>{{ dgw.objectiveText }}</p>
+                  </div>
+                  <div class="dgw-card">
+                    <span class="dgw-card-icon dgw-card-icon--peach">{{ dgw.recapIcon }}</span>
+                    <h2>{{ dgw.recapHeading }}</h2>
+                    <p>{{ dgw.recapText }}</p>
+                  </div>
+                </div>
+
+                @if (isCompletedLessonWelcome()) {
+                  @if (nextLesson(); as next) {
+                    <button type="button" class="btn dgw-start-btn" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+                  } @else {
+                    <button type="button" class="btn dgw-start-btn" (click)="backToMap()">Back to My Modules →</button>
+                  }
+                  <button type="button" class="review-lesson-link" (click)="beginLesson()">↺ Review this lesson</button>
+                } @else {
+                  <button type="button" class="btn dgw-start-btn" (click)="beginLesson()">{{ dgw.startLabel }} →</button>
+                }
+              </div>
+            } @else if (lesson.quickRecapWelcome; as qrw) {
+              <div class="quick-recap-welcome">
+                <div class="qrw-hero">
+                  <div class="qrw-hero-image-wrap">
+                    <img [src]="qrw.image" [alt]="qrw.imageAlt" />
+                  </div>
+
+                  <div class="qrw-hero-copy">
+                    <span class="qrw-eyebrow">{{ qrw.eyebrow }}</span>
+                    <h1><span class="qrw-title-main">{{ qrw.titleStart }}</span>&nbsp;<span class="qrw-title-accent">{{ qrw.titleAccent }}</span></h1>
+                    <p class="qrw-subtitle">{{ qrw.subtitle }}</p>
+
+                    <div class="qrw-cta-row">
+                      @if (isCompletedLessonWelcome()) {
+                        @if (nextLesson(); as next) {
+                          <button type="button" class="btn qrw-start-btn" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+                        } @else {
+                          <button type="button" class="btn qrw-start-btn" (click)="backToMap()">Back to My Modules →</button>
+                        }
+                      } @else {
+                        <button type="button" class="btn qrw-start-btn" (click)="beginLesson()">{{ qrw.startLabel }}</button>
+                      }
+                      <span class="qrw-objective-pill">{{ qrw.objectiveIcon }} {{ qrw.objectiveLabel }} {{ qrw.objectiveText }}</span>
+                    </div>
+
+                    @if (isCompletedLessonWelcome()) {
+                      <button type="button" class="review-lesson-link" (click)="beginLesson()">↺ Review this lesson</button>
+                    }
+                  </div>
+                </div>
+
+                <div class="qrw-below">
+                  <div class="qrw-recap-card">
+                    <h2><span class="qrw-recap-icon">{{ qrw.recapIcon }}</span>{{ qrw.recapHeading }}</h2>
+                    <p>{{ qrw.recapIntro }}</p>
+
+                    <div class="qrw-recap-items">
+                      @for (item of qrw.recapItems; track item.label) {
+                        <div class="qrw-recap-item">
+                          <span class="qrw-recap-item-icon">{{ item.icon }}</span>
+                          <strong>{{ item.label }}</strong>
+                        </div>
+                      }
+                    </div>
+                  </div>
+
+                  <div class="qrw-preview-grid">
+                    @for (card of qrw.previewCards; track card.title) {
+                      <div class="qrw-preview-card">
+                        <span class="qrw-preview-icon" [style.background]="card.iconBg">{{ card.icon }}</span>
+                        <h3>{{ card.title }}</h3>
+                        <p>{{ card.description }}</p>
+                      </div>
+                    }
+                  </div>
+                </div>
+
+                <div class="qrw-banner">
+                  <div>
+                    <h2>{{ qrw.bannerHeading }}</h2>
+                    <p>{{ qrw.bannerText }}</p>
+                  </div>
+                  <span class="qrw-banner-icon">{{ qrw.bannerIcon }}</span>
+                </div>
+              </div>
+            } @else if (lesson.warmupPreviewWelcome; as wpw) {
               <div class="warmup-preview-welcome">
                 <span class="wpw-week-pill">{{ wpw.weekPillIcon }} {{ wpw.weekPill }}</span>
                 <h1>{{ wpw.title }}</h1>
@@ -476,30 +857,95 @@
                 }
               </div>
             } @else if (lesson.introWelcome; as iw) {
+              @if (iw.layout === 'centered') {
+              <div class="intro-welcome-centered">
+                <span class="iwc-week"><span class="iwc-star">☆</span>{{ iw.weekPill }}<span class="iwc-star">☆</span></span>
+
+                <div class="iwc-image">
+                  <img [src]="iw.image" [alt]="iw.imageAlt" />
+                </div>
+
+                <h1>{{ iw.titleStart }} {{ iw.titleAccent }}</h1>
+                <p class="iwc-subtitle">{{ iw.subtitle }}</p>
+
+                <div class="iwc-card">
+                  <div class="iwc-card-head">
+                    <span class="iwc-card-icon"><span class="iwc-card-icon-glyph">{{ iw.objectiveIcon }}</span></span>
+                    <h2>{{ iw.objectiveHeading }}</h2>
+                  </div>
+                  <p>{{ iw.objectiveText }}</p>
+                </div>
+
+                @if (iw.recapText) {
+                  <div class="iwc-card iwc-card--recap">
+                    <div class="iwc-card-head">
+                      <span class="iwc-card-icon iwc-card-icon--muted"><span class="iwc-card-icon-glyph">{{ iw.recapIcon }}</span></span>
+                      <h2>{{ iw.recapHeading }}</h2>
+                    </div>
+                    <p>{{ iw.recapText }}</p>
+                  </div>
+                }
+
+                @if (isCompletedLessonWelcome()) {
+                  @if (nextLesson(); as next) {
+                    <button type="button" class="btn iwc-start-btn" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+                  } @else {
+                    <button type="button" class="btn iwc-start-btn" (click)="backToMap()">Back to My Modules →</button>
+                  }
+                  <button type="button" class="review-lesson-link" (click)="beginLesson()">↺ Review this lesson</button>
+                } @else {
+                  <button type="button" class="btn iwc-start-btn" (click)="beginLesson()">{{ iw.startLabel }} →</button>
+                }
+              </div>
+              } @else {
               <div class="intro-welcome">
                 <div class="intro-welcome-copy">
-                  <span class="iw-week-pill">{{ iw.weekPill }}</span>
-                  <h1><span class="iw-title-main">{{ iw.titleStart }}</span>&nbsp;<span class="iw-title-accent">{{ iw.titleAccent }}</span></h1>
+                  <span class="iw-week-pill" [class.iw-week-pill--rose]="iw.weekPillColor === 'rose'" [class.iw-week-pill--sand]="iw.weekPillColor === 'sand'">{{ iw.weekPill }}</span>
+                  <h1 [class.iw-title--warm]="iw.titleAccentColor === 'coral'"><span class="iw-title-main">{{ iw.titleStart }}</span>&nbsp;<span class="iw-title-accent" [class.iw-title-accent--coral]="iw.titleAccentColor === 'coral'">{{ iw.titleAccent }}</span></h1>
                   <p class="iw-subtitle">{{ iw.subtitle }}</p>
-                  <span class="iw-stage-pill">{{ iw.stageIcon }} {{ iw.stageLabel }}</span>
+                  @if (iw.stageLabel) {
+                    <span class="iw-stage-pill">{{ iw.stageIcon }} {{ iw.stageLabel }}</span>
+                  }
 
                   <div class="iw-objective-card">
-                    <span class="iw-objective-icon">{{ iw.objectiveIcon }}</span>
+                    <span class="iw-objective-icon" [class.iw-objective-icon--coral]="iw.objectiveIconColor === 'coral'">{{ iw.objectiveIcon }}</span>
                     <div>
                       <h2>{{ iw.objectiveHeading }}</h2>
                       <p>{{ iw.objectiveText }}</p>
                     </div>
                   </div>
 
+                  @if (iw.chips; as chips) {
+                    <div class="iw-chips">
+                      @for (chip of chips; track chip.label) {
+                        <div class="iw-chip">
+                          <span class="iw-chip-icon">{{ chip.icon }}</span>
+                          <span class="iw-chip-label">{{ chip.label }}</span>
+                          <span class="iw-chip-sublabel">{{ chip.sublabel }}</span>
+                        </div>
+                      }
+                    </div>
+                  }
+
+                  @if (iw.recapText) {
+                    <div class="iw-recap-card">
+                      <span class="iw-recap-icon">{{ iw.recapIcon }}</span>
+                      <div>
+                        <h2>{{ iw.recapHeading }}</h2>
+                        <p>{{ iw.recapText }}</p>
+                      </div>
+                    </div>
+                  }
+
                   @if (isCompletedLessonWelcome()) {
                     @if (nextLesson(); as next) {
-                      <button type="button" class="btn iw-start-btn" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+                      <button type="button" class="btn iw-start-btn" [class.iw-start-btn--coral]="iw.startBtnColor === 'coral'" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
                     } @else {
-                      <button type="button" class="btn iw-start-btn" (click)="backToMap()">Back to My Modules →</button>
+                      <button type="button" class="btn iw-start-btn" [class.iw-start-btn--coral]="iw.startBtnColor === 'coral'" (click)="backToMap()">Back to My Modules →</button>
                     }
                     <button type="button" class="review-lesson-link" (click)="beginLesson()">↺ Review this lesson</button>
                   } @else {
-                    <button type="button" class="btn iw-start-btn" (click)="beginLesson()">{{ iw.startLabel }} →</button>
+                    <button type="button" class="btn iw-start-btn" [class.iw-start-btn--coral]="iw.startBtnColor === 'coral'" (click)="beginLesson()">{{ iw.startLabel }} →</button>
                   }
                 </div>
 
@@ -510,8 +956,12 @@
                   @if (iw.speechBubble) {
                     <span class="iw-speech-bubble">{{ iw.speechBubble }}</span>
                   }
+                  @if (iw.imageCaption) {
+                    <span class="iw-image-caption">{{ iw.imageCaption }}</span>
+                  }
                 </div>
               </div>
+              }
             } @else if (lesson.objectivesWelcome; as ow) {
               <div class="objectives-welcome">
                 <span class="ow-week-pill">{{ ow.weekPill }}</span>
@@ -881,6 +1331,82 @@
             <div class="story-shell">
               <app-picture-feelings-quiz-step-view [step]="exercise" (continued)="onStepContinue()" />
             </div>
+          } @else if (exercise.type === 'feelings-picture-choice') {
+            <div class="story-shell">
+              <app-feelings-picture-choice-step-view [step]="exercise" (continued)="onStepContinue()" />
+            </div>
+          } @else if (exercise.type === 'challenge-feeling-report') {
+            <div class="story-shell">
+              <app-challenge-feeling-report-step-view [step]="exercise" (submitted)="onShared($event)" />
+            </div>
+          } @else if (exercise.type === 'warmup-quiz') {
+            <div class="story-shell">
+              <app-warmup-quiz-step-view [step]="exercise" (continued)="onStepContinue()" />
+            </div>
+          } @else if (exercise.type === 'warmup-voice-check') {
+            <div class="story-shell">
+              <app-warmup-voice-check-step-view [step]="exercise" (continued)="onStepContinue()" />
+            </div>
+          } @else if (exercise.type === 'final-challenge') {
+            <div class="story-shell">
+              <app-final-challenge-step-view [step]="exercise" (continued)="onStepContinue()" />
+            </div>
+          } @else if (exercise.type === 'what-can-i-share') {
+            <div class="story-shell">
+              <app-what-can-i-share-step-view [step]="exercise" (continued)="onStepContinue()" />
+            </div>
+          } @else if (exercise.type === 'slow-talk-challenge') {
+            <div class="story-shell">
+              <app-slow-talk-challenge-step-view [step]="exercise" (continued)="onStepContinue()" />
+            </div>
+          } @else if (exercise.type === 'fast-or-clear-warmup') {
+            <div class="story-shell">
+              <app-fast-or-clear-warmup-step-view [step]="exercise" (continued)="onStepContinue()" />
+            </div>
+          } @else if (exercise.type === 'brave-body-challenge') {
+            <div class="story-shell">
+              <app-brave-body-challenge-step-view [step]="exercise" (continued)="onStepContinue()" />
+            </div>
+          } @else if (exercise.type === 'brave-or-shy-warmup') {
+            <div class="story-shell">
+              <app-brave-or-shy-warmup-step-view [step]="exercise" (continued)="onStepContinue()" />
+            </div>
+          } @else if (exercise.type === 'challenge-pick-say') {
+            <div class="story-shell">
+              <app-challenge-pick-say-step-view [step]="exercise" (continued)="onStepContinue()" />
+            </div>
+          } @else if (exercise.type === 'warmup-what-should-i-do') {
+            <div class="story-shell">
+              <app-warmup-what-should-i-do-step-view [step]="exercise" (continued)="onStepContinue()" />
+            </div>
+          } @else if (exercise.type === 'warmup-finish-sentence') {
+            <div class="story-shell">
+              <app-warmup-finish-sentence-step-view [step]="exercise" (continued)="onStepContinue()" />
+            </div>
+          } @else if (exercise.type === 'clear-sentence-practice') {
+            <div class="story-shell">
+              <app-clear-sentence-practice-step-view [step]="exercise" (continued)="onStepContinue()" />
+            </div>
+          } @else if (exercise.type === 'feelings-explorer') {
+            <div class="story-shell">
+              <app-feelings-explorer-step-view [step]="exercise" (continued)="onStepContinue()" />
+            </div>
+          } @else if (exercise.type === 'feelings-tracker') {
+            <div class="story-shell">
+              <app-feelings-tracker-step-view [step]="exercise" (continued)="onStepContinue()" />
+            </div>
+          } @else if (exercise.type === 'polite-or-not') {
+            <div class="story-shell">
+              <app-polite-or-not-step-view [step]="exercise" (continued)="onStepContinue()" />
+            </div>
+          } @else if (exercise.type === 'idea-presentation') {
+            <div class="story-shell">
+              <app-idea-presentation-step-view [step]="exercise" (continued)="onStepContinue()" />
+            </div>
+          } @else if (exercise.type === 'listening-promise-tracker') {
+            <div class="story-shell">
+              <app-listening-promise-tracker-step-view [step]="exercise" (continued)="onStepContinue()" />
+            </div>
           } @else if (exercise.type === 'yes-no-quiz') {
             <div class="story-shell">
               <app-yes-no-quiz-step-view [step]="exercise" (continued)="onStepContinue()" />
@@ -952,6 +1478,22 @@
           } @else if (exercise.type === 'challenge-confidence-week') {
             <div class="story-shell">
               <app-challenge-confidence-week-step-view [step]="exercise" (continued)="onStepContinue()" />
+            </div>
+          } @else if (exercise.type === 'detective-challenge') {
+            <div class="story-shell">
+              <app-detective-challenge-step-view [step]="exercise" (continued)="onStepContinue()" />
+            </div>
+          } @else if (exercise.type === 'mission-briefing') {
+            <div class="story-shell">
+              <app-mission-briefing-step-view [step]="exercise" (continued)="onStepContinue()" />
+            </div>
+          } @else if (exercise.type === 'yes-no-checklist') {
+            <div class="story-shell">
+              <app-yes-no-checklist-step-view [step]="exercise" (continued)="onStepContinue()" />
+            </div>
+          } @else if (exercise.type === 'listening-body-tracker') {
+            <div class="story-shell">
+              <app-listening-body-tracker-step-view [step]="exercise" (continued)="onStepContinue()" />
             </div>
           } @else if (exercise.type === 'daily-feelings-checkin') {
             <div class="story-shell">

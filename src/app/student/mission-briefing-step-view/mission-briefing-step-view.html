@@ -1,0 +1,17 @@
+<div class="mb">
+  <h1>{{ step().heading }}</h1>
+
+  <div class="mb-cards">
+    @for (card of step().cards; track card.title) {
+      <div class="mb-card">
+        <span class="mb-card-icon" [style.background]="card.iconBg">{{ card.icon }}</span>
+        <h2>{{ card.title }}</h2>
+        <p>{{ card.description }}</p>
+      </div>
+    }
+  </div>
+
+  <button type="button" class="mb-start-btn" (click)="start()">{{ step().startLabel }}</button>
+
+  <p class="mb-duration">{{ step().durationLabel }}</p>
+</div>

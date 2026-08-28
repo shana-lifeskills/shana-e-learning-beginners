@@ -1,0 +1,83 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+.mb {
+  max-width: 68rem;
+  margin: 0 auto;
+  text-align: center;
+
+  h1 {
+    @include m.playful-heading;
+    font-size: 2.4rem;
+    color: v.$color-navy-text;
+    margin-bottom: 2.5rem;
+  }
+}
+
+.mb-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.mb-card {
+  background: v.$color-white;
+  border-radius: v.$border-radius-xl;
+  box-shadow: 0 4px 16px rgba(30, 42, 94, 0.06);
+  padding: 2rem;
+  text-align: left;
+
+  h2 {
+    @include m.playful-heading;
+    font-size: 1.4rem;
+    color: v.$color-navy-text;
+    margin: 0.25rem 0 0.6rem;
+  }
+
+  p {
+    color: rgba(43, 45, 66, 0.6);
+    font-size: 1rem;
+    line-height: 1.5;
+    margin: 0;
+  }
+}
+
+.mb-card-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 4.25rem;
+  height: 4.25rem;
+  border-radius: v.$border-radius-sm;
+  font-size: 1.9rem;
+  margin-bottom: 0.75rem;
+}
+
+.mb-start-btn {
+  @include m.tappable;
+  background: v.$color-white;
+  color: v.$color-navy-text;
+  border: 3px solid v.$color-sunshine;
+  font-weight: 800;
+  font-size: 1.2rem;
+  padding: 1.1rem 3rem;
+  border-radius: v.$border-radius-pill;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.08);
+  width: 100%;
+  max-width: 34rem;
+
+  &:hover { opacity: 0.92; }
+}
+
+.mb-duration {
+  margin-top: 1rem;
+  color: rgba(43, 45, 66, 0.5);
+  font-size: 0.95rem;
+}
+
+@media (max-width: 640px) {
+  .mb-cards {
+    grid-template-columns: 1fr;
+  }
+}

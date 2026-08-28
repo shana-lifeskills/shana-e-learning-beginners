@@ -1,0 +1,80 @@
+<div class="wufs">
+  <header class="wufs-head">
+    <h1>☀️ {{ step().title }} 🐻</h1>
+    <p class="wufs-subtitle">{{ step().subtitle }}</p>
+
+    <div class="wufs-progress">
+      <span class="wufs-progress-label">🏆 {{ doneCount() }} of {{ total() }} {{ step().progressNoun }}</span>
+      <span class="wufs-progress-track">
+        <span class="wufs-progress-fill" [style.width.%]="progressPercent()"></span>
+      </span>
+    </div>
+
+    <p class="wufs-parent-note">👪 {{ step().parentNote }}</p>
+  </header>
+
+  <div class="wufs-cards">
+    @for (item of step().items; let i = $index; track item.id) {
+      <div class="wufs-card" [class]="'tone-' + item.tone" [class.done]="isChecked(item)">
+        <span class="wufs-card-num">{{ i + 1 }}</span>
+        <span class="wufs-card-icon">{{ item.icon }}</span>
+
+        <div class="wufs-card-body">
+          @if (item.frame) {
+            <p class="wufs-sentence">{{ item.frame }}</p>
+            @if (isChecked(item)) {
+              <p class="wufs-your-answer">✓ {{ answerFor(item) }}</p>
+            }
+          } @else {
+            <p class="wufs-sentence">
+              {{ item.prefix }}
+              <span class="wufs-blank">{{ isChecked(item) ? answerFor(item) : '___________' }}</span>{{ item.suffix }}
+            </p>
+          }
+
+          <div class="wufs-answer-row">
+            <span class="wufs-input-wrap">
+              <span class="wufs-input-pencil" aria-hidden="true">✏️</span>
+              <input
+                type="text"
+                class="wufs-input"
+                [placeholder]="step().inputPlaceholder"
+                [value]="answerFor(item)"
+                [disabled]="isChecked(item)"
+                (input)="onInput(item, $any($event.target).value)"
+                (keyup.enter)="check(item)"
+              />
+            </span>
+            <button
+              type="button"
+              class="wufs-check-btn"
+              [disabled]="!canCheck(item)"
+              (click)="check(item)"
+            >
+              @if (isChecked(item)) { ✓ Done } @else { ✓ {{ step().checkLabel }} }
+            </button>
+          </div>
+
+          @if (showsHint(item)) {
+            <p class="wufs-hint-text">💡 Sample answer: {{ item.sampleAnswer }}</p>
+          } @else {
+            <button type="button" class="wufs-hint-link" (click)="toggleHint(item)">
+              💡 {{ step().hintLabel }}
+            </button>
+          }
+        </div>
+      </div>
+    }
+  </div>
+
+  @if (allDone()) {
+    <div class="wufs-done">
+      <p class="wufs-feedback">✨ {{ step().feedbackText }} ✨</p>
+      <button type="button" class="btn btn-primary btn-lg-tappable" (click)="finish()">
+        {{ step().continueLabel }}
+      </button>
+    </div>
+  } @else {
+    <p class="wufs-locked-note">Finish every sentence to keep going.</p>
+  }
+</div>
