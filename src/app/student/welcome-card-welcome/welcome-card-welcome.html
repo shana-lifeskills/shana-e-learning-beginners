@@ -1,0 +1,57 @@
+              <div class="hero-card">
+                <div class="hero-content">
+                  <span class="hero-badge">{{ wc.badge }}</span>
+                  <h1>{{ wc.headline }}</h1>
+                  <p class="hero-intro">{{ wc.intro }}</p>
+
+                  @if (wc.missionCards) {
+                    @if (isCompletedLessonWelcome()) {
+                      @if (nextLesson(); as next) {
+                        <button type="button" class="btn hero-start-btn" (click)="continueToNextLesson()">Continue to Week {{ next.week }} 🚀</button>
+                      } @else {
+                        <button type="button" class="btn hero-start-btn" (click)="backToMap()">Back to My Modules 🚀</button>
+                      }
+                      <button type="button" class="review-lesson-link" (click)="beginLesson()">↺ Review this lesson</button>
+                    } @else {
+                      <button type="button" class="btn hero-start-btn" (click)="beginLesson()">{{ wc.startLabel }}</button>
+                    }
+                  }
+                </div>
+
+                <div class="hero-image-wrap">
+                  <img [src]="wc.image" [alt]="wc.imageAlt" />
+                </div>
+              </div>
+
+              @if (wc.missionCards; as cards) {
+                <div class="mission-section">
+                  <h2>{{ wc.missionHeading }}</h2>
+                  <p class="mission-subtitle">{{ wc.missionSubtitle }}</p>
+                  <div class="mission-grid">
+                    @for (card of cards; track card.title) {
+                      <div class="mission-card">
+                        <span class="mission-icon">{{ card.icon }}</span>
+                        <strong>{{ card.title }}</strong>
+                        <p>{{ card.description }}</p>
+                      </div>
+                    }
+                  </div>
+                </div>
+              } @else {
+                <div class="trainer-message-panel">
+                  <span class="tm-icon">🧑‍🏫</span>
+                  <h2>Trainer's Message</h2>
+                  <p>{{ wc.trainerMessage }}</p>
+
+                  @if (isCompletedLessonWelcome()) {
+                    @if (nextLesson(); as next) {
+                      <button type="button" class="btn tm-btn" (click)="continueToNextLesson()">Continue to Week {{ next.week }} 🚀</button>
+                    } @else {
+                      <button type="button" class="btn tm-btn" (click)="backToMap()">Back to My Modules 🚀</button>
+                    }
+                    <button type="button" class="review-lesson-link" (click)="beginLesson()">↺ Review this lesson</button>
+                  } @else {
+                    <button type="button" class="btn tm-btn" (click)="beginLesson()">Begin Lessons 🚀</button>
+                  }
+                </div>
+              }

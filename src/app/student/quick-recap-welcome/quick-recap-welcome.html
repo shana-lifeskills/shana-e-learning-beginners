@@ -1,0 +1,64 @@
+              <div class="quick-recap-welcome">
+                <div class="qrw-hero">
+                  <div class="qrw-hero-image-wrap">
+                    <img [src]="qrw.image" [alt]="qrw.imageAlt" />
+                  </div>
+
+                  <div class="qrw-hero-copy">
+                    <span class="qrw-eyebrow">{{ qrw.eyebrow }}</span>
+                    <h1><span class="qrw-title-main">{{ qrw.titleStart }}</span>&nbsp;<span class="qrw-title-accent">{{ qrw.titleAccent }}</span></h1>
+                    <p class="qrw-subtitle">{{ qrw.subtitle }}</p>
+
+                    <div class="qrw-cta-row">
+                      @if (isCompletedLessonWelcome()) {
+                        @if (nextLesson(); as next) {
+                          <button type="button" class="btn qrw-start-btn" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+                        } @else {
+                          <button type="button" class="btn qrw-start-btn" (click)="backToMap()">Back to My Modules →</button>
+                        }
+                      } @else {
+                        <button type="button" class="btn qrw-start-btn" (click)="beginLesson()">{{ qrw.startLabel }}</button>
+                      }
+                      <span class="qrw-objective-pill">{{ qrw.objectiveIcon }} {{ qrw.objectiveLabel }} {{ qrw.objectiveText }}</span>
+                    </div>
+
+                    @if (isCompletedLessonWelcome()) {
+                      <button type="button" class="review-lesson-link" (click)="beginLesson()">↺ Review this lesson</button>
+                    }
+                  </div>
+                </div>
+
+                <div class="qrw-below">
+                  <div class="qrw-recap-card">
+                    <h2><span class="qrw-recap-icon">{{ qrw.recapIcon }}</span>{{ qrw.recapHeading }}</h2>
+                    <p>{{ qrw.recapIntro }}</p>
+
+                    <div class="qrw-recap-items">
+                      @for (item of qrw.recapItems; track item.label) {
+                        <div class="qrw-recap-item">
+                          <span class="qrw-recap-item-icon">{{ item.icon }}</span>
+                          <strong>{{ item.label }}</strong>
+                        </div>
+                      }
+                    </div>
+                  </div>
+
+                  <div class="qrw-preview-grid">
+                    @for (card of qrw.previewCards; track card.title) {
+                      <div class="qrw-preview-card">
+                        <span class="qrw-preview-icon" [style.background]="card.iconBg">{{ card.icon }}</span>
+                        <h3>{{ card.title }}</h3>
+                        <p>{{ card.description }}</p>
+                      </div>
+                    }
+                  </div>
+                </div>
+
+                <div class="qrw-banner">
+                  <div>
+                    <h2>{{ qrw.bannerHeading }}</h2>
+                    <p>{{ qrw.bannerText }}</p>
+                  </div>
+                  <span class="qrw-banner-icon">{{ qrw.bannerIcon }}</span>
+                </div>
+              </div>

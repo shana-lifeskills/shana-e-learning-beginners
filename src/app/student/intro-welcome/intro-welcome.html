@@ -1,0 +1,105 @@
+              @if (iw.layout === 'centered') {
+              <div class="intro-welcome-centered">
+                <span class="iwc-week"><span class="iwc-star">☆</span>{{ iw.weekPill }}<span class="iwc-star">☆</span></span>
+
+                <div class="iwc-image">
+                  <img [src]="iw.image" [alt]="iw.imageAlt" />
+                </div>
+
+                <h1>{{ iw.titleStart }} {{ iw.titleAccent }}</h1>
+                <p class="iwc-subtitle">{{ iw.subtitle }}</p>
+
+                <div class="iwc-card">
+                  <div class="iwc-card-head">
+                    <span class="iwc-card-icon"><span class="iwc-card-icon-glyph">{{ iw.objectiveIcon }}</span></span>
+                    <h2>{{ iw.objectiveHeading }}</h2>
+                  </div>
+                  <p>{{ iw.objectiveText }}</p>
+                </div>
+
+                @if (iw.recapText) {
+                  <div class="iwc-card iwc-card--recap">
+                    <div class="iwc-card-head">
+                      <span class="iwc-card-icon iwc-card-icon--muted"><span class="iwc-card-icon-glyph">{{ iw.recapIcon }}</span></span>
+                      <h2>{{ iw.recapHeading }}</h2>
+                    </div>
+                    <p>{{ iw.recapText }}</p>
+                  </div>
+                }
+
+                @if (isCompletedLessonWelcome()) {
+                  @if (nextLesson(); as next) {
+                    <button type="button" class="btn iwc-start-btn" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+                  } @else {
+                    <button type="button" class="btn iwc-start-btn" (click)="backToMap()">Back to My Modules →</button>
+                  }
+                  <button type="button" class="review-lesson-link" (click)="beginLesson()">↺ Review this lesson</button>
+                } @else {
+                  <button type="button" class="btn iwc-start-btn" (click)="beginLesson()">{{ iw.startLabel }} →</button>
+                }
+              </div>
+              } @else {
+              <div class="intro-welcome">
+                <div class="intro-welcome-copy">
+                  <span class="iw-week-pill" [class.iw-week-pill--rose]="iw.weekPillColor === 'rose'" [class.iw-week-pill--sand]="iw.weekPillColor === 'sand'">{{ iw.weekPill }}</span>
+                  <h1 [class.iw-title--warm]="iw.titleAccentColor === 'coral'"><span class="iw-title-main">{{ iw.titleStart }}</span>&nbsp;<span class="iw-title-accent" [class.iw-title-accent--coral]="iw.titleAccentColor === 'coral'">{{ iw.titleAccent }}</span></h1>
+                  <p class="iw-subtitle">{{ iw.subtitle }}</p>
+                  @if (iw.stageLabel) {
+                    <span class="iw-stage-pill">{{ iw.stageIcon }} {{ iw.stageLabel }}</span>
+                  }
+
+                  <div class="iw-objective-card">
+                    <span class="iw-objective-icon" [class.iw-objective-icon--coral]="iw.objectiveIconColor === 'coral'">{{ iw.objectiveIcon }}</span>
+                    <div>
+                      <h2>{{ iw.objectiveHeading }}</h2>
+                      <p>{{ iw.objectiveText }}</p>
+                    </div>
+                  </div>
+
+                  @if (iw.chips; as chips) {
+                    <div class="iw-chips">
+                      @for (chip of chips; track chip.label) {
+                        <div class="iw-chip">
+                          <span class="iw-chip-icon">{{ chip.icon }}</span>
+                          <span class="iw-chip-label">{{ chip.label }}</span>
+                          <span class="iw-chip-sublabel">{{ chip.sublabel }}</span>
+                        </div>
+                      }
+                    </div>
+                  }
+
+                  @if (iw.recapText) {
+                    <div class="iw-recap-card">
+                      <span class="iw-recap-icon">{{ iw.recapIcon }}</span>
+                      <div>
+                        <h2>{{ iw.recapHeading }}</h2>
+                        <p>{{ iw.recapText }}</p>
+                      </div>
+                    </div>
+                  }
+
+                  @if (isCompletedLessonWelcome()) {
+                    @if (nextLesson(); as next) {
+                      <button type="button" class="btn iw-start-btn" [class.iw-start-btn--coral]="iw.startBtnColor === 'coral'" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+                    } @else {
+                      <button type="button" class="btn iw-start-btn" [class.iw-start-btn--coral]="iw.startBtnColor === 'coral'" (click)="backToMap()">Back to My Modules →</button>
+                    }
+                    <button type="button" class="review-lesson-link" (click)="beginLesson()">↺ Review this lesson</button>
+                  } @else {
+                    <button type="button" class="btn iw-start-btn" [class.iw-start-btn--coral]="iw.startBtnColor === 'coral'" (click)="beginLesson()">{{ iw.startLabel }} →</button>
+                  }
+                </div>
+
+                <div class="intro-welcome-art">
+                  <div class="iw-image-wrap">
+                    <img [src]="iw.image" [alt]="iw.imageAlt" />
+                  </div>
+                  @if (iw.speechBubble) {
+                    <span class="iw-speech-bubble">{{ iw.speechBubble }}</span>
+                  }
+                  @if (iw.imageCaption) {
+                    <span class="iw-image-caption">{{ iw.imageCaption }}</span>
+                  }
+                </div>
+              </div>
+              }

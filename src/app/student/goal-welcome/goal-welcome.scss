@@ -1,0 +1,119 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+.goal-welcome {
+  max-width: 46rem;
+  margin: 1.5rem auto 0;
+  text-align: center;
+}
+
+.gw-week-pill {
+  display: inline-block;
+  background: #dceefc;
+  color: #1b4965;
+  font-weight: 800;
+  font-size: 0.9rem;
+  padding: 0.45rem 1.3rem;
+  border-radius: v.$border-radius-pill;
+  margin-bottom: 1.5rem;
+}
+
+.goal-welcome h1 {
+  @include m.playful-heading;
+  font-size: 2.75rem;
+  line-height: 1.15;
+  color: v.$color-navy-text;
+  margin-bottom: 1.75rem;
+}
+
+.gw-image-wrap {
+  margin: 0 auto;
+  max-width: 36rem;
+  border-radius: v.$border-radius-xl;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+}
+
+.gw-image-caption {
+  color: w.navy(0.55);
+  font-size: 1rem;
+  margin: 1rem 0 2rem;
+}
+
+.gw-card {
+  background: #eef2fb;
+  border-radius: v.$border-radius-xl;
+  padding: 2rem 2.25rem;
+  text-align: left;
+  margin-bottom: 2.5rem;
+}
+
+.gw-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+
+  h2 {
+    @include m.playful-heading;
+    font-size: 1.25rem;
+    color: v.$color-navy-text;
+    margin-bottom: 0.4rem;
+  }
+
+  p {
+    color: w.navy(0.65);
+    font-size: 1.05rem;
+    line-height: 1.55;
+    margin: 0;
+  }
+}
+
+.gw-row-icon {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  font-size: 1.3rem;
+  background: #dbe4fb;
+  color: #4d78f0;
+}
+
+.gw-row-divider {
+  display: block;
+  height: 1px;
+  margin: 1.5rem 0;
+  background: w.navy(0.12);
+}
+
+.gw-focus-label {
+  display: block;
+  color: #4d78f0;
+  font-weight: 800;
+  font-size: 0.85rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+}
+
+.gw-start-btn {
+  @include m.tappable;
+  background: #4d78f0;
+  color: v.$color-white;
+  border: none;
+  font-weight: 800;
+  font-size: 1.05rem;
+  padding: 0.9rem 2.25rem;
+  border-radius: v.$border-radius-pill;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.1);
+
+  &:hover { opacity: 0.92; }
+}

@@ -1,0 +1,54 @@
+              <div class="classic-header">
+                <h1>👋 Welcome to Your Learning Journey!</h1>
+                <p class="classic-subtitle">Get ready to discover amazing things about yourself! ✨</p>
+              </div>
+
+              <div class="welcome-grid">
+                <div class="welcome-card">
+                  <span class="week-pill">Week {{ lesson.week }}</span>
+                  <h2>{{ lesson.title }}</h2>
+                  @if (lesson.tagline) { <p class="tagline">{{ lesson.tagline }}</p> }
+
+                  @if (lesson.mainFocus) {
+                    <div class="main-focus">
+                      <strong>🎯 Main Focus</strong>
+                      <p>{{ lesson.mainFocus }}</p>
+                    </div>
+                  }
+
+                  @if (lesson.discoverPoints?.length) {
+                    <div class="discover">
+                      <h3>📚 What You'll Discover</h3>
+                      <ul>
+                        @for (point of lesson.discoverPoints; track point) {
+                          <li>{{ point }}</li>
+                        }
+                      </ul>
+                    </div>
+                  }
+
+                  @if (isCompletedLessonWelcome()) {
+                    @if (nextLesson(); as next) {
+                      <button type="button" class="btn btn-lg-tappable w-100 start-btn" (click)="continueToNextLesson()">
+                        ➡️ Continue to Week {{ next.week }}
+                      </button>
+                    } @else {
+                      <button type="button" class="btn btn-lg-tappable w-100 start-btn" (click)="backToMap()">
+                        🎉 Back to My Modules
+                      </button>
+                    }
+                    <button type="button" class="review-lesson-link" (click)="beginLesson()">↺ Review this lesson</button>
+                  } @else {
+                    <button type="button" class="btn btn-lg-tappable w-100 start-btn" (click)="beginLesson()">
+                      🚀 Start My Journey of Discovery →
+                    </button>
+                  }
+                </div>
+
+                <div class="welcome-art">
+                  <img class="teacher-img" src="/assets/images/teacher-welcome.png" alt="Your trainer, ready to welcome you to class" />
+                </div>
+              </div>
+
+              <p class="classic-footer">Remember: You are amazing just the way you are! 💖</p>
+              <p class="classic-footer-icons">🌟 📚 🎭 💪 ✨</p>

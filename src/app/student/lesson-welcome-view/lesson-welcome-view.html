@@ -1,0 +1,72 @@
+<div class="welcome-shell">
+  @if (lesson.tinyVoicesWelcome; as tvw) {
+    <app-tvw-welcome [tvw]="tvw" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.growKinderWelcome; as gkw) {
+    <app-grow-kinder-welcome [gkw]="gkw" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.littleLanternWelcome; as llw) {
+    <app-little-lantern-welcome [llw]="llw" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.speakUpClubWelcome; as scw) {
+    <app-speak-up-club-welcome [scw]="scw" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.speakUpWelcome; as suw) {
+    <app-speak-up-welcome [suw]="suw" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.dailyGoalWelcome; as dgw) {
+    <app-daily-goal-welcome [dgw]="dgw" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.quickRecapWelcome; as qrw) {
+    <app-quick-recap-welcome [qrw]="qrw" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.warmupPreviewWelcome; as wpw) {
+    <app-warmup-preview-welcome [wpw]="wpw" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.empathyJourneyWelcome; as ejw) {
+    <app-empathy-journey-welcome [ejw]="ejw" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.recapQuizWelcome; as rqw) {
+    <app-recap-quiz-welcome [rqw]="rqw" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.feelingsReviewWelcome; as frw) {
+    <app-feelings-review-welcome [frw]="frw" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.feelingsCheckWelcome; as fw) {
+    <app-feelings-check-welcome [fw]="fw" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.celebrateWelcome; as cw) {
+    <app-celebrate-welcome [cw]="cw" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.goalWelcome; as gw) {
+    <app-goal-welcome [gw]="gw" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.practiceWelcome; as pw) {
+    <app-practice-welcome [pw]="pw" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.introWelcome; as iw) {
+    <app-intro-welcome [iw]="iw" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.objectivesWelcome; as ow) {
+    <app-objectives-welcome [ow]="ow" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.recapWelcome; as rw) {
+    <app-recap-welcome [rw]="rw" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.welcomeCard; as wc) {
+    <app-welcome-card-welcome [wc]="wc" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.welcomeBackIntro) {
+    <app-welcome-back-welcome [lesson]="lesson" [themeColor]="themeColor" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.heroSubtitle) {
+    <app-mastery-hero-welcome [lesson]="lesson" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.journeyIntro) {
+    <app-journey-welcome [lesson]="lesson" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else {
+    <app-classic-welcome [lesson]="lesson" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  }
+</div>

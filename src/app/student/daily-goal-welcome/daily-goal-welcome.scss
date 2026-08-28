@@ -1,0 +1,115 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+.daily-goal-welcome {
+  max-width: 56rem;
+  margin: 0 auto;
+
+  h1 {
+    @include m.playful-heading;
+    font-size: 2.75rem;
+    line-height: 1.15;
+    margin-bottom: 1rem;
+  }
+}
+
+.dgw-badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: #ece3fb;
+  color: v.$color-navy-text;
+  font-weight: 800;
+  font-size: 0.9rem;
+  padding: 0.55rem 1.4rem;
+  border-radius: v.$border-radius-pill;
+  margin-bottom: 1.5rem;
+}
+
+.dgw-title-main {
+  color: v.$color-navy-text;
+  margin-right: 0.3ch;
+}
+
+.dgw-title-accent {
+  color: v.$color-coral;
+}
+
+.dgw-subtitle {
+  color: w.navy(0.55);
+  font-size: 1.15rem;
+  line-height: 1.5;
+  margin: 0 0 2rem;
+  max-width: 34rem;
+}
+
+.dgw-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+
+  @media (max-width: 720px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.dgw-card {
+  text-align: left;
+  background: v.$color-white;
+  border-radius: v.$border-radius-xl;
+  padding: 1.75rem 1.75rem;
+  box-shadow: 0 2px 14px w.navy(0.06);
+
+  h2 {
+    @include m.playful-heading;
+    font-size: 1.25rem;
+    color: v.$color-navy-text;
+    margin: 1rem 0 0.4rem;
+  }
+
+  p {
+    color: w.navy(0.6);
+    font-size: 1rem;
+    line-height: 1.5;
+    margin: 0;
+  }
+}
+
+.dgw-card-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  font-size: 1.4rem;
+
+  &--blue {
+    background: #e3ecfd;
+    color: #4d78f0;
+  }
+
+  &--peach {
+    background: #fdeee1;
+    color: v.$color-coral;
+  }
+}
+
+.dgw-start-btn {
+  @include m.tappable;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: v.$color-coral;
+  color: v.$color-white;
+  border: none;
+  font-weight: 800;
+  font-size: 1.05rem;
+  padding: 0.85rem 2rem;
+  border-radius: v.$border-radius-pill;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.1);
+
+  &:hover { opacity: 0.92; }
+}

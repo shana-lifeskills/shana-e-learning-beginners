@@ -1,0 +1,181 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+.objectives-welcome {
+  max-width: 44rem;
+  margin: 1.5rem auto 0;
+  text-align: center;
+}
+
+.ow-week-pill {
+  display: inline-block;
+  background: #dceefc;
+  color: #1b4965;
+  font-weight: 800;
+  font-size: 0.9rem;
+  padding: 0.45rem 1.3rem;
+  border-radius: v.$border-radius-pill;
+  margin-bottom: 1.5rem;
+}
+
+.objectives-welcome h1 {
+  @include m.playful-heading;
+  font-size: 2.75rem;
+  line-height: 1.15;
+  color: v.$color-navy-text;
+  margin-bottom: 0.5rem;
+}
+
+.ow-subtitle {
+  color: v.$color-coral;
+  font-weight: 800;
+  font-size: 1.15rem;
+  margin-bottom: 2rem;
+}
+
+.ow-image-wrap {
+  margin: 0 auto 2.5rem;
+  max-width: 34rem;
+
+  img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+}
+
+.ow-card {
+  background: v.$color-white;
+  border-radius: v.$border-radius-xl;
+  padding: 2.25rem 2.5rem;
+  text-align: left;
+  box-shadow: 0 2px 14px w.navy(0.06);
+
+  h2 {
+    @include m.playful-heading;
+    font-size: 1.5rem;
+    color: v.$color-navy-text;
+    margin-bottom: 1.25rem;
+  }
+}
+
+.ow-objectives {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.85rem;
+    color: w.navy(0.75);
+    font-weight: 600;
+    font-size: 1.05rem;
+    line-height: 1.5;
+  }
+}
+
+.ow-check {
+  color: v.$color-navy-text;
+  font-weight: 800;
+  font-size: 1.05rem;
+  line-height: 1.5;
+}
+
+.ow-objectives-section {
+  text-align: center;
+
+  h2 {
+    @include m.playful-heading;
+    font-size: 2rem;
+    color: v.$color-navy-text;
+    margin-bottom: 0.75rem;
+  }
+}
+
+.ow-objectives-description {
+  color: w.navy(0.6);
+  font-size: 1.05rem;
+  line-height: 1.6;
+  max-width: 34rem;
+  margin: 0 auto 2.5rem;
+}
+
+.ow-objectives-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  text-align: left;
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.ow-objective-card {
+  background: v.$color-white;
+  border-radius: v.$border-radius-xl;
+  padding: 2rem;
+  box-shadow: 0 2px 14px w.navy(0.06);
+
+  h3 {
+    @include m.playful-heading;
+    font-size: 1.2rem;
+    color: v.$color-navy-text;
+    margin: 1.25rem 0 0.6rem;
+  }
+
+  p {
+    color: w.navy(0.6);
+    font-size: 0.98rem;
+    line-height: 1.55;
+    margin: 0;
+  }
+}
+
+.ow-obj-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: v.$border-radius-sm;
+  font-size: 1.4rem;
+
+  &--blue {
+    background: #e3ecfd;
+    color: #4d78f0;
+  }
+
+  &--peach {
+    background: #fdeee1;
+    color: #ef9948;
+  }
+}
+
+.ow-divider {
+  display: block;
+  width: 9rem;
+  height: 5px;
+  margin: 2.5rem auto 2rem;
+  border-radius: v.$border-radius-pill;
+  background: linear-gradient(90deg, v.$color-coral, v.$color-sky);
+}
+
+.ow-start-btn {
+  @include m.tappable;
+  background: #4d78f0;
+  color: v.$color-white;
+  border: none;
+  font-weight: 800;
+  font-size: 1.05rem;
+  padding: 0.9rem 2.25rem;
+  border-radius: v.$border-radius-sm;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.1);
+
+  &:hover { opacity: 0.92; }
+}

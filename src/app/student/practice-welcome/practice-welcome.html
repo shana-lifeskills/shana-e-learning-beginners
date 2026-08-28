@@ -1,0 +1,49 @@
+              <div class="practice-welcome">
+                <span class="pw-badge-pill">{{ pw.badgeIcon }} {{ pw.badgeLabel }}</span>
+
+                <div class="practice-welcome-hero">
+                  <div class="pw-image-wrap">
+                    <img [src]="pw.image" [alt]="pw.imageAlt" />
+                    @if (pw.imageBadge) {
+                      <span class="pw-image-badge">{{ pw.imageBadge }}</span>
+                    }
+                  </div>
+
+                  <div class="practice-welcome-copy">
+                    <span class="pw-week-label">{{ pw.weekPill }}</span>
+                    <h1>{{ pw.title }}</h1>
+                    <p class="pw-subtitle">{{ pw.subtitle }}</p>
+                  </div>
+                </div>
+
+                <div class="pw-card pw-objective-card">
+                  <span class="pw-card-icon">{{ pw.objectiveIcon }}</span>
+                  <div>
+                    <h2>{{ pw.objectiveHeading }}</h2>
+                    <p>{{ pw.objectiveText }}</p>
+                  </div>
+                </div>
+
+                <div class="pw-card pw-recap-card">
+                  <span class="pw-card-icon pw-recap-icon">{{ pw.recapIcon }}</span>
+                  <div>
+                    <h2>{{ pw.recapHeading }}</h2>
+                    <p>{{ pw.recapText }}</p>
+
+                    @if (isCompletedLessonWelcome()) {
+                      @if (nextLesson(); as next) {
+                        <button type="button" class="btn pw-recap-btn" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+                      } @else {
+                        <button type="button" class="btn pw-recap-btn" (click)="backToMap()">Back to My Modules →</button>
+                      }
+                      <button type="button" class="review-lesson-link" (click)="beginLesson()">↺ Review this lesson</button>
+                    } @else {
+                      <button type="button" class="btn pw-recap-btn" (click)="beginLesson()">{{ pw.recapButtonLabel }} →</button>
+                    }
+                  </div>
+                </div>
+
+                @if (pw.footerNote) {
+                  <p class="pw-footer-note">{{ pw.footerNote }}</p>
+                }
+              </div>

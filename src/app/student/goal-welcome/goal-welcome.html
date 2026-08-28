@@ -1,0 +1,40 @@
+              <div class="goal-welcome">
+                <span class="gw-week-pill">{{ gw.weekPill }}</span>
+                <h1>{{ gw.title }}</h1>
+
+                <div class="gw-image-wrap">
+                  <img [src]="gw.image" [alt]="gw.imageAlt" />
+                </div>
+                <p class="gw-image-caption">{{ gw.imageCaption }}</p>
+
+                <div class="gw-card">
+                  <div class="gw-row">
+                    <span class="gw-row-icon">{{ gw.objectiveIcon }}</span>
+                    <div>
+                      <h2>{{ gw.objectiveHeading }}</h2>
+                      <p>{{ gw.objectiveText }}</p>
+                    </div>
+                  </div>
+
+                  <span class="gw-row-divider"></span>
+
+                  <div class="gw-row">
+                    <span class="gw-row-icon">{{ gw.focusIcon }}</span>
+                    <div>
+                      <span class="gw-focus-label">{{ gw.focusLabel }}</span>
+                      <p>{{ gw.focusText }}</p>
+                    </div>
+                  </div>
+                </div>
+
+                @if (isCompletedLessonWelcome()) {
+                  @if (nextLesson(); as next) {
+                    <button type="button" class="btn gw-start-btn" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+                  } @else {
+                    <button type="button" class="btn gw-start-btn" (click)="backToMap()">Back to My Modules →</button>
+                  }
+                  <button type="button" class="review-lesson-link" (click)="beginLesson()">↺ Review this lesson</button>
+                } @else {
+                  <button type="button" class="btn gw-start-btn" (click)="beginLesson()">{{ gw.startLabel }} →</button>
+                }
+              </div>

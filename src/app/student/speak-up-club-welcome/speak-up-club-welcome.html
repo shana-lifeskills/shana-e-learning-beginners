@@ -1,0 +1,88 @@
+              <div class="scw">
+                <header class="scw-topbar">
+                  <span class="scw-brand">
+                    <span class="scw-brand-badge" aria-hidden="true">✦</span>
+                    <span>
+                      <strong>{{ scw.brandName }}</strong>
+                      <small>{{ scw.brandTagline }}</small>
+                    </span>
+                  </span>
+                  <span class="scw-week-of">📖 {{ scw.weekOfLabel }}</span>
+                </header>
+
+                <div class="scw-hero">
+                  <div class="scw-hero-copy">
+                    <span class="scw-week-pill">✦ {{ scw.weekPill }}</span>
+                    <h1><span class="scw-title-main">{{ scw.titleStart }}</span>&nbsp;<span class="scw-title-accent">{{ scw.titleAccent }}</span></h1>
+                    <p class="scw-intro">@for (seg of scw.introSegments; track $index) {<span [class.bold]="seg.bold">{{ seg.text }}</span>}</p>
+                    <div class="scw-hero-actions">
+                      <button type="button" class="btn scw-begin-btn" (click)="beginLesson()">{{ scw.beginLabel }} →</button>
+                      <button type="button" class="scw-listen-btn" (click)="speakText(scw.goalText)">🔊 {{ scw.listenLabel }}</button>
+                    </div>
+                    <p class="scw-meta">
+                      <span>👥 {{ scw.ageLabel }}</span>
+                      <span class="scw-meta-dot">•</span>
+                      <span>🎤 {{ scw.durationLabel }}</span>
+                    </p>
+                  </div>
+                  <div class="scw-hero-art">
+                    <div class="scw-hero-image"><img [src]="scw.image" [alt]="scw.imageAlt" /></div>
+                    <span class="scw-hero-bubble">{{ scw.speechBubble }}</span>
+                  </div>
+                </div>
+
+                <div class="scw-goal">
+                  <span class="scw-goal-icon" aria-hidden="true">💡</span>
+                  <div>
+                    <h2>{{ scw.goalHeading }}</h2>
+                    <p>{{ scw.goalText }}</p>
+                  </div>
+                </div>
+
+                <div class="scw-recap">
+                  <div class="scw-recap-head">
+                    <span class="scw-recap-icon" aria-hidden="true">🔊</span>
+                    <h2>{{ scw.recapHeading }}</h2>
+                  </div>
+                  <span class="scw-recap-eyebrow">{{ scw.recapEyebrow }}</span>
+                  <div class="scw-recap-grid">
+                    @for (card of scw.recapCards; track card.label) {
+                      <div class="scw-recap-card" [class]="'tone-' + card.tone">
+                        <span class="scw-recap-card-label">{{ card.icon }} {{ card.label }}</span>
+                        <p>{{ card.text }}</p>
+                      </div>
+                    }
+                  </div>
+                </div>
+
+                <div class="scw-steps">
+                  <h2>{{ scw.stepsHeading }}</h2>
+                  <p class="scw-steps-sub">{{ scw.stepsSub }}</p>
+                  <div class="scw-steps-grid">
+                    @for (stepCard of scw.steps; let i = $index; track stepCard.title) {
+                      <div class="scw-step-card">
+                        <span class="scw-step-num">{{ i + 1 }}</span>
+                        <span class="scw-step-icon" [class]="'tone-' + stepCard.tone" aria-hidden="true">{{ stepCard.icon }}</span>
+                        <h3>{{ stepCard.title }}</h3>
+                        <p>{{ stepCard.text }}</p>
+                      </div>
+                    }
+                  </div>
+                </div>
+
+                <div class="scw-cta">
+                  <h2>{{ scw.ctaHeading }}</h2>
+                  <p>{{ scw.ctaText }}</p>
+                  @if (isCompletedLessonWelcome()) {
+                    @if (nextLesson(); as next) {
+                      <button type="button" class="scw-cta-btn" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+                    } @else {
+                      <button type="button" class="scw-cta-btn" (click)="backToMap()">Back to My Modules →</button>
+                    }
+                  } @else {
+                    <button type="button" class="scw-cta-btn" (click)="beginLesson()">{{ scw.ctaButtonLabel }} →</button>
+                  }
+                </div>
+
+                <p class="scw-footer">{{ scw.footerText }}</p>
+              </div>

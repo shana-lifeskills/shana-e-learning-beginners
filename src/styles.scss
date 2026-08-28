@@ -47,3 +47,26 @@ h1, h2, h3, h4, h5 {
   outline-offset: 2px;
   border-radius: 0.5rem;
 }
+
+// Shared across every lesson-welcome layout variant: the small underlined
+// "↺ Review this lesson" link shown under the CTA on an already-completed week.
+// Lives here rather than in each variant's component styles because it is one
+// utility class used identically by all of them.
+.review-lesson-link {
+  min-height: 44px;
+  min-width: 44px;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  display: block;
+  margin: 0.75rem auto 0;
+  background: none;
+  border: none;
+  color: rgba(43, 45, 66, 0.55);
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-decoration: underline;
+
+  &:active { transform: scale(0.95); }
+  &:hover { color: $color-navy-text; }
+}

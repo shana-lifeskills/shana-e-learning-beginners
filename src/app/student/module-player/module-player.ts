@@ -95,6 +95,7 @@ import { WeeklyChallengeShowcaseStepView } from '../weekly-challenge-showcase-st
 import { SameOrDifferentQuizStepView } from '../same-or-different-quiz-step-view/same-or-different-quiz-step-view';
 import { DiversityPosterStepView } from '../diversity-poster-step-view/diversity-poster-step-view';
 import { KindnessBannerChallengeStepView } from '../kindness-banner-challenge-step-view/kindness-banner-challenge-step-view';
+import { LessonWelcomeView } from '../lesson-welcome-view/lesson-welcome-view';
 
 type PlayerView = 'map' | 'lesson-welcome' | 'exercise' | 'module-complete';
 
@@ -190,6 +191,7 @@ type PlayerView = 'map' | 'lesson-welcome' | 'exercise' | 'module-complete';
     SameOrDifferentQuizStepView,
     DiversityPosterStepView,
     KindnessBannerChallengeStepView,
+    LessonWelcomeView,
   ],
   templateUrl: './module-player.html',
   styleUrl: './module-player.scss',
@@ -211,11 +213,6 @@ export class ModulePlayer implements OnInit {
   readonly completedLessonTitle = signal('');
   /** True while the "lesson complete" congratulations modal is showing, on top of whatever view was active. */
   readonly showCompletionModal = signal(false);
-  /** Which mood emoji is currently picked on a `feelingsCheckWelcome`/`feelingsReviewWelcome` screen — purely a decorative recap, not graded or saved. */
-  readonly feelingsCheckSelectedId = signal<string | null>(null);
-  /** Which option is currently picked on a `recapQuizWelcome` screen's graded mini-quiz. */
-  readonly recapQuizSelectedId = signal<string | null>(null);
-  readonly recapQuizFeedback = signal<'correct' | 'incorrect' | null>(null);
   /** Holds an already-committed advance result for a card-download step until the student clicks Continue. */
   private pendingAdvance: { progress: StudentProgress; lessonCompleted: boolean; moduleCompleted: boolean } | null = null;
 
@@ -394,41 +391,7 @@ export class ModulePlayer implements OnInit {
   enterLesson(lesson: Lesson): void {
     if (this.lessonStatus(lesson) === 'locked') return;
     this.activeLessonId.set(lesson.id);
-    this.feelingsCheckSelectedId.set(
-      lesson.feelingsCheckWelcome?.defaultSelectedOptionId ?? lesson.feelingsReviewWelcome?.defaultSelectedOptionId ?? null
-    );
-    this.recapQuizSelectedId.set(null);
-    this.recapQuizFeedback.set(null);
     this.view.set('lesson-welcome');
-  }
-
-  selectFeelingsOption(optionId: string): void {
-    this.feelingsCheckSelectedId.set(optionId);
-  }
-
-  selectRecapQuizOption(optionId: string, correctOptionId: string): void {
-    if (this.recapQuizFeedback() === 'correct') return;
-    const correct = optionId === correctOptionId;
-    this.recapQuizSelectedId.set(optionId);
-    this.recapQuizFeedback.set(correct ? 'correct' : 'incorrect');
-
-    if (!correct) {
-      setTimeout(() => {
-        this.recapQuizSelectedId.set(null);
-        this.recapQuizFeedback.set(null);
-      }, 900);
-    }
-  }
-
-  /** Starts the lesson's step sequence — warm-up, story, discussion, activity, challenge, questions — in the order the trainer script defines. */
-  /** Reads a short line aloud with the browser's speech synthesis, for "Listen" buttons on welcome screens. */
-  speakText(text: string): void {
-    const speech = typeof window !== 'undefined' ? window.speechSynthesis : undefined;
-    if (!speech) return;
-    speech.cancel();
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.rate = 0.95;
-    speech.speak(utterance);
   }
 
   beginLesson(): void {
@@ -556,11 +519,6 @@ export class ModulePlayer implements OnInit {
       return;
     }
     this.activeLessonId.set(lesson.id);
-    this.feelingsCheckSelectedId.set(
-      lesson.feelingsCheckWelcome?.defaultSelectedOptionId ?? lesson.feelingsReviewWelcome?.defaultSelectedOptionId ?? null
-    );
-    this.recapQuizSelectedId.set(null);
-    this.recapQuizFeedback.set(null);
     this.view.set('lesson-welcome');
   }
 

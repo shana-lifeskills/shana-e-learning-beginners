@@ -1,0 +1,60 @@
+              <div class="speakup-welcome">
+                <span class="suw-week-pill">{{ suw.weekPill }}</span>
+
+                <div class="suw-row">
+                  <div class="suw-card suw-title-card">
+                    <h1>{{ suw.title }}</h1>
+                    <div class="suw-illustration">
+                      <img [src]="suw.image" [alt]="suw.imageAlt" />
+                      <span class="suw-bubble" aria-hidden="true">
+                        <span class="suw-bubble-dots">•••</span>
+                        <span class="suw-owl">🦉</span>
+                      </span>
+                    </div>
+                    <p class="suw-subtitle">{{ suw.subtitle }}</p>
+                  </div>
+
+                  <div class="suw-card suw-learn-card">
+                    <div class="suw-learn-head">
+                      <span class="suw-learn-icon" aria-hidden="true">📢</span>
+                      <h2>{{ suw.learnHeading }}</h2>
+                    </div>
+                    <p class="suw-learn-intro">{{ suw.learnIntro }}</p>
+                    <ol class="suw-learn-list">
+                      @for (point of suw.learnPoints; let i = $index; track point) {
+                        <li><span class="suw-learn-num">{{ i + 1 }}</span>{{ point }}</li>
+                      }
+                    </ol>
+                  </div>
+                </div>
+
+                <div class="suw-card suw-recap-card">
+                  <div class="suw-recap-head">
+                    <span class="suw-recap-icon" aria-hidden="true">📖</span>
+                    <h2>{{ suw.recapLabel }}</h2>
+                  </div>
+                  <div class="suw-recap-box">
+                    <span class="suw-recap-owl" aria-hidden="true">🦉</span>
+                    <div>
+                      <p class="suw-recap-quote">“{{ suw.recapQuote }}”</p>
+                      <p class="suw-recap-text">{{ suw.recapText }}</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="suw-cta">
+                  @if (isCompletedLessonWelcome()) {
+                    @if (nextLesson(); as next) {
+                      <button type="button" class="btn suw-start-btn" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+                    } @else {
+                      <button type="button" class="btn suw-start-btn" (click)="backToMap()">Back to My Modules →</button>
+                    }
+                    <button type="button" class="review-lesson-link" (click)="beginLesson()">↺ Review this lesson</button>
+                  } @else {
+                    <button type="button" class="btn suw-start-btn" (click)="beginLesson()">📣 {{ suw.startLabel }}</button>
+                    <p class="suw-start-caption">{{ suw.startCaption }}</p>
+                  }
+                </div>
+
+                <p class="suw-hoot"><span class="suw-owl" aria-hidden="true">🦉</span> {{ suw.hootMessage }}</p>
+              </div>

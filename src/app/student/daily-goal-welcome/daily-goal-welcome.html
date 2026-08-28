@@ -1,0 +1,29 @@
+              <div class="daily-goal-welcome">
+                <span class="dgw-badge-pill">{{ dgw.badgeIcon }} {{ dgw.badgeLabel }}</span>
+                <h1><span class="dgw-title-main">{{ dgw.titleMain }}</span> <span class="dgw-title-accent">{{ dgw.titleAccent }}</span></h1>
+                <p class="dgw-subtitle">{{ dgw.subtitle }}</p>
+
+                <div class="dgw-cards">
+                  <div class="dgw-card">
+                    <span class="dgw-card-icon dgw-card-icon--blue">{{ dgw.objectiveIcon }}</span>
+                    <h2>{{ dgw.objectiveHeading }}</h2>
+                    <p>{{ dgw.objectiveText }}</p>
+                  </div>
+                  <div class="dgw-card">
+                    <span class="dgw-card-icon dgw-card-icon--peach">{{ dgw.recapIcon }}</span>
+                    <h2>{{ dgw.recapHeading }}</h2>
+                    <p>{{ dgw.recapText }}</p>
+                  </div>
+                </div>
+
+                @if (isCompletedLessonWelcome()) {
+                  @if (nextLesson(); as next) {
+                    <button type="button" class="btn dgw-start-btn" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+                  } @else {
+                    <button type="button" class="btn dgw-start-btn" (click)="backToMap()">Back to My Modules →</button>
+                  }
+                  <button type="button" class="review-lesson-link" (click)="beginLesson()">↺ Review this lesson</button>
+                } @else {
+                  <button type="button" class="btn dgw-start-btn" (click)="beginLesson()">{{ dgw.startLabel }} →</button>
+                }
+              </div>

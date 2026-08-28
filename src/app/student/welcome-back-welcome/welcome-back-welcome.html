@@ -1,0 +1,28 @@
+              <div class="backbanner-hero" [style.--accent]="module()?.themeColor">
+                <h1>Welcome Back, {{ student().firstName }}! 🌟</h1>
+                <p class="backbanner-intro">{{ lesson.welcomeBackIntro }}</p>
+              </div>
+
+              <div class="backbanner-card">
+                <div class="backbanner-week-pill">
+                  <strong>WEEK {{ lesson.week }} @if (lesson.stage) { – {{ lesson.stage.toUpperCase() }} }</strong>
+                  <span>{{ lessonQuotedTitle(lesson) }}</span>
+                </div>
+
+                @if (lesson.mainFocus) {
+                  <div class="backbanner-focus">
+                    <strong>🎯 Main Focus: </strong><span>{{ lesson.mainFocus }}</span>
+                  </div>
+                }
+
+                @if (isCompletedLessonWelcome()) {
+                  @if (nextLesson(); as next) {
+                    <button type="button" class="btn backbanner-btn" (click)="continueToNextLesson()">🚀 Continue to Week {{ next.week }}</button>
+                  } @else {
+                    <button type="button" class="btn backbanner-btn" (click)="backToMap()">🎉 Back to My Modules</button>
+                  }
+                  <button type="button" class="review-lesson-link" (click)="beginLesson()">↺ Review this lesson</button>
+                } @else {
+                  <button type="button" class="btn backbanner-btn" (click)="beginLesson()">🚀 Start Lesson</button>
+                }
+              </div>

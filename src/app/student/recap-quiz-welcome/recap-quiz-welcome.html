@@ -1,0 +1,59 @@
+              <div class="recap-quiz-welcome">
+                <div class="rqw-main">
+                  <span class="rqw-week-pill">{{ rqw.weekPillIcon }} {{ rqw.weekPill }}</span>
+                  <h1><span class="rqw-title-accent">{{ rqw.titleAccent }}&nbsp;</span><span class="rqw-title-plain">{{ rqw.titlePlain }}</span></h1>
+
+                  <div class="rqw-image-wrap">
+                    <img [src]="rqw.image" [alt]="rqw.imageAlt" />
+                  </div>
+
+                  <div class="rqw-objective-card">
+                    <span class="rqw-objective-icon">{{ rqw.objectiveIcon }}</span>
+                    <div>
+                      <strong>{{ rqw.objectiveLabel }}</strong>
+                      <p>{{ rqw.objectiveText }}</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="rqw-quiz">
+                  <span class="rqw-quiz-badge">✨ {{ rqw.recapBadge }}</span>
+
+                  <div class="rqw-quiz-card">
+                    <p class="rqw-quiz-question">{{ rqw.recapQuestion }}</p>
+
+                    <div class="rqw-quiz-options">
+                      @for (option of rqw.options; track option.id) {
+                        <button
+                          type="button"
+                          class="rqw-quiz-option"
+                          [class.correct]="recapQuizSelectedId() === option.id && recapQuizFeedback() === 'correct'"
+                          [class.incorrect]="recapQuizSelectedId() === option.id && recapQuizFeedback() === 'incorrect'"
+                          (click)="selectRecapQuizOption(option.id, rqw.correctOptionId)"
+                        >
+                          {{ option.emoji }} {{ option.label }}
+                        </button>
+                      }
+                    </div>
+
+                    @if (recapQuizFeedback() === 'correct') {
+                      <p class="rqw-quiz-feedback rqw-quiz-feedback--correct">{{ rqw.feedbackText }}</p>
+                    } @else if (recapQuizFeedback() === 'incorrect') {
+                      <p class="rqw-quiz-feedback rqw-quiz-feedback--incorrect">{{ rqw.tryAgainLabel }}</p>
+                    }
+                  </div>
+
+                  <p class="rqw-footer-note">{{ rqw.footerNote }}</p>
+
+                  @if (isCompletedLessonWelcome()) {
+                    @if (nextLesson(); as next) {
+                      <button type="button" class="btn rqw-start-btn" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+                    } @else {
+                      <button type="button" class="btn rqw-start-btn" (click)="backToMap()">Back to My Modules →</button>
+                    }
+                    <button type="button" class="review-lesson-link" (click)="beginLesson()">↺ Review this lesson</button>
+                  } @else if (recapQuizFeedback() === 'correct') {
+                    <button type="button" class="btn rqw-start-btn" (click)="beginLesson()">{{ rqw.startLabel }}</button>
+                  }
+                </div>
+              </div>

@@ -1,0 +1,31 @@
+              <div class="mastery-hero">
+                <div class="mastery-content">
+                  <span class="mastery-pill">Week {{ lesson.week }} @if (lesson.stage) { - {{ lesson.stage }} Level }</span>
+                  <h1>Welcome to <span class="accent">{{ lessonQuotedTitle(lesson) }}</span></h1>
+                  <p class="mastery-subtitle">{{ lesson.heroSubtitle }}</p>
+
+                  @if (lesson.mainFocus) {
+                    <div class="mastery-focus">
+                      <strong>🎯 Main Focus</strong>
+                      <p>{{ lesson.mainFocus }}</p>
+                    </div>
+                  }
+
+                  @if (isCompletedLessonWelcome()) {
+                    @if (nextLesson(); as next) {
+                      <button type="button" class="btn mastery-btn" (click)="continueToNextLesson()">Continue to Week {{ next.week }} ➡️</button>
+                    } @else {
+                      <button type="button" class="btn mastery-btn" (click)="backToMap()">Back to My Modules ➡️</button>
+                    }
+                    <button type="button" class="review-lesson-link" (click)="beginLesson()">↺ Review this lesson</button>
+                  } @else {
+                    <button type="button" class="btn mastery-btn" (click)="beginLesson()">Start Your Journey ➡️</button>
+                  }
+                </div>
+
+                @if (lesson.heroImage) {
+                  <div class="mastery-image-wrap">
+                    <img [src]="lesson.heroImage" [alt]="lesson.heroImageAlt ?? ''" />
+                  </div>
+                }
+              </div>

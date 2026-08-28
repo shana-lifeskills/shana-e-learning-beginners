@@ -1,0 +1,80 @@
+// Shared building blocks for the lesson-welcome screen variants.
+//
+// Every module has a bespoke "welcome" layout for its weeks, and they were
+// hand-built one at a time — so the same handful of shapes (a start button, a
+// week pill, a circular icon chip, a soft white card) got re-typed dozens of
+// times with slightly different literals. These mixins/functions capture the
+// common core; a variant that genuinely differs keeps its own extra
+// declarations on top.
+//
+// This is a refactor, not a redesign: each mixin emits exactly the declarations
+// the hand-written rules used, so the rendered output is unchanged.
+
+@use 'variables' as v;
+@use 'mixins' as m;
+
+/// Navy body text at a given alpha — replaces the ~120 hand-written
+/// `rgba(43, 45, 66, x)` / `rgba(30, 42, 94, x)` literals.
+@function navy($alpha) {
+  @return rgba(43, 45, 66, $alpha);
+}
+
+/// The recurring "big friendly CTA" button: tappable, bold, white text, pill
+/// shape, hard drop shadow, subtle hover fade. Callers pass the background and,
+/// where it isn't white, the foreground; anything else (gradient backgrounds,
+/// full-width block layout, larger type) stays on the caller.
+@mixin welcome-cta-btn($bg, $fg: v.$color-white) {
+  @include m.tappable;
+  background: $bg;
+  color: $fg;
+  border: none;
+  font-weight: 800;
+  font-size: 1.05rem;
+  padding: 0.9rem 2.25rem;
+  border-radius: v.$border-radius-pill;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.1);
+
+  &:hover { opacity: 0.92; }
+}
+
+/// The recurring "week N" / eyebrow pill: a small tinted, bold, rounded label.
+/// Callers pass background + text colour and keep their own margins.
+@mixin welcome-pill($bg, $fg) {
+  display: inline-block;
+  background: $bg;
+  color: $fg;
+  font-weight: 800;
+  font-size: 0.9rem;
+  padding: 0.45rem 1.3rem;
+  border-radius: v.$border-radius-pill;
+}
+
+/// A circular icon chip — centred glyph in a coloured disc.
+@mixin icon-chip($size, $font: 1.3rem, $radius: 50%) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: $size;
+  height: $size;
+  border-radius: $radius;
+  font-size: $font;
+}
+
+/// `bouncy-card` but with the lift-on-hover suppressed — the welcome cards keep
+/// the resting shadow and don't move. Replaces the 9 hand-written
+/// `@include m.bouncy-card;` + `&:hover { transform: none; … }` pairs.
+@mixin static-bouncy-card {
+  @include m.bouncy-card;
+
+  &:hover {
+    transform: none;
+    box-shadow: 0 6px 0 rgba(0, 0, 0, 0.08);
+  }
+}
+
+/// The plain white "soft card" panel used across the newer welcome layouts.
+@mixin soft-card {
+  background: v.$color-white;
+  border-radius: v.$border-radius-xl;
+  box-shadow: 0 2px 14px #{navy(0.06)};
+}

@@ -1,0 +1,58 @@
+              <div class="journey-card">
+                <div class="journey-top">
+                  <div class="journey-avatar">
+                    <img src="/assets/images/week3.jpg" alt="Your trainer, waving hello" />
+                  </div>
+
+                  <div class="journey-content">
+                    <h1>Welcome to Your <span class="accent">Learning Journey!</span></h1>
+                    <p class="journey-greeting">
+                      Hello, {{ student().firstName }}! I'm so excited to see you here today.
+                      {{ lesson.journeyIntro }}
+                    </p>
+
+                    <div class="journey-actions">
+                      @if (isCompletedLessonWelcome()) {
+                        @if (nextLesson(); as next) {
+                          <button type="button" class="btn journey-btn-primary" (click)="continueToNextLesson()">➡️ Continue to Week {{ next.week }}</button>
+                        } @else {
+                          <button type="button" class="btn journey-btn-primary" (click)="backToMap()">🎉 Back to My Modules</button>
+                        }
+                        <button type="button" class="review-lesson-link" (click)="beginLesson()">↺ Review this lesson</button>
+                      } @else {
+                        <button type="button" class="btn journey-btn-primary" (click)="beginLesson()">Let's Get Started!</button>
+                      }
+                    </div>
+                  </div>
+                </div>
+
+                <div class="journey-tip">
+                  <strong>Remember:</strong> There are no wrong answers here — only opportunities to learn and grow together! 🌱
+                </div>
+              </div>
+
+              <div class="journey-info-card">
+                <div class="journey-info-head">
+                  <span class="journey-week-number">{{ lesson.week }}</span>
+                  <h2>{{ lesson.title }}</h2>
+                  @if (lesson.stage) { <span class="stage-pill">{{ lesson.stage }} Week</span> }
+                </div>
+
+                @if (lesson.mainFocus) {
+                  <div class="main-focus">
+                    <strong>🎯 Main Focus:</strong>
+                    <p>{{ lesson.mainFocus }}</p>
+                  </div>
+                }
+
+                @if (lesson.discoverPoints?.length) {
+                  <div class="discover">
+                    <h3>📚 What You'll Discover</h3>
+                    <ul>
+                      @for (point of lesson.discoverPoints; track point) {
+                        <li>{{ point }}</li>
+                      }
+                    </ul>
+                  </div>
+                }
+              </div>

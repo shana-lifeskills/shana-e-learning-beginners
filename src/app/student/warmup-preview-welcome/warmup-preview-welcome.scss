@@ -1,0 +1,97 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+.warmup-preview-welcome {
+  max-width: 34rem;
+  margin: 1.5rem auto 0;
+  text-align: center;
+}
+
+.wpw-week-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: #dceafe;
+  color: #2563a8;
+  font-weight: 800;
+  font-size: 0.9rem;
+  padding: 0.5rem 1.4rem;
+  border-radius: v.$border-radius-pill;
+  margin-bottom: 1.25rem;
+}
+
+.warmup-preview-welcome h1 {
+  @include m.playful-heading;
+  font-size: 2.5rem;
+  color: v.$color-navy-text;
+  margin-bottom: 0.75rem;
+}
+
+.wpw-subtitle {
+  color: w.navy(0.55);
+  font-size: 1.05rem;
+  line-height: 1.5;
+  margin-bottom: 2rem;
+}
+
+.wpw-card {
+  background: v.$color-white;
+  border-radius: v.$border-radius-xl;
+  padding: 1.5rem;
+  box-shadow: 0 2px 14px w.navy(0.06);
+}
+
+.wpw-image-wrap {
+  border-radius: v.$border-radius-lg;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+
+  img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+}
+
+.wpw-activity-pill {
+  display: inline-block;
+  background: #dceafe;
+  color: #2563a8;
+  font-weight: 800;
+  font-size: 0.85rem;
+  padding: 0.4rem 1.1rem;
+  border-radius: v.$border-radius-pill;
+  margin-bottom: 1rem;
+}
+
+.wpw-card h2 {
+  @include m.playful-heading;
+  font-size: 1.4rem;
+  color: v.$color-navy-text;
+  margin-bottom: 0.9rem;
+}
+
+.wpw-activity-description {
+  color: w.navy(0.6);
+  font-weight: 600;
+  font-size: 1rem;
+  line-height: 1.5;
+  margin-bottom: 1.75rem;
+}
+
+.wpw-start-btn {
+  @include m.tappable;
+  display: block;
+  width: 100%;
+  background: #2f6fed;
+  color: v.$color-white;
+  border: none;
+  font-weight: 800;
+  font-size: 1.05rem;
+  padding: 1rem;
+  border-radius: v.$border-radius-sm;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.1);
+
+  &:hover { opacity: 0.92; }
+}

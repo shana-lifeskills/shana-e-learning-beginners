@@ -1,0 +1,203 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Little Lantern welcome (llw) ---- */
+.llw {
+  max-width: 66rem;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.llw-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2.5rem;
+}
+
+.llw-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+
+  strong {
+    font-family: v.$headings-font-family;
+    font-weight: 800;
+    font-size: 1.3rem;
+    color: v.$color-navy-text;
+  }
+}
+
+.llw-brand-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 0.8rem;
+  background: #f4c94e;
+  border: 2px solid v.$color-navy-text;
+  font-size: 1rem;
+}
+
+.llw-week-marker {
+  font-weight: 800;
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  color: w.navy(0.55);
+
+  &::first-letter { color: #e0714f; }
+}
+
+.llw-hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+  margin-bottom: 2.5rem;
+
+  @media (max-width: 880px) { grid-template-columns: 1fr; }
+}
+
+.llw-eyebrow {
+  display: inline-block;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-weight: 800;
+  font-size: 0.85rem;
+  color: #2f8f83;
+  margin-bottom: 1.25rem;
+
+  &::before {
+    content: '';
+    display: inline-block;
+    width: 2rem;
+    height: 3px;
+    border-radius: 2px;
+    background: #e0714f;
+    vertical-align: middle;
+    margin-right: 0.75rem;
+  }
+}
+
+.llw-hero-copy h1 {
+  @include m.playful-heading;
+  font-size: 3.75rem;
+  line-height: 1.05;
+  margin-bottom: 1.25rem;
+}
+
+.llw-title-main { color: v.$color-navy-text; }
+
+.llw-title-accent {
+  color: #3aa093;
+  border-bottom: 6px solid #f4d06a;
+  padding-bottom: 0.05rem;
+}
+
+.llw-subtitle {
+  color: w.navy(0.7);
+  font-size: 1.25rem;
+  line-height: 1.55;
+  margin: 0 0 2rem;
+  max-width: 30rem;
+}
+
+.llw-start-btn {
+  @include m.tappable;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: #3f9a8d;
+  color: v.$color-white;
+  border: 2px solid v.$color-navy-text;
+  font-weight: 800;
+  font-size: 1.15rem;
+  padding: 1rem 2rem;
+  border-radius: v.$border-radius-pill;
+  box-shadow: 0 6px 0 w.navy(0.85);
+}
+
+.llw-lock-line {
+  margin: 1.25rem 0 0;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: w.navy(0.55);
+}
+
+.llw-hero-art {
+  position: relative;
+  justify-self: center;
+}
+
+.llw-hero-image {
+  width: 24rem;
+  max-width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  background: #f6d259;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  overflow: hidden;
+
+  img { width: 82%; height: auto; }
+}
+
+.llw-hero-bubble {
+  position: absolute;
+  top: -0.5rem;
+  right: -1rem;
+  z-index: 1;
+  max-width: 12rem;
+  background: v.$color-white;
+  border: 2px solid v.$color-navy-text;
+  color: v.$color-navy-text;
+  font-weight: 800;
+  font-size: 0.95rem;
+  line-height: 1.3;
+  padding: 0.8rem 1rem;
+  border-radius: v.$border-radius-lg v.$border-radius-lg 0 v.$border-radius-lg;
+}
+
+.llw-objective-card {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 2.5rem;
+  align-items: center;
+  background: v.$color-white;
+  border: 2px solid v.$color-navy-text;
+  border-radius: v.$border-radius-xl;
+  padding: 2rem 2.5rem;
+  box-shadow: 0 8px 0 #f4d06a;
+
+  @media (max-width: 720px) { grid-template-columns: 1fr; gap: 1rem; }
+
+  p {
+    color: w.navy(0.75);
+    font-size: 1.2rem;
+    line-height: 1.5;
+    margin: 0;
+  }
+}
+
+.llw-objective-kicker {
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-weight: 800;
+  font-size: 0.8rem;
+  color: #e0714f;
+  margin-bottom: 0.4rem;
+}
+
+.llw-objective-head h2 {
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 1.9rem;
+  color: v.$color-navy-text;
+  margin: 0;
+  white-space: nowrap;
+}
+

@@ -1,0 +1,49 @@
+              <div class="objectives-welcome">
+                <span class="ow-week-pill">{{ ow.weekPill }}</span>
+                <h1>{{ ow.title }}</h1>
+                <p class="ow-subtitle">{{ ow.subtitle }}</p>
+
+                <div class="ow-image-wrap">
+                  <img [src]="ow.image" [alt]="ow.imageAlt" />
+                </div>
+
+                @if (ow.objectiveCards; as cards) {
+                  <div class="ow-objectives-section">
+                    <h2>{{ ow.sectionHeading || 'Our Objectives' }}</h2>
+                    @if (ow.sectionDescription) {
+                      <p class="ow-objectives-description">{{ ow.sectionDescription }}</p>
+                    }
+                    <div class="ow-objectives-grid">
+                      @for (card of cards; track card.title) {
+                        <div class="ow-objective-card">
+                          <span class="ow-obj-icon" [class]="'ow-obj-icon--' + card.variant">{{ card.icon }}</span>
+                          <h3>{{ card.title }}</h3>
+                          <p>{{ card.description }}</p>
+                        </div>
+                      }
+                    </div>
+                  </div>
+                } @else {
+                  <div class="ow-card">
+                    <h2>Objectives</h2>
+                    <ul class="ow-objectives">
+                      @for (objective of ow.objectives; track objective) {
+                        <li><span class="ow-check">✓</span>{{ objective }}</li>
+                      }
+                    </ul>
+                  </div>
+                }
+
+                <span class="ow-divider"></span>
+
+                @if (isCompletedLessonWelcome()) {
+                  @if (nextLesson(); as next) {
+                    <button type="button" class="btn ow-start-btn" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+                  } @else {
+                    <button type="button" class="btn ow-start-btn" (click)="backToMap()">Back to My Modules →</button>
+                  }
+                  <button type="button" class="review-lesson-link" (click)="beginLesson()">↺ Review this lesson</button>
+                } @else {
+                  <button type="button" class="btn ow-start-btn" (click)="beginLesson()">{{ ow.startLabel }} →</button>
+                }
+              </div>

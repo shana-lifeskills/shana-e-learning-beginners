@@ -1,0 +1,26 @@
+              <div class="warmup-preview-welcome">
+                <span class="wpw-week-pill">{{ wpw.weekPillIcon }} {{ wpw.weekPill }}</span>
+                <h1>{{ wpw.title }}</h1>
+                <p class="wpw-subtitle">{{ wpw.subtitle }}</p>
+
+                <div class="wpw-card">
+                  <div class="wpw-image-wrap">
+                    <img [src]="wpw.image" [alt]="wpw.imageAlt" />
+                  </div>
+
+                  <span class="wpw-activity-pill">{{ wpw.activityPillIcon }} {{ wpw.activityPill }}</span>
+                  <h2>{{ wpw.activityHeading }}</h2>
+                  <p class="wpw-activity-description">{{ wpw.activityDescription }}</p>
+
+                  @if (isCompletedLessonWelcome()) {
+                    @if (nextLesson(); as next) {
+                      <button type="button" class="btn wpw-start-btn" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+                    } @else {
+                      <button type="button" class="btn wpw-start-btn" (click)="backToMap()">Back to My Modules →</button>
+                    }
+                    <button type="button" class="review-lesson-link" (click)="beginLesson()">↺ Review this lesson</button>
+                  } @else {
+                    <button type="button" class="btn wpw-start-btn" (click)="beginLesson()">✨ {{ wpw.startLabel }}</button>
+                  }
+                </div>
+              </div>

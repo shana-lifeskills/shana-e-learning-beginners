@@ -1,0 +1,58 @@
+              <div class="feelings-check-welcome">
+                <span class="fw-week-pill">{{ fw.weekPill }}</span>
+                <h1>{{ fw.title }}</h1>
+
+                <div class="fw-card fw-objective-card">
+                  <span class="fw-eyebrow">{{ fw.objectiveLabel }}</span>
+                  <p>{{ fw.objectiveText }}</p>
+                </div>
+
+                <div class="fw-recap">
+                  <h2>{{ fw.recapHeading }}</h2>
+                  <p class="fw-recap-question">{{ fw.recapQuestion }}</p>
+
+                  <div class="fw-options">
+                    @for (option of fw.options; track option.id) {
+                      <button
+                        type="button"
+                        class="fw-option"
+                        [class.selected]="feelingsCheckSelectedId() === option.id"
+                        (click)="selectFeelingsOption(option.id)"
+                      >
+                        <span class="fw-option-emoji">{{ option.emoji }}</span>
+                        <span class="fw-option-label">{{ option.label }}</span>
+                        @if (feelingsCheckSelectedId() === option.id) {
+                          <span class="fw-option-check">✓</span>
+                        }
+                      </button>
+                    }
+                  </div>
+                </div>
+
+                <div class="fw-feedback-card">
+                  <span class="fw-mascot">
+                    @if (fw.mascotImage) {
+                      <img [src]="fw.mascotImage" [alt]="fw.mascotImageAlt ?? ''" />
+                    } @else {
+                      {{ fw.mascotEmoji }}
+                    }
+                  </span>
+                  <p>&ldquo;{{ fw.feedbackText }}&rdquo;</p>
+                  <span class="fw-dots"><span></span><span></span><span></span></span>
+                </div>
+
+                <div class="fw-cta">
+                  @if (isCompletedLessonWelcome()) {
+                    @if (nextLesson(); as next) {
+                      <button type="button" class="btn fw-start-btn" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+                    } @else {
+                      <button type="button" class="btn fw-start-btn" (click)="backToMap()">Back to My Modules →</button>
+                    }
+                    <button type="button" class="review-lesson-link" (click)="beginLesson()">↺ Review this lesson</button>
+                  } @else {
+                    <button type="button" class="btn fw-start-btn" (click)="beginLesson()">{{ fw.startLabel }}</button>
+                  }
+                </div>
+
+                <p class="fw-footer-brand">{{ fw.footerBrand }}</p>
+              </div>

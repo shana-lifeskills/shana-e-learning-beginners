@@ -1,0 +1,62 @@
+              <div class="feelings-review-welcome">
+                <div class="frw-hero">
+                  <div class="frw-hero-copy">
+                    <span class="frw-week-pill"><span class="frw-week-dot"></span>{{ frw.weekPill }}</span>
+                    <h1><span class="frw-title-line1">{{ frw.titleLine1 }}</span><span class="frw-title-line2">{{ frw.titleLine2 }}</span></h1>
+
+                    <div class="frw-objective-card">
+                      <span class="frw-objective-icon">{{ frw.objectiveIcon }}</span>
+                      <div>
+                        <strong>{{ frw.objectiveLabel }}</strong>
+                        <p>{{ frw.objectiveText }}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="frw-hero-image-wrap">
+                    <img [src]="frw.image" [alt]="frw.imageAlt" />
+                  </div>
+                </div>
+
+                <div class="frw-recap-card">
+                  <div class="frw-recap-head">
+                    <span class="frw-recap-icon">{{ frw.recapIcon }}</span>
+                    <div>
+                      <span class="frw-recap-eyebrow">{{ frw.recapEyebrow }}</span>
+                      <h2>{{ frw.recapHeading }}</h2>
+                    </div>
+                  </div>
+
+                  <div class="frw-question-box">
+                    <p class="frw-question">{{ frw.recapQuestionIcon }} {{ frw.recapQuestion }}</p>
+
+                    <div class="frw-options">
+                      @for (option of frw.options; track option.id) {
+                        <button
+                          type="button"
+                          class="frw-option"
+                          [class.selected]="feelingsCheckSelectedId() === option.id"
+                          (click)="selectFeelingsOption(option.id)"
+                        >
+                          {{ option.label }} {{ option.emoji }}
+                        </button>
+                      }
+                    </div>
+                  </div>
+
+                  @if (feelingsCheckSelectedId()) {
+                    <p class="frw-feedback">✨ {{ frw.feedbackText }} ✨</p>
+                  }
+
+                  @if (isCompletedLessonWelcome()) {
+                    @if (nextLesson(); as next) {
+                      <button type="button" class="btn frw-start-btn" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+                    } @else {
+                      <button type="button" class="btn frw-start-btn" (click)="backToMap()">Back to My Modules →</button>
+                    }
+                    <button type="button" class="review-lesson-link" (click)="beginLesson()">↺ Review this lesson</button>
+                  } @else if (feelingsCheckSelectedId()) {
+                    <button type="button" class="btn frw-start-btn" (click)="beginLesson()">{{ frw.startLabel }}</button>
+                  }
+                </div>
+              </div>

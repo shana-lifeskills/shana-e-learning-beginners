@@ -1,0 +1,43 @@
+              <div class="llw">
+                <header class="llw-topbar">
+                  <span class="llw-brand">
+                    <span class="llw-brand-badge" aria-hidden="true">💛</span>
+                    <strong>{{ llw.brandName }}</strong>
+                  </span>
+                  <span class="llw-week-marker">● {{ llw.weekMarker }}</span>
+                </header>
+
+                <div class="llw-hero">
+                  <div class="llw-hero-copy">
+                    <span class="llw-eyebrow">{{ llw.eyebrow }}</span>
+                    <h1><span class="llw-title-main">{{ llw.titleStart }}</span> <span class="llw-title-accent">{{ llw.titleAccent }}</span></h1>
+                    <p class="llw-subtitle">{{ llw.subtitle }}</p>
+
+                    @if (isCompletedLessonWelcome()) {
+                      @if (nextLesson(); as next) {
+                        <button type="button" class="btn llw-start-btn" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+                      } @else {
+                        <button type="button" class="btn llw-start-btn" (click)="backToMap()">Back to My Modules →</button>
+                      }
+                      <button type="button" class="review-lesson-link" (click)="beginLesson()">↺ Review this lesson</button>
+                    } @else {
+                      <button type="button" class="btn llw-start-btn" (click)="beginLesson()">{{ llw.startLabel }} <span aria-hidden="true">→</span></button>
+                    }
+
+                    <p class="llw-lock-line">🔒 {{ llw.lockLine }}</p>
+                  </div>
+
+                  <div class="llw-hero-art">
+                    <span class="llw-hero-bubble">{{ llw.speechBubble }}</span>
+                    <div class="llw-hero-image"><img [src]="llw.image" [alt]="llw.imageAlt" /></div>
+                  </div>
+                </div>
+
+                <div class="llw-objective-card">
+                  <div class="llw-objective-head">
+                    <span class="llw-objective-kicker">{{ llw.objectiveKicker }}</span>
+                    <h2>{{ llw.objectiveHeading }}</h2>
+                  </div>
+                  <p>{{ llw.objectiveText }}</p>
+                </div>
+              </div>

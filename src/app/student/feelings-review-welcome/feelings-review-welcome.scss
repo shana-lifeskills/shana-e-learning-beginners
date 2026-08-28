@@ -1,0 +1,209 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+.feelings-review-welcome {
+  max-width: 64rem;
+  margin: -1rem auto 0;
+  padding: 2.5rem 2.5rem 3rem;
+  border-radius: v.$border-radius-xl;
+  background: linear-gradient(160deg, #eef6fd 0%, #dbeafe 100%);
+}
+
+.frw-hero {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 2.5rem;
+  margin-bottom: 2.5rem;
+
+  @media (max-width: 780px) {
+    flex-direction: column;
+  }
+}
+
+.frw-hero-copy {
+  flex: 1;
+  min-width: 0;
+}
+
+.frw-week-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: v.$color-white;
+  color: #2b5fd9;
+  font-weight: 800;
+  font-size: 0.9rem;
+  padding: 0.4rem 1rem;
+  border-radius: v.$border-radius-pill;
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.04);
+  margin-bottom: 1.25rem;
+}
+
+.frw-week-dot {
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 50%;
+  background: #4d8bf5;
+}
+
+.feelings-review-welcome h1 {
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 2.5rem;
+  line-height: 1.15;
+  margin-bottom: 1.5rem;
+
+  .frw-title-line1 { display: block; color: #1e2a5e; }
+  .frw-title-line2 { display: block; color: #4d8bf5; }
+}
+
+.frw-objective-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.9rem;
+  background: v.$color-white;
+  border-radius: v.$border-radius-lg;
+  box-shadow: 0 4px 16px rgba(30, 42, 94, 0.06);
+  padding: 1.25rem 1.5rem;
+  max-width: 26rem;
+
+  strong { display: block; color: #1e2a5e; font-weight: 700; margin-bottom: 0.2rem; }
+  p { margin: 0; color: rgba(30, 42, 94, 0.6); font-weight: 500; line-height: 1.45; }
+}
+
+.frw-objective-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  background: #e7f0fe;
+  font-size: 1.05rem;
+}
+
+.frw-hero-image-wrap {
+  flex-shrink: 0;
+  width: 20rem;
+  max-width: 100%;
+  border-radius: v.$border-radius-lg;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(30, 42, 94, 0.08);
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+.frw-recap-card {
+  background: v.$color-white;
+  border-radius: v.$border-radius-xl;
+  box-shadow: 0 4px 20px rgba(30, 42, 94, 0.08);
+  padding: 2rem;
+}
+
+.frw-recap-head {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  margin-bottom: 1.5rem;
+
+  h2 {
+    font-family: v.$headings-font-family;
+    font-weight: 700;
+    font-size: 1.4rem;
+    color: #1e2a5e;
+    margin: 0;
+  }
+}
+
+.frw-recap-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: v.$border-radius;
+  background: #fdf1d6;
+  font-size: 1.15rem;
+}
+
+.frw-recap-eyebrow {
+  display: block;
+  color: rgba(30, 42, 94, 0.45);
+  font-weight: 800;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.15rem;
+}
+
+.frw-question-box {
+  background: #f4f6fb;
+  border-radius: v.$border-radius-lg;
+  padding: 1.5rem 1.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.frw-question {
+  margin: 0 0 1.1rem;
+  font-weight: 700;
+  color: #1e2a5e;
+}
+
+.frw-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.frw-option {
+  @include m.tappable;
+  background: v.$color-white;
+  border: 2px solid rgba(30, 42, 94, 0.12);
+  color: #1e2a5e;
+  font-weight: 700;
+  padding: 0.6rem 1.25rem;
+  border-radius: v.$border-radius;
+
+  &.selected {
+    background: #4d8bf5;
+    border-color: #4d8bf5;
+    color: v.$color-white;
+  }
+
+  &:hover:not(.selected) { border-color: #4d8bf5; }
+}
+
+.frw-feedback {
+  background: rgba(107, 203, 119, 0.12);
+  border: 1px solid rgba(107, 203, 119, 0.4);
+  border-radius: v.$border-radius-lg;
+  color: #2f8f45;
+  font-weight: 700;
+  text-align: center;
+  padding: 0.9rem 1.25rem;
+  margin: 0 0 1.5rem;
+}
+
+.frw-start-btn {
+  @include m.tappable;
+  display: block;
+  width: 100%;
+  background: #4d8bf5;
+  color: v.$color-white;
+  border: none;
+  font-weight: 800;
+  font-size: 1.05rem;
+  padding: 1rem 1.5rem;
+  border-radius: v.$border-radius-pill;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.1);
+
+  &:hover { opacity: 0.92; }
+}

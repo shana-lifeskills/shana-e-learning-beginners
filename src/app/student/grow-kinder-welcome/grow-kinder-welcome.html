@@ -1,0 +1,43 @@
+              <div class="gkw">
+                <span class="gkw-week-pill">✦ {{ gkw.weekPill }}</span>
+                <h1><span class="gkw-title-main">{{ gkw.titleStart }}</span><br /><span class="gkw-title-accent">{{ gkw.titleAccent }}</span></h1>
+
+                <div class="gkw-art">
+                  <img [src]="gkw.image" [alt]="gkw.imageAlt" />
+                  <span class="gkw-bubble">
+                    <strong>{{ gkw.speechBubbleStrong }}</strong>
+                    {{ gkw.speechBubbleText }}
+                  </span>
+                </div>
+
+                <div class="gkw-learn-card">
+                  <div class="gkw-learn-head">
+                    <span class="gkw-learn-icon" aria-hidden="true">✦</span>
+                    <h2>{{ gkw.learnHeading }}</h2>
+                  </div>
+                  <p class="gkw-objective">@for (seg of gkw.objectiveSegments; track $index) {<span [class.orange]="seg.color === 'orange'" [class.pink]="seg.color === 'pink'">{{ seg.text }}</span>}</p>
+                </div>
+
+                <div class="gkw-cards">
+                  @for (card of gkw.cards; track card.title) {
+                    <div class="gkw-card">
+                      <span class="gkw-card-icon" [class]="'tone-' + card.tone" aria-hidden="true">{{ card.icon }}</span>
+                      <h3>{{ card.title }}</h3>
+                      <p>{{ card.text }}</p>
+                    </div>
+                  }
+                </div>
+
+                @if (isCompletedLessonWelcome()) {
+                  @if (nextLesson(); as next) {
+                    <button type="button" class="btn gkw-start-btn" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+                  } @else {
+                    <button type="button" class="btn gkw-start-btn" (click)="backToMap()">Back to My Modules →</button>
+                  }
+                  <button type="button" class="review-lesson-link" (click)="beginLesson()">↺ Review this lesson</button>
+                } @else {
+                  <button type="button" class="btn gkw-start-btn" (click)="beginLesson()">{{ gkw.startLabel }} →</button>
+                }
+
+                <p class="gkw-tagline">♡ {{ gkw.footerTagline }} ♡</p>
+              </div>

@@ -1,0 +1,53 @@
+              <div class="celebrate-welcome">
+                <div class="cw-image-wrap">
+                  <img [src]="cw.image" [alt]="cw.imageAlt" />
+                  <span class="cw-badge-number">{{ cw.badgeNumber }}</span>
+                </div>
+
+                <h1><span class="cw-title-main">{{ cw.titleStart }}</span><span class="cw-title-accent">{{ cw.titleAccent }}</span></h1>
+                <p class="cw-subtitle">{{ cw.subtitle }}</p>
+
+                <div class="cw-scrapbook">
+                  <div class="cw-scrapbook-head">
+                    <h2>{{ cw.scrapbookHeading }}</h2>
+                  </div>
+
+                  <div class="cw-scrapbook-grid">
+                    @for (card of cw.scrapbookCards; track card.title) {
+                      <div class="cw-card">
+                        <div class="cw-card-image" [class]="'cw-card-image--' + card.badgeVariant">
+                          <img [src]="card.image" [alt]="card.imageAlt" />
+                          <span class="cw-card-badge" [class]="'cw-card-badge--' + card.badgeVariant">{{ card.badgeLabel }}</span>
+                        </div>
+                        <div class="cw-card-body">
+                          <h3>{{ card.title }}</h3>
+                          <p>&ldquo;{{ card.quote }}&rdquo;</p>
+                        </div>
+                        <div class="cw-card-footer">
+                          <span class="cw-avatar" [class]="'cw-avatar--' + card.avatarVariant"></span>
+                          <span class="cw-card-credit">{{ card.studentName.toUpperCase() }}, AGE {{ card.studentAge }}</span>
+                        </div>
+                      </div>
+                    }
+                  </div>
+                </div>
+
+                <div class="cw-next-mission">
+                  <div class="cw-next-mission-copy">
+                    <span class="cw-next-mission-label">{{ cw.nextMissionLabel }}</span>
+                    <strong>{{ cw.nextMissionTitle }}</strong>
+                  </div>
+                  @if (isCompletedLessonWelcome()) {
+                    @if (nextLesson(); as next) {
+                      <button type="button" class="btn cw-start-btn" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+                    } @else {
+                      <button type="button" class="btn cw-start-btn" (click)="backToMap()">Back to My Modules →</button>
+                    }
+                  } @else {
+                    <button type="button" class="btn cw-start-btn" (click)="beginLesson()">{{ cw.startLabel }}</button>
+                  }
+                </div>
+                @if (isCompletedLessonWelcome()) {
+                  <button type="button" class="review-lesson-link" (click)="beginLesson()">↺ Review this lesson</button>
+                }
+              </div>

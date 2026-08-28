@@ -1,0 +1,47 @@
+              <div class="tvw">
+                <header class="tvw-topbar">
+                  <span class="tvw-brand">
+                    <span class="tvw-brand-badge" aria-hidden="true">📖</span>
+                    <strong>{{ tvw.brandName }}</strong>
+                  </span>
+                  <span class="tvw-week-badge">✦ {{ tvw.weekBadge }}</span>
+                </header>
+
+                <div class="tvw-hero">
+                  <div class="tvw-hero-copy">
+                    <span class="tvw-week-pill">{{ tvw.weekLessonPill }}</span>
+                    <h1><span class="tvw-title-main">{{ tvw.titleStart }}</span>&nbsp;<span class="tvw-title-accent">{{ tvw.titleAccent }}</span></h1>
+                    <p class="tvw-subtitle">{{ tvw.subtitle }}</p>
+
+                    <div class="tvw-goal-card">
+                      <span class="tvw-goal-icon" aria-hidden="true">✏️</span>
+                      <div>
+                        <h2>{{ tvw.goalHeading }}</h2>
+                        <p>{{ tvw.goalText }}</p>
+                      </div>
+                    </div>
+
+                    @if (isCompletedLessonWelcome()) {
+                      @if (nextLesson(); as next) {
+                        <button type="button" class="btn tvw-start-btn" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+                      } @else {
+                        <button type="button" class="btn tvw-start-btn" (click)="backToMap()">Back to My Modules →</button>
+                      }
+                      <button type="button" class="review-lesson-link" (click)="beginLesson()">↺ Review this lesson</button>
+                    } @else {
+                      <button type="button" class="btn tvw-start-btn" (click)="beginLesson()">{{ tvw.startLabel }} →</button>
+                    }
+                  </div>
+
+                  <div class="tvw-hero-art">
+                    <span class="tvw-hero-bubble">{{ tvw.speechBubble }}</span>
+                    <div class="tvw-hero-image"><img [src]="tvw.image" [alt]="tvw.imageAlt" /></div>
+                  </div>
+                </div>
+
+                <div class="tvw-footer">
+                  @for (check of tvw.footerChecks; track check) {
+                    <span class="tvw-footer-check">✓ {{ check }}</span>
+                  }
+                </div>
+              </div>

@@ -1,0 +1,53 @@
+              <div class="recap-welcome">
+                <div class="recap-hero">
+                  <span class="recap-week-pill">{{ rw.weekPill }}</span>
+                  <h1>{{ rw.title }}</h1>
+                  <p class="recap-subtitle">{{ rw.subtitle }}</p>
+
+                  <div class="recap-hero-image-wrap">
+                    <img [src]="rw.image" [alt]="rw.imageAlt" />
+                  </div>
+                </div>
+
+                <div class="recap-card">
+                  <div class="recap-card-head">
+                    <span class="recap-card-icon">ℹ️</span>
+                    <h2>{{ rw.learningObjectiveHeading }}</h2>
+                  </div>
+                  <p>{{ rw.learningObjectiveText }}</p>
+                </div>
+
+                <div class="recap-card">
+                  <div class="recap-card-head">
+                    <span class="recap-card-icon">💡</span>
+                    <h2>{{ rw.recapHeading }}</h2>
+                  </div>
+                  <span class="recap-meta">{{ rw.recapMeta }}</span>
+                  <p>{{ rw.recapIntro }}</p>
+
+                  <div class="recap-question-list">
+                    @for (q of rw.recapQuestions; track q.number) {
+                      <div class="recap-question-row">
+                        <span class="recap-arrow">→</span>
+                        <div>
+                          <strong>Question {{ q.number }}</strong>
+                          <p>{{ q.question }}</p>
+                        </div>
+                      </div>
+                    }
+                  </div>
+                </div>
+
+                <div class="recap-cta">
+                  @if (isCompletedLessonWelcome()) {
+                    @if (nextLesson(); as next) {
+                      <button type="button" class="btn recap-start-btn" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+                    } @else {
+                      <button type="button" class="btn recap-start-btn" (click)="backToMap()">Back to My Modules →</button>
+                    }
+                    <button type="button" class="review-lesson-link" (click)="beginLesson()">↺ Review this lesson</button>
+                  } @else {
+                    <button type="button" class="btn recap-start-btn" (click)="beginLesson()">{{ rw.startLabel }}</button>
+                  }
+                </div>
+              </div>

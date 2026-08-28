@@ -1,0 +1,57 @@
+              <div class="empathy-journey-welcome">
+                <span class="ejw-journey-badge">{{ ejw.journeyBadge }}</span>
+                <p class="ejw-week-label">{{ ejw.weekLabel }}</p>
+                <h1>{{ ejw.titlePlain }}<span class="ejw-title-accent">{{ ejw.titleAccent }}</span></h1>
+
+                <div class="ejw-image-card">
+                  <img [src]="ejw.image" [alt]="ejw.imageAlt" />
+                </div>
+
+                <div class="ejw-objective-card">
+                  <strong>{{ ejw.objectiveIcon }} {{ ejw.objectiveLabel }}</strong>
+                  <p>{{ ejw.objectiveText }}</p>
+                </div>
+
+                <div class="ejw-card">
+                  <span class="ejw-badge ejw-badge--question">{{ ejw.questionBadge }}</span>
+                  <p class="ejw-question">{{ ejw.question }}</p>
+                </div>
+
+                <div class="ejw-card">
+                  <span class="ejw-badge ejw-badge--sample">{{ ejw.sampleAnswerBadge }}</span>
+
+                  <div class="ejw-options">
+                    @for (option of ejw.options; track option.id) {
+                      <button
+                        type="button"
+                        class="ejw-option"
+                        [class.selected]="feelingsCheckSelectedId() === option.id"
+                        (click)="selectFeelingsOption(option.id)"
+                      >
+                        <span class="ejw-option-image-wrap">
+                          <img [src]="option.image" [alt]="option.imageAlt" />
+                        </span>
+                        <span class="ejw-option-label">{{ option.label }}</span>
+                      </button>
+                    }
+                  </div>
+                </div>
+
+                @if (feelingsCheckSelectedId()) {
+                  <div class="ejw-feedback">
+                    <span class="ejw-badge ejw-badge--feedback">{{ ejw.feedbackBadge }}</span>
+                    <p>{{ ejw.feedbackText }}</p>
+                  </div>
+                }
+
+                @if (isCompletedLessonWelcome()) {
+                  @if (nextLesson(); as next) {
+                    <button type="button" class="btn ejw-start-btn" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+                  } @else {
+                    <button type="button" class="btn ejw-start-btn" (click)="backToMap()">Back to My Modules →</button>
+                  }
+                  <button type="button" class="review-lesson-link" (click)="beginLesson()">↺ Review this lesson</button>
+                } @else if (feelingsCheckSelectedId()) {
+                  <button type="button" class="btn ejw-start-btn" (click)="beginLesson()">{{ ejw.startLabel }}</button>
+                }
+              </div>

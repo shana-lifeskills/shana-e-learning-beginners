@@ -1,0 +1,185 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+.hero-card {
+  display: flex;
+  align-items: stretch;
+  gap: 2.5rem;
+  background: linear-gradient(155deg, #fdecae 0%, #fce29a 100%);
+  border-radius: v.$border-radius-xl;
+  padding: 3rem;
+  margin-bottom: 1.5rem;
+
+  @media (max-width: 780px) {
+    flex-direction: column;
+    padding: 2rem;
+    gap: 1.75rem;
+  }
+}
+
+.hero-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  gap: 0.35rem;
+  background: rgba(255, 255, 255, 0.7);
+  color: v.$color-navy-text;
+  font-weight: 800;
+  font-size: 1rem;
+  padding: 0.4rem 1rem;
+  border-radius: v.$border-radius-pill;
+  margin-bottom: 1.1rem;
+}
+
+.hero-content h1 {
+  @include m.playful-heading;
+  font-size: 2.5rem;
+  line-height: 1.15;
+  color: v.$color-navy-text;
+  margin-bottom: 1.1rem;
+}
+
+.hero-intro {
+  color: w.navy(0.72);
+  font-weight: 600;
+  font-size: 1.15rem;
+  line-height: 1.65;
+  max-width: 34rem;
+  margin-bottom: 2rem;
+
+  strong { color: v.$color-navy-text; }
+}
+
+.hero-start-btn {
+  @include m.tappable;
+  align-self: flex-start;
+  background: rgba(78, 205, 196, 0.28);
+  color: v.$color-navy-text;
+  border: none;
+  font-weight: 800;
+  font-size: 1.1rem;
+  padding: 1rem 2rem;
+  border-radius: v.$border-radius-pill;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.08);
+
+  &:hover { background: rgba(78, 205, 196, 0.4); }
+}
+
+.hero-image-wrap {
+  flex: 1;
+  border-radius: v.$border-radius-lg;
+  overflow: hidden;
+  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.06);
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  @media (max-width: 780px) {
+    min-height: 14rem;
+  }
+}
+
+.mission-section {
+  text-align: center;
+  margin-bottom: 1.5rem;
+
+  h2 {
+    @include m.playful-heading;
+    font-size: 1.8rem;
+    color: v.$color-navy-text;
+    margin-bottom: 0.5rem;
+  }
+}
+
+.mission-subtitle {
+  color: w.navy(0.6);
+  font-weight: 600;
+  margin-bottom: 1.75rem;
+}
+
+.mission-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+
+  @media (max-width: 680px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.mission-card {
+  @include m.bouncy-card;
+  background: v.$color-white;
+  text-align: left;
+  padding: 1.75rem;
+
+  &:hover { transform: none; box-shadow: 0 6px 0 rgba(0, 0, 0, 0.08); }
+
+  .mission-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 50%;
+    background: v.$color-cream-bg;
+    font-size: 1.2rem;
+    margin-bottom: 0.85rem;
+  }
+
+  strong { display: block; color: v.$color-navy-text; font-size: 1.1rem; margin-bottom: 0.5rem; }
+  p { margin: 0; color: w.navy(0.6); font-weight: 600; line-height: 1.55; }
+}
+
+.trainer-message-panel {
+  text-align: center;
+  background: linear-gradient(120deg, #eef8f4 0%, #fbf8f0 100%);
+  border-radius: v.$border-radius-xl;
+  padding: 3rem 2rem;
+
+  .tm-icon {
+    font-size: 2.5rem;
+    display: block;
+    margin-bottom: 0.75rem;
+  }
+
+  h2 {
+    @include m.playful-heading;
+    font-size: 1.6rem;
+    color: v.$color-navy-text;
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    color: w.navy(0.65);
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 1.75rem;
+  }
+}
+
+.tm-btn {
+  @include m.tappable;
+  background: v.$color-sunshine;
+  color: v.$color-navy-text;
+  border: none;
+  font-weight: 800;
+  font-size: 1.1rem;
+  padding: 1rem 2.25rem;
+  border-radius: v.$border-radius-pill;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.12);
+
+  &:hover { background: darken(#ffc93c, 6%); }
+}

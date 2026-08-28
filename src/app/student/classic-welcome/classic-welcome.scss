@@ -1,0 +1,138 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+.classic-header {
+  text-align: center;
+  margin-bottom: 2rem;
+
+  h1 {
+    @include m.playful-heading;
+    font-size: 2.3rem;
+    color: v.$color-navy-text;
+    margin-bottom: 0.5rem;
+  }
+}
+
+.classic-subtitle {
+  color: w.navy(0.6);
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.welcome-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: stretch;
+  margin-bottom: 1.5rem;
+
+  @media (max-width: 720px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.welcome-card {
+  @include m.bouncy-card;
+  background: v.$color-white;
+  padding: 3rem;
+
+  &:hover { transform: none; box-shadow: 0 6px 0 rgba(0, 0, 0, 0.08); }
+
+  h2 {
+    @include m.playful-heading;
+    font-size: 2.1rem;
+    line-height: 1.15;
+    color: v.$color-navy-text;
+    margin-bottom: 0.5rem;
+  }
+}
+
+.week-pill {
+  display: inline-block;
+  background: rgba(78, 205, 196, 0.18);
+  color: v.$color-sky;
+  font-weight: 800;
+  font-size: 1rem;
+  padding: 0.35rem 0.9rem;
+  border-radius: v.$border-radius-pill;
+  margin-bottom: 1.1rem;
+}
+
+.tagline {
+  font-style: italic;
+  font-size: 1.25rem;
+  color: w.navy(0.6);
+  margin-bottom: 1.5rem;
+}
+
+.start-btn {
+  background: linear-gradient(120deg, #{v.$color-sky}, #{v.$color-coral});
+  color: v.$color-white;
+  font-size: 1.2rem;
+  padding-top: 0.9rem;
+  padding-bottom: 0.9rem;
+  border: none;
+
+  &:hover { opacity: 0.92; }
+}
+
+.welcome-art {
+  border-radius: v.$border-radius-lg;
+  overflow: hidden;
+  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.06);
+
+  .teacher-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  @media (max-width: 720px) {
+    min-height: 14rem;
+  }
+}
+
+.classic-footer {
+  text-align: center;
+  color: w.navy(0.65);
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.classic-footer-icons {
+  text-align: center;
+  font-size: 1.3rem;
+  letter-spacing: 0.5rem;
+}
+
+.main-focus {
+  background: v.$color-cream-bg;
+  border-left: 5px solid v.$color-leaf;
+  border-radius: v.$border-radius-sm;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.75rem;
+
+  strong { display: block; color: v.$color-navy-text; margin-bottom: 0.5rem; font-size: 1.2rem; }
+  p { margin: 0; color: w.navy(0.7); font-size: 1.12rem; line-height: 1.55; }
+}
+
+.discover {
+  h3 {
+    @include m.playful-heading;
+    font-size: 1.3rem;
+    color: v.$color-navy-text;
+    margin-bottom: 0.85rem;
+  }
+
+  ul {
+    margin: 0;
+    padding-left: 1.3rem;
+    color: w.navy(0.7);
+    font-weight: 600;
+    font-size: 1.15rem;
+
+    li { margin-bottom: 0.55rem; }
+  }
+}
