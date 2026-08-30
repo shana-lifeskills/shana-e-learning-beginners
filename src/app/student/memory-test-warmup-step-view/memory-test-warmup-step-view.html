@@ -1,0 +1,80 @@
+<div class="mtw">
+  <header class="mtw-head">
+    <span class="mtw-kicker">Warm-Up Game</span>
+    <h2>{{ step().title }}</h2>
+    <p class="mtw-intro">{{ step().intro }}</p>
+  </header>
+
+  <div class="mtw-board">
+    <div class="mtw-board-top">
+      <span class="mtw-board-label">{{ step().studyLabel }}</span>
+      @if (phase() === 'study') {
+        <span class="mtw-timer">
+          <svg viewBox="0 0 44 44" aria-hidden="true">
+            <circle class="mtw-timer-track" cx="22" cy="22" r="19" />
+            <circle class="mtw-timer-fill" cx="22" cy="22" r="19"
+              [style.stroke-dashoffset]="119.4 * (1 - ringFraction())" />
+          </svg>
+          <span class="mtw-timer-num">{{ secondsLeft() }}</span>
+        </span>
+      }
+    </div>
+
+    <div class="mtw-cards" [class.is-hidden]="phase() === 'recall'">
+      @for (word of step().words; track word; let i = $index) {
+        <span class="mtw-card" [style.--i]="i">
+          <span class="mtw-card-face">{{ phase() === 'recall' ? '?' : word }}</span>
+        </span>
+      }
+    </div>
+
+    @if (phase() === 'intro') {
+      <p class="mtw-note">You will have {{ step().studySeconds }} seconds. Ready?</p>
+      <button type="button" class="mtw-btn" (click)="startStudy()">{{ step().startTimerLabel }} →</button>
+    } @else if (phase() === 'study') {
+      <button type="button" class="mtw-btn mtw-btn--ghost" (click)="toRecall()">{{ step().readyLabel }}</button>
+    }
+  </div>
+
+  @if (phase() === 'recall') {
+    <p class="mtw-recall-intro">{{ step().recallIntro }}</p>
+
+    <div class="mtw-meter" aria-hidden="true">
+      <span class="mtw-meter-label">{{ step().progressLabel }} · {{ answeredCount() }}/{{ total() }}</span>
+      <div class="mtw-meter-track">
+        @for (q of step().questions; track q.id; let i = $index) {
+          <span class="mtw-pip" [class.is-on]="i < answeredCount()"></span>
+        }
+      </div>
+    </div>
+
+    <ol class="mtw-questions">
+      @for (q of step().questions; track q.id; let i = $index) {
+        <li class="mtw-q" [class.is-done]="isAnswered(q.id)">
+          <div class="mtw-q-head">
+            <span class="mtw-q-num">{{ i + 1 }}</span>
+            <span class="mtw-q-prompt">{{ q.prompt }}</span>
+          </div>
+          <textarea class="mtw-q-input" rows="2" [placeholder]="q.placeholder"
+            [value]="answers()[q.id] || ''"
+            (input)="onInput(q.id, $any($event.target).value)"></textarea>
+          <button type="button" class="mtw-q-reveal" [disabled]="!isAnswered(q.id)" (click)="toggleSample(q.id)">
+            {{ revealed().has(q.id) ? 'Hide sample answer' : step().sampleAnswerLabel }}
+          </button>
+          @if (revealed().has(q.id)) {
+            <p class="mtw-q-sample"><span>Sample answer:</span> {{ q.sampleAnswer }}</p>
+          }
+        </li>
+      }
+    </ol>
+
+    <button type="button" class="mtw-btn" [disabled]="!allAnswered()" (click)="advance()">
+      {{ step().completeLabel }} →
+    </button>
+    @if (!allAnswered()) {
+      <p class="mtw-lock">Answer all {{ total() }} questions to continue.</p>
+    }
+  }
+
+  <p class="mtw-parent">{{ step().parentNote }}</p>
+</div>

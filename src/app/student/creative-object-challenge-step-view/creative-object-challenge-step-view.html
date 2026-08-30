@@ -1,0 +1,47 @@
+<div class="coc">
+  <header class="coc-head">
+    <span class="coc-badge">🏆 {{ step().badge }}</span>
+    <h2>{{ step().title }}</h2>
+    <p class="coc-intro">{{ step().intro }}</p>
+  </header>
+
+  <ol class="coc-steps">
+    @for (line of step().steps; track line; let i = $index) {
+      <li class="coc-step">
+        <span class="coc-step-num">{{ stepLetter(i) }}</span>
+        <span class="coc-step-text">{{ line }}</span>
+      </li>
+    }
+  </ol>
+
+  <div class="coc-form">
+    @for (field of step().fields; track field.id) {
+      <label class="coc-field">
+        <span class="coc-field-label">{{ field.label }}</span>
+        <textarea rows="2" [placeholder]="field.placeholder" [value]="answers()[field.id] || ''"
+          [disabled]="sent()" (input)="setAnswer(field.id, $any($event.target).value)"></textarea>
+      </label>
+    }
+
+    @if (sent()) {
+      <p class="coc-thanks">✨ Nice work — your creative object is saved. You earned a star!</p>
+    } @else {
+      <button type="button" class="coc-submit" [disabled]="!allFilled()" (click)="submit()">
+        {{ step().submitLabel }} →
+      </button>
+    }
+  </div>
+
+  <div class="coc-recap">
+    <span class="coc-recap-heading">{{ step().recapHeading }}</span>
+    <ul>
+      @for (point of step().recapPoints; track point) {
+        <li>{{ point }}</li>
+      }
+    </ul>
+  </div>
+
+  @if (step().parentNote) {
+    <p class="coc-parent-note">👪 {{ step().parentNote }}</p>
+  }
+</div>

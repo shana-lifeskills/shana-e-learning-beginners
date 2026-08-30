@@ -1,0 +1,289 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- "Spot the Difference" warm-up (std) — Thinking module, Week 1 ---- */
+$std-paper: #fbf3e2;
+$std-paper-edge: #efe0c4;
+$std-ink: #4a3b28;
+$std-accent: #c8622d;
+$std-rule: #d8c7a4;
+
+.std {
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: 1.75rem clamp(1rem, 3.5vw, 2.25rem) 2rem;
+  border-radius: v.$border-radius-xl;
+  color: $std-ink;
+  background:
+    repeating-linear-gradient(transparent 0 32px, rgba($std-rule, 0.5) 32px 33px),
+    linear-gradient(180deg, $std-paper, $std-paper-edge);
+  border: 1px solid $std-paper-edge;
+  box-shadow: 0 10px 30px rgba(74, 59, 40, 0.14);
+}
+
+.std-head { text-align: center; }
+
+.std-kicker {
+  display: inline-block;
+  padding: 0.2rem 0.85rem;
+  border-radius: v.$border-radius-pill;
+  background: rgba($std-accent, 0.15);
+  color: $std-accent;
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.std h2 {
+  @include m.playful-heading;
+  font-size: clamp(1.6rem, 4.5vw, 2.2rem);
+  margin: 0.7rem 0 0.4rem;
+}
+
+.std-intro {
+  max-width: 30rem;
+  margin: 0 auto;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: rgba($std-ink, 0.8);
+}
+
+/* --- picture frames --- */
+.std-frames {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.9rem;
+  margin: 1.5rem 0 0.5rem;
+}
+
+.std-frame {
+  margin: 0;
+  padding: 0.5rem 0.5rem 0.35rem;
+  background: v.$color-white;
+  border: 2px solid $std-ink;
+  border-radius: v.$border-radius-sm;
+  box-shadow: 3px 4px 0 rgba($std-ink, 0.25);
+  transform: rotate(-1deg);
+}
+
+.std-frame--b { transform: rotate(1deg); }
+
+.std-scene {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: v.$border-radius-sm;
+}
+
+.std-frame figcaption {
+  margin-top: 0.3rem;
+  text-align: center;
+  font-weight: 800;
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* --- clue trail --- */
+.std-trail {
+  text-align: center;
+  margin: 1.1rem 0 0.5rem;
+}
+
+.std-trail-label {
+  font-weight: 800;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $std-accent;
+}
+
+.std-trail-track {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 0.5rem 0 0.35rem;
+}
+
+.std-dot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.9rem;
+  height: 1.9rem;
+  border-radius: 50%;
+  font-size: 0.95rem;
+  background: rgba($std-ink, 0.08);
+  border: 2px dashed rgba($std-ink, 0.3);
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.std-dot.is-found {
+  background: rgba($std-accent, 0.18);
+  border-style: solid;
+  border-color: $std-accent;
+}
+
+.std-hint {
+  margin: 0;
+  font-size: 0.85rem;
+  font-style: italic;
+  color: rgba($std-ink, 0.62);
+}
+
+/* --- questions --- */
+.std-questions {
+  list-style: none;
+  margin: 1rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.std-q {
+  padding: 0.9rem 1rem;
+  border-radius: v.$border-radius-sm;
+  background: rgba(v.$color-white, 0.7);
+  border: 1px solid $std-rule;
+  border-left: 4px solid rgba($std-accent, 0.4);
+  transition: border-left-color 0.2s ease;
+}
+
+.std-q.is-done { border-left-color: #3c8a4c; }
+
+.std-q-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+}
+
+.std-q-num {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background: $std-ink;
+  color: $std-paper;
+  font-weight: 800;
+  font-size: 0.82rem;
+}
+
+.std-q-prompt {
+  font-weight: 700;
+  line-height: 1.35;
+  padding-top: 0.1rem;
+}
+
+.std-q-input {
+  width: 100%;
+  margin-top: 0.55rem;
+  padding: 0.55rem 0.65rem;
+  font: inherit;
+  color: $std-ink;
+  background: v.$color-white;
+  border: 1px solid $std-rule;
+  border-radius: v.$border-radius-sm;
+  resize: vertical;
+
+  &:focus-visible {
+    outline: 2px solid $std-accent;
+    outline-offset: 1px;
+  }
+}
+
+.std-q-reveal {
+  @include m.tappable;
+  margin-top: 0.5rem;
+  padding: 0.25rem 0;
+  background: none;
+  border: none;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: $std-accent;
+  text-decoration: underline;
+
+  &:disabled {
+    color: rgba($std-ink, 0.4);
+    text-decoration: none;
+    cursor: not-allowed;
+  }
+}
+
+.std-q-sample {
+  margin: 0.45rem 0 0;
+  padding: 0.5rem 0.7rem;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  background: rgba(#3c8a4c, 0.12);
+  border-radius: v.$border-radius-sm;
+
+  span {
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+  }
+}
+
+/* --- feedback + actions --- */
+.std-feedback {
+  margin: 1.2rem 0 0;
+  padding: 0.8rem 1rem;
+  text-align: center;
+  font-weight: 800;
+  border-radius: v.$border-radius-sm;
+  background: rgba($std-accent, 0.15);
+  color: $std-accent;
+  animation: std-pop 0.35s ease both;
+}
+
+.std-continue {
+  @include m.tappable;
+  display: block;
+  margin: 1.1rem auto 0;
+  padding: 0.8rem 2rem;
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: v.$color-white;
+  background: linear-gradient(120deg, $std-accent, #e08b3a);
+  border: none;
+  border-radius: v.$border-radius-pill;
+  box-shadow: 0 6px 16px rgba($std-accent, 0.35);
+
+  &:disabled {
+    opacity: 0.45;
+    box-shadow: none;
+    cursor: not-allowed;
+  }
+}
+
+.std-lock {
+  margin: 0.5rem 0 0;
+  text-align: center;
+  font-size: 0.85rem;
+  color: rgba($std-ink, 0.6);
+}
+
+.std-parent {
+  margin: 1.3rem 0 0;
+  padding-top: 0.9rem;
+  border-top: 1px dashed $std-rule;
+  text-align: center;
+  font-size: 0.85rem;
+  font-style: italic;
+  color: rgba($std-ink, 0.6);
+}
+
+@keyframes std-pop {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (max-width: 30rem) {
+  .std-frames { grid-template-columns: 1fr; }
+}

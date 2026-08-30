@@ -1,0 +1,82 @@
+<div class="fsc">
+  <header class="fsc-head">
+    <span class="fsc-badge">🏆 {{ step().badge }}</span>
+    <h2>{{ step().title }}</h2>
+    <p class="fsc-intro">{{ step().intro }}</p>
+  </header>
+
+  @if (phase() === 'plan') {
+    <section class="fsc-pick">
+      <span class="fsc-section-label">{{ step().pickHeading }}</span>
+      <div class="fsc-tasks">
+        @for (task of step().tasks; track task.id) {
+          <button type="button" class="fsc-task" [class.is-picked]="picked() === task.id" (click)="pick(task.id)">
+            <span class="fsc-task-icon" aria-hidden="true">{{ task.icon }}</span>
+            <span class="fsc-task-label">{{ task.label }}</span>
+            <span class="fsc-task-pin" aria-hidden="true">📌</span>
+          </button>
+        }
+      </div>
+    </section>
+
+    <section class="fsc-example">
+      <span class="fsc-example-label">{{ step().exampleLabel }}</span>
+      <ol>
+        @for (line of step().exampleSteps; track line) {
+          <li>{{ line }}</li>
+        }
+      </ol>
+    </section>
+
+    <section class="fsc-pad">
+      <span class="fsc-section-label">{{ step().planHeading }}</span>
+      <ol class="fsc-rungs">
+        @for (field of step().stepFields; track field.id; let i = $index) {
+          <li class="fsc-rung">
+            <span class="fsc-rung-num">{{ i + 1 }}</span>
+            <label class="fsc-rung-field">
+              <span class="fsc-rung-label">{{ field.label }}</span>
+              <input type="text" [placeholder]="field.placeholder" [value]="answers()[field.id] || ''"
+                (input)="setAnswer(field.id, $any($event.target).value)" />
+            </label>
+          </li>
+        }
+      </ol>
+
+      <button type="button" class="fsc-submit" [disabled]="!canSubmit()" (click)="submit()">
+        {{ step().submitLabel }} →
+      </button>
+      @if (picked() && !allFilled()) {
+        <p class="fsc-hint">Fill in all three steps to lock in your plan.</p>
+      } @else if (!picked()) {
+        <p class="fsc-hint">Pick a task above to start your plan.</p>
+      }
+    </section>
+  } @else {
+    <section class="fsc-card">
+      <span class="fsc-stamp" aria-hidden="true">✅ Strategy</span>
+      <p class="fsc-card-task">{{ pickedTask()?.icon }} {{ pickedTask()?.label }}</p>
+      <ol class="fsc-card-steps">
+        @for (field of step().stepFields; track field.id) {
+          <li>{{ answers()[field.id] }}</li>
+        }
+      </ol>
+      <p class="fsc-saved">✨ {{ step().savedText }}</p>
+    </section>
+
+    <section class="fsc-recap">
+      <span class="fsc-recap-heading">{{ step().recapHeading }}</span>
+      <ul>
+        @for (point of step().recapPoints; track point) {
+          <li>{{ point }}</li>
+        }
+      </ul>
+    </section>
+
+    <button type="button" class="fsc-finish" (click)="finish()">{{ step().finishLabel }} →</button>
+  }
+
+  @if (step().parentNote) {
+    <p class="fsc-parent">👪 {{ step().parentNote }}</p>
+  }
+</div>

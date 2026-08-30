@@ -1,0 +1,58 @@
+<div class="titw">
+  <header class="titw-head">
+    <span class="titw-badge">🚦 Warm-Up Game</span>
+    <h2>{{ step().title }}</h2>
+    <p class="titw-intro">{{ step().intro }}</p>
+
+    <ul class="titw-progress" role="progressbar" [attr.aria-valuenow]="solvedCount()" [attr.aria-valuemax]="total()">
+      @for (statement of step().statements; track statement.id; let i = $index) {
+        <li class="titw-dot"
+          [class.is-done]="solved().has(statement.id)"
+          [class.is-current]="i === activeIndex() && !solved().has(statement.id)"></li>
+      }
+    </ul>
+    <span class="titw-count">{{ solvedCount() }} / {{ total() }} thought through</span>
+  </header>
+
+  @if (activeStatement(); as statement) {
+    <div class="titw-panel" [class.is-revealed]="revealed()">
+      <div class="titw-light" aria-hidden="true">
+        <span class="titw-lamp titw-lamp--red" [attr.data-on]="lampState('false')"></span>
+        <span class="titw-lamp titw-lamp--amber" [attr.data-on]="lampState('amber')"></span>
+        <span class="titw-lamp titw-lamp--green" [attr.data-on]="lampState('true')"></span>
+      </div>
+
+      <div class="titw-card">
+        <span class="titw-step-tag">Statement {{ activeIndex() + 1 }} of {{ total() }}</span>
+        <p class="titw-statement">{{ statement.text }}</p>
+
+        @if (!revealed()) {
+          <div class="titw-choices">
+            <button type="button" class="titw-choice titw-choice--true"
+              [class.is-missed]="missed() === 'true'" (click)="judge(true)">
+              ✅ {{ step().trueLabel }}
+            </button>
+            <button type="button" class="titw-choice titw-choice--false"
+              [class.is-missed]="missed() === 'false'" (click)="judge(false)">
+              ⛔ {{ step().falseLabel }}
+            </button>
+          </div>
+
+          @if (missed()) {
+            <p class="titw-nudge">Amber light — pause and think it through again.</p>
+          }
+        } @else {
+          <div class="titw-why">
+            <p class="titw-why-verdict">{{ statement.isTrue ? step().trueLabel : step().falseLabel }} — you thought it through!</p>
+            <p class="titw-why-text">{{ statement.because }}</p>
+            <button type="button" class="titw-next" (click)="advance()">
+              @if (allSolved()) { {{ step().completeLabel }} → } @else { Next statement → }
+            </button>
+          </div>
+        }
+      </div>
+    </div>
+
+    <p class="titw-parent">👪 {{ step().parentNote }}</p>
+  }
+</div>

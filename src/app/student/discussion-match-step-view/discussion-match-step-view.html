@@ -1,0 +1,43 @@
+<div class="dm">
+  <h1>🧠 {{ step().heading }}</h1>
+  @if (step().subtitle) { <p class="dm-subtitle">{{ step().subtitle }}</p> }
+
+  <p class="dm-count">{{ matchedCount() }} of {{ total() }} matched</p>
+
+  <div class="dm-board">
+    <div class="dm-col">
+      <span class="dm-col-head">{{ step().actionHeading }}</span>
+      @for (pair of step().pairs; track pair.id) {
+        <button type="button" class="dm-chip dm-action" [attr.data-state]="actionState(pair.id)"
+          [disabled]="matched().has(pair.id)" (click)="pickAction(pair.id)">
+          {{ pair.action }}
+        </button>
+      }
+    </div>
+
+    <div class="dm-col">
+      <span class="dm-col-head">{{ step().resultHeading }}</span>
+      @for (pair of resultOrder(); track pair.id) {
+        <button type="button" class="dm-chip dm-result"
+          [class.is-matched]="matched().has(pair.id)"
+          [class.is-rejected]="rejected() === pair.id"
+          [disabled]="matched().has(pair.id)" (click)="chooseResult(pair.id)">
+          {{ pair.result }}
+        </button>
+      }
+    </div>
+  </div>
+
+  @if (rejected()) {
+    <p class="dm-try-again">Not quite — give it another try! 💪</p>
+  } @else if (picked()) {
+    <p class="dm-hint">Now tap the result it leads to.</p>
+  } @else if (!allMatched()) {
+    <p class="dm-hint">Tap an action, then the result it leads to.</p>
+  }
+
+  @if (allMatched()) {
+    <p class="dm-done">✅ Nice — every action matched to its result.</p>
+    <button type="button" class="dm-continue" (click)="finish()">{{ step().continueLabel }}</button>
+  }
+</div>

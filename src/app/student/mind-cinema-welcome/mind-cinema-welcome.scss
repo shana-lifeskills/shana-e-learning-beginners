@@ -1,0 +1,250 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Cinema in Your Mind welcome (mcw) — Creativity module, Week 2 ---- */
+$mcw-indigo: #1b1440;
+$mcw-gold: #ffcf5c;
+$mcw-violet: #9a7bff;
+$mcw-aqua: #56d4c4;
+
+.mcw {
+  max-width: 60rem;
+  margin: 0 auto;
+  padding: 2.75rem clamp(1rem, 4vw, 2.75rem);
+  text-align: center;
+  border-radius: v.$border-radius-xl;
+  color: #eae6ff;
+  background:
+    radial-gradient(90% 55% at 50% 0%, rgba($mcw-violet, 0.34), transparent 70%),
+    radial-gradient(70% 50% at 50% 100%, rgba($mcw-aqua, 0.18), transparent 70%),
+    linear-gradient(180deg, #150f36 0%, #241a55 100%);
+}
+
+.mcw-week {
+  @include w.welcome-pill(rgba($mcw-gold, 0.16), $mcw-gold);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  border: 1px solid rgba($mcw-gold, 0.4);
+}
+
+.mcw h1 {
+  @include m.playful-heading;
+  font-size: clamp(2.1rem, 6vw, 3.3rem);
+  line-height: 1.1;
+  margin: 1.2rem 0 0.7rem;
+}
+
+.mcw-title-start { color: #f4f1ff; }
+.mcw-title-accent { color: $mcw-gold; }
+
+.mcw-intro {
+  max-width: 36rem;
+  margin: 0 auto;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: rgba(234, 230, 255, 0.78);
+}
+
+/* --- mind screen --- */
+.mcw-screen {
+  position: relative;
+  max-width: 30rem;
+  margin: 2.6rem auto 0;
+  padding: 0.5rem;
+  border-radius: 1.4rem;
+  background: linear-gradient(180deg, #322663, #1d1547);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.mcw-screen-label {
+  position: absolute;
+  top: -0.8rem;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.2rem 0.8rem;
+  border-radius: v.$border-radius-pill;
+  background: $mcw-gold;
+  color: $mcw-indigo;
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  white-space: nowrap;
+}
+
+.mcw-perf {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.3rem;
+  padding: 0.35rem 0.5rem;
+
+  i {
+    flex: 1;
+    height: 0.5rem;
+    border-radius: 2px;
+    background: rgba(0, 0, 0, 0.45);
+  }
+}
+
+.mcw-window {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.7rem;
+  background: radial-gradient(circle at 50% 40%, #443680, #241a55);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.mcw-reel {
+  display: flex;
+  gap: 0;
+  width: max-content;
+  animation: mcw-roll 24s linear infinite;
+}
+
+.mcw-frame {
+  flex: 0 0 auto;
+  width: 9.5rem;
+  padding: 1.5rem 0.9rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  border-right: 1px dashed rgba(255, 255, 255, 0.14);
+}
+
+.mcw-frame-icon {
+  font-size: 2.1rem;
+  filter: drop-shadow(0 0 10px rgba($mcw-gold, 0.4));
+}
+
+.mcw-frame-caption {
+  font-size: 0.78rem;
+  line-height: 1.3;
+  color: rgba(234, 230, 255, 0.82);
+}
+
+.mcw-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(90deg, rgba(29, 21, 71, 0.9), transparent 18%, transparent 82%, rgba(29, 21, 71, 0.9));
+}
+
+.mcw-marquee-note {
+  max-width: 28rem;
+  margin: 1.2rem auto 0;
+  font-size: 1rem;
+  font-style: italic;
+  color: rgba(234, 230, 255, 0.62);
+}
+
+/* --- objective --- */
+.mcw-objective {
+  background: rgba(255, 255, 255, 0.06);
+  border-left: 4px solid $mcw-gold;
+  border-radius: v.$border-radius-lg;
+  padding: 1.35rem 1.6rem;
+  text-align: left;
+  max-width: 40rem;
+  margin: 2.3rem auto 1.6rem;
+
+  p {
+    margin: 0.45rem 0 0;
+    font-size: 1.12rem;
+    line-height: 1.5;
+    font-weight: 700;
+    color: #f4f1ff;
+  }
+}
+
+.mcw-objective-label {
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: $mcw-gold;
+}
+
+/* --- powers --- */
+.mcw-powers-heading {
+  margin: 0 0 0.85rem;
+  font-weight: 800;
+  color: rgba(234, 230, 255, 0.72);
+}
+
+.mcw-powers {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: 0.8rem;
+  max-width: 42rem;
+  margin: 0 auto;
+}
+
+.mcw-power {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 1.1rem 0.9rem;
+  border-radius: v.$border-radius-lg;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.03));
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  animation: mcw-rise 0.5s ease both;
+  animation-delay: calc(var(--i, 0) * 90ms);
+}
+
+.mcw-power-icon { font-size: 1.6rem; }
+
+.mcw-power-title {
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: $mcw-aqua;
+}
+
+.mcw-power-text {
+  font-size: 0.82rem;
+  line-height: 1.35;
+  color: rgba(234, 230, 255, 0.72);
+}
+
+/* --- actions --- */
+.mcw-start {
+  @include w.welcome-cta-btn(linear-gradient(120deg, $mcw-gold, $mcw-violet), $mcw-indigo);
+  margin: 2.3rem auto 0;
+  display: block;
+  font-size: 1.15rem;
+  box-shadow: 0 0 24px rgba($mcw-gold, 0.35);
+}
+
+.mcw-review {
+  @include m.tappable;
+  display: block;
+  margin: 0.9rem auto 0;
+  background: none;
+  border: none;
+  font-weight: 700;
+  color: $mcw-aqua;
+}
+
+.mcw-footer {
+  margin: 1.5rem 0 0;
+  font-size: 0.95rem;
+  color: rgba(234, 230, 255, 0.55);
+}
+
+@keyframes mcw-roll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@keyframes mcw-rise {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mcw-reel { animation: none; }
+  .mcw-power { animation: none; opacity: 1; }
+}

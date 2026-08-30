@@ -1,5 +1,41 @@
 <div class="welcome-shell">
-  @if (lesson.techResponsiblyWelcome; as trw) {
+  @if (lesson.strategyBlueprintWelcome; as sbp) {
+    <app-strategy-blueprint-welcome [sbp]="sbp" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.attentionLensWelcome; as alw) {
+    <app-attention-lens-welcome [alw]="alw" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.solutionPathWelcome; as spw) {
+    <app-solution-path-welcome [spw]="spw" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.memoryWorkshopWelcome; as mww) {
+    <app-memory-workshop-welcome [mww]="mww" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.smartChoiceForecastWelcome; as scf) {
+    <app-smart-choice-forecast-welcome [scf]="scf" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.pauseButtonWelcome; as pbw) {
+    <app-pause-button-welcome [pbw]="pbw" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.strategyKeyringWelcome; as skr) {
+    <app-strategy-keyring-welcome [skr]="skr" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.goalPathWelcome; as gpw) {
+    <app-goal-path-welcome [gpw]="gpw" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.imaginationSparkWelcome; as isw) {
+    <app-imagination-spark-welcome [isw]="isw" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.mindCinemaWelcome; as mcw) {
+    <app-mind-cinema-welcome [mcw]="mcw" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.puzzlePathsWelcome; as ppw) {
+    <app-puzzle-paths-welcome [ppw]="ppw" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.creativeStaircaseWelcome; as csw) {
+    <app-creative-staircase-welcome [csw]="csw" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.techResponsiblyWelcome; as trw) {
     <app-tech-responsibly-welcome [trw]="trw" [completed]="completed" [next]="next" [firstName]="firstName"
       (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
   } @else if (lesson.privacyVaultWelcome; as pvw) {

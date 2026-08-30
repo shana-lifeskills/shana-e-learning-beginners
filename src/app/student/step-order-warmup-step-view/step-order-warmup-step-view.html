@@ -1,0 +1,60 @@
+<div class="sow">
+  <header class="sow-head">
+    <span class="sow-badge">🪜 Warm-Up Game</span>
+    <h2>{{ step().title }}</h2>
+    <p class="sow-intro">{{ step().intro }}</p>
+
+    <ul class="sow-progress" role="progressbar" [attr.aria-valuenow]="solvedCount()" [attr.aria-valuemax]="total()">
+      @for (task of step().tasks; track task.id; let i = $index) {
+        <li class="sow-dot"
+          [class.is-done]="solved().has(task.id)"
+          [class.is-current]="i === activeIndex() && !solved().has(task.id)"></li>
+      }
+    </ul>
+    <span class="sow-count">{{ solvedCount() }} / {{ total() }} ordered</span>
+  </header>
+
+  @if (activeTask(); as task) {
+    <div class="sow-card" [class.is-wrong]="wrong()" [class.is-solved]="justSolved()">
+      <span class="sow-step-tag">Goal {{ activeIndex() + 1 }} of {{ total() }}</span>
+      <h3 class="sow-goal">🎯 {{ task.title }}</h3>
+
+      <div class="sow-ladder">
+        <span class="sow-ladder-cap sow-ladder-cap--goal">Goal reached</span>
+        @for (rung of rungs(); track rung.idx) {
+          <button type="button" class="sow-rung" [class.is-filled]="rung.value" [disabled]="!rung.value || justSolved()"
+            (click)="removeStep(rung.idx)">
+            <span class="sow-rung-num">{{ rung.n }}</span>
+            <span class="sow-rung-text">{{ rung.value || 'Tap a step below' }}</span>
+          </button>
+        }
+        <span class="sow-ladder-cap sow-ladder-cap--start">Start here</span>
+      </div>
+
+      @if (!justSolved()) {
+        <div class="sow-tray">
+          @for (item of tray(); track item) {
+            <button type="button" class="sow-tile" (click)="placeStep(item)">{{ item }}</button>
+          }
+          @if (tray().length === 0 && !wrong()) {
+            <p class="sow-checking">Checking your order…</p>
+          }
+        </div>
+
+        @if (wrong()) {
+          <p class="sow-nudge">Not quite in order — think about which step must come first, then try again.</p>
+        }
+      } @else {
+        <div class="sow-win">
+          <span class="sow-win-badge" aria-hidden="true">✅</span>
+          <p class="sow-win-text">Right order! Each step sets up the next one.</p>
+          <button type="button" class="sow-next" (click)="advance()">
+            @if (allSolved()) { {{ step().completeLabel }} → } @else { Next goal → }
+          </button>
+        </div>
+      }
+    </div>
+
+    <p class="sow-parent">👪 {{ step().parentNote }}</p>
+  }
+</div>

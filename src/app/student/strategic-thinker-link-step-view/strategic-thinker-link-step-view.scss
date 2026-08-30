@@ -1,0 +1,152 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Strategic Thinker confidence link (stl) — Strategizing module, Week 2 ---- */
+$stl-indigo: #4535a8;
+$stl-gold: #f4c145;
+$stl-cream: #f4f2ff;
+
+.stl {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 2.4rem clamp(1rem, 4vw, 2.5rem) 2.6rem;
+  text-align: center;
+  border-radius: v.$border-radius-xl;
+  color: $stl-cream;
+  background: linear-gradient(165deg, #2c2470 0%, #4535a8 60%, #6b4fd0 100%);
+}
+
+.stl-badge {
+  @include w.welcome-pill(rgba($stl-gold, 0.2), $stl-gold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.stl-orb {
+  width: 5.5rem;
+  height: 5.5rem;
+  margin: 1.4rem auto 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 2.4rem;
+  background: radial-gradient(circle at 34% 30%, #fff, $stl-gold);
+  box-shadow: 0 0 34px rgba($stl-gold, 0.55), 0 12px 28px rgba(0, 0, 0, 0.3);
+  animation: stl-glow 3.4s ease-in-out infinite;
+}
+
+.stl h1 {
+  @include m.playful-heading;
+  font-size: clamp(1.7rem, 5vw, 2.3rem);
+  margin: 1rem 0 0.4rem;
+  color: $stl-cream;
+}
+
+.stl-subtitle {
+  max-width: 30rem;
+  margin: 0 auto 1.6rem;
+  line-height: 1.55;
+  color: rgba($stl-cream, 0.82);
+}
+
+.stl-questions-label {
+  display: block;
+  font-weight: 800;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $stl-gold;
+  margin-bottom: 0.7rem;
+}
+
+.stl-questions {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.6rem;
+}
+
+.stl-question {
+  @include m.tappable;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.85rem 1rem;
+  text-align: left;
+  border-radius: v.$border-radius-lg;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba($stl-cream, 0.18);
+  font: inherit;
+  color: $stl-cream;
+
+  &:hover { border-color: rgba($stl-gold, 0.6); }
+
+  &.is-ticked {
+    border-color: $stl-gold;
+    background: rgba($stl-gold, 0.16);
+  }
+}
+
+.stl-q-icon { font-size: 1.2rem; }
+.stl-q-text { flex: 1; font-weight: 600; line-height: 1.35; }
+
+.stl-q-tick {
+  flex-shrink: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: $stl-gold;
+  color: $stl-indigo;
+  font-weight: 800;
+  opacity: 0;
+  transform: scale(0.6);
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.stl-question.is-ticked .stl-q-tick { opacity: 1; transform: none; }
+
+.stl-say {
+  margin: 1.6rem 0 0;
+  padding: 1rem 1.2rem;
+  border-radius: v.$border-radius-lg;
+  background: rgba(0, 0, 0, 0.18);
+  border: 1px dashed rgba($stl-gold, 0.5);
+}
+
+.stl-say-label {
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $stl-gold;
+}
+
+.stl-say-text {
+  margin: 0.3rem 0 0;
+  font-size: 1.05rem;
+  font-style: italic;
+  color: $stl-cream;
+}
+
+.stl-complete {
+  @include w.welcome-cta-btn(linear-gradient(120deg, $stl-gold, #ffdd8a), $stl-indigo);
+  margin: 1.8rem auto 0;
+  display: block;
+  font-size: 1.1rem;
+}
+
+@keyframes stl-glow {
+  0%, 100% { box-shadow: 0 0 26px rgba($stl-gold, 0.45), 0 12px 28px rgba(0, 0, 0, 0.3); }
+  50% { box-shadow: 0 0 44px rgba($stl-gold, 0.7), 0 12px 28px rgba(0, 0, 0, 0.3); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stl-orb { animation: none; }
+}

@@ -1,0 +1,219 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Pause and Plan challenge (ppc) — Strategizing module, Week 2 ---- */
+$ppc-coral: #ef6f5b;
+$ppc-gold: #f2b134;
+$ppc-ink: #4a2a25;
+$ppc-paper: #fff8f1;
+
+.ppc {
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 1.5rem clamp(0.75rem, 3vw, 1.5rem) 2.5rem;
+}
+
+.ppc-head { text-align: center; }
+
+.ppc-badge {
+  @include w.welcome-pill(rgba($ppc-coral, 0.16), $ppc-coral);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.ppc h2 {
+  @include m.playful-heading;
+  font-size: clamp(1.7rem, 5vw, 2.4rem);
+  color: $ppc-ink;
+  margin: 0.9rem 0 0.5rem;
+}
+
+.ppc-intro {
+  max-width: 32rem;
+  margin: 0 auto;
+  color: w.navy(0.72);
+  line-height: 1.5;
+}
+
+/* --- daily rhythm --- */
+.ppc-rhythm {
+  margin-top: 1.6rem;
+  padding: 1.3rem 1.1rem;
+  border-radius: v.$border-radius-xl;
+  background: linear-gradient(160deg, #fff2e2, #ffe6d6);
+  text-align: center;
+}
+
+.ppc-cadence {
+  display: inline-block;
+  margin-bottom: 0.9rem;
+  padding: 0.2rem 0.8rem;
+  border-radius: v.$border-radius-pill;
+  background: $ppc-ink;
+  color: v.$color-white;
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.ppc-beats {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.ppc-beat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  animation: ppc-pulse 0.5s ease both;
+  animation-delay: calc(var(--i, 0) * 120ms);
+}
+
+.ppc-beat-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background: v.$color-white;
+  font-size: 1.4rem;
+  box-shadow: 0 6px 16px rgba($ppc-ink, 0.16);
+}
+
+.ppc-beat-label {
+  font-weight: 700;
+  color: $ppc-ink;
+}
+
+.ppc-beat-link {
+  color: $ppc-coral;
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+/* --- journal --- */
+.ppc-journal {
+  margin-top: 1.6rem;
+  padding: 1.3rem clamp(0.9rem, 3vw, 1.4rem);
+  border-radius: v.$border-radius-xl;
+  background: $ppc-paper;
+  box-shadow: 0 14px 34px rgba($ppc-ink, 0.12);
+  border: 1px solid rgba($ppc-coral, 0.18);
+  /* faint ruled-paper lines */
+  background-image: repeating-linear-gradient(
+    $ppc-paper,
+    $ppc-paper 1.7rem,
+    rgba($ppc-coral, 0.14) 1.7rem,
+    rgba($ppc-coral, 0.14) calc(1.7rem + 1px)
+  );
+}
+
+.ppc-journal-label {
+  display: block;
+  font-weight: 800;
+  color: $ppc-ink;
+  margin-bottom: 0.5rem;
+}
+
+.ppc-journal textarea {
+  width: 100%;
+  padding: 0.7rem 0.8rem;
+  border-radius: v.$border-radius-lg;
+  border: 2px solid rgba($ppc-coral, 0.3);
+  background: rgba(255, 255, 255, 0.75);
+  font: inherit;
+  color: $ppc-ink;
+  resize: vertical;
+
+  &:focus { outline: none; border-color: $ppc-coral; }
+}
+
+.ppc-submit {
+  @include w.welcome-cta-btn(linear-gradient(120deg, $ppc-coral, $ppc-gold));
+  margin: 1.2rem auto 0;
+  display: block;
+
+  &:disabled { opacity: 0.5; }
+}
+
+/* --- saved + recap --- */
+.ppc-saved-card {
+  margin-top: 1.6rem;
+  padding: 1.3rem;
+  border-radius: v.$border-radius-xl;
+  background: $ppc-paper;
+  border: 2px solid $ppc-gold;
+  box-shadow: 0 14px 34px rgba($ppc-ink, 0.14);
+  animation: ppc-pop 0.35s ease both;
+}
+
+.ppc-saved {
+  font-weight: 800;
+  color: #b26a12;
+}
+
+.ppc-entry-echo {
+  margin: 0.6rem 0 0;
+  font-style: italic;
+  color: w.navy(0.78);
+  line-height: 1.5;
+}
+
+.ppc-recap {
+  margin-top: 1.4rem;
+  padding: 1.1rem 1.3rem;
+  border-radius: v.$border-radius-lg;
+  background: rgba($ppc-coral, 0.1);
+
+  ul {
+    margin: 0.4rem 0 0;
+    padding-left: 1.2rem;
+    color: w.navy(0.78);
+    line-height: 1.6;
+  }
+}
+
+.ppc-recap-heading {
+  font-weight: 800;
+  font-size: 0.82rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: $ppc-coral;
+}
+
+.ppc-finish {
+  @include w.welcome-cta-btn(linear-gradient(120deg, $ppc-gold, $ppc-coral));
+  margin: 1.4rem auto 0;
+  display: block;
+}
+
+.ppc-parent {
+  margin: 1.2rem auto 0;
+  max-width: 34rem;
+  text-align: center;
+  font-size: 0.88rem;
+  color: w.navy(0.58);
+}
+
+@keyframes ppc-pulse {
+  from { opacity: 0; transform: scale(0.85); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes ppc-pop {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ppc-beat, .ppc-saved-card { animation: none; opacity: 1; }
+}

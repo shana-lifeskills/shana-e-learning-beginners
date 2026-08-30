@@ -1,0 +1,330 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- "Memory Test" warm-up (mtw) — Thinking module, Week 3 ---- */
+$mtw-bg: #0e3b3f;
+$mtw-bg-2: #145055;
+$mtw-ink: #e9f7f5;
+$mtw-gold: #ffd35c;
+$mtw-line: rgba(233, 247, 245, 0.2);
+
+.mtw {
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: 1.85rem clamp(1rem, 3.5vw, 2.25rem) 2rem;
+  border-radius: v.$border-radius-xl;
+  color: $mtw-ink;
+  background: linear-gradient(165deg, $mtw-bg, $mtw-bg-2);
+}
+
+.mtw-head { text-align: center; }
+
+.mtw-kicker {
+  display: inline-block;
+  padding: 0.25rem 0.9rem;
+  border-radius: v.$border-radius-pill;
+  background: rgba($mtw-gold, 0.16);
+  color: $mtw-gold;
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.mtw h2 {
+  @include m.playful-heading;
+  font-size: clamp(1.7rem, 5vw, 2.35rem);
+  margin: 0.7rem 0 0.4rem;
+}
+
+.mtw-intro {
+  max-width: 30rem;
+  margin: 0 auto;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: rgba($mtw-ink, 0.82);
+}
+
+/* --- study board --- */
+.mtw-board {
+  margin: 1.5rem 0 0;
+  padding: 1.25rem 1.1rem 1.4rem;
+  border: 1px solid $mtw-line;
+  border-radius: v.$border-radius-lg;
+  background: rgba(255, 255, 255, 0.05);
+  text-align: center;
+}
+
+.mtw-board-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.mtw-board-label {
+  font-weight: 800;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $mtw-gold;
+}
+
+.mtw-timer {
+  position: relative;
+  width: 2.75rem;
+  height: 2.75rem;
+  flex: none;
+
+  svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+}
+
+.mtw-timer-track {
+  fill: none;
+  stroke: rgba($mtw-ink, 0.18);
+  stroke-width: 4;
+}
+
+.mtw-timer-fill {
+  fill: none;
+  stroke: $mtw-gold;
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-dasharray: 119.4;
+  transition: stroke-dashoffset 1s linear;
+}
+
+.mtw-timer-num {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.95rem;
+}
+
+.mtw-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(6.5rem, 1fr));
+  gap: 0.6rem;
+  margin: 1.1rem 0;
+}
+
+.mtw-card {
+  aspect-ratio: 3 / 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.4rem;
+  border-radius: v.$border-radius-sm;
+  background: v.$color-white;
+  color: v.$color-navy-text;
+  border: 2px solid $mtw-gold;
+  animation: mtw-flip-in 0.4s ease both;
+  animation-delay: calc(var(--i, 0) * 0.06s);
+}
+
+.mtw-cards.is-hidden .mtw-card {
+  background: rgba($mtw-ink, 0.08);
+  color: rgba($mtw-ink, 0.5);
+  border-color: $mtw-line;
+  border-style: dashed;
+  animation: none;
+}
+
+.mtw-card-face {
+  font-weight: 800;
+  font-size: 1.05rem;
+}
+
+.mtw-note {
+  margin: 0.5rem 0 0.9rem;
+  font-size: 0.9rem;
+  color: rgba($mtw-ink, 0.72);
+}
+
+/* --- recall --- */
+.mtw-recall-intro {
+  margin: 1.4rem 0 0.8rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.mtw-meter { margin: 0 0 0.6rem; text-align: center; }
+
+.mtw-meter-label {
+  font-weight: 800;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $mtw-gold;
+}
+
+.mtw-meter-track {
+  display: flex;
+  justify-content: center;
+  gap: 0.4rem;
+  margin-top: 0.4rem;
+}
+
+.mtw-pip {
+  width: 1.7rem;
+  height: 0.4rem;
+  border-radius: v.$border-radius-pill;
+  background: rgba($mtw-ink, 0.18);
+  transition: background 0.2s ease;
+
+  &.is-on { background: $mtw-gold; }
+}
+
+.mtw-questions {
+  list-style: none;
+  margin: 0.5rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.mtw-q {
+  padding: 0.9rem 1rem;
+  border-radius: v.$border-radius-sm;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid $mtw-line;
+  border-left: 4px solid rgba($mtw-gold, 0.4);
+}
+
+.mtw-q.is-done { border-left-color: $mtw-gold; }
+
+.mtw-q-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+}
+
+.mtw-q-num {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background: $mtw-gold;
+  color: #123;
+  font-weight: 800;
+  font-size: 0.82rem;
+}
+
+.mtw-q-prompt {
+  font-weight: 700;
+  line-height: 1.35;
+  padding-top: 0.1rem;
+}
+
+.mtw-q-input {
+  width: 100%;
+  margin-top: 0.55rem;
+  padding: 0.55rem 0.65rem;
+  font: inherit;
+  color: v.$color-navy-text;
+  background: v.$color-white;
+  border: 1px solid $mtw-line;
+  border-radius: v.$border-radius-sm;
+  resize: vertical;
+
+  &:focus-visible {
+    outline: 2px solid $mtw-gold;
+    outline-offset: 1px;
+  }
+}
+
+.mtw-q-reveal {
+  @include m.tappable;
+  margin-top: 0.5rem;
+  padding: 0.2rem 0;
+  background: none;
+  border: none;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: $mtw-gold;
+  text-decoration: underline;
+
+  &:disabled {
+    color: rgba($mtw-ink, 0.4);
+    text-decoration: none;
+    cursor: not-allowed;
+  }
+}
+
+.mtw-q-sample {
+  margin: 0.45rem 0 0;
+  padding: 0.5rem 0.7rem;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  background: rgba($mtw-gold, 0.14);
+  border-radius: v.$border-radius-sm;
+
+  span {
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+  }
+}
+
+/* --- buttons --- */
+.mtw-btn {
+  @include m.tappable;
+  display: block;
+  margin: 1.1rem auto 0;
+  padding: 0.8rem 2rem;
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: #123;
+  background: linear-gradient(120deg, $mtw-gold, #ffe08a);
+  border: none;
+  border-radius: v.$border-radius-pill;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+
+  &:disabled {
+    opacity: 0.4;
+    box-shadow: none;
+    cursor: not-allowed;
+  }
+}
+
+.mtw-btn--ghost {
+  background: none;
+  color: $mtw-ink;
+  border: 2px solid $mtw-line;
+  box-shadow: none;
+}
+
+.mtw-lock {
+  margin: 0.5rem 0 0;
+  text-align: center;
+  font-size: 0.85rem;
+  color: rgba($mtw-ink, 0.6);
+}
+
+.mtw-parent {
+  margin: 1.4rem 0 0;
+  padding-top: 0.9rem;
+  border-top: 1px dashed $mtw-line;
+  text-align: center;
+  font-size: 0.85rem;
+  font-style: italic;
+  color: rgba($mtw-ink, 0.6);
+}
+
+@keyframes mtw-flip-in {
+  from { opacity: 0; transform: rotateX(-70deg); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mtw-card { animation: none; }
+  .mtw-timer-fill { transition: none; }
+}

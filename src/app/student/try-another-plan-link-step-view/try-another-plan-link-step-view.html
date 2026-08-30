@@ -1,0 +1,30 @@
+<div class="tap">
+  <span class="tap-badge">⭐ {{ step().badge }}</span>
+
+  <h1>{{ step().heading }}</h1>
+  <p class="tap-subtitle">{{ step().subtitle }}</p>
+
+  <div class="tap-plans" aria-hidden="true">
+    <span class="tap-plan tap-plan--a">
+      <span class="tap-plan-label">Plan A</span>
+      <span class="tap-plan-mark">✗</span>
+    </span>
+    <span class="tap-plan-arrow">→</span>
+    <span class="tap-plan tap-plan--b">
+      <span class="tap-plan-label">Plan B</span>
+      <span class="tap-plan-mark">✓</span>
+    </span>
+  </div>
+
+  <div class="tap-know">
+    <span class="tap-know-label">{{ step().knowLabel }}</span>
+    <p class="tap-know-text">{{ step().knowText }}</p>
+  </div>
+
+  <div class="tap-say">
+    <span class="tap-say-label">{{ step().sayItLabel }}</span>
+    <p class="tap-say-text">"{{ step().sayItText }}"</p>
+  </div>
+
+  <button type="button" class="tap-complete" (click)="completed.emit()">{{ step().completeLabel }}</button>
+</div>

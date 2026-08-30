@@ -1,0 +1,143 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Try Another Plan confidence link (tap) — Strategizing module, Week 3 ---- */
+$tap-forest: #1f6d4e;
+$tap-brass: #c9962f;
+$tap-red: #cf5b4a;
+$tap-cream: #f2f7ee;
+
+.tap {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 2.4rem clamp(1rem, 4vw, 2.5rem) 2.6rem;
+  text-align: center;
+  border-radius: v.$border-radius-xl;
+  color: $tap-cream;
+  background: linear-gradient(165deg, #143d2c 0%, #1f6d4e 60%, #2f8f5f 100%);
+}
+
+.tap-badge {
+  @include w.welcome-pill(rgba($tap-brass, 0.22), $tap-brass);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.tap h1 {
+  @include m.playful-heading;
+  font-size: clamp(1.7rem, 5vw, 2.3rem);
+  margin: 1.1rem 0 0.4rem;
+  color: $tap-cream;
+}
+
+.tap-subtitle {
+  max-width: 30rem;
+  margin: 0 auto 1.6rem;
+  line-height: 1.55;
+  color: rgba($tap-cream, 0.82);
+}
+
+/* --- plan A -> plan B strip --- */
+.tap-plans {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  margin: 0 auto 1.6rem;
+}
+
+.tap-plan {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  width: 6.5rem;
+  padding: 0.9rem 0.5rem;
+  border-radius: v.$border-radius-lg;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba($tap-cream, 0.2);
+}
+
+.tap-plan-label {
+  font-weight: 800;
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.tap-plan-mark {
+  font-size: 1.5rem;
+  font-weight: 900;
+}
+
+.tap-plan--a {
+  opacity: 0.6;
+
+  .tap-plan-label { text-decoration: line-through; }
+  .tap-plan-mark { color: $tap-red; }
+}
+
+.tap-plan--b {
+  border-color: $tap-brass;
+  background: rgba($tap-brass, 0.18);
+
+  .tap-plan-mark { color: #8df0b6; }
+}
+
+.tap-plan-arrow {
+  font-size: 1.6rem;
+  color: rgba($tap-cream, 0.7);
+}
+
+/* --- know / say --- */
+.tap-know {
+  padding: 1rem 1.2rem;
+  border-radius: v.$border-radius-lg;
+  background: rgba(0, 0, 0, 0.16);
+  border-left: 4px solid $tap-brass;
+  text-align: left;
+}
+
+.tap-know-label {
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $tap-brass;
+}
+
+.tap-know-text {
+  margin: 0.3rem 0 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: $tap-cream;
+}
+
+.tap-say {
+  margin-top: 1.2rem;
+  padding: 1rem 1.2rem;
+  border-radius: v.$border-radius-lg;
+  border: 1px dashed rgba($tap-brass, 0.5);
+}
+
+.tap-say-label {
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $tap-brass;
+}
+
+.tap-say-text {
+  margin: 0.3rem 0 0;
+  font-style: italic;
+  color: $tap-cream;
+}
+
+.tap-complete {
+  @include w.welcome-cta-btn(linear-gradient(120deg, $tap-brass, #ffd98a), #143d2c);
+  margin: 1.8rem auto 0;
+  display: block;
+  font-size: 1.1rem;
+}

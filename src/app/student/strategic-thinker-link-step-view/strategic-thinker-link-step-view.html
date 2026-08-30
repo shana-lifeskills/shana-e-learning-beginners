@@ -1,0 +1,30 @@
+<div class="stl">
+  <span class="stl-badge">⭐ {{ step().badge }}</span>
+
+  <div class="stl-orb" aria-hidden="true">
+    <span class="stl-orb-glyph">🧠</span>
+  </div>
+
+  <h1>{{ step().heading }}</h1>
+  <p class="stl-subtitle">{{ step().subtitle }}</p>
+
+  <span class="stl-questions-label">{{ step().questionsLabel }}</span>
+  <ul class="stl-questions">
+    @for (question of step().questions; track question.text; let i = $index) {
+      <li>
+        <button type="button" class="stl-question" [class.is-ticked]="ticked().has(i)" (click)="toggle(i)">
+          <span class="stl-q-icon" aria-hidden="true">{{ question.icon }}</span>
+          <span class="stl-q-text">{{ question.text }}</span>
+          <span class="stl-q-tick" aria-hidden="true">{{ ticked().has(i) ? '✓' : '' }}</span>
+        </button>
+      </li>
+    }
+  </ul>
+
+  <div class="stl-say">
+    <span class="stl-say-label">{{ step().sayItLabel }}</span>
+    <p class="stl-say-text">"{{ step().sayItText }}"</p>
+  </div>
+
+  <button type="button" class="stl-complete" (click)="completed.emit()">{{ step().completeLabel }}</button>
+</div>

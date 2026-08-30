@@ -1,0 +1,57 @@
+<div class="sid">
+  <header class="sid-head">
+    <span class="sid-badge">🔁 {{ step().badge }}</span>
+    <h2>{{ step().title }}</h2>
+    <p class="sid-intro">{{ step().intro }}</p>
+  </header>
+
+  <div class="sid-board">
+    <p class="sid-pick-heading">{{ step().pickHeading }}</p>
+    <div class="sid-picks">
+      @for (option of step().picks; track option.id) {
+        <button type="button" class="sid-pick" [class.is-pinned]="pick() === option.id"
+          [disabled]="sent()" (click)="choosePick(option.id)">
+          <span class="sid-pin" aria-hidden="true"></span>
+          <span class="sid-pick-icon">{{ option.icon }}</span>
+          <span class="sid-pick-label">{{ option.label }}</span>
+        </button>
+      }
+    </div>
+
+    <p class="sid-solutions-heading">{{ step().solutionsHeading }}</p>
+    <div class="sid-notes" [class.is-locked]="!pick()">
+      @for (note of step().notes; track note.id; let i = $index) {
+        <label class="sid-note" [class]="'sid-note--' + i">
+          <span class="sid-tape" aria-hidden="true"></span>
+          <span class="sid-note-label">{{ note.label }}</span>
+          <textarea rows="4" [placeholder]="note.placeholder" [value]="notes()[note.id] || ''"
+            [disabled]="sent() || !pick()" (input)="setNote(note.id, $any($event.target).value)"></textarea>
+        </label>
+      }
+      @if (!pick()) {
+        <p class="sid-hint">Pin a problem first, then write two different solutions.</p>
+      }
+    </div>
+
+    @if (sent()) {
+      <p class="sid-thanks">✨ Two solutions pinned up — nice thinking! You earned a star.</p>
+    } @else {
+      <button type="button" class="sid-submit" [disabled]="!ready()" (click)="submit()">
+        {{ step().submitLabel }} →
+      </button>
+    }
+  </div>
+
+  <div class="sid-recap">
+    <span class="sid-recap-heading">🔁 {{ step().recapHeading }}</span>
+    <ul>
+      @for (point of step().recapPoints; track point) {
+        <li>{{ point }}</li>
+      }
+    </ul>
+  </div>
+
+  @if (step().parentNote) {
+    <p class="sid-parent-note">👪 {{ step().parentNote }}</p>
+  }
+</div>

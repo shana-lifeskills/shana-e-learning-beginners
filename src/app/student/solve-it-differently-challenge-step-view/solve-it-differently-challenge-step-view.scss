@@ -1,0 +1,225 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Solve It Differently weekly challenge (sid) — Creativity module, Week 3 ---- */
+$sid-cork: #c98a4b;
+$sid-cork-dark: #8a5a2b;
+$sid-note-a: #fff3b0;
+$sid-note-b: #bfe3c6;
+$sid-ink: #4a3212;
+
+.sid {
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 1.5rem clamp(0.75rem, 3vw, 1.5rem) 2.5rem;
+}
+
+.sid-head { text-align: center; }
+
+.sid-badge {
+  @include w.welcome-pill(rgba($sid-cork-dark, 0.14), $sid-cork-dark);
+  letter-spacing: 0.05em;
+}
+
+.sid-head h2 {
+  @include m.playful-heading;
+  font-size: clamp(1.5rem, 4.5vw, 2rem);
+  margin: 0.9rem 0 0.4rem;
+  color: $sid-cork-dark;
+}
+
+.sid-intro {
+  max-width: 30rem;
+  margin: 0 auto;
+  color: w.navy(0.72);
+  line-height: 1.5;
+}
+
+/* --- cork board --- */
+.sid-board {
+  margin-top: 1.5rem;
+  padding: 1.5rem clamp(1rem, 4vw, 1.6rem);
+  border-radius: v.$border-radius-lg;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.14) 0 2px, transparent 3px),
+    radial-gradient(circle at 70% 60%, rgba(0, 0, 0, 0.1) 0 2px, transparent 3px),
+    linear-gradient(160deg, #d69a5c, #c07f3f);
+  border: 6px solid #7b4a22;
+  box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.2);
+}
+
+.sid-pick-heading,
+.sid-solutions-heading {
+  margin: 0 0 0.7rem;
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 0.9rem;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+}
+
+.sid-solutions-heading { margin-top: 1.5rem; }
+
+.sid-picks {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+  gap: 0.7rem;
+}
+
+.sid-pick {
+  @include m.tappable;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.9rem 0.6rem 0.7rem;
+  border: none;
+  border-radius: 0.3rem;
+  background: #fdfaf0;
+  color: $sid-ink;
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-align: center;
+  transform: rotate(-1.5deg);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.sid-pick:nth-child(even) { transform: rotate(1.5deg); }
+.sid-pick:hover:not(:disabled) { transform: rotate(0) scale(1.03); }
+
+.sid-pin {
+  position: absolute;
+  top: -0.4rem;
+  left: 50%;
+  width: 0.8rem;
+  height: 0.8rem;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #ff8a8a, #d23b3b);
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.4);
+}
+
+.sid-pick.is-pinned {
+  outline: 3px solid #2f9e64;
+  transform: rotate(0) scale(1.04);
+
+  .sid-pin { background: radial-gradient(circle at 35% 30%, #7fe0a5, #2f9e64); }
+}
+
+.sid-pick-icon { font-size: 1.6rem; }
+
+/* --- sticky notes --- */
+.sid-notes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: 1rem;
+  transition: opacity 0.2s ease;
+}
+
+.sid-notes.is-locked { opacity: 0.55; }
+
+.sid-note {
+  position: relative;
+  display: block;
+  padding: 1.4rem 1rem 1rem;
+  border-radius: 0.2rem;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.22);
+}
+
+.sid-note--0 { background: $sid-note-a; transform: rotate(-1.5deg); }
+.sid-note--1 { background: $sid-note-b; transform: rotate(1.5deg); }
+
+.sid-tape {
+  position: absolute;
+  top: -0.55rem;
+  left: 50%;
+  width: 3.4rem;
+  height: 1.1rem;
+  transform: translateX(-50%) rotate(-3deg);
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+}
+
+.sid-note-label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: $sid-ink;
+}
+
+.sid-note textarea {
+  width: 100%;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 0.15rem;
+  background: rgba(255, 255, 255, 0.5);
+  font: inherit;
+  color: $sid-ink;
+  resize: vertical;
+
+  &::placeholder { color: rgba(74, 50, 18, 0.45); }
+  &:focus { outline: 2px solid rgba(255, 255, 255, 0.8); }
+}
+
+.sid-hint {
+  grid-column: 1 / -1;
+  margin: 0;
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.sid-submit {
+  @include w.welcome-cta-btn(linear-gradient(120deg, #2f9e64, #55c98f));
+  margin: 1.5rem auto 0;
+  display: block;
+  font-size: 1.05rem;
+}
+
+.sid-thanks {
+  margin: 1.4rem 0 0;
+  text-align: center;
+  font-weight: 800;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+}
+
+/* --- recap --- */
+.sid-recap {
+  margin-top: 1.6rem;
+  padding: 1.2rem 1.4rem;
+  border-radius: v.$border-radius-lg;
+  background: rgba($sid-cork, 0.16);
+  border-left: 5px solid $sid-cork-dark;
+}
+
+.sid-recap-heading {
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: $sid-cork-dark;
+}
+
+.sid-recap ul {
+  margin: 0.5rem 0 0;
+  padding-left: 1.2rem;
+  color: w.navy(0.78);
+  line-height: 1.55;
+}
+
+.sid-parent-note {
+  margin: 1.3rem 0 0;
+  text-align: center;
+  font-size: 0.9rem;
+  color: w.navy(0.6);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sid-pick, .sid-note { transform: none; }
+}

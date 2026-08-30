@@ -1,0 +1,78 @@
+<div class="spw">
+  <span class="spw-week">{{ spw.weekLabel }}</span>
+
+  <h1>
+    <span class="spw-title-start">{{ spw.titleStart }}</span>
+    <span class="spw-title-accent">{{ spw.titleAccent }}</span>
+  </h1>
+  <p class="spw-intro">{{ spw.intro }}</p>
+
+  <div class="spw-board">
+    <span class="spw-board-label">{{ spw.pathLabel }}</span>
+
+    <div class="spw-stage">
+      <svg class="spw-draw" viewBox="0 0 380 200" fill="none" aria-hidden="true">
+        <polyline class="spw-path" [attr.points]="routePoints" />
+
+        <!-- problem tangle -->
+        <path class="spw-tangle"
+          [attr.transform]="'translate(' + problem[0] + ',' + problem[1] + ')'"
+          d="M-13 2 q6 -12 13 -4 q9 10 -4 12 q-14 2 -9 -10 q4 -11 15 -3 q9 7 3 13" />
+
+        <!-- solved target -->
+        <circle class="spw-target spw-target--outer" [attr.cx]="solved[0]" [attr.cy]="solved[1]" r="15" />
+        <circle class="spw-target spw-target--mid" [attr.cx]="solved[0]" [attr.cy]="solved[1]" r="9" />
+        <circle class="spw-target spw-target--bull" [attr.cx]="solved[0]" [attr.cy]="solved[1]" r="3.5" />
+      </svg>
+
+      <span class="spw-tag spw-tag--problem" [style.left.%]="problem[0] / 380 * 100" [style.top.%]="problem[1] / 200 * 100">
+        <span class="spw-tag-icon">{{ spw.problemIcon }}</span>
+        <span class="spw-tag-label">{{ spw.problemLabel }}</span>
+      </span>
+
+      <span class="spw-tag spw-tag--solved" [style.left.%]="solved[0] / 380 * 100" [style.top.%]="solved[1] / 200 * 100">
+        <span class="spw-tag-icon">{{ spw.solvedIcon }}</span>
+        <span class="spw-tag-label">{{ spw.solvedLabel }}</span>
+      </span>
+
+      @for (s of plottedSteps; track s.n) {
+        <span class="spw-step" [style.left.%]="s.x / 380 * 100" [style.top.%]="s.y / 200 * 100"
+          [style.--delay]="s.delay + 's'">
+          <span class="spw-step-pin">{{ s.n }}</span>
+          <span class="spw-step-chip">{{ s.step.icon }} {{ s.step.label }}</span>
+        </span>
+      }
+    </div>
+
+    <p class="spw-callout">{{ spw.calloutText }}</p>
+  </div>
+
+  <div class="spw-objective">
+    <span class="spw-objective-label">{{ spw.objectiveLabel }}</span>
+    <p>{{ spw.objectiveText }}</p>
+  </div>
+
+  <p class="spw-traits-heading">{{ spw.traitsHeading }}</p>
+  <div class="spw-traits">
+    @for (trait of spw.traits; track trait.title; let i = $index) {
+      <div class="spw-trait" [style.--i]="i">
+        <span class="spw-trait-icon" aria-hidden="true">{{ trait.icon }}</span>
+        <span class="spw-trait-title">{{ trait.title }}</span>
+        <span class="spw-trait-text">{{ trait.text }}</span>
+      </div>
+    }
+  </div>
+
+  @if (isCompletedLessonWelcome()) {
+    @if (nextLesson(); as next) {
+      <button type="button" class="spw-start" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+    } @else {
+      <button type="button" class="spw-start" (click)="backToMap()">Back to My Modules →</button>
+    }
+    <button type="button" class="spw-review" (click)="beginLesson()">↺ Review this lesson</button>
+  } @else {
+    <button type="button" class="spw-start" (click)="beginLesson()">{{ spw.startLabel }} →</button>
+  }
+
+  <p class="spw-footer">{{ spw.footerNote }}</p>
+</div>

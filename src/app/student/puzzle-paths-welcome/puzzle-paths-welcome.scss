@@ -1,0 +1,272 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Many Paths to One Solution welcome (ppw) — Creativity module, Week 3 ---- */
+$ppw-forest: #14532d;
+$ppw-leaf: #2fae66;
+$ppw-coral: #f97362;
+$ppw-sky: #38bdf8;
+
+.ppw {
+  max-width: 60rem;
+  margin: 0 auto;
+  padding: 2.6rem clamp(1rem, 4vw, 2.75rem);
+  text-align: center;
+  border-radius: v.$border-radius-xl;
+  color: $ppw-forest;
+  background:
+    radial-gradient(80% 50% at 15% 0%, rgba($ppw-sky, 0.2), transparent 70%),
+    linear-gradient(165deg, #e6fbef 0%, #dff2ff 100%);
+}
+
+.ppw-week {
+  @include w.welcome-pill(rgba($ppw-leaf, 0.16), #157a45);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.ppw h1 {
+  @include m.playful-heading;
+  font-size: clamp(2rem, 6vw, 3.1rem);
+  line-height: 1.1;
+  margin: 1.2rem 0 0.7rem;
+}
+
+.ppw-title-start { color: $ppw-forest; }
+.ppw-title-accent { color: $ppw-coral; }
+
+.ppw-intro {
+  max-width: 36rem;
+  margin: 0 auto;
+  font-size: 1.1rem;
+  line-height: 1.55;
+  color: rgba(20, 83, 45, 0.72);
+}
+
+/* --- route map --- */
+.ppw-map {
+  max-width: 34rem;
+  margin: 2.4rem auto 0;
+  padding: 1.4rem 1rem 1rem;
+  border-radius: v.$border-radius-lg;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px dashed rgba($ppw-leaf, 0.5);
+}
+
+.ppw-map-label {
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #157a45;
+}
+
+.ppw-stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 300 / 160;
+  margin-top: 0.8rem;
+}
+
+.ppw-trails {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.ppw-trail {
+  fill: none;
+  stroke: $ppw-coral;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-dasharray: 6 7;
+  stroke-dashoffset: 260;
+  animation: ppw-draw 1.6s ease forwards;
+  animation-delay: var(--delay, 0s);
+}
+
+.ppw-node {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  width: 4.6rem;
+}
+
+.ppw-node--problem { left: 13.3%; }
+.ppw-node--solved { left: 86.7%; }
+
+.ppw-node-icon {
+  display: grid;
+  place-items: center;
+  width: 2.9rem;
+  height: 2.9rem;
+  border-radius: 50%;
+  background: v.$color-white;
+  font-size: 1.4rem;
+  box-shadow: 0 8px 18px rgba($ppw-forest, 0.18);
+}
+
+.ppw-node--solved .ppw-node-icon {
+  background: linear-gradient(135deg, $ppw-leaf, $ppw-sky);
+}
+
+.ppw-node-label {
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: rgba(20, 83, 45, 0.7);
+}
+
+.ppw-route {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.22rem 0.55rem 0.22rem 0.28rem;
+  border-radius: v.$border-radius-pill;
+  background: v.$color-white;
+  box-shadow: 0 6px 14px rgba($ppw-forest, 0.16);
+  white-space: nowrap;
+  opacity: 0;
+  animation: ppw-pop 0.4s ease forwards;
+  animation-delay: var(--delay, 0s);
+}
+
+.ppw-route-icon {
+  display: grid;
+  place-items: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background: rgba($ppw-coral, 0.16);
+  font-size: 0.85rem;
+}
+
+.ppw-route-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: $ppw-forest;
+}
+
+/* --- objective --- */
+.ppw-objective {
+  background: rgba(255, 255, 255, 0.72);
+  border-left: 4px solid $ppw-coral;
+  border-radius: v.$border-radius-lg;
+  padding: 1.3rem 1.6rem;
+  text-align: left;
+  max-width: 40rem;
+  margin: 2.3rem auto 1.6rem;
+
+  p {
+    margin: 0.4rem 0 0;
+    font-size: 1.1rem;
+    line-height: 1.5;
+    font-weight: 700;
+    color: $ppw-forest;
+  }
+}
+
+.ppw-objective-label {
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #157a45;
+}
+
+/* --- moves --- */
+.ppw-moves-heading {
+  margin: 0 0 0.85rem;
+  font-weight: 800;
+  color: rgba(20, 83, 45, 0.72);
+}
+
+.ppw-moves {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: 0.8rem;
+  max-width: 42rem;
+  margin: 0 auto;
+}
+
+.ppw-move {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 1.1rem 0.9rem;
+  border-radius: v.$border-radius-lg;
+  background: v.$color-white;
+  box-shadow: 0 10px 22px rgba($ppw-forest, 0.1);
+  animation: ppw-rise 0.5s ease both;
+  animation-delay: calc(var(--i, 0) * 90ms);
+}
+
+.ppw-move-icon { font-size: 1.6rem; }
+
+.ppw-move-title {
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: $ppw-coral;
+}
+
+.ppw-move-text {
+  font-size: 0.82rem;
+  line-height: 1.35;
+  color: rgba(20, 83, 45, 0.7);
+}
+
+/* --- actions --- */
+.ppw-start {
+  @include w.welcome-cta-btn(linear-gradient(120deg, $ppw-leaf, $ppw-sky));
+  margin: 2.3rem auto 0;
+  display: block;
+  font-size: 1.15rem;
+}
+
+.ppw-review {
+  @include m.tappable;
+  display: block;
+  margin: 0.9rem auto 0;
+  background: none;
+  border: none;
+  font-weight: 700;
+  color: #157a45;
+}
+
+.ppw-footer {
+  margin: 1.5rem 0 0;
+  font-size: 0.95rem;
+  color: rgba(20, 83, 45, 0.6);
+}
+
+@keyframes ppw-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes ppw-pop {
+  from { opacity: 0; transform: translate(-50%, -50%) scale(0.85); }
+  to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+@keyframes ppw-rise {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ppw-trail { animation: none; stroke-dashoffset: 0; }
+  .ppw-route, .ppw-move { animation: none; opacity: 1; }
+}

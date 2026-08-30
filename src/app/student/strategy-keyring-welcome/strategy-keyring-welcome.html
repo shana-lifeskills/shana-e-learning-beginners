@@ -1,0 +1,62 @@
+<div class="skr">
+  <span class="skr-week">{{ skr.weekLabel }}</span>
+
+  <h1>
+    <span class="skr-title-start">{{ skr.titleStart }}</span>
+    <span class="skr-title-accent">{{ skr.titleAccent }}</span>
+  </h1>
+  <p class="skr-intro">{{ skr.intro }}</p>
+
+  <div class="skr-stage">
+    <div class="skr-ring" aria-hidden="true">
+      <span class="skr-ring-label">{{ skr.ringLabel }}</span>
+    </div>
+
+    <div class="skr-keys">
+      @for (fk of fannedKeys; track fk.key.label) {
+        <div class="skr-key" [style.--angle]="fk.angle + 'deg'" [style.--delay]="fk.delay + 's'">
+          <span class="skr-key-hole" aria-hidden="true"></span>
+          <span class="skr-key-blade" aria-hidden="true"></span>
+          <span class="skr-key-tag">
+            <span class="skr-key-icon" aria-hidden="true">{{ fk.key.icon }}</span>
+            {{ fk.key.label }}
+          </span>
+        </div>
+      }
+    </div>
+  </div>
+
+  <p class="skr-caption">{{ skr.caption }}</p>
+
+  <div class="skr-objective">
+    <span class="skr-objective-label">{{ skr.objectiveLabel }}</span>
+    <p>{{ skr.objectiveText }}</p>
+  </div>
+
+  <p class="skr-matches-heading">{{ skr.matchesHeading }}</p>
+  <div class="skr-matches">
+    @for (match of skr.matches; track match.problem; let i = $index) {
+      <div class="skr-match" [style.--i]="i">
+        <span class="skr-match-problem">
+          <span class="skr-match-icon" aria-hidden="true">{{ match.problemIcon }}</span>
+          {{ match.problem }}
+        </span>
+        <span class="skr-match-arrow" aria-hidden="true">🔑</span>
+        <span class="skr-match-strategy">{{ match.strategy }}</span>
+      </div>
+    }
+  </div>
+
+  @if (isCompletedLessonWelcome()) {
+    @if (nextLesson(); as next) {
+      <button type="button" class="skr-start" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+    } @else {
+      <button type="button" class="skr-start" (click)="backToMap()">Back to My Modules →</button>
+    }
+    <button type="button" class="skr-review" (click)="beginLesson()">↺ Review this lesson</button>
+  } @else {
+    <button type="button" class="skr-start" (click)="beginLesson()">{{ skr.startLabel }} →</button>
+  }
+
+  <p class="skr-footer">{{ skr.footerNote }}</p>
+</div>

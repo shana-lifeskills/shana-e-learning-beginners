@@ -112,7 +112,36 @@ export type ExerciseType =
   | 'digital-responsibility-tracker'
   | 'think-before-click-challenge'
   | 'privacy-match'
-  | 'privacy-protector-challenge';
+  | 'privacy-protector-challenge'
+  | 'creative-choice-warmup'
+  | 'smart-choices-warmup'
+  | 'first-strategy-challenge'
+  | 'think-it-through-warmup'
+  | 'pause-plan-challenge'
+  | 'strategic-thinker-link'
+  | 'strategy-match-warmup'
+  | 'discussion-match'
+  | 'discussion-sequence'
+  | 'strategy-detective-challenge'
+  | 'try-another-plan-link'
+  | 'step-order-warmup'
+  | 'strategy-plan-challenge'
+  | 'small-steps-link'
+  | 'creative-object-challenge'
+  | 'fact-check-warmup'
+  | 'imagine-create-challenge'
+  | 'solution-match-game'
+  | 'solve-it-differently-challenge'
+  | 'sequence-order-game'
+  | 'creative-project-challenge'
+  | 'spot-the-difference-warmup'
+  | 'weekly-attention-challenge'
+  | 'problem-scenario-warmup'
+  | 'thinking-steps-challenge'
+  | 'memory-test-warmup'
+  | 'memory-gym-challenge'
+  | 'if-then-warmup'
+  | 'smart-thinker-plan-challenge';
 
 export interface BaseExercise {
   id: string;
@@ -1749,6 +1778,8 @@ export interface StoryCarouselStep extends BaseExercise {
   subtitle: string;
   slides: StoryCarouselSlide[];
   continueLabel: string;
+  /** Optional take-home line shown in a highlighted banner under the carousel, e.g. "Good thinking begins with careful attention.". */
+  takeHome?: string;
 }
 
 /** One question inside a DiscussionMcqStep — always multiple-choice, no typing. */
@@ -1829,6 +1860,508 @@ export interface EtiquetteWarmupQuizStep extends BaseExercise {
   questions: EtiquetteWarmupQuizQuestion[];
   parentNote: string;
   completeLabel: string;
+}
+
+/** One thing the learner can choose to imagine in an ImagineCreateChallengeStep, e.g. 🦄 "A new animal". */
+export interface ImagineCreatePick {
+  id: string;
+  icon: string;
+  label: string;
+}
+
+/** One typed blueprint field inside an ImagineCreateChallengeStep. */
+export interface ImagineCreateField {
+  id: string;
+  label: string;
+  placeholder: string;
+}
+
+/**
+ * The "Imagine and Create" weekly challenge (Creativity module, Week 2 closer) —
+ * a blueprint-styled card where the learner first picks what to imagine (a new
+ * animal, place or invention), then fills three "blueprint" fields (what it is,
+ * what makes it special, how it helps others). Submitting with a pick made and
+ * all three fields filled awards a star, followed by a "You learned…" recap.
+ */
+export interface ImagineCreateChallengeStep extends BaseExercise {
+  type: 'imagine-create-challenge';
+  badge: string;
+  title: string;
+  intro: string;
+  pickHeading: string;
+  picks: ImagineCreatePick[];
+  drawNote: string;
+  fields: ImagineCreateField[];
+  submitLabel: string;
+  recapHeading: string;
+  recapPoints: string[];
+  /** Optional note reminding a parent/caregiver to help with the at-home part. */
+  parentNote?: string;
+}
+
+/** One statement the learner stamps TRUE or FALSE inside a FactCheckWarmupStep. */
+export interface FactCheckStatement {
+  id: string;
+  text: string;
+  /** Whether the statement is true — the learner's stamp must match this. */
+  isTrue: boolean;
+  /** Short "why" line revealed once the learner stamps it correctly. */
+  because: string;
+}
+
+/**
+ * The "Fact Check Lab" true/false warm-up (Creativity module, Week 2) — one
+ * statement at a time on a lab-slip card with a big TRUE and a big FALSE stamp
+ * button. A correct stamp flips the card to reveal a "why" line and advances; a
+ * wrong stamp buzzes and invites another try, so every statement must be judged
+ * correctly before the Continue button unlocks. A parent-assist note sits at the
+ * foot of the step.
+ */
+export interface FactCheckWarmupStep extends BaseExercise {
+  type: 'fact-check-warmup';
+  title: string;
+  intro: string;
+  trueLabel: string;
+  falseLabel: string;
+  statements: FactCheckStatement[];
+  parentNote: string;
+  completeLabel: string;
+}
+
+/** One typed "describe your creation" field inside a CreativeObjectChallengeStep. */
+export interface CreativeObjectChallengeField {
+  id: string;
+  label: string;
+  placeholder: string;
+}
+
+/**
+ * The "My Creative Object" weekly challenge (Creativity module, Week 1 closer) —
+ * a badge + title challenge card listing the at-home build steps, then three
+ * typed "describe it" fields (what it was before, what it became, how it felt),
+ * a submit button that awards a star once all three are filled, and a "You
+ * learned…" recap ribbon of takeaway points for the week.
+ */
+export interface CreativeObjectChallengeStep extends BaseExercise {
+  type: 'creative-object-challenge';
+  badge: string;
+  title: string;
+  intro: string;
+  /** The at-home steps to follow, e.g. "Find one object at home". */
+  steps: string[];
+  fields: CreativeObjectChallengeField[];
+  submitLabel: string;
+  recapHeading: string;
+  recapPoints: string[];
+  /** Optional note reminding a parent/caregiver to help with the at-home part. */
+  parentNote?: string;
+}
+
+/** One "choose the creative option" question inside a CreativeChoiceWarmupStep. */
+export interface CreativeChoiceQuestion {
+  id: string;
+  /** The situation the learner is in, e.g. "You are given a plain box.". */
+  scenario: string;
+  /** The question asked about that situation, e.g. "What is the most creative thing to do?". */
+  prompt: string;
+  options: ExerciseOption[];
+  correctOptionId: string;
+  /** Spark line shown once the learner picks the creative option. */
+  spark: string;
+}
+
+/**
+ * The "Choose the Creative Option" warm-up (Creativity module, Week 1) — one
+ * question at a time on a bright card, each with a short scenario and three
+ * option tiles. Picking the creative option fills an "imagination meter" and
+ * pops a spark line before advancing; a plain pick gently dims and invites
+ * another try. The Continue button only unlocks once every question's creative
+ * option has been found.
+ */
+export interface CreativeChoiceWarmupStep extends BaseExercise {
+  type: 'creative-choice-warmup';
+  title: string;
+  intro: string;
+  /** Label under the imagination meter, e.g. "Imagination meter". */
+  meterLabel: string;
+  questions: CreativeChoiceQuestion[];
+  completeLabel: string;
+}
+
+/** One "which choice is the smart plan?" question inside a SmartChoicesWarmupStep. */
+export interface SmartChoicesQuestion {
+  id: string;
+  /** The goal the learner is trying to reach, e.g. "You want to build the tallest block tower.". */
+  goal: string;
+  /** A single emoji shown on the goal tile. */
+  icon: string;
+  options: ExerciseOption[];
+  correctOptionId: string;
+  /** Short "why that is the smart move" line revealed once the learner picks correctly. */
+  smartWhy: string;
+}
+
+/**
+ * The "Smart Choices" warm-up (Strategizing module, Week 1) — a decision-console
+ * card where each question shows a goal tile and three chunky A/B/C "move"
+ * buttons. The right move locks in, lights the next stone on a "plan track"
+ * across the top and flips the card to a "Smart move!" panel with a why-line; a
+ * wrong move shakes and invites another try. Every question must be answered
+ * correctly before the Continue button unlocks. A parent-assist note sits at the
+ * foot of the step.
+ */
+export interface SmartChoicesWarmupStep extends BaseExercise {
+  type: 'smart-choices-warmup';
+  title: string;
+  intro: string;
+  /** Label beside the plan-track progress dots, e.g. "Plan locked in". */
+  trackLabel: string;
+  questions: SmartChoicesQuestion[];
+  parentNote: string;
+  completeLabel: string;
+}
+
+/** One goal the learner can pick to plan in a StrategyPlanChallengeStep, e.g. 📖 "Improve reading". */
+export interface StrategyPlanGoal {
+  id: string;
+  icon: string;
+  label: string;
+}
+
+/** One numbered step slot in a StrategyPlanChallengeStep's strategy. */
+export interface StrategyPlanStepField {
+  id: string;
+  label: string;
+  placeholder: string;
+}
+
+/**
+ * The "My Strategy Plan" final challenge (Strategizing module, Week 4 closer) —
+ * the learner pins one goal, reads a worked example, writes their own
+ * step-by-step strategy on a numbered plan, then answers a reflection question.
+ * Submitting with a goal pinned and every field filled flips the plan to a
+ * stamped "Strategy Plan" card and awards a star; a Finish button then closes
+ * the week and the module.
+ */
+export interface StrategyPlanChallengeStep extends BaseExercise {
+  type: 'strategy-plan-challenge';
+  badge: string;
+  title: string;
+  intro: string;
+  pickHeading: string;
+  goals: StrategyPlanGoal[];
+  exampleLabel: string;
+  exampleGoal: string;
+  exampleSteps: string[];
+  planHeading: string;
+  stepFields: StrategyPlanStepField[];
+  reflectionLabel: string;
+  reflectionPlaceholder: string;
+  submitLabel: string;
+  savedText: string;
+  finishLabel: string;
+  /** Optional note reminding a parent/caregiver to help with the at-home part. */
+  parentNote?: string;
+}
+
+/**
+ * The "Small Steps" confidence-link closer (Strategizing module, Week 4 / whole
+ * module) — a card that closes the module on the idea that big achievements are
+ * built from small steps: a heading and subtitle, a rising row of small step
+ * markers leading to a trophy, a "strategizing helps you…" line, a "say it out
+ * loud" band, and a "Complete the Module" button. Emits `completed` when the
+ * button is pressed.
+ */
+export interface SmallStepsLinkStep extends BaseExercise {
+  type: 'small-steps-link';
+  badge: string;
+  heading: string;
+  subtitle: string;
+  knowLabel: string;
+  knowText: string;
+  sayItLabel: string;
+  sayItText: string;
+  /** The week this closes out — used for copy. */
+  week: number;
+  completeLabel: string;
+}
+
+/** One "put the steps in order" task inside a StepOrderWarmupStep. */
+export interface StepOrderTask {
+  id: string;
+  /** The goal this sequence of steps works towards, e.g. "Reading Goal". */
+  title: string;
+  /** The steps listed in their correct order — the view shuffles them into the tray. */
+  steps: string[];
+}
+
+/**
+ * The "Put the Steps in Order" warm-up (Strategizing module, Week 4) — one goal
+ * at a time shown as a short "goal ladder" of empty rungs above a tray of
+ * shuffled step cards. The learner taps cards up onto the rungs (tap a filled
+ * rung to send it back); once every rung is filled the order is checked. A
+ * correct order locks the ladder green and advances; a wrong order shakes and
+ * clears so they can try again. Every goal must be ordered correctly before the
+ * Continue button unlocks. A parent-assist note sits at the foot of the step.
+ */
+export interface StepOrderWarmupStep extends BaseExercise {
+  type: 'step-order-warmup';
+  title: string;
+  intro: string;
+  tasks: StepOrderTask[];
+  parentNote: string;
+  completeLabel: string;
+}
+
+/** One line on the case-file form in a StrategyDetectiveChallengeStep, e.g. "Problem". */
+export interface DetectiveCaseField {
+  id: string;
+  label: string;
+  placeholder: string;
+}
+
+/**
+ * The "Strategy Detective" weekly challenge (Strategizing module, Week 3) — a
+ * detective case file the learner fills in each time they solve a problem this
+ * week: what the problem was, which strategy they used, and the result.
+ * Submitting with every line filled flips the file to a "solved" stamp and a
+ * "You learned…" recap; a Finish button then closes the week and awards a star.
+ */
+export interface StrategyDetectiveChallengeStep extends BaseExercise {
+  type: 'strategy-detective-challenge';
+  badge: string;
+  title: string;
+  intro: string;
+  briefLabel: string;
+  fields: DetectiveCaseField[];
+  submitLabel: string;
+  savedText: string;
+  recapHeading: string;
+  recapPoints: string[];
+  finishLabel: string;
+  /** Optional note reminding a parent/caregiver to help with the at-home part. */
+  parentNote?: string;
+}
+
+/**
+ * The "Try Another Plan" confidence-link closer (Strategizing module, Week 3) —
+ * a card that closes the week on the idea that a failed plan is not a dead end:
+ * a heading and subtitle, a "Plan A ✗ → Plan B ✓" strip, a "strategic thinkers
+ * know…" line, a "say it out loud" band, and a "Complete Week N" button. Emits
+ * `completed` when the button is pressed.
+ */
+export interface TryAnotherPlanLinkStep extends BaseExercise {
+  type: 'try-another-plan-link';
+  badge: string;
+  heading: string;
+  subtitle: string;
+  knowLabel: string;
+  knowText: string;
+  sayItLabel: string;
+  sayItText: string;
+  /** The week this closes out — used for "Complete Week N" copy. */
+  week: number;
+  completeLabel: string;
+}
+
+/**
+ * A graded "discussion points" step in sequencing form — one set of steps that
+ * must be put into the right order. The learner taps steps from a shuffled tray
+ * onto numbered slots (tap a filled slot to send it back); once every slot is
+ * filled the order is checked. A correct order locks green and unlocks Continue;
+ * a wrong order shakes and clears so they can try again, the same "must get it
+ * right to proceed" rule as DiscussionQuizStep.
+ */
+export interface DiscussionSequenceStep extends BaseExercise {
+  type: 'discussion-sequence';
+  heading: string;
+  subtitle?: string;
+  /** The task line, e.g. "Put Esi's strategy in the correct order.". */
+  instruction: string;
+  /** The steps in their correct order — the view shuffles them into the tray. */
+  steps: string[];
+  continueLabel: string;
+}
+
+/** One action/result pair to link in a DiscussionMatchStep. */
+export interface DiscussionMatchPair {
+  id: string;
+  action: string;
+  result: string;
+}
+
+/**
+ * A graded "discussion points" step in matching form — an "Action" column and a
+ * shuffled "Result" column. The learner taps an action, then the result it
+ * leads to: a correct pair locks in green, a wrong pair shakes and clears so
+ * they can try again. Every pair must be matched correctly before the Continue
+ * button unlocks, the same "must get it right to proceed" rule as
+ * DiscussionQuizStep.
+ */
+export interface DiscussionMatchStep extends BaseExercise {
+  type: 'discussion-match';
+  heading: string;
+  subtitle?: string;
+  actionHeading: string;
+  resultHeading: string;
+  pairs: DiscussionMatchPair[];
+  continueLabel: string;
+}
+
+/** One problem/strategy pair to link in a StrategyMatchWarmupStep. */
+export interface StrategyMatchPair {
+  id: string;
+  problem: string;
+  strategy: string;
+}
+
+/**
+ * The "Match the Problem with the Strategy" warm-up (Strategizing module, Week
+ * 3) — a lock-and-key board with problem "locks" down the left and shuffled
+ * strategy "keys" down the right. The learner taps a lock, then the key that
+ * fits it: a correct pair turns green and the lock opens, a wrong key shakes
+ * and clears so they can try again. Every lock must be opened before the
+ * Continue button unlocks. A parent-assist note sits at the foot of the step.
+ */
+export interface StrategyMatchWarmupStep extends BaseExercise {
+  type: 'strategy-match-warmup';
+  title: string;
+  intro: string;
+  problemHeading: string;
+  strategyHeading: string;
+  pairs: StrategyMatchPair[];
+  parentNote: string;
+  completeLabel: string;
+}
+
+/** One beat of the daily Notice → Pause → Solve rhythm in a PausePlanChallengeStep. */
+export interface PausePlanBeat {
+  icon: string;
+  label: string;
+}
+
+/**
+ * The "Pause and Plan" weekly challenge (Strategizing module, Week 2) — a daily
+ * practice: each day the learner notices one small problem, pauses, and thinks
+ * of a solution. The card shows the three-beat rhythm as a loop, then a journal
+ * panel where the learner writes what happened and how they solved it.
+ * Submitting with the journal filled flips to a "This week you learned…" recap;
+ * a Finish button then closes the week and awards a star.
+ */
+export interface PausePlanChallengeStep extends BaseExercise {
+  type: 'pause-plan-challenge';
+  badge: string;
+  title: string;
+  intro: string;
+  cadenceLabel: string;
+  beats: PausePlanBeat[];
+  journalLabel: string;
+  journalPlaceholder: string;
+  submitLabel: string;
+  savedText: string;
+  recapHeading: string;
+  recapPoints: string[];
+  finishLabel: string;
+  /** Optional note reminding a parent/caregiver to help with the at-home part. */
+  parentNote?: string;
+}
+
+/** One question a strategic thinker asks themselves, shown on a StrategicThinkerLinkStep. */
+export interface StrategicThinkerQuestion {
+  icon: string;
+  text: string;
+}
+
+/**
+ * The "Strategic Thinker" confidence-link closer (Strategizing module, Week 2) —
+ * a self-check card that closes the week: a short heading and subtitle, then a
+ * numbered list of the questions a strategic thinker asks themselves (each
+ * tappable to tick off), a "say it out loud" band, and a "Complete Week N"
+ * button. Emits `completed` when the button is pressed.
+ */
+export interface StrategicThinkerLinkStep extends BaseExercise {
+  type: 'strategic-thinker-link';
+  badge: string;
+  heading: string;
+  subtitle: string;
+  questionsLabel: string;
+  questions: StrategicThinkerQuestion[];
+  sayItLabel: string;
+  sayItText: string;
+  /** The week this closes out — used for "Complete Week N" copy. */
+  week: number;
+  completeLabel: string;
+}
+
+/** One statement the learner judges True or False inside a ThinkItThroughWarmupStep. */
+export interface ThinkItThroughStatement {
+  id: string;
+  text: string;
+  /** Whether the statement is true — the learner's pick must match this. */
+  isTrue: boolean;
+  /** Short "why" line revealed once the learner judges it correctly. */
+  because: string;
+}
+
+/**
+ * The "Think It Through" true/false warm-up (Strategizing module, Week 2) — one
+ * statement at a time beside a stoplight: the learner taps the green "True"
+ * lamp or the red "False" lamp. A correct pick lights that lamp and reveals a
+ * "why" line before advancing; a wrong pick flashes the amber lamp and invites
+ * another try, so every statement must be judged correctly before the Continue
+ * button unlocks. A parent-assist note sits at the foot of the step.
+ */
+export interface ThinkItThroughWarmupStep extends BaseExercise {
+  type: 'think-it-through-warmup';
+  title: string;
+  intro: string;
+  trueLabel: string;
+  falseLabel: string;
+  statements: ThinkItThroughStatement[];
+  parentNote: string;
+  completeLabel: string;
+}
+
+/** One task the learner can pick to plan in a FirstStrategyChallengeStep, e.g. 🎒 "Packing your bag". */
+export interface FirstStrategyTask {
+  id: string;
+  icon: string;
+  label: string;
+}
+
+/** One numbered step slot in a FirstStrategyChallengeStep's 3-step plan. */
+export interface FirstStrategyStepField {
+  id: string;
+  label: string;
+  placeholder: string;
+}
+
+/**
+ * The "My First Strategy" weekly challenge (Strategizing module, Week 1) — the
+ * learner pins one everyday task, reads a worked 3-step example, then writes
+ * their own three-step plan on a numbered plan pad. Submitting with a task
+ * pinned and all three steps written flips the pad to a stamped "strategy card"
+ * and a "This week you learned…" recap; a Finish button then closes the week
+ * and awards a star.
+ */
+export interface FirstStrategyChallengeStep extends BaseExercise {
+  type: 'first-strategy-challenge';
+  badge: string;
+  title: string;
+  intro: string;
+  pickHeading: string;
+  tasks: FirstStrategyTask[];
+  planHeading: string;
+  exampleLabel: string;
+  exampleSteps: string[];
+  stepFields: FirstStrategyStepField[];
+  submitLabel: string;
+  savedText: string;
+  recapHeading: string;
+  recapPoints: string[];
+  finishLabel: string;
+  /** Optional note reminding a parent/caregiver to help with the at-home part. */
+  parentNote?: string;
 }
 
 /** One node on the "responsibility circuit" warm-up board. */
@@ -3800,7 +4333,36 @@ export type Exercise =
   | DigitalResponsibilityTrackerStep
   | ThinkBeforeClickChallengeStep
   | PrivacyMatchStep
-  | PrivacyProtectorChallengeStep;
+  | PrivacyProtectorChallengeStep
+  | CreativeChoiceWarmupStep
+  | SmartChoicesWarmupStep
+  | FirstStrategyChallengeStep
+  | ThinkItThroughWarmupStep
+  | PausePlanChallengeStep
+  | StrategicThinkerLinkStep
+  | StrategyMatchWarmupStep
+  | DiscussionMatchStep
+  | DiscussionSequenceStep
+  | StrategyDetectiveChallengeStep
+  | TryAnotherPlanLinkStep
+  | StepOrderWarmupStep
+  | StrategyPlanChallengeStep
+  | SmallStepsLinkStep
+  | CreativeObjectChallengeStep
+  | FactCheckWarmupStep
+  | ImagineCreateChallengeStep
+  | SolutionMatchGameStep
+  | SolveItDifferentlyChallengeStep
+  | SequenceOrderGameStep
+  | CreativeProjectChallengeStep
+  | SpotTheDifferenceWarmupStep
+  | WeeklyAttentionChallengeStep
+  | ProblemScenarioWarmupStep
+  | ThinkingStepsChallengeStep
+  | MemoryTestWarmupStep
+  | MemoryGymChallengeStep
+  | IfThenWarmupStep
+  | SmartThinkerPlanChallengeStep;
 
 /** Content for the newer, richer lesson-welcome layout. When a lesson has this, its welcome screen uses this design instead of the plain card. */
 /** One preview card inside a LessonWelcomeCard's "This Week's Mission" section. */
@@ -4300,6 +4862,30 @@ export interface Lesson {
   screenBalanceWelcome?: LessonScreenBalanceWelcome;
   /** When set, renders the "ripple of respect" welcome layout (warm rose-to-amber gradient page, an SVG ripple diagram where one kind message spreads out through a ring of friend nodes that light up in turn, objective card, "respect online looks like…" practice cards) — takes priority over all other welcome fields. */
   respectRippleWelcome?: LessonRespectRippleWelcome;
+  /** When set, renders the "imagination spark" welcome layout (warm cream-to-peach gradient page, a glowing central lightbulb throwing rays out to a ring of floating idea bubbles, objective card, "creativity looks like…" cards) — takes priority over all other welcome fields. */
+  imaginationSparkWelcome?: LessonImaginationSparkWelcome;
+  /** When set, renders the "cinema in your mind" welcome layout (deep indigo spotlit page, a projector screen framed by film-strip perforations with imagined-scene frames gliding across it, objective card, "when you imagine, you can…" cards) — takes priority over all other welcome fields. */
+  mindCinemaWelcome?: LessonMindCinemaWelcome;
+  /** When set, renders the "many paths to one solution" welcome layout (mint-to-sky map page, an SVG route map joining a "problem" node to a "solved" flag by several differently-curved trails with labelled approach chips, objective card, "a creative problem-solver…" cards) — takes priority over all other welcome fields. */
+  puzzlePathsWelcome?: LessonPuzzlePathsWelcome;
+  /** When set, renders the "idea to creation, step by step" welcome layout (warm paint-studio gradient page, a rising staircase from a "ground" idea block through numbered action treads to a "summit" flag, objective card, "creativity comes out when you…" cards) — takes priority over all other welcome fields. */
+  creativeStaircaseWelcome?: LessonCreativeStaircaseWelcome;
+  /** When set, renders the "strategy blueprint" welcome layout (deep-blue blueprint-paper page with a drafting grid, an SVG plan drawn in white ink — a "problem" pin joined to a "goal" flag by a dashed planned route that bends around a marked obstacle, with numbered move markers along it, objective card, "a good strategy…" cards) — takes priority over all other welcome fields. */
+  strategyBlueprintWelcome?: LessonStrategyBlueprintWelcome;
+  /** When set, renders the "pause button" welcome layout (calm teal-to-plum twilight page, a large glowing PAUSE button with a slow sweeping ring, a "something happens → pause & think → better choice" strip, objective card, "in the pause you can…" cards) — takes priority over all other welcome fields. */
+  pauseButtonWelcome?: LessonPauseButtonWelcome;
+  /** When set, renders the "strategy keyring" welcome layout (warm brass-and-green workshop page, a central ring with differently-shaped keys fanned around it that each name a strategy, objective card, "problem → strategy" match cards) — takes priority over all other welcome fields. */
+  strategyKeyringWelcome?: LessonStrategyKeyringWelcome;
+  /** When set, renders the "goal path" welcome layout (bright sunrise page, a winding path of numbered stepping stones climbing from a "you now" marker to a goal flag, objective card, "a goal-getter's strategy…" cards) — takes priority over all other welcome fields. */
+  goalPathWelcome?: LessonGoalPathWelcome;
+  /** When set, renders the "attention lens" welcome layout (deep-violet page, a large magnifying lens spotlighting a cluster of sharp labelled details while distraction icons drift dim and blurred around the edges, objective card, "sharp focus looks like…" cards) — takes priority over all other welcome fields. */
+  attentionLensWelcome?: LessonAttentionLensWelcome;
+  /** When set, renders the "solution path" welcome layout (pale-aqua page, an SVG path joining a scribbled "problem" tangle to a glowing "solved" target through three numbered problem-solving stations, objective card, "a good problem-solver…" cards) — takes priority over all other welcome fields. */
+  solutionPathWelcome?: LessonSolutionPathWelcome;
+  /** When set, renders the "memory workshop" welcome layout (warm cream-to-rose page, a board with a "grouping" panel where loose items drop into labelled bins and a "repetition" panel where a short string echoes around a loop, objective card, "a strong memory…" cards) — takes priority over all other welcome fields. */
+  memoryWorkshopWelcome?: LessonMemoryWorkshopWelcome;
+  /** When set, renders the "smart choice forecast" welcome layout (warm sunshine-yellow page, a "you decide" node forking into two branches that each stack a choice, its consequence and an outcome badge, objective card, "a smart chooser…" cards) — takes priority over all other welcome fields. */
+  smartChoiceForecastWelcome?: LessonSmartChoiceForecastWelcome;
   /** Ordered steps the student walks through — warm-up, story, discussion, activity, challenge, questions. */
   exercises: Exercise[];
 }
@@ -4656,6 +5242,948 @@ export interface LessonRespectRippleWelcome {
   objectiveText: string;
   practicesHeading: string;
   practices: RespectRipplePractice[];
+  startLabel: string;
+  footerNote: string;
+}
+
+/** One idea spark orbiting the central lightbulb on the "imagination spark" welcome, e.g. 💡 "New ideas". */
+export interface ImaginationSparkNode {
+  icon: string;
+  label: string;
+}
+
+/** One "creativity looks like…" card on the "imagination spark" welcome. */
+export interface ImaginationSparkWay {
+  icon: string;
+  title: string;
+  text: string;
+}
+
+/**
+ * The "imagination spark" welcome layout (Creativity module, Week 1) — a warm
+ * cream-to-peach gradient page with a week pill and two-tone title, then a
+ * decorative SVG burst: a glowing central lightbulb throwing rays out to a ring
+ * of floating idea bubbles. Below sit an "Our Objective" card and a row of
+ * "creativity looks like…" cards, then a start button and a footer note. Purely
+ * presentational — nothing in the burst is interactive.
+ */
+export interface LessonImaginationSparkWelcome {
+  weekLabel: string;
+  titleStart: string;
+  titleAccent: string;
+  intro: string;
+  sparkLabel: string;
+  centerIcon: string;
+  centerCaption: string;
+  nodes: ImaginationSparkNode[];
+  objectiveLabel: string;
+  objectiveText: string;
+  waysHeading: string;
+  ways: ImaginationSparkWay[];
+  startLabel: string;
+  footerNote: string;
+}
+
+/** One numbered move marker plotted along the planned route on the "strategy blueprint" welcome, e.g. 🔍 "Look at the problem". */
+export interface StrategyBlueprintMove {
+  icon: string;
+  label: string;
+}
+
+/** One "a good strategy…" card on the "strategy blueprint" welcome. */
+export interface StrategyBlueprintTrait {
+  icon: string;
+  title: string;
+  text: string;
+}
+
+/**
+ * The "strategy blueprint" welcome layout (Strategizing module, Week 1) — a
+ * deep-blue blueprint-paper page with a faint drafting grid, a week pill and
+ * two-tone title, then a decorative SVG plan drawn in white "ink": a labelled
+ * "problem" pin on the lower left joined to a "goal" flag on the upper right by
+ * a dashed planned route that bows around a marked obstacle, with numbered move
+ * markers spaced along the route. Below sit an "Our Objective" card and a row
+ * of "a good strategy…" cards, then a start button and a footer note. Purely
+ * presentational — nothing on the blueprint is interactive.
+ */
+export interface LessonStrategyBlueprintWelcome {
+  weekLabel: string;
+  titleStart: string;
+  titleAccent: string;
+  intro: string;
+  blueprintLabel: string;
+  problemIcon: string;
+  problemLabel: string;
+  goalIcon: string;
+  goalLabel: string;
+  obstacleIcon: string;
+  obstacleLabel: string;
+  moves: StrategyBlueprintMove[];
+  calloutText: string;
+  objectiveLabel: string;
+  objectiveText: string;
+  traitsHeading: string;
+  traits: StrategyBlueprintTrait[];
+  startLabel: string;
+  footerNote: string;
+}
+
+/** One branch of the fork on the "smart choice forecast" welcome — a choice, what follows from it, and how it turns out. */
+export interface SmartChoiceBranch {
+  /** 'good' tints the branch green, 'caution' tints it amber. */
+  tone: 'good' | 'caution';
+  optionIcon: string;
+  optionLabel: string;
+  consequenceIcon: string;
+  consequenceLabel: string;
+  outcomeIcon: string;
+  outcomeLabel: string;
+}
+
+/** One "a smart chooser…" card on the "smart choice forecast" welcome. */
+export interface SmartChoiceTrait {
+  icon: string;
+  title: string;
+  text: string;
+}
+
+/**
+ * The "smart choice forecast" welcome layout (Thinking module, Week 4) — a warm
+ * sunshine-yellow page with a week pill and two-tone title, then a board with a
+ * central "you decide" node forking into two branches. Each branch stacks a
+ * choice card, a "then this happens" consequence card and an outcome badge, so
+ * the learner sees how thinking ahead changes where a decision leads. Below sit
+ * an "Our Objective" card and a row of "a smart chooser…" cards, then a start
+ * button and a footer note. Purely presentational — nothing on the board is
+ * interactive.
+ */
+export interface LessonSmartChoiceForecastWelcome {
+  weekLabel: string;
+  titleStart: string;
+  titleAccent: string;
+  intro: string;
+  boardLabel: string;
+  decisionIcon: string;
+  decisionLabel: string;
+  branches: SmartChoiceBranch[];
+  calloutText: string;
+  objectiveLabel: string;
+  objectiveText: string;
+  traitsHeading: string;
+  traits: SmartChoiceTrait[];
+  startLabel: string;
+  footerNote: string;
+}
+
+/** One labelled bin in the "grouping" panel of the "memory workshop" welcome, e.g. 🍎 "Fruits". */
+export interface MemoryGroupBin {
+  icon: string;
+  label: string;
+}
+
+/** One "a strong memory…" card on the "memory workshop" welcome. */
+export interface MemoryWorkshopTrait {
+  icon: string;
+  title: string;
+  text: string;
+}
+
+/**
+ * The "memory workshop" welcome layout (Thinking module, Week 3) — a warm
+ * cream-to-rose page with a week pill and two-tone title, then a board holding
+ * two small diagrams of the recall strategies: a "grouping" panel where loose
+ * items drop into three labelled bins, and a "repetition" panel where one short
+ * string echoes three times around a loop arrow. Below sit an "Our Objective"
+ * card and a row of "a strong memory…" cards, then a start button and a footer
+ * note. Purely presentational — nothing on the board is interactive.
+ */
+export interface LessonMemoryWorkshopWelcome {
+  weekLabel: string;
+  titleStart: string;
+  titleAccent: string;
+  intro: string;
+  boardLabel: string;
+  groupingLabel: string;
+  groupingCaption: string;
+  groups: MemoryGroupBin[];
+  repetitionLabel: string;
+  repetitionCaption: string;
+  /** The short string shown echoing in the repetition panel, e.g. "7 · 4 · 2". */
+  repetitionText: string;
+  calloutText: string;
+  objectiveLabel: string;
+  objectiveText: string;
+  traitsHeading: string;
+  traits: MemoryWorkshopTrait[];
+  startLabel: string;
+  footerNote: string;
+}
+
+/** One numbered station on the path on the "solution path" welcome, e.g. 🔎 "Spot the problem". */
+export interface SolutionPathStep {
+  icon: string;
+  label: string;
+}
+
+/** One "a good problem-solver…" card on the "solution path" welcome. */
+export interface SolutionPathTrait {
+  icon: string;
+  title: string;
+  text: string;
+}
+
+/**
+ * The "solution path" welcome layout (Thinking module, Week 2) — a pale-aqua
+ * page with a week pill and two-tone title, then a decorative SVG scene: a
+ * scribbled "problem" tangle on the lower left is joined to a glowing "solved"
+ * target on the upper right by a single path that passes through three numbered
+ * stations, each captioned with one problem-solving step. Below sit an "Our
+ * Objective" card and a row of "a good problem-solver…" cards, then a start
+ * button and a footer note. Purely presentational — nothing in the scene is
+ * interactive.
+ */
+export interface LessonSolutionPathWelcome {
+  weekLabel: string;
+  titleStart: string;
+  titleAccent: string;
+  intro: string;
+  pathLabel: string;
+  problemIcon: string;
+  problemLabel: string;
+  solvedIcon: string;
+  solvedLabel: string;
+  steps: SolutionPathStep[];
+  calloutText: string;
+  objectiveLabel: string;
+  objectiveText: string;
+  traitsHeading: string;
+  traits: SolutionPathTrait[];
+  startLabel: string;
+  footerNote: string;
+}
+
+/** One crisp detail sitting inside the attention lens on the "attention lens" welcome, e.g. 🔑 "a small key". */
+export interface AttentionFocusItem {
+  icon: string;
+  label: string;
+}
+
+/** One "sharp focus looks like…" card on the "attention lens" welcome. */
+export interface AttentionTrait {
+  icon: string;
+  title: string;
+  text: string;
+}
+
+/**
+ * The "attention lens" welcome layout (Thinking module, Week 1) — a deep-violet
+ * page with a week pill and two-tone title, then a decorative scene: a large
+ * round magnifying lens throws a bright spotlight over a cluster of small
+ * details that read sharp and labelled inside the glass, while distraction icons
+ * drift dim and blurred around the edges. Below sit an "Our Objective" card and
+ * a row of "sharp focus looks like…" cards, then a start button and a footer
+ * note. Purely presentational — nothing in the scene is interactive.
+ */
+export interface LessonAttentionLensWelcome {
+  weekLabel: string;
+  titleStart: string;
+  titleAccent: string;
+  intro: string;
+  lensLabel: string;
+  focusItems: AttentionFocusItem[];
+  distractionItems: AttentionFocusItem[];
+  calloutText: string;
+  objectiveLabel: string;
+  objectiveText: string;
+  traitsHeading: string;
+  traits: AttentionTrait[];
+  startLabel: string;
+  footerNote: string;
+}
+
+/** One stop on the "before → pause → after" strip on the "pause button" welcome. */
+export interface PauseMomentStop {
+  icon: string;
+  label: string;
+}
+
+/** One "in the pause you can…" card on the "pause button" welcome. */
+export interface PauseThinkCard {
+  icon: string;
+  title: string;
+  text: string;
+}
+
+/**
+ * The "pause button" welcome layout (Strategizing module, Week 2) — a calm
+ * teal-to-plum twilight page with a week pill and two-tone title, then a large
+ * glowing circular PAUSE button (two bars) with a ring that sweeps slowly
+ * around it like a held beat. Under it sits a "something happens → pause & think
+ * → better choice" strip, an "Our Objective" card, and a row of "in the pause
+ * you can…" cards, then a start button and a footer note. Purely presentational
+ * — the button is not interactive.
+ */
+export interface LessonPauseButtonWelcome {
+  weekLabel: string;
+  titleStart: string;
+  titleAccent: string;
+  intro: string;
+  pauseLabel: string;
+  momentBefore: PauseMomentStop;
+  momentPause: PauseMomentStop;
+  momentAfter: PauseMomentStop;
+  objectiveLabel: string;
+  objectiveText: string;
+  waysHeading: string;
+  ways: PauseThinkCard[];
+  startLabel: string;
+  footerNote: string;
+}
+
+/** One key fanned off the ring on the "strategy keyring" welcome, e.g. 🪜 "Break it into steps". */
+export interface StrategyKey {
+  icon: string;
+  label: string;
+}
+
+/** One "match the strategy to the problem" card on the "strategy keyring" welcome. */
+export interface StrategyKeyringMatch {
+  problemIcon: string;
+  problem: string;
+  strategy: string;
+}
+
+/**
+ * The "strategy keyring" welcome layout (Strategizing module, Week 3) — a warm
+ * brass-and-green workshop page with a week pill and two-tone title, then a
+ * decorative keyring: a central ring with several differently-shaped keys
+ * fanned out around it, each carrying a tag that names one strategy. Below sit a
+ * caption, an "Our Objective" card, and a row of "problem → strategy" match
+ * cards, then a start button and a footer note. Purely presentational — the
+ * keyring is not interactive.
+ */
+export interface LessonStrategyKeyringWelcome {
+  weekLabel: string;
+  titleStart: string;
+  titleAccent: string;
+  intro: string;
+  ringLabel: string;
+  keys: StrategyKey[];
+  caption: string;
+  objectiveLabel: string;
+  objectiveText: string;
+  matchesHeading: string;
+  matches: StrategyKeyringMatch[];
+  startLabel: string;
+  footerNote: string;
+}
+
+/** One numbered stepping stone along the path on the "goal path" welcome, e.g. 🎒 "Pack what you need". */
+export interface GoalPathStep {
+  icon: string;
+  label: string;
+}
+
+/** One "a goal-getter's strategy…" card on the "goal path" welcome. */
+export interface GoalPathTip {
+  icon: string;
+  title: string;
+  text: string;
+}
+
+/**
+ * The "goal path" welcome layout (Strategizing module, Week 4) — a bright
+ * sunrise page (peach → sky → gold) with a week pill and two-tone title, then a
+ * winding path of numbered stepping stones that climbs from a "you now" marker
+ * at the foot to a goal flag at the top, the stones alternating left and right.
+ * Below sit a caption, an "Our Objective" card, and a row of "a goal-getter's
+ * strategy…" cards, then a start button and a footer note. Purely
+ * presentational — the path is not interactive.
+ */
+export interface LessonGoalPathWelcome {
+  weekLabel: string;
+  titleStart: string;
+  titleAccent: string;
+  intro: string;
+  startNodeIcon: string;
+  startNodeLabel: string;
+  goalNodeIcon: string;
+  goalNodeLabel: string;
+  steps: GoalPathStep[];
+  caption: string;
+  objectiveLabel: string;
+  objectiveText: string;
+  tipsHeading: string;
+  tips: GoalPathTip[];
+  startLabel: string;
+  footerNote: string;
+}
+
+/** One kind of project the learner can choose in a CreativeProjectChallengeStep, e.g. 🎨 "A drawing". */
+export interface CreativeProjectOption {
+  id: string;
+  icon: string;
+  label: string;
+}
+
+/** One process step the learner ticks off in a CreativeProjectChallengeStep, e.g. "Imagine". */
+export interface CreativeProjectStepItem {
+  id: string;
+  label: string;
+}
+
+/** One typed reflection field in a CreativeProjectChallengeStep. */
+export interface CreativeProjectField {
+  id: string;
+  label: string;
+  placeholder: string;
+}
+
+/**
+ * The "My Creative Project" final challenge (Creativity module closer) — a
+ * gallery-wall showcase where the learner picks what to create, ticks off the
+ * Imagine/Plan/Create/Share process steps as they do them, then writes three
+ * reflection answers on a plaque. Submitting with a project picked, every step
+ * ticked and all fields filled awards a star, followed by a "Final Recap" of
+ * what the whole module covered.
+ */
+export interface CreativeProjectChallengeStep extends BaseExercise {
+  type: 'creative-project-challenge';
+  badge: string;
+  title: string;
+  intro: string;
+  pickHeading: string;
+  options: CreativeProjectOption[];
+  stepsHeading: string;
+  steps: CreativeProjectStepItem[];
+  reflectionHeading: string;
+  fields: CreativeProjectField[];
+  submitLabel: string;
+  recapHeading: string;
+  recapPoints: string[];
+  /** Optional note reminding a parent/caregiver to help with the at-home part. */
+  parentNote?: string;
+}
+
+/** One question the learner answers in their own words inside a ProblemScenarioWarmupStep. */
+export interface ProblemScenarioQuestion {
+  id: string;
+  prompt: string;
+  placeholder: string;
+  /** A model answer the learner can reveal once they have written their own. */
+  sampleAnswer: string;
+}
+
+/**
+ * The "What Would You Do?" warm-up (Thinking module, Week 2) — a bold comic-book
+ * panel. The top panel draws the tricky moment (a snapped pencil mid-test) with
+ * a "SNAP!" starburst; below it the learner works through a stack of
+ * speech-bubble questions, answering each in their own words. Answering a
+ * question fills the next segment of a "solved" meter and unlocks that bubble's
+ * sample-answer reveal. Every question must have a written answer before the
+ * Continue button unlocks. A parent-assist note sits at the foot of the step.
+ */
+export interface ProblemScenarioWarmupStep extends BaseExercise {
+  type: 'problem-scenario-warmup';
+  title: string;
+  intro: string;
+  /** Caption on the comic panel, e.g. "The moment". */
+  scenarioLabel: string;
+  /** The situation the learner reasons about, e.g. "Your pencil breaks during a test.". */
+  scenarioText: string;
+  /** Label beside the progress meter, e.g. "Solved". */
+  progressLabel: string;
+  /** Label on each bubble's reveal control, e.g. "Reveal a sample answer". */
+  sampleAnswerLabel: string;
+  questions: ProblemScenarioQuestion[];
+  /** Optional encouraging line shown once every question is answered. */
+  feedbackText?: string;
+  parentNote: string;
+  completeLabel: string;
+}
+
+/** One observation question the learner answers in their own words inside a SpotTheDifferenceWarmupStep. */
+export interface SpotDifferenceQuestion {
+  id: string;
+  /** The question, e.g. "What colour changed?". */
+  prompt: string;
+  /** Hint text shown in the empty answer box. */
+  placeholder: string;
+  /** A model answer the learner can reveal to compare against once they have written their own. */
+  sampleAnswer: string;
+}
+
+/**
+ * The "Spot the Difference" warm-up (Thinking module, Week 1) — a parchment
+ * observation-notebook card holding two side-by-side hand-drawn SVG scenes
+ * ("Picture A" and "Picture B") with a handful of planted differences. Below the
+ * pictures is a stack of questions the learner answers in their own words; each
+ * answered question ticks a magnifier along a "clues found" trail and unlocks a
+ * "reveal a sample answer" line for that card. Every question must have a
+ * written answer before the Continue button unlocks, at which point an
+ * encouraging feedback banner appears. A parent-assist note sits at the foot of
+ * the step.
+ */
+export interface SpotTheDifferenceWarmupStep extends BaseExercise {
+  type: 'spot-the-difference-warmup';
+  title: string;
+  intro: string;
+  /** Caption under the left-hand scene, e.g. "Picture A". */
+  pictureALabel: string;
+  /** Caption under the right-hand scene, e.g. "Picture B". */
+  pictureBLabel: string;
+  /** How many differences are planted between the two scenes — shown as a hint. */
+  differenceCount: number;
+  /** Label beside the progress trail, e.g. "Clues found". */
+  progressLabel: string;
+  /** Label on the per-question reveal control, e.g. "Reveal a sample answer". */
+  sampleAnswerLabel: string;
+  questions: SpotDifferenceQuestion[];
+  /** Encouraging line shown once every question is answered, e.g. "Great thinkers notice small details.". */
+  feedbackText: string;
+  parentNote: string;
+  completeLabel: string;
+}
+
+/** One question the learner answers about their worked example in a SmartThinkerPlanChallengeStep. */
+export interface SmartThinkerQuestion {
+  id: string;
+  prompt: string;
+  placeholder: string;
+}
+
+/**
+ * The "Final Challenge: The Smart Thinker Plan" closing step for Thinking
+ * module, Week 4 — a royal-blue capstone with a gold medal that fills a segment
+ * for each of five days the learner pauses before a decision to ask three
+ * questions. At the end they write up one real decision, answering those
+ * questions about it. Submitting with all five days marked and the example
+ * written lights the medal and a Finish button closes the module and awards a
+ * star.
+ */
+export interface SmartThinkerPlanChallengeStep extends BaseExercise {
+  type: 'smart-thinker-plan-challenge';
+  badge: string;
+  title: string;
+  intro: string;
+  pledgeHeading: string;
+  /** The three questions to ask before a decision, shown as reference. */
+  pledgeQuestions: string[];
+  trackerHeading: string;
+  dayLabels: string[];
+  dayCheckLabel: string;
+  exampleHeading: string;
+  decisionLabel: string;
+  decisionPlaceholder: string;
+  /** The three questions again, this time with answer boxes for the worked example. */
+  exampleQuestions: SmartThinkerQuestion[];
+  sampleLabel: string;
+  sampleReflection: string;
+  submitLabel: string;
+  savedText: string;
+  finishLabel: string;
+  parentNote?: string;
+}
+
+/** One "if… then…" question the learner answers in their own words inside an IfThenWarmupStep. */
+export interface IfThenQuestion {
+  id: string;
+  /** The short condition shown on the "IF" domino, e.g. "you don't study". Omit for reflection questions that are not an "if…". */
+  ifText?: string;
+  /** The full question, e.g. "If you don't study, what might happen?". */
+  prompt: string;
+  placeholder: string;
+  /** A model answer the learner can reveal once they have written their own. */
+  sampleAnswer: string;
+}
+
+/**
+ * The "If… Then…" warm-up (Thinking module, Week 4) — a deep-aubergine board
+ * built on a falling-domino motif. Each question pairs an "IF" domino (the
+ * condition) with a "THEN…" answer slot; writing an answer topples that domino
+ * and lights the next segment of a chain across the top. Reflection questions
+ * with no condition show a "THINK" tile instead. Every question must have a
+ * written answer before the Continue button unlocks. A parent-assist note sits
+ * at the foot of the step.
+ */
+export interface IfThenWarmupStep extends BaseExercise {
+  type: 'if-then-warmup';
+  title: string;
+  intro: string;
+  /** Label beside the domino chain, e.g. "Dominoes toppled". */
+  progressLabel: string;
+  /** Label on each question's reveal control, e.g. "Reveal a sample answer". */
+  sampleAnswerLabel: string;
+  questions: IfThenQuestion[];
+  /** Optional encouraging line shown once every question is answered. */
+  feedbackText?: string;
+  parentNote: string;
+  completeLabel: string;
+}
+
+/** One recall strategy the learner can tag on a day in a MemoryGymChallengeStep, e.g. 🔁 "Repeating". */
+export interface MemoryGymStrategy {
+  id: string;
+  icon: string;
+  label: string;
+}
+
+/**
+ * The "Challenge of the Week" closing step for Thinking module, Week 3 — a
+ * charcoal "memory gym" log with an electric-orange accent and a streak flame
+ * that grows as days are completed. For each of three days the learner lists
+ * five items to memorise, comes back after ten minutes to recall them, tags
+ * which strategies they used (repeating, grouping, drawing) and writes how it
+ * went. Submitting with all three days logged prints a training summary, and a
+ * Finish button closes the week and awards a star.
+ */
+export interface MemoryGymChallengeStep extends BaseExercise {
+  type: 'memory-gym-challenge';
+  badge: string;
+  title: string;
+  intro: string;
+  /** Reminder line, e.g. "Pick 5 items each day, then recall them after 10 minutes.". */
+  ruleLine: string;
+  dayLabels: string[];
+  /** Placeholder for the "your 5 items" field. */
+  itemsPlaceholder: string;
+  /** Heading over the strategy chips, e.g. "How did you remember them?". */
+  strategiesLabel: string;
+  strategies: MemoryGymStrategy[];
+  /** Placeholder for the "how it went" field. */
+  howPlaceholder: string;
+  sampleLabel: string;
+  sampleReflection: string;
+  submitLabel: string;
+  savedText: string;
+  finishLabel: string;
+  parentNote?: string;
+}
+
+/** One recall question the learner answers from memory inside a MemoryTestWarmupStep. */
+export interface MemoryRecallQuestion {
+  id: string;
+  prompt: string;
+  placeholder: string;
+  /** A model answer the learner can reveal once they have written their own. */
+  sampleAnswer: string;
+}
+
+/**
+ * The "Memory Test" warm-up (Thinking module, Week 3) — a deep-teal focus board.
+ * A study phase shows a short list of word cards with a countdown ring; when the
+ * timer runs out (or the learner taps "I've memorised them") the cards flip
+ * face-down and a recall phase asks a stack of questions answered from memory,
+ * each with a revealable sample answer. Every question must have a written
+ * answer before the Continue button unlocks. A parent-assist note sits at the
+ * foot of the step.
+ */
+export interface MemoryTestWarmupStep extends BaseExercise {
+  type: 'memory-test-warmup';
+  title: string;
+  intro: string;
+  /** Caption on the study board, e.g. "Study the list". */
+  studyLabel: string;
+  /** How long the list is shown, in seconds. */
+  studySeconds: number;
+  /** The words to memorise. */
+  words: string[];
+  /** Label on the button that starts the countdown, e.g. "Start the timer". */
+  startTimerLabel: string;
+  /** Label on the button that ends study early, e.g. "I've memorised them". */
+  readyLabel: string;
+  /** Line shown above the questions once the list is hidden. */
+  recallIntro: string;
+  /** Label beside the progress meter, e.g. "Recalled". */
+  progressLabel: string;
+  /** Label on each question's reveal control, e.g. "Reveal a sample answer". */
+  sampleAnswerLabel: string;
+  questions: MemoryRecallQuestion[];
+  parentNote: string;
+  completeLabel: string;
+}
+
+/** One of the three thinking-step slots the learner fills in a ThinkingStepsChallengeStep. */
+export interface ThinkingStepPrompt {
+  id: string;
+  /** Short tag shown on the step, e.g. "The problem". */
+  label: string;
+  /** The question the learner answers, e.g. "What is the problem?". */
+  prompt: string;
+  placeholder: string;
+}
+
+/**
+ * The "Challenge of the Week" closing step for Thinking module, Week 2 — a deep
+ * indigo "thinking machine" console. Three connected step slots ask the learner
+ * to write one real problem they solved this week: what the problem was, two
+ * solutions they thought of, and which was best. A revealable sample reflection
+ * models the answer. Submitting with all three slots filled prints a "solved"
+ * receipt assembling their example, and a Finish button closes the week and
+ * awards a star.
+ */
+export interface ThinkingStepsChallengeStep extends BaseExercise {
+  type: 'thinking-steps-challenge';
+  badge: string;
+  title: string;
+  intro: string;
+  stepsHeading: string;
+  steps: ThinkingStepPrompt[];
+  exampleHeading: string;
+  /** Label on the reveal control for the model reflection, e.g. "Reveal a sample reflection". */
+  sampleLabel: string;
+  sampleReflection: string;
+  submitLabel: string;
+  savedText: string;
+  finishLabel: string;
+  parentNote?: string;
+}
+
+/** One "do this each day" practice line in a WeeklyAttentionChallengeStep, e.g. 👂 "Listen carefully to instructions before starting a task.". */
+export interface AttentionChallengePractice {
+  icon: string;
+  text: string;
+}
+
+/**
+ * The "Challenge of the Week" closing step for Thinking module, Week 1 — a
+ * forest-green field-journal card. It lists three "do this each day" attention
+ * practices, then a three-day tracker strip where the learner ticks off each day
+ * they kept the habit, and finally a reflection question they answer in their
+ * own words (with a revealable sample answer). Submitting with all three days
+ * ticked and the reflection written stamps the card "Challenge complete" and a
+ * Finish button closes the week and awards a star.
+ */
+export interface WeeklyAttentionChallengeStep extends BaseExercise {
+  type: 'weekly-attention-challenge';
+  badge: string;
+  title: string;
+  intro: string;
+  practicesHeading: string;
+  practices: AttentionChallengePractice[];
+  trackerHeading: string;
+  /** One label per day the learner tracks, e.g. ["Day 1", "Day 2", "Day 3"]. */
+  dayLabels: string[];
+  /** Caption on each day's tick control, e.g. "I did all three today". */
+  dayCheckLabel: string;
+  reflectionQuestion: string;
+  reflectionPlaceholder: string;
+  /** Label on the reveal control for the model answer, e.g. "Reveal a sample answer". */
+  reflectionSampleLabel: string;
+  reflectionSample: string;
+  submitLabel: string;
+  savedText: string;
+  finishLabel: string;
+  parentNote?: string;
+}
+
+/** One "put the steps in order" question inside a SequenceOrderGameStep. */
+export interface SequenceOrderQuestion {
+  id: string;
+  /** What is being made, e.g. "Drawing a Picture". */
+  title: string;
+  /** The steps listed in their correct order — the view shuffles them for the tray. */
+  steps: string[];
+}
+
+/**
+ * The "Put the Steps in Order" warm-up (Creativity module, Week 4) — one task
+ * at a time shown as numbered storyboard panels above a tray of shuffled step
+ * cards. The learner taps cards into the panels; once every panel is filled the
+ * order is checked. A correct order locks the panels and advances; a wrong
+ * order shakes and clears so they can try again. Every task must be ordered
+ * correctly before the Continue button unlocks. A parent-assist note sits at
+ * the foot of the step.
+ */
+export interface SequenceOrderGameStep extends BaseExercise {
+  type: 'sequence-order-game';
+  title: string;
+  intro: string;
+  questions: SequenceOrderQuestion[];
+  parentNote: string;
+  completeLabel: string;
+}
+
+/** One small problem the learner can pick to solve in a SolveItDifferentlyChallengeStep. */
+export interface SolveDifferentlyPick {
+  id: string;
+  icon: string;
+  label: string;
+}
+
+/** One sticky-note solution slot in a SolveItDifferentlyChallengeStep. */
+export interface SolveDifferentlyNote {
+  id: string;
+  label: string;
+  placeholder: string;
+}
+
+/**
+ * The "Solve It Differently" weekly challenge (Creativity module, Week 3
+ * closer) — a cork idea-board where the learner pins one small problem, then
+ * writes two different solutions on two sticky notes. Submitting with a problem
+ * pinned and both notes written awards a star, followed by a "You learned…"
+ * recap.
+ */
+export interface SolveItDifferentlyChallengeStep extends BaseExercise {
+  type: 'solve-it-differently-challenge';
+  badge: string;
+  title: string;
+  intro: string;
+  pickHeading: string;
+  picks: SolveDifferentlyPick[];
+  solutionsHeading: string;
+  notes: SolveDifferentlyNote[];
+  submitLabel: string;
+  recapHeading: string;
+  recapPoints: string[];
+  /** Optional note reminding a parent/caregiver to help with the at-home part. */
+  parentNote?: string;
+}
+
+/** One problem/solution pair to wire together in a SolutionMatchGameStep. */
+export interface SolutionMatchPair {
+  id: string;
+  problem: string;
+  solution: string;
+}
+
+/**
+ * The "Solution Workshop" warm-up (Creativity module, Week 3) — a patch-panel
+ * board with problem pegs down the left and shuffled creative-solution pegs down
+ * the right. The learner taps a problem, then the solution that fixes it: a
+ * correct pair locks with a coloured link, a wrong pair flashes and clears so
+ * they can try again. Every pair must be wired correctly before the Continue
+ * button unlocks. A parent-assist note sits at the foot of the step.
+ */
+export interface SolutionMatchGameStep extends BaseExercise {
+  type: 'solution-match-game';
+  title: string;
+  intro: string;
+  problemHeading: string;
+  solutionHeading: string;
+  pairs: SolutionMatchPair[];
+  parentNote: string;
+  completeLabel: string;
+}
+
+/** One action tread on the creative-staircase welcome, e.g. ✏️ "Sketch it". */
+export interface CreativeStaircaseStep {
+  icon: string;
+  label: string;
+}
+
+/** One "creativity comes out when you…" card on the creative-staircase welcome. */
+export interface CreativeStaircaseWay {
+  icon: string;
+  title: string;
+  text: string;
+}
+
+/**
+ * The "idea to creation, step by step" welcome layout (Creativity module, Week
+ * 4) — a warm paint-studio gradient page with a week pill and two-tone title,
+ * then a decorative rising staircase: a "ground" idea block on the left climbs
+ * through numbered action treads up to a "summit" flag where the idea is
+ * expressed. Below sit an "Our Objective" card and a row of "creativity comes
+ * out when you…" cards, then a start button and a footer note. Purely
+ * presentational — the staircase is not interactive.
+ */
+export interface LessonCreativeStaircaseWelcome {
+  weekLabel: string;
+  titleStart: string;
+  titleAccent: string;
+  intro: string;
+  stairLabel: string;
+  groundIcon: string;
+  groundLabel: string;
+  steps: CreativeStaircaseStep[];
+  summitIcon: string;
+  summitLabel: string;
+  objectiveLabel: string;
+  objectiveText: string;
+  waysHeading: string;
+  ways: CreativeStaircaseWay[];
+  startLabel: string;
+  footerNote: string;
+}
+
+/** One route around the problem on the puzzle-paths welcome, e.g. 🔧 "Try a different tool". */
+export interface PuzzlePathRoute {
+  icon: string;
+  label: string;
+}
+
+/** One "a creative problem-solver…" card on the puzzle-paths welcome. */
+export interface PuzzlePathMove {
+  icon: string;
+  title: string;
+  text: string;
+}
+
+/**
+ * The "many paths to one solution" welcome layout (Creativity module, Week 3) —
+ * a fresh mint-to-sky map page with a week pill and two-tone title, then a
+ * decorative SVG route map: a "problem" node on the left joined to a "solved"
+ * flag on the right by several curved trails that each bow out differently, with
+ * a labelled approach chip on each trail. Below sit an "Our Objective" card and
+ * a row of "a creative problem-solver…" cards, then a start button and a footer
+ * note. Purely presentational — the map is not interactive.
+ */
+export interface LessonPuzzlePathsWelcome {
+  weekLabel: string;
+  titleStart: string;
+  titleAccent: string;
+  intro: string;
+  mapLabel: string;
+  problemIcon: string;
+  problemLabel: string;
+  solvedIcon: string;
+  solvedLabel: string;
+  routes: PuzzlePathRoute[];
+  objectiveLabel: string;
+  objectiveText: string;
+  movesHeading: string;
+  moves: PuzzlePathMove[];
+  startLabel: string;
+  footerNote: string;
+}
+
+/** One imagined "scene" frame shown on the mind-cinema screen, e.g. 🏰 "A castle on a cloud". */
+export interface MindCinemaFrame {
+  icon: string;
+  caption: string;
+}
+
+/** One "when you imagine, you can…" card on the mind-cinema welcome. */
+export interface MindCinemaPower {
+  icon: string;
+  title: string;
+  text: string;
+}
+
+/**
+ * The "cinema in your mind" welcome layout (Creativity module, Week 2) — a deep
+ * indigo, softly spotlit page with a week pill and two-tone title, then a
+ * decorative "mind screen": a rounded projector screen framed by film-strip
+ * perforations, with a row of imagined-scene frames gliding across it. Below sit
+ * an "Our Objective" card and a row of "when you imagine, you can…" cards, then
+ * a start button and a footer note. Purely presentational — the screen is not
+ * interactive.
+ */
+export interface LessonMindCinemaWelcome {
+  weekLabel: string;
+  titleStart: string;
+  titleAccent: string;
+  intro: string;
+  screenLabel: string;
+  frames: MindCinemaFrame[];
+  marqueeNote: string;
+  objectiveLabel: string;
+  objectiveText: string;
+  powersHeading: string;
+  powers: MindCinemaPower[];
   startLabel: string;
   footerNote: string;
 }

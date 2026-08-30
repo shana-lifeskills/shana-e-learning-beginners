@@ -1,0 +1,240 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Fact Check Lab true/false warm-up (fcw) — Creativity module, Week 2 ---- */
+$fcw-sky: #2f8fd6;
+$fcw-coral: #ff6b5e;
+$fcw-lime: #3fb98b;
+$fcw-ink: #17324a;
+
+.fcw {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 1.5rem clamp(0.75rem, 3vw, 1.5rem) 2.5rem;
+}
+
+.fcw-head { text-align: center; }
+
+.fcw-badge {
+  @include w.welcome-pill(rgba($fcw-sky, 0.14), #1c6ba8);
+  letter-spacing: 0.05em;
+}
+
+.fcw-head h2 {
+  @include m.playful-heading;
+  font-size: clamp(1.5rem, 4.5vw, 2rem);
+  margin: 0.9rem 0 0.4rem;
+  color: $fcw-ink;
+}
+
+.fcw-intro {
+  max-width: 30rem;
+  margin: 0 auto;
+  color: w.navy(0.72);
+  line-height: 1.5;
+}
+
+/* --- progress stamps --- */
+.fcw-track { margin: 1.4rem 0 0.4rem; }
+
+.fcw-stamps {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 0.4rem;
+  margin: 0 0 0.4rem;
+  padding: 0;
+}
+
+.fcw-stamp-pip {
+  display: grid;
+  place-items: center;
+  width: 1.9rem;
+  height: 1.9rem;
+  border-radius: 0.5rem;
+  border: 2px dashed rgba($fcw-sky, 0.4);
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 0.85rem;
+  color: rgba($fcw-ink, 0.5);
+  transition: all 0.25s ease;
+}
+
+.fcw-stamp-pip.is-current {
+  border-style: solid;
+  border-color: $fcw-sky;
+  color: $fcw-sky;
+  transform: translateY(-2px);
+}
+
+.fcw-stamp-pip.is-done {
+  border-style: solid;
+  border-color: $fcw-lime;
+  background: $fcw-lime;
+  color: v.$color-white;
+  transform: rotate(-6deg);
+}
+
+.fcw-track-label {
+  display: block;
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: $fcw-sky;
+}
+
+/* --- lab slip --- */
+.fcw-slip {
+  position: relative;
+  margin-top: 1.4rem;
+  padding: 1.6rem clamp(1rem, 4vw, 1.8rem);
+  border-radius: 0.4rem 0.4rem 1.1rem 1.1rem;
+  background:
+    repeating-linear-gradient(0deg, transparent 0 1.85rem, rgba($fcw-sky, 0.09) 1.85rem 1.9rem),
+    v.$color-white;
+  border-top: 4px solid $fcw-sky;
+  box-shadow: 0 16px 38px rgba($fcw-ink, 0.14);
+  animation: fcw-in 0.35s ease both;
+}
+
+.fcw-slip.is-buzzing { animation: fcw-buzz 0.4s ease; }
+
+.fcw-slip-tag {
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: $fcw-sky;
+}
+
+.fcw-claim {
+  margin: 0.6rem 0 1.2rem;
+  font-family: v.$headings-font-family;
+  font-weight: 700;
+  font-size: 1.25rem;
+  line-height: 1.4;
+  color: $fcw-ink;
+}
+
+.fcw-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.7rem;
+}
+
+.fcw-btn {
+  @include m.tappable;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.9rem 0.6rem;
+  border-radius: v.$border-radius-lg;
+  border: 2px solid;
+  background: v.$color-white;
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 1.05rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  transition: transform 0.15s ease, background 0.2s ease;
+}
+
+.fcw-btn-mark {
+  display: grid;
+  place-items: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  font-size: 0.9rem;
+}
+
+.fcw-btn--true {
+  border-color: $fcw-lime;
+  color: $fcw-lime;
+
+  .fcw-btn-mark { background: rgba($fcw-lime, 0.16); }
+  &:hover { background: rgba($fcw-lime, 0.08); }
+}
+
+.fcw-btn--false {
+  border-color: $fcw-coral;
+  color: $fcw-coral;
+
+  .fcw-btn-mark { background: rgba($fcw-coral, 0.16); }
+  &:hover { background: rgba($fcw-coral, 0.08); }
+}
+
+.fcw-btn.is-missed {
+  animation: fcw-buzz 0.4s ease;
+  opacity: 0.55;
+}
+
+.fcw-nudge {
+  margin: 0.9rem 0 0;
+  text-align: center;
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: $fcw-coral;
+}
+
+/* --- verdict reveal --- */
+.fcw-verdict {
+  text-align: center;
+  animation: fcw-in 0.3s ease both;
+}
+
+.fcw-verdict-stamp {
+  display: inline-block;
+  padding: 0.35rem 1.1rem;
+  border: 3px solid;
+  border-radius: 0.5rem;
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  transform: rotate(-5deg);
+}
+
+.fcw-verdict.is-true .fcw-verdict-stamp { color: $fcw-lime; border-color: $fcw-lime; }
+.fcw-verdict.is-false .fcw-verdict-stamp { color: $fcw-coral; border-color: $fcw-coral; }
+
+.fcw-because {
+  margin: 0.9rem 0 1.1rem;
+  font-weight: 600;
+  color: w.navy(0.75);
+  line-height: 1.45;
+}
+
+.fcw-next {
+  @include w.welcome-cta-btn(linear-gradient(120deg, $fcw-sky, $fcw-lime));
+  font-size: 1.05rem;
+}
+
+.fcw-parent-note {
+  margin: 1.5rem 0 0;
+  text-align: center;
+  font-size: 0.9rem;
+  color: w.navy(0.6);
+}
+
+@keyframes fcw-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes fcw-buzz {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-6px); }
+  40% { transform: translateX(6px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fcw-slip, .fcw-verdict, .fcw-slip.is-buzzing, .fcw-btn.is-missed { animation: none; }
+}

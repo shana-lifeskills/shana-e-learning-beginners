@@ -1,0 +1,50 @@
+<div class="smw">
+  <header class="smw-head">
+    <span class="smw-badge">🔑 Warm-Up Game</span>
+    <h2>{{ step().title }}</h2>
+    <p class="smw-intro">{{ step().intro }}</p>
+
+    <div class="smw-meter" role="progressbar" [attr.aria-valuenow]="openedCount()" [attr.aria-valuemax]="total()">
+      <span class="smw-meter-fill" [style.width.%]="(openedCount() / total()) * 100"></span>
+      <span class="smw-meter-label">{{ openedCount() }} / {{ total() }} unlocked</span>
+    </div>
+  </header>
+
+  <div class="smw-board">
+    <div class="smw-col">
+      <span class="smw-col-head">{{ step().problemHeading }}</span>
+      @for (pair of step().pairs; track pair.id) {
+        <button type="button" class="smw-lock" [attr.data-state]="lockState(pair.id)"
+          [disabled]="opened().has(pair.id)" (click)="pickLock(pair.id)">
+          <span class="smw-lock-icon" aria-hidden="true">{{ opened().has(pair.id) ? '🔓' : '🔒' }}</span>
+          <span class="smw-lock-text">{{ pair.problem }}</span>
+        </button>
+      }
+    </div>
+
+    <div class="smw-col">
+      <span class="smw-col-head">{{ step().strategyHeading }}</span>
+      @for (pair of keyOrder(); track pair.id) {
+        <button type="button" class="smw-key"
+          [class.is-used]="opened().has(pair.id)"
+          [class.is-rejected]="rejected() === pair.id"
+          [disabled]="opened().has(pair.id)" (click)="chooseKey(pair.id)">
+          <span class="smw-key-icon" aria-hidden="true">{{ opened().has(pair.id) ? '✓' : '🗝️' }}</span>
+          <span class="smw-key-text">{{ pair.strategy }}</span>
+        </button>
+      }
+    </div>
+  </div>
+
+  @if (!picked() && !allOpen()) {
+    <p class="smw-hint">Tap a locked problem, then tap the strategy that opens it.</p>
+  } @else if (picked()) {
+    <p class="smw-hint">Now pick the strategy that fits.</p>
+  }
+
+  @if (allOpen()) {
+    <button type="button" class="smw-finish" (click)="finish()">{{ step().completeLabel }} →</button>
+  }
+
+  <p class="smw-parent">👪 {{ step().parentNote }}</p>
+</div>

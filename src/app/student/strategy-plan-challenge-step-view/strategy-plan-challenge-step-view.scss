@@ -1,0 +1,289 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- My Strategy Plan final challenge (spc) — Strategizing module, Week 4 ---- */
+$spc-coral: #f2765b;
+$spc-gold: #f2ab2e;
+$spc-green: #2f9e5f;
+$spc-ink: #3a2b46;
+$spc-paper: #fff8f0;
+
+.spc {
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 1.5rem clamp(0.75rem, 3vw, 1.5rem) 2.5rem;
+}
+
+.spc-head { text-align: center; }
+
+.spc-badge {
+  @include w.welcome-pill(rgba($spc-coral, 0.16), $spc-coral);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.spc h2 {
+  @include m.playful-heading;
+  font-size: clamp(1.7rem, 5vw, 2.4rem);
+  color: $spc-ink;
+  margin: 0.9rem 0 0.5rem;
+}
+
+.spc-intro {
+  max-width: 32rem;
+  margin: 0 auto;
+  color: w.navy(0.72);
+  line-height: 1.5;
+}
+
+.spc-section-label {
+  display: block;
+  margin-bottom: 0.6rem;
+  font-weight: 800;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $spc-coral;
+}
+
+/* --- goal pick --- */
+.spc-pick { margin-top: 1.6rem; }
+
+.spc-goals { display: grid; gap: 0.6rem; }
+
+.spc-goal {
+  @include m.tappable;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.8rem 1rem;
+  border-radius: v.$border-radius-lg;
+  background: v.$color-white;
+  border: 2px dashed rgba($spc-coral, 0.4);
+  font: inherit;
+  font-weight: 700;
+  color: $spc-ink;
+  text-align: left;
+
+  &:hover { border-color: $spc-coral; }
+  &.is-picked {
+    border-style: solid;
+    border-color: $spc-coral;
+    background: rgba($spc-coral, 0.1);
+  }
+}
+
+.spc-goal-icon { font-size: 1.4rem; }
+
+/* --- worked example --- */
+.spc-example {
+  margin-top: 1.5rem;
+  padding: 1rem 1.1rem;
+  border-radius: v.$border-radius-lg;
+  background: rgba($spc-gold, 0.14);
+  border-left: 4px solid $spc-gold;
+
+  ol {
+    margin: 0.3rem 0 0;
+    padding-left: 1.2rem;
+    color: w.navy(0.78);
+    line-height: 1.6;
+  }
+}
+
+.spc-example-label {
+  font-weight: 800;
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #a56c12;
+}
+
+.spc-example-goal {
+  margin: 0.3rem 0 0.2rem;
+  font-weight: 800;
+  color: $spc-ink;
+}
+
+/* --- plan --- */
+.spc-plan {
+  margin-top: 1.6rem;
+  padding: 1.2rem clamp(0.9rem, 3vw, 1.4rem) 1.4rem;
+  border-radius: v.$border-radius-xl;
+  background: $spc-paper;
+  box-shadow: 0 14px 34px rgba($spc-ink, 0.12);
+  border: 1px solid rgba($spc-coral, 0.16);
+}
+
+.spc-plan-goal {
+  margin: 0 0 0.8rem;
+  font-weight: 800;
+  color: $spc-ink;
+}
+
+.spc-steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.7rem;
+}
+
+.spc-step {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.spc-step-num {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: linear-gradient(135deg, $spc-coral, $spc-gold);
+  color: v.$color-white;
+  font-weight: 800;
+}
+
+.spc-step-field { flex: 1; }
+
+.spc-step-label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: w.navy(0.55);
+}
+
+.spc-step-field input {
+  width: 100%;
+  margin-top: 0.15rem;
+  padding: 0.45rem 0.5rem;
+  border: none;
+  border-bottom: 2px solid rgba($spc-coral, 0.3);
+  background: transparent;
+  font: inherit;
+  color: $spc-ink;
+
+  &:focus { outline: none; border-bottom-color: $spc-coral; }
+}
+
+.spc-reflection {
+  display: block;
+  margin-top: 1.1rem;
+}
+
+.spc-reflection-label {
+  display: block;
+  font-weight: 800;
+  font-size: 0.78rem;
+  color: $spc-ink;
+  margin-bottom: 0.3rem;
+}
+
+.spc-reflection textarea {
+  width: 100%;
+  padding: 0.6rem 0.7rem;
+  border-radius: v.$border-radius-lg;
+  border: 2px solid rgba($spc-coral, 0.3);
+  background: rgba(255, 255, 255, 0.8);
+  font: inherit;
+  color: $spc-ink;
+  resize: vertical;
+
+  &:focus { outline: none; border-color: $spc-coral; }
+}
+
+.spc-submit {
+  @include w.welcome-cta-btn(linear-gradient(120deg, $spc-coral, $spc-gold));
+  margin: 1.3rem auto 0;
+  display: block;
+
+  &:disabled { opacity: 0.5; }
+}
+
+.spc-hint {
+  margin: 0.6rem 0 0;
+  text-align: center;
+  font-size: 0.85rem;
+  color: w.navy(0.55);
+}
+
+/* --- stamped card --- */
+.spc-card {
+  position: relative;
+  margin-top: 1.6rem;
+  padding: 1.6rem 1.3rem 1.3rem;
+  border-radius: v.$border-radius-xl;
+  background: $spc-paper;
+  border: 2px solid $spc-green;
+  box-shadow: 0 14px 34px rgba($spc-ink, 0.14);
+  animation: spc-pop 0.35s ease both;
+}
+
+.spc-stamp {
+  position: absolute;
+  top: -0.8rem;
+  right: 1rem;
+  padding: 0.2rem 0.7rem;
+  border-radius: v.$border-radius-pill;
+  background: $spc-green;
+  color: v.$color-white;
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transform: rotate(4deg);
+}
+
+.spc-card-goal {
+  margin: 0 0 0.6rem;
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: $spc-ink;
+}
+
+.spc-card-steps {
+  margin: 0 0 0.7rem;
+  padding-left: 1.3rem;
+  color: w.navy(0.8);
+  line-height: 1.6;
+}
+
+.spc-card-reflection {
+  margin: 0;
+  color: w.navy(0.75);
+  line-height: 1.5;
+}
+
+.spc-saved {
+  margin: 0.9rem 0 0;
+  font-weight: 700;
+  color: $spc-green;
+}
+
+.spc-finish {
+  @include w.welcome-cta-btn(linear-gradient(120deg, $spc-green, $spc-gold));
+  margin: 1.4rem auto 0;
+  display: block;
+}
+
+.spc-parent {
+  margin: 1.2rem auto 0;
+  max-width: 34rem;
+  text-align: center;
+  font-size: 0.88rem;
+  color: w.navy(0.58);
+}
+
+@keyframes spc-pop {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spc-card { animation: none; }
+}

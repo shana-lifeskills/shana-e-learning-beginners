@@ -1,0 +1,52 @@
+<div class="smg">
+  <header class="smg-head">
+    <span class="smg-badge">🔌 Solution Workshop</span>
+    <h2>{{ step().title }}</h2>
+    <p class="smg-intro">{{ step().intro }}</p>
+
+    <div class="smg-track" role="progressbar" [attr.aria-valuenow]="linkedCount()" [attr.aria-valuemax]="total()">
+      <div class="smg-track-fill" [style.width.%]="(linkedCount() / total()) * 100"></div>
+      <span class="smg-track-label">{{ linkedCount() }} / {{ total() }} wired</span>
+    </div>
+  </header>
+
+  <div class="smg-board">
+    <div class="smg-col">
+      <span class="smg-col-head">{{ step().problemHeading }}</span>
+      @for (pair of step().pairs; track pair.id) {
+        <button type="button" class="smg-peg smg-peg--problem" [class]="'state-' + problemState(pair.id)"
+          [style.--c]="colourIndex(pair.id)" [disabled]="linked().has(pair.id)"
+          (click)="pickProblem(pair.id)">
+          <span class="smg-jack"></span>
+          <span class="smg-peg-text">{{ pair.problem }}</span>
+        </button>
+      }
+    </div>
+
+    <div class="smg-spine" aria-hidden="true"></div>
+
+    <div class="smg-col">
+      <span class="smg-col-head">{{ step().solutionHeading }}</span>
+      @for (pair of solutionOrder(); track pair.id) {
+        <button type="button" class="smg-peg smg-peg--solution"
+          [class.state-linked]="linked().has(pair.id)" [class.state-reject]="rejected() === pair.id"
+          [class.is-live]="picked() && !linked().has(pair.id)"
+          [style.--c]="colourIndex(pair.id)" [disabled]="linked().has(pair.id)"
+          (click)="chooseSolution(pair.id)">
+          <span class="smg-peg-text">{{ pair.solution }}</span>
+          <span class="smg-jack"></span>
+        </button>
+      }
+    </div>
+  </div>
+
+  @if (picked() && !allLinked()) {
+    <p class="smg-hint">Now tap the creative solution that fixes it.</p>
+  }
+
+  <p class="smg-parent-note">👪 {{ step().parentNote }}</p>
+
+  <button type="button" class="smg-finish" [disabled]="!allLinked()" (click)="finish()">
+    @if (allLinked()) { {{ step().completeLabel }} → } @else { Wire all {{ total() }} to continue }
+  </button>
+</div>

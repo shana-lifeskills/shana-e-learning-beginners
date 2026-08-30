@@ -1,0 +1,302 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- "Final Challenge: The Smart Thinker Plan" (stp) — Thinking module, Week 4 ---- */
+$stp-bg: #132a5f;
+$stp-bg-2: #1f3f8a;
+$stp-ink: #eef3ff;
+$stp-gold: #f4c430;
+$stp-line: rgba(238, 243, 255, 0.2);
+
+.stp {
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: 2rem clamp(1rem, 3.5vw, 2.25rem) 2.25rem;
+  border-radius: v.$border-radius-xl;
+  color: $stp-ink;
+  background: linear-gradient(165deg, $stp-bg, $stp-bg-2);
+  border: 1px solid rgba($stp-gold, 0.28);
+}
+
+/* --- hero with medal --- */
+.stp-hero { text-align: center; }
+
+.stp-medal {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 4.5rem;
+  height: 4.5rem;
+  margin-bottom: 0.6rem;
+}
+
+.stp-medal-star {
+  font-size: 1.9rem;
+  color: rgba($stp-gold, 0.35);
+  transition: color 0.4s ease, transform 0.4s ease;
+}
+
+.stp-medal[data-earned='true'] .stp-medal-star {
+  color: $stp-gold;
+  transform: scale(1.12);
+}
+
+.stp-medal-ring {
+  position: absolute;
+  inset: 0;
+  transform: rotate(-90deg);
+}
+
+.stp-medal-seg {
+  fill: none;
+  stroke: rgba($stp-ink, 0.18);
+  stroke-width: 4;
+  transition: stroke 0.3s ease;
+
+  &.is-on { stroke: $stp-gold; }
+}
+
+.stp-badge {
+  display: inline-block;
+  padding: 0.25rem 0.95rem;
+  border-radius: v.$border-radius-pill;
+  background: $stp-gold;
+  color: #23324f;
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.stp h2 {
+  @include m.playful-heading;
+  font-size: clamp(1.6rem, 4.5vw, 2.15rem);
+  margin: 0.6rem 0 0;
+}
+
+.stp-intro {
+  margin: 0.9rem 0 0;
+  text-align: center;
+  font-size: 1rem;
+  color: rgba($stp-ink, 0.82);
+}
+
+/* --- blocks --- */
+.stp-block { margin-top: 1.6rem; }
+
+.stp h3 {
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: $stp-gold;
+  margin: 0 0 0.75rem;
+}
+
+.stp-pledge {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: stp;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  li {
+    counter-increment: stp;
+    position: relative;
+    padding: 0.6rem 0.85rem 0.6rem 2.6rem;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid $stp-line;
+    border-radius: v.$border-radius-sm;
+    font-weight: 600;
+
+    &::before {
+      content: counter(stp);
+      position: absolute;
+      left: 0.7rem;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.4rem;
+      height: 1.4rem;
+      border-radius: 50%;
+      background: rgba($stp-gold, 0.2);
+      color: $stp-gold;
+      font-size: 0.8rem;
+      font-weight: 800;
+    }
+  }
+}
+
+/* --- day tracker --- */
+.stp-days {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.5rem;
+}
+
+.stp-day {
+  @include m.tappable;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.7rem 0.35rem;
+  color: $stp-ink;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px dashed rgba($stp-ink, 0.3);
+  border-radius: v.$border-radius-sm;
+  transition: border-color 0.2s ease, background 0.2s ease;
+
+  &:disabled { cursor: default; }
+}
+
+.stp-day.is-done {
+  border-style: solid;
+  border-color: $stp-gold;
+  background: rgba($stp-gold, 0.16);
+}
+
+.stp-day-check {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  border: 2px solid rgba($stp-ink, 0.4);
+  font-weight: 800;
+  font-size: 0.85rem;
+}
+
+.stp-day.is-done .stp-day-check {
+  border-color: $stp-gold;
+  background: $stp-gold;
+  color: #23324f;
+}
+
+.stp-day-label {
+  font-size: 0.68rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.stp-day-caption {
+  margin: 0.55rem 0 0;
+  font-size: 0.82rem;
+  font-style: italic;
+  color: rgba($stp-ink, 0.65);
+}
+
+/* --- example --- */
+.stp-field-label {
+  display: block;
+  margin: 0.8rem 0 0.35rem;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.stp-input {
+  width: 100%;
+  padding: 0.6rem 0.7rem;
+  font: inherit;
+  color: v.$color-navy-text;
+  background: v.$color-white;
+  border: 1px solid $stp-line;
+  border-radius: v.$border-radius-sm;
+  resize: vertical;
+
+  &:focus-visible {
+    outline: 2px solid $stp-gold;
+    outline-offset: 1px;
+  }
+}
+
+.stp-sample-toggle {
+  @include m.tappable;
+  margin-top: 0.7rem;
+  padding: 0.2rem 0;
+  background: none;
+  border: none;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: $stp-gold;
+  text-decoration: underline;
+}
+
+.stp-sample {
+  margin: 0.5rem 0 0;
+  padding: 0.6rem 0.8rem;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  background: rgba($stp-gold, 0.12);
+  border-radius: v.$border-radius-sm;
+
+  span {
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+  }
+}
+
+/* --- actions --- */
+.stp-submit {
+  @include m.tappable;
+  display: block;
+  margin: 1.6rem auto 0;
+  padding: 0.85rem 2.2rem;
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: #23324f;
+  background: linear-gradient(120deg, $stp-gold, #ffe08a);
+  border: none;
+  border-radius: v.$border-radius-pill;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+
+  &:disabled {
+    opacity: 0.4;
+    box-shadow: none;
+    cursor: not-allowed;
+  }
+}
+
+.stp-lock {
+  margin: 0.5rem 0 0;
+  text-align: center;
+  font-size: 0.85rem;
+  color: rgba($stp-ink, 0.6);
+}
+
+.stp-saved {
+  margin: 1.4rem 0 0;
+  padding: 0.85rem 1rem;
+  text-align: center;
+  font-weight: 800;
+  border-radius: v.$border-radius-sm;
+  background: rgba($stp-gold, 0.18);
+  color: $stp-gold;
+}
+
+.stp-parent {
+  margin: 1.4rem 0 0;
+  padding-top: 0.9rem;
+  border-top: 1px dashed $stp-line;
+  text-align: center;
+  font-size: 0.85rem;
+  font-style: italic;
+  color: rgba($stp-ink, 0.6);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stp-medal-star, .stp-medal-seg, .stp-day { transition: none; }
+}
+
+@media (max-width: 26rem) {
+  .stp-days { grid-template-columns: repeat(3, 1fr); }
+}

@@ -34,6 +34,10 @@
     }
   </div>
 
+  @if (step().takeHome; as takeHome) {
+    <p class="take-home"><span class="take-home-label">Take-Home Message</span>{{ takeHome }}</p>
+  }
+
   <div class="carousel-controls">
     <span class="slide-count">{{ activeIndex() + 1 }} of {{ step().slides.length }}</span>
     <button type="button" class="btn btn-outline-primary auto-play-btn" (click)="toggleAutoPlay()">

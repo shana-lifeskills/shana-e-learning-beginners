@@ -1,0 +1,64 @@
+<div class="pbw">
+  <span class="pbw-week">{{ pbw.weekLabel }}</span>
+
+  <h1>
+    <span class="pbw-title-start">{{ pbw.titleStart }}</span>
+    <span class="pbw-title-accent">{{ pbw.titleAccent }}</span>
+  </h1>
+  <p class="pbw-intro">{{ pbw.intro }}</p>
+
+  <div class="pbw-stage" aria-hidden="true">
+    <span class="pbw-ring"></span>
+    <span class="pbw-ring pbw-ring--2"></span>
+    <span class="pbw-button">
+      <span class="pbw-bars"><i></i><i></i></span>
+      <span class="pbw-button-label">{{ pbw.pauseLabel }}</span>
+    </span>
+  </div>
+
+  <div class="pbw-strip">
+    <span class="pbw-stop">
+      <span class="pbw-stop-icon">{{ pbw.momentBefore.icon }}</span>
+      <span class="pbw-stop-label">{{ pbw.momentBefore.label }}</span>
+    </span>
+    <span class="pbw-arrow" aria-hidden="true">→</span>
+    <span class="pbw-stop pbw-stop--pause">
+      <span class="pbw-stop-icon">{{ pbw.momentPause.icon }}</span>
+      <span class="pbw-stop-label">{{ pbw.momentPause.label }}</span>
+    </span>
+    <span class="pbw-arrow" aria-hidden="true">→</span>
+    <span class="pbw-stop pbw-stop--after">
+      <span class="pbw-stop-icon">{{ pbw.momentAfter.icon }}</span>
+      <span class="pbw-stop-label">{{ pbw.momentAfter.label }}</span>
+    </span>
+  </div>
+
+  <div class="pbw-objective">
+    <span class="pbw-objective-label">{{ pbw.objectiveLabel }}</span>
+    <p>{{ pbw.objectiveText }}</p>
+  </div>
+
+  <p class="pbw-ways-heading">{{ pbw.waysHeading }}</p>
+  <div class="pbw-ways">
+    @for (way of pbw.ways; track way.title; let i = $index) {
+      <div class="pbw-way" [style.--i]="i">
+        <span class="pbw-way-icon" aria-hidden="true">{{ way.icon }}</span>
+        <span class="pbw-way-title">{{ way.title }}</span>
+        <span class="pbw-way-text">{{ way.text }}</span>
+      </div>
+    }
+  </div>
+
+  @if (isCompletedLessonWelcome()) {
+    @if (nextLesson(); as next) {
+      <button type="button" class="pbw-start" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+    } @else {
+      <button type="button" class="pbw-start" (click)="backToMap()">Back to My Modules →</button>
+    }
+    <button type="button" class="pbw-review" (click)="beginLesson()">↺ Review this lesson</button>
+  } @else {
+    <button type="button" class="pbw-start" (click)="beginLesson()">{{ pbw.startLabel }} →</button>
+  }
+
+  <p class="pbw-footer">{{ pbw.footerNote }}</p>
+</div>

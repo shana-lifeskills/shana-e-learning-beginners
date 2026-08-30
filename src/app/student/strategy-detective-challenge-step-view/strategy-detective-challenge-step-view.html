@@ -1,0 +1,54 @@
+<div class="sdc">
+  <header class="sdc-head">
+    <span class="sdc-badge">🕵️ {{ step().badge }}</span>
+    <h2>{{ step().title }}</h2>
+    <p class="sdc-intro">{{ step().intro }}</p>
+  </header>
+
+  @if (phase() === 'file') {
+    <section class="sdc-file">
+      <span class="sdc-file-tab">Case File</span>
+      <p class="sdc-brief">{{ step().briefLabel }}</p>
+
+      @for (field of step().fields; track field.id) {
+        <label class="sdc-line">
+          <span class="sdc-line-label">{{ field.label }}</span>
+          <input type="text" [placeholder]="field.placeholder" [value]="answers()[field.id] || ''"
+            (input)="setAnswer(field.id, $any($event.target).value)" />
+        </label>
+      }
+
+      <button type="button" class="sdc-submit" [disabled]="!allFilled()" (click)="submit()">
+        {{ step().submitLabel }} →
+      </button>
+    </section>
+  } @else {
+    <section class="sdc-solved">
+      <span class="sdc-stamp" aria-hidden="true">CASE SOLVED</span>
+      <dl class="sdc-summary">
+        @for (field of step().fields; track field.id) {
+          <div>
+            <dt>{{ field.label }}</dt>
+            <dd>{{ answers()[field.id] }}</dd>
+          </div>
+        }
+      </dl>
+      <p class="sdc-saved">✨ {{ step().savedText }}</p>
+    </section>
+
+    <section class="sdc-recap">
+      <span class="sdc-recap-heading">{{ step().recapHeading }}</span>
+      <ul>
+        @for (point of step().recapPoints; track point) {
+          <li>{{ point }}</li>
+        }
+      </ul>
+    </section>
+
+    <button type="button" class="sdc-finish" (click)="finish()">{{ step().finishLabel }} →</button>
+  }
+
+  @if (step().parentNote) {
+    <p class="sdc-parent">👪 {{ step().parentNote }}</p>
+  }
+</div>

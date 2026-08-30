@@ -1,0 +1,61 @@
+<div class="icc">
+  <header class="icc-head">
+    <span class="icc-badge">📐 {{ step().badge }}</span>
+    <h2>{{ step().title }}</h2>
+    <p class="icc-intro">{{ step().intro }}</p>
+  </header>
+
+  <div class="icc-sheet">
+    <span class="icc-corner icc-corner--tl"></span>
+    <span class="icc-corner icc-corner--tr"></span>
+    <span class="icc-corner icc-corner--bl"></span>
+    <span class="icc-corner icc-corner--br"></span>
+
+    <p class="icc-pick-heading">{{ step().pickHeading }}</p>
+    <div class="icc-picks">
+      @for (option of step().picks; track option.id) {
+        <button type="button" class="icc-pick" [class.is-chosen]="pick() === option.id"
+          [disabled]="sent()" (click)="choosePick(option.id)">
+          <span class="icc-pick-icon">{{ option.icon }}</span>
+          <span class="icc-pick-label">{{ option.label }}</span>
+        </button>
+      }
+    </div>
+
+    <p class="icc-draw-note">✏️ {{ step().drawNote }}</p>
+
+    <div class="icc-fields" [class.is-locked]="!pick()">
+      @for (field of step().fields; track field.id; let i = $index) {
+        <label class="icc-field">
+          <span class="icc-field-label"><b>{{ i + 1 }}</b> {{ field.label }}</span>
+          <textarea rows="2" [placeholder]="field.placeholder" [value]="answers()[field.id] || ''"
+            [disabled]="sent() || !pick()" (input)="setAnswer(field.id, $any($event.target).value)"></textarea>
+        </label>
+      }
+      @if (!pick()) {
+        <p class="icc-hint">Pick something to imagine first, then draw the blueprint.</p>
+      }
+    </div>
+
+    @if (sent()) {
+      <p class="icc-thanks">✨ Blueprint filed — your invention is saved. You earned a star!</p>
+    } @else {
+      <button type="button" class="icc-submit" [disabled]="!ready()" (click)="submit()">
+        {{ step().submitLabel }} →
+      </button>
+    }
+  </div>
+
+  <div class="icc-recap">
+    <span class="icc-recap-heading">{{ step().recapHeading }}</span>
+    <ul>
+      @for (point of step().recapPoints; track point) {
+        <li>{{ point }}</li>
+      }
+    </ul>
+  </div>
+
+  @if (step().parentNote) {
+    <p class="icc-parent-note">👪 {{ step().parentNote }}</p>
+  }
+</div>

@@ -1,0 +1,60 @@
+<div class="gpw">
+  <span class="gpw-week">{{ gpw.weekLabel }}</span>
+
+  <h1>
+    <span class="gpw-title-start">{{ gpw.titleStart }}</span>
+    <span class="gpw-title-accent">{{ gpw.titleAccent }}</span>
+  </h1>
+  <p class="gpw-intro">{{ gpw.intro }}</p>
+
+  <div class="gpw-path">
+    <div class="gpw-node gpw-node--goal">
+      <span class="gpw-node-icon" aria-hidden="true">{{ gpw.goalNodeIcon }}</span>
+      <span class="gpw-node-label">{{ gpw.goalNodeLabel }}</span>
+    </div>
+
+    @for (ps of stepsTopDown; track ps.n) {
+      <div class="gpw-stone" [class.is-right]="ps.side === 'right'" [style.--n]="ps.n">
+        <span class="gpw-stone-num">{{ ps.n }}</span>
+        <span class="gpw-stone-icon" aria-hidden="true">{{ ps.step.icon }}</span>
+        <span class="gpw-stone-label">{{ ps.step.label }}</span>
+      </div>
+    }
+
+    <div class="gpw-node gpw-node--start">
+      <span class="gpw-node-icon" aria-hidden="true">{{ gpw.startNodeIcon }}</span>
+      <span class="gpw-node-label">{{ gpw.startNodeLabel }}</span>
+    </div>
+  </div>
+
+  <p class="gpw-caption">{{ gpw.caption }}</p>
+
+  <div class="gpw-objective">
+    <span class="gpw-objective-label">{{ gpw.objectiveLabel }}</span>
+    <p>{{ gpw.objectiveText }}</p>
+  </div>
+
+  <p class="gpw-tips-heading">{{ gpw.tipsHeading }}</p>
+  <div class="gpw-tips">
+    @for (tip of gpw.tips; track tip.title; let i = $index) {
+      <div class="gpw-tip" [style.--i]="i">
+        <span class="gpw-tip-icon" aria-hidden="true">{{ tip.icon }}</span>
+        <span class="gpw-tip-title">{{ tip.title }}</span>
+        <span class="gpw-tip-text">{{ tip.text }}</span>
+      </div>
+    }
+  </div>
+
+  @if (isCompletedLessonWelcome()) {
+    @if (nextLesson(); as next) {
+      <button type="button" class="gpw-start" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+    } @else {
+      <button type="button" class="gpw-start" (click)="backToMap()">Back to My Modules →</button>
+    }
+    <button type="button" class="gpw-review" (click)="beginLesson()">↺ Review this lesson</button>
+  } @else {
+    <button type="button" class="gpw-start" (click)="beginLesson()">{{ gpw.startLabel }} →</button>
+  }
+
+  <p class="gpw-footer">{{ gpw.footerNote }}</p>
+</div>

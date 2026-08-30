@@ -1,0 +1,289 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Solution Path welcome (spw) — Thinking module, Week 2 ---- */
+$spw-bg: #e6f7f4;
+$spw-bg-2: #d3eef8;
+$spw-ink: #17403c;
+$spw-emerald: #1f9d78;
+$spw-amber: #f2932c;
+
+.spw {
+  max-width: 62rem;
+  margin: 0 auto;
+  padding: 2.5rem clamp(1rem, 4vw, 2.75rem) 2.75rem;
+  text-align: center;
+  border-radius: v.$border-radius-xl;
+  color: $spw-ink;
+  background: linear-gradient(160deg, $spw-bg 0%, $spw-bg-2 100%);
+}
+
+.spw-week {
+  @include w.welcome-pill(rgba($spw-emerald, 0.16), $spw-emerald);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.spw h1 {
+  @include m.playful-heading;
+  font-size: clamp(2.1rem, 6vw, 3.2rem);
+  line-height: 1.1;
+  margin: 1.2rem 0 0.7rem;
+}
+
+.spw-title-start { color: $spw-ink; }
+.spw-title-accent { color: $spw-amber; }
+
+.spw-intro {
+  max-width: 36rem;
+  margin: 0 auto;
+  font-size: 1.1rem;
+  line-height: 1.55;
+  color: rgba($spw-ink, 0.78);
+}
+
+/* --- path board --- */
+.spw-board {
+  position: relative;
+  max-width: 42rem;
+  margin: 2rem auto 0;
+  padding: 2.25rem 1.25rem 1.5rem;
+  border: 2px solid rgba($spw-emerald, 0.3);
+  border-radius: v.$border-radius-lg;
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.spw-board-label {
+  position: absolute;
+  top: -0.85rem;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.2rem 0.9rem;
+  border-radius: v.$border-radius-pill;
+  background: $spw-emerald;
+  color: v.$color-white;
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.spw-stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 380 / 200;
+}
+
+.spw-draw {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.spw-path {
+  stroke: $spw-emerald;
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1 10;
+  animation: spw-flow 1.4s linear infinite;
+}
+
+.spw-tangle {
+  stroke: $spw-amber;
+  stroke-width: 3;
+  stroke-linecap: round;
+  fill: none;
+}
+
+.spw-target--outer { fill: none; stroke: $spw-amber; stroke-width: 3; }
+.spw-target--mid { fill: rgba($spw-amber, 0.3); }
+.spw-target--bull { fill: $spw-amber; }
+
+/* --- floating tags --- */
+.spw-tag {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+  width: max-content;
+}
+
+.spw-tag-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.1rem;
+  height: 2.1rem;
+  border-radius: 50%;
+  background: v.$color-white;
+  font-size: 1.05rem;
+  box-shadow: 0 4px 12px rgba(23, 64, 60, 0.2);
+}
+
+.spw-tag-label {
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: $spw-ink;
+}
+
+.spw-tag--problem { transform: translate(-50%, 30%); }
+.spw-tag--solved { transform: translate(-30%, -100%); }
+
+/* --- numbered step markers --- */
+.spw-step {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  animation: spw-pop 0.4s ease both;
+  animation-delay: var(--delay, 0s);
+}
+
+.spw-step-pin {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.55rem;
+  height: 1.55rem;
+  border-radius: 50%;
+  background: $spw-emerald;
+  color: v.$color-white;
+  font-weight: 800;
+  font-size: 0.85rem;
+  box-shadow: 0 0 0 4px rgba($spw-emerald, 0.2);
+}
+
+.spw-step-chip {
+  white-space: nowrap;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: $spw-ink;
+  background: v.$color-white;
+  border: 1px solid rgba($spw-emerald, 0.35);
+  border-radius: v.$border-radius-pill;
+  padding: 0.12rem 0.55rem;
+}
+
+.spw-callout {
+  margin: 1.5rem auto 0;
+  max-width: 28rem;
+  font-size: 0.95rem;
+  font-style: italic;
+  color: rgba($spw-ink, 0.7);
+}
+
+/* --- objective --- */
+.spw-objective {
+  max-width: 40rem;
+  margin: 1.6rem auto 0;
+  padding: 1.15rem 1.4rem;
+  text-align: left;
+  border-radius: v.$border-radius-lg;
+  border-left: 4px solid $spw-amber;
+  background: rgba(255, 255, 255, 0.7);
+
+  p {
+    margin: 0.3rem 0 0;
+    font-size: 1.02rem;
+    line-height: 1.5;
+    color: rgba($spw-ink, 0.88);
+  }
+}
+
+.spw-objective-label {
+  font-weight: 800;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $spw-emerald;
+}
+
+/* --- traits --- */
+.spw-traits-heading {
+  margin: 1.9rem 0 0.9rem;
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: $spw-ink;
+}
+
+.spw-traits {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
+  gap: 0.85rem;
+  max-width: 44rem;
+  margin: 0 auto;
+}
+
+.spw-trait {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 1.1rem 0.9rem;
+  border-radius: v.$border-radius-lg;
+  background: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba($spw-emerald, 0.16);
+  animation: spw-rise 0.5s ease both;
+  animation-delay: calc(var(--i, 0) * 90ms);
+}
+
+.spw-trait-icon { font-size: 1.7rem; }
+.spw-trait-title { font-weight: 800; color: $spw-ink; }
+
+.spw-trait-text {
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: rgba($spw-ink, 0.68);
+}
+
+/* --- actions --- */
+.spw-start {
+  @include w.welcome-cta-btn(linear-gradient(120deg, $spw-emerald, #2bbf94), v.$color-white);
+  margin: 2rem auto 0;
+  display: block;
+  font-size: 1.15rem;
+}
+
+.spw-review {
+  @include m.tappable;
+  display: block;
+  margin: 0.8rem auto 0;
+  background: none;
+  border: none;
+  font-weight: 700;
+  color: rgba($spw-ink, 0.6);
+}
+
+.spw-footer {
+  margin: 1.4rem 0 0;
+  font-size: 0.92rem;
+  color: rgba($spw-ink, 0.55);
+}
+
+@keyframes spw-flow {
+  to { stroke-dashoffset: -11; }
+}
+
+@keyframes spw-pop {
+  from { opacity: 0; transform: translate(-50%, -50%) scale(0.7); }
+  to { opacity: 1; }
+}
+
+@keyframes spw-rise {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spw-path { animation: none; }
+  .spw-step, .spw-trait { animation: none; opacity: 1; }
+}

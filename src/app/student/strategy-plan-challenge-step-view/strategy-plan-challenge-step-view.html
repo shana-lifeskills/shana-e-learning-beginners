@@ -1,0 +1,83 @@
+<div class="spc">
+  <header class="spc-head">
+    <span class="spc-badge">🎯 {{ step().badge }}</span>
+    <h2>{{ step().title }}</h2>
+    <p class="spc-intro">{{ step().intro }}</p>
+  </header>
+
+  @if (phase() === 'plan') {
+    <section class="spc-pick">
+      <span class="spc-section-label">{{ step().pickHeading }}</span>
+      <div class="spc-goals">
+        @for (goal of step().goals; track goal.id) {
+          <button type="button" class="spc-goal" [class.is-picked]="picked() === goal.id" (click)="pick(goal.id)">
+            <span class="spc-goal-icon" aria-hidden="true">{{ goal.icon }}</span>
+            <span class="spc-goal-label">{{ goal.label }}</span>
+          </button>
+        }
+      </div>
+    </section>
+
+    <section class="spc-example">
+      <span class="spc-example-label">{{ step().exampleLabel }}</span>
+      <p class="spc-example-goal">Goal: {{ step().exampleGoal }}</p>
+      <ol>
+        @for (line of step().exampleSteps; track line) {
+          <li>{{ line }}</li>
+        }
+      </ol>
+    </section>
+
+    <section class="spc-plan">
+      <span class="spc-section-label">{{ step().planHeading }}</span>
+      @if (pickedGoal(); as g) {
+        <p class="spc-plan-goal">{{ g.icon }} {{ g.label }}</p>
+      }
+      <ol class="spc-steps">
+        @for (field of step().stepFields; track field.id; let i = $index) {
+          <li class="spc-step">
+            <span class="spc-step-num">{{ i + 1 }}</span>
+            <label class="spc-step-field">
+              <span class="spc-step-label">{{ field.label }}</span>
+              <input type="text" [placeholder]="field.placeholder" [value]="steps()[field.id] || ''"
+                (input)="setStep(field.id, $any($event.target).value)" />
+            </label>
+          </li>
+        }
+      </ol>
+
+      <label class="spc-reflection">
+        <span class="spc-reflection-label">{{ step().reflectionLabel }}</span>
+        <textarea rows="3" [placeholder]="step().reflectionPlaceholder" [value]="reflection()"
+          (input)="setReflection($any($event.target).value)"></textarea>
+      </label>
+
+      <button type="button" class="spc-submit" [disabled]="!canSubmit()" (click)="submit()">
+        {{ step().submitLabel }} →
+      </button>
+      @if (!picked()) {
+        <p class="spc-hint">Pick a goal above to start your strategy.</p>
+      } @else if (!stepsFilled() || !reflection().trim()) {
+        <p class="spc-hint">Fill in every step and the reflection to finish your plan.</p>
+      }
+    </section>
+  } @else {
+    <section class="spc-card">
+      <span class="spc-stamp" aria-hidden="true">🎯 Strategy Plan</span>
+      <p class="spc-card-goal">{{ pickedGoal()?.icon }} {{ pickedGoal()?.label }}</p>
+      <ol class="spc-card-steps">
+        @for (field of step().stepFields; track field.id) {
+          <li>{{ steps()[field.id] }}</li>
+        }
+      </ol>
+      <p class="spc-card-reflection"><strong>{{ step().reflectionLabel }}</strong><br />{{ reflection() }}</p>
+      <p class="spc-saved">✨ {{ step().savedText }}</p>
+    </section>
+
+    <button type="button" class="spc-finish" (click)="finish()">{{ step().finishLabel }} →</button>
+  }
+
+  @if (step().parentNote) {
+    <p class="spc-parent">👪 {{ step().parentNote }}</p>
+  }
+</div>

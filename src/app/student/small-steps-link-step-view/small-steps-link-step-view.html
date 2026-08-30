@@ -1,0 +1,25 @@
+<div class="ssl">
+  <span class="ssl-badge">⭐ {{ step().badge }}</span>
+
+  <h1>{{ step().heading }}</h1>
+  <p class="ssl-subtitle">{{ step().subtitle }}</p>
+
+  <div class="ssl-climb" aria-hidden="true">
+    @for (m of markers; track m) {
+      <span class="ssl-step" [style.--i]="m"></span>
+    }
+    <span class="ssl-trophy">🏆</span>
+  </div>
+
+  <div class="ssl-know">
+    <span class="ssl-know-label">{{ step().knowLabel }}</span>
+    <p class="ssl-know-text">{{ step().knowText }}</p>
+  </div>
+
+  <div class="ssl-say">
+    <span class="ssl-say-label">{{ step().sayItLabel }}</span>
+    <p class="ssl-say-text">"{{ step().sayItText }}"</p>
+  </div>
+
+  <button type="button" class="ssl-complete" (click)="completed.emit()">{{ step().completeLabel }}</button>
+</div>

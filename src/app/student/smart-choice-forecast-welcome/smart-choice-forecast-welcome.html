@@ -1,0 +1,77 @@
+<div class="scf">
+  <span class="scf-week">{{ scf.weekLabel }}</span>
+
+  <h1>
+    <span class="scf-title-start">{{ scf.titleStart }}</span>
+    <span class="scf-title-accent">{{ scf.titleAccent }}</span>
+  </h1>
+  <p class="scf-intro">{{ scf.intro }}</p>
+
+  <div class="scf-board">
+    <span class="scf-board-label">{{ scf.boardLabel }}</span>
+
+    <div class="scf-node">
+      <span class="scf-node-icon" aria-hidden="true">{{ scf.decisionIcon }}</span>
+      <span class="scf-node-label">{{ scf.decisionLabel }}</span>
+    </div>
+
+    <div class="scf-fork" aria-hidden="true">
+      <span class="scf-fork-arm scf-fork-arm--left"></span>
+      <span class="scf-fork-arm scf-fork-arm--right"></span>
+    </div>
+
+    <div class="scf-branches">
+      @for (b of scf.branches; track b.optionLabel; let i = $index) {
+        <div class="scf-branch" [class]="'scf-branch--' + b.tone" [style.--i]="i">
+          <span class="scf-card scf-card--choice">
+            <span class="scf-card-icon" aria-hidden="true">{{ b.optionIcon }}</span>
+            <span class="scf-card-kicker">If you…</span>
+            <span class="scf-card-text">{{ b.optionLabel }}</span>
+          </span>
+          <span class="scf-link" aria-hidden="true">↓</span>
+          <span class="scf-card scf-card--then">
+            <span class="scf-card-icon" aria-hidden="true">{{ b.consequenceIcon }}</span>
+            <span class="scf-card-kicker">…then</span>
+            <span class="scf-card-text">{{ b.consequenceLabel }}</span>
+          </span>
+          <span class="scf-link" aria-hidden="true">↓</span>
+          <span class="scf-outcome">
+            <span class="scf-outcome-icon" aria-hidden="true">{{ b.outcomeIcon }}</span>
+            <span class="scf-outcome-label">{{ b.outcomeLabel }}</span>
+          </span>
+        </div>
+      }
+    </div>
+
+    <p class="scf-callout">{{ scf.calloutText }}</p>
+  </div>
+
+  <div class="scf-objective">
+    <span class="scf-objective-label">{{ scf.objectiveLabel }}</span>
+    <p>{{ scf.objectiveText }}</p>
+  </div>
+
+  <p class="scf-traits-heading">{{ scf.traitsHeading }}</p>
+  <div class="scf-traits">
+    @for (trait of scf.traits; track trait.title; let i = $index) {
+      <div class="scf-trait" [style.--i]="i">
+        <span class="scf-trait-icon" aria-hidden="true">{{ trait.icon }}</span>
+        <span class="scf-trait-title">{{ trait.title }}</span>
+        <span class="scf-trait-text">{{ trait.text }}</span>
+      </div>
+    }
+  </div>
+
+  @if (isCompletedLessonWelcome()) {
+    @if (nextLesson(); as next) {
+      <button type="button" class="scf-start" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+    } @else {
+      <button type="button" class="scf-start" (click)="backToMap()">Back to My Modules →</button>
+    }
+    <button type="button" class="scf-review" (click)="beginLesson()">↺ Review this lesson</button>
+  } @else {
+    <button type="button" class="scf-start" (click)="beginLesson()">{{ scf.startLabel }} →</button>
+  }
+
+  <p class="scf-footer">{{ scf.footerNote }}</p>
+</div>

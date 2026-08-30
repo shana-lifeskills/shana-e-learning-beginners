@@ -1,0 +1,68 @@
+<div class="cpc">
+  <header class="cpc-head">
+    <span class="cpc-badge">🏅 {{ step().badge }}</span>
+    <h2>{{ step().title }}</h2>
+    <p class="cpc-intro">{{ step().intro }}</p>
+  </header>
+
+  <div class="cpc-wall">
+    <p class="cpc-pick-heading">{{ step().pickHeading }}</p>
+    <div class="cpc-frames">
+      @for (option of step().options; track option.id) {
+        <button type="button" class="cpc-frame" [class.is-chosen]="pick() === option.id"
+          [disabled]="sent()" (click)="choosePick(option.id)">
+          <span class="cpc-frame-icon">{{ option.icon }}</span>
+          <span class="cpc-frame-label">{{ option.label }}</span>
+        </button>
+      }
+    </div>
+
+    <p class="cpc-steps-heading">{{ step().stepsHeading }}</p>
+    <ol class="cpc-steps">
+      @for (item of step().steps; track item.id; let i = $index) {
+        <li>
+          <button type="button" class="cpc-step" [class.is-ticked]="ticked().has(item.id)"
+            [disabled]="sent()" (click)="toggleStep(item.id)">
+            <span class="cpc-step-box">{{ ticked().has(item.id) ? '✓' : i + 1 }}</span>
+            <span class="cpc-step-label">{{ item.label }}</span>
+          </button>
+        </li>
+      }
+    </ol>
+
+    <div class="cpc-plaque">
+      <span class="cpc-plaque-heading">{{ step().reflectionHeading }}</span>
+      @for (field of step().fields; track field.id) {
+        <label class="cpc-field">
+          <span class="cpc-field-label">{{ field.label }}</span>
+          <textarea rows="2" [placeholder]="field.placeholder" [value]="answers()[field.id] || ''"
+            [disabled]="sent()" (input)="setAnswer(field.id, $any($event.target).value)"></textarea>
+        </label>
+      }
+    </div>
+
+    @if (sent()) {
+      <p class="cpc-thanks">🌟 Your creative project is on the wall. You earned a star — and finished the module!</p>
+    } @else {
+      <button type="button" class="cpc-submit" [disabled]="!ready()" (click)="submit()">
+        {{ step().submitLabel }} →
+      </button>
+      @if (!ready()) {
+        <p class="cpc-hint">Pick a project, tick all {{ step().steps.length }} steps, and answer the reflection.</p>
+      }
+    }
+  </div>
+
+  <div class="cpc-recap">
+    <span class="cpc-recap-heading">🔁 {{ step().recapHeading }}</span>
+    <ul>
+      @for (point of step().recapPoints; track point) {
+        <li>{{ point }}</li>
+      }
+    </ul>
+  </div>
+
+  @if (step().parentNote) {
+    <p class="cpc-parent-note">👪 {{ step().parentNote }}</p>
+  }
+</div>

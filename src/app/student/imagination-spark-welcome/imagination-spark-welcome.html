@@ -1,0 +1,59 @@
+<div class="isw">
+  <span class="isw-week">{{ isw.weekLabel }}</span>
+
+  <h1>
+    <span class="isw-title-start">{{ isw.titleStart }}</span>
+    <span class="isw-title-accent">{{ isw.titleAccent }}</span>
+  </h1>
+  <p class="isw-intro">{{ isw.intro }}</p>
+
+  <div class="isw-stage" aria-hidden="true">
+    <span class="isw-ray isw-ray--1"></span>
+    <span class="isw-ray isw-ray--2"></span>
+    <span class="isw-ray isw-ray--3"></span>
+
+    <span class="isw-bulb">
+      <span class="isw-bulb-icon">{{ isw.centerIcon }}</span>
+      <span class="isw-bulb-label">{{ isw.sparkLabel }}</span>
+    </span>
+
+    @for (spark of placedSparks; track spark.node.label) {
+      <span class="isw-spark" [style.left.%]="spark.x" [style.top.%]="spark.y"
+        [style.--delay]="spark.delay + 's'">
+        <span class="isw-spark-icon">{{ spark.node.icon }}</span>
+        <span class="isw-spark-label">{{ spark.node.label }}</span>
+      </span>
+    }
+  </div>
+
+  <p class="isw-caption">{{ isw.centerCaption }}</p>
+
+  <div class="isw-objective">
+    <span class="isw-objective-label">{{ isw.objectiveLabel }}</span>
+    <p>{{ isw.objectiveText }}</p>
+  </div>
+
+  <p class="isw-ways-heading">{{ isw.waysHeading }}</p>
+  <div class="isw-ways">
+    @for (way of isw.ways; track way.title; let i = $index) {
+      <div class="isw-way" [style.--i]="i">
+        <span class="isw-way-icon" aria-hidden="true">{{ way.icon }}</span>
+        <span class="isw-way-title">{{ way.title }}</span>
+        <span class="isw-way-text">{{ way.text }}</span>
+      </div>
+    }
+  </div>
+
+  @if (isCompletedLessonWelcome()) {
+    @if (nextLesson(); as next) {
+      <button type="button" class="isw-start" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+    } @else {
+      <button type="button" class="isw-start" (click)="backToMap()">Back to My Modules →</button>
+    }
+    <button type="button" class="isw-review" (click)="beginLesson()">↺ Review this lesson</button>
+  } @else {
+    <button type="button" class="isw-start" (click)="beginLesson()">{{ isw.startLabel }} →</button>
+  }
+
+  <p class="isw-footer">{{ isw.footerNote }}</p>
+</div>

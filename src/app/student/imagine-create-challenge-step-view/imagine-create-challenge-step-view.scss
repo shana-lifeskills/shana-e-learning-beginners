@@ -1,0 +1,205 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Imagine and Create weekly challenge (icc) — Creativity module, Week 2 ---- */
+$icc-blueprint: #0d3b66;
+$icc-line: #7ec8e3;
+$icc-amber: #ffd166;
+$icc-paper: #12457a;
+
+.icc {
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 1.5rem clamp(0.75rem, 3vw, 1.5rem) 2.5rem;
+}
+
+.icc-head { text-align: center; }
+
+.icc-badge {
+  @include w.welcome-pill(rgba($icc-blueprint, 0.14), $icc-blueprint);
+  letter-spacing: 0.05em;
+}
+
+.icc-head h2 {
+  @include m.playful-heading;
+  font-size: clamp(1.5rem, 4.5vw, 2rem);
+  margin: 0.9rem 0 0.4rem;
+  color: $icc-blueprint;
+}
+
+.icc-intro {
+  max-width: 30rem;
+  margin: 0 auto;
+  color: w.navy(0.72);
+  line-height: 1.5;
+}
+
+/* --- blueprint sheet --- */
+.icc-sheet {
+  position: relative;
+  margin-top: 1.5rem;
+  padding: 1.6rem clamp(1rem, 4vw, 1.8rem);
+  border-radius: v.$border-radius-lg;
+  color: #eaf6ff;
+  background:
+    linear-gradient(rgba($icc-line, 0.16) 1px, transparent 1px) 0 0 / 100% 1.5rem,
+    linear-gradient(90deg, rgba($icc-line, 0.16) 1px, transparent 1px) 0 0 / 1.5rem 100%,
+    linear-gradient(160deg, #0d3b66, #0a2f52);
+  box-shadow: 0 20px 44px rgba($icc-blueprint, 0.3);
+}
+
+.icc-corner {
+  position: absolute;
+  width: 0.9rem;
+  height: 0.9rem;
+  border: 2px solid rgba($icc-line, 0.7);
+}
+.icc-corner--tl { top: 0.5rem; left: 0.5rem; border-right: 0; border-bottom: 0; }
+.icc-corner--tr { top: 0.5rem; right: 0.5rem; border-left: 0; border-bottom: 0; }
+.icc-corner--bl { bottom: 0.5rem; left: 0.5rem; border-right: 0; border-top: 0; }
+.icc-corner--br { bottom: 0.5rem; right: 0.5rem; border-left: 0; border-top: 0; }
+
+.icc-pick-heading {
+  margin: 0 0 0.7rem;
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 0.8rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: $icc-line;
+}
+
+.icc-picks {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr));
+  gap: 0.6rem;
+}
+
+.icc-pick {
+  @include m.tappable;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.85rem 0.6rem;
+  border-radius: v.$border-radius-lg;
+  border: 2px dashed rgba($icc-line, 0.55);
+  background: rgba(255, 255, 255, 0.04);
+  color: #eaf6ff;
+  font-weight: 700;
+  font-size: 0.88rem;
+  text-align: center;
+  transition: border-color 0.2s ease, background 0.2s ease, transform 0.15s ease;
+}
+
+.icc-pick:hover:not(:disabled) { border-color: $icc-line; }
+
+.icc-pick.is-chosen {
+  border-style: solid;
+  border-color: $icc-amber;
+  background: rgba($icc-amber, 0.16);
+  transform: translateY(-2px);
+}
+
+.icc-pick-icon { font-size: 1.6rem; }
+
+.icc-draw-note {
+  margin: 1.1rem 0 0.9rem;
+  font-size: 0.9rem;
+  font-style: italic;
+  color: rgba(234, 246, 255, 0.75);
+}
+
+.icc-fields { transition: opacity 0.2s ease; }
+.icc-fields.is-locked { opacity: 0.6; }
+
+.icc-field {
+  display: block;
+
+  & + .icc-field { margin-top: 0.9rem; }
+}
+
+.icc-field-label {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: #eaf6ff;
+
+  b {
+    display: inline-grid;
+    place-items: center;
+    width: 1.3rem;
+    height: 1.3rem;
+    margin-right: 0.35rem;
+    border-radius: 50%;
+    background: $icc-amber;
+    color: $icc-blueprint;
+    font-size: 0.75rem;
+  }
+}
+
+.icc-field textarea {
+  width: 100%;
+  padding: 0.65rem 0.8rem;
+  border-radius: v.$border-radius-sm;
+  border: 1px solid rgba($icc-line, 0.5);
+  background: rgba(255, 255, 255, 0.06);
+  font: inherit;
+  color: #f4fbff;
+  resize: vertical;
+
+  &::placeholder { color: rgba(234, 246, 255, 0.45); }
+  &:focus { outline: none; border-color: $icc-amber; }
+}
+
+.icc-hint {
+  margin: 0.7rem 0 0;
+  font-size: 0.85rem;
+  color: rgba(234, 246, 255, 0.6);
+}
+
+.icc-submit {
+  @include w.welcome-cta-btn(linear-gradient(120deg, $icc-amber, $icc-line), $icc-blueprint);
+  margin: 1.3rem auto 0;
+  display: block;
+  font-size: 1.05rem;
+}
+
+.icc-thanks {
+  margin: 1.2rem 0 0;
+  text-align: center;
+  font-weight: 700;
+  color: $icc-amber;
+}
+
+/* --- recap --- */
+.icc-recap {
+  margin-top: 1.6rem;
+  padding: 1.2rem 1.4rem;
+  border-radius: v.$border-radius-lg;
+  background: rgba($icc-line, 0.14);
+  border-left: 5px solid $icc-blueprint;
+}
+
+.icc-recap-heading {
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: $icc-blueprint;
+}
+
+.icc-recap ul {
+  margin: 0.5rem 0 0;
+  padding-left: 1.2rem;
+  color: w.navy(0.78);
+  line-height: 1.55;
+}
+
+.icc-parent-note {
+  margin: 1.3rem 0 0;
+  text-align: center;
+  font-size: 0.9rem;
+  color: w.navy(0.6);
+}

@@ -1,0 +1,161 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- Discussion – Sequencing (ds) ---- */
+$ds-teal: #4ecdc4;
+$ds-navy: #2b2d42;
+$ds-green: #2f9e5f;
+$ds-red: #d1493c;
+$ds-gold: #f2ab2e;
+
+.ds {
+  max-width: 40rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+h1 {
+  @include m.playful-heading;
+  font-size: 2rem;
+  color: v.$color-navy-text;
+  margin-bottom: 0.5rem;
+}
+
+.ds-subtitle {
+  color: rgba($ds-navy, 0.6);
+  font-weight: 600;
+  font-size: 1.05rem;
+  margin-bottom: 1.5rem;
+}
+
+.ds-task {
+  background: rgba($ds-teal, 0.1);
+  border-radius: v.$border-radius;
+  border: 1px solid rgba($ds-teal, 0.25);
+  padding: 1.3rem clamp(0.8rem, 3vw, 1.4rem);
+}
+
+.ds-task.is-wrong { animation: ds-shake 0.5s ease; }
+.ds-task.is-solved { border-color: $ds-green; background: rgba($ds-green, 0.08); }
+
+.ds-instruction {
+  margin: 0 0 1rem;
+  font-weight: 800;
+  color: $ds-navy;
+}
+
+.ds-slots {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.ds-slot {
+  @include m.tappable;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.7rem 0.85rem;
+  border-radius: v.$border-radius;
+  border: 2px dashed rgba($ds-navy, 0.25);
+  background: rgba(255, 255, 255, 0.7);
+  font: inherit;
+  text-align: left;
+  color: rgba($ds-navy, 0.5);
+  min-height: 3rem;
+}
+
+.ds-slot.is-filled {
+  border-style: solid;
+  border-color: $ds-gold;
+  background: v.$color-white;
+  color: $ds-navy;
+  font-weight: 700;
+}
+
+.ds-task.is-solved .ds-slot.is-filled {
+  border-color: $ds-green;
+  background: rgba($ds-green, 0.1);
+}
+
+.ds-slot-num {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.7rem;
+  height: 1.7rem;
+  border-radius: 50%;
+  background: linear-gradient(135deg, $ds-teal, #6fd0b8);
+  color: v.$color-white;
+  font-weight: 800;
+  font-size: 0.85rem;
+}
+
+.ds-slot-text { line-height: 1.3; }
+
+.ds-tray {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1.1rem;
+}
+
+.ds-tile {
+  @include m.tappable;
+  padding: 0.6rem 0.9rem;
+  border-radius: v.$border-radius-pill;
+  border: 2px solid rgba($ds-teal, 0.5);
+  background: v.$color-white;
+  font: inherit;
+  font-weight: 700;
+  color: $ds-navy;
+
+  &:hover { border-color: $ds-teal; background: rgba($ds-teal, 0.08); }
+}
+
+.ds-checking {
+  width: 100%;
+  font-size: 0.85rem;
+  color: rgba($ds-navy, 0.5);
+}
+
+.ds-try-again {
+  margin: 0.9rem 0 0;
+  font-weight: 700;
+  color: $ds-red;
+}
+
+.ds-done {
+  margin: 1rem 0 0;
+  font-weight: 700;
+  color: $ds-green;
+}
+
+.ds-continue {
+  @include m.tappable;
+  margin: 1.2rem auto 0;
+  display: block;
+  padding: 0.85rem 2rem;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  background: linear-gradient(120deg, $ds-teal, #6fd0b8);
+  color: v.$color-white;
+  font-weight: 800;
+  font-size: 1.05rem;
+}
+
+@keyframes ds-shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-6px); }
+  40%, 80% { transform: translateX(6px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-task.is-wrong { animation: none; }
+}

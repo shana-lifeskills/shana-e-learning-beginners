@@ -1,0 +1,259 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Imagination Spark welcome (isw) — Creativity module, Week 1 ---- */
+$isw-tangerine: #ff8a3d;
+$isw-magenta: #e5498c;
+$isw-grape: #7a4bd0;
+$isw-ink: #4a2a6b;
+
+.isw {
+  max-width: 62rem;
+  margin: 0 auto;
+  padding: 2.5rem clamp(1rem, 4vw, 2.75rem) 2.75rem;
+  text-align: center;
+  border-radius: v.$border-radius-xl;
+  background: linear-gradient(165deg, #fff4dc 0%, #ffe1c4 45%, #ffd6ec 100%);
+}
+
+.isw-week {
+  @include w.welcome-pill(rgba($isw-grape, 0.14), $isw-grape);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.isw h1 {
+  @include m.playful-heading;
+  font-size: clamp(2.1rem, 6vw, 3.2rem);
+  line-height: 1.1;
+  margin: 1.2rem 0 0.7rem;
+}
+
+.isw-title-start { color: $isw-ink; }
+.isw-title-accent { color: $isw-magenta; }
+
+.isw-intro {
+  max-width: 36rem;
+  margin: 0 auto;
+  font-size: 1.1rem;
+  line-height: 1.55;
+  color: w.navy(0.74);
+}
+
+/* --- spark burst stage --- */
+.isw-stage {
+  position: relative;
+  width: clamp(17rem, 78vw, 24rem);
+  aspect-ratio: 1;
+  margin: 2.5rem auto 0;
+}
+
+.isw-ray {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 116%;
+  height: 116%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0 12deg,
+    rgba($isw-tangerine, 0.28) 12deg 24deg,
+    transparent 24deg 36deg
+  );
+  mask: radial-gradient(circle, transparent 30%, #000 31%);
+  animation: isw-spin 22s linear infinite;
+}
+
+.isw-ray--2 { animation-duration: 34s; animation-direction: reverse; opacity: 0.6; }
+.isw-ray--3 { animation-duration: 46s; opacity: 0.4; }
+
+.isw-bulb {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 32%;
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.15rem;
+  border-radius: 50%;
+  background: radial-gradient(circle at 32% 28%, #fff, #ffe59e);
+  box-shadow:
+    0 0 0 6px rgba(v.$color-white, 0.55),
+    0 0 34px rgba($isw-tangerine, 0.55),
+    0 14px 30px rgba($isw-grape, 0.25);
+  animation: isw-glow 3s ease-in-out infinite;
+}
+
+.isw-bulb-icon { font-size: clamp(1.6rem, 6vw, 2.2rem); }
+
+.isw-bulb-label {
+  font-weight: 800;
+  font-size: 0.52rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: $isw-grape;
+  line-height: 1.1;
+}
+
+.isw-spark {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  width: 6rem;
+  animation: isw-float 4s ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+}
+
+.isw-spark-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 50%;
+  background: v.$color-white;
+  font-size: 1.3rem;
+  box-shadow: 0 6px 16px rgba($isw-grape, 0.22);
+}
+
+.isw-spark-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: $isw-ink;
+  background: rgba(v.$color-white, 0.78);
+  border-radius: v.$border-radius-pill;
+  padding: 0.1rem 0.45rem;
+}
+
+.isw-caption {
+  max-width: 30rem;
+  margin: 1.25rem auto 0;
+  font-size: 1rem;
+  font-style: italic;
+  color: w.navy(0.66);
+}
+
+/* --- objective --- */
+.isw-objective {
+  @include w.soft-card;
+  max-width: 40rem;
+  margin: 1.6rem auto 0;
+  padding: 1.15rem 1.4rem;
+  text-align: left;
+
+  p {
+    margin: 0.3rem 0 0;
+    font-size: 1.02rem;
+    line-height: 1.5;
+    color: w.navy(0.8);
+  }
+}
+
+.isw-objective-label {
+  font-weight: 800;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $isw-magenta;
+}
+
+/* --- ways --- */
+.isw-ways-heading {
+  margin: 1.9rem 0 0.9rem;
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: $isw-ink;
+}
+
+.isw-ways {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
+  gap: 0.85rem;
+  max-width: 44rem;
+  margin: 0 auto;
+}
+
+.isw-way {
+  @include w.static-bouncy-card;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 1.1rem 0.9rem;
+  background: v.$color-white;
+  animation: isw-rise 0.5s ease both;
+  animation-delay: calc(var(--i, 0) * 90ms);
+}
+
+.isw-way-icon { font-size: 1.7rem; }
+
+.isw-way-title {
+  font-weight: 800;
+  color: $isw-ink;
+}
+
+.isw-way-text {
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: w.navy(0.66);
+}
+
+/* --- actions --- */
+.isw-start {
+  @include w.welcome-cta-btn(linear-gradient(120deg, $isw-tangerine, $isw-magenta));
+  margin: 2rem auto 0;
+  display: block;
+  font-size: 1.15rem;
+}
+
+.isw-review {
+  @include m.tappable;
+  display: block;
+  margin: 0.8rem auto 0;
+  background: none;
+  border: none;
+  font-weight: 700;
+  color: w.navy(0.62);
+}
+
+.isw-footer {
+  margin: 1.4rem 0 0;
+  font-size: 0.92rem;
+  color: w.navy(0.6);
+}
+
+@keyframes isw-spin {
+  from { transform: translate(-50%, -50%) rotate(0); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes isw-glow {
+  0%, 100% { box-shadow: 0 0 0 6px rgba(v.$color-white, 0.55), 0 0 26px rgba($isw-tangerine, 0.45), 0 14px 30px rgba($isw-grape, 0.25); }
+  50% { box-shadow: 0 0 0 6px rgba(v.$color-white, 0.55), 0 0 44px rgba($isw-tangerine, 0.7), 0 14px 30px rgba($isw-grape, 0.25); }
+}
+
+@keyframes isw-float {
+  0%, 100% { transform: translate(-50%, -50%); }
+  50% { transform: translate(-50%, calc(-50% - 8px)); }
+}
+
+@keyframes isw-rise {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .isw-ray { animation: none; }
+  .isw-bulb, .isw-spark, .isw-way { animation: none; opacity: 1; }
+}

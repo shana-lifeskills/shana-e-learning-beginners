@@ -1,0 +1,249 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Goal Path welcome (gpw) — Strategizing module, Week 4 ---- */
+$gpw-coral: #f2765b;
+$gpw-gold: #f6b53c;
+$gpw-sky: #4aa3d8;
+$gpw-ink: #3a2b46;
+
+.gpw {
+  max-width: 62rem;
+  margin: 0 auto;
+  padding: 2.5rem clamp(1rem, 4vw, 2.75rem) 2.75rem;
+  text-align: center;
+  border-radius: v.$border-radius-xl;
+  color: $gpw-ink;
+  background: linear-gradient(180deg, #ffe7cf 0%, #ffd9d0 35%, #d6ecf7 100%);
+}
+
+.gpw-week {
+  @include w.welcome-pill(rgba($gpw-sky, 0.16), #1f6f9c);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.gpw h1 {
+  @include m.playful-heading;
+  font-size: clamp(2.1rem, 6vw, 3.2rem);
+  line-height: 1.1;
+  margin: 1.2rem 0 0.7rem;
+}
+
+.gpw-title-start { color: $gpw-ink; }
+.gpw-title-accent { color: $gpw-coral; }
+
+.gpw-intro {
+  max-width: 36rem;
+  margin: 0 auto;
+  font-size: 1.1rem;
+  line-height: 1.55;
+  color: w.navy(0.72);
+}
+
+/* --- winding path --- */
+.gpw-path {
+  position: relative;
+  max-width: 26rem;
+  margin: 2.4rem auto 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0 1rem;
+}
+
+/* the dotted spine down the middle */
+.gpw-path::before {
+  content: '';
+  position: absolute;
+  top: 1.5rem;
+  bottom: 1.5rem;
+  left: 50%;
+  width: 0;
+  border-left: 4px dashed rgba($gpw-coral, 0.45);
+  transform: translateX(-50%);
+}
+
+.gpw-node {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  padding: 0.7rem 1.1rem;
+  border-radius: v.$border-radius-lg;
+  background: v.$color-white;
+  box-shadow: 0 8px 20px rgba($gpw-ink, 0.16);
+}
+
+.gpw-node-icon { font-size: 1.7rem; }
+
+.gpw-node-label {
+  font-weight: 800;
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: $gpw-ink;
+}
+
+.gpw-node--goal {
+  border: 2px solid $gpw-gold;
+  background: linear-gradient(160deg, #fff, #fff2d4);
+}
+
+.gpw-node--start { border: 2px solid rgba($gpw-sky, 0.6); }
+
+.gpw-stone {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: auto auto;
+  align-items: center;
+  gap: 0.15rem 0.55rem;
+  width: 62%;
+  padding: 0.6rem 0.8rem;
+  border-radius: v.$border-radius-lg;
+  background: v.$color-white;
+  box-shadow: 0 6px 16px rgba($gpw-ink, 0.14);
+  animation: gpw-drop 0.45s ease both;
+  animation-delay: calc(var(--n, 1) * 80ms);
+
+  &.is-right { justify-self: end; margin-right: -0.5rem; }
+  &:not(.is-right) { justify-self: start; margin-left: -0.5rem; }
+}
+
+.gpw-stone-num {
+  grid-row: 1 / span 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.8rem;
+  height: 1.8rem;
+  border-radius: 50%;
+  background: linear-gradient(135deg, $gpw-coral, $gpw-gold);
+  color: v.$color-white;
+  font-weight: 800;
+}
+
+.gpw-stone-icon { font-size: 1.1rem; }
+
+.gpw-stone-label {
+  grid-column: 2;
+  font-size: 0.82rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: $gpw-ink;
+}
+
+.gpw-caption {
+  max-width: 30rem;
+  margin: 1.5rem auto 0;
+  font-size: 1rem;
+  font-style: italic;
+  color: w.navy(0.66);
+}
+
+/* --- objective --- */
+.gpw-objective {
+  max-width: 40rem;
+  margin: 1.6rem auto 0;
+  padding: 1.15rem 1.4rem;
+  text-align: left;
+  border-radius: v.$border-radius-lg;
+  border-left: 4px solid $gpw-coral;
+  background: rgba(255, 255, 255, 0.7);
+
+  p {
+    margin: 0.3rem 0 0;
+    font-size: 1.02rem;
+    line-height: 1.5;
+    color: w.navy(0.8);
+  }
+}
+
+.gpw-objective-label {
+  font-weight: 800;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $gpw-coral;
+}
+
+/* --- tips --- */
+.gpw-tips-heading {
+  margin: 1.9rem 0 0.9rem;
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: $gpw-ink;
+}
+
+.gpw-tips {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
+  gap: 0.85rem;
+  max-width: 44rem;
+  margin: 0 auto;
+}
+
+.gpw-tip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 1.1rem 0.9rem;
+  border-radius: v.$border-radius-lg;
+  background: v.$color-white;
+  box-shadow: 0 4px 14px rgba($gpw-ink, 0.08);
+  animation: gpw-rise 0.5s ease both;
+  animation-delay: calc(var(--i, 0) * 90ms);
+}
+
+.gpw-tip-icon { font-size: 1.7rem; }
+.gpw-tip-title { font-weight: 800; color: $gpw-ink; }
+
+.gpw-tip-text {
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: w.navy(0.66);
+}
+
+/* --- actions --- */
+.gpw-start {
+  @include w.welcome-cta-btn(linear-gradient(120deg, $gpw-coral, $gpw-gold));
+  margin: 2rem auto 0;
+  display: block;
+  font-size: 1.15rem;
+}
+
+.gpw-review {
+  @include m.tappable;
+  display: block;
+  margin: 0.8rem auto 0;
+  background: none;
+  border: none;
+  font-weight: 700;
+  color: w.navy(0.62);
+}
+
+.gpw-footer {
+  margin: 1.4rem 0 0;
+  font-size: 0.92rem;
+  color: w.navy(0.6);
+}
+
+@keyframes gpw-drop {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes gpw-rise {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gpw-stone, .gpw-tip { animation: none; opacity: 1; }
+}

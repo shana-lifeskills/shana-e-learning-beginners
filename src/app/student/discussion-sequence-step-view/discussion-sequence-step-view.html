@@ -1,0 +1,41 @@
+<div class="ds">
+  <h1>🧠 {{ step().heading }}</h1>
+  @if (step().subtitle) { <p class="ds-subtitle">{{ step().subtitle }}</p> }
+
+  <div class="ds-task" [class.is-wrong]="wrong()" [class.is-solved]="solved()">
+    <p class="ds-instruction">{{ step().instruction }}</p>
+
+    <ol class="ds-slots">
+      @for (slot of slots(); track $index; let i = $index) {
+        <li>
+          <button type="button" class="ds-slot" [class.is-filled]="slot" [disabled]="!slot || solved()"
+            (click)="remove(i)">
+            <span class="ds-slot-num">{{ i + 1 }}</span>
+            <span class="ds-slot-text">{{ slot || 'Tap a step below' }}</span>
+          </button>
+        </li>
+      }
+    </ol>
+
+    @if (!solved()) {
+      <div class="ds-tray">
+        @for (item of tray(); track item) {
+          <button type="button" class="ds-tile" (click)="place(item)">{{ item }}</button>
+        }
+        @if (tray().length === 0 && !wrong()) {
+          <p class="ds-checking">Checking your order…</p>
+        }
+      </div>
+
+      @if (wrong()) {
+        <p class="ds-try-again">Not quite — give it another try! 💪</p>
+      }
+    } @else {
+      <p class="ds-done">✅ That's the right order — each step builds on the one before.</p>
+    }
+  </div>
+
+  @if (solved()) {
+    <button type="button" class="ds-continue" (click)="finish()">{{ step().continueLabel }}</button>
+  }
+</div>

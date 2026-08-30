@@ -7,6 +7,18 @@ import { RespectCircleWelcome } from '../respect-circle-welcome/respect-circle-w
 import { ThinkBeforePostWelcome } from '../think-before-post-welcome/think-before-post-welcome';
 import { DigitalMannersWelcome } from '../digital-manners-welcome/digital-manners-welcome';
 import { TechResponsiblyWelcome } from '../tech-responsibly-welcome/tech-responsibly-welcome';
+import { ImaginationSparkWelcome } from '../imagination-spark-welcome/imagination-spark-welcome';
+import { MindCinemaWelcome } from '../mind-cinema-welcome/mind-cinema-welcome';
+import { PuzzlePathsWelcome } from '../puzzle-paths-welcome/puzzle-paths-welcome';
+import { CreativeStaircaseWelcome } from '../creative-staircase-welcome/creative-staircase-welcome';
+import { StrategyBlueprintWelcome } from '../strategy-blueprint-welcome/strategy-blueprint-welcome';
+import { AttentionLensWelcome } from '../attention-lens-welcome/attention-lens-welcome';
+import { SolutionPathWelcome } from '../solution-path-welcome/solution-path-welcome';
+import { MemoryWorkshopWelcome } from '../memory-workshop-welcome/memory-workshop-welcome';
+import { SmartChoiceForecastWelcome } from '../smart-choice-forecast-welcome/smart-choice-forecast-welcome';
+import { PauseButtonWelcome } from '../pause-button-welcome/pause-button-welcome';
+import { StrategyKeyringWelcome } from '../strategy-keyring-welcome/strategy-keyring-welcome';
+import { GoalPathWelcome } from '../goal-path-welcome/goal-path-welcome';
 import { PrivacyVaultWelcome } from '../privacy-vault-welcome/privacy-vault-welcome';
 import { ScreenBalanceWelcome } from '../screen-balance-welcome/screen-balance-welcome';
 import { RespectRippleWelcome } from '../respect-ripple-welcome/respect-ripple-welcome';
@@ -53,6 +65,18 @@ import { ClassicWelcome } from '../classic-welcome/classic-welcome';
     ThinkBeforePostWelcome,
     DigitalMannersWelcome,
     TechResponsiblyWelcome,
+    ImaginationSparkWelcome,
+    MindCinemaWelcome,
+    PuzzlePathsWelcome,
+    CreativeStaircaseWelcome,
+    StrategyBlueprintWelcome,
+    AttentionLensWelcome,
+    SolutionPathWelcome,
+    MemoryWorkshopWelcome,
+    SmartChoiceForecastWelcome,
+    PauseButtonWelcome,
+    StrategyKeyringWelcome,
+    GoalPathWelcome,
     PrivacyVaultWelcome,
     ScreenBalanceWelcome,
     RespectRippleWelcome,

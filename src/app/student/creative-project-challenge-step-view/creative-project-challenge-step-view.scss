@@ -1,0 +1,239 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- My Creative Project final challenge (cpc) — Creativity module closer ---- */
+$cpc-plum: #3a1d4d;
+$cpc-gold: #e0a44a;
+$cpc-rose: #e0668c;
+$cpc-cream: #f7ecd8;
+
+.cpc {
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 1.5rem clamp(0.75rem, 3vw, 1.5rem) 2.5rem;
+}
+
+.cpc-head { text-align: center; }
+
+.cpc-badge {
+  @include w.welcome-pill(rgba($cpc-gold, 0.2), #a06a1c);
+  letter-spacing: 0.05em;
+}
+
+.cpc-head h2 {
+  @include m.playful-heading;
+  font-size: clamp(1.5rem, 4.5vw, 2rem);
+  margin: 0.9rem 0 0.4rem;
+  color: $cpc-plum;
+}
+
+.cpc-intro {
+  max-width: 30rem;
+  margin: 0 auto;
+  color: w.navy(0.72);
+  line-height: 1.5;
+}
+
+/* --- gallery wall --- */
+.cpc-wall {
+  margin-top: 1.5rem;
+  padding: 1.6rem clamp(1rem, 4vw, 1.7rem);
+  border-radius: v.$border-radius-lg;
+  color: $cpc-cream;
+  background:
+    radial-gradient(120% 60% at 50% 0%, rgba(255, 255, 255, 0.08), transparent 70%),
+    linear-gradient(165deg, #431f5b, #2c1540);
+  box-shadow: 0 20px 44px rgba($cpc-plum, 0.35);
+}
+
+.cpc-pick-heading,
+.cpc-steps-heading {
+  margin: 0 0 0.75rem;
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: $cpc-gold;
+}
+
+.cpc-steps-heading { margin-top: 1.6rem; }
+
+.cpc-frames {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(6.5rem, 1fr));
+  gap: 0.6rem;
+}
+
+.cpc-frame {
+  @include m.tappable;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.9rem 0.5rem;
+  border-radius: 0.3rem;
+  border: 3px solid rgba($cpc-gold, 0.4);
+  background: rgba(255, 255, 255, 0.05);
+  color: $cpc-cream;
+  font-weight: 700;
+  font-size: 0.82rem;
+  text-align: center;
+  transition: border-color 0.2s ease, background 0.2s ease, transform 0.15s ease;
+}
+
+.cpc-frame:hover:not(:disabled) { border-color: $cpc-gold; }
+
+.cpc-frame.is-chosen {
+  border-color: $cpc-gold;
+  background: rgba($cpc-gold, 0.2);
+  box-shadow: 0 0 0 3px rgba($cpc-gold, 0.3), 0 8px 20px rgba(0, 0, 0, 0.3);
+  transform: translateY(-3px);
+}
+
+.cpc-frame-icon { font-size: 1.7rem; }
+
+/* --- process steps --- */
+.cpc-steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.45rem;
+}
+
+.cpc-step {
+  @include m.tappable;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  border-radius: v.$border-radius-pill;
+  border: 1px solid rgba($cpc-gold, 0.35);
+  background: rgba(255, 255, 255, 0.05);
+  color: $cpc-cream;
+  font: inherit;
+  font-weight: 700;
+  text-align: left;
+}
+
+.cpc-step-box {
+  display: grid;
+  place-items: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
+.cpc-step.is-ticked {
+  border-color: $cpc-rose;
+  background: rgba($cpc-rose, 0.22);
+
+  .cpc-step-box { background: $cpc-rose; color: #fff; }
+  .cpc-step-label { text-decoration: line-through; opacity: 0.75; }
+}
+
+/* --- reflection plaque --- */
+.cpc-plaque {
+  margin-top: 1.6rem;
+  padding: 1.3rem 1.2rem;
+  border-radius: 0.4rem;
+  background: $cpc-cream;
+  color: $cpc-plum;
+  border: 2px solid $cpc-gold;
+}
+
+.cpc-plaque-heading {
+  display: block;
+  margin-bottom: 0.6rem;
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 1rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #a06a1c;
+}
+
+.cpc-field {
+  display: block;
+
+  & + .cpc-field { margin-top: 0.8rem; }
+}
+
+.cpc-field-label {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: $cpc-rose;
+}
+
+.cpc-field textarea {
+  width: 100%;
+  padding: 0.55rem 0.7rem;
+  border-radius: v.$border-radius-sm;
+  border: 1px solid rgba($cpc-plum, 0.25);
+  background: #fffdf8;
+  font: inherit;
+  color: $cpc-plum;
+  resize: vertical;
+
+  &:focus { outline: none; border-color: $cpc-gold; }
+}
+
+.cpc-submit {
+  @include w.welcome-cta-btn(linear-gradient(120deg, $cpc-gold, $cpc-rose), $cpc-plum);
+  margin: 1.4rem auto 0;
+  display: block;
+  font-size: 1.05rem;
+}
+
+.cpc-hint {
+  margin: 0.7rem 0 0;
+  text-align: center;
+  font-size: 0.85rem;
+  color: rgba(247, 236, 216, 0.7);
+}
+
+.cpc-thanks {
+  margin: 1.3rem 0 0;
+  text-align: center;
+  font-weight: 800;
+  color: $cpc-gold;
+}
+
+/* --- final recap --- */
+.cpc-recap {
+  margin-top: 1.6rem;
+  padding: 1.3rem 1.5rem;
+  border-radius: v.$border-radius-lg;
+  background: linear-gradient(165deg, rgba($cpc-gold, 0.16), rgba($cpc-rose, 0.16));
+  border-left: 5px solid $cpc-plum;
+}
+
+.cpc-recap-heading {
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: $cpc-plum;
+}
+
+.cpc-recap ul {
+  margin: 0.5rem 0 0;
+  padding-left: 1.2rem;
+  color: w.navy(0.8);
+  line-height: 1.6;
+}
+
+.cpc-parent-note {
+  margin: 1.3rem 0 0;
+  text-align: center;
+  font-size: 0.9rem;
+  color: w.navy(0.6);
+}

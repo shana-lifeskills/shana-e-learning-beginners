@@ -1,0 +1,241 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Put the Steps in Order warm-up (sow) — Strategizing module, Week 4 ---- */
+$sow-coral: #f2765b;
+$sow-gold: #f2ab2e;
+$sow-green: #2f9e5f;
+$sow-ink: #3a2b46;
+$sow-red: #d1493c;
+
+.sow {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 1.5rem clamp(0.75rem, 3vw, 1.5rem) 2.5rem;
+}
+
+.sow-head { text-align: center; }
+
+.sow-badge {
+  @include w.welcome-pill(rgba($sow-coral, 0.16), $sow-coral);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.sow h2 {
+  @include m.playful-heading;
+  font-size: clamp(1.7rem, 5vw, 2.4rem);
+  color: $sow-ink;
+  margin: 0.9rem 0 0.5rem;
+}
+
+.sow-intro {
+  max-width: 30rem;
+  margin: 0 auto;
+  color: w.navy(0.72);
+  line-height: 1.5;
+}
+
+.sow-progress {
+  display: flex;
+  justify-content: center;
+  gap: 0.4rem;
+  margin: 1.3rem 0 0.4rem;
+  padding: 0;
+  list-style: none;
+}
+
+.sow-dot {
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 50%;
+  background: rgba($sow-ink, 0.16);
+  transition: transform 0.2s ease;
+
+  &.is-current { background: $sow-gold; transform: scale(1.35); }
+  &.is-done { background: $sow-green; }
+}
+
+.sow-count {
+  display: block;
+  text-align: center;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: w.navy(0.5);
+}
+
+/* --- card --- */
+.sow-card {
+  margin-top: 1.4rem;
+  padding: 1.3rem clamp(0.9rem, 3vw, 1.5rem) 1.4rem;
+  border-radius: v.$border-radius-xl;
+  background: linear-gradient(180deg, #fff7ef, #fdeede);
+  box-shadow: 0 14px 32px rgba($sow-ink, 0.14);
+  border: 1px solid rgba($sow-coral, 0.18);
+}
+
+.sow-card.is-wrong { animation: sow-shake 0.5s ease; }
+.sow-card.is-solved { border-color: $sow-green; }
+
+.sow-step-tag {
+  display: block;
+  text-align: center;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $sow-coral;
+}
+
+.sow-goal {
+  margin: 0.3rem 0 1rem;
+  text-align: center;
+  font-size: 1.25rem;
+  color: $sow-ink;
+}
+
+/* --- goal ladder --- */
+.sow-ladder {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.sow-ladder-cap {
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.sow-ladder-cap--goal { color: $sow-green; }
+.sow-ladder-cap--start { color: w.navy(0.45); }
+
+.sow-rung {
+  @include m.tappable;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.75rem 0.9rem;
+  border-radius: v.$border-radius-lg;
+  border: 2px dashed rgba($sow-ink, 0.28);
+  background: rgba(255, 255, 255, 0.6);
+  font: inherit;
+  text-align: left;
+  color: w.navy(0.45);
+  min-height: 3.2rem;
+}
+
+.sow-rung.is-filled {
+  border-style: solid;
+  border-color: $sow-gold;
+  background: v.$color-white;
+  color: $sow-ink;
+  font-weight: 700;
+}
+
+.sow-card.is-solved .sow-rung.is-filled {
+  border-color: $sow-green;
+  background: rgba($sow-green, 0.1);
+}
+
+.sow-rung-num {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.7rem;
+  height: 1.7rem;
+  border-radius: 50%;
+  background: linear-gradient(135deg, $sow-coral, $sow-gold);
+  color: v.$color-white;
+  font-weight: 800;
+  font-size: 0.85rem;
+}
+
+.sow-rung-text { line-height: 1.3; }
+
+/* --- tray --- */
+.sow-tray {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1.1rem;
+}
+
+.sow-tile {
+  @include m.tappable;
+  padding: 0.65rem 0.9rem;
+  border-radius: v.$border-radius-pill;
+  border: 2px solid rgba($sow-coral, 0.4);
+  background: v.$color-white;
+  font: inherit;
+  font-weight: 700;
+  color: $sow-ink;
+
+  &:hover { border-color: $sow-coral; background: rgba($sow-coral, 0.08); }
+}
+
+.sow-checking {
+  width: 100%;
+  text-align: center;
+  font-size: 0.85rem;
+  color: w.navy(0.5);
+}
+
+.sow-nudge {
+  margin: 0.9rem 0 0;
+  text-align: center;
+  font-weight: 700;
+  color: $sow-red;
+}
+
+/* --- win --- */
+.sow-win {
+  text-align: center;
+  margin-top: 1.1rem;
+  animation: sow-rise 0.3s ease both;
+}
+
+.sow-win-badge { font-size: 2rem; }
+
+.sow-win-text {
+  margin: 0.2rem 0 0;
+  font-weight: 700;
+  color: $sow-green;
+}
+
+.sow-next {
+  @include w.welcome-cta-btn(linear-gradient(120deg, $sow-green, #6fd08a));
+  margin: 1rem auto 0;
+  display: block;
+}
+
+.sow-parent {
+  margin: 1.2rem auto 0;
+  max-width: 32rem;
+  text-align: center;
+  font-size: 0.88rem;
+  color: w.navy(0.58);
+}
+
+@keyframes sow-shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-6px); }
+  40%, 80% { transform: translateX(6px); }
+}
+
+@keyframes sow-rise {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sow-card.is-wrong, .sow-win { animation: none; }
+}

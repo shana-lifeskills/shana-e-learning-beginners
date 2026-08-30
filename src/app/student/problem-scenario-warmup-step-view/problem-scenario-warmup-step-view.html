@@ -1,0 +1,77 @@
+<div class="psw">
+  <header class="psw-head">
+    <span class="psw-kicker">Warm-Up Game</span>
+    <h2>{{ step().title }}</h2>
+    <p class="psw-intro">{{ step().intro }}</p>
+  </header>
+
+  <figure class="psw-panel">
+    <span class="psw-panel-tag">{{ step().scenarioLabel }}</span>
+    <svg class="psw-scene" viewBox="0 0 220 130" role="img" [attr.aria-label]="step().scenarioText">
+      <rect x="0" y="0" width="220" height="130" fill="#fff4c2" />
+      <rect x="0" y="104" width="220" height="26" fill="#e7b23c" />
+
+      <!-- test paper -->
+      <g transform="rotate(-4 110 66)">
+        <rect x="60" y="26" width="100" height="76" fill="#ffffff" stroke="#1d2440" stroke-width="3" />
+        <line x1="70" y1="42" x2="150" y2="42" stroke="#c9ccdd" stroke-width="3" />
+        <line x1="70" y1="56" x2="150" y2="56" stroke="#c9ccdd" stroke-width="3" />
+        <line x1="70" y1="70" x2="150" y2="70" stroke="#c9ccdd" stroke-width="3" />
+        <line x1="70" y1="84" x2="132" y2="84" stroke="#c9ccdd" stroke-width="3" />
+      </g>
+
+      <!-- snapped pencil -->
+      <g transform="rotate(24 118 92)">
+        <rect x="52" y="86" width="46" height="12" rx="2" fill="#f4a72c" stroke="#1d2440" stroke-width="3" />
+        <polygon points="52,86 44,92 52,98" fill="#f0ddc0" stroke="#1d2440" stroke-width="3" />
+        <rect x="112" y="86" width="40" height="12" rx="2" fill="#f4a72c" stroke="#1d2440" stroke-width="3" />
+        <rect x="150" y="86" width="8" height="12" fill="#ec6a5e" stroke="#1d2440" stroke-width="3" />
+        <polygon points="112,86 104,92 112,98" fill="#3a3a3a" stroke="#1d2440" stroke-width="3" />
+      </g>
+
+      <!-- SNAP! starburst -->
+      <polygon points="150,20 158,34 174,30 166,44 182,50 166,56 172,72 156,64 150,80 144,64 128,72 134,56 118,50 134,44 126,30 142,34"
+        fill="#ec2f3f" stroke="#1d2440" stroke-width="3" />
+      <text x="150" y="55" text-anchor="middle" font-size="15" font-weight="900" fill="#fff4c2">SNAP!</text>
+    </svg>
+    <figcaption>{{ step().scenarioText }}</figcaption>
+  </figure>
+
+  <div class="psw-meter" aria-hidden="true">
+    <span class="psw-meter-label">{{ step().progressLabel }} · {{ answeredCount() }}/{{ total() }}</span>
+    <div class="psw-meter-track"><span class="psw-meter-fill" [style.width.%]="meterPercent()"></span></div>
+  </div>
+
+  <ol class="psw-bubbles">
+    @for (q of step().questions; track q.id; let i = $index) {
+      <li class="psw-bubble" [class.is-done]="isAnswered(q.id)">
+        <div class="psw-bubble-top">
+          <span class="psw-bubble-num">{{ i + 1 }}</span>
+          <p class="psw-bubble-prompt">{{ q.prompt }}</p>
+        </div>
+        <textarea class="psw-bubble-input" rows="2" [placeholder]="q.placeholder"
+          [value]="answers()[q.id] || ''"
+          (input)="onInput(q.id, $any($event.target).value)"></textarea>
+        <button type="button" class="psw-bubble-reveal" [disabled]="!isAnswered(q.id)" (click)="toggleSample(q.id)">
+          {{ revealed().has(q.id) ? 'Hide sample answer' : step().sampleAnswerLabel }}
+        </button>
+        @if (revealed().has(q.id)) {
+          <p class="psw-bubble-sample"><span>Sample answer:</span> {{ q.sampleAnswer }}</p>
+        }
+      </li>
+    }
+  </ol>
+
+  @if (allAnswered() && step().feedbackText) {
+    <p class="psw-feedback">💡 {{ step().feedbackText }}</p>
+  }
+
+  <button type="button" class="psw-continue" [disabled]="!allAnswered()" (click)="advance()">
+    {{ step().completeLabel }} →
+  </button>
+  @if (!allAnswered()) {
+    <p class="psw-lock">Answer all {{ total() }} questions to continue.</p>
+  }
+
+  <p class="psw-parent">{{ step().parentNote }}</p>
+</div>

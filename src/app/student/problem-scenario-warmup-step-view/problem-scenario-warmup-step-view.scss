@@ -1,0 +1,283 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- "What Would You Do?" warm-up (psw) — Thinking module, Week 2 ---- */
+$psw-ink: #1d2440;
+$psw-paper: #fffdf4;
+$psw-pop: #ec2f3f;
+$psw-sun: #ffc93c;
+$psw-sky: #7bd0e8;
+
+.psw {
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: 1.75rem clamp(1rem, 3.5vw, 2.25rem) 2rem;
+  border-radius: v.$border-radius-lg;
+  color: $psw-ink;
+  background:
+    radial-gradient(rgba($psw-ink, 0.07) 1.4px, transparent 1.5px) 0 0 / 12px 12px,
+    $psw-paper;
+  border: 3px solid $psw-ink;
+  box-shadow: 8px 8px 0 rgba($psw-ink, 0.85);
+}
+
+.psw-head { text-align: center; }
+
+.psw-kicker {
+  display: inline-block;
+  padding: 0.25rem 0.9rem;
+  background: $psw-pop;
+  color: v.$color-white;
+  font-weight: 900;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  border: 2px solid $psw-ink;
+  transform: rotate(-2deg);
+}
+
+.psw h2 {
+  @include m.playful-heading;
+  font-size: clamp(1.7rem, 5vw, 2.4rem);
+  margin: 0.7rem 0 0.4rem;
+}
+
+.psw-intro {
+  max-width: 30rem;
+  margin: 0 auto;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: rgba($psw-ink, 0.82);
+}
+
+/* --- comic panel --- */
+.psw-panel {
+  position: relative;
+  margin: 1.5rem 0 0;
+  border: 3px solid $psw-ink;
+  background: v.$color-white;
+  box-shadow: 5px 5px 0 rgba($psw-ink, 0.85);
+}
+
+.psw-panel-tag {
+  position: absolute;
+  top: 0.6rem;
+  left: 0.6rem;
+  z-index: 1;
+  padding: 0.15rem 0.6rem;
+  background: $psw-sun;
+  border: 2px solid $psw-ink;
+  font-weight: 900;
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.psw-scene {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.psw-panel figcaption {
+  padding: 0.6rem 0.9rem;
+  border-top: 3px solid $psw-ink;
+  font-weight: 800;
+  font-size: 0.95rem;
+  text-align: center;
+  background: $psw-sun;
+}
+
+/* --- solved meter --- */
+.psw-meter { margin: 1.3rem 0 0.5rem; }
+
+.psw-meter-label {
+  font-weight: 900;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $psw-pop;
+}
+
+.psw-meter-track {
+  margin-top: 0.4rem;
+  height: 0.85rem;
+  border: 2px solid $psw-ink;
+  background: repeating-linear-gradient(45deg, rgba($psw-ink, 0.08) 0 6px, transparent 6px 12px);
+}
+
+.psw-meter-fill {
+  display: block;
+  height: 100%;
+  background: $psw-sky;
+  transition: width 0.3s ease;
+}
+
+/* --- speech bubbles --- */
+.psw-bubbles {
+  list-style: none;
+  margin: 1rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.psw-bubble {
+  position: relative;
+  padding: 0.95rem 1rem;
+  background: v.$color-white;
+  border: 3px solid $psw-ink;
+  border-radius: 1.1rem;
+  box-shadow: 4px 4px 0 rgba($psw-ink, 0.75);
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 2.1rem;
+    bottom: -0.9rem;
+    width: 0;
+    height: 0;
+    border: 0.55rem solid transparent;
+    border-top-color: $psw-ink;
+  }
+}
+
+.psw-bubble.is-done { background: rgba($psw-sky, 0.16); }
+
+.psw-bubble-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+}
+
+.psw-bubble-num {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.7rem;
+  height: 1.7rem;
+  border-radius: 50%;
+  background: $psw-pop;
+  color: v.$color-white;
+  border: 2px solid $psw-ink;
+  font-weight: 900;
+  font-size: 0.85rem;
+}
+
+.psw-bubble-prompt {
+  margin: 0.15rem 0 0;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.psw-bubble-input {
+  width: 100%;
+  margin-top: 0.6rem;
+  padding: 0.55rem 0.65rem;
+  font: inherit;
+  color: $psw-ink;
+  background: $psw-paper;
+  border: 2px solid $psw-ink;
+  border-radius: 0.5rem;
+  resize: vertical;
+
+  &:focus-visible {
+    outline: 3px solid $psw-sky;
+    outline-offset: 1px;
+  }
+}
+
+.psw-bubble-reveal {
+  @include m.tappable;
+  margin-top: 0.5rem;
+  padding: 0.2rem 0;
+  background: none;
+  border: none;
+  font-weight: 800;
+  font-size: 0.85rem;
+  color: $psw-pop;
+  text-decoration: underline;
+
+  &:disabled {
+    color: rgba($psw-ink, 0.4);
+    text-decoration: none;
+    cursor: not-allowed;
+  }
+}
+
+.psw-bubble-sample {
+  margin: 0.5rem 0 0;
+  padding: 0.5rem 0.7rem;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  background: rgba($psw-sun, 0.28);
+  border: 2px dashed $psw-ink;
+  border-radius: 0.5rem;
+
+  span {
+    font-weight: 900;
+    text-transform: uppercase;
+    font-size: 0.72rem;
+    letter-spacing: 0.05em;
+  }
+}
+
+/* --- feedback + actions --- */
+.psw-feedback {
+  margin: 1.3rem 0 0;
+  padding: 0.85rem 1rem;
+  text-align: center;
+  font-weight: 900;
+  background: $psw-sun;
+  border: 3px solid $psw-ink;
+  box-shadow: 4px 4px 0 rgba($psw-ink, 0.75);
+  animation: psw-pop 0.35s ease both;
+}
+
+.psw-continue {
+  @include m.tappable;
+  display: block;
+  margin: 1.3rem auto 0;
+  padding: 0.85rem 2.2rem;
+  font-weight: 900;
+  font-size: 1.05rem;
+  letter-spacing: 0.02em;
+  color: v.$color-white;
+  background: $psw-pop;
+  border: 3px solid $psw-ink;
+  box-shadow: 5px 5px 0 rgba($psw-ink, 0.85);
+
+  &:disabled {
+    background: rgba($psw-ink, 0.25);
+    box-shadow: none;
+    cursor: not-allowed;
+  }
+}
+
+.psw-lock {
+  margin: 0.5rem 0 0;
+  text-align: center;
+  font-size: 0.85rem;
+  color: rgba($psw-ink, 0.6);
+}
+
+.psw-parent {
+  margin: 1.3rem 0 0;
+  padding-top: 0.9rem;
+  border-top: 2px dashed rgba($psw-ink, 0.4);
+  text-align: center;
+  font-size: 0.85rem;
+  font-style: italic;
+  color: rgba($psw-ink, 0.6);
+}
+
+@keyframes psw-pop {
+  from { opacity: 0; transform: scale(0.9) rotate(-1deg); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .psw-feedback { animation: none; }
+}

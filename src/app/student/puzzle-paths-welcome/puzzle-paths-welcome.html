@@ -1,0 +1,67 @@
+<div class="ppw">
+  <span class="ppw-week">{{ ppw.weekLabel }}</span>
+
+  <h1>
+    <span class="ppw-title-start">{{ ppw.titleStart }}</span>
+    <span class="ppw-title-accent">{{ ppw.titleAccent }}</span>
+  </h1>
+  <p class="ppw-intro">{{ ppw.intro }}</p>
+
+  <div class="ppw-map" aria-hidden="true">
+    <span class="ppw-map-label">{{ ppw.mapLabel }}</span>
+
+    <div class="ppw-stage">
+      <svg viewBox="0 0 300 160" preserveAspectRatio="none" class="ppw-trails">
+        @for (placed of placedRoutes; track placed.route.label) {
+          <path [attr.d]="placed.d" class="ppw-trail" [style.--delay]="placed.delay + 's'" />
+        }
+      </svg>
+
+      <span class="ppw-node ppw-node--problem">
+        <span class="ppw-node-icon">{{ ppw.problemIcon }}</span>
+        <span class="ppw-node-label">{{ ppw.problemLabel }}</span>
+      </span>
+      <span class="ppw-node ppw-node--solved">
+        <span class="ppw-node-icon">{{ ppw.solvedIcon }}</span>
+        <span class="ppw-node-label">{{ ppw.solvedLabel }}</span>
+      </span>
+
+      @for (placed of placedRoutes; track placed.route.label) {
+        <span class="ppw-route" [style.left.%]="placed.labelX" [style.top.%]="placed.labelY"
+          [style.--delay]="placed.delay + 0.4 + 's'">
+          <span class="ppw-route-icon">{{ placed.route.icon }}</span>
+          <span class="ppw-route-label">{{ placed.route.label }}</span>
+        </span>
+      }
+    </div>
+  </div>
+
+  <div class="ppw-objective">
+    <span class="ppw-objective-label">{{ ppw.objectiveLabel }}</span>
+    <p>{{ ppw.objectiveText }}</p>
+  </div>
+
+  <p class="ppw-moves-heading">{{ ppw.movesHeading }}</p>
+  <div class="ppw-moves">
+    @for (move of ppw.moves; track move.title; let i = $index) {
+      <div class="ppw-move" [style.--i]="i">
+        <span class="ppw-move-icon" aria-hidden="true">{{ move.icon }}</span>
+        <span class="ppw-move-title">{{ move.title }}</span>
+        <span class="ppw-move-text">{{ move.text }}</span>
+      </div>
+    }
+  </div>
+
+  @if (isCompletedLessonWelcome()) {
+    @if (nextLesson(); as next) {
+      <button type="button" class="ppw-start" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+    } @else {
+      <button type="button" class="ppw-start" (click)="backToMap()">Back to My Modules →</button>
+    }
+    <button type="button" class="ppw-review" (click)="beginLesson()">↺ Review this lesson</button>
+  } @else {
+    <button type="button" class="ppw-start" (click)="beginLesson()">{{ ppw.startLabel }} →</button>
+  }
+
+  <p class="ppw-footer">{{ ppw.footerNote }}</p>
+</div>

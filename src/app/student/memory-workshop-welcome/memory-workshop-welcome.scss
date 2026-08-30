@@ -1,0 +1,293 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Memory Workshop welcome (mww) — Thinking module, Week 3 ---- */
+$mww-bg: #fdeee4;
+$mww-bg-2: #f8d9e0;
+$mww-ink: #5b2a44;
+$mww-rose: #e2557f;
+$mww-teal: #1f9aa6;
+
+.mww {
+  max-width: 62rem;
+  margin: 0 auto;
+  padding: 2.5rem clamp(1rem, 4vw, 2.75rem) 2.75rem;
+  text-align: center;
+  border-radius: v.$border-radius-xl;
+  color: $mww-ink;
+  background: linear-gradient(160deg, $mww-bg 0%, $mww-bg-2 100%);
+}
+
+.mww-week {
+  @include w.welcome-pill(rgba($mww-rose, 0.16), $mww-rose);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.mww h1 {
+  @include m.playful-heading;
+  font-size: clamp(2.1rem, 6vw, 3.2rem);
+  line-height: 1.1;
+  margin: 1.2rem 0 0.7rem;
+}
+
+.mww-title-start { color: $mww-ink; }
+.mww-title-accent { color: $mww-rose; }
+
+.mww-intro {
+  max-width: 36rem;
+  margin: 0 auto;
+  font-size: 1.1rem;
+  line-height: 1.55;
+  color: rgba($mww-ink, 0.78);
+}
+
+/* --- board --- */
+.mww-board {
+  position: relative;
+  max-width: 44rem;
+  margin: 2.25rem auto 0;
+  padding: 2.25rem 1.25rem 1.5rem;
+  border: 2px solid rgba($mww-rose, 0.3);
+  border-radius: v.$border-radius-lg;
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.mww-board-label {
+  position: absolute;
+  top: -0.85rem;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.2rem 0.9rem;
+  border-radius: v.$border-radius-pill;
+  background: $mww-rose;
+  color: v.$color-white;
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.mww-panels {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  gap: 1rem;
+}
+
+.mww-panel {
+  padding: 1rem 0.9rem 1.1rem;
+  border-radius: v.$border-radius-lg;
+  background: v.$color-white;
+  border: 1px solid rgba($mww-ink, 0.12);
+}
+
+.mww-panel-tag {
+  display: inline-block;
+  padding: 0.15rem 0.7rem;
+  border-radius: v.$border-radius-pill;
+  background: rgba($mww-teal, 0.14);
+  color: $mww-teal;
+  font-weight: 800;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* grouping panel */
+.mww-loose {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.35rem;
+  margin: 0.8rem 0 0.3rem;
+  font-size: 1.15rem;
+}
+
+.mww-arrows {
+  color: rgba($mww-ink, 0.4);
+  letter-spacing: 0.9rem;
+  font-weight: 800;
+}
+
+.mww-bins {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.3rem;
+}
+
+.mww-bin {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  width: 3.6rem;
+  padding: 0.5rem 0.3rem;
+  border-radius: v.$border-radius-sm;
+  background: rgba($mww-rose, 0.1);
+  border: 1px dashed rgba($mww-rose, 0.5);
+  animation: mww-drop 0.5s ease both;
+  animation-delay: calc(0.3s + var(--i, 0) * 0.15s);
+}
+
+.mww-bin-icon { font-size: 1.3rem; }
+
+.mww-bin-label {
+  font-size: 0.6rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: rgba($mww-ink, 0.75);
+}
+
+/* repetition panel */
+.mww-loop {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  min-height: 8rem;
+  margin: 0.6rem 0 0.3rem;
+}
+
+.mww-loop-ring {
+  position: absolute;
+  inset: 0.5rem 3rem;
+  border: 3px dashed rgba($mww-teal, 0.5);
+  border-radius: 50%;
+  animation: mww-spin 6s linear infinite;
+}
+
+.mww-echo {
+  font-weight: 800;
+  font-size: 1.05rem;
+  letter-spacing: 0.05em;
+  color: $mww-teal;
+  opacity: calc(1 - var(--e, 0) * 0.32);
+  transform: scale(calc(1 - var(--e, 0) * 0.08));
+}
+
+.mww-panel-caption {
+  margin: 0.6rem 0 0;
+  font-size: 0.82rem;
+  line-height: 1.4;
+  color: rgba($mww-ink, 0.68);
+}
+
+.mww-callout {
+  margin: 1.5rem auto 0;
+  max-width: 28rem;
+  font-size: 0.95rem;
+  font-style: italic;
+  color: rgba($mww-ink, 0.7);
+}
+
+/* --- objective --- */
+.mww-objective {
+  max-width: 40rem;
+  margin: 1.6rem auto 0;
+  padding: 1.15rem 1.4rem;
+  text-align: left;
+  border-radius: v.$border-radius-lg;
+  border-left: 4px solid $mww-teal;
+  background: rgba(255, 255, 255, 0.7);
+
+  p {
+    margin: 0.3rem 0 0;
+    font-size: 1.02rem;
+    line-height: 1.5;
+    color: rgba($mww-ink, 0.88);
+  }
+}
+
+.mww-objective-label {
+  font-weight: 800;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $mww-rose;
+}
+
+/* --- traits --- */
+.mww-traits-heading {
+  margin: 1.9rem 0 0.9rem;
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: $mww-ink;
+}
+
+.mww-traits {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
+  gap: 0.85rem;
+  max-width: 44rem;
+  margin: 0 auto;
+}
+
+.mww-trait {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 1.1rem 0.9rem;
+  border-radius: v.$border-radius-lg;
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba($mww-ink, 0.12);
+  animation: mww-rise 0.5s ease both;
+  animation-delay: calc(var(--i, 0) * 90ms);
+}
+
+.mww-trait-icon { font-size: 1.7rem; }
+.mww-trait-title { font-weight: 800; color: $mww-ink; }
+
+.mww-trait-text {
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: rgba($mww-ink, 0.68);
+}
+
+/* --- actions --- */
+.mww-start {
+  @include w.welcome-cta-btn(linear-gradient(120deg, $mww-rose, #f2884f), v.$color-white);
+  margin: 2rem auto 0;
+  display: block;
+  font-size: 1.15rem;
+}
+
+.mww-review {
+  @include m.tappable;
+  display: block;
+  margin: 0.8rem auto 0;
+  background: none;
+  border: none;
+  font-weight: 700;
+  color: rgba($mww-ink, 0.6);
+}
+
+.mww-footer {
+  margin: 1.4rem 0 0;
+  font-size: 0.92rem;
+  color: rgba($mww-ink, 0.55);
+}
+
+@keyframes mww-drop {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes mww-rise {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes mww-spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mww-bin, .mww-trait { animation: none; opacity: 1; }
+  .mww-loop-ring { animation: none; }
+}

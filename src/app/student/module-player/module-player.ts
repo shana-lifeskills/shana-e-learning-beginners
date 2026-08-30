@@ -78,6 +78,35 @@ import { DigitalResponsibilityTrackerStepView } from '../digital-responsibility-
 import { ThinkBeforeClickChallengeStepView } from '../think-before-click-challenge-step-view/think-before-click-challenge-step-view';
 import { PrivacyMatchStepView } from '../privacy-match-step-view/privacy-match-step-view';
 import { PrivacyProtectorChallengeStepView } from '../privacy-protector-challenge-step-view/privacy-protector-challenge-step-view';
+import { CreativeChoiceWarmupStepView } from '../creative-choice-warmup-step-view/creative-choice-warmup-step-view';
+import { SmartChoicesWarmupStepView } from '../smart-choices-warmup-step-view/smart-choices-warmup-step-view';
+import { FirstStrategyChallengeStepView } from '../first-strategy-challenge-step-view/first-strategy-challenge-step-view';
+import { ThinkItThroughWarmupStepView } from '../think-it-through-warmup-step-view/think-it-through-warmup-step-view';
+import { PausePlanChallengeStepView } from '../pause-plan-challenge-step-view/pause-plan-challenge-step-view';
+import { StrategicThinkerLinkStepView } from '../strategic-thinker-link-step-view/strategic-thinker-link-step-view';
+import { StrategyMatchWarmupStepView } from '../strategy-match-warmup-step-view/strategy-match-warmup-step-view';
+import { DiscussionMatchStepView } from '../discussion-match-step-view/discussion-match-step-view';
+import { DiscussionSequenceStepView } from '../discussion-sequence-step-view/discussion-sequence-step-view';
+import { StrategyDetectiveChallengeStepView } from '../strategy-detective-challenge-step-view/strategy-detective-challenge-step-view';
+import { TryAnotherPlanLinkStepView } from '../try-another-plan-link-step-view/try-another-plan-link-step-view';
+import { StepOrderWarmupStepView } from '../step-order-warmup-step-view/step-order-warmup-step-view';
+import { StrategyPlanChallengeStepView } from '../strategy-plan-challenge-step-view/strategy-plan-challenge-step-view';
+import { SmallStepsLinkStepView } from '../small-steps-link-step-view/small-steps-link-step-view';
+import { CreativeObjectChallengeStepView } from '../creative-object-challenge-step-view/creative-object-challenge-step-view';
+import { FactCheckWarmupStepView } from '../fact-check-warmup-step-view/fact-check-warmup-step-view';
+import { ImagineCreateChallengeStepView } from '../imagine-create-challenge-step-view/imagine-create-challenge-step-view';
+import { SolutionMatchGameStepView } from '../solution-match-game-step-view/solution-match-game-step-view';
+import { SolveItDifferentlyChallengeStepView } from '../solve-it-differently-challenge-step-view/solve-it-differently-challenge-step-view';
+import { SequenceOrderGameStepView } from '../sequence-order-game-step-view/sequence-order-game-step-view';
+import { CreativeProjectChallengeStepView } from '../creative-project-challenge-step-view/creative-project-challenge-step-view';
+import { SpotTheDifferenceWarmupStepView } from '../spot-the-difference-warmup-step-view/spot-the-difference-warmup-step-view';
+import { WeeklyAttentionChallengeStepView } from '../weekly-attention-challenge-step-view/weekly-attention-challenge-step-view';
+import { ProblemScenarioWarmupStepView } from '../problem-scenario-warmup-step-view/problem-scenario-warmup-step-view';
+import { ThinkingStepsChallengeStepView } from '../thinking-steps-challenge-step-view/thinking-steps-challenge-step-view';
+import { MemoryTestWarmupStepView } from '../memory-test-warmup-step-view/memory-test-warmup-step-view';
+import { MemoryGymChallengeStepView } from '../memory-gym-challenge-step-view/memory-gym-challenge-step-view';
+import { IfThenWarmupStepView } from '../if-then-warmup-step-view/if-then-warmup-step-view';
+import { SmartThinkerPlanChallengeStepView } from '../smart-thinker-plan-challenge-step-view/smart-thinker-plan-challenge-step-view';
 import { SmartGoalsLessonStepView } from '../smart-goals-lesson-step-view/smart-goals-lesson-step-view';
 import { SmartGoalBuilderStepView } from '../smart-goal-builder-step-view/smart-goal-builder-step-view';
 import { GoalChallengeTrackerStepView } from '../goal-challenge-tracker-step-view/goal-challenge-tracker-step-view';
@@ -190,6 +219,35 @@ type PlayerView = 'map' | 'lesson-welcome' | 'exercise' | 'module-complete';
     ThinkBeforeClickChallengeStepView,
     PrivacyMatchStepView,
     PrivacyProtectorChallengeStepView,
+    CreativeChoiceWarmupStepView,
+    SmartChoicesWarmupStepView,
+    FirstStrategyChallengeStepView,
+    ThinkItThroughWarmupStepView,
+    PausePlanChallengeStepView,
+    StrategicThinkerLinkStepView,
+    StrategyMatchWarmupStepView,
+    DiscussionMatchStepView,
+    DiscussionSequenceStepView,
+    StrategyDetectiveChallengeStepView,
+    TryAnotherPlanLinkStepView,
+    StepOrderWarmupStepView,
+    StrategyPlanChallengeStepView,
+    SmallStepsLinkStepView,
+    CreativeObjectChallengeStepView,
+    FactCheckWarmupStepView,
+    ImagineCreateChallengeStepView,
+    SolutionMatchGameStepView,
+    SolveItDifferentlyChallengeStepView,
+    SequenceOrderGameStepView,
+    CreativeProjectChallengeStepView,
+    SpotTheDifferenceWarmupStepView,
+    WeeklyAttentionChallengeStepView,
+    ProblemScenarioWarmupStepView,
+    ThinkingStepsChallengeStepView,
+    MemoryTestWarmupStepView,
+    MemoryGymChallengeStepView,
+    IfThenWarmupStepView,
+    SmartThinkerPlanChallengeStepView,
     SmartGoalsLessonStepView,
     SmartGoalBuilderStepView,
     GoalChallengeTrackerStepView,
@@ -334,6 +392,18 @@ export class ModulePlayer implements OnInit {
       case 'warmup-chat':
       case 'warmup-game':
       case 'etiquette-warmup-quiz':
+      case 'creative-choice-warmup':
+      case 'smart-choices-warmup':
+      case 'spot-the-difference-warmup':
+      case 'problem-scenario-warmup':
+      case 'memory-test-warmup':
+      case 'if-then-warmup':
+      case 'think-it-through-warmup':
+      case 'strategy-match-warmup':
+      case 'step-order-warmup':
+      case 'fact-check-warmup':
+      case 'solution-match-game':
+      case 'sequence-order-game':
       case 'responsibility-circuit':
       case 'screen-truth-check':
       case 'kind-words-fill-blank':
@@ -375,6 +445,8 @@ export class ModulePlayer implements OnInit {
       case 'reflection':
       case 'discussion-mcq':
       case 'discussion-quiz':
+      case 'discussion-match':
+      case 'discussion-sequence':
         return 'Discussion Points';
       case 'challenge':
       case 'challenge-checklist':
@@ -407,11 +479,26 @@ export class ModulePlayer implements OnInit {
       case 'think-before-click-challenge':
       case 'privacy-protector-challenge':
       case 'screen-time-plan-challenge':
+      case 'creative-object-challenge':
+      case 'imagine-create-challenge':
+      case 'solve-it-differently-challenge':
+      case 'first-strategy-challenge':
+      case 'pause-plan-challenge':
+      case 'strategy-detective-challenge':
+      case 'weekly-attention-challenge':
+      case 'thinking-steps-challenge':
+      case 'memory-gym-challenge':
         return 'Challenge of the Week';
       case 'digital-etiquette-tracker':
       case 'digital-responsibility-tracker':
+      case 'creative-project-challenge':
+      case 'strategy-plan-challenge':
+      case 'smart-thinker-plan-challenge':
         return 'Final Challenge';
       case 'confidence-link':
+      case 'strategic-thinker-link':
+      case 'try-another-plan-link':
+      case 'small-steps-link':
       case 'confidence-planner':
       case 'confidence-plan':
       case 'confidence-goal-tracker':

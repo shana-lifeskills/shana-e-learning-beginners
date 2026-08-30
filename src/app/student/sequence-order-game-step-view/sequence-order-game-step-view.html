@@ -1,0 +1,63 @@
+<div class="soq">
+  <header class="soq-head">
+    <span class="soq-badge">🎬 Put the Steps in Order</span>
+    <h2>{{ step().title }}</h2>
+    <p class="soq-intro">{{ step().intro }}</p>
+
+    <div class="soq-track" role="progressbar" [attr.aria-valuenow]="doneCount()" [attr.aria-valuemax]="total()">
+      <ul class="soq-dots">
+        @for (question of step().questions; track question.id; let i = $index) {
+          <li class="soq-dot" [class.is-done]="solved().has(question.id) || (justSolved() && i === activeIndex())"
+            [class.is-current]="i === activeIndex() && !justSolved()"></li>
+        }
+      </ul>
+      <span class="soq-track-label">{{ doneCount() }} / {{ total() }} in order</span>
+    </div>
+  </header>
+
+  @if (activeQuestion(); as question) {
+    <div class="soq-card" [class.is-wrong]="wrong()" [class.is-solved]="justSolved()">
+      <span class="soq-card-tag">Task {{ activeIndex() + 1 }} of {{ total() }}</span>
+      <h3 class="soq-card-title">{{ question.title }}</h3>
+
+      <ol class="soq-panels">
+        @for (slot of slots(); track $index; let i = $index) {
+          <li class="soq-panel" [class.is-filled]="slot">
+            <span class="soq-panel-num">{{ i + 1 }}</span>
+            @if (slot) {
+              <button type="button" class="soq-panel-card" [disabled]="justSolved()" (click)="clearSlot(i)">
+                {{ slot }}
+              </button>
+            } @else {
+              <span class="soq-panel-empty">…</span>
+            }
+          </li>
+        }
+      </ol>
+
+      @if (!justSolved()) {
+        <p class="soq-tray-label">Tap the steps in the right order:</p>
+        <ul class="soq-tray">
+          @for (card of tray(); track card) {
+            <li>
+              <button type="button" class="soq-chip" [disabled]="wrong()" (click)="place(card)">{{ card }}</button>
+            </li>
+          }
+        </ul>
+        @if (wrong()) {
+          <p class="soq-nudge">Not in order yet — think about what has to happen first.</p>
+        }
+      } @else {
+        <div class="soq-spark">
+          <span class="soq-spark-burst" aria-hidden="true">✅</span>
+          <p class="soq-spark-text">Perfect order!</p>
+          <button type="button" class="soq-next" (click)="advance()">
+            @if (allSolved()) { {{ step().completeLabel }} → } @else { Next task → }
+          </button>
+        </div>
+      }
+    </div>
+  }
+
+  <p class="soq-parent-note">👪 {{ step().parentNote }}</p>
+</div>

@@ -1,0 +1,284 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- My First Strategy challenge (fsc) — Strategizing module, Week 1 ---- */
+$fsc-violet: #6a4bd8;
+$fsc-lime: #3fae5a;
+$fsc-ink: #2c2350;
+$fsc-paper: #fbfaff;
+
+.fsc {
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 1.5rem clamp(0.75rem, 3vw, 1.5rem) 2.5rem;
+}
+
+.fsc-head { text-align: center; }
+
+.fsc-badge {
+  @include w.welcome-pill(rgba($fsc-violet, 0.14), $fsc-violet);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.fsc h2 {
+  @include m.playful-heading;
+  font-size: clamp(1.7rem, 5vw, 2.4rem);
+  color: $fsc-ink;
+  margin: 0.9rem 0 0.5rem;
+}
+
+.fsc-intro {
+  max-width: 32rem;
+  margin: 0 auto;
+  color: w.navy(0.72);
+  line-height: 1.5;
+}
+
+.fsc-section-label {
+  display: block;
+  margin-bottom: 0.6rem;
+  font-weight: 800;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $fsc-violet;
+}
+
+/* --- task pick --- */
+.fsc-pick { margin-top: 1.6rem; }
+
+.fsc-tasks {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.fsc-task {
+  @include m.tappable;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.8rem 1rem;
+  border-radius: v.$border-radius-lg;
+  background: v.$color-white;
+  border: 2px dashed rgba($fsc-violet, 0.35);
+  font: inherit;
+  color: $fsc-ink;
+  text-align: left;
+
+  &:hover { border-color: $fsc-violet; }
+
+  &.is-picked {
+    border-style: solid;
+    border-color: $fsc-violet;
+    background: rgba($fsc-violet, 0.09);
+  }
+}
+
+.fsc-task-icon { font-size: 1.4rem; }
+.fsc-task-label { flex: 1; font-weight: 700; }
+
+.fsc-task-pin {
+  opacity: 0;
+  transform: rotate(-15deg);
+  transition: opacity 0.15s ease;
+}
+
+.fsc-task.is-picked .fsc-task-pin { opacity: 1; }
+
+/* --- worked example --- */
+.fsc-example {
+  margin-top: 1.5rem;
+  padding: 1rem 1.1rem;
+  border-radius: v.$border-radius-lg;
+  background: rgba($fsc-lime, 0.1);
+  border-left: 4px solid $fsc-lime;
+
+  ol {
+    margin: 0.4rem 0 0;
+    padding-left: 1.2rem;
+    color: w.navy(0.78);
+    line-height: 1.6;
+  }
+}
+
+.fsc-example-label {
+  font-weight: 800;
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #2f7d43;
+}
+
+/* --- plan pad --- */
+.fsc-pad {
+  margin-top: 1.6rem;
+  padding: 1.2rem clamp(0.9rem, 3vw, 1.4rem) 1.4rem;
+  border-radius: v.$border-radius-xl;
+  background: $fsc-paper;
+  box-shadow: 0 14px 34px rgba($fsc-ink, 0.12);
+  border: 1px solid rgba($fsc-violet, 0.16);
+}
+
+.fsc-rungs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.7rem;
+}
+
+.fsc-rung {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.fsc-rung-num {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.1rem;
+  height: 2.1rem;
+  border-radius: 50%;
+  font-weight: 800;
+  background: linear-gradient(135deg, $fsc-violet, #9b7bff);
+  color: v.$color-white;
+}
+
+.fsc-rung-field { flex: 1; }
+
+.fsc-rung-label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: w.navy(0.55);
+}
+
+.fsc-rung-field input {
+  width: 100%;
+  margin-top: 0.15rem;
+  padding: 0.5rem 0.6rem;
+  border: none;
+  border-bottom: 2px solid rgba($fsc-violet, 0.3);
+  background: transparent;
+  font: inherit;
+  color: $fsc-ink;
+
+  &:focus {
+    outline: none;
+    border-bottom-color: $fsc-violet;
+  }
+}
+
+.fsc-submit {
+  @include w.welcome-cta-btn(linear-gradient(120deg, $fsc-violet, $fsc-lime));
+  margin: 1.3rem auto 0;
+  display: block;
+
+  &:disabled { opacity: 0.5; }
+}
+
+.fsc-hint {
+  margin: 0.6rem 0 0;
+  text-align: center;
+  font-size: 0.85rem;
+  color: w.navy(0.55);
+}
+
+/* --- stamped strategy card --- */
+.fsc-card {
+  position: relative;
+  margin-top: 1.6rem;
+  padding: 1.5rem 1.3rem 1.3rem;
+  border-radius: v.$border-radius-xl;
+  background: $fsc-paper;
+  border: 2px solid $fsc-lime;
+  box-shadow: 0 14px 34px rgba($fsc-ink, 0.14);
+  animation: fsc-stamp-in 0.4s ease both;
+}
+
+.fsc-stamp {
+  position: absolute;
+  top: -0.8rem;
+  right: 1rem;
+  padding: 0.2rem 0.7rem;
+  border-radius: v.$border-radius-pill;
+  background: $fsc-lime;
+  color: v.$color-white;
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transform: rotate(4deg);
+}
+
+.fsc-card-task {
+  margin: 0 0 0.6rem;
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: $fsc-ink;
+}
+
+.fsc-card-steps {
+  margin: 0;
+  padding-left: 1.3rem;
+  color: w.navy(0.8);
+  line-height: 1.6;
+
+  li { margin-bottom: 0.2rem; }
+}
+
+.fsc-saved {
+  margin: 0.9rem 0 0;
+  font-weight: 700;
+  color: #2f7d43;
+}
+
+/* --- recap --- */
+.fsc-recap {
+  margin-top: 1.4rem;
+  padding: 1.1rem 1.3rem;
+  border-radius: v.$border-radius-lg;
+  background: rgba($fsc-violet, 0.08);
+
+  ul {
+    margin: 0.4rem 0 0;
+    padding-left: 1.2rem;
+    color: w.navy(0.78);
+    line-height: 1.6;
+  }
+}
+
+.fsc-recap-heading {
+  font-weight: 800;
+  font-size: 0.82rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: $fsc-violet;
+}
+
+.fsc-finish {
+  @include w.welcome-cta-btn(linear-gradient(120deg, $fsc-lime, $fsc-violet));
+  margin: 1.4rem auto 0;
+  display: block;
+}
+
+.fsc-parent {
+  margin: 1.2rem auto 0;
+  max-width: 34rem;
+  text-align: center;
+  font-size: 0.88rem;
+  color: w.navy(0.58);
+}
+
+@keyframes fsc-stamp-in {
+  from { opacity: 0; transform: scale(0.94); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fsc-card { animation: none; }
+}

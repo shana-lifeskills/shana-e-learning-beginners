@@ -1,0 +1,80 @@
+<div class="stp" [class.stp--done]="phase() === 'done'">
+  <div class="stp-hero">
+    <span class="stp-medal" [attr.data-earned]="phase() === 'done'">
+      <span class="stp-medal-star">★</span>
+      <svg class="stp-medal-ring" viewBox="0 0 44 44" aria-hidden="true">
+        @for (label of step().dayLabels; track label; let i = $index) {
+          <circle class="stp-medal-seg" [class.is-on]="isDayDone(i)"
+            cx="22" cy="22" r="19"
+            [attr.stroke-dasharray]="(119.4 / step().dayLabels.length - 2) + ' ' + (119.4 - 119.4 / step().dayLabels.length + 2)"
+            [attr.stroke-dashoffset]="-(119.4 / step().dayLabels.length) * i" />
+        }
+      </svg>
+    </span>
+    <span class="stp-badge">{{ step().badge }}</span>
+    <h2>{{ step().title }}</h2>
+  </div>
+
+  <p class="stp-intro">{{ step().intro }}</p>
+
+  <section class="stp-block">
+    <h3>{{ step().pledgeHeading }}</h3>
+    <ul class="stp-pledge">
+      @for (q of step().pledgeQuestions; track q) {
+        <li>{{ q }}</li>
+      }
+    </ul>
+  </section>
+
+  <section class="stp-block">
+    <h3>{{ step().trackerHeading }}</h3>
+    <div class="stp-days">
+      @for (label of step().dayLabels; track label; let i = $index) {
+        <button type="button" class="stp-day" [class.is-done]="isDayDone(i)"
+          [disabled]="phase() === 'done'" (click)="toggleDay(i)" [attr.aria-pressed]="isDayDone(i)">
+          <span class="stp-day-check" aria-hidden="true">{{ isDayDone(i) ? '✓' : '' }}</span>
+          <span class="stp-day-label">{{ label }}</span>
+        </button>
+      }
+    </div>
+    <p class="stp-day-caption">{{ step().dayCheckLabel }}</p>
+  </section>
+
+  <section class="stp-block">
+    <h3>{{ step().exampleHeading }}</h3>
+    <label class="stp-field-label" for="stp-decision">{{ step().decisionLabel }}</label>
+    <textarea class="stp-input" id="stp-decision" rows="2" [placeholder]="step().decisionPlaceholder"
+      [value]="decision()" [disabled]="phase() === 'done'"
+      (input)="decision.set($any($event.target).value)"></textarea>
+
+    @for (q of step().exampleQuestions; track q.id) {
+      <label class="stp-field-label" [attr.for]="'stp-' + q.id">{{ q.prompt }}</label>
+      <textarea class="stp-input" [id]="'stp-' + q.id" rows="2" [placeholder]="q.placeholder"
+        [value]="answerFor(q.id)" [disabled]="phase() === 'done'"
+        (input)="setAnswer(q.id, $any($event.target).value)"></textarea>
+    }
+
+    <button type="button" class="stp-sample-toggle" (click)="toggleSample()">
+      {{ sampleShown() ? 'Hide sample' : step().sampleLabel }}
+    </button>
+    @if (sampleShown()) {
+      <p class="stp-sample"><span>Sample:</span> {{ step().sampleReflection }}</p>
+    }
+  </section>
+
+  @if (phase() === 'plan') {
+    <button type="button" class="stp-submit" [disabled]="!canSubmit()" (click)="submit()">
+      {{ step().submitLabel }}
+    </button>
+    @if (!canSubmit()) {
+      <p class="stp-lock">Mark all {{ step().dayLabels.length }} days and write your example to finish.</p>
+    }
+  } @else {
+    <p class="stp-saved">🌟 {{ step().savedText }}</p>
+    <button type="button" class="stp-submit" (click)="finish()">{{ step().finishLabel }}</button>
+  }
+
+  @if (step().parentNote; as note) {
+    <p class="stp-parent">{{ note }}</p>
+  }
+</div>

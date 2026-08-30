@@ -1,0 +1,247 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Idea to Creation staircase welcome (csw) — Creativity module, Week 4 ---- */
+$csw-violet: #7c3aed;
+$csw-pink: #ec4899;
+$csw-amber: #f9a03f;
+$csw-ink: #3b1d55;
+
+.csw {
+  max-width: 60rem;
+  margin: 0 auto;
+  padding: 2.6rem clamp(1rem, 4vw, 2.75rem);
+  text-align: center;
+  border-radius: v.$border-radius-xl;
+  color: $csw-ink;
+  background:
+    radial-gradient(70% 45% at 85% 0%, rgba($csw-amber, 0.28), transparent 70%),
+    linear-gradient(165deg, #f3e8ff 0%, #ffe4ec 55%, #ffedd9 100%);
+}
+
+.csw-week {
+  @include w.welcome-pill(rgba($csw-violet, 0.15), $csw-violet);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.csw h1 {
+  @include m.playful-heading;
+  font-size: clamp(2rem, 6vw, 3.1rem);
+  line-height: 1.1;
+  margin: 1.2rem 0 0.7rem;
+}
+
+.csw-title-start { color: $csw-ink; }
+.csw-title-accent { color: $csw-pink; }
+
+.csw-intro {
+  max-width: 36rem;
+  margin: 0 auto;
+  font-size: 1.1rem;
+  line-height: 1.55;
+  color: rgba(59, 29, 85, 0.72);
+}
+
+/* --- staircase --- */
+.csw-stair-wrap {
+  margin: 2.4rem auto 0;
+  padding: 1.2rem 1rem 0.6rem;
+  border-radius: v.$border-radius-lg;
+  background: rgba(255, 255, 255, 0.55);
+  overflow-x: auto;
+}
+
+.csw-stair-label {
+  display: block;
+  margin-bottom: 1rem;
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: $csw-violet;
+}
+
+.csw-stair {
+  list-style: none;
+  margin: 0 auto;
+  padding: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 0.35rem;
+  min-width: max-content;
+}
+
+.csw-rung {
+  --hue: calc(276 - var(--i) * 24);
+  position: relative;
+  flex: 0 0 auto;
+  width: 5.4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.7rem 0.4rem 0;
+  height: calc(4.5rem + var(--i) * 2.3rem);
+  border-radius: 0.7rem 0.7rem 0 0;
+  background: linear-gradient(180deg, hsl(var(--hue), 80%, 66%), hsl(var(--hue), 72%, 56%));
+  color: #fff;
+  box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.35);
+  animation: csw-grow 0.5s ease both;
+  animation-delay: calc(var(--i) * 110ms);
+  transform-origin: bottom;
+}
+
+.csw-rung--ground {
+  background: linear-gradient(180deg, #efe6ff, #d9c7f5);
+  color: $csw-ink;
+}
+
+.csw-rung--summit {
+  width: 6rem;
+  background: linear-gradient(180deg, #ffd76b, $csw-amber);
+  color: $csw-ink;
+}
+
+.csw-rung-num {
+  display: grid;
+  place-items: center;
+  width: 1.35rem;
+  height: 1.35rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  color: $csw-ink;
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 0.72rem;
+}
+
+.csw-rung-icon { font-size: 1.5rem; }
+
+.csw-flag {
+  font-size: 1.9rem;
+  animation: csw-wave 2.4s ease-in-out infinite;
+}
+
+.csw-rung-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+/* --- objective --- */
+.csw-objective {
+  background: rgba(255, 255, 255, 0.72);
+  border-left: 4px solid $csw-pink;
+  border-radius: v.$border-radius-lg;
+  padding: 1.3rem 1.6rem;
+  text-align: left;
+  max-width: 40rem;
+  margin: 2.3rem auto 1.6rem;
+
+  p {
+    margin: 0.4rem 0 0;
+    font-size: 1.1rem;
+    line-height: 1.5;
+    font-weight: 700;
+    color: $csw-ink;
+  }
+}
+
+.csw-objective-label {
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: $csw-violet;
+}
+
+/* --- ways --- */
+.csw-ways-heading {
+  margin: 0 0 0.85rem;
+  font-weight: 800;
+  color: rgba(59, 29, 85, 0.72);
+}
+
+.csw-ways {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: 0.8rem;
+  max-width: 44rem;
+  margin: 0 auto;
+}
+
+.csw-way {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 1.1rem 0.9rem;
+  border-radius: v.$border-radius-lg;
+  background: v.$color-white;
+  box-shadow: 0 12px 24px rgba($csw-violet, 0.12);
+  animation: csw-rise 0.5s ease both;
+  animation-delay: calc(var(--i, 0) * 90ms);
+}
+
+.csw-way-icon { font-size: 1.6rem; }
+
+.csw-way-title {
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: $csw-pink;
+}
+
+.csw-way-text {
+  font-size: 0.82rem;
+  line-height: 1.35;
+  color: rgba(59, 29, 85, 0.7);
+}
+
+/* --- actions --- */
+.csw-start {
+  @include w.welcome-cta-btn(linear-gradient(120deg, $csw-violet, $csw-pink));
+  margin: 2.3rem auto 0;
+  display: block;
+  font-size: 1.15rem;
+}
+
+.csw-review {
+  @include m.tappable;
+  display: block;
+  margin: 0.9rem auto 0;
+  background: none;
+  border: none;
+  font-weight: 700;
+  color: $csw-violet;
+}
+
+.csw-footer {
+  margin: 1.5rem 0 0;
+  font-size: 0.95rem;
+  color: rgba(59, 29, 85, 0.6);
+}
+
+@keyframes csw-grow {
+  from { opacity: 0; transform: scaleY(0.4); }
+  to { opacity: 1; transform: scaleY(1); }
+}
+
+@keyframes csw-wave {
+  0%, 100% { transform: rotate(-8deg); }
+  50% { transform: rotate(8deg); }
+}
+
+@keyframes csw-rise {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .csw-rung, .csw-way { animation: none; opacity: 1; }
+  .csw-flag { animation: none; }
+}

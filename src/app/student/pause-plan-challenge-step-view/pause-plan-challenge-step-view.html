@@ -1,0 +1,51 @@
+<div class="ppc">
+  <header class="ppc-head">
+    <span class="ppc-badge">🏆 {{ step().badge }}</span>
+    <h2>{{ step().title }}</h2>
+    <p class="ppc-intro">{{ step().intro }}</p>
+  </header>
+
+  <section class="ppc-rhythm">
+    <span class="ppc-cadence">{{ step().cadenceLabel }}</span>
+    <ol class="ppc-beats">
+      @for (beat of step().beats; track beat.label; let i = $index) {
+        <li class="ppc-beat" [style.--i]="i">
+          <span class="ppc-beat-icon" aria-hidden="true">{{ beat.icon }}</span>
+          <span class="ppc-beat-label">{{ beat.label }}</span>
+          @if (!$last) { <span class="ppc-beat-link" aria-hidden="true">↓</span> }
+        </li>
+      }
+    </ol>
+  </section>
+
+  @if (phase() === 'write') {
+    <section class="ppc-journal">
+      <label class="ppc-journal-label" for="ppc-entry">{{ step().journalLabel }}</label>
+      <textarea id="ppc-entry" rows="5" [placeholder]="step().journalPlaceholder"
+        [value]="entry()" (input)="setEntry($any($event.target).value)"></textarea>
+      <button type="button" class="ppc-submit" [disabled]="!canSubmit()" (click)="submit()">
+        {{ step().submitLabel }} →
+      </button>
+    </section>
+  } @else {
+    <section class="ppc-saved-card">
+      <span class="ppc-saved">✨ {{ step().savedText }}</span>
+      <p class="ppc-entry-echo">"{{ entry() }}"</p>
+    </section>
+
+    <section class="ppc-recap">
+      <span class="ppc-recap-heading">{{ step().recapHeading }}</span>
+      <ul>
+        @for (point of step().recapPoints; track point) {
+          <li>{{ point }}</li>
+        }
+      </ul>
+    </section>
+
+    <button type="button" class="ppc-finish" (click)="finish()">{{ step().finishLabel }} →</button>
+  }
+
+  @if (step().parentNote) {
+    <p class="ppc-parent">👪 {{ step().parentNote }}</p>
+  }
+</div>

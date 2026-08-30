@@ -1,0 +1,60 @@
+<div class="mcw">
+  <span class="mcw-week">{{ mcw.weekLabel }}</span>
+
+  <h1>
+    <span class="mcw-title-start">{{ mcw.titleStart }}</span>
+    <span class="mcw-title-accent">{{ mcw.titleAccent }}</span>
+  </h1>
+  <p class="mcw-intro">{{ mcw.intro }}</p>
+
+  <div class="mcw-screen" aria-hidden="true">
+    <span class="mcw-screen-label">{{ mcw.screenLabel }}</span>
+
+    <div class="mcw-perf mcw-perf--top"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+
+    <div class="mcw-window">
+      <div class="mcw-reel">
+        @for (frame of reel; track $index) {
+          <div class="mcw-frame">
+            <span class="mcw-frame-icon">{{ frame.icon }}</span>
+            <span class="mcw-frame-caption">{{ frame.caption }}</span>
+          </div>
+        }
+      </div>
+      <span class="mcw-glow"></span>
+    </div>
+
+    <div class="mcw-perf mcw-perf--bottom"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  </div>
+
+  <p class="mcw-marquee-note">{{ mcw.marqueeNote }}</p>
+
+  <div class="mcw-objective">
+    <span class="mcw-objective-label">{{ mcw.objectiveLabel }}</span>
+    <p>{{ mcw.objectiveText }}</p>
+  </div>
+
+  <p class="mcw-powers-heading">{{ mcw.powersHeading }}</p>
+  <div class="mcw-powers">
+    @for (power of mcw.powers; track power.title; let i = $index) {
+      <div class="mcw-power" [style.--i]="i">
+        <span class="mcw-power-icon" aria-hidden="true">{{ power.icon }}</span>
+        <span class="mcw-power-title">{{ power.title }}</span>
+        <span class="mcw-power-text">{{ power.text }}</span>
+      </div>
+    }
+  </div>
+
+  @if (isCompletedLessonWelcome()) {
+    @if (nextLesson(); as next) {
+      <button type="button" class="mcw-start" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+    } @else {
+      <button type="button" class="mcw-start" (click)="backToMap()">Back to My Modules →</button>
+    }
+    <button type="button" class="mcw-review" (click)="beginLesson()">↺ Review this lesson</button>
+  } @else {
+    <button type="button" class="mcw-start" (click)="beginLesson()">{{ mcw.startLabel }} →</button>
+  }
+
+  <p class="mcw-footer">{{ mcw.footerNote }}</p>
+</div>

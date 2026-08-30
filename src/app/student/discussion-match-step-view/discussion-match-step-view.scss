@@ -1,0 +1,140 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- Discussion – Matching (dm) ---- */
+$dm-teal: #4ecdc4;
+$dm-navy: #2b2d42;
+$dm-green: #2f9e5f;
+$dm-red: #d1493c;
+
+.dm {
+  max-width: 40rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+h1 {
+  @include m.playful-heading;
+  font-size: 2rem;
+  color: v.$color-navy-text;
+  margin-bottom: 0.5rem;
+}
+
+.dm-subtitle {
+  color: rgba($dm-navy, 0.6);
+  font-weight: 600;
+  font-size: 1.05rem;
+  margin-bottom: 1rem;
+}
+
+.dm-count {
+  font-weight: 800;
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba($dm-navy, 0.5);
+  margin-bottom: 1rem;
+}
+
+.dm-board {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem 1rem;
+  text-align: left;
+}
+
+.dm-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.dm-col-head {
+  text-align: center;
+  font-weight: 800;
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba($dm-navy, 0.55);
+}
+
+.dm-chip {
+  @include m.tappable;
+  padding: 0.8rem 0.9rem;
+  border-radius: v.$border-radius;
+  border: 2px solid rgba($dm-navy, 0.14);
+  background: v.$color-white;
+  font: inherit;
+  font-weight: 600;
+  color: $dm-navy;
+  text-align: left;
+  min-height: 3.4rem;
+}
+
+.dm-action[data-state='picked'] {
+  border-color: $dm-teal;
+  background: rgba($dm-teal, 0.16);
+  box-shadow: 0 0 0 3px rgba($dm-teal, 0.25);
+}
+
+.dm-action[data-state='matched'],
+.dm-result.is-matched {
+  border-color: $dm-green;
+  background: rgba($dm-green, 0.12);
+  color: rgba($dm-navy, 0.6);
+}
+
+.dm-result:hover { border-color: $dm-teal; }
+
+.dm-result.is-rejected {
+  border-color: $dm-red;
+  background: rgba($dm-red, 0.1);
+  animation: dm-shake 0.4s ease;
+}
+
+.dm-hint {
+  margin: 1rem 0 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: rgba($dm-navy, 0.5);
+}
+
+.dm-try-again {
+  margin: 1rem 0 0;
+  font-weight: 700;
+  color: $dm-red;
+}
+
+.dm-done {
+  margin: 1.4rem 0 0;
+  font-weight: 700;
+  color: $dm-green;
+}
+
+.dm-continue {
+  @include m.tappable;
+  margin: 0.8rem auto 0;
+  display: block;
+  padding: 0.85rem 2rem;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  background: linear-gradient(120deg, $dm-teal, #6fd0b8);
+  color: v.$color-white;
+  font-weight: 800;
+  font-size: 1.05rem;
+}
+
+@keyframes dm-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+@media (max-width: 32rem) {
+  .dm-board { grid-template-columns: 1fr; }
+  .dm-col:last-child { margin-top: 0.4rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dm-result.is-rejected { animation: none; }
+}

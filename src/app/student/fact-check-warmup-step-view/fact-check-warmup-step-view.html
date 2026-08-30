@@ -1,0 +1,52 @@
+<div class="fcw">
+  <header class="fcw-head">
+    <span class="fcw-badge">🔬 Fact Check Lab</span>
+    <h2>{{ step().title }}</h2>
+    <p class="fcw-intro">{{ step().intro }}</p>
+
+    <div class="fcw-track" role="progressbar" [attr.aria-valuenow]="solvedCount()" [attr.aria-valuemax]="total()">
+      <ul class="fcw-stamps">
+        @for (statement of step().statements; track statement.id; let i = $index) {
+          <li class="fcw-stamp-pip" [class.is-done]="solved().has(statement.id)"
+            [class.is-current]="i === activeIndex() && !solved().has(statement.id)">
+            @if (solved().has(statement.id)) { ✓ } @else { {{ i + 1 }} }
+          </li>
+        }
+      </ul>
+      <span class="fcw-track-label">{{ solvedCount() }} / {{ total() }} checked</span>
+    </div>
+  </header>
+
+  @if (activeStatement(); as statement) {
+    <div class="fcw-slip" [class.is-buzzing]="missed()" [class.is-revealed]="revealed()">
+      <span class="fcw-slip-tag">Statement {{ activeIndex() + 1 }} of {{ total() }}</span>
+      <p class="fcw-claim">"{{ statement.text }}"</p>
+
+      @if (revealed()) {
+        <div class="fcw-verdict" [class.is-true]="statement.isTrue" [class.is-false]="!statement.isTrue">
+          <span class="fcw-verdict-stamp">{{ statement.isTrue ? step().trueLabel : step().falseLabel }}</span>
+          <p class="fcw-because">{{ statement.because }}</p>
+          <button type="button" class="fcw-next" (click)="advance()">
+            @if (allSolved()) { {{ step().completeLabel }} → } @else { Next statement → }
+          </button>
+        </div>
+      } @else {
+        <div class="fcw-buttons">
+          <button type="button" class="fcw-btn fcw-btn--true" [class.is-missed]="missed() === 'true'"
+            (click)="stamp(true)">
+            <span class="fcw-btn-mark">✓</span>{{ step().trueLabel }}
+          </button>
+          <button type="button" class="fcw-btn fcw-btn--false" [class.is-missed]="missed() === 'false'"
+            (click)="stamp(false)">
+            <span class="fcw-btn-mark">✗</span>{{ step().falseLabel }}
+          </button>
+        </div>
+        @if (missed()) {
+          <p class="fcw-nudge">Not quite — read it once more and pick the other stamp.</p>
+        }
+      }
+    </div>
+  }
+
+  <p class="fcw-parent-note">👪 {{ step().parentNote }}</p>
+</div>

@@ -1,0 +1,98 @@
+<div class="std">
+  <header class="std-head">
+    <span class="std-kicker">Warm-Up Game</span>
+    <h2>{{ step().title }}</h2>
+    <p class="std-intro">{{ step().intro }}</p>
+  </header>
+
+  <div class="std-frames">
+    @for (pic of ['A', 'B']; track pic) {
+      <figure class="std-frame" [class.std-frame--b]="pic === 'B'">
+        <svg viewBox="0 0 200 160" class="std-scene" role="img"
+          [attr.aria-label]="pic === 'A' ? step().pictureALabel : step().pictureBLabel">
+          <rect x="0" y="0" width="200" height="160" fill="#eaf6ff" />
+          <rect x="0" y="128" width="200" height="32" fill="#cdeccb" />
+
+          <!-- sun -->
+          <circle cx="30" cy="28" r="14" fill="#ffd24a" stroke="#e8a900" stroke-width="2" />
+
+          <!-- bird (Picture A only) -->
+          @if (pic === 'A') {
+            <path d="M138 34 q6 -7 12 0 q6 -7 12 0" fill="none" stroke="#555" stroke-width="2.4" stroke-linecap="round" />
+          }
+
+          <!-- house -->
+          <rect x="120" y="74" width="56" height="54" fill="#f4c98a" stroke="#b07d3c" stroke-width="2" />
+          <polygon points="114,74 148,46 182,74" fill="#c9603f" stroke="#8f3f28" stroke-width="2" />
+          <rect x="140" y="100" width="16" height="28" fill="#7a4a25" />
+
+          <!-- tree -->
+          <rect x="64" y="96" width="10" height="34" fill="#8a5a2b" />
+          <circle cx="69" cy="84" r="27" fill="#5aa15a" stroke="#3d7d3d" stroke-width="2" />
+          <circle cx="58" cy="78" r="4.5" fill="#e23b3b" />
+          <circle cx="80" cy="80" r="4.5" fill="#e23b3b" />
+          @if (pic === 'A') {
+            <circle cx="69" cy="95" r="4.5" fill="#e23b3b" />
+          }
+
+          <!-- boy -->
+          <circle cx="40" cy="104" r="8" fill="#ffe0bd" stroke="#d9a679" stroke-width="1.5" />
+          <rect x="30" y="112" width="20" height="20" rx="3" stroke-width="1.5"
+            [attr.fill]="pic === 'A' ? '#3f8bd8' : '#5bbf6a'"
+            [attr.stroke]="pic === 'A' ? '#2c5f97' : '#3c8a4c'" />
+          <rect x="32" y="130" width="6" height="12" fill="#39434f" />
+          <rect x="42" y="130" width="6" height="12" fill="#39434f" />
+
+          <!-- ball (Picture A only) -->
+          @if (pic === 'A') {
+            <circle cx="98" cy="140" r="8" fill="#ff7a3d" stroke="#c8521f" stroke-width="2" />
+          }
+        </svg>
+        <figcaption>{{ pic === 'A' ? step().pictureALabel : step().pictureBLabel }}</figcaption>
+      </figure>
+    }
+  </div>
+
+  <div class="std-trail" aria-hidden="true">
+    <span class="std-trail-label">{{ step().progressLabel }} · {{ answeredCount() }}/{{ total() }}</span>
+    <div class="std-trail-track">
+      @for (q of step().questions; track q.id; let i = $index) {
+        <span class="std-dot" [class.is-found]="isAnswered(q.id)">{{ i < answeredCount() ? '🔍' : '' }}</span>
+      }
+    </div>
+    <p class="std-hint">There are {{ step().differenceCount }} differences to find.</p>
+  </div>
+
+  <ol class="std-questions">
+    @for (q of step().questions; track q.id; let i = $index) {
+      <li class="std-q" [class.is-done]="isAnswered(q.id)">
+        <div class="std-q-head">
+          <span class="std-q-num">{{ i + 1 }}</span>
+          <span class="std-q-prompt">{{ q.prompt }}</span>
+        </div>
+        <textarea class="std-q-input" rows="2" [placeholder]="q.placeholder"
+          [value]="answers()[q.id] || ''"
+          (input)="onInput(q.id, $any($event.target).value)"></textarea>
+        <button type="button" class="std-q-reveal" [disabled]="!isAnswered(q.id)" (click)="toggleSample(q.id)">
+          {{ revealed().has(q.id) ? 'Hide sample answer' : step().sampleAnswerLabel }}
+        </button>
+        @if (revealed().has(q.id)) {
+          <p class="std-q-sample"><span>Sample answer:</span> {{ q.sampleAnswer }}</p>
+        }
+      </li>
+    }
+  </ol>
+
+  @if (allAnswered()) {
+    <p class="std-feedback">💡 {{ step().feedbackText }}</p>
+  }
+
+  <button type="button" class="std-continue" [disabled]="!allAnswered()" (click)="advance()">
+    {{ step().completeLabel }} →
+  </button>
+  @if (!allAnswered()) {
+    <p class="std-lock">Answer all {{ total() }} questions to continue.</p>
+  }
+
+  <p class="std-parent">{{ step().parentNote }}</p>
+</div>

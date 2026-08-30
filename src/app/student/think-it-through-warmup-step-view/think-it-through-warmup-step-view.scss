@@ -1,0 +1,224 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Think It Through true/false warm-up (titw) — Strategizing module, Week 2 ---- */
+$titw-green: #2fae5b;
+$titw-red: #e0473c;
+$titw-amber: #f5b921;
+$titw-ink: #23304a;
+$titw-case: #2c2f3a;
+
+.titw {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 1.5rem clamp(0.75rem, 3vw, 1.5rem) 2.5rem;
+}
+
+.titw-head { text-align: center; }
+
+.titw-badge {
+  @include w.welcome-pill(rgba($titw-ink, 0.1), $titw-ink);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.titw h2 {
+  @include m.playful-heading;
+  font-size: clamp(1.7rem, 5vw, 2.4rem);
+  color: $titw-ink;
+  margin: 0.9rem 0 0.5rem;
+}
+
+.titw-intro {
+  max-width: 30rem;
+  margin: 0 auto;
+  color: w.navy(0.72);
+  line-height: 1.5;
+}
+
+.titw-progress {
+  display: flex;
+  justify-content: center;
+  gap: 0.4rem;
+  margin: 1.3rem 0 0.4rem;
+  padding: 0;
+  list-style: none;
+}
+
+.titw-dot {
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 50%;
+  background: rgba($titw-ink, 0.16);
+  transition: transform 0.2s ease;
+
+  &.is-current { background: $titw-amber; transform: scale(1.35); }
+  &.is-done { background: $titw-green; }
+}
+
+.titw-count {
+  display: block;
+  text-align: center;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: w.navy(0.5);
+}
+
+/* --- panel: stoplight + card --- */
+.titw-panel {
+  display: flex;
+  gap: 1rem;
+  align-items: stretch;
+  margin-top: 1.5rem;
+}
+
+.titw-light {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 0.7rem;
+  border-radius: 1.1rem;
+  background: linear-gradient(180deg, #363a47, $titw-case);
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.06), 0 10px 24px rgba(0, 0, 0, 0.22);
+}
+
+.titw-lamp {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.45);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.titw-lamp--red[data-on='on'] {
+  background: $titw-red;
+  box-shadow: 0 0 16px 3px rgba($titw-red, 0.7);
+}
+
+.titw-lamp--amber[data-on='on'] {
+  background: $titw-amber;
+  box-shadow: 0 0 16px 3px rgba($titw-amber, 0.7);
+  animation: titw-blink 0.5s steps(1) 3;
+}
+
+.titw-lamp--green[data-on='on'] {
+  background: $titw-green;
+  box-shadow: 0 0 16px 3px rgba($titw-green, 0.7);
+}
+
+.titw-card {
+  flex: 1;
+  padding: 1.2rem clamp(0.9rem, 3vw, 1.4rem) 1.3rem;
+  border-radius: v.$border-radius-xl;
+  background: v.$color-white;
+  box-shadow: 0 12px 30px rgba($titw-ink, 0.12);
+  border: 1px solid rgba($titw-ink, 0.1);
+}
+
+.titw-step-tag {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: w.navy(0.45);
+}
+
+.titw-statement {
+  margin: 0.5rem 0 1rem;
+  font-weight: 700;
+  font-size: 1.12rem;
+  line-height: 1.4;
+  color: $titw-ink;
+}
+
+.titw-choices {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+}
+
+.titw-choice {
+  @include m.tappable;
+  padding: 0.8rem 0.6rem;
+  border-radius: v.$border-radius-lg;
+  font: inherit;
+  font-weight: 800;
+  border: 2px solid transparent;
+  color: v.$color-white;
+}
+
+.titw-choice--true { background: $titw-green; }
+.titw-choice--false { background: $titw-red; }
+
+.titw-choice.is-missed {
+  animation: titw-shake 0.35s ease;
+  outline: 3px solid $titw-amber;
+}
+
+.titw-nudge {
+  margin: 0.8rem 0 0;
+  text-align: center;
+  font-weight: 700;
+  color: #b3860a;
+}
+
+/* --- reveal --- */
+.titw-why { animation: titw-rise 0.3s ease both; }
+
+.titw-why-verdict {
+  margin: 0 0 0.3rem;
+  font-weight: 800;
+  color: $titw-green;
+}
+
+.titw-why-text {
+  margin: 0;
+  color: w.navy(0.75);
+  line-height: 1.5;
+}
+
+.titw-next {
+  @include w.welcome-cta-btn(linear-gradient(120deg, $titw-green, #6fd08a));
+  margin: 1.1rem auto 0;
+  display: block;
+}
+
+.titw-parent {
+  margin: 1.2rem auto 0;
+  max-width: 32rem;
+  text-align: center;
+  font-size: 0.88rem;
+  color: w.navy(0.58);
+}
+
+@keyframes titw-blink {
+  0% { opacity: 1; }
+  50% { opacity: 0.25; }
+  100% { opacity: 1; }
+}
+
+@keyframes titw-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+@keyframes titw-rise {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (max-width: 30rem) {
+  .titw-panel { flex-direction: column; align-items: center; }
+  .titw-light { flex-direction: row; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .titw-lamp--amber[data-on='on'] { animation: none; }
+  .titw-choice.is-missed, .titw-why { animation: none; }
+}

@@ -1,0 +1,58 @@
+<div class="itw">
+  <header class="itw-head">
+    <span class="itw-kicker">Warm-Up Game</span>
+    <h2>{{ step().title }}</h2>
+    <p class="itw-intro">{{ step().intro }}</p>
+  </header>
+
+  <div class="itw-chain" aria-hidden="true">
+    <span class="itw-chain-label">{{ step().progressLabel }} · {{ answeredCount() }}/{{ total() }}</span>
+    <div class="itw-chain-track">
+      @for (q of step().questions; track q.id; let i = $index) {
+        <span class="itw-domino" [class.is-down]="i < answeredCount()"></span>
+      }
+    </div>
+  </div>
+
+  <ol class="itw-questions">
+    @for (q of step().questions; track q.id; let i = $index) {
+      <li class="itw-q" [class.is-done]="isAnswered(q.id)">
+        <div class="itw-q-row">
+          <span class="itw-if" [class.itw-if--think]="!q.ifText">
+            <span class="itw-if-tag">{{ q.ifText ? 'IF' : 'THINK' }}</span>
+            @if (q.ifText) {
+              <span class="itw-if-text">{{ q.ifText }}</span>
+            }
+          </span>
+          <span class="itw-arrow" aria-hidden="true">→</span>
+          <span class="itw-then">
+            <span class="itw-then-tag">{{ q.ifText ? 'THEN…' : '' }}</span>
+            <label class="itw-then-prompt" [attr.for]="'itw-' + q.id">{{ q.prompt }}</label>
+            <textarea class="itw-then-input" [id]="'itw-' + q.id" rows="2" [placeholder]="q.placeholder"
+              [value]="answers()[q.id] || ''"
+              (input)="onInput(q.id, $any($event.target).value)"></textarea>
+          </span>
+        </div>
+        <button type="button" class="itw-reveal" [disabled]="!isAnswered(q.id)" (click)="toggleSample(q.id)">
+          {{ revealed().has(q.id) ? 'Hide sample answer' : step().sampleAnswerLabel }}
+        </button>
+        @if (revealed().has(q.id)) {
+          <p class="itw-sample"><span>Sample answer:</span> {{ q.sampleAnswer }}</p>
+        }
+      </li>
+    }
+  </ol>
+
+  @if (allAnswered() && step().feedbackText) {
+    <p class="itw-feedback">💡 {{ step().feedbackText }}</p>
+  }
+
+  <button type="button" class="itw-continue" [disabled]="!allAnswered()" (click)="advance()">
+    {{ step().completeLabel }} →
+  </button>
+  @if (!allAnswered()) {
+    <p class="itw-lock">Answer all {{ total() }} questions to continue.</p>
+  }
+
+  <p class="itw-parent">{{ step().parentNote }}</p>
+</div>

@@ -1,0 +1,79 @@
+<div class="mgc" [class.mgc--done]="phase() === 'done'">
+  <div class="mgc-top">
+    <span class="mgc-badge">{{ step().badge }}</span>
+    <span class="mgc-streak" [attr.data-lit]="completedCount()">
+      <span class="mgc-streak-flame">🔥</span>
+      <span class="mgc-streak-num">{{ completedCount() }}/{{ step().dayLabels.length }}</span>
+    </span>
+  </div>
+
+  <h2>{{ step().title }}</h2>
+  <p class="mgc-intro">{{ step().intro }}</p>
+  <p class="mgc-rule">🎯 {{ step().ruleLine }}</p>
+
+  <div class="mgc-days">
+    @for (label of step().dayLabels; track label; let day = $index) {
+      <section class="mgc-day" [class.is-complete]="dayComplete(day)">
+        <header class="mgc-day-head">
+          <span class="mgc-day-label">{{ label }}</span>
+          <span class="mgc-day-tick">{{ dayComplete(day) ? '✓ logged' : '' }}</span>
+        </header>
+
+        <label class="mgc-field-label" [attr.for]="'mgc-items-' + day">Your 5 items</label>
+        <textarea class="mgc-input" [id]="'mgc-items-' + day" rows="2" [placeholder]="step().itemsPlaceholder"
+          [value]="entry(day).items" [disabled]="phase() === 'done'"
+          (input)="setItems(day, $any($event.target).value)"></textarea>
+
+        <span class="mgc-field-label">{{ step().strategiesLabel }}</span>
+        <div class="mgc-chips">
+          @for (s of step().strategies; track s.id) {
+            <button type="button" class="mgc-chip" [class.is-on]="hasStrategy(day, s.id)"
+              [disabled]="phase() === 'done'" (click)="toggleStrategy(day, s.id)"
+              [attr.aria-pressed]="hasStrategy(day, s.id)">
+              <span aria-hidden="true">{{ s.icon }}</span> {{ s.label }}
+            </button>
+          }
+        </div>
+
+        <label class="mgc-field-label" [attr.for]="'mgc-how-' + day">How did you remember them?</label>
+        <textarea class="mgc-input" [id]="'mgc-how-' + day" rows="2" [placeholder]="step().howPlaceholder"
+          [value]="entry(day).how" [disabled]="phase() === 'done'"
+          (input)="setHow(day, $any($event.target).value)"></textarea>
+      </section>
+    }
+  </div>
+
+  <button type="button" class="mgc-sample-toggle" (click)="toggleSample()">
+    {{ sampleShown() ? 'Hide sample note' : step().sampleLabel }}
+  </button>
+  @if (sampleShown()) {
+    <p class="mgc-sample"><span>Sample note:</span> {{ step().sampleReflection }}</p>
+  }
+
+  @if (phase() === 'log') {
+    <button type="button" class="mgc-submit" [disabled]="!allComplete()" (click)="submit()">
+      {{ step().submitLabel }}
+    </button>
+    @if (!allComplete()) {
+      <p class="mgc-lock">Log all {{ step().dayLabels.length }} days to finish.</p>
+    }
+  } @else {
+    <div class="mgc-summary">
+      <span class="mgc-summary-tag">Training summary 💪</span>
+      <dl>
+        @for (label of step().dayLabels; track label; let day = $index) {
+          <div>
+            <dt>{{ label }}</dt>
+            <dd>{{ entry(day).items }} <em>— {{ strategyLabels(day) }}</em></dd>
+          </div>
+        }
+      </dl>
+    </div>
+    <p class="mgc-saved">🌟 {{ step().savedText }}</p>
+    <button type="button" class="mgc-submit" (click)="finish()">{{ step().finishLabel }} →</button>
+  }
+
+  @if (step().parentNote; as note) {
+    <p class="mgc-parent">{{ note }}</p>
+  }
+</div>

@@ -1,0 +1,59 @@
+<div class="scw">
+  <header class="scw-head">
+    <span class="scw-badge">🧭 Warm-Up Game</span>
+    <h2>{{ step().title }}</h2>
+    <p class="scw-intro">{{ step().intro }}</p>
+
+    <div class="scw-track" role="progressbar" [attr.aria-valuenow]="solvedCount()" [attr.aria-valuemax]="total()">
+      @for (question of step().questions; track question.id; let i = $index) {
+        <span class="scw-stone"
+          [class.is-locked]="solved().has(question.id)"
+          [class.is-current]="i === activeIndex() && !solved().has(question.id)">
+          @if (solved().has(question.id)) { ✓ } @else { {{ i + 1 }} }
+        </span>
+        @if (!$last) { <span class="scw-link" [class.is-locked]="solved().has(question.id)"></span> }
+      }
+      <span class="scw-track-label">{{ step().trackLabel }} · {{ solvedCount() }} / {{ total() }}</span>
+    </div>
+  </header>
+
+  @if (activeQuestion(); as question) {
+    <div class="scw-console" [class.is-solved]="justSolved()">
+      <span class="scw-step-tag">Move {{ activeIndex() + 1 }} of {{ total() }}</span>
+
+      <div class="scw-goal">
+        <span class="scw-goal-icon" aria-hidden="true">{{ question.icon }}</span>
+        <p class="scw-goal-text">{{ question.goal }}</p>
+      </div>
+
+      @if (!justSolved()) {
+        <p class="scw-ask">Which choice is the smart plan?</p>
+        <ul class="scw-options">
+          @for (option of question.options; track option.id; let oi = $index) {
+            <li>
+              <button type="button" class="scw-option" [class]="optionClass(option)" (click)="pick(option)">
+                <span class="scw-lever">{{ optionLetter(oi) }}</span>
+                <span class="scw-option-text">{{ option.text }}</span>
+              </button>
+            </li>
+          }
+        </ul>
+
+        @if (wrong()) {
+          <p class="scw-nudge">Not the planned move — think it through and try again.</p>
+        }
+      } @else {
+        <div class="scw-win">
+          <span class="scw-win-badge" aria-hidden="true">🎯</span>
+          <p class="scw-win-title">Smart move!</p>
+          <p class="scw-win-why">{{ question.smartWhy }}</p>
+          <button type="button" class="scw-next" (click)="advance()">
+            @if (allSolved()) { {{ step().completeLabel }} → } @else { Next move → }
+          </button>
+        </div>
+      }
+    </div>
+
+    <p class="scw-parent">👪 {{ step().parentNote }}</p>
+  }
+</div>

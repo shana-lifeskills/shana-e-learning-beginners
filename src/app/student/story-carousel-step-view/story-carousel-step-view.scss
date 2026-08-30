@@ -131,6 +131,30 @@ h1 {
   &.active { background: v.$color-sky; width: 1.5rem; border-radius: v.$border-radius-pill; }
 }
 
+.take-home {
+  max-width: 34rem;
+  margin: 1.25rem auto 1.5rem;
+  padding: 1rem 1.25rem;
+  text-align: center;
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.45;
+  color: v.$color-navy-text;
+  background: rgba(v.$color-sky, 0.14);
+  border: 1px dashed rgba(v.$color-sky, 0.6);
+  border-radius: v.$border-radius-lg;
+}
+
+.take-home-label {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: v.$color-sky;
+}
+
 .carousel-controls {
   display: flex;
   align-items: center;

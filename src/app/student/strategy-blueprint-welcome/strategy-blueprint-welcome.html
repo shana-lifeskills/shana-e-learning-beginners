@@ -1,0 +1,83 @@
+<div class="sbp">
+  <span class="sbp-week">{{ sbp.weekLabel }}</span>
+
+  <h1>
+    <span class="sbp-title-start">{{ sbp.titleStart }}</span>
+    <span class="sbp-title-accent">{{ sbp.titleAccent }}</span>
+  </h1>
+  <p class="sbp-intro">{{ sbp.intro }}</p>
+
+  <div class="sbp-board">
+    <span class="sbp-board-label">{{ sbp.blueprintLabel }}</span>
+
+    <div class="sbp-stage">
+      <svg class="sbp-draw" viewBox="0 0 380 240" fill="none" aria-hidden="true">
+        <!-- planned route -->
+        <polyline class="sbp-route" [attr.points]="routePoints" />
+
+        <!-- obstacle the plan routes around -->
+        <rect class="sbp-obstacle-box" x="176" y="150" width="70" height="58" rx="6" />
+
+        <!-- problem pin -->
+        <circle class="sbp-node" [attr.cx]="problem[0]" [attr.cy]="problem[1]" r="13" />
+        <!-- goal flag pole -->
+        <line class="sbp-pole" [attr.x1]="goal[0]" [attr.y1]="goal[1]" [attr.x2]="goal[0]" [attr.y2]="goal[1] + 30" />
+        <polygon class="sbp-flag" [attr.points]="goal[0] + ',' + goal[1] + ' ' + (goal[0] + 30) + ',' + (goal[1] + 7) + ' ' + goal[0] + ',' + (goal[1] + 14)" />
+      </svg>
+
+      <span class="sbp-tag sbp-tag--problem" [style.left.%]="problem[0] / 380 * 100" [style.top.%]="problem[1] / 240 * 100">
+        <span class="sbp-tag-icon">{{ sbp.problemIcon }}</span>
+        <span class="sbp-tag-label">{{ sbp.problemLabel }}</span>
+      </span>
+
+      <span class="sbp-tag sbp-tag--goal" [style.left.%]="goal[0] / 380 * 100" [style.top.%]="goal[1] / 240 * 100">
+        <span class="sbp-tag-icon">{{ sbp.goalIcon }}</span>
+        <span class="sbp-tag-label">{{ sbp.goalLabel }}</span>
+      </span>
+
+      <span class="sbp-tag sbp-tag--obstacle" [style.left.%]="211 / 380 * 100" [style.top.%]="179 / 240 * 100">
+        <span class="sbp-tag-icon">{{ sbp.obstacleIcon }}</span>
+        <span class="sbp-tag-label">{{ sbp.obstacleLabel }}</span>
+      </span>
+
+      @for (m of plottedMoves; track m.n) {
+        <span class="sbp-move" [style.left.%]="m.x / 380 * 100" [style.top.%]="m.y / 240 * 100"
+          [style.--delay]="m.delay + 's'">
+          <span class="sbp-move-pin">{{ m.n }}</span>
+          <span class="sbp-move-chip">{{ m.move.icon }} {{ m.move.label }}</span>
+        </span>
+      }
+    </div>
+
+    <p class="sbp-callout">{{ sbp.calloutText }}</p>
+  </div>
+
+  <div class="sbp-objective">
+    <span class="sbp-objective-label">{{ sbp.objectiveLabel }}</span>
+    <p>{{ sbp.objectiveText }}</p>
+  </div>
+
+  <p class="sbp-traits-heading">{{ sbp.traitsHeading }}</p>
+  <div class="sbp-traits">
+    @for (trait of sbp.traits; track trait.title; let i = $index) {
+      <div class="sbp-trait" [style.--i]="i">
+        <span class="sbp-trait-icon" aria-hidden="true">{{ trait.icon }}</span>
+        <span class="sbp-trait-title">{{ trait.title }}</span>
+        <span class="sbp-trait-text">{{ trait.text }}</span>
+      </div>
+    }
+  </div>
+
+  @if (isCompletedLessonWelcome()) {
+    @if (nextLesson(); as next) {
+      <button type="button" class="sbp-start" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+    } @else {
+      <button type="button" class="sbp-start" (click)="backToMap()">Back to My Modules →</button>
+    }
+    <button type="button" class="sbp-review" (click)="beginLesson()">↺ Review this lesson</button>
+  } @else {
+    <button type="button" class="sbp-start" (click)="beginLesson()">{{ sbp.startLabel }} →</button>
+  }
+
+  <p class="sbp-footer">{{ sbp.footerNote }}</p>
+</div>

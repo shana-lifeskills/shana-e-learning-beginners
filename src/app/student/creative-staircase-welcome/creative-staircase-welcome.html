@@ -1,0 +1,62 @@
+<div class="csw">
+  <span class="csw-week">{{ csw.weekLabel }}</span>
+
+  <h1>
+    <span class="csw-title-start">{{ csw.titleStart }}</span>
+    <span class="csw-title-accent">{{ csw.titleAccent }}</span>
+  </h1>
+  <p class="csw-intro">{{ csw.intro }}</p>
+
+  <div class="csw-stair-wrap" aria-hidden="true">
+    <span class="csw-stair-label">{{ csw.stairLabel }}</span>
+
+    <ol class="csw-stair" [style.--rungs]="rungCount">
+      <li class="csw-rung csw-rung--ground" [style.--i]="0">
+        <span class="csw-rung-icon">{{ csw.groundIcon }}</span>
+        <span class="csw-rung-label">{{ csw.groundLabel }}</span>
+      </li>
+
+      @for (step of csw.steps; track step.label; let i = $index) {
+        <li class="csw-rung csw-rung--step" [style.--i]="i + 1">
+          <span class="csw-rung-num">{{ i + 1 }}</span>
+          <span class="csw-rung-icon">{{ step.icon }}</span>
+          <span class="csw-rung-label">{{ step.label }}</span>
+        </li>
+      }
+
+      <li class="csw-rung csw-rung--summit" [style.--i]="csw.steps.length + 1">
+        <span class="csw-flag">{{ csw.summitIcon }}</span>
+        <span class="csw-rung-label">{{ csw.summitLabel }}</span>
+      </li>
+    </ol>
+  </div>
+
+  <div class="csw-objective">
+    <span class="csw-objective-label">{{ csw.objectiveLabel }}</span>
+    <p>{{ csw.objectiveText }}</p>
+  </div>
+
+  <p class="csw-ways-heading">{{ csw.waysHeading }}</p>
+  <div class="csw-ways">
+    @for (way of csw.ways; track way.title; let i = $index) {
+      <div class="csw-way" [style.--i]="i">
+        <span class="csw-way-icon" aria-hidden="true">{{ way.icon }}</span>
+        <span class="csw-way-title">{{ way.title }}</span>
+        <span class="csw-way-text">{{ way.text }}</span>
+      </div>
+    }
+  </div>
+
+  @if (isCompletedLessonWelcome()) {
+    @if (nextLesson(); as next) {
+      <button type="button" class="csw-start" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+    } @else {
+      <button type="button" class="csw-start" (click)="backToMap()">Back to My Modules →</button>
+    }
+    <button type="button" class="csw-review" (click)="beginLesson()">↺ Review this lesson</button>
+  } @else {
+    <button type="button" class="csw-start" (click)="beginLesson()">{{ csw.startLabel }} →</button>
+  }
+
+  <p class="csw-footer">{{ csw.footerNote }}</p>
+</div>

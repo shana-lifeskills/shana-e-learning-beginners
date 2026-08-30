@@ -1,0 +1,66 @@
+<div class="tsc" [class.tsc--done]="phase() === 'done'">
+  <span class="tsc-badge">{{ step().badge }}</span>
+  <h2>{{ step().title }}</h2>
+  <p class="tsc-intro">{{ step().intro }}</p>
+
+  <p class="tsc-steps-heading">{{ step().stepsHeading }}</p>
+  <ol class="tsc-chips">
+    @for (s of step().steps; track s.id) {
+      <li>{{ s.prompt }}</li>
+    }
+  </ol>
+
+  <p class="tsc-example-heading">{{ step().exampleHeading }}</p>
+
+  <div class="tsc-machine">
+    @for (s of step().steps; track s.id; let i = $index; let last = $last) {
+      <div class="tsc-slot" [class.is-filled]="answerFor(s.id).trim().length > 0">
+        <div class="tsc-slot-rail">
+          <span class="tsc-slot-num">{{ i + 1 }}</span>
+          @if (!last) { <span class="tsc-slot-line"></span> }
+        </div>
+        <div class="tsc-slot-body">
+          <span class="tsc-slot-tag">{{ s.label }}</span>
+          <label class="tsc-slot-prompt" [attr.for]="'tsc-' + s.id">{{ s.prompt }}</label>
+          <textarea class="tsc-slot-input" [id]="'tsc-' + s.id" rows="2" [placeholder]="s.placeholder"
+            [value]="answerFor(s.id)" [disabled]="phase() === 'done'"
+            (input)="setAnswer(s.id, $any($event.target).value)"></textarea>
+        </div>
+      </div>
+    }
+  </div>
+
+  <button type="button" class="tsc-sample-toggle" (click)="toggleSample()">
+    {{ sampleShown() ? 'Hide sample reflection' : step().sampleLabel }}
+  </button>
+  @if (sampleShown()) {
+    <p class="tsc-sample"><span>Sample reflection:</span> {{ step().sampleReflection }}</p>
+  }
+
+  @if (phase() === 'build') {
+    <button type="button" class="tsc-submit" [disabled]="!allFilled()" (click)="submit()">
+      {{ step().submitLabel }}
+    </button>
+    @if (!allFilled()) {
+      <p class="tsc-lock">Fill in all three steps to finish.</p>
+    }
+  } @else {
+    <div class="tsc-receipt">
+      <span class="tsc-receipt-tag">Solved ✓</span>
+      <dl>
+        @for (s of step().steps; track s.id) {
+          <div>
+            <dt>{{ s.label }}</dt>
+            <dd>{{ answerFor(s.id) }}</dd>
+          </div>
+        }
+      </dl>
+    </div>
+    <p class="tsc-saved">🌟 {{ step().savedText }}</p>
+    <button type="button" class="tsc-submit" (click)="finish()">{{ step().finishLabel }} →</button>
+  }
+
+  @if (step().parentNote; as note) {
+    <p class="tsc-parent">{{ note }}</p>
+  }
+</div>

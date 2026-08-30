@@ -1,0 +1,267 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- "If… Then…" warm-up (itw) — Thinking module, Week 4 ---- */
+$itw-bg: #2b1440;
+$itw-bg-2: #3d1d59;
+$itw-ink: #f6ecff;
+$itw-gold: #ffce4d;
+$itw-pink: #ff7eb0;
+$itw-line: rgba(246, 236, 255, 0.18);
+
+.itw {
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: 1.85rem clamp(1rem, 3.5vw, 2.25rem) 2rem;
+  border-radius: v.$border-radius-xl;
+  color: $itw-ink;
+  background: linear-gradient(165deg, $itw-bg, $itw-bg-2);
+}
+
+.itw-head { text-align: center; }
+
+.itw-kicker {
+  display: inline-block;
+  padding: 0.25rem 0.9rem;
+  border-radius: v.$border-radius-pill;
+  background: rgba($itw-pink, 0.18);
+  color: $itw-pink;
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.itw h2 {
+  @include m.playful-heading;
+  font-size: clamp(1.7rem, 5vw, 2.35rem);
+  margin: 0.7rem 0 0.4rem;
+}
+
+.itw-intro {
+  max-width: 30rem;
+  margin: 0 auto;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: rgba($itw-ink, 0.82);
+}
+
+/* --- domino chain --- */
+.itw-chain {
+  margin: 1.4rem 0 0.5rem;
+  text-align: center;
+}
+
+.itw-chain-label {
+  font-weight: 800;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $itw-gold;
+}
+
+.itw-chain-track {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 0.55rem;
+  height: 2.4rem;
+  margin-top: 0.5rem;
+}
+
+.itw-domino {
+  width: 0.7rem;
+  height: 2rem;
+  border-radius: 0.15rem;
+  background: $itw-ink;
+  transform-origin: bottom left;
+  transition: transform 0.35s ease, background 0.35s ease;
+
+  &.is-down {
+    transform: rotate(72deg);
+    background: $itw-gold;
+  }
+}
+
+/* --- questions --- */
+.itw-questions {
+  list-style: none;
+  margin: 1rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.itw-q {
+  padding: 0.95rem 1rem;
+  border-radius: v.$border-radius-sm;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid $itw-line;
+}
+
+.itw-q.is-done { border-color: rgba($itw-gold, 0.6); }
+
+.itw-q-row {
+  display: flex;
+  align-items: stretch;
+  gap: 0.7rem;
+}
+
+.itw-if {
+  flex: none;
+  width: 7.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 0.6rem 0.65rem;
+  border-radius: v.$border-radius-sm;
+  background: linear-gradient(160deg, $itw-pink, #d85c93);
+  color: #3a0f2a;
+}
+
+.itw-if--think { background: linear-gradient(160deg, $itw-gold, #e5ab2b); color: #3a2c05; }
+
+.itw-if-tag {
+  font-weight: 900;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+}
+
+.itw-if-text {
+  font-weight: 700;
+  font-size: 0.85rem;
+  line-height: 1.25;
+}
+
+.itw-arrow {
+  align-self: center;
+  font-weight: 900;
+  font-size: 1.2rem;
+  color: rgba($itw-ink, 0.5);
+}
+
+.itw-then { flex: 1; }
+
+.itw-then-tag {
+  display: block;
+  font-weight: 900;
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  color: rgba($itw-ink, 0.55);
+}
+
+.itw-then-prompt {
+  display: block;
+  margin: 0.15rem 0 0.4rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.itw-then-input {
+  width: 100%;
+  padding: 0.55rem 0.65rem;
+  font: inherit;
+  color: v.$color-navy-text;
+  background: v.$color-white;
+  border: 1px solid $itw-line;
+  border-radius: v.$border-radius-sm;
+  resize: vertical;
+
+  &:focus-visible {
+    outline: 2px solid $itw-gold;
+    outline-offset: 1px;
+  }
+}
+
+.itw-reveal {
+  @include m.tappable;
+  margin-top: 0.55rem;
+  padding: 0.2rem 0;
+  background: none;
+  border: none;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: $itw-gold;
+  text-decoration: underline;
+
+  &:disabled {
+    color: rgba($itw-ink, 0.4);
+    text-decoration: none;
+    cursor: not-allowed;
+  }
+}
+
+.itw-sample {
+  margin: 0.45rem 0 0;
+  padding: 0.5rem 0.7rem;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  background: rgba($itw-gold, 0.14);
+  border-radius: v.$border-radius-sm;
+
+  span {
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+  }
+}
+
+/* --- feedback + actions --- */
+.itw-feedback {
+  margin: 1.3rem 0 0;
+  padding: 0.85rem 1rem;
+  text-align: center;
+  font-weight: 800;
+  border-radius: v.$border-radius-sm;
+  background: rgba($itw-gold, 0.16);
+  color: $itw-gold;
+}
+
+.itw-continue {
+  @include m.tappable;
+  display: block;
+  margin: 1.3rem auto 0;
+  padding: 0.85rem 2.1rem;
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: #3a0f2a;
+  background: linear-gradient(120deg, $itw-pink, $itw-gold);
+  border: none;
+  border-radius: v.$border-radius-pill;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+
+  &:disabled {
+    opacity: 0.4;
+    box-shadow: none;
+    cursor: not-allowed;
+  }
+}
+
+.itw-lock {
+  margin: 0.5rem 0 0;
+  text-align: center;
+  font-size: 0.85rem;
+  color: rgba($itw-ink, 0.6);
+}
+
+.itw-parent {
+  margin: 1.4rem 0 0;
+  padding-top: 0.9rem;
+  border-top: 1px dashed $itw-line;
+  text-align: center;
+  font-size: 0.85rem;
+  font-style: italic;
+  color: rgba($itw-ink, 0.6);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .itw-domino { transition: none; }
+}
+
+@media (max-width: 30rem) {
+  .itw-q-row { flex-direction: column; }
+  .itw-if { width: 100%; flex-direction: row; align-items: baseline; }
+  .itw-arrow { transform: rotate(90deg); align-self: flex-start; }
+}

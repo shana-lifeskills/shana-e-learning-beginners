@@ -1,0 +1,61 @@
+<div class="wac" [class.wac--done]="phase() === 'done'">
+  <span class="wac-badge">{{ step().badge }}</span>
+  <h2>{{ step().title }}</h2>
+  <p class="wac-intro">{{ step().intro }}</p>
+
+  <section class="wac-practices">
+    <h3>{{ step().practicesHeading }}</h3>
+    <ul>
+      @for (p of step().practices; track p.text) {
+        <li>
+          <span class="wac-practice-icon" aria-hidden="true">{{ p.icon }}</span>
+          <span>{{ p.text }}</span>
+        </li>
+      }
+    </ul>
+  </section>
+
+  <section class="wac-tracker">
+    <h3>{{ step().trackerHeading }}</h3>
+    <div class="wac-days">
+      @for (label of step().dayLabels; track label; let i = $index) {
+        <button type="button" class="wac-day" [class.is-done]="isDayDone(i)"
+          [disabled]="phase() === 'done'" (click)="toggleDay(i)"
+          [attr.aria-pressed]="isDayDone(i)">
+          <span class="wac-day-check" aria-hidden="true">{{ isDayDone(i) ? '✓' : '' }}</span>
+          <span class="wac-day-label">{{ label }}</span>
+          <span class="wac-day-sub">{{ step().dayCheckLabel }}</span>
+        </button>
+      }
+    </div>
+  </section>
+
+  <section class="wac-reflect">
+    <h3>{{ step().reflectionQuestion }}</h3>
+    <textarea class="wac-reflect-input" rows="3" [placeholder]="step().reflectionPlaceholder"
+      [value]="reflection()" [disabled]="phase() === 'done'"
+      (input)="setReflection($any($event.target).value)"></textarea>
+    <button type="button" class="wac-sample-toggle" [disabled]="!reflectionFilled()" (click)="toggleSample()">
+      {{ sampleShown() ? 'Hide sample answer' : step().reflectionSampleLabel }}
+    </button>
+    @if (sampleShown()) {
+      <p class="wac-sample"><span>Sample answer:</span> {{ step().reflectionSample }}</p>
+    }
+  </section>
+
+  @if (phase() === 'track') {
+    <button type="button" class="wac-submit" [disabled]="!canSubmit()" (click)="submit()">
+      {{ step().submitLabel }}
+    </button>
+    @if (!canSubmit()) {
+      <p class="wac-lock">Tick all {{ step().dayLabels.length }} days and answer the reflection to finish.</p>
+    }
+  } @else {
+    <p class="wac-saved">🌟 {{ step().savedText }}</p>
+    <button type="button" class="wac-submit" (click)="finish()">{{ step().finishLabel }} →</button>
+  }
+
+  @if (step().parentNote; as note) {
+    <p class="wac-parent">{{ note }}</p>
+  }
+</div>

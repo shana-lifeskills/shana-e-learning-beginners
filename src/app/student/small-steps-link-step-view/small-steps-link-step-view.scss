@@ -1,0 +1,132 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Small Steps confidence link (ssl) — Strategizing module, Week 4 / module close ---- */
+$ssl-coral: #f2765b;
+$ssl-gold: #f6b53c;
+$ssl-ink: #3a2b46;
+$ssl-cream: #fff6ec;
+
+.ssl {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 2.4rem clamp(1rem, 4vw, 2.5rem) 2.6rem;
+  text-align: center;
+  border-radius: v.$border-radius-xl;
+  color: $ssl-cream;
+  background: linear-gradient(165deg, #b8452f 0%, #f2765b 55%, #f6b53c 100%);
+}
+
+.ssl-badge {
+  @include w.welcome-pill(rgba($ssl-cream, 0.22), $ssl-cream);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.ssl h1 {
+  @include m.playful-heading;
+  font-size: clamp(1.7rem, 5vw, 2.3rem);
+  margin: 1.1rem 0 0.4rem;
+  color: $ssl-cream;
+}
+
+.ssl-subtitle {
+  max-width: 30rem;
+  margin: 0 auto 1.6rem;
+  line-height: 1.55;
+  color: rgba($ssl-cream, 0.9);
+}
+
+/* --- rising steps to a trophy --- */
+.ssl-climb {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 0.35rem;
+  height: 6rem;
+  margin: 0 auto 1.6rem;
+}
+
+.ssl-step {
+  width: 2.1rem;
+  height: calc(1.4rem + var(--i, 0) * 1rem);
+  border-radius: 0.35rem 0.35rem 0 0;
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 6px 14px rgba($ssl-ink, 0.25);
+  animation: ssl-grow 0.4s ease both;
+  animation-delay: calc(var(--i, 0) * 110ms);
+}
+
+.ssl-trophy {
+  font-size: 2.4rem;
+  margin-left: 0.3rem;
+  animation: ssl-pop 0.4s ease both;
+  animation-delay: 0.5s;
+}
+
+/* --- know / say --- */
+.ssl-know {
+  padding: 1rem 1.2rem;
+  border-radius: v.$border-radius-lg;
+  background: rgba(0, 0, 0, 0.16);
+  border-left: 4px solid $ssl-cream;
+  text-align: left;
+}
+
+.ssl-know-label {
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $ssl-cream;
+}
+
+.ssl-know-text {
+  margin: 0.3rem 0 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: $ssl-cream;
+}
+
+.ssl-say {
+  margin-top: 1.2rem;
+  padding: 1rem 1.2rem;
+  border-radius: v.$border-radius-lg;
+  border: 1px dashed rgba($ssl-cream, 0.6);
+}
+
+.ssl-say-label {
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $ssl-cream;
+}
+
+.ssl-say-text {
+  margin: 0.3rem 0 0;
+  font-style: italic;
+  color: $ssl-cream;
+}
+
+.ssl-complete {
+  @include w.welcome-cta-btn(linear-gradient(120deg, #fff, $ssl-gold), #a53d29);
+  margin: 1.8rem auto 0;
+  display: block;
+  font-size: 1.1rem;
+}
+
+@keyframes ssl-grow {
+  from { opacity: 0; transform: scaleY(0.2); transform-origin: bottom; }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes ssl-pop {
+  from { opacity: 0; transform: scale(0.5); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ssl-step, .ssl-trophy { animation: none; opacity: 1; }
+}

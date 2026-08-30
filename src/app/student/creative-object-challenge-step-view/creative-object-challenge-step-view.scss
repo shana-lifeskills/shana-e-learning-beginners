@@ -1,0 +1,149 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- My Creative Object weekly challenge (coc) — Creativity module, Week 1 ---- */
+$coc-tangerine: #ff8a3d;
+$coc-magenta: #e5498c;
+$coc-grape: #7a4bd0;
+$coc-ink: #4a2a6b;
+
+.coc {
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 1.5rem clamp(0.75rem, 3vw, 1.5rem) 2.5rem;
+}
+
+.coc-head { text-align: center; }
+
+.coc-badge {
+  @include w.welcome-pill(rgba($coc-tangerine, 0.16), #b7601f);
+  letter-spacing: 0.04em;
+}
+
+.coc-head h2 {
+  @include m.playful-heading;
+  font-size: clamp(1.5rem, 4.5vw, 2rem);
+  margin: 0.9rem 0 0.4rem;
+  color: $coc-ink;
+}
+
+.coc-intro {
+  max-width: 30rem;
+  margin: 0 auto;
+  color: w.navy(0.72);
+  line-height: 1.5;
+}
+
+/* --- build steps --- */
+.coc-steps {
+  list-style: none;
+  margin: 1.5rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.55rem;
+}
+
+.coc-step {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 0.9rem;
+  border-radius: v.$border-radius-lg;
+  background: linear-gradient(120deg, rgba($coc-tangerine, 0.1), rgba($coc-magenta, 0.1));
+  font-weight: 600;
+  color: $coc-ink;
+}
+
+.coc-step-num {
+  display: grid;
+  place-items: center;
+  width: 1.8rem;
+  height: 1.8rem;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: $coc-grape;
+  color: v.$color-white;
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+}
+
+/* --- describe form --- */
+.coc-form {
+  margin-top: 1.5rem;
+  padding: 1.4rem clamp(1rem, 4vw, 1.6rem);
+  border-radius: v.$border-radius-xl;
+  background: v.$color-white;
+  box-shadow: 0 16px 38px rgba($coc-grape, 0.14);
+}
+
+.coc-field {
+  display: block;
+
+  & + .coc-field { margin-top: 1rem; }
+}
+
+.coc-field-label {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: $coc-magenta;
+}
+
+.coc-field textarea {
+  width: 100%;
+  padding: 0.7rem 0.85rem;
+  border-radius: v.$border-radius-lg;
+  border: 2px solid rgba($coc-grape, 0.2);
+  background: #fff9f2;
+  font: inherit;
+  color: $coc-ink;
+  resize: vertical;
+
+  &:focus { outline: none; border-color: $coc-tangerine; }
+}
+
+.coc-submit {
+  @include w.welcome-cta-btn(linear-gradient(120deg, $coc-tangerine, $coc-magenta));
+  margin: 1.3rem auto 0;
+  display: block;
+  font-size: 1.05rem;
+}
+
+.coc-thanks {
+  margin: 1.2rem 0 0;
+  text-align: center;
+  font-weight: 700;
+  color: $coc-grape;
+}
+
+/* --- recap ribbon --- */
+.coc-recap {
+  margin-top: 1.6rem;
+  padding: 1.2rem 1.4rem;
+  border-radius: v.$border-radius-xl;
+  background: linear-gradient(165deg, #fff6e6, #ffe6f1);
+  border-left: 5px solid $coc-tangerine;
+}
+
+.coc-recap-heading {
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: $coc-ink;
+}
+
+.coc-recap ul {
+  margin: 0.5rem 0 0;
+  padding-left: 1.2rem;
+  color: w.navy(0.75);
+  line-height: 1.55;
+}
+
+.coc-parent-note {
+  margin: 1.3rem 0 0;
+  text-align: center;
+  font-size: 0.9rem;
+  color: w.navy(0.6);
+}

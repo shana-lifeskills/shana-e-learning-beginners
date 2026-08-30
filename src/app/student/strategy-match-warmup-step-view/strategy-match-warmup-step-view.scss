@@ -1,0 +1,173 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Strategy Match warm-up (smw) — Strategizing module, Week 3 ---- */
+$smw-brass: #b9822a;
+$smw-forest: #1f6d4e;
+$smw-ink: #14352a;
+$smw-red: #d1493c;
+
+.smw {
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: 1.5rem clamp(0.75rem, 3vw, 1.5rem) 2.5rem;
+}
+
+.smw-head { text-align: center; }
+
+.smw-badge {
+  @include w.welcome-pill(rgba($smw-forest, 0.14), $smw-forest);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.smw h2 {
+  @include m.playful-heading;
+  font-size: clamp(1.7rem, 5vw, 2.4rem);
+  color: $smw-ink;
+  margin: 0.9rem 0 0.5rem;
+}
+
+.smw-intro {
+  max-width: 32rem;
+  margin: 0 auto;
+  color: w.navy(0.72);
+  line-height: 1.5;
+}
+
+.smw-meter {
+  position: relative;
+  max-width: 22rem;
+  margin: 1.3rem auto 0;
+  height: 1.5rem;
+  border-radius: v.$border-radius-pill;
+  background: rgba($smw-ink, 0.1);
+  overflow: hidden;
+}
+
+.smw-meter-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  background: linear-gradient(90deg, $smw-forest, $smw-brass);
+  transition: width 0.4s ease;
+}
+
+.smw-meter-label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: $smw-ink;
+}
+
+/* --- board --- */
+.smw-board {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.7rem 1rem;
+  margin-top: 1.5rem;
+}
+
+.smw-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.smw-col-head {
+  font-weight: 800;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: w.navy(0.55);
+  text-align: center;
+}
+
+.smw-lock,
+.smw-key {
+  @include m.tappable;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.75rem 0.8rem;
+  border-radius: v.$border-radius-lg;
+  background: v.$color-white;
+  border: 2px solid rgba($smw-ink, 0.14);
+  font: inherit;
+  font-weight: 600;
+  color: $smw-ink;
+  text-align: left;
+  min-height: 3.4rem;
+}
+
+.smw-lock-icon,
+.smw-key-icon { font-size: 1.15rem; flex-shrink: 0; }
+
+.smw-lock[data-state='picked'] {
+  border-color: $smw-brass;
+  background: rgba($smw-brass, 0.12);
+  box-shadow: 0 0 0 3px rgba($smw-brass, 0.2);
+}
+
+.smw-lock[data-state='open'] {
+  border-color: $smw-forest;
+  background: rgba($smw-forest, 0.12);
+  color: w.navy(0.6);
+}
+
+.smw-key:hover { border-color: $smw-brass; }
+
+.smw-key.is-used {
+  border-color: $smw-forest;
+  background: rgba($smw-forest, 0.12);
+  color: w.navy(0.6);
+}
+
+.smw-key.is-rejected {
+  border-color: $smw-red;
+  background: rgba($smw-red, 0.1);
+  animation: smw-shake 0.4s ease;
+}
+
+.smw-hint {
+  margin: 1rem 0 0;
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: w.navy(0.55);
+}
+
+.smw-finish {
+  @include w.welcome-cta-btn(linear-gradient(120deg, $smw-forest, $smw-brass));
+  margin: 1.3rem auto 0;
+  display: block;
+}
+
+.smw-parent {
+  margin: 1.2rem auto 0;
+  max-width: 34rem;
+  text-align: center;
+  font-size: 0.88rem;
+  color: w.navy(0.58);
+}
+
+@keyframes smw-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+@media (max-width: 32rem) {
+  .smw-board { grid-template-columns: 1fr; }
+  .smw-col:last-child { margin-top: 0.5rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .smw-key.is-rejected { animation: none; }
+}

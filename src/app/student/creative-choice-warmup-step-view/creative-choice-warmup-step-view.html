@@ -1,0 +1,51 @@
+<div class="ccw">
+  <header class="ccw-head">
+    <span class="ccw-badge">🎨 Warm-Up Game</span>
+    <h2>{{ step().title }}</h2>
+    <p class="ccw-intro">{{ step().intro }}</p>
+
+    <div class="ccw-meter" role="progressbar" [attr.aria-valuenow]="solvedCount()" [attr.aria-valuemax]="total()">
+      <ul class="ccw-bulbs">
+        @for (question of step().questions; track question.id; let i = $index) {
+          <li class="ccw-bulb" [class.is-lit]="solved().has(question.id)"
+            [class.is-current]="i === activeIndex() && !solved().has(question.id)">💡</li>
+        }
+      </ul>
+      <span class="ccw-meter-label">{{ step().meterLabel }} · {{ solvedCount() }} / {{ total() }}</span>
+    </div>
+  </header>
+
+  @if (activeQuestion(); as question) {
+    <div class="ccw-card" [class.is-solved]="justSolved()">
+      <span class="ccw-step-tag">Question {{ activeIndex() + 1 }} of {{ total() }}</span>
+      <p class="ccw-scenario">{{ question.scenario }}</p>
+      <p class="ccw-prompt">{{ question.prompt }}</p>
+
+      <ul class="ccw-options">
+        @for (option of question.options; track option.id; let oi = $index) {
+          <li>
+            <button type="button" class="ccw-option" [class]="optionClass(option)"
+              [disabled]="justSolved()" (click)="pick(option)">
+              <span class="ccw-letter">{{ optionLetter(oi) }}</span>
+              <span class="ccw-option-text">{{ option.text }}</span>
+            </button>
+          </li>
+        }
+      </ul>
+
+      @if (picked() && !justSolved()) {
+        <p class="ccw-nudge">That one is a bit plain — which choice makes something new?</p>
+      }
+
+      @if (justSolved()) {
+        <div class="ccw-spark">
+          <span class="ccw-spark-burst" aria-hidden="true">✨</span>
+          <p class="ccw-spark-text">{{ question.spark }}</p>
+          <button type="button" class="ccw-next" (click)="advance()">
+            @if (allSolved()) { {{ step().completeLabel }} → } @else { Keep going → }
+          </button>
+        </div>
+      }
+    </div>
+  }
+</div>
