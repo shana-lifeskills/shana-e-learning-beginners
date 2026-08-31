@@ -1,0 +1,304 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Trade-off see-saw welcome (tow) — Choices Module, Week 1 ---- */
+$tow-bg: #eafaf1;
+$tow-bg-2: #d6f0e2;
+$tow-ink: #1f3d2f;
+$tow-green: #16a34a;
+$tow-gold: #e6a417;
+$tow-pick: #2f9e6b;
+$tow-give: #d98236;
+
+.tow {
+  max-width: 62rem;
+  margin: 0 auto;
+  padding: 2.5rem clamp(1rem, 4vw, 2.75rem) 2.75rem;
+  text-align: center;
+  border-radius: v.$border-radius-xl;
+  color: $tow-ink;
+  background: linear-gradient(165deg, $tow-bg 0%, $tow-bg-2 100%);
+}
+
+.tow-week {
+  @include w.welcome-pill(rgba($tow-green, 0.16), $tow-green);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.tow h1 {
+  @include m.playful-heading;
+  font-size: clamp(2.1rem, 6vw, 3.2rem);
+  line-height: 1.1;
+  margin: 1.2rem 0 0.7rem;
+}
+
+.tow-title-start { color: $tow-ink; }
+.tow-title-accent { color: $tow-green; }
+
+.tow-intro {
+  max-width: 37rem;
+  margin: 0 auto;
+  font-size: 1.1rem;
+  line-height: 1.55;
+  color: rgba($tow-ink, 0.78);
+}
+
+/* --- cartoon see-saw --- */
+.tow-seesaw {
+  position: relative;
+  width: min(34rem, 100%);
+  margin: 2.6rem auto 0;
+  padding-bottom: 2.4rem;
+}
+
+.tow-beam {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem 1.1rem;
+  border-radius: v.$border-radius-pill;
+  background: linear-gradient(90deg, #ffe7bf, #ffd79a);
+  border: 3px solid rgba($tow-ink, 0.15);
+  transform: rotate(-6deg);
+  transform-origin: 50% 100%;
+  animation: tow-tilt 6s ease-in-out infinite;
+}
+
+.tow-seat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+  width: 46%;
+  padding: 0.75rem 0.6rem;
+  border-radius: v.$border-radius-lg;
+  background: v.$color-white;
+  border: 2px solid;
+}
+
+.tow-seat--pick { border-color: rgba($tow-pick, 0.6); transform: translateY(0.5rem); }
+.tow-seat--give { border-color: rgba($tow-give, 0.6); transform: translateY(-0.5rem); opacity: 0.92; }
+
+.tow-seat-icon { font-size: 1.9rem; }
+
+.tow-seat-kicker {
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba($tow-ink, 0.5);
+}
+
+.tow-seat--pick .tow-seat-kicker { color: $tow-pick; }
+.tow-seat--give .tow-seat-kicker { color: $tow-give; }
+
+.tow-seat-label {
+  font-size: 0.9rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.tow-coin {
+  position: absolute;
+  left: 50%;
+  bottom: 1.3rem;
+  transform: translateX(-50%);
+  width: 3.6rem;
+  height: 3.6rem;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #ffe08a, $tow-gold);
+  border: 3px solid #c98a0d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.12);
+  z-index: 2;
+}
+
+.tow-coin-face { font-size: 1.5rem; }
+
+.tow-base {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 2.4rem solid transparent;
+  border-right: 2.4rem solid transparent;
+  border-bottom: 2.1rem solid rgba($tow-ink, 0.22);
+}
+
+.tow-seesaw-caption {
+  margin: 1.4rem auto 0;
+  max-width: 30rem;
+  font-size: 0.98rem;
+  font-style: italic;
+  color: rgba($tow-ink, 0.72);
+}
+
+/* --- everyday trade-off pairs --- */
+.tow-examples-heading {
+  margin: 2.1rem 0 0.9rem;
+  font-weight: 800;
+  font-size: 1.05rem;
+}
+
+.tow-examples {
+  display: grid;
+  gap: 0.8rem;
+  max-width: 40rem;
+  margin: 0 auto;
+}
+
+.tow-example {
+  display: flex;
+  align-items: stretch;
+  gap: 0.6rem;
+  padding: 0.7rem;
+  border-radius: v.$border-radius-lg;
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba($tow-ink, 0.12);
+  animation: tow-rise 0.5s ease both;
+  animation-delay: calc(var(--i, 0) * 90ms);
+}
+
+.tow-example-side {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.15rem;
+  flex: 1;
+  padding: 0.5rem 0.4rem;
+  border-radius: v.$border-radius-sm;
+}
+
+.tow-example-side--pick { background: rgba($tow-pick, 0.12); }
+.tow-example-side--give { background: rgba($tow-give, 0.12); }
+
+.tow-example-icon { font-size: 1.4rem; }
+
+.tow-example-text {
+  font-size: 0.85rem;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.tow-example-swap {
+  display: flex;
+  align-items: center;
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: rgba($tow-ink, 0.4);
+}
+
+/* --- objective --- */
+.tow-objective {
+  max-width: 40rem;
+  margin: 1.8rem auto 0;
+  padding: 1.15rem 1.4rem;
+  text-align: left;
+  border-radius: v.$border-radius-lg;
+  border-left: 4px solid $tow-green;
+  background: rgba(255, 255, 255, 0.72);
+
+  p {
+    margin: 0.3rem 0 0;
+    font-size: 1.02rem;
+    line-height: 1.5;
+    color: rgba($tow-ink, 0.88);
+  }
+}
+
+.tow-objective-label {
+  font-weight: 800;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $tow-green;
+}
+
+/* --- traits --- */
+.tow-traits-heading {
+  margin: 1.9rem 0 0.9rem;
+  font-weight: 800;
+  font-size: 1.05rem;
+}
+
+.tow-traits {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
+  gap: 0.85rem;
+  max-width: 44rem;
+  margin: 0 auto;
+}
+
+.tow-trait {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 1.1rem 0.9rem;
+  border-radius: v.$border-radius-lg;
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba($tow-ink, 0.12);
+  animation: tow-rise 0.5s ease both;
+  animation-delay: calc(var(--i, 0) * 90ms);
+}
+
+.tow-trait-icon { font-size: 1.7rem; }
+.tow-trait-title { font-weight: 800; }
+
+.tow-trait-text {
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: rgba($tow-ink, 0.68);
+}
+
+/* --- actions --- */
+.tow-start {
+  @include w.welcome-cta-btn(linear-gradient(120deg, $tow-green, #3fbf6b), v.$color-white);
+  margin: 2rem auto 0;
+  display: block;
+  font-size: 1.15rem;
+}
+
+.tow-review {
+  @include m.tappable;
+  display: block;
+  margin: 0.8rem auto 0;
+  background: none;
+  border: none;
+  font-weight: 700;
+  color: rgba($tow-ink, 0.6);
+}
+
+.tow-footer {
+  margin: 1.4rem 0 0;
+  font-size: 0.92rem;
+  color: rgba($tow-ink, 0.55);
+}
+
+@keyframes tow-rise {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes tow-tilt {
+  0%, 100% { transform: rotate(-6deg); }
+  50% { transform: rotate(-2deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tow-beam { animation: none; }
+  .tow-example, .tow-trait { animation: none; opacity: 1; }
+}
+
+@media (max-width: 30rem) {
+  .tow-example { flex-direction: column; }
+  .tow-example-swap { transform: rotate(90deg); }
+}

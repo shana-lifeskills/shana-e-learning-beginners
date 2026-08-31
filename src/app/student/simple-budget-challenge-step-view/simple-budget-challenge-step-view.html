@@ -1,0 +1,64 @@
+<div class="sbc">
+  <header class="sbc-head">
+    <span class="sbc-badge">{{ step().badge }}</span>
+    <h2 class="sbc-title">{{ step().title }}</h2>
+    <p class="sbc-intro">{{ step().intro }}</p>
+  </header>
+
+  <div class="sbc-card">
+    <span class="sbc-card-heading">{{ step().planHeading }}</span>
+
+    <label class="sbc-line">
+      <span class="sbc-line-icon" aria-hidden="true">🛒</span>
+      <span class="sbc-line-label">{{ step().spendLabel }}</span>
+      <input type="text" [value]="spend()" [placeholder]="step().spendPlaceholder"
+        (input)="setField('spend', $any($event.target).value)" />
+    </label>
+
+    <label class="sbc-line">
+      <span class="sbc-line-icon" aria-hidden="true">🐷</span>
+      <span class="sbc-line-label">{{ step().saveLabel }}</span>
+      <input type="text" [value]="save()" [placeholder]="step().savePlaceholder"
+        (input)="setField('save', $any($event.target).value)" />
+    </label>
+
+    <label class="sbc-line">
+      <span class="sbc-line-icon" aria-hidden="true">🎯</span>
+      <span class="sbc-line-label">{{ step().useLaterLabel }}</span>
+      <input type="text" [value]="useLater()" [placeholder]="step().useLaterPlaceholder"
+        (input)="setField('useLater', $any($event.target).value)" />
+    </label>
+  </div>
+
+  <div class="sbc-track">
+    <span class="sbc-track-heading">{{ step().trackHeading }}</span>
+    <p class="sbc-track-q">{{ step().trackQuestion }}</p>
+    <div class="sbc-yesno">
+      <button type="button" class="sbc-yes" [class.is-on]="followed() === 'yes'" (click)="setFollowed('yes')">
+        {{ step().yesLabel }}
+      </button>
+      <button type="button" class="sbc-no" [class.is-on]="followed() === 'no'" (click)="setFollowed('no')">
+        {{ step().noLabel }}
+      </button>
+    </div>
+  </div>
+
+  <p class="sbc-parent-note">
+    <span aria-hidden="true">👪</span> {{ step().parentNote }}
+  </p>
+
+  @if (canComplete()) {
+    <div class="sbc-done">
+      <span class="sbc-done-mark" aria-hidden="true">📋</span>
+      <h3>{{ step().allDoneTitle }}</h3>
+      <p>{{ step().allDoneText }}</p>
+    </div>
+  }
+
+  <button type="button" class="sbc-complete" [disabled]="!canComplete()" (click)="complete()">
+    {{ step().completeLabel }}
+  </button>
+  @if (!canComplete()) {
+    <p class="sbc-hint">Fill in all three parts of your plan and answer the question to finish.</p>
+  }
+</div>

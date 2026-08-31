@@ -1,0 +1,61 @@
+<div class="mm">
+  <div class="mm-board">
+    <header class="mm-head">
+      <span class="mm-badge">{{ step().badge }}</span>
+      <h2 class="mm-heading">{{ step().heading }}</h2>
+      <p class="mm-subtitle">{{ step().subtitle }}</p>
+    </header>
+
+    <div class="mm-progress">
+      <span class="mm-progress-track"><span class="mm-progress-fill" [style.width.%]="progressPercent()"></span></span>
+      <span class="mm-progress-label">{{ matchedCount() }} / {{ total() }} matched</span>
+    </div>
+
+    @if (!allMatched()) {
+      <div class="mm-columns">
+        <div class="mm-col">
+          <span class="mm-col-head">{{ step().termHeading }}</span>
+          @for (pair of step().pairs; track pair.id) {
+            <button type="button" class="mm-term" [class]="termClass(pair)" [disabled]="isMatched(pair.id)"
+              (click)="pickTerm(pair)">
+              <span class="mm-coin" aria-hidden="true">🪙</span>
+              <span class="mm-term-text">{{ pair.term }}</span>
+              @if (isMatched(pair.id)) { <span class="mm-tick" aria-hidden="true">✔</span> }
+            </button>
+          }
+        </div>
+
+        <div class="mm-col">
+          <span class="mm-col-head">{{ step().meaningHeading }}</span>
+          @for (card of meanings(); track card.pairId) {
+            <button type="button" class="mm-meaning" [class]="meaningClass(card)" [disabled]="isMatched(card.pairId)"
+              (click)="pickMeaning(card)">
+              <span class="mm-slot" aria-hidden="true">👛</span>
+              <span class="mm-meaning-text">{{ card.meaning }}</span>
+              @if (isMatched(card.pairId)) { <span class="mm-tick" aria-hidden="true">✔</span> }
+            </button>
+          }
+        </div>
+      </div>
+
+      <p class="mm-hint" aria-live="polite">
+        @if (wrongFlash()) {
+          <span class="mm-hint--bad">Not a match — try again!</span>
+        } @else {
+          Tap a term, then tap the meaning that goes with it.
+        }
+      </p>
+    } @else {
+      <div class="mm-done">
+        <span class="mm-done-mark" aria-hidden="true">💰</span>
+        <h3>{{ step().allDoneTitle }}</h3>
+        <p>{{ step().allDoneText }}</p>
+        <button type="button" class="mm-continue" (click)="finish()">{{ step().continueLabel }} →</button>
+      </div>
+    }
+  </div>
+
+  <p class="mm-parent-note">
+    <span aria-hidden="true">👪</span> {{ step().parentNote }}
+  </p>
+</div>

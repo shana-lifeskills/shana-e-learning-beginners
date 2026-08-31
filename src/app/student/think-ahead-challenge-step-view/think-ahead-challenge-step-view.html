@@ -1,0 +1,75 @@
+<div class="tac">
+  <header class="tac-head">
+    <span class="tac-badge">{{ step().badge }}</span>
+    <h2 class="tac-title">{{ step().title }}</h2>
+    <p class="tac-intro">{{ step().intro }}</p>
+    <p class="tac-ask-banner">
+      <span aria-hidden="true">🔮</span> Before you spend, ask: <strong>"What will happen after this?"</strong>
+    </p>
+  </header>
+
+  <div class="tac-progress">
+    <div class="tac-progress-bar"><span class="tac-progress-fill" [style.width.%]="progressPercent()"></span></div>
+    <span class="tac-progress-label">{{ doneCount() }} / {{ total() }} {{ step().progressLabel }}</span>
+  </div>
+
+  <ol class="tac-path">
+    @for (entry of entries(); track $index; let i = $index) {
+      <li class="tac-day" [class.tac-day--done]="entry.done" [class.tac-day--open]="openDay() === i">
+        <button type="button" class="tac-day-head" (click)="toggleOpen(i)" [attr.aria-expanded]="openDay() === i">
+          <span class="tac-day-node" aria-hidden="true">{{ entry.done ? '✔' : i + 1 }}</span>
+          <span class="tac-day-name">Day {{ i + 1 }}</span>
+          <span class="tac-day-state">{{ entry.done ? 'Recorded' : 'Tap to fill in' }}</span>
+        </button>
+
+        @if (openDay() === i) {
+          <div class="tac-day-body">
+            <label class="tac-check">
+              <input type="checkbox" [checked]="entry.asked" [disabled]="entry.done" (change)="toggleAsked(i)" />
+              <span>{{ step().askLabel }}</span>
+            </label>
+
+            <label class="tac-field">
+              <span class="tac-field-label">{{ step().decisionLabel }}</span>
+              <textarea rows="2" [value]="entry.decision" [disabled]="entry.done"
+                [placeholder]="step().decisionPlaceholder"
+                (input)="setField(i, 'decision', $any($event.target).value)"></textarea>
+            </label>
+
+            <label class="tac-field">
+              <span class="tac-field-label">{{ step().resultLabel }}</span>
+              <textarea rows="2" [value]="entry.result" [disabled]="entry.done"
+                [placeholder]="step().resultPlaceholder"
+                (input)="setField(i, 'result', $any($event.target).value)"></textarea>
+            </label>
+
+            @if (!entry.done) {
+              <button type="button" class="tac-save" [disabled]="!canSaveDay(i)" (click)="saveDay(i)">
+                {{ step().saveDayLabel }} {{ i + 1 }}
+              </button>
+            }
+          </div>
+        }
+      </li>
+    }
+  </ol>
+
+  <p class="tac-parent-note">
+    <span aria-hidden="true">👪</span> {{ step().parentNote }}
+  </p>
+
+  @if (allDone()) {
+    <div class="tac-done">
+      <span class="tac-done-mark" aria-hidden="true">🔮</span>
+      <h3>{{ step().allDoneTitle }}</h3>
+      <p>{{ step().allDoneText }}</p>
+    </div>
+  }
+
+  <button type="button" class="tac-complete" [disabled]="!allDone()" (click)="complete()">
+    {{ step().completeLabel }}
+  </button>
+  @if (!allDone()) {
+    <p class="tac-hint">Record all {{ total() }} days to finish the challenge.</p>
+  }
+</div>

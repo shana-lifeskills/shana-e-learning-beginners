@@ -1,0 +1,57 @@
+<div class="bpw">
+  <span class="bpw-week">{{ bpw.weekLabel }}</span>
+
+  <h1>
+    <span class="bpw-title-start">{{ bpw.titleStart }}</span>
+    <span class="bpw-title-accent">{{ bpw.titleAccent }}</span>
+  </h1>
+  <p class="bpw-intro">{{ bpw.intro }}</p>
+
+  <div class="bpw-shelf-wrap">
+    <span class="bpw-shelf-label">{{ bpw.shelfLabel }}</span>
+    <div class="bpw-jars">
+      @for (jar of bpw.jars; track jar.name; let i = $index) {
+        <div class="bpw-jar" [style.--i]="i">
+          <span class="bpw-jar-coin" aria-hidden="true">🪙</span>
+          <span class="bpw-jar-glass">
+            <span class="bpw-jar-fill"></span>
+            <span class="bpw-jar-icon" aria-hidden="true">{{ jar.icon }}</span>
+          </span>
+          <span class="bpw-jar-name">{{ jar.name }}</span>
+          <span class="bpw-jar-note">{{ jar.note }}</span>
+        </div>
+      }
+    </div>
+    <span class="bpw-shelf" aria-hidden="true"></span>
+  </div>
+  <p class="bpw-jars-caption">{{ bpw.jarsCaption }}</p>
+
+  <div class="bpw-objective">
+    <span class="bpw-objective-label">{{ bpw.objectiveLabel }}</span>
+    <p>{{ bpw.objectiveText }}</p>
+  </div>
+
+  <p class="bpw-traits-heading">{{ bpw.traitsHeading }}</p>
+  <div class="bpw-traits">
+    @for (trait of bpw.traits; track trait.title; let i = $index) {
+      <div class="bpw-trait" [style.--i]="i">
+        <span class="bpw-trait-icon" aria-hidden="true">{{ trait.icon }}</span>
+        <span class="bpw-trait-title">{{ trait.title }}</span>
+        <span class="bpw-trait-text">{{ trait.text }}</span>
+      </div>
+    }
+  </div>
+
+  @if (isCompletedLessonWelcome()) {
+    @if (nextLesson(); as next) {
+      <button type="button" class="bpw-start" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+    } @else {
+      <button type="button" class="bpw-start" (click)="backToMap()">Back to My Modules →</button>
+    }
+    <button type="button" class="bpw-review" (click)="beginLesson()">↺ Review this lesson</button>
+  } @else {
+    <button type="button" class="bpw-start" (click)="beginLesson()">{{ bpw.startLabel }} →</button>
+  }
+
+  <p class="bpw-footer">{{ bpw.footerNote }}</p>
+</div>

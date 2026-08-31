@@ -1,0 +1,259 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- My Financial Decision Audit (fac) — Choices Module, Week 4 finale ---- */
+$fac-ink: #14332a;
+$fac-green: #12855a;
+$fac-green-deep: #0c5f41;
+$fac-gold: #e0a423;
+$fac-paper: #f3faf6;
+
+.fac {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 1rem;
+  color: $fac-ink;
+}
+
+.fac-head {
+  text-align: center;
+  padding: 1.6rem 1.2rem 1.4rem;
+  border-radius: v.$border-radius-xl v.$border-radius-xl 0 0;
+  background: linear-gradient(150deg, $fac-green 0%, $fac-green-deep 100%);
+  color: v.$color-white;
+}
+
+.fac-badge {
+  display: inline-block;
+  padding: 0.32rem 1rem;
+  border-radius: v.$border-radius-pill;
+  background: $fac-gold;
+  color: #3a2800;
+  font-weight: 800;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.fac-title {
+  @include m.playful-heading;
+  font-size: clamp(1.45rem, 4.4vw, 1.95rem);
+  margin: 0.7rem 0 0.3rem;
+}
+
+.fac-intro {
+  margin: 0;
+  font-size: 0.98rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.fac-progress {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 1rem 1.1rem;
+  background: $fac-paper;
+}
+
+.fac-progress-bar {
+  flex: 1;
+  height: 0.7rem;
+  border-radius: v.$border-radius-pill;
+  background: rgba($fac-green, 0.16);
+  overflow: hidden;
+}
+
+.fac-progress-fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, $fac-green, $fac-gold);
+  transition: width 0.4s ease;
+}
+
+.fac-progress-label {
+  font-weight: 800;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.fac-days {
+  list-style: none;
+  margin: 0;
+  padding: 0 1.1rem 0.4rem;
+  background: $fac-paper;
+}
+
+.fac-day {
+  border: 2px solid rgba($fac-ink, 0.1);
+  border-radius: v.$border-radius-sm;
+  background: v.$color-white;
+  margin-bottom: 0.6rem;
+  overflow: hidden;
+}
+
+.fac-day--open { border-color: $fac-green; }
+.fac-day--done { border-color: rgba($fac-green, 0.4); background: rgba($fac-green, 0.05); }
+
+.fac-day-head {
+  @include m.tappable;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  width: 100%;
+  padding: 0.75rem 0.9rem;
+  border: none;
+  background: none;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+}
+
+.fac-day-node {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 1.9rem;
+  height: 1.9rem;
+  border-radius: 50%;
+  background: $fac-green;
+  color: v.$color-white;
+  font-weight: 800;
+  font-size: 0.9rem;
+}
+
+.fac-day--done .fac-day-node { background: $fac-green-deep; }
+
+.fac-day-name { font-weight: 800; }
+
+.fac-day-state {
+  margin-left: auto;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: rgba($fac-ink, 0.55);
+}
+
+.fac-day-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 0.4rem 0.9rem 1rem;
+}
+
+.fac-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.35;
+
+  input { margin-top: 0.12rem; width: 1.1rem; height: 1.1rem; flex-shrink: 0; accent-color: $fac-green; }
+}
+
+.fac-log,
+.fac-complete {
+  @include m.tappable;
+  align-self: flex-start;
+  padding: 0.7rem 1.6rem;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  background: $fac-green;
+  color: v.$color-white;
+  font-weight: 800;
+  font-size: 0.95rem;
+
+  &:disabled { background: rgba($fac-ink, 0.2); cursor: not-allowed; }
+}
+
+/* --- reflection --- */
+.fac-reflection {
+  padding: 1.3rem 1.1rem 1.4rem;
+  background: $fac-paper;
+  border-radius: 0 0 v.$border-radius-xl v.$border-radius-xl;
+}
+
+.fac-reflection-heading {
+  display: block;
+  font-weight: 800;
+  font-size: 0.86rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: $fac-green-deep;
+}
+
+.fac-reflection-intro {
+  margin: 0.3rem 0 0.9rem;
+  font-size: 0.92rem;
+  color: rgba($fac-ink, 0.7);
+}
+
+.fac-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  margin-bottom: 0.9rem;
+}
+
+.fac-field-label {
+  font-weight: 800;
+  font-size: 0.88rem;
+  color: $fac-green-deep;
+}
+
+.fac-field textarea {
+  width: 100%;
+  padding: 0.6rem 0.7rem;
+  border-radius: v.$border-radius-sm;
+  border: 2px solid rgba($fac-ink, 0.15);
+  font: inherit;
+  font-size: 0.92rem;
+  resize: vertical;
+
+  &:focus { outline: none; border-color: $fac-green; }
+}
+
+.fac-parent-note {
+  display: flex;
+  gap: 0.5rem;
+  margin: 1rem 0 0;
+  padding: 0.8rem 1rem;
+  border-radius: v.$border-radius-sm;
+  background: rgba($fac-gold, 0.16);
+  border: 1px dashed rgba(#a9760b, 0.55);
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: #5c4204;
+}
+
+.fac-done {
+  margin-top: 1rem;
+  padding: 1.3rem 1.1rem;
+  text-align: center;
+  border-radius: v.$border-radius-lg;
+  background: rgba($fac-green, 0.1);
+
+  h3 { @include m.playful-heading; font-size: 1.25rem; margin: 0.4rem 0 0.3rem; }
+  p { margin: 0; font-size: 0.95rem; color: rgba($fac-ink, 0.8); }
+}
+
+.fac-done-mark { font-size: 1.9rem; }
+
+.fac-complete {
+  display: block;
+  width: 100%;
+  margin: 1.1rem 0 0;
+  padding: 0.95rem 1.6rem;
+  font-size: 1.1rem;
+  background: linear-gradient(120deg, $fac-green, $fac-gold);
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.12);
+}
+
+.fac-hint {
+  margin: 0.6rem 0 0;
+  text-align: center;
+  font-size: 0.85rem;
+  color: rgba($fac-ink, 0.55);
+}

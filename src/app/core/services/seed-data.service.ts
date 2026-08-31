@@ -4,7 +4,7 @@ import { COLLECTIONS } from './collections';
 import { Student, Trainer } from '../models/user.model';
 import { Module } from '../models/module.model';
 
-const SEED_FLAG = 'seeded_v270';
+const SEED_FLAG = 'seeded_v291';
 
 /**
  * Populates the mock database with a small amount of realistic demo data
@@ -43,6 +43,7 @@ export class SeedDataService {
         'module-listening',
         'module-speaking',
         'module-expression',
+        'module-choices',
       ],
     };
 
@@ -11624,6 +11625,995 @@ export class SeedDataService {
       ],
     };
 
+    // "Choices Module" — Financial Responsibility track.
+    // Theme: Smart Financial Decisions & Money Management.
+    //
+    // What are Financial Choices? Financial choices involve:
+    //   • Deciding how to use limited money wisely
+    //   • Understanding trade-offs (choosing one thing over another)
+    //   • Planning spending and saving
+    //   • Thinking about consequences before acting
+    //   • Making decisions that support future goals
+    //
+    // Weeks are added on request — the module ships as a shell for now.
+    const choicesModule: Module = {
+      id: 'module-choices',
+      title: 'Choices Module',
+      description:
+        'Theme: Smart Financial Decisions & Money Management. Learn to use limited money wisely, weigh trade-offs, plan spending and saving, and think about consequences before you act.',
+      themeColor: '#16A34A',
+      icon: '💰',
+      createdByTrainerId: trainer.id,
+      createdAt: now,
+      category: 'life-skills',
+      trackName: 'Financial Responsibility',
+      lessons: [
+        {
+          id: 'choices-week-1',
+          title: 'UNDERSTANDING TRADE-OFFS',
+          order: 1,
+          week: 1,
+          stage: 'Awareness',
+          tradeOffWelcome: {
+            weekLabel: 'Week 1 · Choices Module',
+            titleStart: 'Understanding ',
+            titleAccent: 'Trade-offs',
+            intro:
+              "A trade-off happens every time you choose. When you spend your money on one thing, you say goodbye to something else you could have picked. Let's find out how it works!",
+            coinLabel: '🙂',
+            pickSeatIcon: '🍦',
+            pickSeatLabel: 'the ice cream you buy today',
+            giveSeatIcon: '🧸',
+            giveSeatLabel: 'the teddy you were saving for',
+            seesawCaption:
+              'One coin can only sit on one seat. Pick the ice cream and the teddy has to wait — that is a trade-off.',
+            examplesHeading: 'Trade-offs are everywhere',
+            examples: [
+              { pickIcon: '🍬', pickLabel: 'Sweets after school', giveIcon: '🐷', giveLabel: 'Coins in the piggy bank' },
+              { pickIcon: '🎈', pickLabel: 'A balloon at the fair', giveIcon: '🎡', giveLabel: 'A ride on the wheel' },
+              { pickIcon: '✏️', pickLabel: 'New stickers now', giveIcon: '🎨', giveLabel: 'A paint set next week' },
+            ],
+            objectiveLabel: 'Our Objective',
+            objectiveText:
+              'Learners understand that every financial decision involves giving something up.',
+            traitsHeading: 'A smart chooser…',
+            traits: [
+              { icon: '👀', title: 'Looks at both sides', text: 'They see what they get AND what they give up.' },
+              { icon: '⚖️', title: 'Weighs what matters', text: 'They ask which choice is more important to them.' },
+              { icon: '🎯', title: 'Thinks about goals', text: 'They pick what helps the thing they are saving for.' },
+            ],
+            startLabel: "Let's Explore Trade-offs",
+            footerNote: 'A short, friendly lesson for our beginner class.',
+          },
+          exercises: [
+            {
+              id: 'choices-w1-warmup',
+              type: 'trade-off-quiz',
+              order: 1,
+              prompt: 'Warm-Up Game: Trade-off Quiz Machine',
+              badge: 'Warm-Up Game',
+              heading: 'Trade-off Quiz Machine',
+              subtitle: 'Answer each question to collect a gold coin. Fill the whole track to move on!',
+              questions: [
+                {
+                  id: 'toq-q1',
+                  prompt: 'A trade-off means:',
+                  options: [
+                    { id: 'a', text: 'Getting everything you want' },
+                    { id: 'b', text: 'Choosing one thing and giving up another' },
+                    { id: 'c', text: 'Saving all your money' },
+                    { id: 'd', text: 'Spending quickly' },
+                  ],
+                  correctOptionId: 'b',
+                  feedbackText: 'Yes! You pick one thing and let another one go.',
+                },
+                {
+                  id: 'toq-q2',
+                  prompt: 'If you buy a toy instead of saving money, the trade-off is:',
+                  options: [
+                    { id: 'a', text: 'You lose the toy' },
+                    { id: 'b', text: 'You gain more money' },
+                    { id: 'c', text: 'You give up saving for later' },
+                    { id: 'd', text: 'Nothing changes' },
+                  ],
+                  correctOptionId: 'c',
+                  feedbackText: 'Right — the money you spend can no longer be saved.',
+                },
+                {
+                  id: 'toq-q3',
+                  prompt: 'Why are trade-offs important?',
+                  options: [
+                    { id: 'a', text: 'They help us avoid thinking' },
+                    { id: 'b', text: 'They help us make better decisions' },
+                    { id: 'c', text: 'They waste time' },
+                    { id: 'd', text: 'They increase spending' },
+                  ],
+                  correctOptionId: 'b',
+                  feedbackText: 'Exactly — thinking about what you give up leads to smarter choices.',
+                },
+                {
+                  id: 'toq-q4',
+                  prompt: 'Which is the BEST example of a trade-off?',
+                  options: [
+                    { id: 'a', text: 'Buying everything' },
+                    { id: 'b', text: 'Saving and spending at the same time' },
+                    { id: 'c', text: 'Choosing snacks over a book' },
+                    { id: 'd', text: 'Buying a book instead of snacks' },
+                  ],
+                  correctOptionId: 'd',
+                  feedbackText: 'Nice — you picked the book and gave up the snacks.',
+                },
+                {
+                  id: 'toq-q5',
+                  prompt: 'A smart decision considers:',
+                  options: [
+                    { id: 'a', text: 'Only what you want' },
+                    { id: 'b', text: 'Only what is cheap' },
+                    { id: 'c', text: 'Both choices and consequences' },
+                    { id: 'd', text: 'What other people are doing' },
+                  ],
+                  correctOptionId: 'c',
+                  feedbackText: 'That is it — a smart chooser weighs the choice AND what happens next.',
+                },
+              ],
+              allDoneTitle: 'All coins collected! 🎉',
+              allDoneText: 'You can spot a trade-off and explain why it matters. Ready for the next part?',
+              parentNote:
+                'Parents/guardians: please sit with your ward for this exercise and talk each question through together.',
+              continueLabel: 'Continue',
+            },
+            {
+              id: 'choices-w1-story',
+              type: 'story-carousel',
+              order: 2,
+              prompt: 'Mini Story: The Football Boots Decision',
+              heading: 'The Football Boots Decision',
+              subtitle: "Follow Kofi as he works out how to get something he really wants.",
+              slides: [
+                {
+                  image: '/assets/images/choices module/kojo/scene 1.png',
+                  title: "Kofi's Two Wishes",
+                  text: 'Kofi wanted new football boots. He also wanted to buy snacks every day after school.',
+                },
+                {
+                  image: '/assets/images/choices module/kojo/scene 2.png',
+                  title: 'Not Enough for Both',
+                  text: 'When Kofi counted his money, he realised he did not have enough for the boots AND snacks every day.',
+                },
+                {
+                  image: '/assets/images/choices module/kojo/scene 3.png',
+                  title: 'Kofi Thinks It Through',
+                  text: 'He thought carefully. "If I keep buying snacks," he said, "I won\'t get the boots."',
+                },
+                {
+                  image: '/assets/images/choices module/kojo/scene 4.png',
+                  title: 'Kofi Cuts Back on Snacks',
+                  text: 'So Kofi decided to buy fewer snacks after school.',
+                },
+                {
+                  image: '/assets/images/choices module/kojo/scene 5.png',
+                  title: 'Kofi Saves the Money',
+                  text: "Every day, the money he did not spend on snacks went straight into his savings.",
+                },
+                {
+                  image: '/assets/images/choices module/kojo/scene 6.png',
+                  title: 'A Few Weeks Later',
+                  text: 'Little by little his savings grew. After a few weeks, Kofi had enough — and he bought the football boots!',
+                },
+                {
+                  image: '/assets/images/choices module/kojo/scene 7.png',
+                  title: 'What Kofi Learned',
+                  text: 'Kofi learned that good decisions mean giving up something now to get something you want more later.',
+                },
+              ],
+              takeHome: 'Good decisions require giving up something.',
+              continueLabel: 'Continue',
+            },
+            {
+              id: 'choices-w1-discussion',
+              type: 'discussion-quiz',
+              order: 3,
+              prompt: 'Think & Apply',
+              heading: 'Think & Apply',
+              subtitle: "Think back to Kofi's story. Pick the best answer for each question — a wrong pick lets you try again.",
+              questions: [
+                {
+                  id: 'choices-w1-dq1',
+                  prompt: 'What did Kofi want?',
+                  options: [
+                    { id: 'a', text: 'Books and clothes' },
+                    { id: 'b', text: 'Boots and snacks' },
+                    { id: 'c', text: 'Shoes and games' },
+                    { id: 'd', text: 'Food and water' },
+                  ],
+                  correctOptionId: 'b',
+                  feedbackText: 'Right — football boots AND snacks every day.',
+                },
+                {
+                  id: 'choices-w1-dq2',
+                  prompt: 'What was the trade-off?',
+                  options: [
+                    { id: 'a', text: 'Giving up school' },
+                    { id: 'b', text: 'Giving up saving' },
+                    { id: 'c', text: 'Giving up snacks to save money' },
+                    { id: 'd', text: 'Giving up the boots' },
+                  ],
+                  correctOptionId: 'c',
+                  feedbackText: 'Yes — he let go of daily snacks so he could save.',
+                },
+                {
+                  id: 'choices-w1-dq3',
+                  prompt: 'Why did Kofi succeed?',
+                  options: [
+                    { id: 'a', text: 'He spent more' },
+                    { id: 'b', text: 'He planned his choices' },
+                    { id: 'c', text: 'He ignored the problem' },
+                    { id: 'd', text: 'He borrowed money' },
+                  ],
+                  correctOptionId: 'b',
+                  feedbackText: 'Exactly — he thought ahead and made a plan.',
+                },
+                {
+                  id: 'choices-w1-dq4',
+                  prompt: 'What is the key lesson?',
+                  options: [
+                    { id: 'a', text: 'Spend freely' },
+                    { id: 'b', text: 'Avoid making choices' },
+                    { id: 'c', text: 'Trade-offs help you achieve goals' },
+                    { id: 'd', text: 'Buy quickly' },
+                  ],
+                  correctOptionId: 'c',
+                  feedbackText: 'That is it — giving something up can help you reach a bigger goal.',
+                },
+                {
+                  id: 'choices-w1-dq5',
+                  prompt: 'What type of thinking did Kofi use?',
+                  options: [
+                    { id: 'a', text: 'Careless thinking' },
+                    { id: 'b', text: 'Emotional thinking' },
+                    { id: 'c', text: 'Random thinking' },
+                    { id: 'd', text: 'Planned decision-making' },
+                  ],
+                  correctOptionId: 'd',
+                  feedbackText: 'Yes — Kofi used planned decision-making.',
+                },
+              ],
+              reviewHeading: 'Your answers',
+              recapHeading: 'Remember',
+              recapPoints: [
+                'Every choice has a trade-off — you give something up.',
+                'Planning your choices helps you reach your goals.',
+              ],
+              continueLabel: 'Continue',
+            },
+            {
+              id: 'choices-w1-challenge',
+              type: 'trade-off-tracker-challenge',
+              order: 4,
+              prompt: 'Challenge of the Week: My Trade-Off Tracker',
+              badge: 'Challenge of the Week',
+              title: 'My Trade-Off Tracker',
+              intro:
+                'For 5 days, notice one choice you made each day. Write down what you chose and what you gave up.',
+              dayCount: 5,
+              spotLabel: 'I spotted one choice I made today.',
+              chooseLabel: 'What did I choose?',
+              choosePlaceholder: 'Today I chose…',
+              giveLabel: 'What did I give up?',
+              givePlaceholder: 'To do that, I gave up…',
+              saveDayLabel: 'Save Day',
+              progressLabel: 'days logged',
+              parentNote:
+                'Parents/guardians: please help your ward each day — talk about the choice they made and what they gave up before they write it down.',
+              allDoneTitle: 'Five days done! 🌟',
+              allDoneText: 'You noticed a trade-off every single day this week. That is exactly how smart choosers think.',
+              completeLabel: 'Finish the Challenge',
+            },
+            {
+              id: 'choices-w1-confidence',
+              type: 'trade-off-confidence-link',
+              order: 5,
+              prompt: 'Confidence Link',
+              badge: 'Confidence Link',
+              weekLabel: 'Week 1',
+              statement: 'I understand trade-offs and make smart choices.',
+              sayItLabel: 'Say it out loud',
+              saidItLabel: 'I said it out loud!',
+              reinforceLine:
+                'Every time you choose one thing over another, you are practising a skill that helps you reach your goals.',
+              completeLabel: 'Complete Week 1',
+            },
+          ],
+        },
+        {
+          id: 'choices-week-2',
+          title: 'BUDGETING & PLANNING',
+          order: 2,
+          week: 2,
+          stage: 'Awareness',
+          budgetPlanWelcome: {
+            weekLabel: 'Week 2 · Choices Module',
+            titleStart: 'Budgeting & ',
+            titleAccent: 'Planning',
+            intro:
+              'A budget is a simple plan for your money. Before you spend, you decide how much goes to saving, how much to spending, and how much toward something big you want.',
+            shelfLabel: 'A simple money plan',
+            jars: [
+              { icon: '🐷', name: 'Save', note: 'money you keep for later' },
+              { icon: '🛒', name: 'Spend', note: 'money for small things now' },
+              { icon: '🎯', name: 'Goal', note: 'money for something big you want' },
+            ],
+            jarsCaption:
+              'When your money has a job before you spend it, it is much easier to reach the things you really want.',
+            objectiveLabel: 'Our Objective',
+            objectiveText: 'Learners understand how to plan and manage money.',
+            traitsHeading: 'A good money planner…',
+            traits: [
+              { icon: '📝', title: 'Makes a plan first', text: 'They decide where money goes before they spend it.' },
+              { icon: '🐷', title: 'Always saves some', text: 'A little bit is set aside every time.' },
+              { icon: '🎯', title: 'Keeps the goal in view', text: 'They remember what they are saving up for.' },
+            ],
+            startLabel: "Let's Make a Money Plan",
+            footerNote: 'A short, friendly lesson for our beginner class.',
+          },
+          exercises: [
+            {
+              id: 'choices-w2-warmup',
+              type: 'money-match',
+              order: 1,
+              prompt: 'Warm-Up Game: Money Match',
+              badge: 'Warm-Up Game',
+              heading: 'Money Match',
+              subtitle: 'Match each money word to what it really means. Match all four to move on!',
+              termHeading: 'Money word',
+              meaningHeading: 'What it means',
+              pairs: [
+                { id: 'budget', term: 'Budget', meaning: 'Planning how to use money' },
+                { id: 'saving', term: 'Saving', meaning: 'Keeping money for later' },
+                { id: 'spending', term: 'Spending', meaning: 'Using money' },
+                { id: 'planning', term: 'Planning', meaning: 'Thinking before deciding' },
+              ],
+              parentNote:
+                'Parents/guardians: please sit with your ward for this exercise and talk through what each money word means.',
+              allDoneTitle: 'Board cleared! 💰',
+              allDoneText: 'You matched every money word to its meaning. Now you are ready to build a plan.',
+              continueLabel: 'Continue',
+            },
+            {
+              id: 'choices-w2-story',
+              type: 'story-carousel',
+              order: 2,
+              prompt: "Mini Story: Ama's Weekly Budget",
+              heading: "Ama's Weekly Budget",
+              subtitle: 'See how a simple weekly plan changed things for Ama.',
+              slides: [
+                {
+                  image: '/assets/images/choices module/Ama/scene 1.png',
+                  title: "Ama's Weekly Money",
+                  text: 'Ama received a little money every week.',
+                },
+                {
+                  image: '/assets/images/choices module/Ama/scene 2.png',
+                  title: 'A Simple Plan',
+                  text: 'Before she spent any of it, Ama made a simple plan for where her money would go.',
+                },
+                {
+                  image: '/assets/images/choices module/Ama/scene 3.png',
+                  title: 'Part 1: School Needs',
+                  text: 'First, she set aside money for the things she needed for school.',
+                },
+                {
+                  image: '/assets/images/choices module/Ama/scene 4.png',
+                  title: 'Part 2: Savings',
+                  text: 'Next, she put some money into her savings — every single week.',
+                },
+                {
+                  image: '/assets/images/choices module/Ama/scene 5.png',
+                  title: 'Part 3: A Small Treat',
+                  text: 'Last, she kept a little for one small treat she could enjoy.',
+                },
+                {
+                  image: '/assets/images/choices module/Ama/scene 6.png',
+                  title: 'Hard at First',
+                  text: 'Sticking to the plan was difficult at first — it was tempting to spend it all at once.',
+                },
+                {
+                  image: '/assets/images/choices module/Ama/scene 7.png',
+                  title: 'It Got Easier',
+                  text: 'Over time, Ama stopped running out of money, and she started saving more and more.',
+                },
+                {
+                  image: '/assets/images/choices module/Ama/scene 8.png',
+                  title: 'Planning Gives Control',
+                  text: 'Her friends often had nothing left by the weekend — but Ama always did. She realised that planning your money gives you control.',
+                },
+              ],
+              takeHome: 'Planning gives you control of your money.',
+              continueLabel: 'Continue',
+            },
+            {
+              id: 'choices-w2-discussion',
+              type: 'discussion-quiz',
+              order: 3,
+              prompt: 'Think & Apply',
+              heading: 'Think & Apply',
+              subtitle: 'Pick the result each money habit leads to — a wrong pick lets you try again.',
+              questions: [
+                {
+                  id: 'choices-w2-dq1',
+                  prompt: 'What does budgeting lead to?',
+                  options: [
+                    { id: 'a', text: 'No control' },
+                    { id: 'b', text: 'Better control' },
+                    { id: 'c', text: 'Confusion' },
+                    { id: 'd', text: 'Running out of money' },
+                  ],
+                  correctOptionId: 'b',
+                  feedbackText: 'Right — a budget puts you in control of your money.',
+                },
+                {
+                  id: 'choices-w2-dq2',
+                  prompt: 'What happens when you spend everything?',
+                  options: [
+                    { id: 'a', text: 'Your savings grow' },
+                    { id: 'b', text: 'No money left' },
+                    { id: 'c', text: 'Better control' },
+                    { id: 'd', text: 'Money for the future' },
+                  ],
+                  correctOptionId: 'b',
+                  feedbackText: 'Yes — spend it all now and there is nothing left later.',
+                },
+                {
+                  id: 'choices-w2-dq3',
+                  prompt: 'What does saving money lead to?',
+                  options: [
+                    { id: 'a', text: 'Confusion' },
+                    { id: 'b', text: 'No money left' },
+                    { id: 'c', text: 'Money for future use' },
+                    { id: 'd', text: 'Less control' },
+                  ],
+                  correctOptionId: 'c',
+                  feedbackText: 'Exactly — saved money is there when you need it later.',
+                },
+                {
+                  id: 'choices-w2-dq4',
+                  prompt: 'What does planning ahead lead to?',
+                  options: [
+                    { id: 'a', text: 'Clear decisions' },
+                    { id: 'b', text: 'Confusion' },
+                    { id: 'c', text: 'No money left' },
+                    { id: 'd', text: 'Spending faster' },
+                  ],
+                  correctOptionId: 'a',
+                  feedbackText: 'That is it — planning ahead makes your choices clear.',
+                },
+              ],
+              reviewHeading: 'Your answers',
+              recapHeading: 'Recap',
+              recapPoints: [
+                'Budgeting gives control.',
+                'Planning prevents waste.',
+                'Saving supports future goals.',
+              ],
+              continueLabel: 'Continue',
+            },
+            {
+              id: 'choices-w2-challenge',
+              type: 'simple-budget-challenge',
+              order: 4,
+              prompt: 'Challenge of the Week: My Simple Budget',
+              badge: 'Challenge of the Week',
+              title: 'My Simple Budget',
+              intro: 'Make a simple plan for your money this week, then come back and tell us if you followed it.',
+              planHeading: 'Create a plan for your money',
+              spendLabel: 'Spend',
+              spendPlaceholder: 'e.g. snacks and bus fare',
+              saveLabel: 'Save',
+              savePlaceholder: 'e.g. put in my piggy bank',
+              useLaterLabel: 'Use later',
+              useLaterPlaceholder: 'e.g. save toward a new book',
+              trackHeading: 'Track',
+              trackQuestion: 'Did I follow my plan?',
+              yesLabel: 'YES',
+              noLabel: 'NO',
+              parentNote:
+                'Parents/guardians: please help your ward make the plan and check in with them during the week about whether they followed it.',
+              allDoneTitle: 'Plan made! 📋',
+              allDoneText: 'You have a simple budget for your money. Following a plan gets easier every week.',
+              completeLabel: 'Finish the Challenge',
+            },
+            {
+              id: 'choices-w2-confidence',
+              type: 'budget-confidence-link',
+              order: 5,
+              prompt: 'Confidence Link',
+              badge: 'Confidence Link',
+              weekLabel: 'Week 2',
+              statement: 'I can plan and manage my money.',
+              sayItLabel: 'Say it out loud',
+              stampLabel: 'Stamp my card',
+              stampedLabel: 'APPROVED',
+              reinforceLine:
+                'When you plan where your money goes, you stay in control — and you can reach the things you are saving for.',
+              completeLabel: 'Complete Week 2',
+            },
+          ],
+        },
+        {
+          id: 'choices-week-3',
+          title: 'CONSEQUENCES OF MONEY CHOICES',
+          order: 3,
+          week: 3,
+          stage: 'Awareness',
+          consequenceChainWelcome: {
+            weekLabel: 'Week 3 · Choices Module',
+            titleStart: 'Consequences of ',
+            titleAccent: 'Money Choices',
+            intro:
+              'Every choice you make with money leads to something. Some results come right away, and some come much later. This week we look at what happens after we spend or save.',
+            chainLabel: 'One choice starts a chain',
+            dominoes: [
+              { icon: '🪙', label: 'You spend it all on sweets' },
+              { icon: '😋', label: 'Yummy right now' },
+              { icon: '💸', label: 'No money for the school trip' },
+              { icon: '😕', label: 'You miss out later' },
+            ],
+            chainCaption:
+              'The first choice tips over everything after it. Thinking about the whole chain helps you choose well.',
+            objectiveLabel: 'Our Objective',
+            objectiveText: 'Learners understand that financial choices have consequences.',
+            traitsHeading: 'A thoughtful spender…',
+            traits: [
+              { icon: '🔮', title: 'Thinks ahead', text: 'They picture what happens after they spend or save.' },
+              { icon: '⚖️', title: 'Weighs good and bad', text: 'Every choice has an upside and a downside.' },
+              { icon: '🔁', title: 'Learns from last time', text: 'They remember how past choices turned out.' },
+            ],
+            startLabel: "Let's Follow the Chain",
+            footerNote: 'A short, friendly lesson for our beginner class.',
+          },
+          exercises: [
+            {
+              id: 'choices-w3-warmup',
+              type: 'money-myth-buster',
+              order: 1,
+              prompt: 'Warm-Up Game: Money Myth Buster',
+              badge: 'Warm-Up Game',
+              heading: 'Money Myth Buster',
+              subtitle: 'Read each claim about money choices. Stamp it FACT or MYTH — settle all five cases to move on.',
+              factLabel: 'FACT',
+              mythLabel: 'MYTH',
+              statements: [
+                {
+                  id: 'mmb-1',
+                  text: 'Every money choice has a result.',
+                  isFact: true,
+                  feedbackText: 'True — spending or saving always leads to something.',
+                },
+                {
+                  id: 'mmb-2',
+                  text: 'Spending does not affect the future.',
+                  isFact: false,
+                  feedbackText: 'Myth — money you spend now is not there for you later.',
+                },
+                {
+                  id: 'mmb-3',
+                  text: 'Saving helps later.',
+                  isFact: true,
+                  feedbackText: 'True — saved money is ready when you need it.',
+                },
+                {
+                  id: 'mmb-4',
+                  text: 'Poor choices have no effect.',
+                  isFact: false,
+                  feedbackText: 'Myth — a poor choice can leave you with nothing when it matters.',
+                },
+                {
+                  id: 'mmb-5',
+                  text: 'Thinking helps you make better decisions.',
+                  isFact: true,
+                  feedbackText: 'True — stopping to think leads to smarter money choices.',
+                },
+              ],
+              parentNote:
+                'Parents/guardians: please sit with your ward for this exercise and talk through why each claim is a fact or a myth.',
+              allDoneTitle: 'All cases closed! 🕵️',
+              allDoneText: 'You busted the myths and confirmed the facts. Money choices really do have consequences.',
+              continueLabel: 'Continue',
+            },
+            {
+              id: 'choices-w3-story',
+              type: 'story-carousel',
+              order: 2,
+              prompt: "Mini Story: Yaw's Quick Spending",
+              heading: "Yaw's Quick Spending",
+              subtitle: 'See what happens when Yaw spends his money the moment he gets it.',
+              slides: [
+                {
+                  image: '/assets/images/choices module/yaw/scene 1.png',
+                  title: "Yaw's Money",
+                  text: 'Yaw received some money.',
+                },
+                {
+                  image: '/assets/images/choices module/yaw/scene 2.png',
+                  title: 'Straight to Games',
+                  text: 'He spent it all on games right away.',
+                },
+                {
+                  image: '/assets/images/choices module/yaw/scene 3.png',
+                  title: 'A Problem at School',
+                  text: 'Later, Yaw needed money for a school item — but he had none left.',
+                },
+                {
+                  image: '/assets/images/choices module/yaw/scene 4.png',
+                  title: 'Disappointed',
+                  text: 'Yaw felt really disappointed.',
+                },
+                {
+                  image: '/assets/images/choices module/yaw/scene 5.png',
+                  title: 'A New Plan',
+                  text: 'Next time, Yaw decided: save first.',
+                },
+                {
+                  image: '/assets/images/choices module/yaw/scene 6.png',
+                  title: 'Spend Later',
+                  text: 'Only after saving would he spend on fun things.',
+                },
+                {
+                  image: '/assets/images/choices module/yaw/scene 7.png',
+                  title: 'No More Problem',
+                  text: 'This time, when Yaw needed money, he had it. He avoided the same problem.',
+                },
+                {
+                  image: '/assets/images/choices module/yaw/scene 8.png',
+                  title: 'What Yaw Learned',
+                  text: 'Yaw learned that the choices you make today affect tomorrow.',
+                },
+              ],
+              takeHome: 'Choices today affect tomorrow.',
+              continueLabel: 'Continue',
+            },
+            {
+              id: 'choices-w3-discussion',
+              type: 'discussion-quiz',
+              order: 3,
+              prompt: 'Think & Apply',
+              heading: 'Think & Apply',
+              subtitle: "Think back to Yaw's story. Choose True or False — a wrong pick lets you try again.",
+              questions: [
+                {
+                  id: 'choices-w3-dq1',
+                  prompt: 'Yaw planned his spending.',
+                  options: [
+                    { id: 'true', text: 'True' },
+                    { id: 'false', text: 'False' },
+                  ],
+                  correctOptionId: 'false',
+                  feedbackText: 'False — Yaw spent his money the moment he got it, with no plan.',
+                },
+                {
+                  id: 'choices-w3-dq2',
+                  prompt: 'Yaw had money when he needed it.',
+                  options: [
+                    { id: 'true', text: 'True' },
+                    { id: 'false', text: 'False' },
+                  ],
+                  correctOptionId: 'false',
+                  feedbackText: 'False — when the school item came up, he had none left.',
+                },
+                {
+                  id: 'choices-w3-dq3',
+                  prompt: 'His choice caused a problem.',
+                  options: [
+                    { id: 'true', text: 'True' },
+                    { id: 'false', text: 'False' },
+                  ],
+                  correctOptionId: 'true',
+                  feedbackText: 'True — spending it all left him stuck later.',
+                },
+                {
+                  id: 'choices-w3-dq4',
+                  prompt: 'He improved next time.',
+                  options: [
+                    { id: 'true', text: 'True' },
+                    { id: 'false', text: 'False' },
+                  ],
+                  correctOptionId: 'true',
+                  feedbackText: 'True — next time he saved first and spent later.',
+                },
+                {
+                  id: 'choices-w3-dq5',
+                  prompt: 'Saving would have helped.',
+                  options: [
+                    { id: 'true', text: 'True' },
+                    { id: 'false', text: 'False' },
+                  ],
+                  correctOptionId: 'true',
+                  feedbackText: 'True — a little saved money would have covered the school item.',
+                },
+              ],
+              reviewHeading: 'Your answers',
+              recapHeading: 'Recap',
+              recapPoints: [
+                'Choices have consequences.',
+                'Poor decisions lead to problems.',
+                'Good habits prevent issues.',
+              ],
+              continueLabel: 'Continue',
+            },
+            {
+              id: 'choices-w3-challenge',
+              type: 'think-ahead-challenge',
+              order: 4,
+              prompt: 'Challenge of the Week: Think Ahead Challenge',
+              badge: 'Challenge of the Week',
+              title: 'Think Ahead Challenge',
+              intro: 'For 5 days, stop before you spend and picture what happens next. Then write down one decision and how it turned out.',
+              dayCount: 5,
+              askLabel: 'Before I spent, I asked: "What will happen after this?"',
+              decisionLabel: 'One decision I made',
+              decisionPlaceholder: 'Today I decided to…',
+              resultLabel: 'Its result',
+              resultPlaceholder: 'What happened afterwards was…',
+              saveDayLabel: 'Save Day',
+              progressLabel: 'days recorded',
+              parentNote:
+                'Parents/guardians: please help your ward each day — pause with them before a spending decision and talk about what could happen next.',
+              allDoneTitle: 'Five days of thinking ahead! 🔮',
+              allDoneText: 'You stopped to picture the consequences before every choice this week. That habit protects your money.',
+              completeLabel: 'Finish the Challenge',
+            },
+            {
+              id: 'choices-w3-confidence',
+              type: 'consequence-confidence-link',
+              order: 5,
+              prompt: 'Confidence Link',
+              badge: 'Confidence Link',
+              weekLabel: 'Week 3',
+              statement: 'I think about the consequences before I spend.',
+              sayItLabel: 'Say it out loud',
+              saidItLabel: 'I said it out loud!',
+              reinforceLine:
+                'Picturing what happens next — right away and later — helps you make money choices you will be glad about.',
+              completeLabel: 'Complete Week 3',
+            },
+          ],
+        },
+        {
+          id: 'choices-week-4',
+          title: 'SMART FINANCIAL DECISION-MAKING',
+          order: 4,
+          week: 4,
+          stage: 'Awareness',
+          smartDecisionWelcome: {
+            weekLabel: 'Week 4 · Choices Module',
+            titleStart: 'Smart Financial ',
+            titleAccent: 'Decision-Making',
+            intro:
+              'A smart money decision is not a lucky guess. It is a set of questions you work through, one at a time, before you spend.',
+            checklistLabel: 'The Smart Money Checklist',
+            steps: [
+              { icon: '🎯', question: 'What do I want?' },
+              { icon: '🏷️', question: 'What does it cost?' },
+              { icon: '💰', question: 'Can I afford it right now?' },
+              { icon: '⚖️', question: 'What do I give up to get it?' },
+              { icon: '🔮', question: 'Will I be glad about this later?' },
+            ],
+            resultLabel: 'Smart choice',
+            checklistCaption:
+              'Work down the list every time, and your money decisions stop being guesses.',
+            objectiveLabel: 'Our Objective',
+            objectiveText: 'Learners apply structured thinking to financial decisions.',
+            traitsHeading: 'A smart decision-maker…',
+            traits: [
+              { icon: '🧭', title: 'Follows the steps', text: 'They check each question before they decide.' },
+              { icon: '🐢', title: 'Takes their time', text: 'They do not rush into buying things.' },
+              { icon: '🎯', title: 'Chooses on purpose', text: 'They pick what fits their goals, not the moment.' },
+            ],
+            startLabel: "Let's Use the Checklist",
+            footerNote: 'A short, friendly lesson for our beginner class.',
+          },
+          exercises: [
+            {
+              id: 'choices-w4-warmup',
+              type: 'step-sequence',
+              order: 1,
+              prompt: 'Warm-Up Game: Step Sorter',
+              badge: 'Warm-Up Game',
+              heading: 'Step Sorter',
+              subtitle: 'Tap the steps into slots 1, 2, 3 to put each process in order. Sort all five to move on.',
+              checkLabel: 'Check the order',
+              questions: [
+                { id: 'seq-q1', title: 'Smart Decision Steps', steps: ['Think', 'Decide', 'Review'] },
+                {
+                  id: 'seq-q2',
+                  title: 'Spending Process',
+                  steps: ['Identify the need', 'Compare options', 'Choose wisely'],
+                },
+                { id: 'seq-q3', title: 'Saving Process', steps: ['Set a goal', 'Save regularly', 'Use it later'] },
+                { id: 'seq-q4', title: 'Avoiding Poor Choices', steps: ['Pause', 'Think', 'Act'] },
+                { id: 'seq-q5', title: 'Financial Growth', steps: ['Learn', 'Apply', 'Improve'] },
+              ],
+              parentNote:
+                'Parents/guardians: please sit with your ward for this exercise and talk through why each step comes before the next.',
+              allDoneTitle: 'Every process sorted! 🏭',
+              allDoneText: 'You put all five money processes in the right order. Smart decisions follow steps.',
+              continueLabel: 'Continue',
+            },
+            {
+              id: 'choices-w4-story',
+              type: 'story-carousel',
+              order: 2,
+              prompt: 'Mini Story: The Smart Planner',
+              heading: 'The Smart Planner',
+              subtitle: 'Follow Nana as she saves up for something she really wants.',
+              slides: [
+                {
+                  image: '',
+                  title: "Nana's Big Goal",
+                  text: 'Nana wanted to buy a bicycle.',
+                },
+                {
+                  image: '',
+                  title: "She Didn't Rush",
+                  text: 'Instead of rushing to spend her money, Nana made a plan.',
+                },
+                {
+                  image: '',
+                  title: 'Set a Goal',
+                  text: 'First, she set a clear goal: the bicycle.',
+                },
+                {
+                  image: '',
+                  title: 'Saved Every Week',
+                  text: 'Each week, she put some of her money away for it.',
+                },
+                {
+                  image: '',
+                  title: 'Skipped the Extras',
+                  text: 'She said no to spending on things she did not really need.',
+                },
+                {
+                  image: '',
+                  title: 'Her Friends Ran Out',
+                  text: 'Her friends spent their money quickly and soon had nothing left.',
+                },
+                {
+                  image: '',
+                  title: "Nana's Bicycle",
+                  text: 'After some time, Nana had saved enough — and she bought her bicycle!',
+                },
+                {
+                  image: '',
+                  title: 'Proud of Herself',
+                  text: 'She felt proud — not just about the bicycle, but about her discipline. Nana learned that planning leads to success.',
+                },
+              ],
+              takeHome: 'Planning leads to success.',
+              continueLabel: 'Continue',
+            },
+            {
+              id: 'choices-w4-discussion',
+              type: 'discussion-quiz',
+              order: 3,
+              prompt: 'Think & Apply',
+              heading: 'Think & Apply',
+              subtitle: "Put Nana's actions in order. Choose the right action for each step — a wrong pick lets you try again.",
+              questions: [
+                {
+                  id: 'choices-w4-dq1',
+                  prompt: 'Which did Nana do FIRST?',
+                  options: [
+                    { id: 'a', text: 'Save regularly' },
+                    { id: 'b', text: 'Set a goal' },
+                    { id: 'c', text: 'Avoid unnecessary spending' },
+                    { id: 'd', text: 'Achieve the goal' },
+                  ],
+                  correctOptionId: 'b',
+                  feedbackText: 'Right — first she decided what she was saving for.',
+                },
+                {
+                  id: 'choices-w4-dq2',
+                  prompt: 'What did Nana do SECOND?',
+                  options: [
+                    { id: 'a', text: 'Set a goal' },
+                    { id: 'b', text: 'Save regularly' },
+                    { id: 'c', text: 'Achieve the goal' },
+                    { id: 'd', text: 'Spend it all quickly' },
+                  ],
+                  correctOptionId: 'b',
+                  feedbackText: 'Yes — she put money away every week.',
+                },
+                {
+                  id: 'choices-w4-dq3',
+                  prompt: 'What did Nana do THIRD?',
+                  options: [
+                    { id: 'a', text: 'Avoid unnecessary spending' },
+                    { id: 'b', text: 'Set a goal' },
+                    { id: 'c', text: 'Achieve the goal' },
+                    { id: 'd', text: 'Save regularly' },
+                  ],
+                  correctOptionId: 'a',
+                  feedbackText: 'Exactly — she said no to spending she did not need.',
+                },
+                {
+                  id: 'choices-w4-dq4',
+                  prompt: 'What came LAST?',
+                  options: [
+                    { id: 'a', text: 'Set a goal' },
+                    { id: 'b', text: 'Save regularly' },
+                    { id: 'c', text: 'Achieve the goal' },
+                    { id: 'd', text: 'Avoid unnecessary spending' },
+                  ],
+                  correctOptionId: 'c',
+                  feedbackText: 'That is it — after the steps, she reached her goal and bought the bicycle.',
+                },
+              ],
+              reviewHeading: 'Your answers',
+              recapHeading: 'Recap',
+              recapPoints: [
+                'Smart decisions follow steps.',
+                'Planning leads to success.',
+                'Discipline builds results.',
+              ],
+              continueLabel: 'Continue',
+            },
+            {
+              id: 'choices-w4-challenge',
+              type: 'financial-audit-challenge',
+              order: 4,
+              prompt: 'Final Challenge: My Financial Decision Audit',
+              badge: 'Final Challenge',
+              title: 'My Financial Decision Audit',
+              intro: 'For 5 days, check off the money habits you kept. Then finish the structured reflection.',
+              dayCount: 5,
+              auditItems: [
+                'I made thoughtful choices',
+                'I considered trade-offs',
+                'I followed my plan',
+                'I avoided waste',
+              ],
+              dayLoggedLabel: 'Log Day',
+              progressLabel: 'days logged',
+              reflectionHeading: 'Structured Reflection',
+              reflectionIntro: 'Look back over your week and complete each line.',
+              reflectionFields: [
+                { id: 'decision', label: 'One smart decision I made', placeholder: 'I decided to…' },
+                { id: 'tradeoff', label: 'One trade-off I managed', placeholder: 'I chose … over …' },
+                { id: 'habit', label: 'One habit I improved', placeholder: 'I got better at…' },
+              ],
+              parentNote:
+                'Parents/guardians: please check in with your ward each day and help them think through the reflection at the end of the week.',
+              allDoneTitle: 'Audit complete! 🧾',
+              allDoneText: 'Five days of thoughtful money habits, and a reflection to match. You have built real financial discipline.',
+              completeLabel: 'Finish the Challenge',
+            },
+            {
+              id: 'choices-w4-confidence',
+              type: 'module-outcome-confidence-link',
+              order: 5,
+              prompt: 'Confidence Link',
+              badge: 'Confidence Link',
+              weekLabel: 'Week 4 · Module Finale',
+              statement: 'I make smart financial decisions for my future.',
+              sayItLabel: 'Say it out loud',
+              saidItLabel: 'I said it out loud!',
+              outcomeHeading: 'Skills you built in this module',
+              outcomes: [
+                'Understand trade-offs',
+                'Plan and budget money',
+                'Evaluate consequences',
+                'Make structured financial decisions',
+                'Develop financial discipline',
+              ],
+              reinforceLine:
+                'You can spot a trade-off, plan your money, think about consequences, and work through a decision step by step. Those skills are yours to keep.',
+              completeLabel: 'Complete the Module',
+            },
+          ],
+        },
+      ],
+    };
+
     // Every seed record below is upserted by a fixed id instead of overwriting
     // the whole collection with `saveAll` — that way, if this ever runs more
     // than once (e.g. a future schema change bumps SEED_FLAG again), it can
@@ -11645,6 +12635,7 @@ export class SeedDataService {
     this.db.upsert(COLLECTIONS.modules, creativityModule);
     this.db.upsert(COLLECTIONS.modules, strategizingModule);
     this.db.upsert(COLLECTIONS.modules, thinkingModule);
+    this.db.upsert(COLLECTIONS.modules, choicesModule);
 
     const ava: Student = {
       id: 'student-1',
@@ -11674,6 +12665,7 @@ export class SeedDataService {
         creativityModule.id,
         strategizingModule.id,
         thinkingModule.id,
+        choicesModule.id,
       ],
       ageGroup: 'beginner',
     };
@@ -11706,6 +12698,7 @@ export class SeedDataService {
         creativityModule.id,
         strategizingModule.id,
         thinkingModule.id,
+        choicesModule.id,
       ],
       ageGroup: 'advanced',
     };

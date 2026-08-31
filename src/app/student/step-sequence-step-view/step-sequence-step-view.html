@@ -1,0 +1,67 @@
+<div class="seq">
+  <div class="seq-belt">
+    <header class="seq-head">
+      <span class="seq-badge">{{ step().badge }}</span>
+      <h2 class="seq-heading">{{ step().heading }}</h2>
+      <p class="seq-subtitle">{{ step().subtitle }}</p>
+    </header>
+
+    <div class="seq-progress" role="progressbar" [attr.aria-valuenow]="activeIndex()"
+      [attr.aria-valuemax]="questions().length" aria-label="Questions ordered">
+      @for (done of progress(); track $index) {
+        <span class="seq-pip" [class.seq-pip--done]="done">{{ $index + 1 }}</span>
+      }
+    </div>
+
+    @if (!allDone()) {
+      @if (current(); as q) {
+        <div class="seq-card" [class.seq-card--shake]="wrong()" [class.seq-card--solved]="solved()">
+          <span class="seq-qtitle">{{ q.title }}</span>
+          <p class="seq-instruction">Put the steps in the right order.</p>
+
+          <ol class="seq-slots">
+            @for (slot of slots(); track $index; let s = $index) {
+              <li class="seq-slot" [class.seq-slot--filled]="slot !== null">
+                <span class="seq-slot-num" aria-hidden="true">{{ s + 1 }}</span>
+                @if (slot !== null) {
+                  <button type="button" class="seq-chip seq-chip--placed" [disabled]="solved()"
+                    (click)="clearSlot(s)">{{ stepText(slot) }}</button>
+                } @else {
+                  <span class="seq-slot-empty">—</span>
+                }
+              </li>
+            }
+          </ol>
+
+          @if (tray().length) {
+            <div class="seq-tray">
+              @for (stepIndex of tray(); track stepIndex) {
+                <button type="button" class="seq-chip" (click)="placeStep(stepIndex)">{{ stepText(stepIndex) }}</button>
+              }
+            </div>
+          }
+
+          <p class="seq-feedback" aria-live="polite">
+            @if (solved()) { <span class="seq-feedback--good">✅ Perfect order!</span> }
+            @else if (wrong()) { <span class="seq-feedback--bad">Not quite — tap a slot to move a step.</span> }
+          </p>
+
+          <button type="button" class="seq-check" [disabled]="!allFilled() || solved()" (click)="check()">
+            {{ step().checkLabel }}
+          </button>
+        </div>
+      }
+    } @else {
+      <div class="seq-done">
+        <span class="seq-done-mark" aria-hidden="true">🏭</span>
+        <h3>{{ step().allDoneTitle }}</h3>
+        <p>{{ step().allDoneText }}</p>
+        <button type="button" class="seq-continue" (click)="finish()">{{ step().continueLabel }} →</button>
+      </div>
+    }
+  </div>
+
+  <p class="seq-parent-note">
+    <span aria-hidden="true">👪</span> {{ step().parentNote }}
+  </p>
+</div>

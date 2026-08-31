@@ -1,0 +1,228 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- Module Outcome Confidence Link (mocl) — Choices Module finale ---- */
+$mocl-ink: #14332a;
+$mocl-green: #12855a;
+$mocl-green-deep: #0c5f41;
+$mocl-gold: #d99e1f;
+$mocl-bg: #eef8f2;
+$mocl-bg-2: #dcefe4;
+$mocl-cert: #fffdf5;
+
+.mocl {
+  max-width: 34rem;
+  margin: 0 auto;
+  padding: 2.4rem clamp(1rem, 4vw, 2.5rem) 2.6rem;
+  text-align: center;
+  border-radius: v.$border-radius-xl;
+  color: $mocl-ink;
+  background: radial-gradient(circle at 50% 12%, $mocl-bg 0%, $mocl-bg-2 100%);
+}
+
+.mocl-badge {
+  display: inline-block;
+  padding: 0.32rem 1rem;
+  border-radius: v.$border-radius-pill;
+  background: $mocl-green;
+  color: v.$color-white;
+  font-weight: 800;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.mocl-week {
+  display: block;
+  margin-top: 0.6rem;
+  font-weight: 800;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba($mocl-ink, 0.55);
+}
+
+/* --- certificate --- */
+.mocl-cert {
+  position: relative;
+  max-width: 24rem;
+  margin: 1.6rem auto 1.3rem;
+  padding: 1.6rem 1.4rem 1.5rem;
+  border-radius: v.$border-radius-lg;
+  background: $mocl-cert;
+  border: 3px double $mocl-gold;
+  box-shadow: 0 8px 0 rgba($mocl-ink, 0.1);
+}
+
+.mocl-cert-ribbon {
+  position: absolute;
+  top: -0.9rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1.9rem;
+  height: 1.9rem;
+  border-radius: 50%;
+  background: $mocl-gold;
+  color: v.$color-white;
+  font-size: 1rem;
+  line-height: 1.9rem;
+}
+
+.mocl-cert-kicker {
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: $mocl-gold;
+}
+
+.mocl-statement {
+  margin: 0.6rem 0 0;
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: clamp(1.15rem, 4vw, 1.4rem);
+  line-height: 1.35;
+  color: $mocl-ink;
+}
+
+.mocl-cert--sealed { box-shadow: 0 8px 0 rgba($mocl-ink, 0.1), 0 0 0 3px rgba($mocl-green, 0.4); }
+
+.mocl-seal {
+  position: absolute;
+  right: 0.8rem;
+  bottom: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 50%;
+  background: $mocl-green;
+  color: v.$color-white;
+  font-weight: 900;
+  font-size: 1.1rem;
+  transform: rotate(-12deg);
+  animation: mocl-thump 0.35s cubic-bezier(0.3, 1.5, 0.6, 1) both;
+}
+
+/* --- outcomes --- */
+.mocl-outcomes {
+  max-width: 24rem;
+  margin: 0 auto;
+  padding: 1.1rem 1.3rem;
+  text-align: left;
+  border-radius: v.$border-radius-lg;
+  background: rgba(255, 255, 255, 0.72);
+  border-left: 4px solid $mocl-green;
+
+  ul { list-style: none; margin: 0.5rem 0 0; padding: 0; }
+
+  li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    padding: 0.35rem 0;
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1.35;
+    animation: mocl-in 0.4s ease both;
+    animation-delay: calc(var(--i, 0) * 80ms);
+  }
+}
+
+.mocl-outcomes-heading {
+  font-weight: 800;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $mocl-green;
+}
+
+.mocl-outcome-check {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 1.3rem;
+  height: 1.3rem;
+  border-radius: 0.3rem;
+  background: $mocl-green;
+  color: v.$color-white;
+  font-weight: 900;
+  font-size: 0.8rem;
+}
+
+/* --- say it --- */
+.mocl-say {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.55rem;
+  margin-top: 1.4rem;
+}
+
+.mocl-say-label {
+  font-weight: 800;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $mocl-green;
+}
+
+.mocl-say-btn {
+  @include m.tappable;
+  padding: 0.75rem 1.8rem;
+  border: 2px solid $mocl-green;
+  border-radius: v.$border-radius-pill;
+  background: v.$color-white;
+  color: $mocl-green;
+  font-weight: 800;
+  font-size: 1rem;
+}
+
+.mocl-say-btn.is-done { background: $mocl-green; color: v.$color-white; }
+
+.mocl-reinforce {
+  max-width: 26rem;
+  margin: 1.4rem auto 0;
+  font-size: 0.98rem;
+  line-height: 1.5;
+  color: rgba($mocl-ink, 0.78);
+}
+
+.mocl-complete {
+  @include m.tappable;
+  display: block;
+  width: 100%;
+  margin: 1.6rem 0 0;
+  padding: 0.95rem 1.6rem;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  background: linear-gradient(120deg, $mocl-green, $mocl-gold);
+  color: v.$color-white;
+  font-weight: 800;
+  font-size: 1.12rem;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.14);
+
+  &:disabled { background: rgba($mocl-ink, 0.18); cursor: not-allowed; box-shadow: none; }
+}
+
+.mocl-hint {
+  margin: 0.6rem 0 0;
+  font-size: 0.85rem;
+  color: rgba($mocl-ink, 0.55);
+}
+
+@keyframes mocl-thump {
+  from { opacity: 0; transform: rotate(-12deg) scale(2.2); }
+  to { opacity: 1; transform: rotate(-12deg) scale(1); }
+}
+
+@keyframes mocl-in {
+  from { opacity: 0; transform: translateX(-8px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mocl-seal, .mocl-outcomes li { animation: none; opacity: 1; }
+}

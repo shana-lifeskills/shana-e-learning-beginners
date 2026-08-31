@@ -1,0 +1,193 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- My Simple Budget challenge (sbc) — Choices Module, Week 2 ---- */
+$sbc-ink: #17303a;
+$sbc-blue: #1d6fb8;
+$sbc-blue-deep: #124e83;
+$sbc-sun: #f4a83c;
+$sbc-paper: #f2f9fd;
+$sbc-yes: #159a5c;
+$sbc-no: #d1603a;
+
+.sbc {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 1rem;
+  color: $sbc-ink;
+}
+
+.sbc-head {
+  text-align: center;
+  padding: 1.6rem 1.2rem 1.5rem;
+  border-radius: v.$border-radius-xl v.$border-radius-xl 0 0;
+  background: linear-gradient(150deg, $sbc-blue 0%, $sbc-blue-deep 100%);
+  color: v.$color-white;
+}
+
+.sbc-badge {
+  display: inline-block;
+  padding: 0.32rem 1rem;
+  border-radius: v.$border-radius-pill;
+  background: $sbc-sun;
+  color: #4a2c00;
+  font-weight: 800;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.sbc-title {
+  @include m.playful-heading;
+  font-size: clamp(1.5rem, 4.5vw, 2rem);
+  margin: 0.7rem 0 0.3rem;
+}
+
+.sbc-intro {
+  margin: 0;
+  font-size: 0.98rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+/* --- plan card --- */
+.sbc-card {
+  padding: 1.3rem 1.1rem;
+  background: $sbc-paper;
+  border-left: 4px solid $sbc-sun;
+  border-right: 4px solid $sbc-sun;
+}
+
+.sbc-card-heading {
+  display: block;
+  margin-bottom: 0.9rem;
+  font-weight: 800;
+  font-size: 0.86rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: $sbc-blue-deep;
+}
+
+.sbc-line {
+  display: grid;
+  grid-template-columns: 1.6rem 1fr;
+  align-items: center;
+  gap: 0.3rem 0.6rem;
+  margin-bottom: 0.9rem;
+}
+
+.sbc-line-icon { font-size: 1.2rem; grid-row: span 2; }
+
+.sbc-line-label {
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.sbc-line input {
+  grid-column: 2;
+  width: 100%;
+  padding: 0.55rem 0.7rem;
+  border-radius: v.$border-radius-sm;
+  border: 2px solid rgba($sbc-ink, 0.16);
+  font: inherit;
+  font-size: 0.95rem;
+
+  &:focus { outline: none; border-color: $sbc-blue; }
+}
+
+/* --- track --- */
+.sbc-track {
+  padding: 1.2rem 1.1rem 1.4rem;
+  background: $sbc-paper;
+  border-radius: 0 0 v.$border-radius-xl v.$border-radius-xl;
+  border-left: 4px solid $sbc-sun;
+  border-right: 4px solid $sbc-sun;
+  border-bottom: 4px solid $sbc-sun;
+  text-align: center;
+}
+
+.sbc-track-heading {
+  font-weight: 800;
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $sbc-blue-deep;
+}
+
+.sbc-track-q {
+  margin: 0.4rem 0 0.9rem;
+  font-weight: 700;
+  font-size: 1.02rem;
+}
+
+.sbc-yesno {
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+}
+
+.sbc-yes,
+.sbc-no {
+  @include m.tappable;
+  padding: 0.6rem 1.7rem;
+  border-radius: v.$border-radius-pill;
+  border: 2px solid;
+  background: v.$color-white;
+  font-weight: 800;
+  font-size: 0.95rem;
+}
+
+.sbc-yes { border-color: $sbc-yes; color: $sbc-yes; }
+.sbc-yes.is-on { background: $sbc-yes; color: v.$color-white; }
+.sbc-no { border-color: $sbc-no; color: $sbc-no; }
+.sbc-no.is-on { background: $sbc-no; color: v.$color-white; }
+
+.sbc-parent-note {
+  display: flex;
+  gap: 0.5rem;
+  margin: 1rem 0 0;
+  padding: 0.8rem 1rem;
+  border-radius: v.$border-radius-sm;
+  background: rgba($sbc-sun, 0.16);
+  border: 1px dashed rgba(#b9700b, 0.55);
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: #6b3d04;
+}
+
+.sbc-done {
+  margin-top: 1rem;
+  padding: 1.3rem 1.1rem;
+  text-align: center;
+  border-radius: v.$border-radius-lg;
+  background: rgba($sbc-blue, 0.1);
+
+  h3 { @include m.playful-heading; font-size: 1.25rem; margin: 0.4rem 0 0.3rem; }
+  p { margin: 0; font-size: 0.95rem; color: rgba($sbc-ink, 0.8); }
+}
+
+.sbc-done-mark { font-size: 1.9rem; }
+
+.sbc-complete {
+  @include m.tappable;
+  display: block;
+  width: 100%;
+  margin: 1.1rem 0 0;
+  padding: 0.95rem 1.6rem;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  background: linear-gradient(120deg, $sbc-blue, $sbc-sun);
+  color: v.$color-white;
+  font-weight: 800;
+  font-size: 1.1rem;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.12);
+
+  &:disabled { background: rgba($sbc-ink, 0.2); cursor: not-allowed; box-shadow: none; }
+}
+
+.sbc-hint {
+  margin: 0.6rem 0 0;
+  text-align: center;
+  font-size: 0.85rem;
+  color: rgba($sbc-ink, 0.55);
+}

@@ -1,0 +1,179 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- Budget Confidence Link (bcl) — Choices Module, Week 2 close ---- */
+$bcl-ink: #06302c;
+$bcl-teal: #0d7a70;
+$bcl-teal-deep: #0a5a53;
+$bcl-gold: #e7b429;
+$bcl-bg: #e8f6f3;
+$bcl-bg-2: #d2ece6;
+
+.bcl {
+  max-width: 34rem;
+  margin: 0 auto;
+  padding: 2.4rem clamp(1rem, 4vw, 2.5rem) 2.6rem;
+  text-align: center;
+  border-radius: v.$border-radius-xl;
+  color: $bcl-ink;
+  background: linear-gradient(165deg, $bcl-bg 0%, $bcl-bg-2 100%);
+}
+
+.bcl-badge {
+  display: inline-block;
+  padding: 0.32rem 1rem;
+  border-radius: v.$border-radius-pill;
+  background: $bcl-teal;
+  color: v.$color-white;
+  font-weight: 800;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.bcl-week {
+  display: block;
+  margin-top: 0.6rem;
+  font-weight: 800;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba($bcl-ink, 0.55);
+}
+
+/* --- pledge card --- */
+.bcl-card {
+  position: relative;
+  max-width: 22rem;
+  margin: 1.6rem auto 1.4rem;
+  padding: 1.2rem 1.3rem 1.1rem;
+  border-radius: v.$border-radius-lg;
+  background: linear-gradient(135deg, $bcl-teal 0%, $bcl-teal-deep 100%);
+  color: v.$color-white;
+  box-shadow: 0 8px 0 rgba(0, 0, 0, 0.14);
+  overflow: hidden;
+  text-align: left;
+}
+
+.bcl-card-top {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.9rem;
+}
+
+.bcl-chip {
+  width: 2.1rem;
+  height: 1.5rem;
+  border-radius: 0.3rem;
+  background: linear-gradient(135deg, #ffe08a, $bcl-gold);
+}
+
+.bcl-card-name {
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+}
+
+.bcl-statement {
+  margin: 0 0 1rem;
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: clamp(1.1rem, 3.8vw, 1.35rem);
+  line-height: 1.35;
+}
+
+.bcl-card-bottom {
+  display: flex;
+  gap: 0.35rem;
+  font-size: 1.15rem;
+}
+
+.bcl-stamp {
+  position: absolute;
+  right: 0.7rem;
+  bottom: 0.9rem;
+  padding: 0.25rem 0.7rem;
+  border: 3px solid #e2483d;
+  border-radius: 0.4rem;
+  color: #e2483d;
+  font-weight: 900;
+  font-size: 0.95rem;
+  letter-spacing: 0.1em;
+  transform: rotate(-14deg);
+  animation: bcl-thump 0.35s cubic-bezier(0.3, 1.5, 0.6, 1) both;
+}
+
+.bcl-card--stamped { box-shadow: 0 8px 0 rgba(0, 0, 0, 0.14), 0 0 0 3px rgba($bcl-gold, 0.5); }
+
+/* --- say it --- */
+.bcl-say {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.bcl-say-label {
+  font-weight: 800;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $bcl-teal;
+}
+
+.bcl-stamp-btn {
+  @include m.tappable;
+  padding: 0.75rem 1.8rem;
+  border: 2px solid $bcl-teal;
+  border-radius: v.$border-radius-pill;
+  background: v.$color-white;
+  color: $bcl-teal;
+  font-weight: 800;
+  font-size: 1rem;
+}
+
+.bcl-stamp-btn.is-done {
+  background: $bcl-teal;
+  color: v.$color-white;
+}
+
+.bcl-reinforce {
+  max-width: 26rem;
+  margin: 1.4rem auto 0;
+  font-size: 0.98rem;
+  line-height: 1.5;
+  color: rgba($bcl-ink, 0.78);
+}
+
+.bcl-complete {
+  @include m.tappable;
+  display: block;
+  width: 100%;
+  margin: 1.6rem 0 0;
+  padding: 0.95rem 1.6rem;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  background: linear-gradient(120deg, $bcl-teal, $bcl-gold);
+  color: v.$color-white;
+  font-weight: 800;
+  font-size: 1.12rem;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.14);
+
+  &:disabled { background: rgba($bcl-ink, 0.18); cursor: not-allowed; box-shadow: none; }
+}
+
+.bcl-hint {
+  margin: 0.6rem 0 0;
+  font-size: 0.85rem;
+  color: rgba($bcl-ink, 0.55);
+}
+
+@keyframes bcl-thump {
+  from { opacity: 0; transform: rotate(-14deg) scale(2.4); }
+  to { opacity: 1; transform: rotate(-14deg) scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bcl-stamp { animation: none; }
+}

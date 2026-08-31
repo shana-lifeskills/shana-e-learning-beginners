@@ -1,0 +1,174 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- Consequence Confidence Link (ccl) — Choices Module, Week 3 close ---- */
+$ccl-ink: #241640;
+$ccl-plum: #7c3aed;
+$ccl-indigo: #4338ca;
+$ccl-amber: #f59e0b;
+$ccl-bg: #f1ecfd;
+$ccl-bg-2: #e2d9fb;
+
+.ccl {
+  max-width: 34rem;
+  margin: 0 auto;
+  padding: 2.4rem clamp(1rem, 4vw, 2.5rem) 2.6rem;
+  text-align: center;
+  border-radius: v.$border-radius-xl;
+  color: $ccl-ink;
+  background: radial-gradient(circle at 50% 15%, $ccl-bg 0%, $ccl-bg-2 100%);
+}
+
+.ccl-badge {
+  display: inline-block;
+  padding: 0.32rem 1rem;
+  border-radius: v.$border-radius-pill;
+  background: $ccl-plum;
+  color: v.$color-white;
+  font-weight: 800;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.ccl-week {
+  display: block;
+  margin-top: 0.6rem;
+  font-weight: 800;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba($ccl-ink, 0.55);
+}
+
+/* --- crystal ball --- */
+.ccl-orb {
+  position: relative;
+  width: 12rem;
+  height: 12rem;
+  margin: 1.8rem auto 1.2rem;
+}
+
+.ccl-orb-glow {
+  position: absolute;
+  inset: -1.5rem;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba($ccl-amber, 0.55), transparent 65%);
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.ccl-orb--lit .ccl-orb-glow { opacity: 1; animation: ccl-pulse 2.6s ease-in-out infinite; }
+
+.ccl-orb-ball {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 9rem;
+  height: 9rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.85), rgba($ccl-indigo, 0.35) 70%, rgba($ccl-indigo, 0.5));
+  border: 3px solid rgba(255, 255, 255, 0.7);
+  box-shadow: inset 0 -10px 20px rgba($ccl-indigo, 0.35);
+}
+
+.ccl-orb--lit .ccl-orb-ball {
+  background: radial-gradient(circle at 40% 32%, #fff7dc, rgba($ccl-amber, 0.55) 70%, rgba($ccl-plum, 0.4));
+}
+
+.ccl-orb-icon { font-size: 2.6rem; }
+
+.ccl-orb-stand {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 5rem;
+  height: 1.6rem;
+  border-radius: 0.4rem 0.4rem 0.8rem 0.8rem;
+  background: linear-gradient(180deg, $ccl-indigo, $ccl-ink);
+}
+
+.ccl-statement {
+  max-width: 22rem;
+  margin: 0 auto;
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: clamp(1.15rem, 4vw, 1.45rem);
+  line-height: 1.35;
+  color: $ccl-ink;
+}
+
+/* --- say it --- */
+.ccl-say {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.55rem;
+  margin-top: 1.4rem;
+}
+
+.ccl-say-label {
+  font-weight: 800;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $ccl-plum;
+}
+
+.ccl-say-btn {
+  @include m.tappable;
+  padding: 0.75rem 1.8rem;
+  border: 2px solid $ccl-plum;
+  border-radius: v.$border-radius-pill;
+  background: v.$color-white;
+  color: $ccl-plum;
+  font-weight: 800;
+  font-size: 1rem;
+}
+
+.ccl-say-btn.is-done { background: $ccl-plum; color: v.$color-white; }
+
+.ccl-reinforce {
+  max-width: 26rem;
+  margin: 1.4rem auto 0;
+  font-size: 0.98rem;
+  line-height: 1.5;
+  color: rgba($ccl-ink, 0.78);
+}
+
+.ccl-complete {
+  @include m.tappable;
+  display: block;
+  width: 100%;
+  margin: 1.6rem 0 0;
+  padding: 0.95rem 1.6rem;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  background: linear-gradient(120deg, $ccl-plum, $ccl-amber);
+  color: v.$color-white;
+  font-weight: 800;
+  font-size: 1.12rem;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.14);
+
+  &:disabled { background: rgba($ccl-ink, 0.18); cursor: not-allowed; box-shadow: none; }
+}
+
+.ccl-hint {
+  margin: 0.6rem 0 0;
+  font-size: 0.85rem;
+  color: rgba($ccl-ink, 0.55);
+}
+
+@keyframes ccl-pulse {
+  0%, 100% { opacity: 0.7; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ccl-orb--lit .ccl-orb-glow { animation: none; }
+}

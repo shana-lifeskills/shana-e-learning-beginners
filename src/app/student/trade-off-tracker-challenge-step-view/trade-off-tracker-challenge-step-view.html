@@ -1,0 +1,74 @@
+<div class="tot">
+  <header class="tot-head">
+    <span class="tot-badge">{{ step().badge }}</span>
+    <h2 class="tot-title">{{ step().title }}</h2>
+    <p class="tot-intro">{{ step().intro }}</p>
+  </header>
+
+  <div class="tot-progress">
+    <div class="tot-progress-bar">
+      <span class="tot-progress-fill" [style.width.%]="progressPercent()"></span>
+    </div>
+    <span class="tot-progress-label">{{ doneCount() }} / {{ total() }} {{ step().progressLabel }}</span>
+  </div>
+
+  <ol class="tot-days">
+    @for (entry of entries(); track $index; let i = $index) {
+      <li class="tot-day" [class.tot-day--done]="entry.done" [class.tot-day--open]="openDay() === i">
+        <button type="button" class="tot-day-head" (click)="toggleOpen(i)" [attr.aria-expanded]="openDay() === i">
+          <span class="tot-day-num" aria-hidden="true">{{ entry.done ? '✔' : i + 1 }}</span>
+          <span class="tot-day-name">Day {{ i + 1 }}</span>
+          <span class="tot-day-state">{{ entry.done ? 'Logged' : 'Tap to fill in' }}</span>
+        </button>
+
+        @if (openDay() === i) {
+          <div class="tot-day-body">
+            <label class="tot-check">
+              <input type="checkbox" [checked]="entry.spotted" [disabled]="entry.done" (change)="toggleSpotted(i)" />
+              <span>{{ step().spotLabel }}</span>
+            </label>
+
+            <label class="tot-field">
+              <span class="tot-field-label">{{ step().chooseLabel }}</span>
+              <textarea rows="2" [value]="entry.choose" [disabled]="entry.done"
+                [placeholder]="step().choosePlaceholder"
+                (input)="setField(i, 'choose', $any($event.target).value)"></textarea>
+            </label>
+
+            <label class="tot-field">
+              <span class="tot-field-label">{{ step().giveLabel }}</span>
+              <textarea rows="2" [value]="entry.give" [disabled]="entry.done"
+                [placeholder]="step().givePlaceholder"
+                (input)="setField(i, 'give', $any($event.target).value)"></textarea>
+            </label>
+
+            @if (!entry.done) {
+              <button type="button" class="tot-save" [disabled]="!canSaveDay(i)" (click)="saveDay(i)">
+                {{ step().saveDayLabel }} {{ i + 1 }}
+              </button>
+            }
+          </div>
+        }
+      </li>
+    }
+  </ol>
+
+  <p class="tot-parent-note">
+    <span aria-hidden="true">👪</span> {{ step().parentNote }}
+  </p>
+
+  @if (allDone()) {
+    <div class="tot-done">
+      <span class="tot-done-star" aria-hidden="true">🌟</span>
+      <h3>{{ step().allDoneTitle }}</h3>
+      <p>{{ step().allDoneText }}</p>
+    </div>
+  }
+
+  <button type="button" class="tot-complete" [disabled]="!allDone()" (click)="complete()">
+    {{ step().completeLabel }}
+  </button>
+  @if (!allDone()) {
+    <p class="tot-hint">Log all {{ total() }} days to finish the challenge.</p>
+  }
+</div>

@@ -141,7 +141,19 @@ export type ExerciseType =
   | 'memory-test-warmup'
   | 'memory-gym-challenge'
   | 'if-then-warmup'
-  | 'smart-thinker-plan-challenge';
+  | 'smart-thinker-plan-challenge'
+  | 'trade-off-quiz'
+  | 'trade-off-tracker-challenge'
+  | 'trade-off-confidence-link'
+  | 'money-match'
+  | 'simple-budget-challenge'
+  | 'budget-confidence-link'
+  | 'money-myth-buster'
+  | 'think-ahead-challenge'
+  | 'consequence-confidence-link'
+  | 'step-sequence'
+  | 'financial-audit-challenge'
+  | 'module-outcome-confidence-link';
 
 export interface BaseExercise {
   id: string;
@@ -697,6 +709,330 @@ export interface WarmupQuizStep extends BaseExercise {
   /** Callout encouraging a parent/guardian to help the student with this exercise. */
   parentNote: string;
   continueLabel: string;
+}
+
+/** One lettered option inside a TradeOffQuizQuestion. */
+export interface TradeOffQuizOption {
+  id: string;
+  text: string;
+}
+
+/** One question in the "Trade-off Quiz Machine" warm-up. */
+export interface TradeOffQuizQuestion {
+  id: string;
+  prompt: string;
+  options: TradeOffQuizOption[];
+  correctOptionId: string;
+  /** Short line shown when the learner picks the right answer. */
+  feedbackText: string;
+}
+
+/**
+ * The "Trade-off Quiz Machine" warm-up (Choices Module, Week 1). A playful
+ * arcade/vending-machine card: a row of coin slots at the top fills with gold
+ * coins as each question is answered, and one lettered multiple-choice question
+ * shows at a time. A wrong pick shakes and the question stays put; a right pick
+ * drops a coin into the track and moves on. The "Continue" button only appears
+ * once every coin is collected, so the learner must answer all questions
+ * correctly before leaving the step. A parent-assist note sits below the card.
+ */
+export interface TradeOffQuizStep extends BaseExercise {
+  type: 'trade-off-quiz';
+  badge: string;
+  heading: string;
+  subtitle: string;
+  questions: TradeOffQuizQuestion[];
+  /** Title of the celebration panel shown after every question is answered. */
+  allDoneTitle: string;
+  /** Body line of that celebration panel. */
+  allDoneText: string;
+  /** Callout reminding a parent/guardian to help the learner with this exercise. */
+  parentNote: string;
+  continueLabel: string;
+}
+
+/**
+ * "My Trade-Off Tracker" challenge of the week (Choices Module, Week 1). A
+ * five-day journal: each day the learner ticks that they spotted a choice they
+ * made, then writes what they chose and what they gave up. A day locks in once
+ * both lines are filled; the "Complete" button unlocks only after all five days
+ * are logged, and the entries are submitted so the trainer can read them.
+ */
+export interface TradeOffTrackerChallengeStep extends BaseExercise {
+  type: 'trade-off-tracker-challenge';
+  badge: string;
+  title: string;
+  intro: string;
+  dayCount: number;
+  /** Checkbox label confirming the learner noticed a choice that day. */
+  spotLabel: string;
+  chooseLabel: string;
+  choosePlaceholder: string;
+  giveLabel: string;
+  givePlaceholder: string;
+  saveDayLabel: string;
+  progressLabel: string;
+  /** Callout reminding a parent/guardian to help across the five days. */
+  parentNote: string;
+  allDoneTitle: string;
+  allDoneText: string;
+  completeLabel: string;
+}
+
+/**
+ * "My Simple Budget" challenge of the week (Choices Module, Week 2). The learner
+ * fills a three-part money plan — how much to spend, save, and use later — then
+ * marks whether they followed it (YES / NO). The "Complete" button unlocks only
+ * once all three plan lines are filled and the follow-up is answered; the plan
+ * is submitted so the trainer can read it.
+ */
+export interface SimpleBudgetChallengeStep extends BaseExercise {
+  type: 'simple-budget-challenge';
+  badge: string;
+  title: string;
+  intro: string;
+  planHeading: string;
+  spendLabel: string;
+  spendPlaceholder: string;
+  saveLabel: string;
+  savePlaceholder: string;
+  useLaterLabel: string;
+  useLaterPlaceholder: string;
+  trackHeading: string;
+  trackQuestion: string;
+  yesLabel: string;
+  noLabel: string;
+  /** Callout reminding a parent/guardian to help across the week. */
+  parentNote: string;
+  allDoneTitle: string;
+  allDoneText: string;
+  completeLabel: string;
+}
+
+/**
+ * The "Confidence Link" closing page for Choices Module, Week 2. The affirmation
+ * is printed on a bank-card-style pledge card; the learner says it out loud and
+ * taps to thump an "APPROVED" stamp onto the card, which unlocks the "Complete
+ * Week 2" button.
+ */
+export interface BudgetConfidenceLinkStep extends BaseExercise {
+  type: 'budget-confidence-link';
+  badge: string;
+  weekLabel: string;
+  statement: string;
+  sayItLabel: string;
+  stampLabel: string;
+  stampedLabel: string;
+  reinforceLine: string;
+  completeLabel: string;
+}
+
+/** One fill-in line in the "My Financial Decision Audit" structured reflection. */
+export interface FinancialAuditReflectionField {
+  id: string;
+  label: string;
+  placeholder: string;
+}
+
+/**
+ * "My Financial Decision Audit" final challenge (Choices Module, Week 4). A
+ * five-day grid: each day the learner ticks the money habits they kept
+ * (thoughtful choices, trade-offs, followed the plan, avoided waste); a day
+ * counts once all four are ticked. Below the grid is a one-time structured
+ * reflection with three fill-in lines. The "Complete the Module" button unlocks
+ * only when all five days are logged and every reflection line is filled; the
+ * reflection is submitted so the trainer can read it.
+ */
+export interface FinancialAuditChallengeStep extends BaseExercise {
+  type: 'financial-audit-challenge';
+  badge: string;
+  title: string;
+  intro: string;
+  dayCount: number;
+  /** The daily habit checkboxes — all must be ticked to log a day. */
+  auditItems: string[];
+  dayLoggedLabel: string;
+  progressLabel: string;
+  reflectionHeading: string;
+  reflectionIntro: string;
+  reflectionFields: FinancialAuditReflectionField[];
+  /** Callout reminding a parent/guardian to help across the five days. */
+  parentNote: string;
+  allDoneTitle: string;
+  allDoneText: string;
+  completeLabel: string;
+}
+
+/**
+ * The "Confidence Link" closing page for Choices Module, Week 4 — also the
+ * module finale. The affirmation sits on a certificate-style card above a
+ * checklist of the skills the learner built across the whole module; they say
+ * the affirmation out loud and tap to seal the certificate, unlocking the
+ * "Complete the Module" button.
+ */
+export interface ModuleOutcomeConfidenceLinkStep extends BaseExercise {
+  type: 'module-outcome-confidence-link';
+  badge: string;
+  weekLabel: string;
+  statement: string;
+  sayItLabel: string;
+  saidItLabel: string;
+  outcomeHeading: string;
+  outcomes: string[];
+  reinforceLine: string;
+  completeLabel: string;
+}
+
+/** One "put the steps in order" question in the "Step Sorter" warm-up. `steps` is given in the correct order. */
+export interface StepSequenceQuestion {
+  id: string;
+  title: string;
+  steps: string[];
+}
+
+/**
+ * The "Step Sorter" warm-up (Choices Module, Week 4). A conveyor-belt sequencing
+ * game: for each question three step chips start shuffled in a tray and the
+ * learner taps them into numbered slots 1-2-3. Tapping a filled slot returns its
+ * chip. When all three slots are filled they press "Check the order"; a wrong
+ * order shakes and stays put for another try, a correct order locks green and
+ * the next question loads. The "Continue" button only appears once every
+ * question is ordered correctly. A parent-assist note sits below.
+ */
+export interface StepSequenceStep extends BaseExercise {
+  type: 'step-sequence';
+  badge: string;
+  heading: string;
+  subtitle: string;
+  checkLabel: string;
+  questions: StepSequenceQuestion[];
+  parentNote: string;
+  allDoneTitle: string;
+  allDoneText: string;
+  continueLabel: string;
+}
+
+/**
+ * "Think Ahead Challenge" challenge of the week (Choices Module, Week 3). A
+ * five-day path: each day the learner confirms they paused before spending to
+ * ask "what will happen after this?", then records one decision they made and
+ * how it turned out. A day locks in once both lines are filled; the "Complete"
+ * button unlocks only after all five days are recorded, and the entries are
+ * submitted so the trainer can read them.
+ */
+export interface ThinkAheadChallengeStep extends BaseExercise {
+  type: 'think-ahead-challenge';
+  badge: string;
+  title: string;
+  intro: string;
+  dayCount: number;
+  /** Checkbox label confirming the learner asked the think-ahead question that day. */
+  askLabel: string;
+  decisionLabel: string;
+  decisionPlaceholder: string;
+  resultLabel: string;
+  resultPlaceholder: string;
+  saveDayLabel: string;
+  progressLabel: string;
+  /** Callout reminding a parent/guardian to help across the five days. */
+  parentNote: string;
+  allDoneTitle: string;
+  allDoneText: string;
+  completeLabel: string;
+}
+
+/**
+ * The "Confidence Link" closing page for Choices Module, Week 3. The affirmation
+ * sits under a glowing crystal ball; the learner says it out loud and taps to
+ * light the ball, which unlocks the "Complete Week 3" button.
+ */
+export interface ConsequenceConfidenceLinkStep extends BaseExercise {
+  type: 'consequence-confidence-link';
+  badge: string;
+  weekLabel: string;
+  statement: string;
+  sayItLabel: string;
+  saidItLabel: string;
+  reinforceLine: string;
+  completeLabel: string;
+}
+
+/** One claim the learner stamps FACT or MYTH in the "Money Myth Buster" warm-up. */
+export interface MoneyMythStatement {
+  id: string;
+  text: string;
+  /** true when the claim is true (FACT); false when it is a MYTH. */
+  isFact: boolean;
+  /** Short line shown when the learner stamps it correctly. */
+  feedbackText: string;
+}
+
+/**
+ * The "Money Myth Buster" warm-up (Choices Module, Week 3). An investigation
+ * sheet: one claim about money choices shows at a time and the learner slams
+ * down a FACT or MYTH stamp. A correct stamp thumps on and the case advances; a
+ * wrong stamp shakes and the claim stays open. The "Continue" button only
+ * appears once every claim is settled, so the learner must finish all of them
+ * before moving on. A parent-assist note sits below the sheet.
+ */
+export interface MoneyMythBusterStep extends BaseExercise {
+  type: 'money-myth-buster';
+  badge: string;
+  heading: string;
+  subtitle: string;
+  factLabel: string;
+  mythLabel: string;
+  statements: MoneyMythStatement[];
+  parentNote: string;
+  allDoneTitle: string;
+  allDoneText: string;
+  continueLabel: string;
+}
+
+/** One term/meaning pair in the "Money Match" warm-up. */
+export interface MoneyMatchPair {
+  id: string;
+  term: string;
+  meaning: string;
+}
+
+/**
+ * The "Money Match" warm-up (Choices Module, Week 2). A budget-board game: money
+ * terms sit as coin cards on the left, their meanings are shuffled into wallet
+ * slots on the right. The learner taps a term then a meaning; a correct pair
+ * locks together with a shared colour, a wrong pair shakes and clears. The
+ * "Continue" button only appears once every pair is matched, so the learner must
+ * finish the whole board before moving on. A parent-assist note sits below.
+ */
+export interface MoneyMatchStep extends BaseExercise {
+  type: 'money-match';
+  badge: string;
+  heading: string;
+  subtitle: string;
+  termHeading: string;
+  meaningHeading: string;
+  pairs: MoneyMatchPair[];
+  parentNote: string;
+  allDoneTitle: string;
+  allDoneText: string;
+  continueLabel: string;
+}
+
+/**
+ * The "Confidence Link" closing page for Choices Module, Week 1. A single
+ * affirmation on a glowing medal, a "say it out loud" prompt the learner taps
+ * once they have said it, a reinforcing line, and a "Complete Week 1" button
+ * that only enables after the affirmation has been said.
+ */
+export interface TradeOffConfidenceLinkStep extends BaseExercise {
+  type: 'trade-off-confidence-link';
+  badge: string;
+  weekLabel: string;
+  statement: string;
+  sayItLabel: string;
+  saidItLabel: string;
+  reinforceLine: string;
+  completeLabel: string;
 }
 
 /** One numbered mission pill in the Final Challenge card. */
@@ -4362,7 +4698,19 @@ export type Exercise =
   | MemoryTestWarmupStep
   | MemoryGymChallengeStep
   | IfThenWarmupStep
-  | SmartThinkerPlanChallengeStep;
+  | SmartThinkerPlanChallengeStep
+  | TradeOffQuizStep
+  | TradeOffTrackerChallengeStep
+  | TradeOffConfidenceLinkStep
+  | MoneyMatchStep
+  | SimpleBudgetChallengeStep
+  | BudgetConfidenceLinkStep
+  | MoneyMythBusterStep
+  | ThinkAheadChallengeStep
+  | ConsequenceConfidenceLinkStep
+  | StepSequenceStep
+  | FinancialAuditChallengeStep
+  | ModuleOutcomeConfidenceLinkStep;
 
 /** Content for the newer, richer lesson-welcome layout. When a lesson has this, its welcome screen uses this design instead of the plain card. */
 /** One preview card inside a LessonWelcomeCard's "This Week's Mission" section. */
@@ -4886,6 +5234,14 @@ export interface Lesson {
   memoryWorkshopWelcome?: LessonMemoryWorkshopWelcome;
   /** When set, renders the "smart choice forecast" welcome layout (warm sunshine-yellow page, a "you decide" node forking into two branches that each stack a choice, its consequence and an outcome badge, objective card, "a smart chooser…" cards) — takes priority over all other welcome fields. */
   smartChoiceForecastWelcome?: LessonSmartChoiceForecastWelcome;
+  /** When set, renders the "trade-off see-saw" welcome layout (Choices Module, Week 1 — a warm cartoon see-saw balanced on a smiling coin, with a "what you pick" seat down and a "what you give up" seat tipped up, everyday trade-off pairs, an objective card and "a smart chooser…" cards) — takes priority over all other welcome fields. */
+  tradeOffWelcome?: LessonTradeOffWelcome;
+  /** When set, renders the "budget jars" welcome layout (Choices Module, Week 2 — a planner-blue page with a shelf of clear cartoon jars, each labelled with a job for the money and a coin dropping in, an objective card and "a good money planner…" cards) — takes priority over all other welcome fields. */
+  budgetPlanWelcome?: LessonBudgetPlanWelcome;
+  /** When set, renders the "consequence chain" welcome layout (Choices Module, Week 3 — a warm sunset page with a coin about to topple a run of domino tiles that spell out how one money choice leads to what happens now and later, an objective card and "a thoughtful spender…" cards) — takes priority over all other welcome fields. */
+  consequenceChainWelcome?: LessonConsequenceChainWelcome;
+  /** When set, renders the "smart money checklist" welcome layout (Choices Module, Week 4 — a cream clipboard of decision questions that tick off in turn and end in a "SMART CHOICE" stamp, an objective card and "a smart decision-maker…" cards) — takes priority over all other welcome fields. */
+  smartDecisionWelcome?: LessonSmartDecisionWelcome;
   /** Ordered steps the student walks through — warm-up, story, discussion, activity, challenge, questions. */
   exercises: Exercise[];
 }
@@ -5372,6 +5728,171 @@ export interface LessonSmartChoiceForecastWelcome {
   objectiveText: string;
   traitsHeading: string;
   traits: SmartChoiceTrait[];
+  startLabel: string;
+  footerNote: string;
+}
+
+/** One everyday "if you pick this, you give up that" pair on the "trade-off see-saw" welcome. */
+export interface TradeOffExample {
+  pickIcon: string;
+  pickLabel: string;
+  giveIcon: string;
+  giveLabel: string;
+}
+
+/** One "a smart chooser…" card on the "trade-off see-saw" welcome. */
+export interface TradeOffTrait {
+  icon: string;
+  title: string;
+  text: string;
+}
+
+/**
+ * The "trade-off see-saw" welcome layout (Choices Module, Week 1 — "Understanding
+ * Trade-offs"). A warm, friendly page for young learners: a week pill and
+ * two-tone title, then a cartoon see-saw balanced on a smiling coin — one seat
+ * holds "what you pick", the other tips up as "what you give up" — to show that
+ * spending on one thing always means letting go of another. Below sit a row of
+ * everyday trade-off pairs, an "Our Objective" card, a row of "a smart chooser…"
+ * cards, a start button and a footer note. Purely presentational — the see-saw
+ * is not interactive.
+ */
+export interface LessonTradeOffWelcome {
+  weekLabel: string;
+  titleStart: string;
+  titleAccent: string;
+  intro: string;
+  coinLabel: string;
+  pickSeatLabel: string;
+  pickSeatIcon: string;
+  giveSeatLabel: string;
+  giveSeatIcon: string;
+  seesawCaption: string;
+  examplesHeading: string;
+  examples: TradeOffExample[];
+  objectiveLabel: string;
+  objectiveText: string;
+  traitsHeading: string;
+  traits: TradeOffTrait[];
+  startLabel: string;
+  footerNote: string;
+}
+
+/** One labelled money jar on the "budget jars" welcome, e.g. 💰 "Save" / "money you keep for later". */
+export interface BudgetJar {
+  icon: string;
+  name: string;
+  note: string;
+}
+
+/** One "a good money planner…" card on the "budget jars" welcome. */
+export interface BudgetPlanTrait {
+  icon: string;
+  title: string;
+  text: string;
+}
+
+/**
+ * The "budget jars" welcome layout (Choices Module, Week 2 — "Budgeting &
+ * Planning"). A friendly planner-blue page for young learners: a week pill and
+ * two-tone title, then a shelf of clear cartoon jars — each labelled with a job
+ * for the money (Save / Spend / Goal) and a coin dropping into it — to show that
+ * a budget means deciding where money goes before you spend it. Below sit a
+ * caption, an "Our Objective" card, a row of "a good money planner…" cards, a
+ * start button and a footer note. Purely presentational — the jars are not
+ * interactive.
+ */
+export interface LessonBudgetPlanWelcome {
+  weekLabel: string;
+  titleStart: string;
+  titleAccent: string;
+  intro: string;
+  shelfLabel: string;
+  jars: BudgetJar[];
+  jarsCaption: string;
+  objectiveLabel: string;
+  objectiveText: string;
+  traitsHeading: string;
+  traits: BudgetPlanTrait[];
+  startLabel: string;
+  footerNote: string;
+}
+
+/** One domino tile in the toppling run on the "consequence chain" welcome, e.g. 🪙 "You spend on sweets". */
+export interface ConsequenceDomino {
+  icon: string;
+  label: string;
+}
+
+/** One "a thoughtful spender…" card on the "consequence chain" welcome. */
+export interface ConsequenceTrait {
+  icon: string;
+  title: string;
+  text: string;
+}
+
+/**
+ * The "consequence chain" welcome layout (Choices Module, Week 3 — "Consequences
+ * of Money Choices"). A warm sunset page for young learners: a week pill and
+ * two-tone title, then a cartoon domino run — a coin leaning into the first tile,
+ * with each following tile labelled as the next thing that happens (the choice,
+ * how it feels now, what it means later) — to show that one money choice sets off
+ * a chain of results. Below sit a caption, an "Our Objective" card, a row of
+ * "a thoughtful spender…" cards, a start button and a footer note. Purely
+ * presentational — the dominoes are not interactive.
+ */
+export interface LessonConsequenceChainWelcome {
+  weekLabel: string;
+  titleStart: string;
+  titleAccent: string;
+  intro: string;
+  chainLabel: string;
+  dominoes: ConsequenceDomino[];
+  chainCaption: string;
+  objectiveLabel: string;
+  objectiveText: string;
+  traitsHeading: string;
+  traits: ConsequenceTrait[];
+  startLabel: string;
+  footerNote: string;
+}
+
+/** One question that ticks off on the "smart money checklist" welcome, e.g. 🎯 "What do I want?". */
+export interface SmartDecisionStep {
+  icon: string;
+  question: string;
+}
+
+/** One "a smart decision-maker…" card on the "smart money checklist" welcome. */
+export interface SmartDecisionTrait {
+  icon: string;
+  title: string;
+  text: string;
+}
+
+/**
+ * The "smart money checklist" welcome layout (Choices Module, Week 4 — "Smart
+ * Financial Decision-Making"). A clean page for young learners: a week pill and
+ * two-tone title, then a cream clipboard headed "The Smart Money Checklist" whose
+ * decision questions tick off one after another and finish with a green
+ * "SMART CHOICE" stamp — showing that a good money decision is a set of
+ * questions you work through, not a guess. Below sit a caption, an "Our
+ * Objective" card, a row of "a smart decision-maker…" cards, a start button and
+ * a footer note. Purely presentational — the checklist is not interactive.
+ */
+export interface LessonSmartDecisionWelcome {
+  weekLabel: string;
+  titleStart: string;
+  titleAccent: string;
+  intro: string;
+  checklistLabel: string;
+  steps: SmartDecisionStep[];
+  resultLabel: string;
+  checklistCaption: string;
+  objectiveLabel: string;
+  objectiveText: string;
+  traitsHeading: string;
+  traits: SmartDecisionTrait[];
   startLabel: string;
   footerNote: string;
 }

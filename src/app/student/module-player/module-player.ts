@@ -80,6 +80,18 @@ import { PrivacyMatchStepView } from '../privacy-match-step-view/privacy-match-s
 import { PrivacyProtectorChallengeStepView } from '../privacy-protector-challenge-step-view/privacy-protector-challenge-step-view';
 import { CreativeChoiceWarmupStepView } from '../creative-choice-warmup-step-view/creative-choice-warmup-step-view';
 import { SmartChoicesWarmupStepView } from '../smart-choices-warmup-step-view/smart-choices-warmup-step-view';
+import { TradeOffQuizStepView } from '../trade-off-quiz-step-view/trade-off-quiz-step-view';
+import { TradeOffTrackerChallengeStepView } from '../trade-off-tracker-challenge-step-view/trade-off-tracker-challenge-step-view';
+import { TradeOffConfidenceLinkStepView } from '../trade-off-confidence-link-step-view/trade-off-confidence-link-step-view';
+import { MoneyMatchStepView } from '../money-match-step-view/money-match-step-view';
+import { SimpleBudgetChallengeStepView } from '../simple-budget-challenge-step-view/simple-budget-challenge-step-view';
+import { BudgetConfidenceLinkStepView } from '../budget-confidence-link-step-view/budget-confidence-link-step-view';
+import { MoneyMythBusterStepView } from '../money-myth-buster-step-view/money-myth-buster-step-view';
+import { ThinkAheadChallengeStepView } from '../think-ahead-challenge-step-view/think-ahead-challenge-step-view';
+import { ConsequenceConfidenceLinkStepView } from '../consequence-confidence-link-step-view/consequence-confidence-link-step-view';
+import { StepSequenceStepView } from '../step-sequence-step-view/step-sequence-step-view';
+import { FinancialAuditChallengeStepView } from '../financial-audit-challenge-step-view/financial-audit-challenge-step-view';
+import { ModuleOutcomeConfidenceLinkStepView } from '../module-outcome-confidence-link-step-view/module-outcome-confidence-link-step-view';
 import { FirstStrategyChallengeStepView } from '../first-strategy-challenge-step-view/first-strategy-challenge-step-view';
 import { ThinkItThroughWarmupStepView } from '../think-it-through-warmup-step-view/think-it-through-warmup-step-view';
 import { PausePlanChallengeStepView } from '../pause-plan-challenge-step-view/pause-plan-challenge-step-view';
@@ -221,6 +233,18 @@ type PlayerView = 'map' | 'lesson-welcome' | 'exercise' | 'module-complete';
     PrivacyProtectorChallengeStepView,
     CreativeChoiceWarmupStepView,
     SmartChoicesWarmupStepView,
+    TradeOffQuizStepView,
+    TradeOffTrackerChallengeStepView,
+    TradeOffConfidenceLinkStepView,
+    MoneyMatchStepView,
+    SimpleBudgetChallengeStepView,
+    BudgetConfidenceLinkStepView,
+    MoneyMythBusterStepView,
+    ThinkAheadChallengeStepView,
+    ConsequenceConfidenceLinkStepView,
+    StepSequenceStepView,
+    FinancialAuditChallengeStepView,
+    ModuleOutcomeConfidenceLinkStepView,
     FirstStrategyChallengeStepView,
     ThinkItThroughWarmupStepView,
     PausePlanChallengeStepView,
@@ -424,6 +448,10 @@ export class ModulePlayer implements OnInit {
       case 'mission-briefing':
       case 'yes-no-checklist':
       case 'feelings-picture-choice':
+      case 'trade-off-quiz':
+      case 'money-match':
+      case 'money-myth-buster':
+      case 'step-sequence':
         return 'Warm-Up';
       case 'story':
       case 'story-tabs':
@@ -488,12 +516,16 @@ export class ModulePlayer implements OnInit {
       case 'weekly-attention-challenge':
       case 'thinking-steps-challenge':
       case 'memory-gym-challenge':
+      case 'trade-off-tracker-challenge':
+      case 'simple-budget-challenge':
+      case 'think-ahead-challenge':
         return 'Challenge of the Week';
       case 'digital-etiquette-tracker':
       case 'digital-responsibility-tracker':
       case 'creative-project-challenge':
       case 'strategy-plan-challenge':
       case 'smart-thinker-plan-challenge':
+      case 'financial-audit-challenge':
         return 'Final Challenge';
       case 'confidence-link':
       case 'strategic-thinker-link':
@@ -502,6 +534,10 @@ export class ModulePlayer implements OnInit {
       case 'confidence-planner':
       case 'confidence-plan':
       case 'confidence-goal-tracker':
+      case 'trade-off-confidence-link':
+      case 'budget-confidence-link':
+      case 'consequence-confidence-link':
+      case 'module-outcome-confidence-link':
         return 'Confidence Link';
       case 'matching-game':
       case 'plan-it-race':

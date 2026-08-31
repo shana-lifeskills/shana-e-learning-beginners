@@ -1,0 +1,233 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Consequence chain welcome (ccw) — Choices Module, Week 3 ---- */
+$ccw-bg: #fff1e6;
+$ccw-bg-2: #ffe0cc;
+$ccw-ink: #4a2338;
+$ccw-plum: #7c3aed;
+$ccw-orange: #f97316;
+$ccw-tile: #fffaf4;
+
+.ccw {
+  max-width: 62rem;
+  margin: 0 auto;
+  padding: 2.5rem clamp(1rem, 4vw, 2.75rem) 2.75rem;
+  text-align: center;
+  border-radius: v.$border-radius-xl;
+  color: $ccw-ink;
+  background: linear-gradient(165deg, $ccw-bg 0%, $ccw-bg-2 100%);
+}
+
+.ccw-week {
+  @include w.welcome-pill(rgba($ccw-plum, 0.14), $ccw-plum);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.ccw h1 {
+  @include m.playful-heading;
+  font-size: clamp(2rem, 5.6vw, 3.1rem);
+  line-height: 1.1;
+  margin: 1.2rem 0 0.7rem;
+}
+
+.ccw-title-start { color: $ccw-ink; }
+.ccw-title-accent { color: $ccw-orange; }
+
+.ccw-intro {
+  max-width: 37rem;
+  margin: 0 auto;
+  font-size: 1.1rem;
+  line-height: 1.55;
+  color: rgba($ccw-ink, 0.78);
+}
+
+/* --- domino run --- */
+.ccw-run-wrap {
+  position: relative;
+  max-width: 42rem;
+  margin: 2.6rem auto 0;
+  padding: 1.5rem 0.5rem 0;
+}
+
+.ccw-run-label {
+  display: inline-block;
+  margin-bottom: 1.3rem;
+  padding: 0.25rem 1rem;
+  border-radius: v.$border-radius-pill;
+  background: $ccw-orange;
+  color: v.$color-white;
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.ccw-run {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem 0.4rem;
+}
+
+.ccw-coin {
+  font-size: 1.5rem;
+  transform: rotate(-16deg);
+  animation: ccw-lean 3s ease-in-out infinite;
+}
+
+.ccw-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  width: 7.4rem;
+  min-height: 6rem;
+  padding: 0.7rem 0.5rem;
+  border-radius: 0.5rem;
+  background: $ccw-tile;
+  border: 2px solid rgba($ccw-ink, 0.14);
+  border-bottom: 5px solid rgba($ccw-plum, 0.35);
+  box-shadow: 0 4px 0 rgba($ccw-ink, 0.08);
+  animation: ccw-topple 0.5s ease both;
+  animation-delay: calc(0.2s + var(--i, 0) * 0.18s);
+}
+
+.ccw-tile-icon { font-size: 1.5rem; }
+
+.ccw-tile-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1.25;
+  color: rgba($ccw-ink, 0.85);
+}
+
+.ccw-arrow {
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: rgba($ccw-ink, 0.4);
+}
+
+.ccw-ground {
+  display: block;
+  height: 0.7rem;
+  margin-top: 0.6rem;
+  border-radius: v.$border-radius-pill;
+  background: linear-gradient(90deg, rgba($ccw-ink, 0.16), rgba($ccw-ink, 0.26));
+}
+
+.ccw-run-caption {
+  margin: 1.5rem auto 0;
+  max-width: 30rem;
+  font-size: 0.98rem;
+  font-style: italic;
+  color: rgba($ccw-ink, 0.72);
+}
+
+/* --- objective --- */
+.ccw-objective {
+  max-width: 40rem;
+  margin: 1.8rem auto 0;
+  padding: 1.15rem 1.4rem;
+  text-align: left;
+  border-radius: v.$border-radius-lg;
+  border-left: 4px solid $ccw-plum;
+  background: rgba(255, 255, 255, 0.72);
+
+  p {
+    margin: 0.3rem 0 0;
+    font-size: 1.02rem;
+    line-height: 1.5;
+    color: rgba($ccw-ink, 0.88);
+  }
+}
+
+.ccw-objective-label {
+  font-weight: 800;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $ccw-plum;
+}
+
+/* --- traits --- */
+.ccw-traits-heading {
+  margin: 1.9rem 0 0.9rem;
+  font-weight: 800;
+  font-size: 1.05rem;
+}
+
+.ccw-traits {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
+  gap: 0.85rem;
+  max-width: 44rem;
+  margin: 0 auto;
+}
+
+.ccw-trait {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 1.1rem 0.9rem;
+  border-radius: v.$border-radius-lg;
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba($ccw-ink, 0.12);
+  animation: ccw-topple 0.5s ease both;
+  animation-delay: calc(var(--i, 0) * 90ms);
+}
+
+.ccw-trait-icon { font-size: 1.7rem; }
+.ccw-trait-title { font-weight: 800; }
+
+.ccw-trait-text {
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: rgba($ccw-ink, 0.68);
+}
+
+/* --- actions --- */
+.ccw-start {
+  @include w.welcome-cta-btn(linear-gradient(120deg, $ccw-orange, #fb923c), v.$color-white);
+  margin: 2rem auto 0;
+  display: block;
+  font-size: 1.15rem;
+}
+
+.ccw-review {
+  @include m.tappable;
+  display: block;
+  margin: 0.8rem auto 0;
+  background: none;
+  border: none;
+  font-weight: 700;
+  color: rgba($ccw-ink, 0.6);
+}
+
+.ccw-footer {
+  margin: 1.4rem 0 0;
+  font-size: 0.92rem;
+  color: rgba($ccw-ink, 0.55);
+}
+
+@keyframes ccw-topple {
+  from { opacity: 0; transform: translateY(10px) rotate(-4deg); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes ccw-lean {
+  0%, 100% { transform: rotate(-16deg); }
+  50% { transform: rotate(-6deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ccw-coin, .ccw-tile, .ccw-trait { animation: none; opacity: 1; }
+}
+
+@media (max-width: 32rem) {
+  .ccw-arrow { transform: rotate(90deg); }
+}

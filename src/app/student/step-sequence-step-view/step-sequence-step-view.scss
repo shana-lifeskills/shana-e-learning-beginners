@@ -1,0 +1,260 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- Step Sorter warm-up (seq) — Choices Module, Week 4 ---- */
+$seq-steel: #2b3a4a;
+$seq-steel-2: #1e2a37;
+$seq-panel: #f4f7fa;
+$seq-ink: #22303c;
+$seq-green: #16a34a;
+$seq-amber: #f59e0b;
+$seq-red: #e5484d;
+
+.seq {
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.seq-belt {
+  border-radius: v.$border-radius-xl;
+  padding: 1.6rem clamp(1rem, 3.5vw, 2rem) 1.9rem;
+  background: linear-gradient(160deg, $seq-steel 0%, $seq-steel-2 100%);
+  box-shadow: inset 0 0 0 4px rgba(255, 255, 255, 0.06), 0 10px 0 rgba(0, 0, 0, 0.16);
+  color: v.$color-white;
+  text-align: center;
+}
+
+.seq-badge {
+  display: inline-block;
+  padding: 0.32rem 1rem;
+  border-radius: v.$border-radius-pill;
+  background: $seq-amber;
+  color: #4a2c00;
+  font-weight: 800;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.seq-heading {
+  @include m.playful-heading;
+  font-size: clamp(1.5rem, 4.5vw, 2rem);
+  margin: 0.7rem 0 0.3rem;
+}
+
+.seq-subtitle {
+  margin: 0 0 1.2rem;
+  font-size: 0.98rem;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.seq-progress {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1.3rem;
+}
+
+.seq-pip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.4rem;
+  background: rgba(255, 255, 255, 0.09);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  font-weight: 800;
+  font-size: 0.82rem;
+}
+
+.seq-pip--done {
+  background: $seq-green;
+  border-color: $seq-green;
+}
+
+/* --- question card --- */
+.seq-card {
+  padding: 1.4rem 1.1rem 1.3rem;
+  border-radius: v.$border-radius-lg;
+  background: $seq-panel;
+  color: $seq-ink;
+  box-shadow: inset 0 0 0 4px rgba(0, 0, 0, 0.05);
+}
+
+.seq-card--shake { animation: seq-shake 0.45s ease; }
+.seq-card--solved { box-shadow: inset 0 0 0 4px rgba($seq-green, 0.4); }
+
+.seq-qtitle {
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 1.15rem;
+  color: $seq-steel;
+}
+
+.seq-instruction {
+  margin: 0.3rem 0 1rem;
+  font-size: 0.9rem;
+  color: rgba($seq-ink, 0.65);
+}
+
+/* --- slots --- */
+.seq-slots {
+  list-style: none;
+  margin: 0 0 1rem;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.seq-slot {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.4rem 0.5rem;
+  border-radius: v.$border-radius-sm;
+  border: 2px dashed rgba($seq-ink, 0.25);
+  background: rgba(255, 255, 255, 0.6);
+  min-height: 3.2rem;
+}
+
+.seq-slot--filled {
+  border-style: solid;
+  border-color: rgba($seq-steel, 0.35);
+}
+
+.seq-slot-num {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 1.8rem;
+  height: 1.8rem;
+  border-radius: 50%;
+  background: $seq-steel;
+  color: v.$color-white;
+  font-weight: 800;
+  font-size: 0.9rem;
+}
+
+.seq-slot-empty {
+  color: rgba($seq-ink, 0.3);
+  font-weight: 800;
+}
+
+/* --- chips --- */
+.seq-tray {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+  padding: 0.6rem;
+  border-radius: v.$border-radius-sm;
+  background: rgba($seq-steel, 0.08);
+}
+
+.seq-chip {
+  @include m.tappable;
+  padding: 0.6rem 1rem;
+  border-radius: v.$border-radius-pill;
+  border: 2px solid $seq-amber;
+  background: v.$color-white;
+  color: $seq-ink;
+  font: inherit;
+  font-weight: 700;
+  font-size: 0.9rem;
+
+  &:hover:not(:disabled) { background: rgba($seq-amber, 0.14); }
+}
+
+.seq-chip--placed {
+  border-color: $seq-steel;
+  background: rgba($seq-steel, 0.1);
+}
+
+.seq-card--solved .seq-chip--placed {
+  border-color: $seq-green;
+  background: rgba($seq-green, 0.14);
+}
+
+.seq-feedback {
+  min-height: 1.4rem;
+  margin: 0.9rem 0 0.6rem;
+  font-weight: 700;
+  font-size: 0.92rem;
+}
+
+.seq-feedback--good { color: $seq-green; }
+.seq-feedback--bad { color: $seq-red; }
+
+.seq-check {
+  @include m.tappable;
+  padding: 0.75rem 2rem;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  background: $seq-steel;
+  color: v.$color-white;
+  font-weight: 800;
+  font-size: 1rem;
+
+  &:disabled { background: rgba($seq-ink, 0.2); cursor: not-allowed; }
+}
+
+/* --- done --- */
+.seq-done { padding: 1.4rem 1rem 0.5rem; }
+
+.seq-done-mark { font-size: 2rem; }
+
+.seq-done h3 {
+  @include m.playful-heading;
+  font-size: 1.35rem;
+  margin: 0.5rem 0 0.4rem;
+}
+
+.seq-done p {
+  margin: 0 auto;
+  max-width: 24rem;
+  font-size: 0.97rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.seq-continue {
+  @include m.tappable;
+  margin-top: 1.2rem;
+  padding: 0.9rem 2.4rem;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  background: linear-gradient(120deg, $seq-amber, $seq-green);
+  color: #10240f;
+  font-weight: 800;
+  font-size: 1.1rem;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.2);
+}
+
+.seq-parent-note {
+  display: flex;
+  gap: 0.5rem;
+  max-width: 34rem;
+  margin: 1.1rem auto 0;
+  padding: 0.8rem 1rem;
+  border-radius: v.$border-radius-sm;
+  background: rgba($seq-amber, 0.16);
+  border: 1px dashed rgba(#b9860b, 0.6);
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: #5c4204;
+}
+
+@keyframes seq-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-3px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .seq-card--shake { animation: none; }
+}

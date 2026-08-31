@@ -1,0 +1,38 @@
+<div class="mocl">
+  <span class="mocl-badge">{{ step().badge }}</span>
+  <span class="mocl-week">{{ step().weekLabel }}</span>
+
+  <div class="mocl-cert" [class.mocl-cert--sealed]="sealed()">
+    <span class="mocl-cert-ribbon" aria-hidden="true">★</span>
+    <span class="mocl-cert-kicker">Choices Module</span>
+    <p class="mocl-statement">{{ step().statement }}</p>
+    @if (sealed()) {
+      <span class="mocl-seal" aria-hidden="true">✓</span>
+    }
+  </div>
+
+  <div class="mocl-outcomes">
+    <span class="mocl-outcomes-heading">{{ step().outcomeHeading }}</span>
+    <ul>
+      @for (outcome of step().outcomes; track outcome; let i = $index) {
+        <li [style.--i]="i"><span class="mocl-outcome-check" aria-hidden="true">✓</span>{{ outcome }}</li>
+      }
+    </ul>
+  </div>
+
+  <div class="mocl-say">
+    <span class="mocl-say-label">{{ step().sayItLabel }}</span>
+    <button type="button" class="mocl-say-btn" [class.is-done]="sealed()" [disabled]="sealed()" (click)="seal()">
+      {{ sealed() ? '✓ ' + step().saidItLabel : step().saidItLabel }}
+    </button>
+  </div>
+
+  <p class="mocl-reinforce">{{ step().reinforceLine }}</p>
+
+  <button type="button" class="mocl-complete" [disabled]="!sealed()" (click)="finish()">
+    {{ step().completeLabel }} 🎉
+  </button>
+  @if (!sealed()) {
+    <p class="mocl-hint">Say the sentence out loud, then seal your certificate.</p>
+  }
+</div>

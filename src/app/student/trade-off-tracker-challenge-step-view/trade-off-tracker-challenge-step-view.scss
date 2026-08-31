@@ -1,0 +1,238 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- My Trade-Off Tracker challenge (tot) — Choices Module, Week 1 ---- */
+$tot-ink: #123a2e;
+$tot-teal: #0e9488;
+$tot-teal-deep: #0b6b63;
+$tot-sun: #f2a63b;
+$tot-paper: #f4fbf8;
+
+.tot {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 1rem;
+  color: $tot-ink;
+}
+
+.tot-head {
+  text-align: center;
+  padding: 1.6rem 1.2rem 1.5rem;
+  border-radius: v.$border-radius-xl v.$border-radius-xl 0 0;
+  background: linear-gradient(150deg, $tot-teal 0%, $tot-teal-deep 100%);
+  color: v.$color-white;
+}
+
+.tot-badge {
+  display: inline-block;
+  padding: 0.32rem 1rem;
+  border-radius: v.$border-radius-pill;
+  background: $tot-sun;
+  color: #4a2c00;
+  font-weight: 800;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.tot-title {
+  @include m.playful-heading;
+  font-size: clamp(1.5rem, 4.5vw, 2rem);
+  margin: 0.7rem 0 0.3rem;
+}
+
+.tot-intro {
+  margin: 0;
+  font-size: 0.98rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.tot-progress {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 1rem 1.1rem;
+  background: $tot-paper;
+}
+
+.tot-progress-bar {
+  flex: 1;
+  height: 0.7rem;
+  border-radius: v.$border-radius-pill;
+  background: rgba($tot-teal, 0.16);
+  overflow: hidden;
+}
+
+.tot-progress-fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, $tot-teal, $tot-sun);
+  transition: width 0.4s ease;
+}
+
+.tot-progress-label {
+  font-weight: 800;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.tot-days {
+  list-style: none;
+  margin: 0;
+  padding: 0 1.1rem 1.1rem;
+  background: $tot-paper;
+  border-radius: 0 0 v.$border-radius-xl v.$border-radius-xl;
+}
+
+.tot-day {
+  border: 2px solid rgba($tot-ink, 0.1);
+  border-radius: v.$border-radius-sm;
+  background: v.$color-white;
+  margin-bottom: 0.6rem;
+  overflow: hidden;
+}
+
+.tot-day--open { border-color: $tot-teal; }
+.tot-day--done { border-color: rgba($tot-teal, 0.45); background: rgba($tot-teal, 0.06); }
+
+.tot-day-head {
+  @include m.tappable;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  width: 100%;
+  padding: 0.75rem 0.9rem;
+  border: none;
+  background: none;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+}
+
+.tot-day-num {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 1.8rem;
+  height: 1.8rem;
+  border-radius: 50%;
+  background: $tot-teal;
+  color: v.$color-white;
+  font-weight: 800;
+  font-size: 0.9rem;
+}
+
+.tot-day--done .tot-day-num { background: $tot-teal-deep; }
+
+.tot-day-name { font-weight: 800; }
+
+.tot-day-state {
+  margin-left: auto;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: rgba($tot-ink, 0.55);
+}
+
+.tot-day-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  padding: 0.4rem 0.9rem 1rem;
+}
+
+.tot-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.35;
+
+  input { margin-top: 0.15rem; width: 1.1rem; height: 1.1rem; flex-shrink: 0; accent-color: $tot-teal; }
+}
+
+.tot-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.tot-field-label {
+  font-weight: 800;
+  font-size: 0.86rem;
+  color: $tot-teal-deep;
+}
+
+.tot-field textarea {
+  width: 100%;
+  padding: 0.6rem 0.7rem;
+  border-radius: v.$border-radius-sm;
+  border: 2px solid rgba($tot-ink, 0.15);
+  font: inherit;
+  font-size: 0.92rem;
+  resize: vertical;
+
+  &:focus { outline: none; border-color: $tot-teal; }
+  &:disabled { background: rgba($tot-ink, 0.04); color: rgba($tot-ink, 0.6); }
+}
+
+.tot-save,
+.tot-complete {
+  @include m.tappable;
+  align-self: flex-start;
+  padding: 0.7rem 1.6rem;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  background: $tot-teal;
+  color: v.$color-white;
+  font-weight: 800;
+  font-size: 0.95rem;
+
+  &:disabled { background: rgba($tot-ink, 0.2); cursor: not-allowed; }
+}
+
+.tot-complete {
+  display: block;
+  width: 100%;
+  margin: 1.1rem 0 0;
+  padding: 0.95rem 1.6rem;
+  font-size: 1.1rem;
+  background: linear-gradient(120deg, $tot-teal, $tot-sun);
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.12);
+}
+
+.tot-parent-note {
+  display: flex;
+  gap: 0.5rem;
+  margin: 1rem 0 0;
+  padding: 0.8rem 1rem;
+  border-radius: v.$border-radius-sm;
+  background: rgba($tot-sun, 0.16);
+  border: 1px dashed rgba(#b9700b, 0.55);
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: #6b3d04;
+}
+
+.tot-done {
+  margin-top: 1rem;
+  padding: 1.3rem 1.1rem;
+  text-align: center;
+  border-radius: v.$border-radius-lg;
+  background: rgba($tot-teal, 0.1);
+
+  h3 { @include m.playful-heading; font-size: 1.25rem; margin: 0.4rem 0 0.3rem; }
+  p { margin: 0; font-size: 0.95rem; color: rgba($tot-ink, 0.8); }
+}
+
+.tot-done-star { font-size: 1.9rem; }
+
+.tot-hint {
+  margin: 0.6rem 0 0;
+  text-align: center;
+  font-size: 0.85rem;
+  color: rgba($tot-ink, 0.55);
+}

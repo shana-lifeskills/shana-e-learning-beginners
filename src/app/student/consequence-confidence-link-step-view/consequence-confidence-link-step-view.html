@@ -1,0 +1,30 @@
+<div class="ccl">
+  <span class="ccl-badge">{{ step().badge }}</span>
+  <span class="ccl-week">{{ step().weekLabel }}</span>
+
+  <div class="ccl-orb" [class.ccl-orb--lit]="saidIt()">
+    <span class="ccl-orb-glow" aria-hidden="true"></span>
+    <span class="ccl-orb-ball">
+      <span class="ccl-orb-icon" aria-hidden="true">{{ saidIt() ? '💡' : '🔮' }}</span>
+    </span>
+    <span class="ccl-orb-stand" aria-hidden="true"></span>
+  </div>
+
+  <p class="ccl-statement">{{ step().statement }}</p>
+
+  <div class="ccl-say">
+    <span class="ccl-say-label">{{ step().sayItLabel }}</span>
+    <button type="button" class="ccl-say-btn" [class.is-done]="saidIt()" [disabled]="saidIt()" (click)="light()">
+      {{ saidIt() ? '✓ ' + step().saidItLabel : step().saidItLabel }}
+    </button>
+  </div>
+
+  <p class="ccl-reinforce">{{ step().reinforceLine }}</p>
+
+  <button type="button" class="ccl-complete" [disabled]="!saidIt()" (click)="finish()">
+    {{ step().completeLabel }} 🎉
+  </button>
+  @if (!saidIt()) {
+    <p class="ccl-hint">Say the sentence out loud, then tap the button to light the ball.</p>
+  }
+</div>

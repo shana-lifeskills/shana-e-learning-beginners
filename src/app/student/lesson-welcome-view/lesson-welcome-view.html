@@ -14,6 +14,18 @@
   } @else if (lesson.smartChoiceForecastWelcome; as scf) {
     <app-smart-choice-forecast-welcome [scf]="scf" [completed]="completed" [next]="next" [firstName]="firstName"
       (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.tradeOffWelcome; as tow) {
+    <app-trade-off-welcome [tow]="tow" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.budgetPlanWelcome; as bpw) {
+    <app-budget-plan-welcome [bpw]="bpw" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.consequenceChainWelcome; as ccw) {
+    <app-consequence-chain-welcome [ccw]="ccw" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.smartDecisionWelcome; as sdw) {
+    <app-smart-decision-welcome [sdw]="sdw" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
   } @else if (lesson.pauseButtonWelcome; as pbw) {
     <app-pause-button-welcome [pbw]="pbw" [completed]="completed" [next]="next" [firstName]="firstName"
       (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />

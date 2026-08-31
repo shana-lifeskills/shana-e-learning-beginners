@@ -1,0 +1,58 @@
+<div class="toq">
+  <div class="toq-machine">
+    <div class="toq-machine-head">
+      <span class="toq-badge">{{ step().badge }}</span>
+      <h2 class="toq-heading">{{ step().heading }}</h2>
+      <p class="toq-subtitle">{{ step().subtitle }}</p>
+    </div>
+
+    <div class="toq-track" role="progressbar" [attr.aria-valuenow]="activeIndex()"
+      [attr.aria-valuemax]="questions().length" aria-label="Coins collected">
+      @for (filled of coins(); track $index) {
+        <span class="toq-slot" [class.toq-slot--filled]="filled">
+          <span class="toq-slot-coin" aria-hidden="true">🪙</span>
+        </span>
+      }
+    </div>
+
+    @if (!allDone()) {
+      @if (currentQuestion(); as q) {
+        <div class="toq-screen" [class.toq-screen--shake]="feedback() === 'incorrect'">
+          <span class="toq-qcount">Question {{ activeIndex() + 1 }} of {{ questions().length }}</span>
+          <p class="toq-prompt">{{ q.prompt }}</p>
+
+          <div class="toq-options">
+            @for (opt of q.options; track opt.id; let i = $index) {
+              <button type="button" class="toq-option" [class.toq-option--correct]="optionState(opt) === 'correct'"
+                [class.toq-option--wrong]="optionState(opt) === 'incorrect'" [disabled]="locked()"
+                (click)="selectOption(opt)">
+                <span class="toq-option-letter" aria-hidden="true">{{ letterFor(i) }}</span>
+                <span class="toq-option-text">{{ opt.text }}</span>
+              </button>
+            }
+          </div>
+
+          <p class="toq-feedback" aria-live="polite">
+            @if (feedback() === 'correct') {
+              <span class="toq-feedback--good">🎉 {{ q.feedbackText }}</span>
+            } @else if (feedback() === 'incorrect') {
+              <span class="toq-feedback--bad">Not quite — give it another go!</span>
+            }
+          </p>
+        </div>
+      }
+    } @else {
+      <div class="toq-done">
+        <span class="toq-done-coins" aria-hidden="true">🪙🪙🪙🪙🪙</span>
+        <h3>{{ step().allDoneTitle }}</h3>
+        <p>{{ step().allDoneText }}</p>
+        <button type="button" class="toq-continue" (click)="finish()">{{ step().continueLabel }} →</button>
+      </div>
+    }
+  </div>
+
+  <p class="toq-parent-note">
+    <span class="toq-parent-icon" aria-hidden="true">👪</span>
+    {{ step().parentNote }}
+  </p>
+</div>

@@ -16,6 +16,10 @@ import { AttentionLensWelcome } from '../attention-lens-welcome/attention-lens-w
 import { SolutionPathWelcome } from '../solution-path-welcome/solution-path-welcome';
 import { MemoryWorkshopWelcome } from '../memory-workshop-welcome/memory-workshop-welcome';
 import { SmartChoiceForecastWelcome } from '../smart-choice-forecast-welcome/smart-choice-forecast-welcome';
+import { TradeOffWelcome } from '../trade-off-welcome/trade-off-welcome';
+import { BudgetPlanWelcome } from '../budget-plan-welcome/budget-plan-welcome';
+import { ConsequenceChainWelcome } from '../consequence-chain-welcome/consequence-chain-welcome';
+import { SmartDecisionWelcome } from '../smart-decision-welcome/smart-decision-welcome';
 import { PauseButtonWelcome } from '../pause-button-welcome/pause-button-welcome';
 import { StrategyKeyringWelcome } from '../strategy-keyring-welcome/strategy-keyring-welcome';
 import { GoalPathWelcome } from '../goal-path-welcome/goal-path-welcome';
@@ -74,6 +78,10 @@ import { ClassicWelcome } from '../classic-welcome/classic-welcome';
     SolutionPathWelcome,
     MemoryWorkshopWelcome,
     SmartChoiceForecastWelcome,
+    TradeOffWelcome,
+    BudgetPlanWelcome,
+    ConsequenceChainWelcome,
+    SmartDecisionWelcome,
     PauseButtonWelcome,
     StrategyKeyringWelcome,
     GoalPathWelcome,

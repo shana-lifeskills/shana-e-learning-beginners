@@ -1,0 +1,247 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Smart money checklist welcome (sdw) — Choices Module, Week 4 ---- */
+$sdw-bg: #eef7f1;
+$sdw-bg-2: #dcefe3;
+$sdw-ink: #1c3324;
+$sdw-green: #12855a;
+$sdw-navy: #1f3d63;
+$sdw-board: #fdfbf3;
+
+.sdw {
+  max-width: 62rem;
+  margin: 0 auto;
+  padding: 2.5rem clamp(1rem, 4vw, 2.75rem) 2.75rem;
+  text-align: center;
+  border-radius: v.$border-radius-xl;
+  color: $sdw-ink;
+  background: linear-gradient(165deg, $sdw-bg 0%, $sdw-bg-2 100%);
+}
+
+.sdw-week {
+  @include w.welcome-pill(rgba($sdw-navy, 0.14), $sdw-navy);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.sdw h1 {
+  @include m.playful-heading;
+  font-size: clamp(2rem, 5.6vw, 3.1rem);
+  line-height: 1.1;
+  margin: 1.2rem 0 0.7rem;
+}
+
+.sdw-title-start { color: $sdw-ink; }
+.sdw-title-accent { color: $sdw-green; }
+
+.sdw-intro {
+  max-width: 37rem;
+  margin: 0 auto;
+  font-size: 1.1rem;
+  line-height: 1.55;
+  color: rgba($sdw-ink, 0.78);
+}
+
+/* --- clipboard --- */
+.sdw-clipboard {
+  position: relative;
+  max-width: 30rem;
+  margin: 3rem auto 0;
+  padding: 2rem 1.4rem 1.6rem;
+  border-radius: v.$border-radius-lg;
+  background: $sdw-board;
+  border: 3px solid rgba($sdw-ink, 0.14);
+  box-shadow: 0 8px 0 rgba($sdw-ink, 0.1);
+  text-align: left;
+}
+
+.sdw-clip {
+  position: absolute;
+  top: -1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 5rem;
+  height: 1.6rem;
+  border-radius: 0.5rem;
+  background: linear-gradient(180deg, #b9c0c7, #8a929b);
+  box-shadow: inset 0 -3px 4px rgba(0, 0, 0, 0.2);
+}
+
+.sdw-clipboard-title {
+  display: block;
+  margin-bottom: 1rem;
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 1.1rem;
+  text-align: center;
+  color: $sdw-navy;
+}
+
+.sdw-steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.sdw-step {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 0;
+  border-bottom: 1px dashed rgba($sdw-ink, 0.18);
+  font-weight: 600;
+  animation: sdw-tick 0.4s ease both;
+  animation-delay: calc(0.2s + var(--i, 0) * 0.22s);
+}
+
+.sdw-step:last-child { border-bottom: none; }
+
+.sdw-step-check {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 1.4rem;
+  height: 1.4rem;
+  border-radius: 0.35rem;
+  background: $sdw-green;
+  color: v.$color-white;
+  font-weight: 900;
+  font-size: 0.85rem;
+}
+
+.sdw-step-icon { font-size: 1.2rem; }
+
+.sdw-step-q {
+  font-size: 0.95rem;
+  line-height: 1.3;
+  color: rgba($sdw-ink, 0.9);
+}
+
+.sdw-stamp {
+  display: block;
+  width: fit-content;
+  margin: 1.2rem auto 0;
+  padding: 0.35rem 1.1rem;
+  border: 3px solid $sdw-green;
+  border-radius: 0.4rem;
+  color: $sdw-green;
+  font-weight: 900;
+  font-size: 0.95rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transform: rotate(-4deg);
+  animation: sdw-thump 0.4s cubic-bezier(0.3, 1.5, 0.6, 1) both;
+  animation-delay: calc(0.3s + 5 * 0.22s);
+}
+
+.sdw-caption {
+  margin: 1.5rem auto 0;
+  max-width: 30rem;
+  font-size: 0.98rem;
+  font-style: italic;
+  color: rgba($sdw-ink, 0.72);
+}
+
+/* --- objective --- */
+.sdw-objective {
+  max-width: 40rem;
+  margin: 1.8rem auto 0;
+  padding: 1.15rem 1.4rem;
+  text-align: left;
+  border-radius: v.$border-radius-lg;
+  border-left: 4px solid $sdw-navy;
+  background: rgba(255, 255, 255, 0.72);
+
+  p {
+    margin: 0.3rem 0 0;
+    font-size: 1.02rem;
+    line-height: 1.5;
+    color: rgba($sdw-ink, 0.88);
+  }
+}
+
+.sdw-objective-label {
+  font-weight: 800;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $sdw-navy;
+}
+
+/* --- traits --- */
+.sdw-traits-heading {
+  margin: 1.9rem 0 0.9rem;
+  font-weight: 800;
+  font-size: 1.05rem;
+}
+
+.sdw-traits {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
+  gap: 0.85rem;
+  max-width: 44rem;
+  margin: 0 auto;
+}
+
+.sdw-trait {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 1.1rem 0.9rem;
+  border-radius: v.$border-radius-lg;
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba($sdw-ink, 0.12);
+  animation: sdw-tick 0.5s ease both;
+  animation-delay: calc(var(--i, 0) * 90ms);
+}
+
+.sdw-trait-icon { font-size: 1.7rem; }
+.sdw-trait-title { font-weight: 800; }
+
+.sdw-trait-text {
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: rgba($sdw-ink, 0.68);
+}
+
+/* --- actions --- */
+.sdw-start {
+  @include w.welcome-cta-btn(linear-gradient(120deg, $sdw-green, #2bb377), v.$color-white);
+  margin: 2rem auto 0;
+  display: block;
+  font-size: 1.15rem;
+}
+
+.sdw-review {
+  @include m.tappable;
+  display: block;
+  margin: 0.8rem auto 0;
+  background: none;
+  border: none;
+  font-weight: 700;
+  color: rgba($sdw-ink, 0.6);
+}
+
+.sdw-footer {
+  margin: 1.4rem 0 0;
+  font-size: 0.92rem;
+  color: rgba($sdw-ink, 0.55);
+}
+
+@keyframes sdw-tick {
+  from { opacity: 0; transform: translateX(-8px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes sdw-thump {
+  from { opacity: 0; transform: rotate(-4deg) scale(1.8); }
+  to { opacity: 1; transform: rotate(-4deg) scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sdw-step, .sdw-stamp, .sdw-trait { animation: none; opacity: 1; }
+}

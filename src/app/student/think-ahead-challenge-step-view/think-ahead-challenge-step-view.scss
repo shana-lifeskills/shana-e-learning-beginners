@@ -1,0 +1,248 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- Think Ahead Challenge (tac) — Choices Module, Week 3 ---- */
+$tac-ink: #2c1c46;
+$tac-plum: #7c3aed;
+$tac-plum-deep: #5b21b6;
+$tac-amber: #f59e0b;
+$tac-paper: #f7f3fe;
+
+.tac {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 1rem;
+  color: $tac-ink;
+}
+
+.tac-head {
+  text-align: center;
+  padding: 1.6rem 1.2rem 1.4rem;
+  border-radius: v.$border-radius-xl v.$border-radius-xl 0 0;
+  background: linear-gradient(150deg, $tac-plum 0%, $tac-plum-deep 100%);
+  color: v.$color-white;
+}
+
+.tac-badge {
+  display: inline-block;
+  padding: 0.32rem 1rem;
+  border-radius: v.$border-radius-pill;
+  background: $tac-amber;
+  color: #4a2c00;
+  font-weight: 800;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.tac-title {
+  @include m.playful-heading;
+  font-size: clamp(1.5rem, 4.5vw, 2rem);
+  margin: 0.7rem 0 0.3rem;
+}
+
+.tac-intro {
+  margin: 0 0 0.9rem;
+  font-size: 0.98rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.tac-ask-banner {
+  margin: 0;
+  padding: 0.6rem 0.9rem;
+  border-radius: v.$border-radius-sm;
+  background: rgba(255, 255, 255, 0.14);
+  font-size: 0.92rem;
+  line-height: 1.4;
+}
+
+.tac-progress {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 1rem 1.1rem;
+  background: $tac-paper;
+}
+
+.tac-progress-bar {
+  flex: 1;
+  height: 0.7rem;
+  border-radius: v.$border-radius-pill;
+  background: rgba($tac-plum, 0.16);
+  overflow: hidden;
+}
+
+.tac-progress-fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, $tac-plum, $tac-amber);
+  transition: width 0.4s ease;
+}
+
+.tac-progress-label {
+  font-weight: 800;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.tac-path {
+  list-style: none;
+  margin: 0;
+  padding: 0 1.1rem 1.1rem;
+  background: $tac-paper;
+  border-radius: 0 0 v.$border-radius-xl v.$border-radius-xl;
+}
+
+.tac-day {
+  position: relative;
+  border: 2px solid rgba($tac-ink, 0.1);
+  border-radius: v.$border-radius-sm;
+  background: v.$color-white;
+  margin-bottom: 0.6rem;
+  overflow: hidden;
+}
+
+.tac-day--open { border-color: $tac-plum; }
+.tac-day--done { border-color: rgba($tac-plum, 0.4); background: rgba($tac-plum, 0.05); }
+
+.tac-day-head {
+  @include m.tappable;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  width: 100%;
+  padding: 0.75rem 0.9rem;
+  border: none;
+  background: none;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+}
+
+.tac-day-node {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 1.9rem;
+  height: 1.9rem;
+  border-radius: 50%;
+  background: $tac-plum;
+  color: v.$color-white;
+  font-weight: 800;
+  font-size: 0.9rem;
+}
+
+.tac-day--done .tac-day-node { background: $tac-plum-deep; }
+
+.tac-day-name { font-weight: 800; }
+
+.tac-day-state {
+  margin-left: auto;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: rgba($tac-ink, 0.55);
+}
+
+.tac-day-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  padding: 0.4rem 0.9rem 1rem;
+}
+
+.tac-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.35;
+
+  input { margin-top: 0.15rem; width: 1.1rem; height: 1.1rem; flex-shrink: 0; accent-color: $tac-plum; }
+}
+
+.tac-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.tac-field-label {
+  font-weight: 800;
+  font-size: 0.86rem;
+  color: $tac-plum-deep;
+}
+
+.tac-field textarea {
+  width: 100%;
+  padding: 0.6rem 0.7rem;
+  border-radius: v.$border-radius-sm;
+  border: 2px solid rgba($tac-ink, 0.15);
+  font: inherit;
+  font-size: 0.92rem;
+  resize: vertical;
+
+  &:focus { outline: none; border-color: $tac-plum; }
+  &:disabled { background: rgba($tac-ink, 0.04); color: rgba($tac-ink, 0.6); }
+}
+
+.tac-save,
+.tac-complete {
+  @include m.tappable;
+  align-self: flex-start;
+  padding: 0.7rem 1.6rem;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  background: $tac-plum;
+  color: v.$color-white;
+  font-weight: 800;
+  font-size: 0.95rem;
+
+  &:disabled { background: rgba($tac-ink, 0.2); cursor: not-allowed; }
+}
+
+.tac-complete {
+  display: block;
+  width: 100%;
+  margin: 1.1rem 0 0;
+  padding: 0.95rem 1.6rem;
+  font-size: 1.1rem;
+  background: linear-gradient(120deg, $tac-plum, $tac-amber);
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.12);
+}
+
+.tac-parent-note {
+  display: flex;
+  gap: 0.5rem;
+  margin: 1rem 0 0;
+  padding: 0.8rem 1rem;
+  border-radius: v.$border-radius-sm;
+  background: rgba($tac-amber, 0.16);
+  border: 1px dashed rgba(#b9700b, 0.55);
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: #6b3d04;
+}
+
+.tac-done {
+  margin-top: 1rem;
+  padding: 1.3rem 1.1rem;
+  text-align: center;
+  border-radius: v.$border-radius-lg;
+  background: rgba($tac-plum, 0.1);
+
+  h3 { @include m.playful-heading; font-size: 1.25rem; margin: 0.4rem 0 0.3rem; }
+  p { margin: 0; font-size: 0.95rem; color: rgba($tac-ink, 0.8); }
+}
+
+.tac-done-mark { font-size: 1.9rem; }
+
+.tac-hint {
+  margin: 0.6rem 0 0;
+  text-align: center;
+  font-size: 0.85rem;
+  color: rgba($tac-ink, 0.55);
+}

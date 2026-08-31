@@ -1,0 +1,56 @@
+<div class="sdw">
+  <span class="sdw-week">{{ sdw.weekLabel }}</span>
+
+  <h1>
+    <span class="sdw-title-start">{{ sdw.titleStart }}</span>
+    <span class="sdw-title-accent">{{ sdw.titleAccent }}</span>
+  </h1>
+  <p class="sdw-intro">{{ sdw.intro }}</p>
+
+  <div class="sdw-clipboard">
+    <span class="sdw-clip" aria-hidden="true"></span>
+    <span class="sdw-clipboard-title">{{ sdw.checklistLabel }}</span>
+
+    <ul class="sdw-steps">
+      @for (step of sdw.steps; track step.question; let i = $index) {
+        <li class="sdw-step" [style.--i]="i">
+          <span class="sdw-step-check" aria-hidden="true">✓</span>
+          <span class="sdw-step-icon" aria-hidden="true">{{ step.icon }}</span>
+          <span class="sdw-step-q">{{ step.question }}</span>
+        </li>
+      }
+    </ul>
+
+    <span class="sdw-stamp" aria-hidden="true">{{ sdw.resultLabel }}</span>
+  </div>
+  <p class="sdw-caption">{{ sdw.checklistCaption }}</p>
+
+  <div class="sdw-objective">
+    <span class="sdw-objective-label">{{ sdw.objectiveLabel }}</span>
+    <p>{{ sdw.objectiveText }}</p>
+  </div>
+
+  <p class="sdw-traits-heading">{{ sdw.traitsHeading }}</p>
+  <div class="sdw-traits">
+    @for (trait of sdw.traits; track trait.title; let i = $index) {
+      <div class="sdw-trait" [style.--i]="i">
+        <span class="sdw-trait-icon" aria-hidden="true">{{ trait.icon }}</span>
+        <span class="sdw-trait-title">{{ trait.title }}</span>
+        <span class="sdw-trait-text">{{ trait.text }}</span>
+      </div>
+    }
+  </div>
+
+  @if (isCompletedLessonWelcome()) {
+    @if (nextLesson(); as next) {
+      <button type="button" class="sdw-start" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+    } @else {
+      <button type="button" class="sdw-start" (click)="backToMap()">Back to My Modules →</button>
+    }
+    <button type="button" class="sdw-review" (click)="beginLesson()">↺ Review this lesson</button>
+  } @else {
+    <button type="button" class="sdw-start" (click)="beginLesson()">{{ sdw.startLabel }} →</button>
+  }
+
+  <p class="sdw-footer">{{ sdw.footerNote }}</p>
+</div>

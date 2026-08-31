@@ -1,0 +1,250 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Budget jars welcome (bpw) — Choices Module, Week 2 ---- */
+$bpw-bg: #eef4ff;
+$bpw-bg-2: #dbe7ff;
+$bpw-ink: #1e2a55;
+$bpw-blue: #2563eb;
+$bpw-coral: #f9736b;
+$bpw-glass: #bfe0ef;
+
+.bpw {
+  max-width: 62rem;
+  margin: 0 auto;
+  padding: 2.5rem clamp(1rem, 4vw, 2.75rem) 2.75rem;
+  text-align: center;
+  border-radius: v.$border-radius-xl;
+  color: $bpw-ink;
+  background: linear-gradient(165deg, $bpw-bg 0%, $bpw-bg-2 100%);
+}
+
+.bpw-week {
+  @include w.welcome-pill(rgba($bpw-blue, 0.14), $bpw-blue);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.bpw h1 {
+  @include m.playful-heading;
+  font-size: clamp(2.1rem, 6vw, 3.2rem);
+  line-height: 1.1;
+  margin: 1.2rem 0 0.7rem;
+}
+
+.bpw-title-start { color: $bpw-ink; }
+.bpw-title-accent { color: $bpw-blue; }
+
+.bpw-intro {
+  max-width: 37rem;
+  margin: 0 auto;
+  font-size: 1.1rem;
+  line-height: 1.55;
+  color: rgba($bpw-ink, 0.78);
+}
+
+/* --- jar shelf --- */
+.bpw-shelf-wrap {
+  position: relative;
+  max-width: 40rem;
+  margin: 2.6rem auto 0;
+  padding: 1.5rem 1rem 0;
+}
+
+.bpw-shelf-label {
+  display: inline-block;
+  margin-bottom: 1.2rem;
+  padding: 0.25rem 1rem;
+  border-radius: v.$border-radius-pill;
+  background: $bpw-coral;
+  color: v.$color-white;
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.bpw-jars {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  align-items: end;
+}
+
+.bpw-jar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  animation: bpw-rise 0.5s ease both;
+  animation-delay: calc(0.1s + var(--i, 0) * 0.14s);
+}
+
+.bpw-jar-coin {
+  font-size: 1.15rem;
+  animation: bpw-drop 2.4s ease-in-out infinite;
+  animation-delay: calc(var(--i, 0) * 0.5s);
+}
+
+.bpw-jar-glass {
+  position: relative;
+  width: 4.6rem;
+  height: 5.2rem;
+  border-radius: 0.5rem 0.5rem 1.1rem 1.1rem;
+  background: linear-gradient(180deg, rgba($bpw-glass, 0.35), rgba($bpw-glass, 0.65));
+  border: 3px solid rgba(255, 255, 255, 0.9);
+  box-shadow: inset 0 -6px 10px rgba($bpw-blue, 0.12), 0 4px 0 rgba($bpw-ink, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.bpw-jar-fill {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 42%;
+  background: linear-gradient(180deg, rgba($bpw-blue, 0.35), rgba($bpw-blue, 0.5));
+}
+
+.bpw-jar-icon {
+  position: relative;
+  font-size: 1.7rem;
+}
+
+.bpw-jar-name {
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: $bpw-ink;
+}
+
+.bpw-jar-note {
+  font-size: 0.78rem;
+  line-height: 1.3;
+  color: rgba($bpw-ink, 0.6);
+  max-width: 9rem;
+}
+
+.bpw-shelf {
+  display: block;
+  height: 0.8rem;
+  margin-top: 0.4rem;
+  border-radius: v.$border-radius-pill;
+  background: linear-gradient(90deg, rgba($bpw-ink, 0.18), rgba($bpw-ink, 0.28));
+}
+
+.bpw-jars-caption {
+  margin: 1.5rem auto 0;
+  max-width: 30rem;
+  font-size: 0.98rem;
+  font-style: italic;
+  color: rgba($bpw-ink, 0.72);
+}
+
+/* --- objective --- */
+.bpw-objective {
+  max-width: 40rem;
+  margin: 1.8rem auto 0;
+  padding: 1.15rem 1.4rem;
+  text-align: left;
+  border-radius: v.$border-radius-lg;
+  border-left: 4px solid $bpw-blue;
+  background: rgba(255, 255, 255, 0.75);
+
+  p {
+    margin: 0.3rem 0 0;
+    font-size: 1.02rem;
+    line-height: 1.5;
+    color: rgba($bpw-ink, 0.88);
+  }
+}
+
+.bpw-objective-label {
+  font-weight: 800;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $bpw-blue;
+}
+
+/* --- traits --- */
+.bpw-traits-heading {
+  margin: 1.9rem 0 0.9rem;
+  font-weight: 800;
+  font-size: 1.05rem;
+}
+
+.bpw-traits {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
+  gap: 0.85rem;
+  max-width: 44rem;
+  margin: 0 auto;
+}
+
+.bpw-trait {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 1.1rem 0.9rem;
+  border-radius: v.$border-radius-lg;
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba($bpw-ink, 0.12);
+  animation: bpw-rise 0.5s ease both;
+  animation-delay: calc(var(--i, 0) * 90ms);
+}
+
+.bpw-trait-icon { font-size: 1.7rem; }
+.bpw-trait-title { font-weight: 800; }
+
+.bpw-trait-text {
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: rgba($bpw-ink, 0.68);
+}
+
+/* --- actions --- */
+.bpw-start {
+  @include w.welcome-cta-btn(linear-gradient(120deg, $bpw-blue, #4f8cf7), v.$color-white);
+  margin: 2rem auto 0;
+  display: block;
+  font-size: 1.15rem;
+}
+
+.bpw-review {
+  @include m.tappable;
+  display: block;
+  margin: 0.8rem auto 0;
+  background: none;
+  border: none;
+  font-weight: 700;
+  color: rgba($bpw-ink, 0.6);
+}
+
+.bpw-footer {
+  margin: 1.4rem 0 0;
+  font-size: 0.92rem;
+  color: rgba($bpw-ink, 0.55);
+}
+
+@keyframes bpw-rise {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes bpw-drop {
+  0%, 60%, 100% { transform: translateY(0); opacity: 1; }
+  30% { transform: translateY(6px); opacity: 0.85; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bpw-jar, .bpw-jar-coin, .bpw-trait { animation: none; opacity: 1; }
+}
+
+@media (max-width: 32rem) {
+  .bpw-jars { grid-template-columns: 1fr; justify-items: center; }
+}

@@ -1,0 +1,75 @@
+<div class="tow">
+  <span class="tow-week">{{ tow.weekLabel }}</span>
+
+  <h1>
+    <span class="tow-title-start">{{ tow.titleStart }}</span>
+    <span class="tow-title-accent">{{ tow.titleAccent }}</span>
+  </h1>
+  <p class="tow-intro">{{ tow.intro }}</p>
+
+  <div class="tow-seesaw">
+    <div class="tow-beam">
+      <div class="tow-seat tow-seat--pick">
+        <span class="tow-seat-icon" aria-hidden="true">{{ tow.pickSeatIcon }}</span>
+        <span class="tow-seat-kicker">You pick</span>
+        <span class="tow-seat-label">{{ tow.pickSeatLabel }}</span>
+      </div>
+      <div class="tow-seat tow-seat--give">
+        <span class="tow-seat-icon" aria-hidden="true">{{ tow.giveSeatIcon }}</span>
+        <span class="tow-seat-kicker">You give up</span>
+        <span class="tow-seat-label">{{ tow.giveSeatLabel }}</span>
+      </div>
+    </div>
+    <div class="tow-coin" aria-hidden="true">
+      <span class="tow-coin-face">{{ tow.coinLabel }}</span>
+    </div>
+    <div class="tow-base" aria-hidden="true"></div>
+  </div>
+  <p class="tow-seesaw-caption">{{ tow.seesawCaption }}</p>
+
+  <p class="tow-examples-heading">{{ tow.examplesHeading }}</p>
+  <div class="tow-examples">
+    @for (ex of tow.examples; track ex.pickLabel; let i = $index) {
+      <div class="tow-example" [style.--i]="i">
+        <span class="tow-example-side tow-example-side--pick">
+          <span class="tow-example-icon" aria-hidden="true">{{ ex.pickIcon }}</span>
+          <span class="tow-example-text">{{ ex.pickLabel }}</span>
+        </span>
+        <span class="tow-example-swap" aria-hidden="true">⇄</span>
+        <span class="tow-example-side tow-example-side--give">
+          <span class="tow-example-icon" aria-hidden="true">{{ ex.giveIcon }}</span>
+          <span class="tow-example-text">{{ ex.giveLabel }}</span>
+        </span>
+      </div>
+    }
+  </div>
+
+  <div class="tow-objective">
+    <span class="tow-objective-label">{{ tow.objectiveLabel }}</span>
+    <p>{{ tow.objectiveText }}</p>
+  </div>
+
+  <p class="tow-traits-heading">{{ tow.traitsHeading }}</p>
+  <div class="tow-traits">
+    @for (trait of tow.traits; track trait.title; let i = $index) {
+      <div class="tow-trait" [style.--i]="i">
+        <span class="tow-trait-icon" aria-hidden="true">{{ trait.icon }}</span>
+        <span class="tow-trait-title">{{ trait.title }}</span>
+        <span class="tow-trait-text">{{ trait.text }}</span>
+      </div>
+    }
+  </div>
+
+  @if (isCompletedLessonWelcome()) {
+    @if (nextLesson(); as next) {
+      <button type="button" class="tow-start" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+    } @else {
+      <button type="button" class="tow-start" (click)="backToMap()">Back to My Modules →</button>
+    }
+    <button type="button" class="tow-review" (click)="beginLesson()">↺ Review this lesson</button>
+  } @else {
+    <button type="button" class="tow-start" (click)="beginLesson()">{{ tow.startLabel }} →</button>
+  }
+
+  <p class="tow-footer">{{ tow.footerNote }}</p>
+</div>

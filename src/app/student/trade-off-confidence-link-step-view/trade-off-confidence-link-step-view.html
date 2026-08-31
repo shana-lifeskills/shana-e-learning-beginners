@@ -1,0 +1,29 @@
+<div class="tcl">
+  <span class="tcl-badge">{{ step().badge }}</span>
+  <span class="tcl-week">{{ step().weekLabel }}</span>
+
+  <div class="tcl-medal" [class.tcl-medal--lit]="saidIt()">
+    <span class="tcl-medal-ring" aria-hidden="true"></span>
+    <span class="tcl-medal-core">
+      <span class="tcl-medal-mark" aria-hidden="true">💡</span>
+      <p class="tcl-statement">{{ step().statement }}</p>
+    </span>
+  </div>
+
+  <div class="tcl-say">
+    <span class="tcl-say-label">{{ step().sayItLabel }}</span>
+    <button type="button" class="tcl-say-btn" [class.tcl-say-btn--done]="saidIt()"
+      [disabled]="saidIt()" (click)="toggleSaidIt()">
+      {{ saidIt() ? '✓ ' + step().saidItLabel : step().saidItLabel }}
+    </button>
+  </div>
+
+  <p class="tcl-reinforce">{{ step().reinforceLine }}</p>
+
+  <button type="button" class="tcl-complete" [disabled]="!saidIt()" (click)="finish()">
+    {{ step().completeLabel }} 🎉
+  </button>
+  @if (!saidIt()) {
+    <p class="tcl-hint">Say the sentence out loud, then tap the button above.</p>
+  }
+</div>

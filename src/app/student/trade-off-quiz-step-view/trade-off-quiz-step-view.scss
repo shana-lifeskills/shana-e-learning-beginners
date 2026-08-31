@@ -1,0 +1,265 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- Trade-off Quiz Machine (toq) — Choices Module, Week 1 warm-up ---- */
+$toq-body: #3b2a6d;
+$toq-body-2: #55379b;
+$toq-screen: #fdf6e3;
+$toq-ink: #2b2350;
+$toq-gold: #f5c542;
+$toq-pink: #ff5da2;
+$toq-green: #2fb170;
+$toq-red: #e5484d;
+
+.toq {
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.toq-machine {
+  border-radius: v.$border-radius-xl;
+  padding: 1.6rem clamp(1rem, 4vw, 2rem) 1.9rem;
+  background: linear-gradient(165deg, $toq-body-2 0%, $toq-body 100%);
+  box-shadow: 0 10px 0 rgba(0, 0, 0, 0.18), inset 0 0 0 4px rgba(255, 255, 255, 0.08);
+  color: v.$color-white;
+  text-align: center;
+}
+
+.toq-machine-head { margin-bottom: 1.2rem; }
+
+.toq-badge {
+  display: inline-block;
+  padding: 0.35rem 1.1rem;
+  border-radius: v.$border-radius-pill;
+  background: $toq-pink;
+  color: v.$color-white;
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.toq-heading {
+  @include m.playful-heading;
+  font-size: clamp(1.5rem, 4.5vw, 2.1rem);
+  margin: 0.7rem 0 0.3rem;
+}
+
+.toq-subtitle {
+  margin: 0;
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* --- coin track --- */
+.toq-track {
+  display: flex;
+  justify-content: center;
+  gap: 0.55rem;
+  padding: 0.7rem;
+  margin-bottom: 1.3rem;
+  border-radius: v.$border-radius-pill;
+  background: rgba(0, 0, 0, 0.22);
+}
+
+.toq-slot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.09);
+  border: 2px dashed rgba(255, 255, 255, 0.25);
+}
+
+.toq-slot-coin {
+  font-size: 1.2rem;
+  opacity: 0;
+  transform: scale(0.3) translateY(-8px);
+  transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.toq-slot--filled {
+  background: radial-gradient(circle at 35% 30%, #ffe89a, $toq-gold);
+  border: 2px solid #d99b0c;
+  border-style: solid;
+}
+
+.toq-slot--filled .toq-slot-coin { opacity: 1; transform: none; }
+
+/* --- question screen --- */
+.toq-screen {
+  border-radius: v.$border-radius-lg;
+  padding: 1.4rem clamp(0.9rem, 3vw, 1.6rem) 1.5rem;
+  background: $toq-screen;
+  color: $toq-ink;
+  box-shadow: inset 0 0 0 4px rgba(0, 0, 0, 0.06);
+  text-align: left;
+}
+
+.toq-screen--shake { animation: toq-shake 0.4s ease; }
+
+.toq-qcount {
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $toq-pink;
+}
+
+.toq-prompt {
+  margin: 0.4rem 0 1.1rem;
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.toq-options {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.toq-option {
+  @include m.tappable;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border-radius: v.$border-radius-sm;
+  border: 2px solid rgba($toq-ink, 0.16);
+  background: v.$color-white;
+  font: inherit;
+  text-align: left;
+  color: $toq-ink;
+
+  &:hover:not(:disabled) { border-color: $toq-pink; }
+  &:disabled { cursor: default; }
+}
+
+.toq-option-letter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 1.9rem;
+  height: 1.9rem;
+  border-radius: 50%;
+  background: $toq-body;
+  color: v.$color-white;
+  font-weight: 800;
+  font-size: 0.9rem;
+}
+
+.toq-option-text {
+  font-size: 0.98rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.toq-option--correct {
+  border-color: $toq-green;
+  background: rgba($toq-green, 0.14);
+
+  .toq-option-letter { background: $toq-green; }
+}
+
+.toq-option--wrong {
+  border-color: $toq-red;
+  background: rgba($toq-red, 0.12);
+
+  .toq-option-letter { background: $toq-red; }
+}
+
+.toq-feedback {
+  min-height: 1.5rem;
+  margin: 0.9rem 0 0;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.toq-feedback--good { color: $toq-green; }
+.toq-feedback--bad { color: $toq-red; }
+
+/* --- all-done panel --- */
+.toq-done {
+  border-radius: v.$border-radius-lg;
+  padding: 1.8rem 1.4rem 2rem;
+  background: $toq-screen;
+  color: $toq-ink;
+
+  h3 {
+    @include m.playful-heading;
+    font-size: 1.4rem;
+    margin: 0.6rem 0 0.4rem;
+  }
+
+  p {
+    margin: 0 auto;
+    max-width: 26rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: rgba($toq-ink, 0.8);
+  }
+}
+
+.toq-done-coins {
+  font-size: 1.8rem;
+  letter-spacing: 0.15rem;
+  animation: toq-pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.toq-continue {
+  @include m.tappable;
+  margin-top: 1.3rem;
+  padding: 0.9rem 2.4rem;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  background: linear-gradient(120deg, $toq-pink, #ff8a3d);
+  color: v.$color-white;
+  font-weight: 800;
+  font-size: 1.1rem;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.15);
+
+  &:hover { opacity: 0.92; }
+}
+
+/* --- parent note --- */
+.toq-parent-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  max-width: 34rem;
+  margin: 1.2rem auto 0;
+  padding: 0.85rem 1.1rem;
+  border-radius: v.$border-radius-sm;
+  background: rgba($toq-gold, 0.16);
+  border: 1px dashed rgba(#b9860b, 0.6);
+  font-size: 0.9rem;
+  line-height: 1.45;
+  color: #6b4e04;
+  text-align: left;
+}
+
+.toq-parent-icon { font-size: 1.1rem; }
+
+@keyframes toq-shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-7px); }
+  40% { transform: translateX(6px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(3px); }
+}
+
+@keyframes toq-pop {
+  from { opacity: 0; transform: scale(0.4); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toq-screen--shake,
+  .toq-done-coins { animation: none; }
+  .toq-slot-coin { transition: none; }
+}

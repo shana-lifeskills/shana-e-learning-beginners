@@ -1,0 +1,36 @@
+<div class="bcl">
+  <span class="bcl-badge">{{ step().badge }}</span>
+  <span class="bcl-week">{{ step().weekLabel }}</span>
+
+  <div class="bcl-card" [class.bcl-card--stamped]="stamped()">
+    <div class="bcl-card-top">
+      <span class="bcl-chip" aria-hidden="true"></span>
+      <span class="bcl-card-name">MY MONEY PLAN</span>
+    </div>
+    <p class="bcl-statement">{{ step().statement }}</p>
+    <div class="bcl-card-bottom">
+      <span class="bcl-coin" aria-hidden="true">🪙</span>
+      <span class="bcl-coin" aria-hidden="true">🪙</span>
+      <span class="bcl-coin" aria-hidden="true">🪙</span>
+    </div>
+    @if (stamped()) {
+      <span class="bcl-stamp" aria-hidden="true">{{ step().stampedLabel }}</span>
+    }
+  </div>
+
+  <div class="bcl-say">
+    <span class="bcl-say-label">{{ step().sayItLabel }}</span>
+    <button type="button" class="bcl-stamp-btn" [class.is-done]="stamped()" [disabled]="stamped()" (click)="stamp()">
+      {{ stamped() ? '✓ ' + step().stampedLabel : step().stampLabel }}
+    </button>
+  </div>
+
+  <p class="bcl-reinforce">{{ step().reinforceLine }}</p>
+
+  <button type="button" class="bcl-complete" [disabled]="!stamped()" (click)="finish()">
+    {{ step().completeLabel }} 🎉
+  </button>
+  @if (!stamped()) {
+    <p class="bcl-hint">Say the sentence out loud, then stamp your card.</p>
+  }
+</div>

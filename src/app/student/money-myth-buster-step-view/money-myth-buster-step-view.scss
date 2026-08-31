@@ -1,0 +1,216 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- Money Myth Buster warm-up (mmb) — Choices Module, Week 3 ---- */
+$mmb-kraft: #efe2c9;
+$mmb-kraft-2: #e3d2b0;
+$mmb-ink: #3d2f1c;
+$mmb-fact: #1f8a4c;
+$mmb-myth: #c62f2f;
+$mmb-plum: #7c3aed;
+
+.mmb {
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.mmb-sheet {
+  border-radius: v.$border-radius-xl;
+  padding: 1.6rem clamp(1rem, 3.5vw, 2rem) 1.9rem;
+  background:
+    repeating-linear-gradient(0deg, rgba($mmb-ink, 0.035) 0 1px, transparent 1px 26px),
+    linear-gradient(160deg, $mmb-kraft 0%, $mmb-kraft-2 100%);
+  border: 1px solid rgba($mmb-ink, 0.18);
+  box-shadow: 0 8px 0 rgba($mmb-ink, 0.12);
+  color: $mmb-ink;
+  text-align: center;
+}
+
+.mmb-badge {
+  display: inline-block;
+  padding: 0.32rem 1rem;
+  border-radius: 0.25rem;
+  background: $mmb-plum;
+  color: v.$color-white;
+  font-weight: 800;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transform: rotate(-1.5deg);
+}
+
+.mmb-heading {
+  @include m.playful-heading;
+  font-size: clamp(1.5rem, 4.5vw, 2rem);
+  margin: 0.7rem 0 0.3rem;
+}
+
+.mmb-subtitle {
+  margin: 0 0 1.2rem;
+  font-size: 0.98rem;
+  color: rgba($mmb-ink, 0.72);
+}
+
+.mmb-cases {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1.3rem;
+}
+
+.mmb-case {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: rgba($mmb-ink, 0.08);
+  border: 2px dashed rgba($mmb-ink, 0.3);
+  font-weight: 800;
+  font-size: 0.85rem;
+  color: rgba($mmb-ink, 0.5);
+}
+
+.mmb-case--solved {
+  background: $mmb-fact;
+  border-style: solid;
+  border-color: $mmb-fact;
+  color: v.$color-white;
+}
+
+/* --- claim card --- */
+.mmb-claim {
+  padding: 1.4rem 1.1rem 1.3rem;
+  border-radius: v.$border-radius-sm;
+  background: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba($mmb-ink, 0.15);
+}
+
+.mmb-claim--shake { animation: mmb-shake 0.4s ease; }
+
+.mmb-claim-kicker {
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $mmb-plum;
+}
+
+.mmb-claim-text {
+  margin: 0.5rem 0 1.3rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+  font-style: italic;
+  line-height: 1.4;
+}
+
+.mmb-stamps {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.mmb-stamp {
+  @include m.tappable;
+  padding: 0.7rem 1.6rem;
+  border-radius: 0.35rem;
+  border: 3px solid;
+  background: rgba(255, 255, 255, 0.6);
+  font-weight: 900;
+  font-size: 1.05rem;
+  letter-spacing: 0.08em;
+  transform: rotate(-3deg);
+  transition: transform 0.12s ease;
+}
+
+.mmb-stamp--fact { border-color: $mmb-fact; color: $mmb-fact; }
+.mmb-stamp--myth { border-color: $mmb-myth; color: $mmb-myth; transform: rotate(3deg); }
+
+.mmb-stamp:hover:not(:disabled) { transform: rotate(0) scale(1.04); }
+
+.mmb-stamp.is-correct {
+  animation: mmb-thump 0.3s cubic-bezier(0.3, 1.5, 0.6, 1);
+}
+
+.mmb-stamp--fact.is-correct { background: $mmb-fact; color: v.$color-white; }
+.mmb-stamp--myth.is-correct { background: $mmb-myth; color: v.$color-white; }
+
+.mmb-stamp.is-wrong { animation: mmb-shake 0.4s ease; }
+
+.mmb-feedback {
+  min-height: 1.5rem;
+  margin: 1rem 0 0;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.mmb-feedback--good { color: $mmb-fact; }
+.mmb-feedback--bad { color: $mmb-myth; }
+
+/* --- done --- */
+.mmb-done {
+  padding: 1.4rem 1rem 0.5rem;
+}
+
+.mmb-done-mark { font-size: 2rem; }
+
+.mmb-done h3 {
+  @include m.playful-heading;
+  font-size: 1.35rem;
+  margin: 0.5rem 0 0.4rem;
+}
+
+.mmb-done p {
+  margin: 0 auto;
+  max-width: 24rem;
+  font-size: 0.97rem;
+  line-height: 1.5;
+  color: rgba($mmb-ink, 0.78);
+}
+
+.mmb-continue {
+  @include m.tappable;
+  margin-top: 1.2rem;
+  padding: 0.9rem 2.4rem;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  background: linear-gradient(120deg, $mmb-plum, #f97316);
+  color: v.$color-white;
+  font-weight: 800;
+  font-size: 1.1rem;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.2);
+}
+
+.mmb-parent-note {
+  display: flex;
+  gap: 0.5rem;
+  max-width: 34rem;
+  margin: 1.1rem auto 0;
+  padding: 0.8rem 1rem;
+  border-radius: v.$border-radius-sm;
+  background: rgba($mmb-plum, 0.1);
+  border: 1px dashed rgba($mmb-plum, 0.5);
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: #4a2f6b;
+}
+
+@keyframes mmb-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-3px); }
+}
+
+@keyframes mmb-thump {
+  from { transform: rotate(0) scale(1.8); }
+  to { transform: rotate(0) scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mmb-claim--shake,
+  .mmb-stamp.is-correct,
+  .mmb-stamp.is-wrong { animation: none; }
+}

@@ -1,0 +1,57 @@
+<div class="mmb">
+  <div class="mmb-sheet">
+    <header class="mmb-head">
+      <span class="mmb-badge">{{ step().badge }}</span>
+      <h2 class="mmb-heading">{{ step().heading }}</h2>
+      <p class="mmb-subtitle">{{ step().subtitle }}</p>
+    </header>
+
+    <div class="mmb-cases" role="progressbar" [attr.aria-valuenow]="activeIndex()"
+      [attr.aria-valuemax]="statements().length" aria-label="Cases solved">
+      @for (solved of cases(); track $index) {
+        <span class="mmb-case" [class.mmb-case--solved]="solved">{{ $index + 1 }}</span>
+      }
+    </div>
+
+    @if (!allDone()) {
+      @if (current(); as claim) {
+        <div class="mmb-claim" [class.mmb-claim--shake]="feedback() === 'incorrect'">
+          <span class="mmb-claim-kicker">Claim {{ activeIndex() + 1 }}</span>
+          <p class="mmb-claim-text">"{{ claim.text }}"</p>
+
+          <div class="mmb-stamps">
+            <button type="button" class="mmb-stamp mmb-stamp--fact"
+              [class.is-correct]="stampState('fact') === 'correct'"
+              [class.is-wrong]="stampState('fact') === 'incorrect'" [disabled]="locked()" (click)="pick('fact')">
+              {{ step().factLabel }}
+            </button>
+            <button type="button" class="mmb-stamp mmb-stamp--myth"
+              [class.is-correct]="stampState('myth') === 'correct'"
+              [class.is-wrong]="stampState('myth') === 'incorrect'" [disabled]="locked()" (click)="pick('myth')">
+              {{ step().mythLabel }}
+            </button>
+          </div>
+
+          <p class="mmb-feedback" aria-live="polite">
+            @if (feedback() === 'correct') {
+              <span class="mmb-feedback--good">✅ {{ claim.feedbackText }}</span>
+            } @else if (feedback() === 'incorrect') {
+              <span class="mmb-feedback--bad">Not quite — look again and re-stamp.</span>
+            }
+          </p>
+        </div>
+      }
+    } @else {
+      <div class="mmb-done">
+        <span class="mmb-done-mark" aria-hidden="true">🕵️</span>
+        <h3>{{ step().allDoneTitle }}</h3>
+        <p>{{ step().allDoneText }}</p>
+        <button type="button" class="mmb-continue" (click)="finish()">{{ step().continueLabel }} →</button>
+      </div>
+    }
+  </div>
+
+  <p class="mmb-parent-note">
+    <span aria-hidden="true">👪</span> {{ step().parentNote }}
+  </p>
+</div>

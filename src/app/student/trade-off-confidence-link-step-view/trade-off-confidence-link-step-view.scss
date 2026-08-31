@@ -1,0 +1,164 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- Trade-off Confidence Link (tcl) — Choices Module, Week 1 close ---- */
+$tcl-ink: #3a2a05;
+$tcl-gold: #eab308;
+$tcl-amber: #f97316;
+$tcl-bg: #fff8e6;
+$tcl-bg-2: #ffeec2;
+
+.tcl {
+  max-width: 34rem;
+  margin: 0 auto;
+  padding: 2.4rem clamp(1rem, 4vw, 2.5rem) 2.6rem;
+  text-align: center;
+  border-radius: v.$border-radius-xl;
+  color: $tcl-ink;
+  background: radial-gradient(circle at 50% 12%, $tcl-bg 0%, $tcl-bg-2 100%);
+}
+
+.tcl-badge {
+  display: inline-block;
+  padding: 0.32rem 1rem;
+  border-radius: v.$border-radius-pill;
+  background: $tcl-amber;
+  color: v.$color-white;
+  font-weight: 800;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.tcl-week {
+  display: block;
+  margin-top: 0.6rem;
+  font-weight: 800;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba($tcl-ink, 0.55);
+}
+
+/* --- medal --- */
+.tcl-medal {
+  position: relative;
+  width: min(17rem, 80vw);
+  aspect-ratio: 1;
+  margin: 1.6rem auto 1.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tcl-medal-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, $tcl-gold, #fde68a, $tcl-amber, $tcl-gold);
+  opacity: 0.35;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.tcl-medal--lit .tcl-medal-ring {
+  opacity: 1;
+  animation: tcl-spin 8s linear infinite;
+}
+
+.tcl-medal-core {
+  position: relative;
+  width: 76%;
+  height: 76%;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1.2rem;
+  background: v.$color-white;
+  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.1);
+}
+
+.tcl-medal-mark { font-size: 2rem; }
+
+.tcl-statement {
+  margin: 0;
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: clamp(1.05rem, 3.6vw, 1.3rem);
+  line-height: 1.35;
+  color: $tcl-ink;
+}
+
+/* --- say it out loud --- */
+.tcl-say {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.tcl-say-label {
+  font-weight: 800;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $tcl-amber;
+}
+
+.tcl-say-btn {
+  @include m.tappable;
+  padding: 0.75rem 1.8rem;
+  border: 2px solid $tcl-amber;
+  border-radius: v.$border-radius-pill;
+  background: v.$color-white;
+  color: $tcl-amber;
+  font-weight: 800;
+  font-size: 1rem;
+}
+
+.tcl-say-btn--done {
+  background: $tcl-amber;
+  color: v.$color-white;
+  border-color: $tcl-amber;
+}
+
+.tcl-reinforce {
+  max-width: 26rem;
+  margin: 1.4rem auto 0;
+  font-size: 0.98rem;
+  line-height: 1.5;
+  color: rgba($tcl-ink, 0.78);
+}
+
+.tcl-complete {
+  @include m.tappable;
+  display: block;
+  width: 100%;
+  margin: 1.6rem 0 0;
+  padding: 0.95rem 1.6rem;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  background: linear-gradient(120deg, $tcl-amber, $tcl-gold);
+  color: v.$color-white;
+  font-weight: 800;
+  font-size: 1.12rem;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.13);
+
+  &:disabled { background: rgba($tcl-ink, 0.18); cursor: not-allowed; box-shadow: none; }
+}
+
+.tcl-hint {
+  margin: 0.6rem 0 0;
+  font-size: 0.85rem;
+  color: rgba($tcl-ink, 0.55);
+}
+
+@keyframes tcl-spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tcl-medal--lit .tcl-medal-ring { animation: none; }
+}
