@@ -1,0 +1,140 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Self-control dial welcome (scd) — Discipline Module, Week 2 ---- */
+$scd-bg: #f1edfb;
+$scd-bg-2: #e4dcf6;
+$scd-ink: #2c2350;
+$scd-plum: #6d4bd0;
+$scd-react: #e5674b;
+$scd-mid: #f6c445;
+$scd-steady: #1f9d63;
+
+.scd {
+  max-width: 54rem;
+  margin: 0 auto;
+  padding: 2.5rem clamp(1rem, 4vw, 2.75rem) 2.75rem;
+  text-align: center;
+  border-radius: v.$border-radius-xl;
+  color: $scd-ink;
+  background: linear-gradient(165deg, $scd-bg 0%, $scd-bg-2 100%);
+}
+
+.scd-week {
+  @include w.welcome-pill(rgba($scd-plum, 0.16), $scd-plum);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.scd h1 {
+  @include m.playful-heading;
+  font-size: clamp(2rem, 5.6vw, 3.1rem);
+  line-height: 1.1;
+  margin: 1.2rem 0 0.4rem;
+}
+
+.scd-title-start { color: $scd-ink; }
+.scd-title-accent { color: $scd-plum; }
+
+/* --- dial --- */
+.scd-dial {
+  width: clamp(13rem, 46vw, 19rem);
+  margin: 1.6rem auto 0;
+
+  svg { width: 100%; height: auto; display: block; overflow: visible; }
+}
+
+.scd-arc {
+  fill: none;
+  stroke-width: 14;
+  stroke-linecap: round;
+}
+
+.scd-arc--react { stroke: $scd-react; }
+.scd-arc--mid { stroke: $scd-mid; }
+.scd-arc--steady { stroke: $scd-steady; }
+
+.scd-needle {
+  transform-origin: 110px 110px;
+  animation: scd-settle 2.6s cubic-bezier(0.4, 0, 0.2, 1) 0.3s both;
+
+  line {
+    stroke: $scd-ink;
+    stroke-width: 6;
+    stroke-linecap: round;
+  }
+}
+
+.scd-hub { fill: $scd-ink; }
+
+.scd-end-label {
+  fill: rgba($scd-ink, 0.6);
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 13px;
+  text-anchor: start;
+}
+
+.scd-end-label--right { text-anchor: end; }
+
+/* --- objective --- */
+.scd-objective {
+  max-width: 38rem;
+  margin: 1.8rem auto 0;
+  padding: 1.15rem 1.4rem;
+  text-align: left;
+  border-radius: v.$border-radius-lg;
+  border-left: 4px solid $scd-plum;
+  background: rgba(255, 255, 255, 0.78);
+
+  p {
+    margin: 0.3rem 0 0;
+    font-size: 1.05rem;
+    line-height: 1.5;
+    color: rgba($scd-ink, 0.9);
+  }
+}
+
+.scd-objective-label {
+  font-weight: 800;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $scd-plum;
+}
+
+/* --- actions --- */
+.scd-start {
+  @include w.welcome-cta-btn(linear-gradient(120deg, $scd-plum, #8a63e8), v.$color-white);
+  margin: 2rem auto 0;
+  display: block;
+  font-size: 1.15rem;
+}
+
+.scd-review {
+  @include m.tappable;
+  display: block;
+  margin: 0.8rem auto 0;
+  background: none;
+  border: none;
+  font-weight: 700;
+  color: rgba($scd-ink, 0.6);
+}
+
+.scd-footer {
+  margin: 1.4rem 0 0;
+  font-size: 0.92rem;
+  color: rgba($scd-ink, 0.55);
+}
+
+@keyframes scd-settle {
+  0% { transform: rotate(-62deg); }
+  55% { transform: rotate(48deg); }
+  75% { transform: rotate(38deg); }
+  100% { transform: rotate(44deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scd-needle { animation: none; transform: rotate(44deg); }
+}

@@ -1,0 +1,61 @@
+<div class="spm">
+  <div class="spm-card">
+    <div class="spm-card-head">
+      <span class="spm-badge">{{ step().badge }}</span>
+      <h2 class="spm-heading">{{ step().heading }}</h2>
+      <p class="spm-subtitle">{{ step().subtitle }}</p>
+    </div>
+
+    @if (!allPlaced()) {
+      <div class="spm-bank">
+        <span class="spm-bank-label">{{ step().bankLabel }}</span>
+        <div class="spm-bank-cards">
+          @for (item of remaining(); track item.id) {
+            <button type="button" class="spm-chip" [class.spm-chip--selected]="selectedId() === item.id"
+              draggable="true" (dragstart)="onDragStart($event, item.id)" (click)="selectItem(item.id)">
+              {{ item.text }}
+            </button>
+          }
+        </div>
+      </div>
+    }
+
+    <div class="spm-zones">
+      <div class="spm-zone" [class.spm-zone--wrong]="isZoneWrong('home')"
+        (dragover)="onZoneDragOver($event)" (drop)="onZoneDrop($event, 'home')" (click)="placeInZone('home')">
+        <span class="spm-zone-title"><span aria-hidden="true">{{ step().homeIcon }}</span> {{ step().homeLabel }}</span>
+        <div class="spm-zone-cards">
+          @for (item of itemsInZone('home'); track item.id) {
+            <span class="spm-chip spm-chip--placed">✔ {{ item.text }}</span>
+          }
+        </div>
+      </div>
+
+      <div class="spm-zone" [class.spm-zone--wrong]="isZoneWrong('school')"
+        (dragover)="onZoneDragOver($event)" (drop)="onZoneDrop($event, 'school')" (click)="placeInZone('school')">
+        <span class="spm-zone-title"><span aria-hidden="true">{{ step().schoolIcon }}</span> {{ step().schoolLabel }}</span>
+        <div class="spm-zone-cards">
+          @for (item of itemsInZone('school'); track item.id) {
+            <span class="spm-chip spm-chip--placed">✔ {{ item.text }}</span>
+          }
+        </div>
+      </div>
+    </div>
+
+    @if (!allPlaced()) {
+      <button type="button" class="spm-startover" (click)="startOver()">↺ {{ step().startOverLabel }}</button>
+    } @else {
+      <div class="spm-done">
+        <span class="spm-done-icon" aria-hidden="true">🏡🏫</span>
+        <h3>{{ step().allDoneTitle }}</h3>
+        <p>{{ step().allDoneText }}</p>
+        <button type="button" class="spm-continue" (click)="finish()">{{ step().continueLabel }} →</button>
+      </div>
+    }
+  </div>
+
+  <p class="spm-parent-note">
+    <span class="spm-parent-icon" aria-hidden="true">👪</span>
+    {{ step().parentNote }}
+  </p>
+</div>

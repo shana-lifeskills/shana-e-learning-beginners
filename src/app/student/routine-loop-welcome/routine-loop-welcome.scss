@@ -1,0 +1,143 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Routine loop welcome (rlw) — Discipline Module, Week 3 ---- */
+$rlw-bg: #fff3e6;
+$rlw-bg-2: #ffe4c9;
+$rlw-ink: #4a2f17;
+$rlw-amber: #e08a1e;
+$rlw-teal: #14867a;
+
+.rlw {
+  max-width: 54rem;
+  margin: 0 auto;
+  padding: 2.5rem clamp(1rem, 4vw, 2.75rem) 2.75rem;
+  text-align: center;
+  border-radius: v.$border-radius-xl;
+  color: $rlw-ink;
+  background: linear-gradient(165deg, $rlw-bg 0%, $rlw-bg-2 100%);
+}
+
+.rlw-week {
+  @include w.welcome-pill(rgba($rlw-amber, 0.18), #b56b12);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.rlw h1 {
+  @include m.playful-heading;
+  font-size: clamp(2rem, 5.6vw, 3.1rem);
+  line-height: 1.1;
+  margin: 1.2rem 0 0.4rem;
+}
+
+.rlw-title-start { color: $rlw-ink; }
+.rlw-title-accent { color: $rlw-amber; }
+
+/* --- day loop --- */
+.rlw-loop {
+  width: clamp(13rem, 44vw, 18rem);
+  margin: 1.6rem auto 0;
+
+  svg { width: 100%; height: auto; display: block; }
+}
+
+.rlw-ring {
+  fill: rgba(255, 255, 255, 0.55);
+  stroke: rgba($rlw-ink, 0.28);
+  stroke-width: 3;
+  stroke-dasharray: 4 7;
+  stroke-linecap: round;
+}
+
+.rlw-orbit {
+  transform-origin: 110px 110px;
+  animation: rlw-orbit 6s linear infinite;
+}
+
+.rlw-runner {
+  fill: $rlw-teal;
+}
+
+.rlw-stop {
+  circle {
+    fill: v.$color-white;
+    stroke: $rlw-amber;
+    stroke-width: 3;
+    transform-origin: center;
+    transform-box: fill-box;
+    animation: rlw-pulse 6s ease-in-out infinite;
+    animation-delay: calc(var(--i, 0) * 1.5s);
+  }
+
+  text {
+    font-size: 20px;
+    text-anchor: middle;
+  }
+}
+
+/* --- objective --- */
+.rlw-objective {
+  max-width: 38rem;
+  margin: 1.8rem auto 0;
+  padding: 1.15rem 1.4rem;
+  text-align: left;
+  border-radius: v.$border-radius-lg;
+  border-left: 4px solid $rlw-amber;
+  background: rgba(255, 255, 255, 0.8);
+
+  p {
+    margin: 0.3rem 0 0;
+    font-size: 1.05rem;
+    line-height: 1.5;
+    color: rgba($rlw-ink, 0.9);
+  }
+}
+
+.rlw-objective-label {
+  font-weight: 800;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #b56b12;
+}
+
+/* --- actions --- */
+.rlw-start {
+  @include w.welcome-cta-btn(linear-gradient(120deg, $rlw-amber, #f0a94a), v.$color-white);
+  margin: 2rem auto 0;
+  display: block;
+  font-size: 1.15rem;
+}
+
+.rlw-review {
+  @include m.tappable;
+  display: block;
+  margin: 0.8rem auto 0;
+  background: none;
+  border: none;
+  font-weight: 700;
+  color: rgba($rlw-ink, 0.6);
+}
+
+.rlw-footer {
+  margin: 1.4rem 0 0;
+  font-size: 0.92rem;
+  color: rgba($rlw-ink, 0.55);
+}
+
+@keyframes rlw-orbit {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes rlw-pulse {
+  0%, 12%, 100% { fill: v.$color-white; }
+  4% { fill: #ffe9cc; transform: scale(1.12); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rlw-orbit { animation: none; }
+  .rlw-stop circle { animation: none; }
+}

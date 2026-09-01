@@ -1,0 +1,100 @@
+<div class="set">
+  <header class="set-head">
+    <span class="set-badge">{{ step().badge }}</span>
+    <h2 class="set-title">{{ step().title }}</h2>
+    <p class="set-intro">{{ step().intro }}</p>
+  </header>
+
+  <div class="set-progress">
+    <div class="set-progress-bar">
+      <span class="set-progress-fill" [style.width.%]="progressPercent()"></span>
+    </div>
+    <span class="set-progress-label">{{ doneCount() }} / {{ total() }} {{ step().progressLabel }}</span>
+  </div>
+
+  <ol class="set-days">
+    @for (entry of entries(); track $index; let d = $index) {
+      <li class="set-day" [class.set-day--done]="entry.done" [class.set-day--open]="openDay() === d">
+        <button type="button" class="set-day-head" (click)="toggleOpen(d)" [attr.aria-expanded]="openDay() === d">
+          <span class="set-day-num" aria-hidden="true">{{ entry.done ? '✔' : d + 1 }}</span>
+          <span class="set-day-name">Day {{ d + 1 }}</span>
+          <span class="set-day-state">{{ entry.done ? entry.acts.length + ' acts logged' : 'Tap to fill in' }}</span>
+        </button>
+
+        @if (openDay() === d) {
+          <div class="set-day-body">
+            @for (act of entry.acts; track $index; let a = $index) {
+              <div class="set-act">
+                <span class="set-act-num">Act {{ a + 1 }}</span>
+
+                <label class="set-field">
+                  <span class="set-field-label">{{ step().whatLabel }}</span>
+                  <textarea rows="2" [value]="act.what" [disabled]="entry.done"
+                    [placeholder]="step().whatPlaceholder"
+                    (input)="setActField(d, a, 'what', $any($event.target).value)"></textarea>
+                </label>
+
+                <div class="set-field">
+                  <span class="set-field-label">{{ step().whereLabel }}</span>
+                  <div class="set-place">
+                    <button type="button" class="set-place-btn" [class.set-place-btn--on]="act.where === 'home'"
+                      [disabled]="entry.done" (click)="setActPlace(d, a, 'home')">{{ step().homeLabel }}</button>
+                    <button type="button" class="set-place-btn" [class.set-place-btn--on]="act.where === 'school'"
+                      [disabled]="entry.done" (click)="setActPlace(d, a, 'school')">{{ step().schoolLabel }}</button>
+                  </div>
+                </div>
+
+                <label class="set-field">
+                  <span class="set-field-label">{{ step().resultLabel }}</span>
+                  <textarea rows="2" [value]="act.result" [disabled]="entry.done"
+                    [placeholder]="step().resultPlaceholder"
+                    (input)="setActField(d, a, 'result', $any($event.target).value)"></textarea>
+                </label>
+              </div>
+            }
+
+            @if (!entry.done) {
+              <button type="button" class="set-add" (click)="addAct(d)">+ {{ step().addActLabel }}</button>
+              <button type="button" class="set-save" [disabled]="!canSaveDay(d)" (click)="saveDay(d)">
+                {{ step().saveDayLabel }} {{ d + 1 }}
+              </button>
+            }
+          </div>
+        }
+      </li>
+    }
+  </ol>
+
+  <p class="set-parent-note">
+    <span aria-hidden="true">👪</span> {{ step().parentNote }}
+  </p>
+
+  <div class="set-summary" [class.set-summary--locked]="!allDaysDone()">
+    <span class="set-summary-heading">{{ step().summaryHeading }}</span>
+    @if (allDaysDone()) {
+      <p class="set-count">{{ countLine() }}</p>
+      <label class="set-field">
+        <span class="set-field-label">{{ step().mostHelpfulLabel }}</span>
+        <textarea rows="2" [value]="mostHelpful()" [placeholder]="step().mostHelpfulPlaceholder"
+          (input)="mostHelpful.set($any($event.target).value)"></textarea>
+      </label>
+    } @else {
+      <p class="set-count set-count--muted">Log all {{ total() }} days to see your total.</p>
+    }
+  </div>
+
+  @if (allDone()) {
+    <div class="set-done">
+      <span class="set-done-star" aria-hidden="true">🌟</span>
+      <h3>{{ step().allDoneTitle }}</h3>
+      <p>{{ step().allDoneText }}</p>
+    </div>
+  }
+
+  <button type="button" class="set-complete" [disabled]="!allDone()" (click)="complete()">
+    {{ step().completeLabel }}
+  </button>
+  @if (!allDone()) {
+    <p class="set-hint">Log all {{ total() }} days and name your most helpful action to finish.</p>
+  }
+</div>

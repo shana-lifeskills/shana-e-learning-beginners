@@ -111,6 +111,34 @@ h1 {
   color: $dm-green;
 }
 
+.dm-recap {
+  margin: 1rem auto 0;
+  max-width: 26rem;
+  padding: 1rem 1.2rem;
+  border-radius: v.$border-radius;
+  background: rgba($dm-teal, 0.12);
+  text-align: left;
+
+  ul {
+    margin: 0.4rem 0 0;
+    padding-left: 1.1rem;
+  }
+
+  li {
+    font-weight: 600;
+    color: $dm-navy;
+    margin: 0.2rem 0;
+  }
+}
+
+.dm-recap-head {
+  font-weight: 800;
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba($dm-navy, 0.6);
+}
+
 .dm-continue {
   @include m.tappable;
   margin: 0.8rem auto 0;

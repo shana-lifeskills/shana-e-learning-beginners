@@ -20,6 +20,18 @@ import { TradeOffWelcome } from '../trade-off-welcome/trade-off-welcome';
 import { BudgetPlanWelcome } from '../budget-plan-welcome/budget-plan-welcome';
 import { ConsequenceChainWelcome } from '../consequence-chain-welcome/consequence-chain-welcome';
 import { SmartDecisionWelcome } from '../smart-decision-welcome/smart-decision-welcome';
+import { DisciplineCompassWelcome } from '../discipline-compass-welcome/discipline-compass-welcome';
+import { SelfControlDialWelcome } from '../self-control-dial-welcome/self-control-dial-welcome';
+import { RoutineLoopWelcome } from '../routine-loop-welcome/routine-loop-welcome';
+import { ConsistencyStreakWelcome } from '../consistency-streak-welcome/consistency-streak-welcome';
+import { ServiceHandsWelcome } from '../service-hands-welcome/service-hands-welcome';
+import { ServiceSpotsWelcome } from '../service-spots-welcome/service-spots-welcome';
+import { ServiceKindnessWelcome } from '../service-kindness-welcome/service-kindness-welcome';
+import { ServiceRippleWelcome } from '../service-ripple-welcome/service-ripple-welcome';
+import { TeamworkPuzzleWelcome } from '../teamwork-puzzle-welcome/teamwork-puzzle-welcome';
+import { TeamworkRolesWelcome } from '../teamwork-roles-welcome/teamwork-roles-welcome';
+import { TeamworkTalkWelcome } from '../teamwork-talk-welcome/teamwork-talk-welcome';
+import { TeamworkGearsWelcome } from '../teamwork-gears-welcome/teamwork-gears-welcome';
 import { PauseButtonWelcome } from '../pause-button-welcome/pause-button-welcome';
 import { StrategyKeyringWelcome } from '../strategy-keyring-welcome/strategy-keyring-welcome';
 import { GoalPathWelcome } from '../goal-path-welcome/goal-path-welcome';
@@ -82,6 +94,18 @@ import { ClassicWelcome } from '../classic-welcome/classic-welcome';
     BudgetPlanWelcome,
     ConsequenceChainWelcome,
     SmartDecisionWelcome,
+    DisciplineCompassWelcome,
+    SelfControlDialWelcome,
+    RoutineLoopWelcome,
+    ConsistencyStreakWelcome,
+    ServiceHandsWelcome,
+    ServiceSpotsWelcome,
+    ServiceKindnessWelcome,
+    ServiceRippleWelcome,
+    TeamworkPuzzleWelcome,
+    TeamworkRolesWelcome,
+    TeamworkTalkWelcome,
+    TeamworkGearsWelcome,
     PauseButtonWelcome,
     StrategyKeyringWelcome,
     GoalPathWelcome,

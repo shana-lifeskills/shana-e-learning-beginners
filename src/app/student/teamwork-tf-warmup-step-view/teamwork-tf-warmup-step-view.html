@@ -1,0 +1,63 @@
+<div class="ttf">
+  <div class="ttf-card">
+    <div class="ttf-card-head">
+      <span class="ttf-badge">{{ step().badge }}</span>
+      <h2 class="ttf-heading">{{ step().heading }}</h2>
+      <p class="ttf-subtitle">{{ step().subtitle }}</p>
+    </div>
+
+    <div class="ttf-meter" role="progressbar" [attr.aria-valuenow]="activeIndex()"
+      [attr.aria-valuemax]="statements().length" aria-label="Statements judged">
+      @for (filled of dots(); track $index) {
+        <span class="ttf-node" [class.ttf-node--on]="filled" aria-hidden="true"></span>
+      }
+      <span class="ttf-meter-label">Conversation meter</span>
+    </div>
+
+    @if (!allDone()) {
+      @if (current(); as s) {
+        <div class="ttf-screen" [class.ttf-screen--shake]="feedback() === 'incorrect'">
+          <span class="ttf-count">Statement {{ activeIndex() + 1 }} of {{ statements().length }}</span>
+          <p class="ttf-statement">{{ s.text }}</p>
+
+          <div class="ttf-verdicts">
+            <button type="button" class="ttf-verdict ttf-verdict--true"
+              [class.ttf-verdict--correct]="verdictState(true) === 'correct'"
+              [class.ttf-verdict--wrong]="verdictState(true) === 'incorrect'"
+              [disabled]="locked()" (click)="choose(true)">
+              <span class="ttf-verdict-icon" aria-hidden="true">👍</span>
+              {{ step().trueLabel }}
+            </button>
+            <button type="button" class="ttf-verdict ttf-verdict--false"
+              [class.ttf-verdict--correct]="verdictState(false) === 'correct'"
+              [class.ttf-verdict--wrong]="verdictState(false) === 'incorrect'"
+              [disabled]="locked()" (click)="choose(false)">
+              <span class="ttf-verdict-icon" aria-hidden="true">👎</span>
+              {{ step().falseLabel }}
+            </button>
+          </div>
+
+          <p class="ttf-feedback" aria-live="polite">
+            @if (feedback() === 'correct') {
+              <span class="ttf-feedback--good">✅ {{ s.feedbackText }}</span>
+            } @else if (feedback() === 'incorrect') {
+              <span class="ttf-feedback--bad">Not quite — think about talking and listening in a team, and try again!</span>
+            }
+          </p>
+        </div>
+      }
+    } @else {
+      <div class="ttf-done">
+        <span class="ttf-done-icon" aria-hidden="true">💬✨</span>
+        <h3>{{ step().allDoneTitle }}</h3>
+        <p>{{ step().allDoneText }}</p>
+        <button type="button" class="ttf-continue" (click)="finish()">{{ step().continueLabel }} →</button>
+      </div>
+    }
+  </div>
+
+  <p class="ttf-parent-note">
+    <span class="ttf-parent-icon" aria-hidden="true">👪</span>
+    {{ step().parentNote }}
+  </p>
+</div>

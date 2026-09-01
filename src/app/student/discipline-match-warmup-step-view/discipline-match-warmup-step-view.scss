@@ -1,0 +1,220 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- Discipline Warm-Up matching (dmw) — Discipline Module, Week 3 ---- */
+$dmw-body: #b56b12;
+$dmw-body-2: #e08a1e;
+$dmw-screen: #fff7ec;
+$dmw-ink: #4a2f17;
+$dmw-gold: #f6c445;
+$dmw-green: #1f9d63;
+$dmw-red: #e5674b;
+$dmw-teal: #14867a;
+
+.dmw {
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.dmw-card {
+  border-radius: v.$border-radius-xl;
+  padding: 1.6rem clamp(1rem, 4vw, 2rem) 1.9rem;
+  background: linear-gradient(165deg, $dmw-body-2 0%, $dmw-body 100%);
+  box-shadow: 0 10px 0 rgba(0, 0, 0, 0.18), inset 0 0 0 4px rgba(255, 255, 255, 0.08);
+  color: v.$color-white;
+  text-align: center;
+}
+
+.dmw-card-head { margin-bottom: 1.3rem; }
+
+.dmw-badge {
+  display: inline-block;
+  padding: 0.35rem 1.1rem;
+  border-radius: v.$border-radius-pill;
+  background: $dmw-gold;
+  color: $dmw-ink;
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.dmw-heading {
+  @include m.playful-heading;
+  font-size: clamp(1.5rem, 4.6vw, 2.1rem);
+  margin: 0.7rem 0 0.3rem;
+}
+
+.dmw-subtitle {
+  margin: 0;
+  font-size: 0.98rem;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+/* --- board --- */
+.dmw-board {
+  display: grid;
+  grid-template-columns: 1fr minmax(9rem, 0.7fr);
+  gap: 0.9rem;
+  text-align: left;
+}
+
+@media (max-width: 34rem) {
+  .dmw-board { grid-template-columns: 1fr; }
+}
+
+.dmw-col-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.dmw-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.dmw-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.7rem 0.9rem;
+  border-radius: v.$border-radius-lg;
+  background: $dmw-screen;
+  border: 2px dashed rgba($dmw-ink, 0.22);
+  color: $dmw-ink;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease, transform 0.15s ease;
+}
+
+.dmw-row--target {
+  border-color: $dmw-teal;
+  background: #fffdf6;
+}
+
+.dmw-row--matched {
+  border-style: solid;
+  border-color: $dmw-green;
+  background: rgba($dmw-green, 0.12);
+  cursor: default;
+}
+
+.dmw-row--wrong {
+  border-color: $dmw-red;
+  animation: dmw-shake 0.4s ease;
+}
+
+.dmw-row-action {
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 1rem;
+}
+
+.dmw-row-slot { font-size: 0.9rem; }
+.dmw-row-placeholder { color: rgba($dmw-ink, 0.45); font-style: italic; }
+.dmw-row-result { color: $dmw-green; font-weight: 700; }
+
+/* --- result bank --- */
+.dmw-bank {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.dmw-chip {
+  @include m.tappable;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 0.8rem;
+  border: none;
+  border-radius: 0.9rem;
+  background: v.$color-white;
+  box-shadow: 0 3px 0 rgba(0, 0, 0, 0.16);
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: $dmw-ink;
+  text-align: left;
+  cursor: grab;
+
+  &:active { cursor: grabbing; }
+}
+
+.dmw-chip--selected {
+  outline: 3px solid $dmw-teal;
+  outline-offset: 1px;
+}
+
+.dmw-chip-grip {
+  color: rgba($dmw-ink, 0.4);
+  font-size: 0.8rem;
+  letter-spacing: -2px;
+}
+
+.dmw-hint {
+  margin: 1rem 0 0;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* --- done panel --- */
+.dmw-done {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: v.$border-radius-lg;
+  padding: 1.6rem 1.2rem;
+
+  h3 {
+    @include m.playful-heading;
+    margin: 0.5rem 0 0.3rem;
+    font-size: 1.4rem;
+  }
+
+  p { margin: 0 0 1.1rem; color: rgba(255, 255, 255, 0.85); }
+}
+
+.dmw-done-icon { font-size: 2.2rem; }
+
+.dmw-continue {
+  @include m.tappable;
+  background: $dmw-gold;
+  color: $dmw-ink;
+  border: none;
+  font-weight: 800;
+  font-size: 1.05rem;
+  padding: 0.9rem 2.25rem;
+  border-radius: v.$border-radius-pill;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.18);
+
+  &:hover { opacity: 0.92; }
+}
+
+/* --- parent note --- */
+.dmw-parent-note {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 1rem 0 0;
+  padding: 0.75rem 1rem;
+  border-radius: v.$border-radius-lg;
+  background: rgba($dmw-body-2, 0.12);
+  font-size: 0.9rem;
+  color: rgba($dmw-ink, 0.8);
+}
+
+.dmw-parent-icon { font-size: 1.1rem; }
+
+@keyframes dmw-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  75% { transform: translateX(6px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dmw-row--wrong { animation: none; }
+}

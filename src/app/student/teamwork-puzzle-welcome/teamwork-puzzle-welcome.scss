@@ -1,0 +1,156 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Puzzle team welcome (tpw) — Teamwork Module, Week 1 ---- */
+$tpw-bg: #ecfdf5;
+$tpw-bg-2: #ccfbf1;
+$tpw-ink: #0f3d3a;
+$tpw-teal: #14b8a6;
+$tpw-deep: #0f766e;
+
+.tpw {
+  max-width: 54rem;
+  margin: 0 auto;
+  padding: 2.5rem clamp(1rem, 4vw, 2.75rem) 2.75rem;
+  text-align: center;
+  border-radius: v.$border-radius-xl;
+  color: $tpw-ink;
+  background: linear-gradient(165deg, $tpw-bg 0%, $tpw-bg-2 100%);
+}
+
+.tpw-week {
+  @include w.welcome-pill(rgba($tpw-teal, 0.18), $tpw-deep);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.tpw h1 {
+  @include m.playful-heading;
+  font-size: clamp(2rem, 5.6vw, 3.1rem);
+  line-height: 1.1;
+  margin: 1.2rem 0 0.4rem;
+}
+
+.tpw-title-start { color: $tpw-ink; }
+.tpw-title-accent { color: $tpw-teal; }
+
+/* --- puzzle scene --- */
+.tpw-scene {
+  width: clamp(13rem, 52vw, 18rem);
+  margin: 1.4rem auto 0;
+
+  svg { width: 100%; height: auto; display: block; overflow: visible; }
+}
+
+.tpw-piece {
+  path {
+    fill: rgba(255, 255, 255, 0.9);
+    stroke: $tpw-deep;
+    stroke-width: 2.5;
+    stroke-linejoin: round;
+  }
+
+  text {
+    font-family: v.$headings-font-family;
+    font-weight: 800;
+    font-size: 13px;
+    text-anchor: middle;
+    fill: $tpw-deep;
+  }
+
+  &.tpw-piece-tr path { fill: rgba($tpw-teal, 0.16); }
+  &.tpw-piece-bl path { fill: rgba($tpw-teal, 0.16); }
+}
+
+.tpw-piece-tl { animation: tpw-in-tl 0.7s ease-out 0.1s both; }
+.tpw-piece-tr { animation: tpw-in-tr 0.7s ease-out 0.3s both; }
+.tpw-piece-bl { animation: tpw-in-bl 0.7s ease-out 0.5s both; }
+.tpw-piece-br { animation: tpw-in-br 0.7s ease-out 0.7s both; }
+
+.tpw-mark {
+  display: block;
+  margin-top: 0.7rem;
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 1rem;
+  color: $tpw-deep;
+}
+
+/* --- objective --- */
+.tpw-objective {
+  max-width: 38rem;
+  margin: 1.8rem auto 0;
+  padding: 1.15rem 1.4rem;
+  text-align: left;
+  border-radius: v.$border-radius-lg;
+  border-left: 4px solid $tpw-teal;
+  background: rgba(255, 255, 255, 0.8);
+
+  p {
+    margin: 0.3rem 0 0;
+    font-size: 1.05rem;
+    line-height: 1.5;
+    color: rgba($tpw-ink, 0.9);
+  }
+}
+
+.tpw-objective-label {
+  font-weight: 800;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $tpw-deep;
+}
+
+/* --- actions --- */
+.tpw-start {
+  @include w.welcome-cta-btn(linear-gradient(120deg, $tpw-teal, #2dd4bf), v.$color-white);
+  margin: 2rem auto 0;
+  display: block;
+  font-size: 1.15rem;
+}
+
+.tpw-review {
+  @include m.tappable;
+  display: block;
+  margin: 0.8rem auto 0;
+  background: none;
+  border: none;
+  font-weight: 700;
+  color: rgba($tpw-ink, 0.6);
+}
+
+.tpw-footer {
+  margin: 1.4rem 0 0;
+  font-size: 0.92rem;
+  color: rgba($tpw-ink, 0.55);
+}
+
+@keyframes tpw-in-tl {
+  0% { opacity: 0; transform: translate(-38px, -38px); }
+  100% { opacity: 1; transform: translate(0, 0); }
+}
+
+@keyframes tpw-in-tr {
+  0% { opacity: 0; transform: translate(38px, -38px); }
+  100% { opacity: 1; transform: translate(0, 0); }
+}
+
+@keyframes tpw-in-bl {
+  0% { opacity: 0; transform: translate(-38px, 38px); }
+  100% { opacity: 1; transform: translate(0, 0); }
+}
+
+@keyframes tpw-in-br {
+  0% { opacity: 0; transform: translate(38px, 38px); }
+  100% { opacity: 1; transform: translate(0, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tpw-piece-tl, .tpw-piece-tr, .tpw-piece-bl, .tpw-piece-br {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}

@@ -1,0 +1,59 @@
+<div class="dmw">
+  <div class="dmw-card">
+    <div class="dmw-card-head">
+      <span class="dmw-badge">{{ step().badge }}</span>
+      <h2 class="dmw-heading">{{ step().heading }}</h2>
+      <p class="dmw-subtitle">{{ step().subtitle }}</p>
+    </div>
+
+    @if (!allMatched()) {
+      <div class="dmw-board">
+        <div class="dmw-rows">
+          <span class="dmw-col-label">{{ step().actionColumnLabel }}</span>
+          @for (pair of step().pairs; track pair.id) {
+            <div class="dmw-row" [class.dmw-row--matched]="isRowMatched(pair.id)"
+              [class.dmw-row--wrong]="isRowWrong(pair.id)"
+              [class.dmw-row--target]="selectedResultId() && !isRowMatched(pair.id)"
+              (dragover)="onRowDragOver($event)" (drop)="onRowDrop($event, pair.id)"
+              (click)="placeOnRow(pair.id)">
+              <span class="dmw-row-action">{{ pair.action }}</span>
+              <span class="dmw-row-slot">
+                @if (rowResult(pair.id); as result) {
+                  <span class="dmw-row-result">✓ {{ result }}</span>
+                } @else {
+                  <span class="dmw-row-placeholder">Drop the result here</span>
+                }
+              </span>
+            </div>
+          }
+        </div>
+
+        <div class="dmw-bank">
+          <span class="dmw-col-label">{{ step().resultColumnLabel }}</span>
+          @for (pair of remaining(); track pair.id) {
+            <button type="button" class="dmw-chip" [class.dmw-chip--selected]="selectedResultId() === pair.id"
+              draggable="true" (dragstart)="onResultDragStart($event, pair.id)"
+              (click)="selectResult(pair.id); $event.stopPropagation()">
+              <span class="dmw-chip-grip" aria-hidden="true">⣿</span>
+              {{ pair.result }}
+            </button>
+          }
+        </div>
+      </div>
+
+      <p class="dmw-hint">Drag a result onto its action — or tap a result, then tap the row.</p>
+    } @else {
+      <div class="dmw-done">
+        <span class="dmw-done-icon" aria-hidden="true">🔁✨</span>
+        <h3>{{ step().allDoneTitle }}</h3>
+        <p>{{ step().allDoneText }}</p>
+        <button type="button" class="dmw-continue" (click)="finish()">{{ step().continueLabel }} →</button>
+      </div>
+    }
+  </div>
+
+  <p class="dmw-parent-note">
+    <span class="dmw-parent-icon" aria-hidden="true">👪</span>
+    {{ step().parentNote }}
+  </p>
+</div>

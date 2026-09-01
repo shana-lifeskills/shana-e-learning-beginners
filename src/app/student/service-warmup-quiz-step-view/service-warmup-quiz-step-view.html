@@ -1,0 +1,59 @@
+<div class="swq">
+  <div class="swq-card">
+    <div class="swq-card-head">
+      <span class="swq-badge">{{ step().badge }}</span>
+      <h2 class="swq-heading">{{ step().heading }}</h2>
+      <p class="swq-subtitle">{{ step().subtitle }}</p>
+    </div>
+
+    <div class="swq-jar" role="progressbar" [attr.aria-valuenow]="activeIndex()"
+      [attr.aria-valuemax]="questions().length" aria-label="Good deeds collected">
+      <div class="swq-jar-glass">
+        @for (filled of hearts(); track $index) {
+          <span class="swq-heart" [class.swq-heart--filled]="filled" aria-hidden="true">💛</span>
+        }
+      </div>
+      <span class="swq-jar-label">Good-Deeds Jar</span>
+    </div>
+
+    @if (!allDone()) {
+      @if (currentQuestion(); as q) {
+        <div class="swq-screen" [class.swq-screen--shake]="feedback() === 'incorrect'">
+          <span class="swq-qcount">Question {{ activeIndex() + 1 }} of {{ questions().length }}</span>
+          <p class="swq-prompt">{{ q.prompt }}</p>
+
+          <div class="swq-options">
+            @for (opt of q.options; track opt.id; let i = $index) {
+              <button type="button" class="swq-option" [class.swq-option--correct]="optionState(opt) === 'correct'"
+                [class.swq-option--wrong]="optionState(opt) === 'incorrect'" [disabled]="locked()"
+                (click)="selectOption(opt)">
+                <span class="swq-option-letter" aria-hidden="true">{{ letterFor(i) }}</span>
+                <span class="swq-option-text">{{ opt.text }}</span>
+              </button>
+            }
+          </div>
+
+          <p class="swq-feedback" aria-live="polite">
+            @if (feedback() === 'correct') {
+              <span class="swq-feedback--good">💛 {{ q.feedbackText }}</span>
+            } @else if (feedback() === 'incorrect') {
+              <span class="swq-feedback--bad">Not quite — think about helping others, and try again!</span>
+            }
+          </p>
+        </div>
+      }
+    } @else {
+      <div class="swq-done">
+        <span class="swq-done-icon" aria-hidden="true">🫙💛</span>
+        <h3>{{ step().allDoneTitle }}</h3>
+        <p>{{ step().allDoneText }}</p>
+        <button type="button" class="swq-continue" (click)="finish()">{{ step().continueLabel }} →</button>
+      </div>
+    }
+  </div>
+
+  <p class="swq-parent-note">
+    <span class="swq-parent-icon" aria-hidden="true">👪</span>
+    {{ step().parentNote }}
+  </p>
+</div>

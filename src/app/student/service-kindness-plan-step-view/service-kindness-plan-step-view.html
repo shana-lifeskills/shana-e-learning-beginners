@@ -1,0 +1,92 @@
+<div class="skp">
+  <header class="skp-head">
+    <span class="skp-badge">{{ step().badge }}</span>
+    <h2 class="skp-title">{{ step().title }}</h2>
+    <p class="skp-intro">{{ step().intro }}</p>
+  </header>
+
+  <div class="skp-progress">
+    <div class="skp-progress-bar">
+      <span class="skp-progress-fill" [style.width.%]="progressPercent()"></span>
+    </div>
+    <span class="skp-progress-label">{{ doneCount() }} / {{ total() }} {{ step().progressLabel }}</span>
+  </div>
+
+  <ol class="skp-acts">
+    @for (entry of entries(); track $index; let i = $index) {
+      <li class="skp-act" [class.skp-act--done]="entry.done" [class.skp-act--open]="openAct() === i">
+        <button type="button" class="skp-act-head" (click)="toggleOpen(i)" [attr.aria-expanded]="openAct() === i">
+          <span class="skp-act-num" aria-hidden="true">{{ entry.done ? '✔' : i + 1 }}</span>
+          <span class="skp-act-name">Act of Kindness {{ i + 1 }}</span>
+          <span class="skp-act-state">{{ entry.done ? 'Done' : 'Tap to plan' }}</span>
+        </button>
+
+        @if (openAct() === i) {
+          <div class="skp-act-body">
+            <span class="skp-section">Plan it</span>
+
+            <label class="skp-field">
+              <span class="skp-field-label">{{ step().actLabel }}</span>
+              <textarea rows="2" [value]="entry.act" [disabled]="entry.done"
+                [placeholder]="step().actPlaceholder"
+                (input)="setField(i, 'act', $any($event.target).value)"></textarea>
+            </label>
+
+            <label class="skp-field">
+              <span class="skp-field-label">{{ step().whenLabel }}</span>
+              <input type="text" [value]="entry.when" [disabled]="entry.done"
+                [placeholder]="step().whenPlaceholder"
+                (input)="setField(i, 'when', $any($event.target).value)" />
+            </label>
+
+            <label class="skp-field">
+              <span class="skp-field-label">{{ step().whoLabel }}</span>
+              <input type="text" [value]="entry.who" [disabled]="entry.done"
+                [placeholder]="step().whoPlaceholder"
+                (input)="setField(i, 'who', $any($event.target).value)" />
+            </label>
+
+            <span class="skp-section">After you do it</span>
+
+            <label class="skp-check">
+              <input type="checkbox" [checked]="entry.didIt" [disabled]="entry.done" (change)="toggleDidIt(i)" />
+              <span>{{ step().doneCheckLabel }}</span>
+            </label>
+
+            <label class="skp-field">
+              <span class="skp-field-label">{{ step().changedLabel }}</span>
+              <textarea rows="2" [value]="entry.changed" [disabled]="entry.done"
+                [placeholder]="step().changedPlaceholder"
+                (input)="setField(i, 'changed', $any($event.target).value)"></textarea>
+            </label>
+
+            @if (!entry.done) {
+              <button type="button" class="skp-save" [disabled]="!canSaveAct(i)" (click)="saveAct(i)">
+                {{ step().saveActLabel }} {{ i + 1 }}
+              </button>
+            }
+          </div>
+        }
+      </li>
+    }
+  </ol>
+
+  <p class="skp-parent-note">
+    <span aria-hidden="true">👪</span> {{ step().parentNote }}
+  </p>
+
+  @if (allDone()) {
+    <div class="skp-done">
+      <span class="skp-done-star" aria-hidden="true">🌟</span>
+      <h3>{{ step().allDoneTitle }}</h3>
+      <p>{{ step().allDoneText }}</p>
+    </div>
+  }
+
+  <button type="button" class="skp-complete" [disabled]="!allDone()" (click)="complete()">
+    {{ step().completeLabel }}
+  </button>
+  @if (!allDone()) {
+    <p class="skp-hint">Plan and complete all {{ total() }} acts of kindness to finish.</p>
+  }
+</div>

@@ -1,0 +1,40 @@
+<div class="scd">
+  <span class="scd-week">{{ scd.weekLabel }}</span>
+
+  <h1>
+    <span class="scd-title-start">{{ scd.titleStart }}</span>
+    <span class="scd-title-accent">{{ scd.titleAccent }}</span>
+  </h1>
+
+  <div class="scd-dial" aria-hidden="true">
+    <svg viewBox="0 0 220 138" role="img">
+      <path class="scd-arc scd-arc--react" d="M20 110 A90 90 0 0 1 65 32.1" />
+      <path class="scd-arc scd-arc--mid" d="M65 32.1 A90 90 0 0 1 155 32.1" />
+      <path class="scd-arc scd-arc--steady" d="M155 32.1 A90 90 0 0 1 200 110" />
+      <g class="scd-needle">
+        <line x1="110" y1="110" x2="110" y2="30" />
+      </g>
+      <circle class="scd-hub" cx="110" cy="110" r="9" />
+      <text class="scd-end-label" x="18" y="132">{{ scd.reactLabel }}</text>
+      <text class="scd-end-label scd-end-label--right" x="202" y="132">{{ scd.steadyLabel }}</text>
+    </svg>
+  </div>
+
+  <div class="scd-objective">
+    <span class="scd-objective-label">{{ scd.objectiveLabel }}</span>
+    <p>{{ scd.objectiveText }}</p>
+  </div>
+
+  @if (isCompletedLessonWelcome()) {
+    @if (nextLesson(); as next) {
+      <button type="button" class="scd-start" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+    } @else {
+      <button type="button" class="scd-start" (click)="backToMap()">Back to My Modules →</button>
+    }
+    <button type="button" class="scd-review" (click)="beginLesson()">↺ Review this lesson</button>
+  } @else {
+    <button type="button" class="scd-start" (click)="beginLesson()">{{ scd.startLabel }} →</button>
+  }
+
+  <p class="scd-footer">{{ scd.footerNote }}</p>
+</div>

@@ -1,0 +1,209 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- Service Warm-Up true/false (stf) — Service Module, Week 3 ---- */
+$stf-body: #b45309;
+$stf-body-2: #ea8a1e;
+$stf-screen: #fff8ef;
+$stf-ink: #4a2b12;
+$stf-orange: #f97316;
+$stf-green: #1f9d63;
+$stf-red: #e5484d;
+$stf-star: #ffd23f;
+$stf-sun: #ffe08a;
+
+.stf {
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.stf-card {
+  border-radius: v.$border-radius-xl;
+  padding: 1.6rem clamp(1rem, 4vw, 2rem) 1.9rem;
+  background: linear-gradient(165deg, $stf-body-2 0%, $stf-body 100%);
+  box-shadow: 0 10px 0 rgba(0, 0, 0, 0.16), inset 0 0 0 4px rgba(255, 255, 255, 0.1);
+  color: v.$color-white;
+  text-align: center;
+}
+
+.stf-card-head { margin-bottom: 1.2rem; }
+
+.stf-badge {
+  display: inline-block;
+  padding: 0.35rem 1.1rem;
+  border-radius: v.$border-radius-pill;
+  background: $stf-sun;
+  color: $stf-ink;
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.stf-heading {
+  @include m.playful-heading;
+  font-size: clamp(1.5rem, 4.6vw, 2.1rem);
+  margin: 0.7rem 0 0.3rem;
+}
+
+.stf-subtitle {
+  margin: 0;
+  font-size: 0.98rem;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* --- star track --- */
+.stf-track {
+  display: flex;
+  justify-content: center;
+  gap: 0.4rem;
+  margin: 0 0 1.4rem;
+}
+
+.stf-star {
+  font-size: 1.7rem;
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.35);
+  transition: transform 0.3s ease, color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.stf-star--lit {
+  color: $stf-star;
+  transform: translateY(-3px) scale(1.12);
+  text-shadow: 0 0 10px rgba($stf-star, 0.8);
+}
+
+/* --- statement screen --- */
+.stf-screen {
+  background: $stf-screen;
+  color: $stf-ink;
+  border-radius: v.$border-radius-lg;
+  padding: 1.4rem clamp(0.9rem, 3vw, 1.6rem) 1.5rem;
+  box-shadow: inset 0 0 0 3px rgba($stf-ink, 0.08);
+}
+
+.stf-screen--shake { animation: stf-shake 0.4s ease; }
+
+.stf-count {
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: $stf-body;
+}
+
+.stf-statement {
+  margin: 0.5rem 0 1.1rem;
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 1.2rem;
+  line-height: 1.35;
+}
+
+.stf-verdicts {
+  display: flex;
+  gap: 0.7rem;
+}
+
+.stf-verdict {
+  @include m.tappable;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.9rem 0.75rem;
+  border: 2px solid rgba($stf-ink, 0.16);
+  border-radius: 0.9rem;
+  background: v.$color-white;
+  font-weight: 800;
+  font-size: 1rem;
+  color: $stf-ink;
+
+  &:disabled { cursor: default; }
+}
+
+.stf-verdict-icon { font-size: 1.3rem; }
+
+.stf-verdict--true:hover:not(:disabled) { border-color: $stf-green; }
+.stf-verdict--false:hover:not(:disabled) { border-color: $stf-red; }
+
+.stf-verdict--correct {
+  border-color: $stf-green;
+  background: rgba($stf-green, 0.14);
+  color: #0f5c3a;
+}
+
+.stf-verdict--wrong {
+  border-color: $stf-red;
+  background: rgba($stf-red, 0.12);
+  color: #a3161a;
+}
+
+.stf-feedback {
+  margin: 0.9rem 0 0;
+  min-height: 1.4rem;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.stf-feedback--good { color: $stf-green; }
+.stf-feedback--bad { color: $stf-red; }
+
+/* --- done panel --- */
+.stf-done {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: v.$border-radius-lg;
+  padding: 1.6rem 1.2rem;
+
+  h3 {
+    @include m.playful-heading;
+    margin: 0.5rem 0 0.3rem;
+    font-size: 1.4rem;
+  }
+
+  p { margin: 0 0 1.1rem; color: rgba(255, 255, 255, 0.88); }
+}
+
+.stf-done-icon { font-size: 2.2rem; }
+
+.stf-continue {
+  @include m.tappable;
+  background: $stf-sun;
+  color: $stf-ink;
+  border: none;
+  font-weight: 800;
+  font-size: 1.05rem;
+  padding: 0.9rem 2.25rem;
+  border-radius: v.$border-radius-pill;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.16);
+
+  &:hover { opacity: 0.92; }
+}
+
+/* --- parent note --- */
+.stf-parent-note {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 1rem 0 0;
+  padding: 0.75rem 1rem;
+  border-radius: 0.9rem;
+  background: rgba($stf-body, 0.08);
+  font-size: 0.9rem;
+  color: rgba($stf-ink, 0.8);
+}
+
+.stf-parent-icon { font-size: 1.1rem; }
+
+@keyframes stf-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-7px); }
+  75% { transform: translateX(7px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stf-screen--shake { animation: none; }
+  .stf-star { transition: none; }
+}

@@ -1,0 +1,222 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- Discipline Warm-Up quiz (dwq) — Discipline Module, Week 1 ---- */
+$dwq-body: #0f5b63;
+$dwq-body-2: #147c86;
+$dwq-screen: #f4fbfb;
+$dwq-ink: #10333a;
+$dwq-gold: #f6c445;
+$dwq-blue: #0ea5e9;
+$dwq-green: #1f9d63;
+$dwq-red: #e5484d;
+
+.dwq {
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.dwq-card {
+  border-radius: v.$border-radius-xl;
+  padding: 1.6rem clamp(1rem, 4vw, 2rem) 1.9rem;
+  background: linear-gradient(165deg, $dwq-body-2 0%, $dwq-body 100%);
+  box-shadow: 0 10px 0 rgba(0, 0, 0, 0.18), inset 0 0 0 4px rgba(255, 255, 255, 0.08);
+  color: v.$color-white;
+  text-align: center;
+}
+
+.dwq-card-head { margin-bottom: 1.2rem; }
+
+.dwq-badge {
+  display: inline-block;
+  padding: 0.35rem 1.1rem;
+  border-radius: v.$border-radius-pill;
+  background: $dwq-gold;
+  color: $dwq-ink;
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.dwq-heading {
+  @include m.playful-heading;
+  font-size: clamp(1.5rem, 4.6vw, 2.1rem);
+  margin: 0.7rem 0 0.3rem;
+}
+
+.dwq-subtitle {
+  margin: 0;
+  font-size: 0.98rem;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+/* --- shield track --- */
+.dwq-track {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 0 0 1.4rem;
+}
+
+.dwq-shield {
+  font-size: 1.6rem;
+  filter: grayscale(1) brightness(1.4);
+  opacity: 0.4;
+  transition: transform 0.3s ease, opacity 0.3s ease, filter 0.3s ease;
+}
+
+.dwq-shield--lit {
+  filter: none;
+  opacity: 1;
+  transform: translateY(-3px) scale(1.12);
+}
+
+/* --- question screen --- */
+.dwq-screen {
+  background: $dwq-screen;
+  color: $dwq-ink;
+  border-radius: v.$border-radius-lg;
+  padding: 1.4rem clamp(0.9rem, 3vw, 1.6rem) 1.5rem;
+  text-align: left;
+  box-shadow: inset 0 0 0 3px rgba($dwq-ink, 0.08);
+}
+
+.dwq-screen--shake { animation: dwq-shake 0.4s ease; }
+
+.dwq-qcount {
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: $dwq-body;
+}
+
+.dwq-prompt {
+  margin: 0.4rem 0 1rem;
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 1.15rem;
+  line-height: 1.35;
+}
+
+.dwq-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.dwq-option {
+  @include m.tappable;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border: 2px solid rgba($dwq-ink, 0.16);
+  border-radius: 0.9rem;
+  background: v.$color-white;
+  font-weight: 600;
+  font-size: 1rem;
+  color: $dwq-ink;
+  text-align: left;
+
+  &:hover:not(:disabled) { border-color: $dwq-blue; }
+  &:disabled { cursor: default; }
+}
+
+.dwq-option-letter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 1.9rem;
+  height: 1.9rem;
+  border-radius: 50%;
+  background: rgba($dwq-body, 0.12);
+  font-weight: 900;
+  font-size: 0.9rem;
+  color: $dwq-body;
+}
+
+.dwq-option--correct {
+  border-color: $dwq-green;
+  background: rgba($dwq-green, 0.14);
+
+  .dwq-option-letter { background: $dwq-green; color: v.$color-white; }
+}
+
+.dwq-option--wrong {
+  border-color: $dwq-red;
+  background: rgba($dwq-red, 0.12);
+
+  .dwq-option-letter { background: $dwq-red; color: v.$color-white; }
+}
+
+.dwq-feedback {
+  margin: 0.9rem 0 0;
+  min-height: 1.4rem;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.dwq-feedback--good { color: $dwq-green; }
+.dwq-feedback--bad { color: $dwq-red; }
+
+/* --- done panel --- */
+.dwq-done {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: v.$border-radius-lg;
+  padding: 1.6rem 1.2rem;
+
+  h3 {
+    @include m.playful-heading;
+    margin: 0.5rem 0 0.3rem;
+    font-size: 1.4rem;
+  }
+
+  p { margin: 0 0 1.1rem; color: rgba(255, 255, 255, 0.85); }
+}
+
+.dwq-done-icon { font-size: 2.2rem; }
+
+.dwq-continue {
+  @include m.tappable;
+  background: $dwq-gold;
+  color: $dwq-ink;
+  border: none;
+  font-weight: 800;
+  font-size: 1.05rem;
+  padding: 0.9rem 2.25rem;
+  border-radius: v.$border-radius-pill;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.18);
+
+  &:hover { opacity: 0.92; }
+}
+
+/* --- parent note --- */
+.dwq-parent-note {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 1rem 0 0;
+  padding: 0.75rem 1rem;
+  border-radius: 0.9rem;
+  background: rgba($dwq-body, 0.08);
+  font-size: 0.9rem;
+  color: rgba($dwq-ink, 0.8);
+}
+
+.dwq-parent-icon { font-size: 1.1rem; }
+
+@keyframes dwq-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-7px); }
+  75% { transform: translateX(7px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dwq-screen--shake { animation: none; }
+  .dwq-shield { transition: none; }
+}

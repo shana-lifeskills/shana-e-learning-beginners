@@ -1,0 +1,42 @@
+<div class="trw">
+  <span class="trw-week">{{ trw.weekLabel }}</span>
+
+  <h1>
+    <span class="trw-title-start">{{ trw.titleStart }}</span>
+    <span class="trw-title-accent">{{ trw.titleAccent }}</span>
+  </h1>
+
+  <div class="trw-scene" aria-hidden="true">
+    <svg viewBox="0 0 260 150" role="img">
+      <line class="trw-floor" x1="14" y1="118" x2="246" y2="118" />
+
+      @for (label of trw.roleLabels; track $index; let i = $index) {
+        <g class="trw-member" [class]="'trw-member trw-member-' + i">
+          <circle class="trw-head" cx="40" cy="34" r="11" />
+          <path class="trw-body" d="M22 116 V78 q0 -18 18 -18 q18 0 18 18 V116 Z" />
+          <circle class="trw-badge" cx="40" cy="82" r="7" />
+          <text class="trw-role" x="40" y="138">{{ label }}</text>
+        </g>
+      }
+    </svg>
+    <span class="trw-mark">{{ trw.rolesMark }}</span>
+  </div>
+
+  <div class="trw-objective">
+    <span class="trw-objective-label">{{ trw.objectiveLabel }}</span>
+    <p>{{ trw.objectiveText }}</p>
+  </div>
+
+  @if (isCompletedLessonWelcome()) {
+    @if (nextLesson(); as next) {
+      <button type="button" class="trw-start" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+    } @else {
+      <button type="button" class="trw-start" (click)="backToMap()">Back to My Modules →</button>
+    }
+    <button type="button" class="trw-review" (click)="beginLesson()">↺ Review this lesson</button>
+  } @else {
+    <button type="button" class="trw-start" (click)="beginLesson()">{{ trw.startLabel }} →</button>
+  }
+
+  <p class="trw-footer">{{ trw.footerNote }}</p>
+</div>

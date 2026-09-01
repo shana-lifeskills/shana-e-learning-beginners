@@ -1,0 +1,57 @@
+<div class="sfb">
+  <div class="sfb-card">
+    <div class="sfb-card-head">
+      <span class="sfb-badge">{{ step().badge }}</span>
+      <h2 class="sfb-heading">{{ step().title }}</h2>
+      <p class="sfb-intro">{{ step().intro }}</p>
+    </div>
+
+    <div class="sfb-bank">
+      <span class="sfb-bank-label">{{ step().wordBankLabel }}</span>
+      <div class="sfb-bank-words">
+        @for (t of bank(); track t.key) {
+          <button type="button" class="sfb-word" [class.sfb-word--selected]="selectedKey() === t.key"
+            (click)="tapWord(t.key)">{{ t.word }}</button>
+        }
+        @if (bank().length === 0) {
+          <span class="sfb-bank-empty">All words placed! ✨</span>
+        }
+      </div>
+    </div>
+
+    <ol class="sfb-sentences">
+      @for (s of sentences(); track s.id) {
+        <li class="sfb-sentence" [class.sfb-sentence--done]="isFilled(s.id)">
+          <p class="sfb-line">
+            <span>{{ s.before }}</span>
+            <button type="button" class="sfb-blank" [class.sfb-blank--filled]="isFilled(s.id)"
+              [class.sfb-blank--wrong]="isWrong(s.id)" [disabled]="isFilled(s.id)"
+              (click)="tapBlank(s.id)">
+              {{ isFilled(s.id) ? filledWord(s.id) : '_____' }}
+            </button>
+            <span>{{ s.after }}</span>
+          </p>
+          @if (isFilled(s.id)) {
+            <span class="sfb-praise">✅ {{ praiseFor(s.id) }}</span>
+          }
+        </li>
+      }
+    </ol>
+
+    @if (allFilled()) {
+      <div class="sfb-done">
+        <span class="sfb-done-icon" aria-hidden="true">🌟</span>
+        <h3>{{ step().allDoneTitle }}</h3>
+        <p>{{ step().allDoneText }}</p>
+        <button type="button" class="sfb-continue" (click)="finish()">{{ step().continueLabel }} →</button>
+      </div>
+    } @else {
+      <p class="sfb-hint">Tap a word, then tap a blank to place it.</p>
+    }
+  </div>
+
+  <p class="sfb-parent-note">
+    <span class="sfb-parent-icon" aria-hidden="true">👪</span>
+    {{ step().parentNote }}
+  </p>
+</div>

@@ -1,0 +1,51 @@
+<div class="tgw">
+  <span class="tgw-week">{{ tgw.weekLabel }}</span>
+
+  <h1>
+    <span class="tgw-title-start">{{ tgw.titleStart }}</span>
+    <span class="tgw-title-accent">{{ tgw.titleAccent }}</span>
+  </h1>
+
+  <div class="tgw-scene" aria-hidden="true">
+    <svg viewBox="0 0 240 170" role="img">
+      <!-- gear A -->
+      <g class="tgw-gear tgw-gear-a">
+        @for (a of toothAngles; track a) {
+          <rect class="tgw-tooth" x="84" y="46" width="12" height="15" rx="2"
+            [attr.transform]="'rotate(' + a + ' 90 84)'" />
+        }
+        <circle class="tgw-body" cx="90" cy="84" r="30" />
+        <circle class="tgw-hub" cx="90" cy="84" r="9" />
+      </g>
+
+      <!-- gear B -->
+      <g class="tgw-gear tgw-gear-b">
+        @for (a of toothAngles; track a) {
+          <rect class="tgw-tooth" x="147" y="55" width="10" height="13" rx="2"
+            [attr.transform]="'rotate(' + (a + 22) + ' 152 84)'" />
+        }
+        <circle class="tgw-body" cx="152" cy="84" r="22" />
+        <circle class="tgw-hub" cx="152" cy="84" r="7" />
+      </g>
+    </svg>
+    <span class="tgw-mark">{{ tgw.gearsMark }}</span>
+  </div>
+
+  <div class="tgw-objective">
+    <span class="tgw-objective-label">{{ tgw.objectiveLabel }}</span>
+    <p>{{ tgw.objectiveText }}</p>
+  </div>
+
+  @if (isCompletedLessonWelcome()) {
+    @if (nextLesson(); as next) {
+      <button type="button" class="tgw-start" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+    } @else {
+      <button type="button" class="tgw-start" (click)="backToMap()">Back to My Modules →</button>
+    }
+    <button type="button" class="tgw-review" (click)="beginLesson()">↺ Review this lesson</button>
+  } @else {
+    <button type="button" class="tgw-start" (click)="beginLesson()">{{ tgw.startLabel }} →</button>
+  }
+
+  <p class="tgw-footer">{{ tgw.footerNote }}</p>
+</div>

@@ -1,0 +1,174 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- Service Confidence Link (scl) — Service Module, Week 1 close ---- */
+$scl-ink: #4a2b12;
+$scl-coral: #fb7185;
+$scl-coral-deep: #e11d48;
+$scl-orange: #f97316;
+$scl-bg: #fff1f2;
+$scl-bg-2: #ffe4d6;
+
+.scl {
+  max-width: 34rem;
+  margin: 0 auto;
+  padding: 2.4rem clamp(1rem, 4vw, 2.5rem) 2.6rem;
+  text-align: center;
+  border-radius: v.$border-radius-xl;
+  color: $scl-ink;
+  background: radial-gradient(circle at 50% 12%, $scl-bg 0%, $scl-bg-2 100%);
+}
+
+.scl-badge {
+  display: inline-block;
+  padding: 0.32rem 1rem;
+  border-radius: v.$border-radius-pill;
+  background: $scl-orange;
+  color: v.$color-white;
+  font-weight: 800;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.scl-week {
+  display: block;
+  margin-top: 0.6rem;
+  font-weight: 800;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba($scl-ink, 0.55);
+}
+
+/* --- helping-hand badge --- */
+.scl-badge-medal {
+  position: relative;
+  width: min(17rem, 80vw);
+  aspect-ratio: 1;
+  margin: 1.7rem auto 1.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.scl-rays {
+  position: absolute;
+  inset: 6%;
+  border-radius: 28%;
+  background: repeating-conic-gradient(
+    from 0deg,
+    rgba($scl-coral, 0.55) 0deg 12deg,
+    transparent 12deg 24deg
+  );
+  opacity: 0.25;
+  transition: opacity 0.5s ease;
+}
+
+.scl-badge-medal--lit .scl-rays {
+  opacity: 0.9;
+  animation: scl-spin 14s linear infinite;
+}
+
+.scl-core {
+  position: relative;
+  width: 74%;
+  height: 74%;
+  border-radius: 24%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1.1rem;
+  background: v.$color-white;
+  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.5s ease;
+}
+
+.scl-badge-medal--lit .scl-core {
+  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.1), 0 0 28px rgba($scl-coral, 0.6);
+}
+
+.scl-mark { font-size: 2rem; }
+
+.scl-statement {
+  margin: 0;
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: clamp(1.05rem, 3.6vw, 1.3rem);
+  line-height: 1.35;
+  color: $scl-ink;
+}
+
+/* --- say it out loud --- */
+.scl-say {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.scl-say-label {
+  font-weight: 800;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $scl-coral-deep;
+}
+
+.scl-say-btn {
+  @include m.tappable;
+  padding: 0.75rem 1.8rem;
+  border: 2px solid $scl-coral-deep;
+  border-radius: v.$border-radius-pill;
+  background: v.$color-white;
+  color: $scl-coral-deep;
+  font-weight: 800;
+  font-size: 1rem;
+}
+
+.scl-say-btn--done {
+  background: $scl-coral-deep;
+  color: v.$color-white;
+  border-color: $scl-coral-deep;
+}
+
+.scl-reinforce {
+  max-width: 26rem;
+  margin: 1.4rem auto 0;
+  font-size: 0.98rem;
+  line-height: 1.5;
+  color: rgba($scl-ink, 0.78);
+}
+
+.scl-complete {
+  @include m.tappable;
+  display: block;
+  width: 100%;
+  margin: 1.6rem 0 0;
+  padding: 0.95rem 1.6rem;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  background: linear-gradient(120deg, $scl-orange, $scl-coral);
+  color: v.$color-white;
+  font-weight: 800;
+  font-size: 1.12rem;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.13);
+
+  &:disabled { background: rgba($scl-ink, 0.18); cursor: not-allowed; box-shadow: none; }
+}
+
+.scl-hint {
+  margin: 0.6rem 0 0;
+  font-size: 0.85rem;
+  color: rgba($scl-ink, 0.55);
+}
+
+@keyframes scl-spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scl-badge-medal--lit .scl-rays { animation: none; }
+}

@@ -1,0 +1,39 @@
+<div class="csw">
+  <span class="csw-week">{{ csw.weekLabel }}</span>
+
+  <h1>
+    <span class="csw-title-start">{{ csw.titleStart }}</span>
+    <span class="csw-title-accent">{{ csw.titleAccent }}</span>
+  </h1>
+
+  <div class="csw-streak" aria-hidden="true">
+    <div class="csw-days">
+      @for (d of days; track d) {
+        <span class="csw-day" [style.--i]="d">
+          <span class="csw-day-check">✓</span>
+        </span>
+      }
+    </div>
+    <div class="csw-bar">
+      <span class="csw-bar-fill"></span>
+    </div>
+  </div>
+
+  <div class="csw-objective">
+    <span class="csw-objective-label">{{ csw.objectiveLabel }}</span>
+    <p>{{ csw.objectiveText }}</p>
+  </div>
+
+  @if (isCompletedLessonWelcome()) {
+    @if (nextLesson(); as next) {
+      <button type="button" class="csw-start" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+    } @else {
+      <button type="button" class="csw-start" (click)="backToMap()">Back to My Modules →</button>
+    }
+    <button type="button" class="csw-review" (click)="beginLesson()">↺ Review this lesson</button>
+  } @else {
+    <button type="button" class="csw-start" (click)="beginLesson()">{{ csw.startLabel }} →</button>
+  }
+
+  <p class="csw-footer">{{ csw.footerNote }}</p>
+</div>

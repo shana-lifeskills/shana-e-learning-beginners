@@ -1,0 +1,165 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Making a difference welcome (srw) — Service Module, Week 4 ---- */
+$srw-bg: #fff2df;
+$srw-bg-2: #ffdfbf;
+$srw-ink: #4a2b12;
+$srw-orange: #f97316;
+$srw-deep: #b45309;
+$srw-heart: #ef4444;
+$srw-glow: #f5b301;
+
+.srw {
+  max-width: 54rem;
+  margin: 0 auto;
+  padding: 2.5rem clamp(1rem, 4vw, 2.75rem) 2.75rem;
+  text-align: center;
+  border-radius: v.$border-radius-xl;
+  color: $srw-ink;
+  background: linear-gradient(165deg, $srw-bg 0%, $srw-bg-2 100%);
+}
+
+.srw-week {
+  @include w.welcome-pill(rgba($srw-orange, 0.18), $srw-deep);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.srw h1 {
+  @include m.playful-heading;
+  font-size: clamp(2rem, 5.6vw, 3.1rem);
+  line-height: 1.1;
+  margin: 1.2rem 0 0.4rem;
+}
+
+.srw-title-start { color: $srw-ink; }
+.srw-title-accent { color: $srw-orange; }
+
+/* --- ripple scene --- */
+.srw-scene {
+  width: clamp(13rem, 46vw, 18rem);
+  margin: 1.6rem auto 0;
+
+  svg { width: 100%; height: auto; display: block; overflow: visible; }
+}
+
+.srw-ring {
+  fill: none;
+  stroke: rgba($srw-orange, 0.5);
+  stroke-width: 2.5;
+  transform-origin: 100px 100px;
+  animation: srw-pulse 2.6s ease-out infinite;
+}
+
+.srw-ring-2 { animation-delay: 0.5s; stroke-width: 2; }
+.srw-ring-3 { animation-delay: 1s; stroke-width: 1.5; }
+
+.srw-dot {
+  fill: rgba($srw-deep, 0.25);
+  animation: srw-light 2.6s ease-in-out infinite;
+}
+
+.srw-hub {
+  fill: v.$color-white;
+  stroke: $srw-glow;
+  stroke-width: 3;
+}
+
+.srw-heart {
+  fill: $srw-heart;
+  stroke: #b91c1c;
+  stroke-width: 1.5;
+  stroke-linejoin: round;
+  transform-origin: 100px 100px;
+  animation: srw-beat 2s ease-in-out infinite;
+}
+
+.srw-marks {
+  display: flex;
+  justify-content: space-around;
+  max-width: 20rem;
+  margin: 0.6rem auto 0;
+}
+
+.srw-mark {
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: $srw-deep;
+}
+
+/* --- objective --- */
+.srw-objective {
+  max-width: 38rem;
+  margin: 1.9rem auto 0;
+  padding: 1.15rem 1.4rem;
+  text-align: left;
+  border-radius: v.$border-radius-lg;
+  border-left: 4px solid $srw-orange;
+  background: rgba(255, 255, 255, 0.8);
+
+  p {
+    margin: 0.3rem 0 0;
+    font-size: 1.05rem;
+    line-height: 1.5;
+    color: rgba($srw-ink, 0.9);
+  }
+}
+
+.srw-objective-label {
+  font-weight: 800;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $srw-deep;
+}
+
+/* --- actions --- */
+.srw-start {
+  @include w.welcome-cta-btn(linear-gradient(120deg, $srw-orange, #fb923c), v.$color-white);
+  margin: 2rem auto 0;
+  display: block;
+  font-size: 1.15rem;
+}
+
+.srw-review {
+  @include m.tappable;
+  display: block;
+  margin: 0.8rem auto 0;
+  background: none;
+  border: none;
+  font-weight: 700;
+  color: rgba($srw-ink, 0.6);
+}
+
+.srw-footer {
+  margin: 1.4rem 0 0;
+  font-size: 0.92rem;
+  color: rgba($srw-ink, 0.55);
+}
+
+@keyframes srw-pulse {
+  0% { transform: scale(0.35); opacity: 0; }
+  25% { opacity: 1; }
+  100% { transform: scale(1); opacity: 0; }
+}
+
+@keyframes srw-light {
+  0%, 40% { fill: rgba($srw-deep, 0.25); }
+  55%, 90% { fill: $srw-glow; }
+  100% { fill: rgba($srw-deep, 0.25); }
+}
+
+@keyframes srw-beat {
+  0%, 100% { transform: scale(1); }
+  25% { transform: scale(1.12); }
+  40% { transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .srw-ring, .srw-dot, .srw-heart { animation: none; }
+  .srw-ring { opacity: 0.4; }
+  .srw-dot { fill: $srw-glow; }
+}

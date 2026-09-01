@@ -1,0 +1,284 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- Teamwork Reflection Mission (trm) — Teamwork Module, Week 4 finale ---- */
+$trm-teal: #14b8a6;
+$trm-deep: #0f766e;
+$trm-ink: #0f3d3a;
+$trm-screen: #f2fbf9;
+$trm-green: #1f9d63;
+
+.trm {
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.trm-head {
+  text-align: center;
+  padding: 1.6rem 1.2rem 1.4rem;
+  border-radius: v.$border-radius-xl v.$border-radius-xl 0 0;
+  background: linear-gradient(160deg, $trm-teal 0%, $trm-deep 100%);
+  color: v.$color-white;
+}
+
+.trm-badge {
+  display: inline-block;
+  padding: 0.35rem 1.1rem;
+  border-radius: v.$border-radius-pill;
+  background: rgba(255, 255, 255, 0.9);
+  color: $trm-deep;
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.trm-title {
+  @include m.playful-heading;
+  font-size: clamp(1.5rem, 4.6vw, 2.1rem);
+  margin: 0.7rem 0 0.3rem;
+}
+
+.trm-intro {
+  margin: 0;
+  font-size: 0.98rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.trm-progress {
+  padding: 1.1rem 1.2rem;
+  background: v.$color-white;
+  border-inline: 2px solid rgba($trm-teal, 0.12);
+  text-align: center;
+}
+
+.trm-track {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.trm-pip {
+  width: 0.85rem;
+  height: 0.85rem;
+  border-radius: 50%;
+  background: rgba($trm-teal, 0.2);
+  border: 2px solid rgba($trm-teal, 0.4);
+
+  &:not(:first-child) {
+    margin-left: 2rem;
+    position: relative;
+  }
+
+  &:not(:first-child)::before {
+    content: '';
+    position: absolute;
+    right: 100%;
+    top: 50%;
+    width: 2rem;
+    height: 2px;
+    background: rgba($trm-teal, 0.3);
+    transform: translateY(-1px);
+  }
+}
+
+.trm-pip--on {
+  background: $trm-teal;
+  border-color: $trm-deep;
+}
+
+.trm-progress-label {
+  display: block;
+  margin-top: 0.6rem;
+  font-weight: 800;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $trm-deep;
+}
+
+.trm-days {
+  list-style: none;
+  margin: 0;
+  padding: 0.6rem 1.2rem 0;
+  background: v.$color-white;
+  border-inline: 2px solid rgba($trm-teal, 0.12);
+}
+
+.trm-day {
+  border: 2px solid rgba($trm-teal, 0.22);
+  border-radius: v.$border-radius-lg;
+  margin-bottom: 0.6rem;
+  overflow: hidden;
+  background: $trm-screen;
+}
+
+.trm-day--done {
+  border-color: $trm-green;
+  background: rgba($trm-green, 0.1);
+}
+
+.trm-day-head {
+  @include m.tappable;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border: none;
+  background: none;
+  font-weight: 700;
+  color: $trm-ink;
+  text-align: left;
+}
+
+.trm-day-node {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.9rem;
+  height: 1.9rem;
+  border-radius: 50%;
+  background: rgba($trm-teal, 0.16);
+  font-weight: 900;
+  color: $trm-deep;
+  flex-shrink: 0;
+}
+
+.trm-day--done .trm-day-node { background: $trm-green; color: v.$color-white; }
+
+.trm-day-name { font-family: v.$headings-font-family; }
+.trm-day-state {
+  margin-left: auto;
+  font-weight: 700;
+  font-size: 0.8rem;
+  color: rgba($trm-ink, 0.55);
+}
+
+.trm-day-body {
+  padding: 0.4rem 1rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.trm-check {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-weight: 600;
+  color: $trm-ink;
+
+  input { width: 1.1rem; height: 1.1rem; accent-color: $trm-teal; }
+}
+
+.trm-log {
+  @include m.tappable;
+  margin-top: 0.4rem;
+  align-self: flex-start;
+  padding: 0.6rem 1.4rem;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  background: linear-gradient(120deg, $trm-teal, #2dd4bf);
+  color: v.$color-white;
+  font-weight: 800;
+
+  &:disabled { opacity: 0.5; cursor: default; }
+}
+
+.trm-reflection {
+  padding: 1.2rem;
+  background: v.$color-white;
+  border-inline: 2px solid rgba($trm-teal, 0.12);
+}
+
+.trm-reflection-heading {
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: $trm-deep;
+}
+
+.trm-reflection-intro {
+  margin: 0.3rem 0 0.9rem;
+  font-size: 0.92rem;
+  color: rgba($trm-ink, 0.7);
+}
+
+.trm-field {
+  display: block;
+  margin-bottom: 0.8rem;
+}
+
+.trm-field-label {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: $trm-ink;
+}
+
+.trm-field textarea {
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  border: 2px solid rgba($trm-teal, 0.28);
+  border-radius: 0.7rem;
+  font: inherit;
+  resize: vertical;
+
+  &:focus { outline: none; border-color: $trm-teal; }
+}
+
+.trm-parent-note {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0.8rem 1.2rem;
+  background: rgba($trm-teal, 0.1);
+  border-inline: 2px solid rgba($trm-teal, 0.12);
+  font-size: 0.9rem;
+  color: rgba($trm-ink, 0.8);
+}
+
+.trm-done {
+  text-align: center;
+  padding: 1.4rem 1.2rem 0.6rem;
+  background: v.$color-white;
+  border-inline: 2px solid rgba($trm-teal, 0.12);
+
+  h3 {
+    @include m.playful-heading;
+    margin: 0.4rem 0 0.3rem;
+    font-size: 1.3rem;
+    color: $trm-deep;
+  }
+
+  p { margin: 0; color: rgba($trm-ink, 0.8); }
+}
+
+.trm-done-mark { font-size: 2rem; }
+
+.trm-complete {
+  @include m.tappable;
+  display: block;
+  width: 100%;
+  margin-top: 0;
+  padding: 1rem;
+  border: none;
+  border-radius: 0 0 v.$border-radius-xl v.$border-radius-xl;
+  background: linear-gradient(120deg, $trm-teal, #2dd4bf);
+  color: v.$color-white;
+  font-weight: 800;
+  font-size: 1.1rem;
+
+  &:disabled { opacity: 0.55; cursor: default; }
+}
+
+.trm-hint {
+  margin: 0.7rem 0 0;
+  text-align: center;
+  font-size: 0.85rem;
+  color: rgba($trm-ink, 0.55);
+}

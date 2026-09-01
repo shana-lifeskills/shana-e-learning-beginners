@@ -1,0 +1,87 @@
+<div class="sat">
+  <header class="sat-head">
+    <span class="sat-badge">{{ step().badge }}</span>
+    <h2 class="sat-title">{{ step().title }}</h2>
+    <p class="sat-intro">{{ step().intro }}</p>
+  </header>
+
+  <div class="sat-examples">
+    <span class="sat-examples-label">{{ step().examplesLabel }}</span>
+    <ul>
+      @for (ex of step().examples; track ex) {
+        <li>{{ ex }}</li>
+      }
+    </ul>
+  </div>
+
+  <div class="sat-progress">
+    <div class="sat-hearts" aria-hidden="true">
+      @for (entry of entries(); track $index) {
+        <span class="sat-heart" [class.sat-heart--filled]="entry.done">💛</span>
+      }
+    </div>
+    <span class="sat-progress-label">{{ doneCount() }} / {{ total() }} {{ step().progressLabel }}</span>
+  </div>
+
+  <ol class="sat-days">
+    @for (entry of entries(); track $index; let i = $index) {
+      <li class="sat-day" [class.sat-day--done]="entry.done" [class.sat-day--open]="openDay() === i">
+        <button type="button" class="sat-day-head" (click)="toggleOpen(i)" [attr.aria-expanded]="openDay() === i">
+          <span class="sat-day-num" aria-hidden="true">{{ entry.done ? '✔' : i + 1 }}</span>
+          <span class="sat-day-name">Day {{ i + 1 }}</span>
+          <span class="sat-day-state">{{ entry.done ? 'Logged' : 'Tap to fill in' }}</span>
+        </button>
+
+        @if (openDay() === i) {
+          <div class="sat-day-body">
+            <label class="sat-field">
+              <span class="sat-field-label">{{ step().didLabel }}</span>
+              <textarea rows="2" [value]="entry.did" [disabled]="entry.done"
+                [placeholder]="step().didPlaceholder"
+                (input)="setField(i, 'did', $any($event.target).value)"></textarea>
+            </label>
+
+            <label class="sat-field">
+              <span class="sat-field-label">{{ step().whoLabel }}</span>
+              <textarea rows="2" [value]="entry.who" [disabled]="entry.done"
+                [placeholder]="step().whoPlaceholder"
+                (input)="setField(i, 'who', $any($event.target).value)"></textarea>
+            </label>
+
+            <label class="sat-field">
+              <span class="sat-field-label">{{ step().reactionLabel }}</span>
+              <textarea rows="2" [value]="entry.reaction" [disabled]="entry.done"
+                [placeholder]="step().reactionPlaceholder"
+                (input)="setField(i, 'reaction', $any($event.target).value)"></textarea>
+            </label>
+
+            @if (!entry.done) {
+              <button type="button" class="sat-save" [disabled]="!canSaveDay(i)" (click)="saveDay(i)">
+                {{ step().saveDayLabel }} {{ i + 1 }}
+              </button>
+            }
+          </div>
+        }
+      </li>
+    }
+  </ol>
+
+  <p class="sat-parent-note">
+    <span aria-hidden="true">👪</span> {{ step().parentNote }}
+  </p>
+
+  @if (allDone()) {
+    <div class="sat-done">
+      <span class="sat-done-star" aria-hidden="true">🌟</span>
+      <h3>{{ step().allDoneTitle }}</h3>
+      <p>{{ step().allDoneText }}</p>
+    </div>
+  }
+
+  <button type="button" class="sat-complete" [disabled]="!allDone()" (click)="complete()">
+    {{ step().completeLabel }}
+  </button>
+  @if (!allDone()) {
+    <p class="sat-hint">Log all {{ total() }} days to finish the challenge.</p>
+  }
+</div>

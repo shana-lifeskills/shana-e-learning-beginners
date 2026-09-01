@@ -1,0 +1,51 @@
+<div class="rlw">
+  <span class="rlw-week">{{ rlw.weekLabel }}</span>
+
+  <h1>
+    <span class="rlw-title-start">{{ rlw.titleStart }}</span>
+    <span class="rlw-title-accent">{{ rlw.titleAccent }}</span>
+  </h1>
+
+  <div class="rlw-loop" aria-hidden="true">
+    <svg viewBox="0 0 220 220" role="img">
+      <circle class="rlw-ring" cx="110" cy="110" r="78" />
+      <g class="rlw-orbit">
+        <circle class="rlw-runner" cx="110" cy="32" r="7" />
+      </g>
+      <g class="rlw-stop" style="--i: 0">
+        <circle cx="110" cy="32" r="20" />
+        <text x="110" y="39">🌅</text>
+      </g>
+      <g class="rlw-stop" style="--i: 1">
+        <circle cx="188" cy="110" r="20" />
+        <text x="188" y="117">📚</text>
+      </g>
+      <g class="rlw-stop" style="--i: 2">
+        <circle cx="110" cy="188" r="20" />
+        <text x="110" y="195">🏠</text>
+      </g>
+      <g class="rlw-stop" style="--i: 3">
+        <circle cx="32" cy="110" r="20" />
+        <text x="32" y="117">🌙</text>
+      </g>
+    </svg>
+  </div>
+
+  <div class="rlw-objective">
+    <span class="rlw-objective-label">{{ rlw.objectiveLabel }}</span>
+    <p>{{ rlw.objectiveText }}</p>
+  </div>
+
+  @if (isCompletedLessonWelcome()) {
+    @if (nextLesson(); as next) {
+      <button type="button" class="rlw-start" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+    } @else {
+      <button type="button" class="rlw-start" (click)="backToMap()">Back to My Modules →</button>
+    }
+    <button type="button" class="rlw-review" (click)="beginLesson()">↺ Review this lesson</button>
+  } @else {
+    <button type="button" class="rlw-start" (click)="beginLesson()">{{ rlw.startLabel }} →</button>
+  }
+
+  <p class="rlw-footer">{{ rlw.footerNote }}</p>
+</div>

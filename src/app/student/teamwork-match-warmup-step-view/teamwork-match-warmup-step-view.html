@@ -1,0 +1,62 @@
+<div class="tmw">
+  <div class="tmw-card">
+    <div class="tmw-card-head">
+      <span class="tmw-badge">{{ step().badge }}</span>
+      <h2 class="tmw-heading">{{ step().heading }}</h2>
+      <p class="tmw-subtitle">{{ step().subtitle }}</p>
+    </div>
+
+    @if (!allMatched()) {
+      <div class="tmw-board">
+        <div class="tmw-rows">
+          <span class="tmw-col-label">{{ step().roleColumnLabel }}</span>
+          @for (pair of step().pairs; track pair.id) {
+            <div class="tmw-row" [class.tmw-row--matched]="isRowMatched(pair.id)"
+              [class.tmw-row--wrong]="isRowWrong(pair.id)"
+              [class.tmw-row--target]="selectedActionId() && !isRowMatched(pair.id)"
+              (dragover)="onRowDragOver($event)" (drop)="onRowDrop($event, pair.id)"
+              (click)="placeOnRow(pair.id)">
+              <span class="tmw-row-role">
+                <span class="tmw-row-dot" aria-hidden="true"></span>
+                {{ pair.role }}
+              </span>
+              <span class="tmw-row-slot">
+                @if (rowAction(pair.id); as action) {
+                  <span class="tmw-row-action">✓ {{ action }}</span>
+                } @else {
+                  <span class="tmw-row-placeholder">Drop the action here</span>
+                }
+              </span>
+            </div>
+          }
+        </div>
+
+        <div class="tmw-bank">
+          <span class="tmw-col-label">{{ step().actionColumnLabel }}</span>
+          @for (pair of remaining(); track pair.id) {
+            <button type="button" class="tmw-chip" [class.tmw-chip--selected]="selectedActionId() === pair.id"
+              draggable="true" (dragstart)="onActionDragStart($event, pair.id)"
+              (click)="selectAction(pair.id); $event.stopPropagation()">
+              <span class="tmw-chip-grip" aria-hidden="true">⣿</span>
+              {{ pair.action }}
+            </button>
+          }
+        </div>
+      </div>
+
+      <p class="tmw-hint">Drag an action onto its role — or tap an action, then tap the role.</p>
+    } @else {
+      <div class="tmw-done">
+        <span class="tmw-done-icon" aria-hidden="true">🧩✨</span>
+        <h3>{{ step().allDoneTitle }}</h3>
+        <p>{{ step().allDoneText }}</p>
+        <button type="button" class="tmw-continue" (click)="finish()">{{ step().continueLabel }} →</button>
+      </div>
+    }
+  </div>
+
+  <p class="tmw-parent-note">
+    <span class="tmw-parent-icon" aria-hidden="true">👪</span>
+    {{ step().parentNote }}
+  </p>
+</div>

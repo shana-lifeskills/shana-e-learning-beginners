@@ -1,0 +1,160 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Discipline compass welcome (dcw) — Discipline Module, Week 1 ---- */
+$dcw-bg: #e8f5fd;
+$dcw-bg-2: #d3ecfa;
+$dcw-ink: #123047;
+$dcw-blue: #0ea5e9;
+
+.dcw {
+  max-width: 54rem;
+  margin: 0 auto;
+  padding: 2.5rem clamp(1rem, 4vw, 2.75rem) 2.75rem;
+  text-align: center;
+  border-radius: v.$border-radius-xl;
+  color: $dcw-ink;
+  background: linear-gradient(165deg, $dcw-bg 0%, $dcw-bg-2 100%);
+}
+
+.dcw-week {
+  @include w.welcome-pill(rgba($dcw-blue, 0.16), #0369a1);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.dcw h1 {
+  @include m.playful-heading;
+  font-size: clamp(2rem, 5.6vw, 3.1rem);
+  line-height: 1.1;
+  margin: 1.2rem 0 0.4rem;
+}
+
+.dcw-title-start { color: $dcw-ink; }
+.dcw-title-accent { color: $dcw-blue; }
+
+/* --- compass --- */
+.dcw-compass {
+  width: clamp(12rem, 42vw, 17rem);
+  margin: 1.6rem auto 0;
+
+  svg { width: 100%; height: auto; display: block; }
+}
+
+.dcw-ring {
+  fill: rgba(255, 255, 255, 0.7);
+  stroke: rgba($dcw-ink, 0.25);
+  stroke-width: 3;
+}
+
+.dcw-ring-inner {
+  fill: none;
+  stroke-dasharray: 3 6;
+  stroke-width: 2;
+}
+
+.dcw-tick {
+  stroke: rgba($dcw-ink, 0.4);
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+.dcw-letter {
+  fill: rgba($dcw-ink, 0.55);
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 14px;
+  text-anchor: middle;
+}
+
+.dcw-needle {
+  transform-origin: 100px 100px;
+  animation: dcw-swing 2.4s cubic-bezier(0.5, 0, 0.2, 1) 0.3s both;
+
+  polygon {
+    fill: $dcw-blue;
+    stroke: #0369a1;
+    stroke-width: 1.5;
+    stroke-linejoin: round;
+  }
+}
+
+.dcw-hub {
+  fill: #0369a1;
+}
+
+.dcw-mark {
+  fill: $dcw-ink;
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 15px;
+  text-anchor: middle;
+  opacity: 0;
+  animation: dcw-fade 0.5s ease 2.4s both;
+}
+
+/* --- objective --- */
+.dcw-objective {
+  max-width: 38rem;
+  margin: 1.8rem auto 0;
+  padding: 1.15rem 1.4rem;
+  text-align: left;
+  border-radius: v.$border-radius-lg;
+  border-left: 4px solid $dcw-blue;
+  background: rgba(255, 255, 255, 0.78);
+
+  p {
+    margin: 0.3rem 0 0;
+    font-size: 1.05rem;
+    line-height: 1.5;
+    color: rgba($dcw-ink, 0.9);
+  }
+}
+
+.dcw-objective-label {
+  font-weight: 800;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #0369a1;
+}
+
+/* --- actions --- */
+.dcw-start {
+  @include w.welcome-cta-btn(linear-gradient(120deg, $dcw-blue, #38bdf8), v.$color-white);
+  margin: 2rem auto 0;
+  display: block;
+  font-size: 1.15rem;
+}
+
+.dcw-review {
+  @include m.tappable;
+  display: block;
+  margin: 0.8rem auto 0;
+  background: none;
+  border: none;
+  font-weight: 700;
+  color: rgba($dcw-ink, 0.6);
+}
+
+.dcw-footer {
+  margin: 1.4rem 0 0;
+  font-size: 0.92rem;
+  color: rgba($dcw-ink, 0.55);
+}
+
+@keyframes dcw-swing {
+  0% { transform: rotate(-160deg); }
+  70% { transform: rotate(28deg); }
+  100% { transform: rotate(0deg); }
+}
+
+@keyframes dcw-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dcw-needle, .dcw-mark { animation: none; opacity: 1; }
+}

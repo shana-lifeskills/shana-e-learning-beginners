@@ -1,0 +1,230 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- Service Warm-Up fill-in-the-blank (sfb) — Service Module, Week 4 ---- */
+$sfb-body: #b45309;
+$sfb-body-2: #ea8a1e;
+$sfb-paper: #fffaf2;
+$sfb-ink: #4a2b12;
+$sfb-orange: #f97316;
+$sfb-green: #1f9d63;
+$sfb-red: #e5484d;
+$sfb-sun: #ffe08a;
+
+.sfb {
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.sfb-card {
+  border-radius: v.$border-radius-xl;
+  padding: 1.6rem clamp(1rem, 4vw, 2rem) 1.9rem;
+  background: linear-gradient(165deg, $sfb-body-2 0%, $sfb-body 100%);
+  box-shadow: 0 10px 0 rgba(0, 0, 0, 0.16), inset 0 0 0 4px rgba(255, 255, 255, 0.1);
+  color: v.$color-white;
+  text-align: center;
+}
+
+.sfb-card-head { margin-bottom: 1.1rem; }
+
+.sfb-badge {
+  display: inline-block;
+  padding: 0.35rem 1.1rem;
+  border-radius: v.$border-radius-pill;
+  background: $sfb-sun;
+  color: $sfb-ink;
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.sfb-heading {
+  @include m.playful-heading;
+  font-size: clamp(1.5rem, 4.6vw, 2.1rem);
+  margin: 0.7rem 0 0.3rem;
+}
+
+.sfb-intro {
+  margin: 0;
+  font-size: 0.98rem;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* --- word bank --- */
+.sfb-bank {
+  background: rgba(255, 255, 255, 0.16);
+  border-radius: v.$border-radius-lg;
+  padding: 0.8rem 1rem 1rem;
+  margin-bottom: 1rem;
+}
+
+.sfb-bank-label {
+  display: block;
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 0.6rem;
+}
+
+.sfb-bank-words {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+  min-height: 2.4rem;
+  align-items: center;
+}
+
+.sfb-word {
+  @include m.tappable;
+  padding: 0.55rem 0.95rem;
+  border: 2px solid rgba($sfb-ink, 0.15);
+  border-radius: v.$border-radius-pill;
+  background: v.$color-white;
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: $sfb-ink;
+}
+
+.sfb-word--selected {
+  border-color: $sfb-orange;
+  background: rgba($sfb-orange, 0.16);
+  box-shadow: 0 0 0 3px rgba($sfb-orange, 0.3);
+}
+
+.sfb-bank-empty {
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* --- sentences --- */
+.sfb-sentences {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  text-align: left;
+}
+
+.sfb-sentence {
+  background: $sfb-paper;
+  color: $sfb-ink;
+  border-radius: v.$border-radius-sm;
+  padding: 0.85rem 1rem;
+  box-shadow: inset 0 0 0 2px rgba($sfb-ink, 0.06);
+}
+
+.sfb-sentence--done { box-shadow: inset 0 0 0 2px rgba($sfb-green, 0.4); }
+
+.sfb-line {
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  font-weight: 600;
+}
+
+.sfb-blank {
+  @include m.tappable;
+  display: inline-block;
+  margin: 0 0.2rem;
+  padding: 0.15rem 0.7rem;
+  border: 2px dashed rgba($sfb-orange, 0.7);
+  border-radius: 0.6rem;
+  background: rgba($sfb-orange, 0.08);
+  font: inherit;
+  font-weight: 800;
+  color: $sfb-body;
+  min-width: 4rem;
+
+  &:disabled { cursor: default; }
+}
+
+.sfb-blank--filled {
+  border-style: solid;
+  border-color: $sfb-green;
+  background: rgba($sfb-green, 0.14);
+  color: #0f5c3a;
+}
+
+.sfb-blank--wrong {
+  border-color: $sfb-red;
+  background: rgba($sfb-red, 0.12);
+  animation: sfb-shake 0.4s ease;
+}
+
+.sfb-praise {
+  display: block;
+  margin-top: 0.4rem;
+  font-weight: 700;
+  font-size: 0.88rem;
+  color: $sfb-green;
+}
+
+/* --- done / hint --- */
+.sfb-done {
+  margin-top: 1.2rem;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: v.$border-radius-lg;
+  padding: 1.5rem 1.2rem;
+  text-align: center;
+
+  h3 {
+    @include m.playful-heading;
+    margin: 0.4rem 0 0.3rem;
+    font-size: 1.35rem;
+  }
+
+  p { margin: 0 0 1.1rem; color: rgba(255, 255, 255, 0.88); }
+}
+
+.sfb-done-icon { font-size: 2rem; }
+
+.sfb-continue {
+  @include m.tappable;
+  background: $sfb-sun;
+  color: $sfb-ink;
+  border: none;
+  font-weight: 800;
+  font-size: 1.05rem;
+  padding: 0.9rem 2.25rem;
+  border-radius: v.$border-radius-pill;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.16);
+
+  &:hover { opacity: 0.92; }
+}
+
+.sfb-hint {
+  margin: 1rem 0 0;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.sfb-parent-note {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 1rem 0 0;
+  padding: 0.75rem 1rem;
+  border-radius: 0.9rem;
+  background: rgba($sfb-body, 0.08);
+  font-size: 0.9rem;
+  color: rgba($sfb-ink, 0.8);
+}
+
+.sfb-parent-icon { font-size: 1.1rem; }
+
+@keyframes sfb-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sfb-blank--wrong { animation: none; }
+}

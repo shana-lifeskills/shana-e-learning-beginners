@@ -1,0 +1,57 @@
+<div class="twq">
+  <div class="twq-card">
+    <div class="twq-card-head">
+      <span class="twq-badge">{{ step().badge }}</span>
+      <h2 class="twq-heading">{{ step().heading }}</h2>
+      <p class="twq-subtitle">{{ step().subtitle }}</p>
+    </div>
+
+    <div class="twq-stack" role="progressbar" [attr.aria-valuenow]="activeIndex()"
+      [attr.aria-valuemax]="questions().length" aria-label="Team hands stacked in">
+      @for (filled of hands(); track $index) {
+        <span class="twq-hand" [class.twq-hand--in]="filled" aria-hidden="true">✋</span>
+      }
+      <span class="twq-stack-label">Hands In</span>
+    </div>
+
+    @if (!allDone()) {
+      @if (currentQuestion(); as q) {
+        <div class="twq-screen" [class.twq-screen--shake]="feedback() === 'incorrect'">
+          <span class="twq-qcount">Question {{ activeIndex() + 1 }} of {{ questions().length }}</span>
+          <p class="twq-prompt">{{ q.prompt }}</p>
+
+          <div class="twq-options">
+            @for (opt of q.options; track opt.id; let i = $index) {
+              <button type="button" class="twq-option" [class.twq-option--correct]="optionState(opt) === 'correct'"
+                [class.twq-option--wrong]="optionState(opt) === 'incorrect'" [disabled]="locked()"
+                (click)="selectOption(opt)">
+                <span class="twq-option-letter" aria-hidden="true">{{ letterFor(i) }}</span>
+                <span class="twq-option-text">{{ opt.text }}</span>
+              </button>
+            }
+          </div>
+
+          <p class="twq-feedback" aria-live="polite">
+            @if (feedback() === 'correct') {
+              <span class="twq-feedback--good">✋ {{ q.feedbackText }}</span>
+            } @else if (feedback() === 'incorrect') {
+              <span class="twq-feedback--bad">Not quite — think about working together, and try again!</span>
+            }
+          </p>
+        </div>
+      }
+    } @else {
+      <div class="twq-done">
+        <span class="twq-done-icon" aria-hidden="true">🙌</span>
+        <h3>{{ step().allDoneTitle }}</h3>
+        <p>{{ step().allDoneText }}</p>
+        <button type="button" class="twq-continue" (click)="finish()">{{ step().continueLabel }} →</button>
+      </div>
+    }
+  </div>
+
+  <p class="twq-parent-note">
+    <span class="twq-parent-icon" aria-hidden="true">👪</span>
+    {{ step().parentNote }}
+  </p>
+</div>

@@ -1,0 +1,55 @@
+<div class="shw">
+  <span class="shw-week">{{ shw.weekLabel }}</span>
+
+  <h1>
+    <span class="shw-title-start">{{ shw.titleStart }}</span>
+    <span class="shw-title-accent">{{ shw.titleAccent }}</span>
+  </h1>
+
+  <div class="shw-scene" aria-hidden="true">
+    <svg viewBox="0 0 240 180" role="img">
+      <ellipse class="shw-ground" cx="120" cy="150" rx="92" ry="14" />
+
+      <!-- giving hand (left) -->
+      <g class="shw-hand shw-hand-give">
+        <path d="M18 132 q10 -34 40 -40 l30 -4 q10 0 10 8 q0 8 -12 9 l-18 3 q22 2 34 6 q9 3 8 11 q-1 7 -12 6 l-24 -3 q20 4 30 9 q8 4 6 11 q-2 6 -12 4 l-26 -6 q16 5 23 10 q7 5 3 11 q-4 5 -13 2 l-40 -18 q-14 -6 -12 -18 z" />
+      </g>
+
+      <!-- receiving hand (right) -->
+      <g class="shw-hand shw-hand-take">
+        <path d="M222 132 q-10 -34 -40 -40 l-30 -4 q-10 0 -10 8 q0 8 12 9 l18 3 q-22 2 -34 6 q-9 3 -8 11 q1 7 12 6 l24 -3 q-20 4 -30 9 q-8 4 -6 11 q2 6 12 4 l26 -6 q-16 5 -23 10 q-7 5 -3 11 q4 5 13 2 l40 -18 q14 -6 12 -18 z" />
+      </g>
+
+      <!-- travelling heart -->
+      <g class="shw-heart">
+        <path d="M120 78 c-9 -16 -34 -12 -34 8 c0 15 20 27 34 38 c14 -11 34 -23 34 -38 c0 -20 -25 -24 -34 -8 z" />
+      </g>
+
+      <!-- sparkles -->
+      <g class="shw-sparks">
+        <path class="shw-spark shw-spark-1" d="M96 52 l3 8 8 3 -8 3 -3 8 -3 -8 -8 -3 8 -3 z" />
+        <path class="shw-spark shw-spark-2" d="M150 44 l2 6 6 2 -6 2 -2 6 -2 -6 -6 -2 6 -2 z" />
+        <path class="shw-spark shw-spark-3" d="M124 30 l2 6 6 2 -6 2 -2 6 -2 -6 -6 -2 6 -2 z" />
+      </g>
+    </svg>
+    <span class="shw-mark">{{ shw.handsMark }}</span>
+  </div>
+
+  <div class="shw-objective">
+    <span class="shw-objective-label">{{ shw.objectiveLabel }}</span>
+    <p>{{ shw.objectiveText }}</p>
+  </div>
+
+  @if (isCompletedLessonWelcome()) {
+    @if (nextLesson(); as next) {
+      <button type="button" class="shw-start" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+    } @else {
+      <button type="button" class="shw-start" (click)="backToMap()">Back to My Modules →</button>
+    }
+    <button type="button" class="shw-review" (click)="beginLesson()">↺ Review this lesson</button>
+  } @else {
+    <button type="button" class="shw-start" (click)="beginLesson()">{{ shw.startLabel }} →</button>
+  }
+
+  <p class="shw-footer">{{ shw.footerNote }}</p>
+</div>

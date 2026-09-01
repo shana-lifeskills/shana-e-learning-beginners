@@ -1,0 +1,43 @@
+<div class="dcw">
+  <span class="dcw-week">{{ dcw.weekLabel }}</span>
+
+  <h1>
+    <span class="dcw-title-start">{{ dcw.titleStart }}</span>
+    <span class="dcw-title-accent">{{ dcw.titleAccent }}</span>
+  </h1>
+
+  <div class="dcw-compass" aria-hidden="true">
+    <svg viewBox="0 0 200 200" role="img">
+      <circle class="dcw-ring" cx="100" cy="100" r="88" />
+      <circle class="dcw-ring dcw-ring-inner" cx="100" cy="100" r="70" />
+      @for (t of [0, 45, 90, 135, 180, 225, 270, 315]; track t) {
+        <line class="dcw-tick" x1="100" y1="18" x2="100" y2="30"
+          [attr.transform]="'rotate(' + t + ' 100 100)'" />
+      }
+      <text class="dcw-letter" x="100" y="40">N</text>
+      <g class="dcw-needle">
+        <polygon points="100,28 110,104 100,116 90,104" />
+      </g>
+      <circle class="dcw-hub" cx="100" cy="100" r="8" />
+      <text class="dcw-mark" x="100" y="150">{{ dcw.compassMark }}</text>
+    </svg>
+  </div>
+
+  <div class="dcw-objective">
+    <span class="dcw-objective-label">{{ dcw.objectiveLabel }}</span>
+    <p>{{ dcw.objectiveText }}</p>
+  </div>
+
+  @if (isCompletedLessonWelcome()) {
+    @if (nextLesson(); as next) {
+      <button type="button" class="dcw-start" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+    } @else {
+      <button type="button" class="dcw-start" (click)="backToMap()">Back to My Modules →</button>
+    }
+    <button type="button" class="dcw-review" (click)="beginLesson()">↺ Review this lesson</button>
+  } @else {
+    <button type="button" class="dcw-start" (click)="beginLesson()">{{ dcw.startLabel }} →</button>
+  }
+
+  <p class="dcw-footer">{{ dcw.footerNote }}</p>
+</div>

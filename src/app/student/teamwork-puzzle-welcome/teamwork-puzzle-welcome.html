@@ -1,0 +1,52 @@
+<div class="tpw">
+  <span class="tpw-week">{{ tpw.weekLabel }}</span>
+
+  <h1>
+    <span class="tpw-title-start">{{ tpw.titleStart }}</span>
+    <span class="tpw-title-accent">{{ tpw.titleAccent }}</span>
+  </h1>
+
+  <div class="tpw-scene" aria-hidden="true">
+    <svg viewBox="0 0 200 200" role="img">
+      <!-- top-left piece -->
+      <g class="tpw-piece tpw-piece-tl">
+        <path d="M10,10 H100 V43 C112,43 112,67 100,67 V100 H67 C67,112 43,112 43,100 H10 Z" />
+        <text x="53" y="59">{{ tpw.pieceLabels[0] }}</text>
+      </g>
+      <!-- top-right piece -->
+      <g class="tpw-piece tpw-piece-tr">
+        <path d="M100,10 H190 V100 H157 C157,112 133,112 133,100 H100 V67 C112,67 112,43 100,43 V10 Z" />
+        <text x="147" y="59">{{ tpw.pieceLabels[1] }}</text>
+      </g>
+      <!-- bottom-left piece -->
+      <g class="tpw-piece tpw-piece-bl">
+        <path d="M10,100 H43 C43,112 67,112 67,100 H100 V133 C112,133 112,157 100,157 V190 H10 Z" />
+        <text x="53" y="149">{{ tpw.pieceLabels[2] }}</text>
+      </g>
+      <!-- bottom-right piece -->
+      <g class="tpw-piece tpw-piece-br">
+        <path d="M100,100 H133 C133,112 157,112 157,100 H190 V190 H100 V157 C112,157 112,133 100,133 Z" />
+        <text x="147" y="149">{{ tpw.pieceLabels[3] }}</text>
+      </g>
+    </svg>
+    <span class="tpw-mark">{{ tpw.puzzleMark }}</span>
+  </div>
+
+  <div class="tpw-objective">
+    <span class="tpw-objective-label">{{ tpw.objectiveLabel }}</span>
+    <p>{{ tpw.objectiveText }}</p>
+  </div>
+
+  @if (isCompletedLessonWelcome()) {
+    @if (nextLesson(); as next) {
+      <button type="button" class="tpw-start" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+    } @else {
+      <button type="button" class="tpw-start" (click)="backToMap()">Back to My Modules →</button>
+    }
+    <button type="button" class="tpw-review" (click)="beginLesson()">↺ Review this lesson</button>
+  } @else {
+    <button type="button" class="tpw-start" (click)="beginLesson()">{{ tpw.startLabel }} →</button>
+  }
+
+  <p class="tpw-footer">{{ tpw.footerNote }}</p>
+</div>

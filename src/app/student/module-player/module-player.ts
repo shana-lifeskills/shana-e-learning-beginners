@@ -81,6 +81,24 @@ import { PrivacyProtectorChallengeStepView } from '../privacy-protector-challeng
 import { CreativeChoiceWarmupStepView } from '../creative-choice-warmup-step-view/creative-choice-warmup-step-view';
 import { SmartChoicesWarmupStepView } from '../smart-choices-warmup-step-view/smart-choices-warmup-step-view';
 import { TradeOffQuizStepView } from '../trade-off-quiz-step-view/trade-off-quiz-step-view';
+import { DisciplineWarmupQuizStepView } from '../discipline-warmup-quiz-step-view/discipline-warmup-quiz-step-view';
+import { ServiceWarmupQuizStepView } from '../service-warmup-quiz-step-view/service-warmup-quiz-step-view';
+import { TeamworkWarmupQuizStepView } from '../teamwork-warmup-quiz-step-view/teamwork-warmup-quiz-step-view';
+import { TeamworkMatchWarmupStepView } from '../teamwork-match-warmup-step-view/teamwork-match-warmup-step-view';
+import { TeamworkTfWarmupStepView } from '../teamwork-tf-warmup-step-view/teamwork-tf-warmup-step-view';
+import { TeamworkFillBlankStepView } from '../teamwork-fill-blank-step-view/teamwork-fill-blank-step-view';
+import { TeamworkReflectionMissionStepView } from '../teamwork-reflection-mission-step-view/teamwork-reflection-mission-step-view';
+import { ServiceActTrackerStepView } from '../service-act-tracker-step-view/service-act-tracker-step-view';
+import { ServiceConfidenceLinkStepView } from '../service-confidence-link-step-view/service-confidence-link-step-view';
+import { ServicePlaceMatchStepView } from '../service-place-match-step-view/service-place-match-step-view';
+import { ServiceEnvironmentTrackerStepView } from '../service-environment-tracker-step-view/service-environment-tracker-step-view';
+import { ServiceTfWarmupStepView } from '../service-tf-warmup-step-view/service-tf-warmup-step-view';
+import { ServiceKindnessPlanStepView } from '../service-kindness-plan-step-view/service-kindness-plan-step-view';
+import { ServiceFillBlankStepView } from '../service-fill-blank-step-view/service-fill-blank-step-view';
+import { ServiceProjectFinalStepView } from '../service-project-final-step-view/service-project-final-step-view';
+import { DisciplineTfWarmupStepView } from '../discipline-tf-warmup-step-view/discipline-tf-warmup-step-view';
+import { DisciplineMatchWarmupStepView } from '../discipline-match-warmup-step-view/discipline-match-warmup-step-view';
+import { DisciplineSequenceWarmupStepView } from '../discipline-sequence-warmup-step-view/discipline-sequence-warmup-step-view';
 import { TradeOffTrackerChallengeStepView } from '../trade-off-tracker-challenge-step-view/trade-off-tracker-challenge-step-view';
 import { TradeOffConfidenceLinkStepView } from '../trade-off-confidence-link-step-view/trade-off-confidence-link-step-view';
 import { MoneyMatchStepView } from '../money-match-step-view/money-match-step-view';
@@ -234,6 +252,24 @@ type PlayerView = 'map' | 'lesson-welcome' | 'exercise' | 'module-complete';
     CreativeChoiceWarmupStepView,
     SmartChoicesWarmupStepView,
     TradeOffQuizStepView,
+    DisciplineWarmupQuizStepView,
+    ServiceWarmupQuizStepView,
+    TeamworkWarmupQuizStepView,
+    TeamworkMatchWarmupStepView,
+    TeamworkTfWarmupStepView,
+    TeamworkFillBlankStepView,
+    TeamworkReflectionMissionStepView,
+    ServiceActTrackerStepView,
+    ServiceConfidenceLinkStepView,
+    ServicePlaceMatchStepView,
+    ServiceEnvironmentTrackerStepView,
+    ServiceTfWarmupStepView,
+    ServiceKindnessPlanStepView,
+    ServiceFillBlankStepView,
+    ServiceProjectFinalStepView,
+    DisciplineTfWarmupStepView,
+    DisciplineMatchWarmupStepView,
+    DisciplineSequenceWarmupStepView,
     TradeOffTrackerChallengeStepView,
     TradeOffConfidenceLinkStepView,
     MoneyMatchStepView,
@@ -449,6 +485,18 @@ export class ModulePlayer implements OnInit {
       case 'yes-no-checklist':
       case 'feelings-picture-choice':
       case 'trade-off-quiz':
+      case 'discipline-warmup-quiz':
+      case 'service-warmup-quiz':
+      case 'teamwork-warmup-quiz':
+      case 'teamwork-match-warmup':
+      case 'teamwork-tf-warmup':
+      case 'teamwork-fill-blank':
+      case 'service-place-match':
+      case 'service-tf-warmup':
+      case 'service-fill-blank':
+      case 'discipline-tf-warmup':
+      case 'discipline-match-warmup':
+      case 'discipline-sequence-warmup':
       case 'money-match':
       case 'money-myth-buster':
       case 'step-sequence':
@@ -519,6 +567,9 @@ export class ModulePlayer implements OnInit {
       case 'trade-off-tracker-challenge':
       case 'simple-budget-challenge':
       case 'think-ahead-challenge':
+      case 'service-act-tracker':
+      case 'service-environment-tracker':
+      case 'service-kindness-plan':
         return 'Challenge of the Week';
       case 'digital-etiquette-tracker':
       case 'digital-responsibility-tracker':
@@ -526,6 +577,8 @@ export class ModulePlayer implements OnInit {
       case 'strategy-plan-challenge':
       case 'smart-thinker-plan-challenge':
       case 'financial-audit-challenge':
+      case 'service-project-final':
+      case 'teamwork-reflection-mission':
         return 'Final Challenge';
       case 'confidence-link':
       case 'strategic-thinker-link':
@@ -535,6 +588,7 @@ export class ModulePlayer implements OnInit {
       case 'confidence-plan':
       case 'confidence-goal-tracker':
       case 'trade-off-confidence-link':
+      case 'service-confidence-link':
       case 'budget-confidence-link':
       case 'consequence-confidence-link':
       case 'module-outcome-confidence-link':

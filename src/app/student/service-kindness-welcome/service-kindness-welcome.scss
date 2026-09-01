@@ -1,0 +1,183 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Kindness + responsibility welcome (skw) — Service Module, Week 3 ---- */
+$skw-bg: #fff3e6;
+$skw-bg-2: #ffe0c9;
+$skw-ink: #4a2b12;
+$skw-orange: #f97316;
+$skw-deep: #b45309;
+$skw-heart: #ef4444;
+$skw-green: #1f9d63;
+$skw-star: #f5b301;
+
+.skw {
+  max-width: 54rem;
+  margin: 0 auto;
+  padding: 2.5rem clamp(1rem, 4vw, 2.75rem) 2.75rem;
+  text-align: center;
+  border-radius: v.$border-radius-xl;
+  color: $skw-ink;
+  background: linear-gradient(165deg, $skw-bg 0%, $skw-bg-2 100%);
+}
+
+.skw-week {
+  @include w.welcome-pill(rgba($skw-orange, 0.18), $skw-deep);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.skw h1 {
+  @include m.playful-heading;
+  font-size: clamp(2rem, 5.6vw, 3.1rem);
+  line-height: 1.1;
+  margin: 1.2rem 0 0.4rem;
+}
+
+.skw-title-start { color: $skw-ink; }
+.skw-title-accent { color: $skw-orange; }
+
+/* --- equation --- */
+.skw-equation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.6rem clamp(0.5rem, 3vw, 1.4rem);
+  margin: 1.8rem auto 0;
+}
+
+.skw-term {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  width: clamp(4.5rem, 16vw, 6.5rem);
+
+  svg { width: 100%; height: auto; display: block; }
+}
+
+.skw-term-label {
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: clamp(0.78rem, 2.4vw, 0.95rem);
+  color: $skw-deep;
+}
+
+.skw-op {
+  font-family: v.$headings-font-family;
+  font-weight: 900;
+  font-size: clamp(1.6rem, 5vw, 2.4rem);
+  color: rgba($skw-ink, 0.45);
+}
+
+.skw-heart {
+  fill: $skw-heart;
+  stroke: #b91c1c;
+  stroke-width: 2.5;
+  stroke-linejoin: round;
+  animation: skw-beat 1.8s ease-in-out infinite;
+  transform-origin: 32px 36px;
+}
+
+.skw-shield {
+  fill: rgba($skw-green, 0.18);
+  stroke: $skw-green;
+  stroke-width: 3;
+  stroke-linejoin: round;
+}
+
+.skw-check {
+  fill: none;
+  stroke: $skw-green;
+  stroke-width: 5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 40;
+  stroke-dashoffset: 40;
+  animation: skw-draw 0.8s ease 0.5s forwards;
+}
+
+.skw-term--result .skw-star {
+  fill: $skw-star;
+  stroke: $skw-deep;
+  stroke-width: 2.5;
+  stroke-linejoin: round;
+  transform-origin: 32px 32px;
+  animation: skw-pop 0.5s ease 1.2s both;
+}
+
+/* --- objective --- */
+.skw-objective {
+  max-width: 38rem;
+  margin: 1.9rem auto 0;
+  padding: 1.15rem 1.4rem;
+  text-align: left;
+  border-radius: v.$border-radius-lg;
+  border-left: 4px solid $skw-orange;
+  background: rgba(255, 255, 255, 0.8);
+
+  p {
+    margin: 0.3rem 0 0;
+    font-size: 1.05rem;
+    line-height: 1.5;
+    color: rgba($skw-ink, 0.9);
+  }
+}
+
+.skw-objective-label {
+  font-weight: 800;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $skw-deep;
+}
+
+/* --- actions --- */
+.skw-start {
+  @include w.welcome-cta-btn(linear-gradient(120deg, $skw-orange, #fb923c), v.$color-white);
+  margin: 2rem auto 0;
+  display: block;
+  font-size: 1.15rem;
+}
+
+.skw-review {
+  @include m.tappable;
+  display: block;
+  margin: 0.8rem auto 0;
+  background: none;
+  border: none;
+  font-weight: 700;
+  color: rgba($skw-ink, 0.6);
+}
+
+.skw-footer {
+  margin: 1.4rem 0 0;
+  font-size: 0.92rem;
+  color: rgba($skw-ink, 0.55);
+}
+
+@keyframes skw-beat {
+  0%, 100% { transform: scale(1); }
+  30% { transform: scale(1.12); }
+  45% { transform: scale(1); }
+}
+
+@keyframes skw-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes skw-pop {
+  from { opacity: 0; transform: scale(0.3) rotate(-25deg); }
+  to { opacity: 1; transform: scale(1) rotate(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skw-heart, .skw-check, .skw-term--result .skw-star {
+    animation: none;
+    opacity: 1;
+    stroke-dashoffset: 0;
+    transform: none;
+  }
+}

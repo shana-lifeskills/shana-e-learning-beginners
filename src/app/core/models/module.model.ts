@@ -153,7 +153,25 @@ export type ExerciseType =
   | 'consequence-confidence-link'
   | 'step-sequence'
   | 'financial-audit-challenge'
-  | 'module-outcome-confidence-link';
+  | 'module-outcome-confidence-link'
+  | 'discipline-warmup-quiz'
+  | 'discipline-tf-warmup'
+  | 'discipline-match-warmup'
+  | 'discipline-sequence-warmup'
+  | 'service-warmup-quiz'
+  | 'service-act-tracker'
+  | 'service-confidence-link'
+  | 'service-place-match'
+  | 'service-environment-tracker'
+  | 'service-tf-warmup'
+  | 'service-kindness-plan'
+  | 'service-fill-blank'
+  | 'service-project-final'
+  | 'teamwork-warmup-quiz'
+  | 'teamwork-match-warmup'
+  | 'teamwork-tf-warmup'
+  | 'teamwork-fill-blank'
+  | 'teamwork-reflection-mission';
 
 export interface BaseExercise {
   id: string;
@@ -743,6 +761,640 @@ export interface TradeOffQuizStep extends BaseExercise {
   subtitle: string;
   questions: TradeOffQuizQuestion[];
   /** Title of the celebration panel shown after every question is answered. */
+  allDoneTitle: string;
+  /** Body line of that celebration panel. */
+  allDoneText: string;
+  /** Callout reminding a parent/guardian to help the learner with this exercise. */
+  parentNote: string;
+  continueLabel: string;
+}
+
+/** One lettered option inside a DisciplineWarmupQuizQuestion. */
+export interface DisciplineWarmupQuizOption {
+  id: string;
+  text: string;
+}
+
+/** One question in the "Discipline Warm-Up" multiple-choice game. */
+export interface DisciplineWarmupQuizQuestion {
+  id: string;
+  prompt: string;
+  options: DisciplineWarmupQuizOption[];
+  correctOptionId: string;
+  /** Short line shown when the learner picks the right answer. */
+  feedbackText: string;
+}
+
+/**
+ * The "Discipline Warm-Up" multiple-choice game (Discipline Module, Week 1 —
+ * "Understanding Discipline"). A row of shields across the top lights up one at
+ * a time as each question is answered, with a single lettered question showing
+ * at a time. A wrong pick shakes and the question stays put; a right pick lights
+ * the next shield and moves on. The "Continue" button appears only once every
+ * shield is lit, so the learner must answer all questions correctly before
+ * leaving the step. A parent-assist note sits below the card.
+ */
+export interface DisciplineWarmupQuizStep extends BaseExercise {
+  type: 'discipline-warmup-quiz';
+  badge: string;
+  heading: string;
+  subtitle: string;
+  questions: DisciplineWarmupQuizQuestion[];
+  /** Title of the celebration panel shown after every question is answered. */
+  allDoneTitle: string;
+  /** Body line of that celebration panel. */
+  allDoneText: string;
+  /** Callout reminding a parent/guardian to help the learner with this exercise. */
+  parentNote: string;
+  continueLabel: string;
+}
+
+/** One lettered option inside a ServiceWarmupQuizQuestion. */
+export interface ServiceWarmupQuizOption {
+  id: string;
+  text: string;
+}
+
+/** One question in the "Service Warm-Up" multiple-choice game. */
+export interface ServiceWarmupQuizQuestion {
+  id: string;
+  prompt: string;
+  options: ServiceWarmupQuizOption[];
+  correctOptionId: string;
+  /** Short line shown when the learner picks the right answer. */
+  feedbackText: string;
+}
+
+/**
+ * The "Service Warm-Up" multiple-choice game (Service Module, Week 1 — "What is
+ * Service?"). A "good-deeds jar" fills with a heart token each time a question
+ * is answered correctly, with a single lettered question showing at a time. A
+ * wrong pick shakes and the question stays put; a right pick drops the next
+ * heart into the jar and moves on. The "Continue" button appears only once the
+ * jar is full, so the learner must answer every question correctly before
+ * leaving the step. A parent-assist note sits below the card.
+ */
+export interface ServiceWarmupQuizStep extends BaseExercise {
+  type: 'service-warmup-quiz';
+  badge: string;
+  heading: string;
+  subtitle: string;
+  questions: ServiceWarmupQuizQuestion[];
+  /** Title of the celebration panel shown after every question is answered. */
+  allDoneTitle: string;
+  /** Body line of that celebration panel. */
+  allDoneText: string;
+  /** Callout reminding a parent/guardian to help the learner with this exercise. */
+  parentNote: string;
+  continueLabel: string;
+}
+
+/** One open reflection line inside a TeamworkReflectionMissionStep. */
+export interface TeamworkReflectionField {
+  id: string;
+  label: string;
+  placeholder: string;
+}
+
+/**
+ * The "Teamwork Reflection Mission" final challenge (Teamwork Module, Week 4 —
+ * module finale). A multi-day self-observation grid: each day the learner ticks
+ * the teamwork habits they kept in any group situation, then once every day is
+ * logged completes a short structured reflection. Complete unlocks only when
+ * every day is logged and every reflection line is filled; the reflection is
+ * then submitted.
+ */
+export interface TeamworkReflectionMissionStep extends BaseExercise {
+  type: 'teamwork-reflection-mission';
+  badge: string;
+  title: string;
+  intro: string;
+  dayCount: number;
+  /** The daily habit checkboxes — all must be ticked to log a day. */
+  habitItems: string[];
+  dayLoggedLabel: string;
+  progressLabel: string;
+  reflectionHeading: string;
+  reflectionIntro: string;
+  reflectionFields: TeamworkReflectionField[];
+  /** Callout reminding a parent/guardian to help across the days. */
+  parentNote: string;
+  allDoneTitle: string;
+  allDoneText: string;
+  completeLabel: string;
+}
+
+/** One sentence with a single blank inside a TeamworkFillBlankStep. */
+export interface TeamworkFillBlankSentence {
+  id: string;
+  /** Sentence text before the blank. */
+  before: string;
+  /** Sentence text after the blank. */
+  after: string;
+  /** The word that belongs in the blank. */
+  answer: string;
+  /** Short affirmation shown once the blank is filled correctly. */
+  praise: string;
+}
+
+/**
+ * The "Teamwork Warm-Up" fill-in-the-blank game (Teamwork Module, Week 4 —
+ * "Respect and Cooperation"). One sentence shows at a time with a single blank;
+ * all the answer words sit shuffled in a word bank below. Tapping the right
+ * word snaps it into the blank and advances; a wrong word shakes the blank and
+ * clears. A progress meter fills as each blank is completed. The "Continue"
+ * button is withheld until every sentence is done, so the learner must fill all
+ * the blanks. A parent-assist note sits below the card.
+ */
+export interface TeamworkFillBlankStep extends BaseExercise {
+  type: 'teamwork-fill-blank';
+  badge: string;
+  heading: string;
+  subtitle: string;
+  wordBankLabel: string;
+  sentences: TeamworkFillBlankSentence[];
+  /** Title of the celebration panel shown once every blank is filled. */
+  allDoneTitle: string;
+  /** Body line of that celebration panel. */
+  allDoneText: string;
+  /** Callout reminding a parent/guardian to help the learner with this exercise. */
+  parentNote: string;
+  continueLabel: string;
+}
+
+/** One statement inside a TeamworkTfWarmupStep. */
+export interface TeamworkTfStatement {
+  id: string;
+  text: string;
+  /** The correct verdict — true means the statement is true. */
+  answer: boolean;
+  /** Short line shown when the learner picks the right verdict. */
+  feedbackText: string;
+}
+
+/**
+ * The "Teamwork Warm-Up" true/false game (Teamwork Module, Week 3 —
+ * "Communication in Teams"). A connected-dot conversation meter fills as each
+ * statement is judged, one statement shows at a time with big 👍 True / 👎
+ * False buttons, a wrong pick shakes and stays put, a right pick fills the next
+ * dot and advances. The "Continue" button is withheld until the meter is full,
+ * so the learner must judge every statement correctly. A parent-assist note
+ * sits below the card.
+ */
+export interface TeamworkTfWarmupStep extends BaseExercise {
+  type: 'teamwork-tf-warmup';
+  badge: string;
+  heading: string;
+  subtitle: string;
+  trueLabel: string;
+  falseLabel: string;
+  statements: TeamworkTfStatement[];
+  /** Title of the celebration panel shown after every statement is judged. */
+  allDoneTitle: string;
+  /** Body line of that celebration panel. */
+  allDoneText: string;
+  /** Callout reminding a parent/guardian to help the learner with this exercise. */
+  parentNote: string;
+  continueLabel: string;
+}
+
+/** One role/action pair inside a TeamworkMatchWarmupStep. */
+export interface TeamworkMatchPair {
+  id: string;
+  role: string;
+  action: string;
+}
+
+/**
+ * The "Teamwork Warm-Up" matching game (Teamwork Module, Week 2 — "Roles in a
+ * Team"). Fixed role rows on the left are drop targets; shuffled action cards
+ * are dragged (or tap-selected then tap-placed) onto the role they belong to.
+ * A wrong drop shakes and bounces back; a correct drop locks into the row. The
+ * "Continue" button is withheld until every role is matched. A parent-assist
+ * note sits below the card.
+ */
+export interface TeamworkMatchWarmupStep extends BaseExercise {
+  type: 'teamwork-match-warmup';
+  badge: string;
+  heading: string;
+  subtitle: string;
+  roleColumnLabel: string;
+  actionColumnLabel: string;
+  pairs: TeamworkMatchPair[];
+  /** Title of the celebration panel shown once every row is matched. */
+  allDoneTitle: string;
+  /** Body line of that celebration panel. */
+  allDoneText: string;
+  /** Callout reminding a parent/guardian to help the learner with this exercise. */
+  parentNote: string;
+  continueLabel: string;
+}
+
+/** One lettered option inside a TeamworkWarmupQuizQuestion. */
+export interface TeamworkWarmupQuizOption {
+  id: string;
+  text: string;
+}
+
+/** One question in the "Teamwork Warm-Up" multiple-choice game. */
+export interface TeamworkWarmupQuizQuestion {
+  id: string;
+  prompt: string;
+  options: TeamworkWarmupQuizOption[];
+  correctOptionId: string;
+  /** Short line shown when the learner picks the right answer. */
+  feedbackText: string;
+}
+
+/**
+ * The "Teamwork Warm-Up" multiple-choice game (Teamwork Module, Week 1 — "What
+ * is Teamwork?"). A "team stack" of five hands builds up from the bottom, one
+ * hand added each time a question is answered correctly, with a single lettered
+ * question showing at a time. A wrong pick shakes and the question stays put; a
+ * right pick adds the next hand and moves on. The "Continue" button appears
+ * only once the stack is complete, so the learner must answer every question
+ * correctly before leaving the step. A parent-assist note sits below the card.
+ */
+export interface TeamworkWarmupQuizStep extends BaseExercise {
+  type: 'teamwork-warmup-quiz';
+  badge: string;
+  heading: string;
+  subtitle: string;
+  questions: TeamworkWarmupQuizQuestion[];
+  /** Title of the celebration panel shown after every question is answered. */
+  allDoneTitle: string;
+  /** Body line of that celebration panel. */
+  allDoneText: string;
+  /** Callout reminding a parent/guardian to help the learner with this exercise. */
+  parentNote: string;
+  continueLabel: string;
+}
+
+/**
+ * "One Act of Service" challenge of the week (Service Module, Week 1). A
+ * five-day kindness log accordion: each day the learner writes what helpful
+ * thing they did, who they helped, and how the person reacted, then locks the
+ * day in. A row of hearts fills as days are logged; the "Complete Week 1"
+ * button unlocks only once every day is recorded, and the entries are then
+ * submitted so the trainer can read them.
+ */
+export interface ServiceActTrackerStep extends BaseExercise {
+  type: 'service-act-tracker';
+  badge: string;
+  title: string;
+  intro: string;
+  dayCount: number;
+  /** Heading over the list of example acts of service. */
+  examplesLabel: string;
+  /** A few example acts, e.g. "Help at home". */
+  examples: string[];
+  didLabel: string;
+  didPlaceholder: string;
+  whoLabel: string;
+  whoPlaceholder: string;
+  reactionLabel: string;
+  reactionPlaceholder: string;
+  saveDayLabel: string;
+  progressLabel: string;
+  /** Callout reminding a parent/guardian to help across the five days. */
+  parentNote: string;
+  allDoneTitle: string;
+  allDoneText: string;
+  completeLabel: string;
+}
+
+/**
+ * The "Confidence Link" closing page for Service Module, Week 1 — also the
+ * end of Week 1. A glowing helping-hand badge carries the week's affirmation;
+ * the learner says it out loud and taps to light the badge, which unlocks the
+ * "Complete Week 1" button.
+ */
+export interface ServiceConfidenceLinkStep extends BaseExercise {
+  type: 'service-confidence-link';
+  badge: string;
+  weekLabel: string;
+  /** Emoji shown in the centre of the glowing badge — defaults to 🤝 when unset. */
+  markEmoji?: string;
+  statement: string;
+  sayItLabel: string;
+  saidItLabel: string;
+  reinforceLine: string;
+  completeLabel: string;
+}
+
+/**
+ * "Service Tracker – My Environment" challenge of the week (Service Module,
+ * Week 2). A five-day log: each day the learner records at least two acts of
+ * service — for each act, what they did, where (home or school), and the
+ * result. A day locks in once it has the minimum number of complete acts. At
+ * the end a summary panel shows the total act count and asks the learner to
+ * name their most helpful action; the "Complete Week 2" button unlocks only
+ * when every day is logged and the most-helpful field is filled, and the log
+ * is submitted so the trainer can read it.
+ */
+export interface ServiceEnvironmentTrackerStep extends BaseExercise {
+  type: 'service-environment-tracker';
+  badge: string;
+  title: string;
+  intro: string;
+  dayCount: number;
+  /** Minimum complete acts required to lock a day in, e.g. 2. */
+  minActsPerDay: number;
+  whatLabel: string;
+  whatPlaceholder: string;
+  whereLabel: string;
+  homeLabel: string;
+  schoolLabel: string;
+  resultLabel: string;
+  resultPlaceholder: string;
+  addActLabel: string;
+  saveDayLabel: string;
+  progressLabel: string;
+  summaryHeading: string;
+  /** Line naming the total, with "{n}" replaced by the act count, e.g. "You completed {n} acts of service!". */
+  countTemplate: string;
+  mostHelpfulLabel: string;
+  mostHelpfulPlaceholder: string;
+  /** Callout reminding a parent/guardian to help across the five days. */
+  parentNote: string;
+  allDoneTitle: string;
+  allDoneText: string;
+  completeLabel: string;
+}
+
+/**
+ * "Kindness in Action Plan" challenge of the week (Service Module, Week 3).
+ * The learner plans three specific acts of kindness for the week — for each,
+ * what the act is, when they will do it, and who it will help — then, after
+ * doing each one, ticks it complete and notes what changed. A card locks in
+ * once all its fields are filled and it is ticked complete; the "Complete Week
+ * 3" button unlocks only once all three acts are logged, and the plan is
+ * submitted so the trainer can read it.
+ */
+export interface ServiceKindnessPlanStep extends BaseExercise {
+  type: 'service-kindness-plan';
+  badge: string;
+  title: string;
+  intro: string;
+  actCount: number;
+  actLabel: string;
+  actPlaceholder: string;
+  whenLabel: string;
+  whenPlaceholder: string;
+  whoLabel: string;
+  whoPlaceholder: string;
+  doneCheckLabel: string;
+  changedLabel: string;
+  changedPlaceholder: string;
+  saveActLabel: string;
+  progressLabel: string;
+  /** Callout reminding a parent/guardian to help across the week. */
+  parentNote: string;
+  allDoneTitle: string;
+  allDoneText: string;
+  completeLabel: string;
+}
+
+/**
+ * "My Service Project" final challenge (Service Module, Week 4 — module
+ * finale). The learner picks one small project for the week, plans it (what /
+ * when / who it helps), then after doing it confirms they finished and notes
+ * what changed and who benefited. The "Complete the Module" button unlocks
+ * only when every field is filled and the finished box is ticked; the project
+ * write-up is submitted so the trainer can read it.
+ */
+export interface ServiceProjectFinalStep extends BaseExercise {
+  type: 'service-project-final';
+  badge: string;
+  title: string;
+  intro: string;
+  examplesLabel: string;
+  examples: string[];
+  planHeading: string;
+  whatLabel: string;
+  whatPlaceholder: string;
+  whenLabel: string;
+  whenPlaceholder: string;
+  whoLabel: string;
+  whoPlaceholder: string;
+  reflectHeading: string;
+  finishedCheckLabel: string;
+  changedLabel: string;
+  changedPlaceholder: string;
+  benefitedLabel: string;
+  benefitedPlaceholder: string;
+  /** Callout reminding a parent/guardian to help across the week. */
+  parentNote: string;
+  allDoneTitle: string;
+  allDoneText: string;
+  completeLabel: string;
+}
+
+/** One sentence with a single blank in a ServiceFillBlankStep. */
+export interface ServiceFillBlankSentence {
+  id: string;
+  /** Sentence text before the blank. */
+  before: string;
+  /** Sentence text after the blank. */
+  after: string;
+  /** The word (or short phrase) that belongs in the blank. */
+  answer: string;
+  /** Short affirmation shown once the blank is filled correctly. */
+  praise: string;
+}
+
+/**
+ * The "Service Warm-Up" fill-in-the-blank game (Service Module, Week 4 —
+ * "Making a Difference"), built as a sunny word-bank poster. All the answer
+ * words sit shuffled in a word bank; each sentence below has one empty slot.
+ * The learner taps a word, then taps a blank — a right word snaps in and the
+ * slot turns green, a wrong word shakes the slot and clears the pick. Used
+ * words leave the bank. The "Continue" button stays disabled until every blank
+ * is filled, so nothing is skippable. A parent-assist note sits at the foot.
+ */
+export interface ServiceFillBlankStep extends BaseExercise {
+  type: 'service-fill-blank';
+  badge: string;
+  title: string;
+  intro: string;
+  wordBankLabel: string;
+  sentences: ServiceFillBlankSentence[];
+  allDoneTitle: string;
+  allDoneText: string;
+  parentNote: string;
+  continueLabel: string;
+}
+
+/** One statement in the "Service Warm-Up" true/false game. */
+export interface ServiceTfStatement {
+  id: string;
+  text: string;
+  /** The correct verdict — true means the statement is true. */
+  answer: boolean;
+  /** Short line shown when the learner picks the right verdict. */
+  feedbackText: string;
+}
+
+/**
+ * The "Service Warm-Up" true/false game (Service Module, Week 3 — "Kindness
+ * and Responsibility"). A row of stars across the top lights one at a time as
+ * each statement is judged, with a single statement showing at a time and two
+ * big True / False buttons. A wrong pick shakes and the statement stays put; a
+ * right pick lights the next star and moves on. The "Continue" button appears
+ * only once every star is lit, so the learner must judge all statements
+ * correctly before leaving the step. A parent-assist note sits below the card.
+ */
+export interface ServiceTfWarmupStep extends BaseExercise {
+  type: 'service-tf-warmup';
+  badge: string;
+  heading: string;
+  subtitle: string;
+  trueLabel: string;
+  falseLabel: string;
+  statements: ServiceTfStatement[];
+  /** Title of the celebration panel shown after every statement is judged. */
+  allDoneTitle: string;
+  /** Body line of that celebration panel. */
+  allDoneText: string;
+  /** Callout reminding a parent/guardian to help the learner with this exercise. */
+  parentNote: string;
+  continueLabel: string;
+}
+
+/** One helpful-act card in the "Where Does It Belong?" sorting warm-up. */
+export interface ServicePlaceMatchItem {
+  id: string;
+  text: string;
+  /** The zone this card belongs in. */
+  place: 'home' | 'school';
+}
+
+/**
+ * The "Where Does It Belong?" sorting warm-up (Service Module, Week 2 —
+ * "Serving at Home and School"). Helpful-act cards start shuffled in a bank;
+ * the learner drags each one into the "At Home" or "At School" basket (a
+ * tap-to-select then tap-a-basket fallback works too for touch). A wrong drop
+ * shakes and bounces the card back to the bank; a correct drop drops it into
+ * the basket. The "Continue" button appears only once every card is sorted
+ * correctly. A parent-assist note sits below.
+ */
+export interface ServicePlaceMatchStep extends BaseExercise {
+  type: 'service-place-match';
+  badge: string;
+  heading: string;
+  subtitle: string;
+  bankLabel: string;
+  homeLabel: string;
+  homeIcon: string;
+  schoolLabel: string;
+  schoolIcon: string;
+  items: ServicePlaceMatchItem[];
+  startOverLabel: string;
+  /** Title of the celebration panel shown once every card is sorted. */
+  allDoneTitle: string;
+  /** Body line of that celebration panel. */
+  allDoneText: string;
+  /** Callout reminding a parent/guardian to help the learner with this exercise. */
+  parentNote: string;
+  continueLabel: string;
+}
+
+/** One "put the steps in order" question in the "Discipline Warm-Up" sequencing game. */
+export interface DisciplineSequenceQuestion {
+  id: string;
+  prompt: string;
+  /** The steps listed in the ONE correct order — the view shuffles them into the tray. */
+  steps: string[];
+  /** Short line shown once the learner orders the steps correctly. */
+  feedbackText: string;
+}
+
+/**
+ * The "Discipline Warm-Up" sequencing game (Discipline Module, Week 4 —
+ * "Consistency & Responsibility"). One question at a time: a short scenario and
+ * a row of numbered slots, with the steps shuffled into a tray below. The
+ * learner taps steps into the slots (tap a filled slot to send it back); once
+ * every slot is filled the order is checked. A correct order locks green and
+ * advances; a wrong order shakes and clears so they can try again. Every
+ * question must be ordered correctly before the Continue button appears. A
+ * parent-assist note sits below.
+ */
+export interface DisciplineSequenceWarmupStep extends BaseExercise {
+  type: 'discipline-sequence-warmup';
+  badge: string;
+  heading: string;
+  subtitle: string;
+  questions: DisciplineSequenceQuestion[];
+  /** Title of the celebration panel shown once every question is ordered correctly. */
+  allDoneTitle: string;
+  /** Body line of that celebration panel. */
+  allDoneText: string;
+  /** Callout reminding a parent/guardian to help the learner with this exercise. */
+  parentNote: string;
+  continueLabel: string;
+}
+
+/** One action-to-result pair in the "Discipline Warm-Up" matching game. */
+export interface DisciplineMatchPair {
+  id: string;
+  action: string;
+  result: string;
+}
+
+/**
+ * The "Discipline Warm-Up" matching game (Discipline Module, Week 3 —
+ * "Following Routines"). The fixed "Action" rows sit on the left as drop
+ * targets; the "Result" cards start shuffled in a bank on the right and the
+ * learner drags each one onto the routine it produces (a tap-to-select then
+ * tap-a-row fallback works too for touch). A wrong drop bounces back with a
+ * shake; a correct drop locks into the row. The "Continue" button appears only
+ * once every row is matched. A parent-assist note sits below.
+ */
+export interface DisciplineMatchWarmupStep extends BaseExercise {
+  type: 'discipline-match-warmup';
+  badge: string;
+  heading: string;
+  subtitle: string;
+  actionColumnLabel: string;
+  resultColumnLabel: string;
+  pairs: DisciplineMatchPair[];
+  /** Title of the celebration panel shown once every row is matched. */
+  allDoneTitle: string;
+  /** Body line of that celebration panel. */
+  allDoneText: string;
+  /** Callout reminding a parent/guardian to help the learner with this exercise. */
+  parentNote: string;
+  continueLabel: string;
+}
+
+/** One statement in the "Discipline Warm-Up" true/false game. */
+export interface DisciplineTfStatement {
+  id: string;
+  text: string;
+  /** The correct verdict — true means the statement is true. */
+  answer: boolean;
+  /** Short line shown when the learner picks the right verdict. */
+  feedbackText: string;
+}
+
+/**
+ * The "Discipline Warm-Up" true/false game (Discipline Module, Week 2 —
+ * "Self-Control"). A row of calm "breath" dots across the top fills one at a
+ * time as each statement is judged, with a single statement showing at a time
+ * and two big True / False buttons. A wrong pick shakes and the statement stays
+ * put; a right pick fills the next dot and moves on. The "Continue" button
+ * appears only once every dot is filled, so the learner must judge all
+ * statements correctly before leaving the step. A parent-assist note sits below.
+ */
+export interface DisciplineTfWarmupStep extends BaseExercise {
+  type: 'discipline-tf-warmup';
+  badge: string;
+  heading: string;
+  subtitle: string;
+  trueLabel: string;
+  falseLabel: string;
+  statements: DisciplineTfStatement[];
+  /** Title of the celebration panel shown after every statement is judged. */
   allDoneTitle: string;
   /** Body line of that celebration panel. */
   allDoneText: string;
@@ -2542,6 +3194,9 @@ export interface DiscussionMatchStep extends BaseExercise {
   resultHeading: string;
   pairs: DiscussionMatchPair[];
   continueLabel: string;
+  /** Optional recap card shown once every pair is matched — a heading over a short bullet list. */
+  recapHeading?: string;
+  recapPoints?: string[];
 }
 
 /** One problem/strategy pair to link in a StrategyMatchWarmupStep. */
@@ -4707,10 +5362,28 @@ export type Exercise =
   | BudgetConfidenceLinkStep
   | MoneyMythBusterStep
   | ThinkAheadChallengeStep
+  | DisciplineWarmupQuizStep
+  | DisciplineTfWarmupStep
+  | DisciplineMatchWarmupStep
+  | DisciplineSequenceWarmupStep
   | ConsequenceConfidenceLinkStep
   | StepSequenceStep
   | FinancialAuditChallengeStep
-  | ModuleOutcomeConfidenceLinkStep;
+  | ModuleOutcomeConfidenceLinkStep
+  | ServiceWarmupQuizStep
+  | ServiceActTrackerStep
+  | ServiceConfidenceLinkStep
+  | ServicePlaceMatchStep
+  | ServiceEnvironmentTrackerStep
+  | ServiceTfWarmupStep
+  | ServiceKindnessPlanStep
+  | ServiceFillBlankStep
+  | ServiceProjectFinalStep
+  | TeamworkWarmupQuizStep
+  | TeamworkMatchWarmupStep
+  | TeamworkTfWarmupStep
+  | TeamworkFillBlankStep
+  | TeamworkReflectionMissionStep;
 
 /** Content for the newer, richer lesson-welcome layout. When a lesson has this, its welcome screen uses this design instead of the plain card. */
 /** One preview card inside a LessonWelcomeCard's "This Week's Mission" section. */
@@ -5242,6 +5915,30 @@ export interface Lesson {
   consequenceChainWelcome?: LessonConsequenceChainWelcome;
   /** When set, renders the "smart money checklist" welcome layout (Choices Module, Week 4 — a cream clipboard of decision questions that tick off in turn and end in a "SMART CHOICE" stamp, an objective card and "a smart decision-maker…" cards) — takes priority over all other welcome fields. */
   smartDecisionWelcome?: LessonSmartDecisionWelcome;
+  /** When set, renders the "discipline compass" welcome layout (Discipline Module, Week 1 — a sky-blue page with a hand-drawn compass whose needle swings to a "right choice" mark, a two-tone title and a single Objective card) — takes priority over all other welcome fields. */
+  disciplineCompassWelcome?: LessonDisciplineCompassWelcome;
+  /** When set, renders the "self-control dial" welcome layout (Discipline Module, Week 2 — a page with a hand-drawn gauge whose needle eases from a red "react" zone to a green "steady" zone, a two-tone title and a single Objective card) — takes priority over all other welcome fields. */
+  selfControlDialWelcome?: LessonSelfControlDialWelcome;
+  /** When set, renders the "routine loop" welcome layout (Discipline Module, Week 3 — a page with a hand-drawn circular day-loop whose four stops light up around the ring, a two-tone title and a single Objective card) — takes priority over all other welcome fields. */
+  routineLoopWelcome?: LessonRoutineLoopWelcome;
+  /** When set, renders the "consistency streak" welcome layout (Discipline Module, Week 4 — a page with a hand-drawn seven-day streak strip that fills into an unbroken run over a climbing growth bar, a two-tone title and a single Objective card) — takes priority over all other welcome fields. */
+  consistencyStreakWelcome?: LessonConsistencyStreakWelcome;
+  /** When set, renders the "helping hands" welcome layout (Service Module, Week 1 — "What is Service?": a warm amber page, a two-tone title, a hand-drawn scene of one hand passing a glowing heart to another, and a single Objective card) — takes priority over all other welcome fields. */
+  serviceHandsWelcome?: LessonServiceHandsWelcome;
+  /** When set, renders the "serve where you are" welcome layout (Service Module, Week 2 — "Serving at Home and School": a warm page, a two-tone title, a hand-drawn scene of a home and a school joined by a path of hearts, and a single Objective card) — takes priority over all other welcome fields. */
+  serviceSpotsWelcome?: LessonServiceSpotsWelcome;
+  /** When set, renders the "kindness + responsibility" welcome layout (Service Module, Week 3 — "Kindness and Responsibility": a warm page, a two-tone title, a hand-drawn "heart + checkmark badge = service star" equation, and a single Objective card) — takes priority over all other welcome fields. */
+  serviceKindnessWelcome?: LessonServiceKindnessWelcome;
+  /** When set, renders the "making a difference" welcome layout (Service Module, Week 4 — "Making a Difference": a warm page, a two-tone title, a hand-drawn ripple where one glowing heart at the centre sends rings out to a circle of dots that light up in turn, and a single Objective card) — takes priority over all other welcome fields. */
+  serviceRippleWelcome?: LessonServiceRippleWelcome;
+  /** When set, renders the "puzzle team" welcome layout (Teamwork Module, Week 1 — "What is Teamwork?": a mint-to-teal page, a two-tone title, four labelled puzzle pieces that slide in from the corners and lock into one complete square, a caption, and a single Objective card) — takes priority over all other welcome fields. */
+  teamworkPuzzleWelcome?: LessonTeamworkPuzzleWelcome;
+  /** When set, renders the "role lineup" welcome layout (Teamwork Module, Week 2 — "Roles in a Team": a mint-to-teal page, a two-tone title, a hand-drawn line-up of four team members that pop in one by one, each wearing a differently-coloured role badge and captioned with a role name, a caption, and a single Objective card) — takes priority over all other welcome fields. */
+  teamworkRolesWelcome?: LessonTeamworkRolesWelcome;
+  /** When set, renders the "talk and listen" welcome layout (Teamwork Module, Week 3 — "Communication in Teams": a mint-to-teal page, a two-tone title, a hand-drawn scene of two team members passing a speech bubble back and forth while listening ears pulse, a caption, and a single Objective card) — takes priority over all other welcome fields. */
+  teamworkTalkWelcome?: LessonTeamworkTalkWelcome;
+  /** When set, renders the "meshing gears" welcome layout (Teamwork Module, Week 4 — "Respect and Cooperation": a mint-to-teal page, a two-tone title, a hand-drawn pair of interlocking gears that turn together, a caption, and a single Objective card) — takes priority over all other welcome fields. */
+  teamworkGearsWelcome?: LessonTeamworkGearsWelcome;
   /** Ordered steps the student walks through — warm-up, story, discussion, activity, challenge, questions. */
   exercises: Exercise[];
 }
@@ -5893,6 +6590,255 @@ export interface LessonSmartDecisionWelcome {
   objectiveText: string;
   traitsHeading: string;
   traits: SmartDecisionTrait[];
+  startLabel: string;
+  footerNote: string;
+}
+
+/**
+ * The "discipline compass" welcome layout (Discipline Module, Week 1 —
+ * "Understanding Discipline"). A deliberately spare page for beginners: a week
+ * pill, a two-tone title, a hand-drawn compass whose needle animates round to a
+ * "right choice" mark, and a single Objective card. No intro paragraph, story
+ * preview or trait cards — the week's teaching content is delivered by the
+ * lesson steps. Purely presentational.
+ */
+export interface LessonDisciplineCompassWelcome {
+  weekLabel: string;
+  titleStart: string;
+  titleAccent: string;
+  compassMark: string;
+  objectiveLabel: string;
+  objectiveText: string;
+  startLabel: string;
+  footerNote: string;
+}
+
+/**
+ * The "self-control dial" welcome layout (Discipline Module, Week 2 —
+ * "Self-Control"). Another deliberately spare beginner page: a week pill, a
+ * two-tone title, a hand-drawn half-circle gauge whose needle eases from a red
+ * "react" zone round to a green "steady" zone, and a single Objective card. No
+ * intro paragraph or trait cards — the week's teaching is delivered by the
+ * lesson steps. Purely presentational.
+ */
+export interface LessonSelfControlDialWelcome {
+  weekLabel: string;
+  titleStart: string;
+  titleAccent: string;
+  reactLabel: string;
+  steadyLabel: string;
+  objectiveLabel: string;
+  objectiveText: string;
+  startLabel: string;
+  footerNote: string;
+}
+
+/**
+ * The "routine loop" welcome layout (Discipline Module, Week 3 — "Following
+ * Routines"). Another deliberately spare beginner page: a week pill, a two-tone
+ * title, a hand-drawn circular day-loop whose four stops (morning, school,
+ * home, night) light up in turn around the ring, and a single Objective card.
+ * No intro paragraph or trait cards — the week's teaching is delivered by the
+ * lesson steps. Purely presentational.
+ */
+export interface LessonRoutineLoopWelcome {
+  weekLabel: string;
+  titleStart: string;
+  titleAccent: string;
+  objectiveLabel: string;
+  objectiveText: string;
+  startLabel: string;
+  footerNote: string;
+}
+
+/**
+ * The "consistency streak" welcome layout (Discipline Module, Week 4 —
+ * "Consistency & Responsibility"). Another deliberately spare beginner page: a
+ * week pill, a two-tone title, a hand-drawn seven-day streak strip whose stamps
+ * fill in one after another into an unbroken run while a small growth bar
+ * climbs beneath it, and a single Objective card. No intro paragraph or trait
+ * cards — the week's teaching is delivered by the lesson steps. Purely
+ * presentational.
+ */
+export interface LessonConsistencyStreakWelcome {
+  weekLabel: string;
+  titleStart: string;
+  titleAccent: string;
+  objectiveLabel: string;
+  objectiveText: string;
+  startLabel: string;
+  footerNote: string;
+}
+
+/**
+ * The "helping hands" welcome layout (Service Module, Week 1 — "What is
+ * Service?"). A deliberately spare beginner page: a week pill, a two-tone
+ * title, a hand-drawn scene of one open hand passing a glowing heart across to
+ * another waiting hand while small sparkles rise, and a single Objective card.
+ * No intro paragraph or trait cards — the week's teaching is delivered by the
+ * lesson steps. Purely presentational.
+ */
+export interface LessonServiceHandsWelcome {
+  weekLabel: string;
+  titleStart: string;
+  titleAccent: string;
+  /** Short caption under the hands scene, e.g. "A little help goes a long way". */
+  handsMark: string;
+  objectiveLabel: string;
+  objectiveText: string;
+  startLabel: string;
+  footerNote: string;
+}
+
+/**
+ * The "puzzle team" welcome layout (Teamwork Module, Week 1 — "What is
+ * Teamwork?"). A deliberately spare beginner page: a week pill, a two-tone
+ * title, a hand-drawn scene of four labelled puzzle pieces that slide in from
+ * the corners and interlock into one complete square, a short caption, and a
+ * single Objective card. No intro paragraph or trait cards — the week's
+ * teaching is delivered by the lesson steps. Purely presentational.
+ */
+export interface LessonTeamworkPuzzleWelcome {
+  weekLabel: string;
+  titleStart: string;
+  titleAccent: string;
+  /** The four short words shown on the puzzle pieces, e.g. "Listen". Exactly four. */
+  pieceLabels: string[];
+  /** Caption under the assembled puzzle, e.g. "Every piece matters". */
+  puzzleMark: string;
+  objectiveLabel: string;
+  objectiveText: string;
+  startLabel: string;
+  footerNote: string;
+}
+
+/**
+ * The "meshing gears" welcome layout (Teamwork Module, Week 4 — "Respect and
+ * Cooperation"). A deliberately spare beginner page: a week pill, a two-tone
+ * title, a hand-drawn pair of interlocking gears that turn together in
+ * opposite directions, a short caption, and a single Objective card. No intro
+ * paragraph or trait cards — the week's teaching is delivered by the lesson
+ * steps. Purely presentational.
+ */
+export interface LessonTeamworkGearsWelcome {
+  weekLabel: string;
+  titleStart: string;
+  titleAccent: string;
+  /** Caption under the gears, e.g. "We work better together". */
+  gearsMark: string;
+  objectiveLabel: string;
+  objectiveText: string;
+  startLabel: string;
+  footerNote: string;
+}
+
+/**
+ * The "talk and listen" welcome layout (Teamwork Module, Week 3 —
+ * "Communication in Teams"). A deliberately spare beginner page: a week pill, a
+ * two-tone title, a hand-drawn scene of two team members with a speech bubble
+ * that travels back and forth between them while small listening ears pulse, a
+ * short caption, and a single Objective card. No intro paragraph or trait
+ * cards — the week's teaching is delivered by the lesson steps. Purely
+ * presentational.
+ */
+export interface LessonTeamworkTalkWelcome {
+  weekLabel: string;
+  titleStart: string;
+  titleAccent: string;
+  /** Caption under the scene, e.g. "Talk clearly, listen well". */
+  talkMark: string;
+  objectiveLabel: string;
+  objectiveText: string;
+  startLabel: string;
+  footerNote: string;
+}
+
+/**
+ * The "role lineup" welcome layout (Teamwork Module, Week 2 — "Roles in a
+ * Team"). A deliberately spare beginner page: a week pill, a two-tone title, a
+ * hand-drawn line-up of four team members that pop in one by one, each wearing
+ * a differently-coloured role badge and captioned with a role name, a short
+ * caption, and a single Objective card. No intro paragraph or trait cards —
+ * the week's teaching is delivered by the lesson steps. Purely presentational.
+ */
+export interface LessonTeamworkRolesWelcome {
+  weekLabel: string;
+  titleStart: string;
+  titleAccent: string;
+  /** The four short role names shown under the team members, e.g. "Leader". Exactly four. */
+  roleLabels: string[];
+  /** Caption under the line-up, e.g. "Everyone has a job to do". */
+  rolesMark: string;
+  objectiveLabel: string;
+  objectiveText: string;
+  startLabel: string;
+  footerNote: string;
+}
+
+/**
+ * The "serve where you are" welcome layout (Service Module, Week 2 — "Serving
+ * at Home and School"). A deliberately spare beginner page: a week pill, a
+ * two-tone title, a hand-drawn scene of a house and a school joined by a
+ * dotted path of small hearts, and a single Objective card. No intro
+ * paragraph or trait cards — the week's teaching is delivered by the lesson
+ * steps. Purely presentational.
+ */
+export interface LessonServiceSpotsWelcome {
+  weekLabel: string;
+  titleStart: string;
+  titleAccent: string;
+  /** Caption under the house, e.g. "At home". */
+  homeLabel: string;
+  /** Caption under the school, e.g. "At school". */
+  schoolLabel: string;
+  objectiveLabel: string;
+  objectiveText: string;
+  startLabel: string;
+  footerNote: string;
+}
+
+/**
+ * The "kindness + responsibility" welcome layout (Service Module, Week 3 —
+ * "Kindness and Responsibility"). A deliberately spare beginner page: a week
+ * pill, a two-tone title, a hand-drawn "equation" — a heart plus a checkmark
+ * badge equals a glowing service star — and a single Objective card. No intro
+ * paragraph or trait cards — the week's teaching is delivered by the lesson
+ * steps. Purely presentational.
+ */
+export interface LessonServiceKindnessWelcome {
+  weekLabel: string;
+  titleStart: string;
+  titleAccent: string;
+  /** Caption under the heart, e.g. "Kindness". */
+  kindnessLabel: string;
+  /** Caption under the checkmark badge, e.g. "Responsibility". */
+  responsibilityLabel: string;
+  /** Caption under the star, e.g. "Service". */
+  serviceLabel: string;
+  objectiveLabel: string;
+  objectiveText: string;
+  startLabel: string;
+  footerNote: string;
+}
+
+/**
+ * The "making a difference" welcome layout (Service Module, Week 4 — "Making a
+ * Difference"). A deliberately spare beginner page: a week pill, a two-tone
+ * title, a hand-drawn ripple where one glowing heart at the centre sends rings
+ * out to a circle of dots that light up in turn, and a single Objective card.
+ * No intro paragraph or trait cards — the week's teaching is delivered by the
+ * lesson steps. Purely presentational.
+ */
+export interface LessonServiceRippleWelcome {
+  weekLabel: string;
+  titleStart: string;
+  titleAccent: string;
+  /** Caption at the centre of the ripple, e.g. "One kind act". */
+  centreLabel: string;
+  /** Caption at the edge of the ripple, e.g. "Reaches many". */
+  reachLabel: string;
+  objectiveLabel: string;
+  objectiveText: string;
   startLabel: string;
   footerNote: string;
 }

@@ -1,0 +1,55 @@
+<div class="ttw">
+  <span class="ttw-week">{{ ttw.weekLabel }}</span>
+
+  <h1>
+    <span class="ttw-title-start">{{ ttw.titleStart }}</span>
+    <span class="ttw-title-accent">{{ ttw.titleAccent }}</span>
+  </h1>
+
+  <div class="ttw-scene" aria-hidden="true">
+    <svg viewBox="0 0 260 160" role="img">
+      <line class="ttw-floor" x1="20" y1="132" x2="240" y2="132" />
+
+      <!-- left member -->
+      <g class="ttw-member">
+        <circle class="ttw-head" cx="44" cy="66" r="15" />
+        <path class="ttw-body" d="M22 130 V96 q0 -22 22 -22 q22 0 22 22 V130 Z" />
+        <path class="ttw-ear ttw-ear-l" d="M60 60 q12 6 0 16" />
+      </g>
+
+      <!-- right member -->
+      <g class="ttw-member">
+        <circle class="ttw-head" cx="216" cy="66" r="15" />
+        <path class="ttw-body" d="M194 130 V96 q0 -22 22 -22 q22 0 22 22 V130 Z" />
+        <path class="ttw-ear ttw-ear-r" d="M200 60 q-12 6 0 16" />
+      </g>
+
+      <!-- travelling speech bubble -->
+      <g class="ttw-bubble">
+        <path d="M0 0 h56 a8 8 0 0 1 8 8 v20 a8 8 0 0 1 -8 8 h-40 l-10 10 v-10 h-6 a8 8 0 0 1 -8 -8 v-20 a8 8 0 0 1 8 -8 z" />
+        <circle class="ttw-dot ttw-dot-1" cx="16" cy="18" r="3.5" />
+        <circle class="ttw-dot ttw-dot-2" cx="30" cy="18" r="3.5" />
+        <circle class="ttw-dot ttw-dot-3" cx="44" cy="18" r="3.5" />
+      </g>
+    </svg>
+    <span class="ttw-mark">{{ ttw.talkMark }}</span>
+  </div>
+
+  <div class="ttw-objective">
+    <span class="ttw-objective-label">{{ ttw.objectiveLabel }}</span>
+    <p>{{ ttw.objectiveText }}</p>
+  </div>
+
+  @if (isCompletedLessonWelcome()) {
+    @if (nextLesson(); as next) {
+      <button type="button" class="ttw-start" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+    } @else {
+      <button type="button" class="ttw-start" (click)="backToMap()">Back to My Modules →</button>
+    }
+    <button type="button" class="ttw-review" (click)="beginLesson()">↺ Review this lesson</button>
+  } @else {
+    <button type="button" class="ttw-start" (click)="beginLesson()">{{ ttw.startLabel }} →</button>
+  }
+
+  <p class="ttw-footer">{{ ttw.footerNote }}</p>
+</div>

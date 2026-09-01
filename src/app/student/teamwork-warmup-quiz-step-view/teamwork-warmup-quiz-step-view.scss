@@ -1,0 +1,244 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- Teamwork Warm-Up quiz (twq) — Teamwork Module, Week 1 ---- */
+$twq-teal: #14b8a6;
+$twq-deep: #0f766e;
+$twq-ink: #0f3d3a;
+$twq-screen: #f2fbf9;
+$twq-green: #1f9d63;
+$twq-red: #e5484d;
+
+.twq {
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.twq-card {
+  border-radius: v.$border-radius-xl;
+  padding: 1.6rem clamp(1rem, 4vw, 2rem) 1.9rem;
+  background: v.$color-white;
+  box-shadow: 0 12px 30px rgba($twq-deep, 0.18), inset 0 0 0 2px rgba($twq-teal, 0.12);
+  color: $twq-ink;
+  text-align: center;
+}
+
+.twq-card-head {
+  margin: -1.6rem clamp(-1rem, -4vw, -2rem) 1.3rem;
+  padding: 1.5rem 1.5rem 1.3rem;
+  border-radius: v.$border-radius-xl v.$border-radius-xl 0 0;
+  background: linear-gradient(160deg, $twq-teal 0%, $twq-deep 100%);
+  color: v.$color-white;
+}
+
+.twq-badge {
+  display: inline-block;
+  padding: 0.35rem 1.1rem;
+  border-radius: v.$border-radius-pill;
+  background: rgba(255, 255, 255, 0.9);
+  color: $twq-deep;
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.twq-heading {
+  @include m.playful-heading;
+  font-size: clamp(1.5rem, 4.6vw, 2.1rem);
+  margin: 0.7rem 0 0.3rem;
+}
+
+.twq-subtitle {
+  margin: 0;
+  font-size: 0.98rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* --- team "hands in" stack --- */
+.twq-stack {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  gap: 0.15rem;
+  width: fit-content;
+  margin: 0 auto 1.5rem;
+  padding: 0.8rem 1.4rem 0.6rem;
+  border-radius: 1.2rem;
+  background: rgba($twq-teal, 0.08);
+}
+
+.twq-hand {
+  font-size: 1.7rem;
+  line-height: 1.1;
+  opacity: 0.25;
+  filter: grayscale(1);
+  transform: scale(0.8);
+  transition: transform 0.35s ease, opacity 0.35s ease, filter 0.35s ease;
+}
+
+.twq-hand--in {
+  opacity: 1;
+  filter: none;
+  transform: scale(1.05);
+}
+
+.twq-stack-label {
+  order: 99;
+  margin-top: 0.4rem;
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: $twq-deep;
+}
+
+/* --- question screen --- */
+.twq-screen {
+  background: $twq-screen;
+  color: $twq-ink;
+  border-radius: v.$border-radius-lg;
+  padding: 1.4rem clamp(0.9rem, 3vw, 1.6rem) 1.5rem;
+  text-align: left;
+  box-shadow: inset 0 0 0 2px rgba($twq-teal, 0.16);
+}
+
+.twq-screen--shake { animation: twq-shake 0.4s ease; }
+
+.twq-qcount {
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: $twq-deep;
+}
+
+.twq-prompt {
+  margin: 0.4rem 0 1rem;
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 1.15rem;
+  line-height: 1.35;
+}
+
+.twq-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.twq-option {
+  @include m.tappable;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border: 2px solid rgba($twq-ink, 0.14);
+  border-radius: 0.9rem;
+  background: v.$color-white;
+  font-weight: 600;
+  font-size: 1rem;
+  color: $twq-ink;
+  text-align: left;
+
+  &:hover:not(:disabled) { border-color: $twq-teal; }
+  &:disabled { cursor: default; }
+}
+
+.twq-option-letter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 1.9rem;
+  height: 1.9rem;
+  border-radius: 50%;
+  background: rgba($twq-teal, 0.16);
+  font-weight: 900;
+  font-size: 0.9rem;
+  color: $twq-deep;
+}
+
+.twq-option--correct {
+  border-color: $twq-green;
+  background: rgba($twq-green, 0.14);
+
+  .twq-option-letter { background: $twq-green; color: v.$color-white; }
+}
+
+.twq-option--wrong {
+  border-color: $twq-red;
+  background: rgba($twq-red, 0.12);
+
+  .twq-option-letter { background: $twq-red; color: v.$color-white; }
+}
+
+.twq-feedback {
+  margin: 0.9rem 0 0;
+  min-height: 1.4rem;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.twq-feedback--good { color: $twq-green; }
+.twq-feedback--bad { color: $twq-red; }
+
+/* --- done panel --- */
+.twq-done {
+  background: rgba($twq-teal, 0.1);
+  border-radius: v.$border-radius-lg;
+  padding: 1.6rem 1.2rem;
+
+  h3 {
+    @include m.playful-heading;
+    margin: 0.5rem 0 0.3rem;
+    font-size: 1.4rem;
+    color: $twq-deep;
+  }
+
+  p { margin: 0 0 1.1rem; color: rgba($twq-ink, 0.85); }
+}
+
+.twq-done-icon { font-size: 2.2rem; }
+
+.twq-continue {
+  @include m.tappable;
+  background: linear-gradient(120deg, $twq-teal, #2dd4bf);
+  color: v.$color-white;
+  border: none;
+  font-weight: 800;
+  font-size: 1.05rem;
+  padding: 0.9rem 2.25rem;
+  border-radius: v.$border-radius-pill;
+  box-shadow: 0 4px 0 rgba($twq-deep, 0.35);
+
+  &:hover { opacity: 0.92; }
+}
+
+/* --- parent note --- */
+.twq-parent-note {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 1rem 0 0;
+  padding: 0.75rem 1rem;
+  border-radius: 0.9rem;
+  background: rgba($twq-teal, 0.1);
+  font-size: 0.9rem;
+  color: rgba($twq-ink, 0.8);
+}
+
+.twq-parent-icon { font-size: 1.1rem; }
+
+@keyframes twq-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-7px); }
+  75% { transform: translateX(7px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .twq-screen--shake { animation: none; }
+  .twq-hand { transition: none; }
+}

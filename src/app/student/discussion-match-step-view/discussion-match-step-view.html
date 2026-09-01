@@ -38,6 +38,18 @@
 
   @if (allMatched()) {
     <p class="dm-done">✅ Nice — every action matched to its result.</p>
+
+    @if (step().recapPoints?.length) {
+      <div class="dm-recap">
+        <span class="dm-recap-head">{{ step().recapHeading }}</span>
+        <ul>
+          @for (point of step().recapPoints; track point) {
+            <li>{{ point }}</li>
+          }
+        </ul>
+      </div>
+    }
+
     <button type="button" class="dm-continue" (click)="finish()">{{ step().continueLabel }}</button>
   }
 </div>

@@ -1,0 +1,62 @@
+<div class="stf">
+  <div class="stf-card">
+    <div class="stf-card-head">
+      <span class="stf-badge">{{ step().badge }}</span>
+      <h2 class="stf-heading">{{ step().heading }}</h2>
+      <p class="stf-subtitle">{{ step().subtitle }}</p>
+    </div>
+
+    <div class="stf-track" role="progressbar" [attr.aria-valuenow]="activeIndex()"
+      [attr.aria-valuemax]="statements().length" aria-label="Statements judged">
+      @for (lit of stars(); track $index) {
+        <span class="stf-star" [class.stf-star--lit]="lit" aria-hidden="true">★</span>
+      }
+    </div>
+
+    @if (!allDone()) {
+      @if (current(); as s) {
+        <div class="stf-screen" [class.stf-screen--shake]="feedback() === 'incorrect'">
+          <span class="stf-count">Statement {{ activeIndex() + 1 }} of {{ statements().length }}</span>
+          <p class="stf-statement">{{ s.text }}</p>
+
+          <div class="stf-verdicts">
+            <button type="button" class="stf-verdict stf-verdict--true"
+              [class.stf-verdict--correct]="verdictState(true) === 'correct'"
+              [class.stf-verdict--wrong]="verdictState(true) === 'incorrect'"
+              [disabled]="locked()" (click)="choose(true)">
+              <span class="stf-verdict-icon" aria-hidden="true">✔</span>
+              {{ step().trueLabel }}
+            </button>
+            <button type="button" class="stf-verdict stf-verdict--false"
+              [class.stf-verdict--correct]="verdictState(false) === 'correct'"
+              [class.stf-verdict--wrong]="verdictState(false) === 'incorrect'"
+              [disabled]="locked()" (click)="choose(false)">
+              <span class="stf-verdict-icon" aria-hidden="true">✘</span>
+              {{ step().falseLabel }}
+            </button>
+          </div>
+
+          <p class="stf-feedback" aria-live="polite">
+            @if (feedback() === 'correct') {
+              <span class="stf-feedback--good">✅ {{ s.feedbackText }}</span>
+            } @else if (feedback() === 'incorrect') {
+              <span class="stf-feedback--bad">Not quite — think about kindness and responsibility, and try again!</span>
+            }
+          </p>
+        </div>
+      }
+    } @else {
+      <div class="stf-done">
+        <span class="stf-done-icon" aria-hidden="true">🌟💛</span>
+        <h3>{{ step().allDoneTitle }}</h3>
+        <p>{{ step().allDoneText }}</p>
+        <button type="button" class="stf-continue" (click)="finish()">{{ step().continueLabel }} →</button>
+      </div>
+    }
+  </div>
+
+  <p class="stf-parent-note">
+    <span class="stf-parent-icon" aria-hidden="true">👪</span>
+    {{ step().parentNote }}
+  </p>
+</div>

@@ -1,0 +1,161 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Role lineup welcome (trw) — Teamwork Module, Week 2 ---- */
+$trw-bg: #ecfdf5;
+$trw-bg-2: #ccfbf1;
+$trw-ink: #0f3d3a;
+$trw-teal: #14b8a6;
+$trw-deep: #0f766e;
+
+.trw {
+  max-width: 54rem;
+  margin: 0 auto;
+  padding: 2.5rem clamp(1rem, 4vw, 2.75rem) 2.75rem;
+  text-align: center;
+  border-radius: v.$border-radius-xl;
+  color: $trw-ink;
+  background: linear-gradient(165deg, $trw-bg 0%, $trw-bg-2 100%);
+}
+
+.trw-week {
+  @include w.welcome-pill(rgba($trw-teal, 0.18), $trw-deep);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.trw h1 {
+  @include m.playful-heading;
+  font-size: clamp(2rem, 5.6vw, 3.1rem);
+  line-height: 1.1;
+  margin: 1.2rem 0 0.4rem;
+}
+
+.trw-title-start { color: $trw-ink; }
+.trw-title-accent { color: $trw-teal; }
+
+/* --- role line-up --- */
+.trw-scene {
+  width: clamp(16rem, 66vw, 24rem);
+  margin: 1.4rem auto 0;
+
+  svg { width: 100%; height: auto; display: block; }
+}
+
+.trw-floor {
+  stroke: rgba($trw-deep, 0.28);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-dasharray: 2 7;
+}
+
+.trw-member {
+  opacity: 0;
+  transform-origin: 40px 88px;
+  animation: trw-pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* x-position via the independent `translate` property so the `transform`-based
+   pop animation composes on top instead of overriding the layout offset. */
+.trw-member-0 { translate: 0; animation-delay: 0.15s; }
+.trw-member-1 { translate: 60px 0; animation-delay: 0.35s; }
+.trw-member-2 { translate: 120px 0; animation-delay: 0.55s; }
+.trw-member-3 { translate: 180px 0; animation-delay: 0.75s; }
+
+.trw-head { fill: #ffd9b3; stroke: $trw-deep; stroke-width: 2.5; }
+.trw-body {
+  fill: rgba(255, 255, 255, 0.9);
+  stroke: $trw-deep;
+  stroke-width: 2.5;
+  stroke-linejoin: round;
+}
+
+.trw-badge { stroke: $trw-deep; stroke-width: 2; }
+.trw-member-0 .trw-badge { fill: #14b8a6; }
+.trw-member-1 .trw-badge { fill: #f59e0b; }
+.trw-member-2 .trw-badge { fill: #6366f1; }
+.trw-member-3 .trw-badge { fill: #ec4899; }
+.trw-member-0 .trw-body { fill: rgba(#14b8a6, 0.15); }
+.trw-member-1 .trw-body { fill: rgba(#f59e0b, 0.15); }
+.trw-member-2 .trw-body { fill: rgba(#6366f1, 0.15); }
+.trw-member-3 .trw-body { fill: rgba(#ec4899, 0.15); }
+
+.trw-role {
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 12px;
+  text-anchor: middle;
+  fill: $trw-deep;
+}
+
+.trw-mark {
+  display: block;
+  margin-top: 0.6rem;
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 1rem;
+  color: $trw-deep;
+}
+
+/* --- objective --- */
+.trw-objective {
+  max-width: 38rem;
+  margin: 1.8rem auto 0;
+  padding: 1.15rem 1.4rem;
+  text-align: left;
+  border-radius: v.$border-radius-lg;
+  border-left: 4px solid $trw-teal;
+  background: rgba(255, 255, 255, 0.8);
+
+  p {
+    margin: 0.3rem 0 0;
+    font-size: 1.05rem;
+    line-height: 1.5;
+    color: rgba($trw-ink, 0.9);
+  }
+}
+
+.trw-objective-label {
+  font-weight: 800;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $trw-deep;
+}
+
+/* --- actions --- */
+.trw-start {
+  @include w.welcome-cta-btn(linear-gradient(120deg, $trw-teal, #2dd4bf), v.$color-white);
+  margin: 2rem auto 0;
+  display: block;
+  font-size: 1.15rem;
+}
+
+.trw-review {
+  @include m.tappable;
+  display: block;
+  margin: 0.8rem auto 0;
+  background: none;
+  border: none;
+  font-weight: 700;
+  color: rgba($trw-ink, 0.6);
+}
+
+.trw-footer {
+  margin: 1.4rem 0 0;
+  font-size: 0.92rem;
+  color: rgba($trw-ink, 0.55);
+}
+
+@keyframes trw-pop {
+  0% { opacity: 0; transform: translateY(14px) scale(0.7); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .trw-member {
+    animation: none;
+    opacity: 1;
+  }
+}

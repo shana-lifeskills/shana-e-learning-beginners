@@ -1,0 +1,60 @@
+<div class="tfb">
+  <div class="tfb-card">
+    <div class="tfb-card-head">
+      <span class="tfb-badge">{{ step().badge }}</span>
+      <h2 class="tfb-heading">{{ step().heading }}</h2>
+      <p class="tfb-subtitle">{{ step().subtitle }}</p>
+    </div>
+
+    <div class="tfb-meter" role="progressbar" [attr.aria-valuenow]="activeIndex()"
+      [attr.aria-valuemax]="sentences().length" aria-label="Blanks filled">
+      @for (filled of nodes(); track $index) {
+        <span class="tfb-node" [class.tfb-node--on]="filled" aria-hidden="true"></span>
+      }
+    </div>
+
+    @if (!allDone()) {
+      @if (current(); as s) {
+        <div class="tfb-screen" [class.tfb-screen--shake]="wrong()">
+          <span class="tfb-count">Sentence {{ activeIndex() + 1 }} of {{ sentences().length }}</span>
+          <p class="tfb-line">
+            <span>{{ s.before }}</span>
+            <span class="tfb-blank" [class.tfb-blank--filled]="justFilled()" [class.tfb-blank--wrong]="wrong()">
+              {{ justFilled() ? s.answer : '______' }}
+            </span>
+            <span>{{ s.after }}</span>
+          </p>
+
+          @if (justFilled()) {
+            <p class="tfb-praise" aria-live="polite">✅ {{ s.praise }}</p>
+          } @else {
+            <div class="tfb-bank">
+              <span class="tfb-bank-label">{{ step().wordBankLabel }}</span>
+              <div class="tfb-bank-words">
+                @for (t of bank(); track t.key) {
+                  <button type="button" class="tfb-word" [disabled]="wrong()" (click)="tapWord(t)">{{ t.word }}</button>
+                }
+              </div>
+            </div>
+          }
+
+          @if (wrong()) {
+            <p class="tfb-oops" aria-live="polite">Not quite — try another word!</p>
+          }
+        </div>
+      }
+    } @else {
+      <div class="tfb-done">
+        <span class="tfb-done-icon" aria-hidden="true">📝✨</span>
+        <h3>{{ step().allDoneTitle }}</h3>
+        <p>{{ step().allDoneText }}</p>
+        <button type="button" class="tfb-continue" (click)="finish()">{{ step().continueLabel }} →</button>
+      </div>
+    }
+  </div>
+
+  <p class="tfb-parent-note">
+    <span class="tfb-parent-icon" aria-hidden="true">👪</span>
+    {{ step().parentNote }}
+  </p>
+</div>

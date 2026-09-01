@@ -1,0 +1,76 @@
+<div class="trm">
+  <header class="trm-head">
+    <span class="trm-badge">{{ step().badge }}</span>
+    <h2 class="trm-title">{{ step().title }}</h2>
+    <p class="trm-intro">{{ step().intro }}</p>
+  </header>
+
+  <div class="trm-progress">
+    <div class="trm-track">
+      @for (entry of entries(); track $index) {
+        <span class="trm-pip" [class.trm-pip--on]="entry.done" aria-hidden="true"></span>
+      }
+    </div>
+    <span class="trm-progress-label">{{ doneCount() }} / {{ total() }} {{ step().progressLabel }}</span>
+  </div>
+
+  <ol class="trm-days">
+    @for (entry of entries(); track $index; let i = $index) {
+      <li class="trm-day" [class.trm-day--done]="entry.done" [class.trm-day--open]="openDay() === i">
+        <button type="button" class="trm-day-head" (click)="toggleOpen(i)" [attr.aria-expanded]="openDay() === i">
+          <span class="trm-day-node" aria-hidden="true">{{ entry.done ? '✔' : i + 1 }}</span>
+          <span class="trm-day-name">Day {{ i + 1 }}</span>
+          <span class="trm-day-state">{{ entry.done ? 'Logged' : 'Tap to check off' }}</span>
+        </button>
+
+        @if (openDay() === i) {
+          <div class="trm-day-body">
+            @for (item of step().habitItems; track item; let ci = $index) {
+              <label class="trm-check">
+                <input type="checkbox" [checked]="entry.checks[ci]" [disabled]="entry.done"
+                  (change)="toggleCheck(i, ci)" />
+                <span>{{ item }}</span>
+              </label>
+            }
+            @if (!entry.done) {
+              <button type="button" class="trm-log" [disabled]="!canLogDay(i)" (click)="logDay(i)">
+                {{ step().dayLoggedLabel }} {{ i + 1 }}
+              </button>
+            }
+          </div>
+        }
+      </li>
+    }
+  </ol>
+
+  <div class="trm-reflection">
+    <span class="trm-reflection-heading">{{ step().reflectionHeading }}</span>
+    <p class="trm-reflection-intro">{{ step().reflectionIntro }}</p>
+    @for (field of step().reflectionFields; track field.id) {
+      <label class="trm-field">
+        <span class="trm-field-label">{{ field.label }}</span>
+        <textarea rows="2" [value]="reflection()[field.id] || ''" [placeholder]="field.placeholder"
+          (input)="setReflection(field.id, $any($event.target).value)"></textarea>
+      </label>
+    }
+  </div>
+
+  <p class="trm-parent-note">
+    <span aria-hidden="true">👪</span> {{ step().parentNote }}
+  </p>
+
+  @if (canComplete()) {
+    <div class="trm-done">
+      <span class="trm-done-mark" aria-hidden="true">🤝✨</span>
+      <h3>{{ step().allDoneTitle }}</h3>
+      <p>{{ step().allDoneText }}</p>
+    </div>
+  }
+
+  <button type="button" class="trm-complete" [disabled]="!canComplete()" (click)="complete()">
+    {{ step().completeLabel }}
+  </button>
+  @if (!canComplete()) {
+    <p class="trm-hint">Log all {{ total() }} days and fill in the reflection to finish.</p>
+  }
+</div>

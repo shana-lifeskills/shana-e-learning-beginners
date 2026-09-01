@@ -1,0 +1,54 @@
+<div class="skw">
+  <span class="skw-week">{{ skw.weekLabel }}</span>
+
+  <h1>
+    <span class="skw-title-start">{{ skw.titleStart }}</span>
+    <span class="skw-title-accent">{{ skw.titleAccent }}</span>
+  </h1>
+
+  <div class="skw-equation" aria-hidden="true">
+    <div class="skw-term">
+      <svg viewBox="0 0 64 64" role="img">
+        <path class="skw-heart" d="M32 56 C10 40 6 24 18 16 c8 -5 14 1 14 6 c0 -5 6 -11 14 -6 c12 8 8 24 -14 40 z" />
+      </svg>
+      <span class="skw-term-label">{{ skw.kindnessLabel }}</span>
+    </div>
+
+    <span class="skw-op">+</span>
+
+    <div class="skw-term">
+      <svg viewBox="0 0 64 64" role="img">
+        <path class="skw-shield" d="M32 6 L54 14 v18 c0 16 -12 24 -22 28 C22 56 10 48 10 32 V14 z" />
+        <path class="skw-check" d="M22 32 l7 8 14 -16" />
+      </svg>
+      <span class="skw-term-label">{{ skw.responsibilityLabel }}</span>
+    </div>
+
+    <span class="skw-op">=</span>
+
+    <div class="skw-term skw-term--result">
+      <svg viewBox="0 0 64 64" role="img">
+        <path class="skw-star" d="M32 5 l7 17 18 1 -14 12 5 18 -16 -10 -16 10 5 -18 -14 -12 18 -1 z" />
+      </svg>
+      <span class="skw-term-label">{{ skw.serviceLabel }}</span>
+    </div>
+  </div>
+
+  <div class="skw-objective">
+    <span class="skw-objective-label">{{ skw.objectiveLabel }}</span>
+    <p>{{ skw.objectiveText }}</p>
+  </div>
+
+  @if (isCompletedLessonWelcome()) {
+    @if (nextLesson(); as next) {
+      <button type="button" class="skw-start" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+    } @else {
+      <button type="button" class="skw-start" (click)="backToMap()">Back to My Modules →</button>
+    }
+    <button type="button" class="skw-review" (click)="beginLesson()">↺ Review this lesson</button>
+  } @else {
+    <button type="button" class="skw-start" (click)="beginLesson()">{{ skw.startLabel }} →</button>
+  }
+
+  <p class="skw-footer">{{ skw.footerNote }}</p>
+</div>

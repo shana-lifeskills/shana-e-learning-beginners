@@ -1,0 +1,313 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- Service Tracker – My Environment (set) — Service Module, Week 2 ---- */
+$set-ink: #4a2b12;
+$set-orange: #f97316;
+$set-deep: #b45309;
+$set-sun: #ffe08a;
+$set-paper: #fff8ef;
+$set-green: #1f9d63;
+
+.set {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 1rem;
+  color: $set-ink;
+}
+
+.set-head {
+  text-align: center;
+  padding: 1.6rem 1.2rem 1.5rem;
+  border-radius: v.$border-radius-xl v.$border-radius-xl 0 0;
+  background: linear-gradient(150deg, $set-orange 0%, $set-deep 100%);
+  color: v.$color-white;
+}
+
+.set-badge {
+  display: inline-block;
+  padding: 0.32rem 1rem;
+  border-radius: v.$border-radius-pill;
+  background: $set-sun;
+  color: #4a2c00;
+  font-weight: 800;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.set-title {
+  @include m.playful-heading;
+  font-size: clamp(1.4rem, 4.3vw, 1.9rem);
+  margin: 0.7rem 0 0.3rem;
+}
+
+.set-intro {
+  margin: 0;
+  font-size: 0.98rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.set-progress {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 1rem 1.1rem;
+  background: $set-paper;
+}
+
+.set-progress-bar {
+  flex: 1;
+  height: 0.7rem;
+  border-radius: v.$border-radius-pill;
+  background: rgba($set-orange, 0.16);
+  overflow: hidden;
+}
+
+.set-progress-fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, $set-orange, $set-sun);
+  transition: width 0.4s ease;
+}
+
+.set-progress-label {
+  font-weight: 800;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.set-days {
+  list-style: none;
+  margin: 0;
+  padding: 0 1.1rem 1.1rem;
+  background: $set-paper;
+}
+
+.set-day {
+  border: 2px solid rgba($set-ink, 0.1);
+  border-radius: v.$border-radius-sm;
+  background: v.$color-white;
+  margin-bottom: 0.6rem;
+  overflow: hidden;
+}
+
+.set-day--open { border-color: $set-orange; }
+.set-day--done { border-color: rgba($set-orange, 0.45); background: rgba($set-orange, 0.06); }
+
+.set-day-head {
+  @include m.tappable;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  width: 100%;
+  padding: 0.75rem 0.9rem;
+  border: none;
+  background: none;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+}
+
+.set-day-num {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 1.8rem;
+  height: 1.8rem;
+  border-radius: 50%;
+  background: $set-orange;
+  color: v.$color-white;
+  font-weight: 800;
+  font-size: 0.9rem;
+}
+
+.set-day--done .set-day-num { background: $set-deep; }
+
+.set-day-name { font-weight: 800; }
+
+.set-day-state {
+  margin-left: auto;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: rgba($set-ink, 0.55);
+}
+
+.set-day-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  padding: 0.5rem 0.9rem 1rem;
+}
+
+.set-act {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  padding: 0.8rem;
+  border-radius: v.$border-radius-sm;
+  background: rgba($set-orange, 0.06);
+  border: 1px solid rgba($set-ink, 0.1);
+}
+
+.set-act-num {
+  font-weight: 800;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $set-deep;
+}
+
+.set-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.set-field-label {
+  font-weight: 800;
+  font-size: 0.84rem;
+  color: $set-deep;
+}
+
+.set-field textarea {
+  width: 100%;
+  padding: 0.55rem 0.7rem;
+  border-radius: v.$border-radius-sm;
+  border: 2px solid rgba($set-ink, 0.15);
+  font: inherit;
+  font-size: 0.9rem;
+  resize: vertical;
+
+  &:focus { outline: none; border-color: $set-orange; }
+  &:disabled { background: rgba($set-ink, 0.04); color: rgba($set-ink, 0.6); }
+}
+
+.set-place {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.set-place-btn {
+  @include m.tappable;
+  flex: 1;
+  padding: 0.5rem 0.75rem;
+  border: 2px solid rgba($set-ink, 0.18);
+  border-radius: v.$border-radius-pill;
+  background: v.$color-white;
+  font-weight: 700;
+  font-size: 0.88rem;
+  color: $set-ink;
+
+  &:disabled { cursor: default; opacity: 0.7; }
+}
+
+.set-place-btn--on {
+  border-color: $set-orange;
+  background: rgba($set-orange, 0.16);
+  color: $set-deep;
+}
+
+.set-add {
+  @include m.tappable;
+  align-self: flex-start;
+  padding: 0.45rem 1rem;
+  border: 2px dashed rgba($set-deep, 0.5);
+  border-radius: v.$border-radius-pill;
+  background: none;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: $set-deep;
+}
+
+.set-save,
+.set-complete {
+  @include m.tappable;
+  align-self: flex-start;
+  padding: 0.7rem 1.6rem;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  background: $set-orange;
+  color: v.$color-white;
+  font-weight: 800;
+  font-size: 0.95rem;
+
+  &:disabled { background: rgba($set-ink, 0.2); cursor: not-allowed; }
+}
+
+.set-parent-note {
+  display: flex;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0.8rem 1rem;
+  background: $set-paper;
+  border-radius: 0 0 v.$border-radius-xl v.$border-radius-xl;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: #6b3d04;
+}
+
+.set-summary {
+  margin-top: 1.1rem;
+  padding: 1.1rem 1.2rem;
+  border-radius: v.$border-radius-lg;
+  background: rgba($set-orange, 0.1);
+  border: 2px solid rgba($set-orange, 0.3);
+}
+
+.set-summary--locked { opacity: 0.75; }
+
+.set-summary-heading {
+  display: block;
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: $set-deep;
+  margin-bottom: 0.4rem;
+}
+
+.set-count {
+  margin: 0 0 0.7rem;
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: $set-green;
+}
+
+.set-count--muted {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: rgba($set-ink, 0.6);
+}
+
+.set-done {
+  margin-top: 1rem;
+  padding: 1.3rem 1.1rem;
+  text-align: center;
+  border-radius: v.$border-radius-lg;
+  background: rgba($set-orange, 0.1);
+
+  h3 { @include m.playful-heading; font-size: 1.25rem; margin: 0.4rem 0 0.3rem; }
+  p { margin: 0; font-size: 0.95rem; color: rgba($set-ink, 0.8); }
+}
+
+.set-done-star { font-size: 1.9rem; }
+
+.set-complete {
+  display: block;
+  width: 100%;
+  margin: 1.1rem 0 0;
+  padding: 0.95rem 1.6rem;
+  font-size: 1.1rem;
+  background: linear-gradient(120deg, $set-orange, $set-sun);
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.12);
+}
+
+.set-hint {
+  margin: 0.6rem 0 0;
+  text-align: center;
+  font-size: 0.85rem;
+  color: rgba($set-ink, 0.55);
+}

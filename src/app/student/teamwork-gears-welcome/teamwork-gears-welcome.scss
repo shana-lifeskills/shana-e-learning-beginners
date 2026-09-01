@@ -1,0 +1,148 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Meshing gears welcome (tgw) — Teamwork Module, Week 4 ---- */
+$tgw-bg: #ecfdf5;
+$tgw-bg-2: #ccfbf1;
+$tgw-ink: #0f3d3a;
+$tgw-teal: #14b8a6;
+$tgw-deep: #0f766e;
+
+.tgw {
+  max-width: 54rem;
+  margin: 0 auto;
+  padding: 2.5rem clamp(1rem, 4vw, 2.75rem) 2.75rem;
+  text-align: center;
+  border-radius: v.$border-radius-xl;
+  color: $tgw-ink;
+  background: linear-gradient(165deg, $tgw-bg 0%, $tgw-bg-2 100%);
+}
+
+.tgw-week {
+  @include w.welcome-pill(rgba($tgw-teal, 0.18), $tgw-deep);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.tgw h1 {
+  @include m.playful-heading;
+  font-size: clamp(2rem, 5.6vw, 3.1rem);
+  line-height: 1.1;
+  margin: 1.2rem 0 0.4rem;
+}
+
+.tgw-title-start { color: $tgw-ink; }
+.tgw-title-accent { color: $tgw-teal; }
+
+/* --- gears scene --- */
+.tgw-scene {
+  width: clamp(14rem, 56vw, 20rem);
+  margin: 1.4rem auto 0;
+
+  svg { width: 100%; height: auto; display: block; }
+}
+
+.tgw-body {
+  fill: rgba(255, 255, 255, 0.92);
+  stroke: $tgw-deep;
+  stroke-width: 2.5;
+}
+
+.tgw-tooth {
+  fill: rgba(255, 255, 255, 0.92);
+  stroke: $tgw-deep;
+  stroke-width: 2.5;
+  stroke-linejoin: round;
+}
+
+.tgw-hub {
+  fill: $tgw-teal;
+  stroke: $tgw-deep;
+  stroke-width: 2.5;
+}
+
+.tgw-gear-a {
+  transform-origin: 90px 84px;
+  animation: tgw-spin-cw 9s linear infinite;
+}
+
+.tgw-gear-b {
+  transform-origin: 152px 84px;
+  animation: tgw-spin-ccw 6.6s linear infinite;
+}
+
+.tgw-gear-b .tgw-body { fill: rgba($tgw-teal, 0.14); }
+
+.tgw-mark {
+  display: block;
+  margin-top: 0.7rem;
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 1rem;
+  color: $tgw-deep;
+}
+
+/* --- objective --- */
+.tgw-objective {
+  max-width: 38rem;
+  margin: 1.8rem auto 0;
+  padding: 1.15rem 1.4rem;
+  text-align: left;
+  border-radius: v.$border-radius-lg;
+  border-left: 4px solid $tgw-teal;
+  background: rgba(255, 255, 255, 0.8);
+
+  p {
+    margin: 0.3rem 0 0;
+    font-size: 1.05rem;
+    line-height: 1.5;
+    color: rgba($tgw-ink, 0.9);
+  }
+}
+
+.tgw-objective-label {
+  font-weight: 800;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $tgw-deep;
+}
+
+/* --- actions --- */
+.tgw-start {
+  @include w.welcome-cta-btn(linear-gradient(120deg, $tgw-teal, #2dd4bf), v.$color-white);
+  margin: 2rem auto 0;
+  display: block;
+  font-size: 1.15rem;
+}
+
+.tgw-review {
+  @include m.tappable;
+  display: block;
+  margin: 0.8rem auto 0;
+  background: none;
+  border: none;
+  font-weight: 700;
+  color: rgba($tgw-ink, 0.6);
+}
+
+.tgw-footer {
+  margin: 1.4rem 0 0;
+  font-size: 0.92rem;
+  color: rgba($tgw-ink, 0.55);
+}
+
+@keyframes tgw-spin-cw {
+  from { transform: rotate(0); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes tgw-spin-ccw {
+  from { transform: rotate(0); }
+  to { transform: rotate(-360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tgw-gear-a, .tgw-gear-b { animation: none; }
+}

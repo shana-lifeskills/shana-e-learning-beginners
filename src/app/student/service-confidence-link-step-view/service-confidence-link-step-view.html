@@ -1,0 +1,29 @@
+<div class="scl">
+  <span class="scl-badge">{{ step().badge }}</span>
+  <span class="scl-week">{{ step().weekLabel }}</span>
+
+  <div class="scl-badge-medal" [class.scl-badge-medal--lit]="saidIt()">
+    <span class="scl-rays" aria-hidden="true"></span>
+    <span class="scl-core">
+      <span class="scl-mark" aria-hidden="true">{{ step().markEmoji || '🤝' }}</span>
+      <p class="scl-statement">{{ step().statement }}</p>
+    </span>
+  </div>
+
+  <div class="scl-say">
+    <span class="scl-say-label">{{ step().sayItLabel }}</span>
+    <button type="button" class="scl-say-btn" [class.scl-say-btn--done]="saidIt()"
+      [disabled]="saidIt()" (click)="toggleSaidIt()">
+      {{ saidIt() ? '✓ ' + step().saidItLabel : step().saidItLabel }}
+    </button>
+  </div>
+
+  <p class="scl-reinforce">{{ step().reinforceLine }}</p>
+
+  <button type="button" class="scl-complete" [disabled]="!saidIt()" (click)="finish()">
+    {{ step().completeLabel }} 🎉
+  </button>
+  @if (!saidIt()) {
+    <p class="scl-hint">Say the sentence out loud, then tap the button above.</p>
+  }
+</div>

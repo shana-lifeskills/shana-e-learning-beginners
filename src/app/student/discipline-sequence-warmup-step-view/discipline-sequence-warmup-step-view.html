@@ -1,0 +1,59 @@
+<div class="dsw">
+  <div class="dsw-card">
+    <div class="dsw-card-head">
+      <span class="dsw-badge">{{ step().badge }}</span>
+      <h2 class="dsw-heading">{{ step().heading }}</h2>
+      <p class="dsw-subtitle">{{ step().subtitle }}</p>
+    </div>
+
+    <div class="dsw-track" role="progressbar" [attr.aria-valuenow]="doneCount()"
+      [attr.aria-valuemax]="total()" aria-label="Sequences solved">
+      @for (done of progress(); track $index) {
+        <span class="dsw-dot" [class.dsw-dot--filled]="done" aria-hidden="true"></span>
+      }
+    </div>
+
+    @if (!allSolved()) {
+      <div class="dsw-screen" [class.dsw-screen--shake]="wrong()">
+        <span class="dsw-count">Step {{ activeIndex() + 1 }} of {{ total() }}</span>
+        <p class="dsw-prompt">{{ activeQuestion().prompt }}</p>
+
+        <ol class="dsw-slots">
+          @for (slot of slots(); track $index; let i = $index) {
+            <li class="dsw-slot" [class.dsw-slot--filled]="slot"
+              [class.dsw-slot--locked]="justSolved()" (click)="clearSlot(i)">
+              <span class="dsw-slot-num" aria-hidden="true">{{ i + 1 }}</span>
+              <span class="dsw-slot-text">{{ slot ?? 'Tap a step' }}</span>
+            </li>
+          }
+        </ol>
+
+        @if (justSolved()) {
+          <p class="dsw-feedback dsw-feedback--good" aria-live="polite">✅ {{ activeQuestion().feedbackText }}</p>
+          <button type="button" class="dsw-next" (click)="advance()">Next →</button>
+        } @else {
+          <div class="dsw-tray">
+            @for (card of tray(); track card) {
+              <button type="button" class="dsw-chip" (click)="place(card)">{{ card }}</button>
+            }
+          </div>
+          @if (wrong()) {
+            <p class="dsw-feedback dsw-feedback--bad" aria-live="polite">Not in order yet — try again!</p>
+          }
+        }
+      </div>
+    } @else {
+      <div class="dsw-done">
+        <span class="dsw-done-icon" aria-hidden="true">🪜✨</span>
+        <h3>{{ step().allDoneTitle }}</h3>
+        <p>{{ step().allDoneText }}</p>
+        <button type="button" class="dsw-continue" (click)="finish()">{{ step().continueLabel }} →</button>
+      </div>
+    }
+  </div>
+
+  <p class="dsw-parent-note">
+    <span class="dsw-parent-icon" aria-hidden="true">👪</span>
+    {{ step().parentNote }}
+  </p>
+</div>

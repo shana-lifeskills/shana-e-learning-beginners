@@ -1,0 +1,148 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Consistency streak welcome (csw) — Discipline Module, Week 4 ---- */
+$csw-bg: #eaf6ec;
+$csw-bg-2: #d6ecda;
+$csw-ink-solid: #173622;
+$csw-green: #1f9d63;
+$csw-deep: #146c47;
+
+.csw {
+  max-width: 54rem;
+  margin: 0 auto;
+  padding: 2.5rem clamp(1rem, 4vw, 2.75rem) 2.75rem;
+  text-align: center;
+  border-radius: v.$border-radius-xl;
+  color: $csw-ink-solid;
+  background: linear-gradient(165deg, $csw-bg 0%, $csw-bg-2 100%);
+}
+
+.csw-week {
+  @include w.welcome-pill(rgba($csw-green, 0.16), $csw-deep);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.csw h1 {
+  @include m.playful-heading;
+  font-size: clamp(2rem, 5.6vw, 3.1rem);
+  line-height: 1.1;
+  margin: 1.2rem 0 0.4rem;
+}
+
+.csw-title-start { color: $csw-ink-solid; }
+.csw-title-accent { color: $csw-green; }
+
+/* --- streak strip --- */
+.csw-streak {
+  max-width: 26rem;
+  margin: 1.8rem auto 0;
+}
+
+.csw-days {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.4rem;
+}
+
+.csw-day {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  aspect-ratio: 1;
+  border-radius: 0.7rem;
+  background: rgba(255, 255, 255, 0.7);
+  border: 2px solid rgba($csw-ink-solid, 0.16);
+  animation: csw-stamp 0.4s cubic-bezier(0.3, 1.5, 0.6, 1) both;
+  animation-delay: calc(0.3s + var(--i, 0) * 0.28s);
+}
+
+.csw-day-check {
+  color: $csw-green;
+  font-weight: 900;
+  font-size: 1.1rem;
+}
+
+.csw-bar {
+  margin-top: 0.7rem;
+  height: 0.6rem;
+  border-radius: 50rem;
+  background: rgba(255, 255, 255, 0.7);
+  overflow: hidden;
+}
+
+.csw-bar-fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, $csw-green, #3fca8b);
+  animation: csw-grow 2.6s cubic-bezier(0.4, 0, 0.2, 1) 0.3s both;
+}
+
+/* --- objective --- */
+.csw-objective {
+  max-width: 38rem;
+  margin: 1.8rem auto 0;
+  padding: 1.15rem 1.4rem;
+  text-align: left;
+  border-radius: v.$border-radius-lg;
+  border-left: 4px solid $csw-green;
+  background: rgba(255, 255, 255, 0.8);
+
+  p {
+    margin: 0.3rem 0 0;
+    font-size: 1.05rem;
+    line-height: 1.5;
+    color: rgba($csw-ink-solid, 0.9);
+  }
+}
+
+.csw-objective-label {
+  font-weight: 800;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $csw-deep;
+}
+
+/* --- actions --- */
+.csw-start {
+  @include w.welcome-cta-btn(linear-gradient(120deg, $csw-green, #34c489), v.$color-white);
+  margin: 2rem auto 0;
+  display: block;
+  font-size: 1.15rem;
+}
+
+.csw-review {
+  @include m.tappable;
+  display: block;
+  margin: 0.8rem auto 0;
+  background: none;
+  border: none;
+  font-weight: 700;
+  color: rgba($csw-ink-solid, 0.6);
+}
+
+.csw-footer {
+  margin: 1.4rem 0 0;
+  font-size: 0.92rem;
+  color: rgba($csw-ink-solid, 0.55);
+}
+
+@keyframes csw-stamp {
+  from { opacity: 0; transform: scale(0.4) rotate(-12deg); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes csw-grow {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .csw-day { animation: none; opacity: 1; }
+  .csw-bar-fill { animation: none; width: 100%; }
+}

@@ -1,0 +1,78 @@
+<div class="spf">
+  <header class="spf-head">
+    <span class="spf-badge">{{ step().badge }}</span>
+    <h2 class="spf-title">{{ step().title }}</h2>
+    <p class="spf-intro">{{ step().intro }}</p>
+  </header>
+
+  <div class="spf-body">
+    <div class="spf-examples">
+      <span class="spf-examples-label">{{ step().examplesLabel }}</span>
+      <ul>
+        @for (ex of step().examples; track ex) {
+          <li>{{ ex }}</li>
+        }
+      </ul>
+    </div>
+
+    <span class="spf-section">{{ step().planHeading }}</span>
+
+    <label class="spf-field">
+      <span class="spf-field-label">{{ step().whatLabel }}</span>
+      <textarea rows="2" [value]="what()" [placeholder]="step().whatPlaceholder"
+        (input)="what.set($any($event.target).value)"></textarea>
+    </label>
+
+    <label class="spf-field">
+      <span class="spf-field-label">{{ step().whenLabel }}</span>
+      <input type="text" [value]="when()" [placeholder]="step().whenPlaceholder"
+        (input)="when.set($any($event.target).value)" />
+    </label>
+
+    <label class="spf-field">
+      <span class="spf-field-label">{{ step().whoLabel }}</span>
+      <input type="text" [value]="who()" [placeholder]="step().whoPlaceholder"
+        (input)="who.set($any($event.target).value)" />
+    </label>
+
+    <span class="spf-section" [class.spf-section--locked]="!planReady()">{{ step().reflectHeading }}</span>
+
+    <label class="spf-check" [class.spf-check--locked]="!planReady()">
+      <input type="checkbox" [checked]="finished()" [disabled]="!planReady()" (change)="toggleFinished()" />
+      <span>{{ step().finishedCheckLabel }}</span>
+    </label>
+
+    <label class="spf-field">
+      <span class="spf-field-label">{{ step().changedLabel }}</span>
+      <textarea rows="2" [value]="changed()" [disabled]="!planReady()"
+        [placeholder]="step().changedPlaceholder"
+        (input)="changed.set($any($event.target).value)"></textarea>
+    </label>
+
+    <label class="spf-field">
+      <span class="spf-field-label">{{ step().benefitedLabel }}</span>
+      <textarea rows="2" [value]="benefited()" [disabled]="!planReady()"
+        [placeholder]="step().benefitedPlaceholder"
+        (input)="benefited.set($any($event.target).value)"></textarea>
+    </label>
+  </div>
+
+  <p class="spf-parent-note">
+    <span aria-hidden="true">👪</span> {{ step().parentNote }}
+  </p>
+
+  @if (allDone()) {
+    <div class="spf-done">
+      <span class="spf-done-star" aria-hidden="true">🌟</span>
+      <h3>{{ step().allDoneTitle }}</h3>
+      <p>{{ step().allDoneText }}</p>
+    </div>
+  }
+
+  <button type="button" class="spf-complete" [disabled]="!allDone()" (click)="complete()">
+    {{ step().completeLabel }}
+  </button>
+  @if (!allDone()) {
+    <p class="spf-hint">Plan your project, do it, then fill in what changed to finish the module.</p>
+  }
+</div>

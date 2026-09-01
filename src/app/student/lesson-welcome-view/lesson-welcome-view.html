@@ -1,5 +1,41 @@
 <div class="welcome-shell">
-  @if (lesson.strategyBlueprintWelcome; as sbp) {
+  @if (lesson.disciplineCompassWelcome; as dcw) {
+    <app-discipline-compass-welcome [dcw]="dcw" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.selfControlDialWelcome; as scd) {
+    <app-self-control-dial-welcome [scd]="scd" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.routineLoopWelcome; as rlw) {
+    <app-routine-loop-welcome [rlw]="rlw" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.consistencyStreakWelcome; as csw) {
+    <app-consistency-streak-welcome [csw]="csw" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.serviceHandsWelcome; as shw) {
+    <app-service-hands-welcome [shw]="shw" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.serviceSpotsWelcome; as ssw) {
+    <app-service-spots-welcome [ssw]="ssw" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.serviceKindnessWelcome; as skw) {
+    <app-service-kindness-welcome [skw]="skw" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.serviceRippleWelcome; as srw) {
+    <app-service-ripple-welcome [srw]="srw" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.teamworkPuzzleWelcome; as tpw) {
+    <app-teamwork-puzzle-welcome [tpw]="tpw" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.teamworkRolesWelcome; as trw) {
+    <app-teamwork-roles-welcome [trw]="trw" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.teamworkTalkWelcome; as ttw) {
+    <app-teamwork-talk-welcome [ttw]="ttw" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.teamworkGearsWelcome; as tgw) {
+    <app-teamwork-gears-welcome [tgw]="tgw" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.strategyBlueprintWelcome; as sbp) {
     <app-strategy-blueprint-welcome [sbp]="sbp" [completed]="completed" [next]="next" [firstName]="firstName"
       (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
   } @else if (lesson.attentionLensWelcome; as alw) {

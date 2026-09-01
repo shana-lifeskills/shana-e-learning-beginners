@@ -1,0 +1,171 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Talk and listen welcome (ttw) — Teamwork Module, Week 3 ---- */
+$ttw-bg: #ecfdf5;
+$ttw-bg-2: #ccfbf1;
+$ttw-ink: #0f3d3a;
+$ttw-teal: #14b8a6;
+$ttw-deep: #0f766e;
+
+.ttw {
+  max-width: 54rem;
+  margin: 0 auto;
+  padding: 2.5rem clamp(1rem, 4vw, 2.75rem) 2.75rem;
+  text-align: center;
+  border-radius: v.$border-radius-xl;
+  color: $ttw-ink;
+  background: linear-gradient(165deg, $ttw-bg 0%, $ttw-bg-2 100%);
+}
+
+.ttw-week {
+  @include w.welcome-pill(rgba($ttw-teal, 0.18), $ttw-deep);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.ttw h1 {
+  @include m.playful-heading;
+  font-size: clamp(2rem, 5.6vw, 3.1rem);
+  line-height: 1.1;
+  margin: 1.2rem 0 0.4rem;
+}
+
+.ttw-title-start { color: $ttw-ink; }
+.ttw-title-accent { color: $ttw-teal; }
+
+/* --- talk scene --- */
+.ttw-scene {
+  width: clamp(16rem, 64vw, 23rem);
+  margin: 1.4rem auto 0;
+
+  svg { width: 100%; height: auto; display: block; }
+}
+
+.ttw-floor {
+  stroke: rgba($ttw-deep, 0.28);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-dasharray: 2 7;
+}
+
+.ttw-head { fill: #ffd9b3; stroke: $ttw-deep; stroke-width: 2.5; }
+.ttw-body {
+  fill: rgba(255, 255, 255, 0.9);
+  stroke: $ttw-deep;
+  stroke-width: 2.5;
+  stroke-linejoin: round;
+}
+
+.ttw-ear {
+  fill: none;
+  stroke: $ttw-deep;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+}
+
+.ttw-ear-l {
+  transform-origin: 60px 68px;
+  animation: ttw-listen 2.8s ease-in-out 1.4s infinite;
+}
+
+.ttw-ear-r {
+  transform-origin: 200px 68px;
+  animation: ttw-listen 2.8s ease-in-out infinite;
+}
+
+.ttw-bubble {
+  fill: $ttw-teal;
+  translate: 4px 28px;
+  animation: ttw-talk 2.8s ease-in-out infinite;
+
+  path { stroke: $ttw-deep; stroke-width: 2.5; stroke-linejoin: round; }
+}
+
+.ttw-dot { fill: #fff; }
+.ttw-dot-1 { animation: ttw-blip 1.4s ease-in-out infinite; }
+.ttw-dot-2 { animation: ttw-blip 1.4s ease-in-out 0.2s infinite; }
+.ttw-dot-3 { animation: ttw-blip 1.4s ease-in-out 0.4s infinite; }
+
+.ttw-mark {
+  display: block;
+  margin-top: 0.6rem;
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 1rem;
+  color: $ttw-deep;
+}
+
+/* --- objective --- */
+.ttw-objective {
+  max-width: 38rem;
+  margin: 1.8rem auto 0;
+  padding: 1.15rem 1.4rem;
+  text-align: left;
+  border-radius: v.$border-radius-lg;
+  border-left: 4px solid $ttw-teal;
+  background: rgba(255, 255, 255, 0.8);
+
+  p {
+    margin: 0.3rem 0 0;
+    font-size: 1.05rem;
+    line-height: 1.5;
+    color: rgba($ttw-ink, 0.9);
+  }
+}
+
+.ttw-objective-label {
+  font-weight: 800;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $ttw-deep;
+}
+
+/* --- actions --- */
+.ttw-start {
+  @include w.welcome-cta-btn(linear-gradient(120deg, $ttw-teal, #2dd4bf), v.$color-white);
+  margin: 2rem auto 0;
+  display: block;
+  font-size: 1.15rem;
+}
+
+.ttw-review {
+  @include m.tappable;
+  display: block;
+  margin: 0.8rem auto 0;
+  background: none;
+  border: none;
+  font-weight: 700;
+  color: rgba($ttw-ink, 0.6);
+}
+
+.ttw-footer {
+  margin: 1.4rem 0 0;
+  font-size: 0.92rem;
+  color: rgba($ttw-ink, 0.55);
+}
+
+@keyframes ttw-talk {
+  0% { transform: translateX(64px); }
+  50% { transform: translateX(128px); }
+  100% { transform: translateX(64px); }
+}
+
+@keyframes ttw-listen {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.35); }
+}
+
+@keyframes ttw-blip {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ttw-bubble, .ttw-ear-l, .ttw-ear-r, .ttw-dot-1, .ttw-dot-2, .ttw-dot-3 {
+    animation: none;
+  }
+  .ttw-bubble { transform: translateX(96px); }
+}

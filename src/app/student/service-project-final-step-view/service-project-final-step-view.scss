@@ -1,0 +1,192 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- My Service Project final challenge (spf) — Service Module, Week 4 ---- */
+$spf-ink: #4a2b12;
+$spf-orange: #f97316;
+$spf-deep: #b45309;
+$spf-sun: #ffe08a;
+$spf-paper: #fff8ef;
+$spf-star: #f5b301;
+
+.spf {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 1rem;
+  color: $spf-ink;
+}
+
+.spf-head {
+  text-align: center;
+  padding: 1.7rem 1.2rem 1.6rem;
+  border-radius: v.$border-radius-xl v.$border-radius-xl 0 0;
+  background: linear-gradient(150deg, $spf-star 0%, $spf-deep 100%);
+  color: v.$color-white;
+}
+
+.spf-badge {
+  display: inline-block;
+  padding: 0.32rem 1rem;
+  border-radius: v.$border-radius-pill;
+  background: v.$color-white;
+  color: $spf-deep;
+  font-weight: 800;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.spf-title {
+  @include m.playful-heading;
+  font-size: clamp(1.5rem, 4.5vw, 2rem);
+  margin: 0.7rem 0 0.3rem;
+}
+
+.spf-intro {
+  margin: 0;
+  font-size: 0.98rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.spf-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  padding: 1.2rem 1.1rem;
+  background: $spf-paper;
+  border-radius: 0 0 v.$border-radius-xl v.$border-radius-xl;
+}
+
+.spf-examples {
+  padding-bottom: 0.2rem;
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0.5rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  li {
+    padding: 0.35rem 0.8rem;
+    border-radius: v.$border-radius-pill;
+    background: rgba($spf-orange, 0.14);
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+}
+
+.spf-examples-label {
+  font-weight: 800;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $spf-deep;
+}
+
+.spf-section {
+  font-weight: 800;
+  font-size: 0.74rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $spf-deep;
+  margin-top: 0.4rem;
+}
+
+.spf-section--locked { opacity: 0.5; }
+
+.spf-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.spf-field-label {
+  font-weight: 800;
+  font-size: 0.86rem;
+  color: $spf-deep;
+}
+
+.spf-field textarea,
+.spf-field input {
+  width: 100%;
+  padding: 0.6rem 0.7rem;
+  border-radius: v.$border-radius-sm;
+  border: 2px solid rgba($spf-ink, 0.15);
+  font: inherit;
+  font-size: 0.92rem;
+}
+
+.spf-field textarea { resize: vertical; }
+
+.spf-field textarea:focus,
+.spf-field input:focus { outline: none; border-color: $spf-orange; }
+
+.spf-field textarea:disabled,
+.spf-field input:disabled { background: rgba($spf-ink, 0.04); color: rgba($spf-ink, 0.55); }
+
+.spf-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.35;
+
+  input { margin-top: 0.15rem; width: 1.1rem; height: 1.1rem; flex-shrink: 0; accent-color: $spf-orange; }
+}
+
+.spf-check--locked { opacity: 0.5; }
+
+.spf-parent-note {
+  display: flex;
+  gap: 0.5rem;
+  margin: 1rem 0 0;
+  padding: 0.8rem 1rem;
+  border-radius: v.$border-radius-sm;
+  background: rgba($spf-sun, 0.4);
+  border: 1px dashed rgba(#b9700b, 0.55);
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: #6b3d04;
+}
+
+.spf-done {
+  margin-top: 1rem;
+  padding: 1.4rem 1.1rem;
+  text-align: center;
+  border-radius: v.$border-radius-lg;
+  background: rgba($spf-star, 0.16);
+
+  h3 { @include m.playful-heading; font-size: 1.3rem; margin: 0.4rem 0 0.3rem; }
+  p { margin: 0; font-size: 0.95rem; color: rgba($spf-ink, 0.8); }
+}
+
+.spf-done-star { font-size: 2rem; }
+
+.spf-complete {
+  @include m.tappable;
+  display: block;
+  width: 100%;
+  margin: 1.1rem 0 0;
+  padding: 0.95rem 1.6rem;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  background: linear-gradient(120deg, $spf-orange, $spf-star);
+  color: v.$color-white;
+  font-weight: 800;
+  font-size: 1.1rem;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.13);
+
+  &:disabled { background: rgba($spf-ink, 0.2); cursor: not-allowed; box-shadow: none; }
+}
+
+.spf-hint {
+  margin: 0.6rem 0 0;
+  text-align: center;
+  font-size: 0.85rem;
+  color: rgba($spf-ink, 0.55);
+}

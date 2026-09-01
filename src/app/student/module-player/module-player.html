@@ -386,6 +386,40 @@
                 <app-smart-choices-warmup-step-view [step]="exercise" (continued)="onStepContinue()" />
               } @else if (exercise.type === 'trade-off-quiz') {
                 <app-trade-off-quiz-step-view [step]="exercise" (continued)="onStepContinue()" />
+              } @else if (exercise.type === 'discipline-warmup-quiz') {
+                <app-discipline-warmup-quiz-step-view [step]="exercise" (continued)="onStepContinue()" />
+              } @else if (exercise.type === 'service-warmup-quiz') {
+                <app-service-warmup-quiz-step-view [step]="exercise" (continued)="onStepContinue()" />
+              } @else if (exercise.type === 'teamwork-warmup-quiz') {
+                <app-teamwork-warmup-quiz-step-view [step]="exercise" (continued)="onStepContinue()" />
+              } @else if (exercise.type === 'service-act-tracker') {
+                <app-service-act-tracker-step-view [step]="exercise" (submitted)="onShared($event)" />
+              } @else if (exercise.type === 'service-confidence-link') {
+                <app-service-confidence-link-step-view [step]="exercise" (completed)="onStepContinue()" />
+              } @else if (exercise.type === 'service-place-match') {
+                <app-service-place-match-step-view [step]="exercise" (continued)="onStepContinue()" />
+              } @else if (exercise.type === 'service-environment-tracker') {
+                <app-service-environment-tracker-step-view [step]="exercise" (submitted)="onShared($event)" />
+              } @else if (exercise.type === 'service-tf-warmup') {
+                <app-service-tf-warmup-step-view [step]="exercise" (continued)="onStepContinue()" />
+              } @else if (exercise.type === 'service-kindness-plan') {
+                <app-service-kindness-plan-step-view [step]="exercise" (submitted)="onShared($event)" />
+              } @else if (exercise.type === 'service-fill-blank') {
+                <app-service-fill-blank-step-view [step]="exercise" (continued)="onStepContinue()" />
+              } @else if (exercise.type === 'service-project-final') {
+                <app-service-project-final-step-view [step]="exercise" (submitted)="onShared($event)" />
+              } @else if (exercise.type === 'discipline-tf-warmup') {
+                <app-discipline-tf-warmup-step-view [step]="exercise" (continued)="onStepContinue()" />
+              } @else if (exercise.type === 'discipline-match-warmup') {
+                <app-discipline-match-warmup-step-view [step]="exercise" (continued)="onStepContinue()" />
+              } @else if (exercise.type === 'teamwork-match-warmup') {
+                <app-teamwork-match-warmup-step-view [step]="exercise" (continued)="onStepContinue()" />
+              } @else if (exercise.type === 'teamwork-tf-warmup') {
+                <app-teamwork-tf-warmup-step-view [step]="exercise" (continued)="onStepContinue()" />
+              } @else if (exercise.type === 'teamwork-fill-blank') {
+                <app-teamwork-fill-blank-step-view [step]="exercise" (continued)="onStepContinue()" />
+              } @else if (exercise.type === 'discipline-sequence-warmup') {
+                <app-discipline-sequence-warmup-step-view [step]="exercise" (continued)="onStepContinue()" />
               } @else if (exercise.type === 'trade-off-tracker-challenge') {
                 <app-trade-off-tracker-challenge-step-view [step]="exercise" (submitted)="onShared($event)" />
               } @else if (exercise.type === 'trade-off-confidence-link') {
@@ -398,6 +432,8 @@
                 <app-step-sequence-step-view [step]="exercise" (continued)="onStepContinue()" />
               } @else if (exercise.type === 'financial-audit-challenge') {
                 <app-financial-audit-challenge-step-view [step]="exercise" (submitted)="onShared($event)" />
+              } @else if (exercise.type === 'teamwork-reflection-mission') {
+                <app-teamwork-reflection-mission-step-view [step]="exercise" (submitted)="onShared($event)" />
               } @else if (exercise.type === 'module-outcome-confidence-link') {
                 <app-module-outcome-confidence-link-step-view [step]="exercise" (completed)="onStepContinue()" />
               } @else if (exercise.type === 'think-ahead-challenge') {

@@ -1,0 +1,250 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- Teamwork Warm-Up fill-in-the-blank (tfb) — Teamwork Module, Week 4 ---- */
+$tfb-teal: #14b8a6;
+$tfb-deep: #0f766e;
+$tfb-ink: #0f3d3a;
+$tfb-screen: #f2fbf9;
+$tfb-green: #1f9d63;
+$tfb-red: #e5484d;
+
+.tfb {
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.tfb-card {
+  border-radius: v.$border-radius-xl;
+  padding: 1.6rem clamp(1rem, 4vw, 2rem) 1.9rem;
+  background: v.$color-white;
+  box-shadow: 0 12px 30px rgba($tfb-deep, 0.18), inset 0 0 0 2px rgba($tfb-teal, 0.12);
+  color: $tfb-ink;
+  text-align: center;
+}
+
+.tfb-card-head {
+  margin: -1.6rem clamp(-1rem, -4vw, -2rem) 1.4rem;
+  padding: 1.5rem 1.5rem 1.3rem;
+  border-radius: v.$border-radius-xl v.$border-radius-xl 0 0;
+  background: linear-gradient(160deg, $tfb-teal 0%, $tfb-deep 100%);
+  color: v.$color-white;
+}
+
+.tfb-badge {
+  display: inline-block;
+  padding: 0.35rem 1.1rem;
+  border-radius: v.$border-radius-pill;
+  background: rgba(255, 255, 255, 0.9);
+  color: $tfb-deep;
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.tfb-heading {
+  @include m.playful-heading;
+  font-size: clamp(1.5rem, 4.6vw, 2.1rem);
+  margin: 0.7rem 0 0.3rem;
+}
+
+.tfb-subtitle {
+  margin: 0;
+  font-size: 0.98rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* --- progress meter --- */
+.tfb-meter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+}
+
+.tfb-node {
+  width: 0.9rem;
+  height: 0.9rem;
+  border-radius: 50%;
+  background: rgba($tfb-teal, 0.2);
+  border: 2px solid rgba($tfb-teal, 0.4);
+  flex-shrink: 0;
+  transition: background 0.3s ease, transform 0.3s ease;
+
+  &:not(:first-child) {
+    margin-left: 2.4rem;
+    position: relative;
+  }
+
+  &:not(:first-child)::before {
+    content: '';
+    position: absolute;
+    right: 100%;
+    top: 50%;
+    width: 2.4rem;
+    height: 2px;
+    background: rgba($tfb-teal, 0.3);
+    transform: translateY(-1px);
+  }
+}
+
+.tfb-node--on {
+  background: $tfb-teal;
+  border-color: $tfb-deep;
+  transform: scale(1.15);
+}
+
+/* --- sentence screen --- */
+.tfb-screen {
+  background: $tfb-screen;
+  color: $tfb-ink;
+  border-radius: v.$border-radius-lg;
+  padding: 1.4rem clamp(0.9rem, 3vw, 1.6rem) 1.5rem;
+  box-shadow: inset 0 0 0 2px rgba($tfb-teal, 0.16);
+}
+
+.tfb-screen--shake { animation: tfb-shake 0.4s ease; }
+
+.tfb-count {
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: $tfb-deep;
+}
+
+.tfb-line {
+  margin: 0.6rem 0 1.1rem;
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 1.2rem;
+  line-height: 1.6;
+}
+
+.tfb-blank {
+  display: inline-block;
+  min-width: 4rem;
+  margin: 0 0.15rem;
+  padding: 0 0.4rem;
+  border-bottom: 3px solid $tfb-teal;
+  font-weight: 900;
+  color: $tfb-deep;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.tfb-blank--filled {
+  border-color: $tfb-green;
+  color: $tfb-green;
+}
+
+.tfb-blank--wrong {
+  border-color: $tfb-red;
+  color: $tfb-red;
+}
+
+/* --- word bank --- */
+.tfb-bank-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: $tfb-deep;
+}
+
+.tfb-bank-words {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.tfb-word {
+  @include m.tappable;
+  padding: 0.6rem 1rem;
+  border: 2px solid rgba($tfb-teal, 0.3);
+  border-radius: v.$border-radius-pill;
+  background: v.$color-white;
+  box-shadow: 0 3px 0 rgba($tfb-deep, 0.18);
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: $tfb-ink;
+
+  &:hover:not(:disabled) { border-color: $tfb-teal; }
+  &:disabled { cursor: default; }
+}
+
+.tfb-praise {
+  margin: 0.4rem 0 0;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: $tfb-green;
+}
+
+.tfb-oops {
+  margin: 0.8rem 0 0;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: $tfb-red;
+}
+
+/* --- done panel --- */
+.tfb-done {
+  background: rgba($tfb-teal, 0.1);
+  border-radius: v.$border-radius-lg;
+  padding: 1.6rem 1.2rem;
+
+  h3 {
+    @include m.playful-heading;
+    margin: 0.5rem 0 0.3rem;
+    font-size: 1.4rem;
+    color: $tfb-deep;
+  }
+
+  p { margin: 0 0 1.1rem; color: rgba($tfb-ink, 0.85); }
+}
+
+.tfb-done-icon { font-size: 2.2rem; }
+
+.tfb-continue {
+  @include m.tappable;
+  background: linear-gradient(120deg, $tfb-teal, #2dd4bf);
+  color: v.$color-white;
+  border: none;
+  font-weight: 800;
+  font-size: 1.05rem;
+  padding: 0.9rem 2.25rem;
+  border-radius: v.$border-radius-pill;
+  box-shadow: 0 4px 0 rgba($tfb-deep, 0.35);
+
+  &:hover { opacity: 0.92; }
+}
+
+/* --- parent note --- */
+.tfb-parent-note {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 1rem 0 0;
+  padding: 0.75rem 1rem;
+  border-radius: v.$border-radius-lg;
+  background: rgba($tfb-teal, 0.1);
+  font-size: 0.9rem;
+  color: rgba($tfb-ink, 0.8);
+}
+
+.tfb-parent-icon { font-size: 1.1rem; }
+
+@keyframes tfb-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-7px); }
+  75% { transform: translateX(7px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tfb-screen--shake { animation: none; }
+  .tfb-node { transition: none; }
+}

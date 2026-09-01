@@ -1,0 +1,62 @@
+<div class="dtf">
+  <div class="dtf-card">
+    <div class="dtf-card-head">
+      <span class="dtf-badge">{{ step().badge }}</span>
+      <h2 class="dtf-heading">{{ step().heading }}</h2>
+      <p class="dtf-subtitle">{{ step().subtitle }}</p>
+    </div>
+
+    <div class="dtf-track" role="progressbar" [attr.aria-valuenow]="activeIndex()"
+      [attr.aria-valuemax]="statements().length" aria-label="Statements judged">
+      @for (filled of dots(); track $index) {
+        <span class="dtf-dot" [class.dtf-dot--filled]="filled" aria-hidden="true"></span>
+      }
+    </div>
+
+    @if (!allDone()) {
+      @if (current(); as s) {
+        <div class="dtf-screen" [class.dtf-screen--shake]="feedback() === 'incorrect'">
+          <span class="dtf-count">Statement {{ activeIndex() + 1 }} of {{ statements().length }}</span>
+          <p class="dtf-statement">{{ s.text }}</p>
+
+          <div class="dtf-verdicts">
+            <button type="button" class="dtf-verdict dtf-verdict--true"
+              [class.dtf-verdict--correct]="verdictState(true) === 'correct'"
+              [class.dtf-verdict--wrong]="verdictState(true) === 'incorrect'"
+              [disabled]="locked()" (click)="choose(true)">
+              <span class="dtf-verdict-icon" aria-hidden="true">✔</span>
+              {{ step().trueLabel }}
+            </button>
+            <button type="button" class="dtf-verdict dtf-verdict--false"
+              [class.dtf-verdict--correct]="verdictState(false) === 'correct'"
+              [class.dtf-verdict--wrong]="verdictState(false) === 'incorrect'"
+              [disabled]="locked()" (click)="choose(false)">
+              <span class="dtf-verdict-icon" aria-hidden="true">✘</span>
+              {{ step().falseLabel }}
+            </button>
+          </div>
+
+          <p class="dtf-feedback" aria-live="polite">
+            @if (feedback() === 'correct') {
+              <span class="dtf-feedback--good">✅ {{ s.feedbackText }}</span>
+            } @else if (feedback() === 'incorrect') {
+              <span class="dtf-feedback--bad">Not quite — pause, think it through, and try again!</span>
+            }
+          </p>
+        </div>
+      }
+    } @else {
+      <div class="dtf-done">
+        <span class="dtf-done-icon" aria-hidden="true">🌬️✨</span>
+        <h3>{{ step().allDoneTitle }}</h3>
+        <p>{{ step().allDoneText }}</p>
+        <button type="button" class="dtf-continue" (click)="finish()">{{ step().continueLabel }} →</button>
+      </div>
+    }
+  </div>
+
+  <p class="dtf-parent-note">
+    <span class="dtf-parent-icon" aria-hidden="true">👪</span>
+    {{ step().parentNote }}
+  </p>
+</div>

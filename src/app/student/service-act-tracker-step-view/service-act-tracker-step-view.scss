@@ -1,0 +1,264 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- One Act of Service tracker (sat) — Service Module, Week 1 ---- */
+$sat-ink: #4a2b12;
+$sat-orange: #f97316;
+$sat-deep: #b45309;
+$sat-sun: #ffe08a;
+$sat-paper: #fff8ef;
+
+.sat {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 1rem;
+  color: $sat-ink;
+}
+
+.sat-head {
+  text-align: center;
+  padding: 1.6rem 1.2rem 1.5rem;
+  border-radius: v.$border-radius-xl v.$border-radius-xl 0 0;
+  background: linear-gradient(150deg, $sat-orange 0%, $sat-deep 100%);
+  color: v.$color-white;
+}
+
+.sat-badge {
+  display: inline-block;
+  padding: 0.32rem 1rem;
+  border-radius: v.$border-radius-pill;
+  background: $sat-sun;
+  color: #4a2c00;
+  font-weight: 800;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.sat-title {
+  @include m.playful-heading;
+  font-size: clamp(1.5rem, 4.5vw, 2rem);
+  margin: 0.7rem 0 0.3rem;
+}
+
+.sat-intro {
+  margin: 0;
+  font-size: 0.98rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.sat-examples {
+  padding: 1rem 1.1rem 0.4rem;
+  background: $sat-paper;
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0.5rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  li {
+    padding: 0.35rem 0.8rem;
+    border-radius: v.$border-radius-pill;
+    background: rgba($sat-orange, 0.14);
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+}
+
+.sat-examples-label {
+  font-weight: 800;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $sat-deep;
+}
+
+.sat-progress {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.9rem 1.1rem;
+  background: $sat-paper;
+}
+
+.sat-hearts {
+  display: flex;
+  gap: 0.3rem;
+  flex: 1;
+}
+
+.sat-heart {
+  font-size: 1.25rem;
+  opacity: 0.3;
+  filter: grayscale(1);
+  transition: opacity 0.3s ease, filter 0.3s ease, transform 0.3s ease;
+}
+
+.sat-heart--filled {
+  opacity: 1;
+  filter: none;
+  transform: translateY(-2px) scale(1.1);
+}
+
+.sat-progress-label {
+  font-weight: 800;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.sat-days {
+  list-style: none;
+  margin: 0;
+  padding: 0 1.1rem 1.1rem;
+  background: $sat-paper;
+  border-radius: 0 0 v.$border-radius-xl v.$border-radius-xl;
+}
+
+.sat-day {
+  border: 2px solid rgba($sat-ink, 0.1);
+  border-radius: v.$border-radius-sm;
+  background: v.$color-white;
+  margin-bottom: 0.6rem;
+  overflow: hidden;
+}
+
+.sat-day--open { border-color: $sat-orange; }
+.sat-day--done { border-color: rgba($sat-orange, 0.45); background: rgba($sat-orange, 0.06); }
+
+.sat-day-head {
+  @include m.tappable;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  width: 100%;
+  padding: 0.75rem 0.9rem;
+  border: none;
+  background: none;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+}
+
+.sat-day-num {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 1.8rem;
+  height: 1.8rem;
+  border-radius: 50%;
+  background: $sat-orange;
+  color: v.$color-white;
+  font-weight: 800;
+  font-size: 0.9rem;
+}
+
+.sat-day--done .sat-day-num { background: $sat-deep; }
+
+.sat-day-name { font-weight: 800; }
+
+.sat-day-state {
+  margin-left: auto;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: rgba($sat-ink, 0.55);
+}
+
+.sat-day-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  padding: 0.4rem 0.9rem 1rem;
+}
+
+.sat-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.sat-field-label {
+  font-weight: 800;
+  font-size: 0.86rem;
+  color: $sat-deep;
+}
+
+.sat-field textarea {
+  width: 100%;
+  padding: 0.6rem 0.7rem;
+  border-radius: v.$border-radius-sm;
+  border: 2px solid rgba($sat-ink, 0.15);
+  font: inherit;
+  font-size: 0.92rem;
+  resize: vertical;
+
+  &:focus { outline: none; border-color: $sat-orange; }
+  &:disabled { background: rgba($sat-ink, 0.04); color: rgba($sat-ink, 0.6); }
+}
+
+.sat-save,
+.sat-complete {
+  @include m.tappable;
+  align-self: flex-start;
+  padding: 0.7rem 1.6rem;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  background: $sat-orange;
+  color: v.$color-white;
+  font-weight: 800;
+  font-size: 0.95rem;
+
+  &:disabled { background: rgba($sat-ink, 0.2); cursor: not-allowed; }
+}
+
+.sat-complete {
+  display: block;
+  width: 100%;
+  margin: 1.1rem 0 0;
+  padding: 0.95rem 1.6rem;
+  font-size: 1.1rem;
+  background: linear-gradient(120deg, $sat-orange, $sat-sun);
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.12);
+}
+
+.sat-parent-note {
+  display: flex;
+  gap: 0.5rem;
+  margin: 1rem 0 0;
+  padding: 0.8rem 1rem;
+  border-radius: v.$border-radius-sm;
+  background: rgba($sat-sun, 0.4);
+  border: 1px dashed rgba(#b9700b, 0.55);
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: #6b3d04;
+}
+
+.sat-done {
+  margin-top: 1rem;
+  padding: 1.3rem 1.1rem;
+  text-align: center;
+  border-radius: v.$border-radius-lg;
+  background: rgba($sat-orange, 0.1);
+
+  h3 { @include m.playful-heading; font-size: 1.25rem; margin: 0.4rem 0 0.3rem; }
+  p { margin: 0; font-size: 0.95rem; color: rgba($sat-ink, 0.8); }
+}
+
+.sat-done-star { font-size: 1.9rem; }
+
+.sat-hint {
+  margin: 0.6rem 0 0;
+  text-align: center;
+  font-size: 0.85rem;
+  color: rgba($sat-ink, 0.55);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sat-heart { transition: none; }
+}

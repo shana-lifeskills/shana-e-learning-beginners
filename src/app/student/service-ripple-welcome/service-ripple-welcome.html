@@ -1,0 +1,46 @@
+<div class="srw">
+  <span class="srw-week">{{ srw.weekLabel }}</span>
+
+  <h1>
+    <span class="srw-title-start">{{ srw.titleStart }}</span>
+    <span class="srw-title-accent">{{ srw.titleAccent }}</span>
+  </h1>
+
+  <div class="srw-scene" aria-hidden="true">
+    <svg viewBox="0 0 200 200" role="img">
+      <circle class="srw-ring srw-ring-1" cx="100" cy="100" r="34" />
+      <circle class="srw-ring srw-ring-2" cx="100" cy="100" r="56" />
+      <circle class="srw-ring srw-ring-3" cx="100" cy="100" r="78" />
+
+      @for (d of dots; track $index) {
+        <circle class="srw-dot" [attr.cx]="d.cx" [attr.cy]="d.cy" r="7"
+          [style.animation-delay]="d.delay + 's'" />
+      }
+
+      <circle class="srw-hub" cx="100" cy="100" r="22" />
+      <path class="srw-heart" d="M100 112 C86 102 82 92 89 86 c4 -3 8 -1 11 3 c3 -4 7 -6 11 -3 c7 6 3 16 -11 26 z" />
+    </svg>
+    <div class="srw-marks">
+      <span class="srw-mark">{{ srw.centreLabel }}</span>
+      <span class="srw-mark">{{ srw.reachLabel }}</span>
+    </div>
+  </div>
+
+  <div class="srw-objective">
+    <span class="srw-objective-label">{{ srw.objectiveLabel }}</span>
+    <p>{{ srw.objectiveText }}</p>
+  </div>
+
+  @if (isCompletedLessonWelcome()) {
+    @if (nextLesson(); as next) {
+      <button type="button" class="srw-start" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+    } @else {
+      <button type="button" class="srw-start" (click)="backToMap()">Back to My Modules →</button>
+    }
+    <button type="button" class="srw-review" (click)="beginLesson()">↺ Review this lesson</button>
+  } @else {
+    <button type="button" class="srw-start" (click)="beginLesson()">{{ srw.startLabel }} →</button>
+  }
+
+  <p class="srw-footer">{{ srw.footerNote }}</p>
+</div>

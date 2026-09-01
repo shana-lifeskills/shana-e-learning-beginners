@@ -1,0 +1,170 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Helping hands welcome (shw) — Service Module, Week 1 ---- */
+$shw-bg: #fff4e6;
+$shw-bg-2: #ffe4c4;
+$shw-ink: #4a2b12;
+$shw-orange: #f97316;
+$shw-deep: #c2410c;
+$shw-heart: #ef4444;
+
+.shw {
+  max-width: 54rem;
+  margin: 0 auto;
+  padding: 2.5rem clamp(1rem, 4vw, 2.75rem) 2.75rem;
+  text-align: center;
+  border-radius: v.$border-radius-xl;
+  color: $shw-ink;
+  background: linear-gradient(165deg, $shw-bg 0%, $shw-bg-2 100%);
+}
+
+.shw-week {
+  @include w.welcome-pill(rgba($shw-orange, 0.18), $shw-deep);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.shw h1 {
+  @include m.playful-heading;
+  font-size: clamp(2rem, 5.6vw, 3.1rem);
+  line-height: 1.1;
+  margin: 1.2rem 0 0.4rem;
+}
+
+.shw-title-start { color: $shw-ink; }
+.shw-title-accent { color: $shw-orange; }
+
+/* --- hands scene --- */
+.shw-scene {
+  width: clamp(15rem, 60vw, 22rem);
+  margin: 1.4rem auto 0;
+
+  svg { width: 100%; height: auto; display: block; }
+}
+
+.shw-ground {
+  fill: rgba($shw-deep, 0.1);
+}
+
+.shw-hand path {
+  fill: #ffd9b3;
+  stroke: $shw-deep;
+  stroke-width: 2.5;
+  stroke-linejoin: round;
+}
+
+.shw-hand-give { animation: shw-give 3s ease-in-out 0.2s both; }
+.shw-hand-take { animation: shw-take 3s ease-in-out 0.2s both; }
+
+.shw-heart {
+  transform-origin: 120px 100px;
+  animation: shw-pass 3s cubic-bezier(0.45, 0, 0.3, 1) 0.2s both;
+
+  path {
+    fill: $shw-heart;
+    stroke: #b91c1c;
+    stroke-width: 2;
+    stroke-linejoin: round;
+  }
+}
+
+.shw-spark {
+  fill: #fbbf24;
+  opacity: 0;
+}
+
+.shw-spark-1 { animation: shw-twinkle 1.6s ease-in-out 1.6s infinite; }
+.shw-spark-2 { animation: shw-twinkle 1.6s ease-in-out 1.9s infinite; }
+.shw-spark-3 { animation: shw-twinkle 1.6s ease-in-out 2.2s infinite; }
+
+.shw-mark {
+  display: block;
+  margin-top: 0.4rem;
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 1rem;
+  color: $shw-deep;
+}
+
+/* --- objective --- */
+.shw-objective {
+  max-width: 38rem;
+  margin: 1.8rem auto 0;
+  padding: 1.15rem 1.4rem;
+  text-align: left;
+  border-radius: v.$border-radius-lg;
+  border-left: 4px solid $shw-orange;
+  background: rgba(255, 255, 255, 0.8);
+
+  p {
+    margin: 0.3rem 0 0;
+    font-size: 1.05rem;
+    line-height: 1.5;
+    color: rgba($shw-ink, 0.9);
+  }
+}
+
+.shw-objective-label {
+  font-weight: 800;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $shw-deep;
+}
+
+/* --- actions --- */
+.shw-start {
+  @include w.welcome-cta-btn(linear-gradient(120deg, $shw-orange, #fb923c), v.$color-white);
+  margin: 2rem auto 0;
+  display: block;
+  font-size: 1.15rem;
+}
+
+.shw-review {
+  @include m.tappable;
+  display: block;
+  margin: 0.8rem auto 0;
+  background: none;
+  border: none;
+  font-weight: 700;
+  color: rgba($shw-ink, 0.6);
+}
+
+.shw-footer {
+  margin: 1.4rem 0 0;
+  font-size: 0.92rem;
+  color: rgba($shw-ink, 0.55);
+}
+
+@keyframes shw-pass {
+  0% { transform: translateX(-70px) scale(0.7); opacity: 0; }
+  25% { opacity: 1; }
+  50% { transform: translateX(0) scale(1.12); }
+  75% { transform: translateX(0) scale(1); }
+  100% { transform: translateX(0) scale(1); }
+}
+
+@keyframes shw-give {
+  0%, 45% { transform: translateX(-10px); }
+  70%, 100% { transform: translateX(0); }
+}
+
+@keyframes shw-take {
+  0%, 55% { transform: translateX(10px); }
+  80%, 100% { transform: translateX(0); }
+}
+
+@keyframes shw-twinkle {
+  0%, 100% { opacity: 0; transform: scale(0.6); }
+  50% { opacity: 1; transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shw-hand-give, .shw-hand-take, .shw-heart, .shw-spark {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
