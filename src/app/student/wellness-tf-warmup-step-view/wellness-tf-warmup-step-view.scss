@@ -1,0 +1,220 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- Wellness True/False warm-up (wtf) — Wellness Module, Week 3 ---- */
+$wtf-bg: #fdecf1;
+$wtf-bg-2: #fbe0e9;
+$wtf-ink: #4a2f3d;
+$wtf-rose: #d9628a;
+$wtf-deep: #b34870;
+$wtf-true: #4f9d63;
+$wtf-false: #d1543b;
+
+.wtf {
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: 1.75rem clamp(1rem, 4vw, 2.25rem) 2rem;
+  color: $wtf-ink;
+  text-align: center;
+  border-radius: v.$border-radius-xl;
+  background: linear-gradient(168deg, $wtf-bg 0%, $wtf-bg-2 100%);
+}
+
+.wtf-head h2 {
+  @include m.playful-heading;
+  margin: 0.35rem 0 0;
+  font-size: clamp(1.4rem, 4.5vw, 1.9rem);
+}
+
+.wtf-kicker {
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: $wtf-rose;
+}
+
+.wtf-sub {
+  margin: 0.3rem 0 0;
+  font-size: 0.98rem;
+  color: rgba($wtf-ink, 0.7);
+}
+
+.wtf-progress {
+  margin: 1rem auto 0;
+  max-width: 22rem;
+  height: 8px;
+  border-radius: 999px;
+  background: rgba($wtf-deep, 0.15);
+  overflow: hidden;
+}
+
+.wtf-progress-fill {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: $wtf-rose;
+  transition: width 0.4s ease;
+}
+
+.wtf-arena {
+  margin-top: 1.3rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.9rem;
+}
+
+@media (min-width: 40rem) {
+  .wtf-arena {
+    grid-template-columns: 1fr 1.6fr 1fr;
+    align-items: start;
+  }
+}
+
+.wtf-side {
+  padding: 0.9rem 0.8rem;
+  background: rgba(255, 255, 255, 0.7);
+  border: 2px solid rgba($wtf-deep, 0.18);
+  border-radius: 14px;
+
+  ul { list-style: none; margin: 0.5rem 0 0; padding: 0; }
+  li {
+    margin: 0.3rem 0;
+    padding: 0.35rem 0.5rem;
+    font-size: 0.85rem;
+    border-radius: 8px;
+    background: rgba($wtf-deep, 0.06);
+  }
+}
+
+.wtf-side-true { border-color: rgba($wtf-true, 0.4); }
+.wtf-side-false { border-color: rgba($wtf-false, 0.4); }
+
+.wtf-thumb { font-size: 1.6rem; }
+
+.wtf-side-label {
+  display: block;
+  margin-top: 0.2rem;
+  font-weight: 800;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba($wtf-ink, 0.7);
+}
+
+.wtf-card {
+  padding: 1.4rem 1.2rem;
+  background: v.$color-white;
+  border: 2px solid rgba($wtf-rose, 0.35);
+  border-radius: v.$border-radius-lg;
+  box-shadow: 0 8px 0 rgba($wtf-deep, 0.12);
+
+  &.wobble { animation: wtf-wobble 0.4s ease; }
+
+  p {
+    margin: 0.5rem 0 0;
+    font-family: v.$headings-font-family;
+    font-weight: 800;
+    font-size: 1.15rem;
+  }
+}
+
+.wtf-card-num {
+  font-weight: 800;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  color: rgba($wtf-ink, 0.5);
+}
+
+.wtf-actions {
+  margin-top: 1.1rem;
+  display: flex;
+  gap: 0.7rem;
+  justify-content: center;
+}
+
+.wtf-btn {
+  @include m.tappable;
+  flex: 1;
+  max-width: 11rem;
+  padding: 0.8rem 0.6rem;
+  border: 2px solid transparent;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 1rem;
+  color: v.$color-white;
+}
+
+.wtf-btn.is-true { background: $wtf-true; }
+.wtf-btn.is-false { background: $wtf-false; }
+
+.wtf-praise { margin: 0.9rem 0 0; font-weight: 700; color: $wtf-deep; }
+.wtf-oops { margin: 0.9rem 0 0; font-weight: 700; color: $wtf-false; }
+
+.wtf-footer {
+  margin: 1rem 0 0;
+  font-size: 0.9rem;
+  color: rgba($wtf-ink, 0.55);
+}
+
+.wtf-done {
+  margin: 1.3rem auto 0;
+  padding: 1.6rem 1.3rem;
+  background: rgba(255, 255, 255, 0.92);
+  border: 2px solid rgba($wtf-rose, 0.4);
+  border-radius: v.$border-radius-lg;
+
+  h3 {
+    @include m.playful-heading;
+    margin: 0.5rem 0 0.3rem;
+    font-size: 1.3rem;
+  }
+
+  p { margin: 0; color: rgba($wtf-ink, 0.75); }
+}
+
+.wtf-done-icon { font-size: 2.4rem; }
+
+.wtf-recap {
+  margin: 1.1rem auto 0;
+  max-width: 26rem;
+  padding: 1rem 1.2rem;
+  text-align: left;
+  background: rgba($wtf-rose, 0.1);
+  border: 1px solid rgba($wtf-deep, 0.2);
+  border-radius: 12px;
+
+  h4 {
+    margin: 0 0 0.5rem;
+    font-weight: 800;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: $wtf-deep;
+  }
+
+  ul { margin: 0; padding-left: 1.1rem; }
+  li { margin: 0.25rem 0; font-size: 0.95rem; color: rgba($wtf-ink, 0.85); }
+}
+
+.wtf-continue {
+  @include m.tappable;
+  margin: 1.2rem 0 0;
+  padding: 0.8rem 1.8rem;
+  background: linear-gradient(120deg, $wtf-rose, #e37ba0);
+  border: none;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: v.$color-white;
+}
+
+@keyframes wtf-wobble {
+  0%, 100% { transform: translateX(0) rotate(0); }
+  25% { transform: translateX(-6px) rotate(-2deg); }
+  75% { transform: translateX(6px) rotate(2deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wtf-card.wobble { animation: none; }
+}

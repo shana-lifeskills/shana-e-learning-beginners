@@ -1,0 +1,64 @@
+<div class="wfw">
+  <span class="wfw-week">{{ wfw.weekLabel }}</span>
+
+  <h1>
+    <span class="wfw-title-start">{{ wfw.titleStart }}</span>
+    <span class="wfw-title-accent">{{ wfw.titleAccent }}</span>
+  </h1>
+
+  <div class="wfw-scene" aria-hidden="true">
+    <svg viewBox="0 0 224 200" role="img">
+      <!-- colour-shifting heart -->
+      <path
+        class="wfw-heart"
+        d="M112 176c-40-26-72-52-72-92a40 40 0 0 1 72-24 40 40 0 0 1 72 24c0 40-32 66-72 92Z"
+      />
+      <circle class="wfw-heart-eye" cx="98" cy="86" r="5" />
+      <circle class="wfw-heart-eye" cx="126" cy="86" r="5" />
+      <path class="wfw-heart-smile" d="M96 104c8 10 24 10 32 0" />
+
+      <!-- drifting mood faces -->
+      @for (m of moods; track m.face) {
+        <g [attr.transform]="'translate(' + m.cx + ',' + m.cy + ')'">
+          <g class="wfw-mood" [style.animation-delay]="m.delay">
+            <circle class="wfw-mood-bg" [class]="'is-' + m.face" r="15" />
+            <circle class="wfw-mood-eye" cx="-5" cy="-3" r="2" />
+            <circle class="wfw-mood-eye" cx="5" cy="-3" r="2" />
+            @if (m.face === 'happy') { <path class="wfw-mood-mouth" d="M-6 4c3 5 9 5 12 0" /> }
+            @else if (m.face === 'sad') { <path class="wfw-mood-mouth" d="M-6 6c3 -5 9 -5 12 0" /> }
+            @else if (m.face === 'calm') { <path class="wfw-mood-mouth" d="M-6 4h12" /> }
+            @else { <path class="wfw-mood-mouth" d="M-6 5c3 -3 9 -3 12 0" /> }
+          </g>
+        </g>
+      }
+    </svg>
+    <span class="wfw-caption">{{ wfw.caption }}</span>
+  </div>
+
+  <ul class="wfw-feelings">
+    @for (f of wfw.feelings; track f.label) {
+      <li class="wfw-feeling">
+        <span class="wfw-feeling-icon">{{ f.icon }}</span>
+        <span class="wfw-feeling-label">{{ f.label }}</span>
+      </li>
+    }
+  </ul>
+
+  <div class="wfw-objective">
+    <span class="wfw-objective-label">{{ wfw.objectiveLabel }}</span>
+    <p>{{ wfw.objectiveText }}</p>
+  </div>
+
+  @if (isCompletedLessonWelcome()) {
+    @if (nextLesson(); as next) {
+      <button type="button" class="wfw-start" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+    } @else {
+      <button type="button" class="wfw-start" (click)="backToMap()">Back to My Modules →</button>
+    }
+    <button type="button" class="wfw-review" (click)="beginLesson()">↺ Review this lesson</button>
+  } @else {
+    <button type="button" class="wfw-start" (click)="beginLesson()">{{ wfw.startLabel }} →</button>
+  }
+
+  <p class="wfw-footer">{{ wfw.footerNote }}</p>
+</div>

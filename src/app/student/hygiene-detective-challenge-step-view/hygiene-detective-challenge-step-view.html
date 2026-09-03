@@ -1,0 +1,50 @@
+<div class="hdc">
+  <div class="hdc-file">
+    <span class="hdc-tape" aria-hidden="true"></span>
+    <span class="hdc-badge">{{ step().badge }}</span>
+
+    <h2 class="hdc-title"><span class="hdc-glass" aria-hidden="true">🔍</span>{{ step().title }}</h2>
+    <p class="hdc-mission">{{ step().missionText }}</p>
+
+    <div class="hdc-days" role="img" [attr.aria-label]="step().dayCount + ' day challenge'">
+      @for (day of days(); track day) {
+        <span class="hdc-day">Day {{ day }}</span>
+      }
+    </div>
+
+    <p class="hdc-clue-head">Case clues — tick each one when you spot it</p>
+    <ul class="hdc-clues">
+      @for (clue of step().clues; track clue.id) {
+        <li>
+          <button
+            type="button"
+            class="hdc-clue"
+            [class.found]="isFound(clue)"
+            [attr.aria-pressed]="isFound(clue)"
+            (click)="toggle(clue)"
+          >
+            <span class="hdc-stamp" aria-hidden="true">{{ isFound(clue) ? '✓' : '' }}</span>
+            <span class="hdc-clue-label">{{ clue.label }}</span>
+          </button>
+        </li>
+      }
+    </ul>
+
+    <p class="hdc-progress">{{ foundCount() }} / {{ step().clues.length }} clues found</p>
+  </div>
+
+  @if (allFound()) {
+    <div class="hdc-solved">
+      <span class="hdc-solved-mark" aria-hidden="true">🕵️</span>
+      <h3>{{ step().caseClosedTitle }}</h3>
+      <p>{{ step().caseClosedText }}</p>
+    </div>
+  }
+
+  <button type="button" class="hdc-continue" [disabled]="!allFound()" (click)="finish()">
+    {{ step().continueLabel }} →
+  </button>
+  @if (!allFound()) {
+    <p class="hdc-hint">Find every clue to close the case.</p>
+  }
+</div>

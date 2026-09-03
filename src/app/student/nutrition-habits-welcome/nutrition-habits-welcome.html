@@ -1,0 +1,56 @@
+<div class="nhw">
+  <span class="nhw-week">{{ nhw.weekLabel }}</span>
+
+  <h1>
+    <span class="nhw-title-start">{{ nhw.titleStart }}</span>
+    <span class="nhw-title-accent">{{ nhw.titleAccent }}</span>
+  </h1>
+
+  <div class="nhw-scene" aria-hidden="true">
+    <svg viewBox="0 0 240 180" role="img">
+      <!-- sun glow -->
+      <circle class="nhw-sun" cx="188" cy="44" r="20" />
+      <!-- ground -->
+      <line class="nhw-ground" x1="24" y1="154" x2="216" y2="154" />
+
+      <g class="nhw-build">
+        <!-- wall bricks, built bottom-up -->
+        @for (b of bricks; track $index) {
+          <rect class="nhw-brick" [attr.x]="b.x" [attr.y]="b.y" width="40" height="20" rx="3" />
+        }
+        <!-- roof, added last -->
+        <path class="nhw-roof" d="M64 88 L120 54 L176 88 Z" />
+        <!-- door -->
+        <rect class="nhw-door" x="108" y="120" width="24" height="34" rx="3" />
+      </g>
+    </svg>
+    <span class="nhw-caption">{{ nhw.caption }}</span>
+  </div>
+
+  <ul class="nhw-habits">
+    @for (h of nhw.habits; track h.label) {
+      <li class="nhw-habit">
+        <span class="nhw-habit-icon">{{ h.icon }}</span>
+        <span class="nhw-habit-label">{{ h.label }}</span>
+      </li>
+    }
+  </ul>
+
+  <div class="nhw-card">
+    <span class="nhw-card-label">{{ nhw.objectiveLabel }}</span>
+    <p>{{ nhw.objectiveText }}</p>
+  </div>
+
+  @if (isCompletedLessonWelcome()) {
+    @if (nextLesson(); as next) {
+      <button type="button" class="nhw-start" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+    } @else {
+      <button type="button" class="nhw-start" (click)="backToMap()">Back to My Modules →</button>
+    }
+    <button type="button" class="nhw-review" (click)="beginLesson()">↺ Review this lesson</button>
+  } @else {
+    <button type="button" class="nhw-start" (click)="beginLesson()">{{ nhw.startLabel }} →</button>
+  }
+
+  <p class="nhw-footer">{{ nhw.footerNote }}</p>
+</div>

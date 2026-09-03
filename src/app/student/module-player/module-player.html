@@ -392,6 +392,40 @@
                 <app-service-warmup-quiz-step-view [step]="exercise" (continued)="onStepContinue()" />
               } @else if (exercise.type === 'teamwork-warmup-quiz') {
                 <app-teamwork-warmup-quiz-step-view [step]="exercise" (continued)="onStepContinue()" />
+              } @else if (exercise.type === 'hygiene-warmup-quiz') {
+                <app-hygiene-warmup-quiz-step-view [step]="exercise" (continued)="onStepContinue()" />
+              } @else if (exercise.type === 'wellness-warmup-quiz') {
+                <app-wellness-warmup-quiz-step-view [step]="exercise" (continued)="onStepContinue()" />
+              } @else if (exercise.type === 'nutrition-warmup-quiz') {
+                <app-nutrition-warmup-quiz-step-view [step]="exercise" (continued)="onStepContinue()" />
+              } @else if (exercise.type === 'nutrition-food-match') {
+                <app-nutrition-food-match-step-view [step]="exercise" (continued)="onStepContinue()" />
+              } @else if (exercise.type === 'nutrition-tf-warmup') {
+                <app-nutrition-tf-warmup-step-view [step]="exercise" (continued)="onStepContinue()" />
+              } @else if (exercise.type === 'nutrition-fill-blank') {
+                <app-nutrition-fill-blank-step-view [step]="exercise" (continued)="onStepContinue()" />
+              } @else if (exercise.type === 'wellness-habit-match') {
+                <app-wellness-habit-match-step-view [step]="exercise" (continued)="onStepContinue()" />
+              } @else if (exercise.type === 'wellness-tf-warmup') {
+                <app-wellness-tf-warmup-step-view [step]="exercise" (continued)="onStepContinue()" />
+              } @else if (exercise.type === 'wellness-feelings-journal') {
+                <app-wellness-feelings-journal-step-view [step]="exercise" (continued)="onStepContinue()" />
+              } @else if (exercise.type === 'wellness-fill-blank') {
+                <app-wellness-fill-blank-step-view [step]="exercise" (continued)="onStepContinue()" />
+              } @else if (exercise.type === 'hygiene-detective-challenge') {
+                <app-hygiene-detective-challenge-step-view [step]="exercise" (continued)="onStepContinue()" />
+              } @else if (exercise.type === 'hygiene-confidence-link') {
+                <app-hygiene-confidence-link-step-view [step]="exercise" (completed)="onStepContinue()" />
+              } @else if (exercise.type === 'hygiene-habit-match') {
+                <app-hygiene-habit-match-step-view [step]="exercise" (continued)="onStepContinue()" />
+              } @else if (exercise.type === 'hygiene-checklist-challenge') {
+                <app-hygiene-checklist-challenge-step-view [step]="exercise" (continued)="onStepContinue()" />
+              } @else if (exercise.type === 'hygiene-tf-warmup') {
+                <app-hygiene-tf-warmup-step-view [step]="exercise" (continued)="onStepContinue()" />
+              } @else if (exercise.type === 'hygiene-fill-blank') {
+                <app-hygiene-fill-blank-step-view [step]="exercise" (continued)="onStepContinue()" />
+              } @else if (exercise.type === 'hygiene-final-challenge') {
+                <app-hygiene-final-challenge-step-view [step]="exercise" (submitted)="onShared($event)" />
               } @else if (exercise.type === 'service-act-tracker') {
                 <app-service-act-tracker-step-view [step]="exercise" (submitted)="onShared($event)" />
               } @else if (exercise.type === 'service-confidence-link') {

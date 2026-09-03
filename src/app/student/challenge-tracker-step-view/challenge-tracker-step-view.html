@@ -4,7 +4,11 @@
   <p class="subtitle">{{ step().subtitle }}</p>
 
   <div class="image-frame">
-    <img [src]="step().image" [alt]="step().imageAlt" />
+    @if (step().image) {
+      <img [src]="step().image" [alt]="step().imageAlt" />
+    } @else {
+      <div class="image-placeholder" aria-hidden="true"></div>
+    }
   </div>
 
   <div class="card card-white">
@@ -33,10 +37,19 @@
 
     <div class="day-list">
       @for (day of step().days; track day) {
-        <button type="button" class="day-row" [class.checked]="isChecked(day)" (click)="toggleDay(day)">
-          <span class="day-check">{{ isChecked(day) ? '✓' : '' }}</span>
-          <span>{{ day }}</span>
-        </button>
+        <div class="day-item">
+          <button type="button" class="day-row" [class.checked]="isChecked(day)" (click)="toggleDay(day)">
+            <span class="day-check">{{ isChecked(day) ? '✓' : '' }}</span>
+            <span>{{ day }}</span>
+          </button>
+          @if (step().dailyNoteLabel; as noteLabel) {
+            <label class="day-note">
+              <span>{{ noteLabel }}</span>
+              <input type="text" [placeholder]="step().dailyNotePlaceholder ?? ''"
+                [value]="noteFor(day)" (input)="setNote(day, $any($event.target).value)" />
+            </label>
+          }
+        </div>
       }
     </div>
   </div>
@@ -49,10 +62,31 @@
     </div>
   </div>
 
-  <button type="button" class="btn continue-btn" [disabled]="!allDaysChecked()" (click)="continued.emit()">
+  @if (step().reflectionPrompts?.length) {
+    <div class="card card-white reflection-card">
+      <h2 class="plain">{{ step().reflectionHeading }}</h2>
+      <div class="reflection-list">
+        @for (prompt of step().reflectionPrompts; track prompt.id) {
+          <label class="reflection-field">
+            <span>{{ prompt.label }}</span>
+            <input type="text" [placeholder]="prompt.placeholder"
+              [value]="reflectionFor(prompt.id)" (input)="setReflection(prompt.id, $any($event.target).value)" />
+          </label>
+        }
+      </div>
+    </div>
+  }
+
+  <button type="button" class="btn continue-btn" [disabled]="!canContinue()" (click)="continued.emit()">
     {{ step().continueLabel }}
   </button>
-  @if (!allDaysChecked()) {
-    <p class="continue-hint">Tick off all 7 days to continue.</p>
+  @if (!canContinue()) {
+    <p class="continue-hint">
+      @if (!allDaysChecked()) {
+        Tick off all {{ totalDays() }} days to continue.
+      } @else {
+        Fill in every box above to continue.
+      }
+    </p>
   }
 </div>

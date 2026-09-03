@@ -1,0 +1,189 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Balance-scale welcome (nhc) — Nutrition Module, Week 3 ---- */
+$nhc-bg: #e4f5ea;
+$nhc-bg-2: #ffe9dc;
+$nhc-ink: #33402f;
+$nhc-green: #5aa564;
+$nhc-deep: #3c7d46;
+$nhc-peach: #e88a56;
+$nhc-treat: #d6683f;
+$nhc-card: #fffdf6;
+
+.nhc {
+  max-width: 54rem;
+  margin: 0 auto;
+  padding: 2.5rem clamp(1rem, 4vw, 2.75rem) 2.75rem;
+  text-align: center;
+  color: $nhc-ink;
+  border-radius: v.$border-radius-xl;
+  background: linear-gradient(120deg, $nhc-bg 0%, $nhc-bg 46%, $nhc-bg-2 54%, $nhc-bg-2 100%);
+}
+
+.nhc-week {
+  @include w.welcome-pill(rgba($nhc-green, 0.2), $nhc-deep);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.nhc h1 {
+  @include m.playful-heading;
+  margin: 1.2rem 0 0;
+  font-size: clamp(1.9rem, 5.4vw, 2.9rem);
+  line-height: 1.12;
+}
+
+.nhc-title-start { color: $nhc-deep; }
+.nhc-title-accent { color: $nhc-treat; }
+
+/* --- scale scene --- */
+.nhc-scene {
+  width: clamp(15rem, 60vw, 21rem);
+  margin: 1.4rem auto 0;
+
+  svg { width: 100%; height: auto; display: block; overflow: visible; }
+}
+
+.nhc-post { fill: #9a7b52; }
+.nhc-base { fill: #9a7b52; }
+.nhc-pivot { fill: #7c6240; }
+
+.nhc-beam {
+  transform-box: fill-box;
+  transform-origin: 130px 44px;
+  animation: nhc-rock 5s ease-in-out infinite;
+}
+
+.nhc-arm { stroke: #7c6240; stroke-width: 5; stroke-linecap: round; }
+.nhc-string { stroke: rgba($nhc-ink, 0.4); stroke-width: 2; }
+
+.nhc-pan { stroke: rgba($nhc-ink, 0.25); stroke-width: 2; }
+.nhc-pan-good { fill: rgba($nhc-green, 0.85); }
+.nhc-pan-treat { fill: rgba($nhc-treat, 0.75); }
+
+.nhc-apple { fill: #e0503f; stroke: #b23b2d; stroke-width: 1.5; }
+.nhc-leaf { fill: $nhc-green; }
+.nhc-candy { fill: $nhc-peach; stroke: $nhc-treat; stroke-width: 1.5; }
+.nhc-stick { stroke: #c9a06f; stroke-width: 3; stroke-linecap: round; }
+
+.nhc-caption {
+  display: block;
+  margin-top: 0.5rem;
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: $nhc-deep;
+}
+
+/* --- two chip columns --- */
+.nhc-cols {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.9rem;
+  margin: 1.6rem auto 0;
+}
+
+.nhc-col {
+  flex: 1 1 12rem;
+  max-width: 15rem;
+  padding: 0.9rem 1rem 1.1rem;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.78);
+  border: 2px solid rgba($nhc-ink, 0.14);
+
+  ul {
+    list-style: none;
+    margin: 0.6rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: 0.45rem;
+  }
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: rgba($nhc-ink, 0.9);
+  }
+}
+
+.nhc-col-good { border-color: rgba($nhc-green, 0.5); }
+.nhc-col-treat { border-color: rgba($nhc-treat, 0.4); }
+
+.nhc-col-label {
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.nhc-col-good .nhc-col-label { color: $nhc-deep; }
+.nhc-col-treat .nhc-col-label { color: $nhc-treat; }
+
+.nhc-food-icon { font-size: 1.15rem; }
+
+/* --- objective card --- */
+.nhc-card {
+  max-width: 34rem;
+  margin: 1.8rem auto 0;
+  padding: 1.3rem 1.5rem 1.2rem;
+  text-align: left;
+  background: $nhc-card;
+  border: 2px solid rgba($nhc-ink, 0.2);
+  border-radius: 14px;
+  box-shadow: 0 6px 0 rgba($nhc-ink, 0.1);
+
+  p {
+    margin: 0.35rem 0 0;
+    font-size: 1.05rem;
+    line-height: 1.55;
+    color: rgba($nhc-ink, 0.92);
+  }
+}
+
+.nhc-card-label {
+  font-weight: 800;
+  font-size: 0.76rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: $nhc-peach;
+}
+
+/* --- actions --- */
+.nhc-start {
+  @include w.welcome-cta-btn(linear-gradient(120deg, $nhc-green, $nhc-peach), v.$color-white);
+  display: block;
+  margin: 2rem auto 0;
+  font-size: 1.15rem;
+}
+
+.nhc-review {
+  @include m.tappable;
+  display: block;
+  margin: 0.8rem auto 0;
+  background: none;
+  border: none;
+  font-weight: 700;
+  color: rgba($nhc-ink, 0.6);
+}
+
+.nhc-footer {
+  margin: 1.4rem 0 0;
+  font-size: 0.92rem;
+  color: rgba($nhc-ink, 0.55);
+}
+
+@keyframes nhc-rock {
+  0% { transform: rotate(6deg); }
+  40% { transform: rotate(-9deg); }
+  70% { transform: rotate(-6deg); }
+  100% { transform: rotate(-8deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nhc-beam { animation: none; transform: rotate(-8deg); }
+}

@@ -50,6 +50,13 @@ h1 {
   }
 }
 
+.image-placeholder {
+  width: 100%;
+  min-height: 12rem;
+  border-radius: v.$border-radius-sm;
+  background: repeating-linear-gradient(45deg, #f3ece1, #f3ece1 12px, #ede4d5 12px, #ede4d5 24px);
+}
+
 .card {
   border-radius: v.$border-radius;
   padding: 1.5rem 1.75rem;
@@ -140,6 +147,72 @@ h1 {
 
 .day-row.checked .day-check {
   background: $accent-blue;
+}
+
+.day-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.reflection-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  margin-top: 0.75rem;
+}
+
+.reflection-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  text-align: left;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: rgba(v.$color-navy-text, 0.75);
+
+  input {
+    width: 100%;
+    padding: 0.6rem 0.9rem;
+    border: 2px solid rgba($accent-blue, 0.25);
+    border-radius: v.$border-radius-sm;
+    font: inherit;
+    font-weight: 500;
+    color: v.$color-navy-text;
+    background: v.$color-white;
+  }
+
+  input:focus {
+    outline: none;
+    border-color: $accent-blue;
+  }
+}
+
+.day-note {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0 0.35rem 0.25rem;
+  text-align: left;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: rgba(v.$color-navy-text, 0.7);
+
+  input {
+    width: 100%;
+    padding: 0.55rem 0.85rem;
+    border: 2px solid rgba($accent-blue, 0.25);
+    border-radius: v.$border-radius-sm;
+    font: inherit;
+    font-weight: 500;
+    color: v.$color-navy-text;
+    background: v.$color-white;
+  }
+
+  input:focus {
+    outline: none;
+    border-color: $accent-blue;
+  }
 }
 
 .tracker-card {

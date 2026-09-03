@@ -1,0 +1,196 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- My Hygiene Habit Tracker — final challenge (hfc) — Hygiene Module, Week 4 ---- */
+$hfc-bg: #fbf1dd;
+$hfc-bg-2: #f5e6cb;
+$hfc-ink: #4a3818;
+$hfc-honey: #e0a53c;
+$hfc-deep: #b9781f;
+$hfc-leaf: #4faa74;
+$hfc-leaf-deep: #2f7d54;
+
+.hfc {
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 1.5rem clamp(0.75rem, 3vw, 1.5rem) 2.5rem;
+  text-align: center;
+}
+
+.hfc-chart {
+  padding: 1.8rem clamp(0.9rem, 3vw, 1.8rem);
+  text-align: left;
+  color: $hfc-ink;
+  background: linear-gradient(168deg, $hfc-bg 0%, $hfc-bg-2 100%);
+  border: 1px solid rgba($hfc-deep, 0.25);
+  border-radius: v.$border-radius-lg;
+  box-shadow: 0 8px 20px rgba($hfc-deep, 0.14);
+}
+
+.hfc-badge {
+  @include w.welcome-pill(rgba($hfc-honey, 0.22), $hfc-deep);
+  font-size: 0.74rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.hfc-title {
+  @include m.playful-heading;
+  margin: 0.8rem 0 0.3rem;
+  font-size: clamp(1.5rem, 4.5vw, 2rem);
+}
+
+.hfc-mission {
+  margin: 0 0 1.2rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: rgba($hfc-ink, 0.8);
+}
+
+/* --- grid --- */
+.hfc-grid { display: flex; flex-direction: column; gap: 0.4rem; }
+
+.hfc-row {
+  display: grid;
+  grid-template-columns: minmax(5.5rem, 1.4fr) repeat(var(--days), minmax(0, 1fr));
+  gap: 0.35rem;
+  align-items: stretch;
+}
+
+.hfc-row-head { align-items: end; }
+
+.hfc-task-head,
+.hfc-day-head {
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: $hfc-deep;
+}
+
+.hfc-day-head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1.1;
+  padding-bottom: 0.15rem;
+}
+
+.hfc-day-head.done { color: $hfc-honey; }
+.hfc-day-star { font-size: 0.8rem; min-height: 0.9rem; }
+
+.hfc-task {
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  font-size: 0.86rem;
+  padding-right: 0.3rem;
+}
+
+.hfc-cell {
+  @include m.tappable;
+  aspect-ratio: 1 / 1;
+  min-height: 2rem;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  color: v.$color-white;
+  background: v.$color-white;
+  border: 2px solid rgba($hfc-deep, 0.28);
+  border-radius: 8px;
+
+  &.ticked { background: $hfc-leaf; border-color: $hfc-leaf; }
+}
+
+.hfc-progress {
+  margin: 1rem 0 0;
+  font-weight: 700;
+  font-size: 0.86rem;
+  color: rgba($hfc-ink, 0.65);
+}
+
+/* --- reflection fields --- */
+.hfc-reflect {
+  margin: 1.4rem 0 0;
+  padding: 1.3rem 1.4rem;
+  text-align: left;
+  border-radius: v.$border-radius-lg;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba($hfc-deep, 0.25);
+}
+
+.hfc-reflect-head {
+  display: block;
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $hfc-leaf-deep;
+  margin-bottom: 0.8rem;
+}
+
+.hfc-field {
+  display: block;
+  margin-bottom: 0.9rem;
+
+  &:last-child { margin-bottom: 0; }
+
+  span {
+    display: block;
+    font-weight: 700;
+    font-size: 0.92rem;
+    color: rgba($hfc-ink, 0.85);
+    margin-bottom: 0.35rem;
+  }
+
+  input {
+    width: 100%;
+    font: inherit;
+    padding: 0.6rem 0.8rem;
+    border-radius: v.$border-radius-sm;
+    border: 2px solid rgba($hfc-deep, 0.3);
+    background: v.$color-white;
+    color: $hfc-ink;
+
+    &:focus-visible { outline: none; border-color: $hfc-leaf; }
+  }
+}
+
+/* --- done --- */
+.hfc-done {
+  margin: 1.4rem 0 0;
+  padding: 1.4rem;
+  text-align: center;
+  border-radius: v.$border-radius-lg;
+  background: rgba($hfc-honey, 0.16);
+  border: 2px solid rgba($hfc-honey, 0.6);
+
+  h3 {
+    @include m.playful-heading;
+    margin: 0.4rem 0 0.3rem;
+    font-size: 1.4rem;
+    color: $hfc-deep;
+  }
+
+  p { margin: 0; color: rgba($hfc-ink, 0.8); }
+}
+
+.hfc-done-mark { font-size: 2.2rem; }
+
+.hfc-submit {
+  @include w.welcome-cta-btn(linear-gradient(120deg, $hfc-leaf, #63c78e), v.$color-white);
+  margin: 1.6rem auto 0;
+  display: block;
+  font-size: 1.1rem;
+
+  &:disabled { opacity: 0.45; cursor: not-allowed; }
+}
+
+.hfc-hint {
+  margin: 0.7rem 0 0;
+  font-size: 0.85rem;
+  color: rgba($hfc-ink, 0.55);
+}

@@ -1,0 +1,182 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Hygiene Detective challenge (hdc) — Hygiene Module, Week 1 ---- */
+$hdc-file: #f6ecd3;
+$hdc-file-2: #efe0bf;
+$hdc-ink: #423722;
+$hdc-cyan: #1aa5be;
+$hdc-deep: #0e7c90;
+$hdc-red: #d5533b;
+$hdc-leaf: #4faa74;
+
+.hdc {
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 1.5rem clamp(0.75rem, 3vw, 1.5rem) 2.5rem;
+  text-align: center;
+}
+
+/* --- the case file --- */
+.hdc-file {
+  position: relative;
+  padding: 2rem clamp(1rem, 4vw, 2.2rem);
+  text-align: left;
+  color: $hdc-ink;
+  background: repeating-linear-gradient(0deg, $hdc-file 0 28px, $hdc-file-2 28px 29px);
+  border: 1px solid rgba($hdc-ink, 0.25);
+  border-radius: 6px;
+  box-shadow: 0 10px 22px rgba($hdc-ink, 0.18);
+}
+
+.hdc-tape {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  width: 8rem;
+  height: 1.6rem;
+  margin-left: -4rem;
+  background: rgba($hdc-cyan, 0.35);
+  border: 1px dashed rgba($hdc-deep, 0.5);
+  transform: rotate(-3deg);
+}
+
+.hdc-badge {
+  @include w.welcome-pill(rgba($hdc-red, 0.16), $hdc-red);
+  font-size: 0.74rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.hdc-title {
+  @include m.playful-heading;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0.8rem 0 0.3rem;
+  font-size: clamp(1.5rem, 4.5vw, 2rem);
+}
+
+.hdc-glass { font-size: 1.5rem; }
+
+.hdc-mission {
+  margin: 0 0 1rem;
+  font-size: 1.02rem;
+  line-height: 1.55;
+}
+
+.hdc-days {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0 0 1.4rem;
+}
+
+.hdc-day {
+  font-family: v.$headings-font-family;
+  font-weight: 700;
+  font-size: 0.78rem;
+  padding: 0.3rem 0.7rem;
+  border-radius: v.$border-radius-sm;
+  color: $hdc-deep;
+  background: rgba($hdc-cyan, 0.16);
+  border: 1px solid rgba($hdc-deep, 0.3);
+}
+
+.hdc-clue-head {
+  margin: 0 0 0.6rem;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: rgba($hdc-ink, 0.7);
+}
+
+.hdc-clues {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.55rem;
+}
+
+.hdc-clue {
+  @include m.tappable;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.75rem 0.9rem;
+  text-align: left;
+  font: inherit;
+  font-weight: 600;
+  color: $hdc-ink;
+  background: rgba(255, 255, 255, 0.75);
+  border: 2px solid rgba($hdc-ink, 0.3);
+  border-radius: v.$border-radius-sm;
+
+  &.found {
+    border-color: $hdc-leaf;
+    background: rgba($hdc-leaf, 0.14);
+  }
+}
+
+.hdc-stamp {
+  flex: none;
+  width: 1.7rem;
+  height: 1.7rem;
+  display: grid;
+  place-items: center;
+  border-radius: 5px;
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  color: v.$color-white;
+  background: rgba($hdc-ink, 0.2);
+}
+
+.hdc-clue.found .hdc-stamp {
+  background: $hdc-leaf;
+  transform: rotate(-8deg);
+}
+
+.hdc-progress {
+  margin: 1rem 0 0;
+  font-weight: 700;
+  font-size: 0.88rem;
+  color: rgba($hdc-ink, 0.65);
+}
+
+/* --- solved panel --- */
+.hdc-solved {
+  margin: 1.4rem 0 0;
+  padding: 1.4rem;
+  text-align: center;
+  border-radius: v.$border-radius-lg;
+  background: rgba($hdc-cyan, 0.12);
+  border: 2px solid rgba($hdc-deep, 0.3);
+
+  h3 {
+    @include m.playful-heading;
+    margin: 0.4rem 0 0.3rem;
+    font-size: 1.4rem;
+    color: $hdc-deep;
+  }
+
+  p { margin: 0; color: rgba($hdc-ink, 0.8); }
+}
+
+.hdc-solved-mark { font-size: 2.2rem; }
+
+.hdc-continue {
+  @include w.welcome-cta-btn(linear-gradient(120deg, $hdc-cyan, #2ec7dd), v.$color-white);
+  margin: 1.6rem auto 0;
+  display: block;
+  font-size: 1.1rem;
+
+  &:disabled { opacity: 0.45; cursor: not-allowed; }
+}
+
+.hdc-hint {
+  margin: 0.7rem 0 0;
+  font-size: 0.85rem;
+  color: rgba($hdc-ink, 0.55);
+}

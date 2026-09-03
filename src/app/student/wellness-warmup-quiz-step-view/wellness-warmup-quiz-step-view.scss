@@ -1,0 +1,185 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- Wellness Warm-Up quiz (wwq) — Wellness Module, Week 1 ---- */
+$wwq-bg: #e8f4fd;
+$wwq-bg-2: #d5ebfb;
+$wwq-ink: #23415a;
+$wwq-blue: #3d8fd0;
+$wwq-gold: #f5b13d;
+$wwq-green: #5fae5c;
+
+.wwq {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 1.75rem clamp(1rem, 4vw, 2.25rem) 2rem;
+  color: $wwq-ink;
+  text-align: center;
+  border-radius: v.$border-radius-xl;
+  background: linear-gradient(168deg, $wwq-bg 0%, $wwq-bg-2 100%);
+}
+
+.wwq-head h2 {
+  @include m.playful-heading;
+  margin: 0.4rem 0 0;
+  font-size: clamp(1.4rem, 4.5vw, 1.9rem);
+}
+
+.wwq-kicker {
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: $wwq-blue;
+}
+
+.wwq-sub {
+  margin: 0.3rem 0 0;
+  font-size: 0.98rem;
+  color: rgba($wwq-ink, 0.7);
+}
+
+/* --- sun progress --- */
+.wwq-sun {
+  width: 8.5rem;
+  margin: 1.1rem auto 0;
+
+  svg { width: 100%; height: auto; display: block; overflow: visible; }
+}
+
+.wwq-ray {
+  stroke: rgba($wwq-ink, 0.16);
+  stroke-width: 6;
+  stroke-linecap: round;
+  transform-box: view-box;
+  transform-origin: 80px 80px;
+  transition: stroke 0.4s ease;
+
+  &.lit {
+    stroke: $wwq-gold;
+    animation: wwq-pop 0.5s ease;
+  }
+}
+
+.wwq-core { fill: $wwq-gold; stroke: #e09a25; stroke-width: 3; }
+.wwq-eye { fill: #7a4a12; }
+.wwq-smile { fill: none; stroke: #7a4a12; stroke-width: 3; stroke-linecap: round; }
+
+/* --- question card --- */
+.wwq-card {
+  margin: 1.3rem auto 0;
+  padding: 1.3rem 1.2rem 1.4rem;
+  background: rgba(255, 255, 255, 0.85);
+  border: 2px solid rgba($wwq-blue, 0.2);
+  border-radius: v.$border-radius-lg;
+
+  &.shiver { animation: wwq-shiver 0.4s ease; }
+}
+
+.wwq-q {
+  margin: 0 0 1rem;
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 1.1rem;
+}
+
+.wwq-options {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.6rem;
+}
+
+.wwq-pebble {
+  @include m.tappable;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.8rem 1rem;
+  text-align: left;
+  background: #fbfdff;
+  border: 2px solid rgba($wwq-ink, 0.14);
+  border-radius: 999px;
+  font-size: 1rem;
+  color: $wwq-ink;
+
+  &:disabled { cursor: default; }
+  &.is-correct { border-color: $wwq-green; background: rgba($wwq-green, 0.14); }
+  &.is-wrong { border-color: #e0674f; background: rgba(#e0674f, 0.12); }
+}
+
+.wwq-letter {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 1.85rem;
+  height: 1.85rem;
+  border-radius: 50%;
+  background: rgba($wwq-blue, 0.16);
+  font-weight: 800;
+  color: $wwq-blue;
+}
+
+.wwq-feedback {
+  margin: 1rem 0 0;
+  font-weight: 700;
+  font-size: 0.98rem;
+
+  &.ok { color: $wwq-green; }
+  &.no { color: #d1543b; }
+}
+
+.wwq-footer {
+  margin: 1rem 0 0;
+  font-size: 0.9rem;
+  color: rgba($wwq-ink, 0.55);
+}
+
+/* --- done panel --- */
+.wwq-done {
+  margin: 1.3rem auto 0;
+  padding: 1.6rem 1.3rem;
+  background: rgba(255, 255, 255, 0.9);
+  border: 2px solid rgba($wwq-gold, 0.4);
+  border-radius: v.$border-radius-lg;
+
+  h3 {
+    @include m.playful-heading;
+    margin: 0.5rem 0 0.3rem;
+    font-size: 1.3rem;
+  }
+
+  p { margin: 0; color: rgba($wwq-ink, 0.75); }
+}
+
+.wwq-done-icon { font-size: 2.4rem; }
+
+.wwq-continue {
+  @include m.tappable;
+  margin: 1.2rem 0 0;
+  padding: 0.8rem 1.8rem;
+  background: linear-gradient(120deg, $wwq-blue, #57a8e0);
+  border: none;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: v.$color-white;
+}
+
+@keyframes wwq-pop {
+  0% { stroke-width: 6; opacity: 0.3; }
+  55% { stroke-width: 11; opacity: 1; }
+  100% { stroke-width: 6; opacity: 1; }
+}
+
+@keyframes wwq-shiver {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wwq-ray.lit, .wwq-card.shiver { animation: none; }
+}

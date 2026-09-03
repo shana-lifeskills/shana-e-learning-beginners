@@ -1,0 +1,217 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- Nutrition Warm-Up matching game (nfm) — Nutrition Module, Week 2 ---- */
+$nfm-bg: #fff1e6;
+$nfm-bg-2: #ffe7d3;
+$nfm-ink: #4a2b23;
+$nfm-tomato: #e2603f;
+$nfm-deep: #b8442a;
+$nfm-amber: #f2a63c;
+$nfm-green: #6fb45c;
+
+.nfm {
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 1.75rem clamp(1rem, 4vw, 2.25rem) 2rem;
+  color: $nfm-ink;
+  text-align: center;
+  border-radius: v.$border-radius-xl;
+  background: linear-gradient(168deg, $nfm-bg 0%, $nfm-bg-2 100%);
+}
+
+.nfm-head h2 {
+  @include m.playful-heading;
+  margin: 0.4rem 0 0;
+  font-size: clamp(1.4rem, 4.5vw, 1.9rem);
+}
+
+.nfm-kicker {
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: $nfm-tomato;
+}
+
+.nfm-sub {
+  margin: 0.3rem 0 0;
+  font-size: 0.98rem;
+  color: rgba($nfm-ink, 0.7);
+}
+
+/* --- board --- */
+.nfm-board {
+  margin: 1.3rem 0 0;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.7);
+  border: 2px solid rgba($nfm-deep, 0.16);
+  border-radius: v.$border-radius-lg;
+}
+
+.nfm-col-labels {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 0.4rem 0.5rem;
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba($nfm-deep, 0.7);
+}
+
+.nfm-rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.6rem;
+}
+
+.nfm-row {
+  display: grid;
+  grid-template-columns: 1fr auto 1.15fr;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.55rem 0.65rem;
+  background: #fffaf4;
+  border: 2px solid rgba($nfm-ink, 0.12);
+  border-radius: 14px;
+
+  &.armed { border-color: rgba($nfm-amber, 0.7); }
+  &.matched { border-color: $nfm-green; background: rgba($nfm-green, 0.12); }
+  &.wrong { animation: nfm-wobble 0.5s ease; border-color: $nfm-tomato; }
+}
+
+.nfm-food {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 800;
+  font-size: 0.98rem;
+}
+
+.nfm-food-icon { font-size: 1.15rem; }
+
+.nfm-link {
+  width: 1.1rem;
+  height: 2px;
+  border-radius: 2px;
+  background: rgba($nfm-deep, 0.3);
+}
+
+.nfm-slot {
+  @include m.tappable;
+  padding: 0.55rem 0.7rem;
+  border: 2px dashed rgba($nfm-deep, 0.35);
+  border-radius: 10px;
+  background: rgba($nfm-deep, 0.04);
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: rgba($nfm-ink, 0.75);
+
+  &:disabled { opacity: 0.55; cursor: default; }
+  &.filled {
+    border-style: solid;
+    border-color: $nfm-green;
+    background: rgba($nfm-green, 0.18);
+    color: $nfm-deep;
+  }
+}
+
+/* --- benefit tag bank --- */
+.nfm-bank {
+  margin: 1.2rem 0 0;
+}
+
+.nfm-bank-label {
+  margin: 0 0 0.6rem;
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba($nfm-deep, 0.7);
+}
+
+.nfm-tags {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.55rem;
+}
+
+.nfm-tag {
+  @include m.tappable;
+  padding: 0.6rem 1rem;
+  border: 2px solid rgba($nfm-deep, 0.22);
+  border-radius: 999px;
+  background: #fff;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: $nfm-ink;
+
+  &.selected {
+    border-color: $nfm-amber;
+    background: rgba($nfm-amber, 0.2);
+    transform: translateY(-2px);
+  }
+}
+
+.nfm-footer {
+  margin: 1.1rem 0 0;
+  font-size: 0.9rem;
+  color: rgba($nfm-ink, 0.55);
+}
+
+.nfm-reset {
+  @include m.tappable;
+  margin: 0.5rem 0 0;
+  background: none;
+  border: none;
+  font-weight: 700;
+  color: rgba($nfm-ink, 0.6);
+}
+
+/* --- done panel --- */
+.nfm-done {
+  margin: 1.3rem auto 0;
+  padding: 1.6rem 1.3rem;
+  background: rgba(255, 255, 255, 0.92);
+  border: 2px solid rgba($nfm-amber, 0.45);
+  border-radius: v.$border-radius-lg;
+
+  h3 {
+    @include m.playful-heading;
+    margin: 0.5rem 0 0.3rem;
+    font-size: 1.3rem;
+  }
+
+  p { margin: 0; color: rgba($nfm-ink, 0.75); }
+}
+
+.nfm-done-icon { font-size: 2.4rem; }
+
+.nfm-continue {
+  @include m.tappable;
+  margin: 1.2rem 0 0;
+  padding: 0.8rem 1.8rem;
+  background: linear-gradient(120deg, $nfm-tomato, $nfm-amber);
+  border: none;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: v.$color-white;
+}
+
+@keyframes nfm-wobble {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nfm-row.wrong { animation: none; }
+}

@@ -1,0 +1,185 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Fuel-plate welcome (nwf) — Nutrition Module, Week 1 ---- */
+$nwf-bg: #ffe9df;
+$nwf-bg-2: #ffefcf;
+$nwf-ink: #4a2b23;
+$nwf-tomato: #e2603f;
+$nwf-deep: #b8442a;
+$nwf-amber: #f2a63c;
+$nwf-card: #fffaf2;
+
+.nwf {
+  max-width: 54rem;
+  margin: 0 auto;
+  padding: 2.5rem clamp(1rem, 4vw, 2.75rem) 2.75rem;
+  text-align: center;
+  color: $nwf-ink;
+  border-radius: v.$border-radius-xl;
+  background: linear-gradient(165deg, $nwf-bg 0%, $nwf-bg-2 100%);
+}
+
+.nwf-week {
+  @include w.welcome-pill(rgba($nwf-tomato, 0.2), $nwf-deep);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.nwf h1 {
+  @include m.playful-heading;
+  margin: 1.2rem 0 0;
+  font-size: clamp(2rem, 5.6vw, 3rem);
+  line-height: 1.12;
+}
+
+.nwf-title-start { color: $nwf-ink; }
+.nwf-title-accent { color: $nwf-tomato; }
+
+/* --- plate scene --- */
+.nwf-scene {
+  width: clamp(15rem, 60vw, 21rem);
+  margin: 1.4rem auto 0;
+
+  svg { width: 100%; height: auto; display: block; overflow: visible; }
+}
+
+.nwf-glow { fill: rgba($nwf-amber, 0.18); }
+.nwf-plate { fill: #ffffff; stroke: rgba($nwf-deep, 0.18); stroke-width: 2; }
+.nwf-plate-rim { fill: none; stroke: rgba($nwf-deep, 0.16); stroke-width: 2; }
+.nwf-plate-center { fill: #fff; stroke: rgba($nwf-deep, 0.14); stroke-width: 2; }
+
+.nwf-wedge {
+  fill: $nwf-amber;
+  stroke: #fff;
+  stroke-width: 3;
+  transform-box: fill-box;
+  transform-origin: 120px 120px;
+  animation: nwf-light 3.6s ease-in-out infinite;
+}
+.nwf-wedges .nwf-wedge:nth-child(2) { fill: $nwf-tomato; }
+.nwf-wedges .nwf-wedge:nth-child(3) { fill: #7cbf6a; }
+
+.nwf-bolt {
+  fill: $nwf-amber;
+  stroke: $nwf-deep;
+  stroke-width: 2;
+  transform-box: fill-box;
+  transform-origin: center bottom;
+  animation: nwf-rise 2.4s ease-in-out infinite;
+}
+
+.nwf-batt { fill: none; stroke: rgba($nwf-deep, 0.55); stroke-width: 4; }
+.nwf-batt-cap { fill: rgba($nwf-deep, 0.55); }
+.nwf-batt-fill {
+  fill: #7cbf6a;
+  transform-box: fill-box;
+  transform-origin: center bottom;
+  animation: nwf-charge 3.6s ease-in-out infinite;
+}
+
+.nwf-caption {
+  display: block;
+  margin-top: 0.5rem;
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: $nwf-deep;
+}
+
+/* --- benefit chips --- */
+.nwf-benefits {
+  list-style: none;
+  margin: 1.6rem auto 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.7rem;
+}
+
+.nwf-benefit {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.95rem;
+  background: rgba(255, 255, 255, 0.8);
+  border: 2px solid rgba($nwf-deep, 0.22);
+  border-radius: 999px;
+  font-weight: 800;
+  color: $nwf-deep;
+}
+
+.nwf-benefit-icon { font-size: 1.2rem; }
+.nwf-benefit-label { font-size: 0.95rem; }
+
+/* --- objective on a menu card --- */
+.nwf-menu {
+  max-width: 34rem;
+  margin: 1.8rem auto 0;
+  padding: 1.3rem 1.5rem 1.2rem;
+  text-align: left;
+  background: $nwf-card;
+  border: 2px solid rgba($nwf-deep, 0.28);
+  border-radius: 14px;
+  box-shadow: 0 6px 0 rgba($nwf-deep, 0.12);
+
+  p {
+    margin: 0.35rem 0 0;
+    font-size: 1.05rem;
+    line-height: 1.55;
+    color: rgba($nwf-ink, 0.92);
+  }
+}
+
+.nwf-menu-label {
+  font-weight: 800;
+  font-size: 0.76rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: $nwf-tomato;
+}
+
+/* --- actions --- */
+.nwf-start {
+  @include w.welcome-cta-btn(linear-gradient(120deg, $nwf-tomato, $nwf-amber), v.$color-white);
+  display: block;
+  margin: 2rem auto 0;
+  font-size: 1.15rem;
+}
+
+.nwf-review {
+  @include m.tappable;
+  display: block;
+  margin: 0.8rem auto 0;
+  background: none;
+  border: none;
+  font-weight: 700;
+  color: rgba($nwf-ink, 0.6);
+}
+
+.nwf-footer {
+  margin: 1.4rem 0 0;
+  font-size: 0.92rem;
+  color: rgba($nwf-ink, 0.55);
+}
+
+@keyframes nwf-light {
+  0%, 100% { opacity: 0.4; transform: scale(0.97); }
+  50% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes nwf-rise {
+  0%, 100% { transform: translateY(4px) scale(0.94); opacity: 0.7; }
+  50% { transform: translateY(-8px) scale(1.06); opacity: 1; }
+}
+
+@keyframes nwf-charge {
+  0% { transform: scaleY(0.12); }
+  70%, 100% { transform: scaleY(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nwf-wedge, .nwf-bolt, .nwf-batt-fill { animation: none; }
+}

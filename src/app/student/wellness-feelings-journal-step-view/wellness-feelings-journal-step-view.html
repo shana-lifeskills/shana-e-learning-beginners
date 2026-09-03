@@ -1,0 +1,51 @@
+<div class="wfj">
+  <span class="wfj-badge">⭐ {{ step().badge }}</span>
+  <h2>{{ step().title }}</h2>
+  <p class="wfj-subtitle">{{ step().subtitle }}</p>
+  <p class="wfj-intro">{{ step().intro }}</p>
+
+  <div class="wfj-streak" [attr.aria-label]="loggedCount() + ' of ' + step().dayCount + ' days logged'">
+    @for (day of days(); track day) {
+      <span class="wfj-heart" [class.filled]="isLogged(day)">{{ isLogged(day) ? '💜' : '🤍' }}</span>
+    }
+  </div>
+
+  <ul class="wfj-days">
+    @for (day of days(); track day) {
+      <li class="wfj-day" [class.open]="openDay() === day" [class.logged]="isLogged(day)">
+        <button type="button" class="wfj-day-head" (click)="toggleDay(day)">
+          <span>Day {{ day }}</span>
+          <span class="wfj-day-state">{{ isLogged(day) ? '✓ Logged' : (openDay() === day ? '−' : '+') }}</span>
+        </button>
+
+        @if (openDay() === day) {
+          <div class="wfj-day-body">
+            @for (field of step().fields; track field.id) {
+              <label class="wfj-field">
+                <span>{{ field.label }}</span>
+                <textarea rows="2" [placeholder]="field.placeholder"></textarea>
+              </label>
+            }
+            <button type="button" class="wfj-log" (click)="logDay(day)">
+              {{ isLogged(day) ? 'Update entry' : step().dayLoggedLabel }}
+            </button>
+          </div>
+        }
+      </li>
+    }
+  </ul>
+
+  <p class="wfj-progress">{{ loggedCount() }} / {{ step().dayCount }} {{ step().progressLabel }}</p>
+
+  <p class="wfj-parent">{{ step().parentNote }}</p>
+
+  @if (allLogged()) {
+    <div class="wfj-done">
+      <span aria-hidden="true">📔</span>
+      <h3>{{ step().allDoneTitle }}</h3>
+      <p>{{ step().allDoneText }}</p>
+    </div>
+  }
+
+  <button type="button" class="wfj-continue" (click)="finish()">{{ step().continueLabel }} →</button>
+</div>

@@ -1,0 +1,69 @@
+<div class="ntf">
+  <header class="ntf-head">
+    <span class="ntf-kicker">{{ step().kicker }}</span>
+    <h2>{{ step().heading }}</h2>
+    <p class="ntf-sub">{{ step().subtitle }}</p>
+  </header>
+
+  @if (!allSolved()) {
+    <ul class="ntf-dots" aria-hidden="true">
+      @for (s of step().statements; track s.id) {
+        <li class="ntf-dot" [class.done]="isSolved(s)"></li>
+      }
+    </ul>
+
+    @if (activeStatement(); as statement) {
+      <div class="ntf-stage">
+        <span class="ntf-lane ntf-lane-true">{{ step().trueLabel }}</span>
+
+        <div
+          class="ntf-card"
+          [class.wobble]="wrongVerdict() !== null"
+          [class.leave-true]="leavingVerdict() === true"
+          [class.leave-false]="leavingVerdict() === false"
+        >
+          <span class="ntf-count">{{ activeNumber() }} / {{ total() }}</span>
+          <p class="ntf-statement">{{ statement.text }}</p>
+        </div>
+
+        <span class="ntf-lane ntf-lane-false">{{ step().falseLabel }}</span>
+      </div>
+
+      <div class="ntf-actions">
+        <button type="button" class="ntf-btn ntf-btn-true" (click)="answer(statement, true)">
+          👍 {{ step().trueLabel }}
+        </button>
+        <button type="button" class="ntf-btn ntf-btn-false" (click)="answer(statement, false)">
+          👎 {{ step().falseLabel }}
+        </button>
+      </div>
+
+      @if (wrongVerdict() !== null) {
+        <p class="ntf-feedback no">Not quite — think it through and try again.</p>
+      } @else if (lastPraise(); as praise) {
+        <p class="ntf-feedback ok">🍎 {{ praise }}</p>
+      }
+    }
+
+    <p class="ntf-footer">{{ step().footerNote }}</p>
+  } @else {
+    <div class="ntf-done">
+      <span class="ntf-done-icon" aria-hidden="true">🥗</span>
+      <h3>{{ step().allDoneTitle }}</h3>
+      <p>{{ step().allDoneText }}</p>
+
+      @if (step().recapHeading; as recapHeading) {
+        <div class="ntf-recap">
+          <h4>{{ recapHeading }}</h4>
+          <ul>
+            @for (point of step().recapPoints; track point) {
+              <li>{{ point }}</li>
+            }
+          </ul>
+        </div>
+      }
+
+      <button type="button" class="ntf-continue" (click)="finish()">{{ step().continueLabel }} →</button>
+    </div>
+  }
+</div>

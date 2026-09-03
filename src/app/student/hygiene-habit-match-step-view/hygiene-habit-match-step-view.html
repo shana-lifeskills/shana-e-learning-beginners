@@ -1,0 +1,69 @@
+<div class="hhm">
+  <header class="hhm-head">
+    <span class="hhm-kicker">Warm-Up · Matching</span>
+    <h2>{{ step().heading }}</h2>
+    <p class="hhm-sub">{{ step().subtitle }}</p>
+  </header>
+
+  <div class="hhm-track" role="img" [attr.aria-label]="matchedCount() + ' of ' + total() + ' matched'">
+    <span class="hhm-track-fill" [style.width.%]="progressPercent()"></span>
+  </div>
+
+  @if (!allMatched()) {
+    <div class="hhm-board">
+      <div class="hhm-col">
+        <span class="hhm-col-head">{{ step().habitHeading }}</span>
+        @for (pair of step().pairs; track pair.id) {
+          <button
+            type="button"
+            class="hhm-chip hhm-habit"
+            [class]="habitClass(pair)"
+            [disabled]="isMatched(pair.id)"
+            (click)="pickHabit(pair)"
+          >
+            @if (pair.icon) {<span class="hhm-icon" aria-hidden="true">{{ pair.icon }}</span>}
+            <span>{{ pair.habit }}</span>
+            @if (isMatched(pair.id)) {<span class="hhm-tick" aria-hidden="true">✓</span>}
+          </button>
+        }
+      </div>
+
+      <div class="hhm-col">
+        <span class="hhm-col-head">{{ step().purposeHeading }}</span>
+        @for (card of purposes(); track card.pairId) {
+          <button
+            type="button"
+            class="hhm-chip hhm-purpose"
+            [class]="purposeClass(card)"
+            [disabled]="isMatched(card.pairId)"
+            (click)="pickPurpose(card)"
+          >
+            <span>{{ card.purpose }}</span>
+            @if (isMatched(card.pairId)) {<span class="hhm-tick" aria-hidden="true">✓</span>}
+          </button>
+        }
+      </div>
+    </div>
+
+    <p class="hhm-hint">Tap a habit, then tap the purpose it helps with.</p>
+  } @else {
+    <div class="hhm-done">
+      <span class="hhm-done-mark" aria-hidden="true">🧴</span>
+      <h3>{{ step().allDoneTitle }}</h3>
+      <p>{{ step().allDoneText }}</p>
+
+      @if (step().recapPoints?.length) {
+        <div class="hhm-recap">
+          <span class="hhm-recap-head">{{ step().recapHeading }}</span>
+          <ul>
+            @for (point of step().recapPoints; track point) {
+              <li>{{ point }}</li>
+            }
+          </ul>
+        </div>
+      }
+
+      <button type="button" class="hhm-continue" (click)="finish()">{{ step().continueLabel }} →</button>
+    </div>
+  }
+</div>

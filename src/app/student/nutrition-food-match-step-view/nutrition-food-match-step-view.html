@@ -1,0 +1,75 @@
+<div class="nfm">
+  <header class="nfm-head">
+    <span class="nfm-kicker">{{ step().kicker }}</span>
+    <h2>{{ step().heading }}</h2>
+    <p class="nfm-sub">{{ step().subtitle }}</p>
+  </header>
+
+  @if (!allMatched()) {
+    <div class="nfm-board">
+      <div class="nfm-col-labels">
+        <span>{{ step().foodColumnLabel }}</span>
+        <span>{{ step().benefitColumnLabel }}</span>
+      </div>
+
+      <ul class="nfm-rows">
+        @for (pair of step().pairs; track pair.id) {
+          <li
+            class="nfm-row"
+            [class.matched]="isRowMatched(pair.id)"
+            [class.wrong]="isRowWrong(pair.id)"
+            [class.armed]="selectedBenefitId() && !isRowMatched(pair.id)"
+          >
+            <span class="nfm-food">
+              @if (pair.icon) {
+                <span class="nfm-food-icon" aria-hidden="true">{{ pair.icon }}</span>
+              }
+              {{ pair.food }}
+            </span>
+            <span class="nfm-link" aria-hidden="true"></span>
+            @if (isRowMatched(pair.id)) {
+              <span class="nfm-slot filled">✓ {{ rowBenefit(pair.id) }}</span>
+            } @else {
+              <button
+                type="button"
+                class="nfm-slot"
+                [disabled]="!selectedBenefitId()"
+                (click)="placeOnRow(pair.id)"
+              >
+                Tap to place
+              </button>
+            }
+          </li>
+        }
+      </ul>
+    </div>
+
+    <div class="nfm-bank">
+      <p class="nfm-bank-label">{{ step().benefitColumnLabel }}</p>
+      <ul class="nfm-tags">
+        @for (pair of remaining(); track pair.id) {
+          <li>
+            <button
+              type="button"
+              class="nfm-tag"
+              [class.selected]="selectedBenefitId() === pair.id"
+              (click)="selectBenefit(pair.id)"
+            >
+              {{ pair.benefit }}
+            </button>
+          </li>
+        }
+      </ul>
+    </div>
+
+    <p class="nfm-footer">{{ step().footerNote }}</p>
+    <button type="button" class="nfm-reset" (click)="startOver()">↺ Start over</button>
+  } @else {
+    <div class="nfm-done">
+      <span class="nfm-done-icon" aria-hidden="true">🍽️</span>
+      <h3>{{ step().allDoneTitle }}</h3>
+      <p>{{ step().allDoneText }}</p>
+      <button type="button" class="nfm-continue" (click)="finish()">{{ step().continueLabel }} →</button>
+    </div>
+  }
+</div>

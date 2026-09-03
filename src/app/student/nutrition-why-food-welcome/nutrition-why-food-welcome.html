@@ -1,0 +1,63 @@
+<div class="nwf">
+  <span class="nwf-week">{{ nwf.weekLabel }}</span>
+
+  <h1>
+    <span class="nwf-title-start">{{ nwf.titleStart }}</span>
+    <span class="nwf-title-accent">{{ nwf.titleAccent }}</span>
+  </h1>
+
+  <div class="nwf-scene" aria-hidden="true">
+    <svg viewBox="0 0 300 220" role="img">
+      <!-- warm glow behind the plate -->
+      <circle class="nwf-glow" cx="120" cy="120" r="86" />
+
+      <!-- plate -->
+      <circle class="nwf-plate" cx="120" cy="120" r="84" />
+      <circle class="nwf-plate-rim" cx="120" cy="120" r="80" />
+
+      <!-- food wedges lighting up in turn -->
+      <g class="nwf-wedges">
+        @for (wg of wedges; track $index) {
+          <path class="nwf-wedge" [attr.d]="wg.d" [style.animation-delay]="wg.delay" />
+        }
+      </g>
+      <circle class="nwf-plate-center" cx="120" cy="120" r="16" />
+
+      <!-- energy bolt rising off the plate -->
+      <path class="nwf-bolt" d="M126 96l-20 30h14l-6 26 22-34h-14Z" />
+
+      <!-- battery charging beside the plate -->
+      <rect class="nwf-batt" x="232" y="92" width="40" height="60" rx="7" />
+      <rect class="nwf-batt-cap" x="245" y="84" width="14" height="9" rx="3" />
+      <rect class="nwf-batt-fill" x="238" y="98" width="28" height="48" rx="4" />
+    </svg>
+    <span class="nwf-caption">{{ nwf.caption }}</span>
+  </div>
+
+  <ul class="nwf-benefits">
+    @for (b of nwf.benefits; track b.label) {
+      <li class="nwf-benefit">
+        <span class="nwf-benefit-icon">{{ b.icon }}</span>
+        <span class="nwf-benefit-label">{{ b.label }}</span>
+      </li>
+    }
+  </ul>
+
+  <div class="nwf-menu">
+    <span class="nwf-menu-label">{{ nwf.objectiveLabel }}</span>
+    <p>{{ nwf.objectiveText }}</p>
+  </div>
+
+  @if (isCompletedLessonWelcome()) {
+    @if (nextLesson(); as next) {
+      <button type="button" class="nwf-start" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+    } @else {
+      <button type="button" class="nwf-start" (click)="backToMap()">Back to My Modules →</button>
+    }
+    <button type="button" class="nwf-review" (click)="beginLesson()">↺ Review this lesson</button>
+  } @else {
+    <button type="button" class="nwf-start" (click)="beginLesson()">{{ nwf.startLabel }} →</button>
+  }
+
+  <p class="nwf-footer">{{ nwf.footerNote }}</p>
+</div>

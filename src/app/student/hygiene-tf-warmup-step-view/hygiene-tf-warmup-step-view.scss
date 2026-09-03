@@ -1,0 +1,215 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Hygiene True/False warm-up (htf) — Hygiene Module, Week 3 ---- */
+$htf-bg: #e8f2fb;
+$htf-bg-2: #d6e7f7;
+$htf-ink: #123a54;
+$htf-blue: #3d8fd6;
+$htf-deep: #235d94;
+$htf-leaf: #4faa74;
+$htf-coral: #ff7a59;
+
+.htf {
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: 2rem clamp(1rem, 4vw, 2.5rem) 2.5rem;
+  color: $htf-ink;
+  border-radius: v.$border-radius-xl;
+  background: linear-gradient(168deg, $htf-bg 0%, $htf-bg-2 100%);
+}
+
+.htf-head { text-align: center; }
+
+.htf-kicker {
+  @include w.welcome-pill(rgba($htf-blue, 0.18), $htf-deep);
+  font-size: 0.76rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.htf-head h2 {
+  @include m.playful-heading;
+  margin: 0.8rem 0 0.3rem;
+  font-size: clamp(1.6rem, 4.5vw, 2.1rem);
+}
+
+.htf-sub {
+  margin: 0;
+  font-size: 1rem;
+  color: rgba($htf-ink, 0.7);
+}
+
+/* --- progress --- */
+.htf-track {
+  height: 0.6rem;
+  margin: 1.3rem 0 1.4rem;
+  border-radius: v.$border-radius-pill;
+  background: rgba($htf-deep, 0.14);
+  overflow: hidden;
+}
+
+.htf-track-fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, $htf-blue, #6fb2e6);
+  transition: width 0.35s ease;
+}
+
+/* --- active card --- */
+.htf-card {
+  padding: 1.5rem clamp(1rem, 3vw, 1.7rem);
+  text-align: center;
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: v.$border-radius-lg;
+  box-shadow: 0 4px 0 rgba($htf-deep, 0.12);
+}
+
+.htf-card.wobble { animation: htf-wobble 0.4s ease; }
+
+.htf-count {
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba($htf-ink, 0.55);
+}
+
+.htf-text {
+  margin: 0.6rem 0 1.2rem;
+  font-family: v.$headings-font-family;
+  font-weight: 700;
+  font-size: 1.25rem;
+  line-height: 1.4;
+}
+
+.htf-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8rem;
+}
+
+.htf-btn {
+  @include m.tappable;
+  font: inherit;
+  font-weight: 800;
+  font-size: 1.1rem;
+  padding: 0.9rem 1rem;
+  border-radius: v.$border-radius-sm;
+  color: v.$color-white;
+  border: none;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.12);
+}
+
+.htf-true { background: $htf-leaf; }
+.htf-false { background: $htf-coral; }
+
+.htf-feedback {
+  margin: 1rem 0 0;
+  font-weight: 700;
+
+  &.ok { color: $htf-deep; }
+  &.no { color: $htf-coral; }
+}
+
+/* --- trays --- */
+.htf-trays {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8rem;
+  margin: 1.4rem 0 0;
+}
+
+.htf-tray {
+  padding: 0.9rem;
+  border-radius: v.$border-radius-sm;
+  background: rgba(255, 255, 255, 0.6);
+  border: 2px dashed rgba($htf-deep, 0.3);
+  min-height: 4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.htf-tray-true { border-color: rgba($htf-leaf, 0.7); }
+.htf-tray-false { border-color: rgba($htf-coral, 0.7); }
+
+.htf-tray-head {
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  text-align: center;
+  color: rgba($htf-ink, 0.6);
+}
+
+.htf-slip {
+  font-size: 0.82rem;
+  line-height: 1.35;
+  padding: 0.4rem 0.6rem;
+  border-radius: 0.5rem;
+  background: v.$color-white;
+  box-shadow: 0 2px 0 rgba($htf-deep, 0.1);
+}
+
+/* --- done --- */
+.htf-done {
+  padding: 1.8rem 1.4rem;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: v.$border-radius-lg;
+  box-shadow: 0 4px 0 rgba($htf-deep, 0.12);
+
+  h3 {
+    @include m.playful-heading;
+    margin: 0.5rem 0 0.3rem;
+    font-size: 1.5rem;
+  }
+
+  p { margin: 0; color: rgba($htf-ink, 0.75); }
+}
+
+.htf-done-mark { font-size: 2.6rem; }
+
+.htf-recap {
+  margin: 1.2rem auto 0;
+  max-width: 30rem;
+  padding: 1rem 1.2rem;
+  text-align: left;
+  border-radius: v.$border-radius-sm;
+  background: rgba($htf-blue, 0.12);
+  border: 1px solid rgba($htf-deep, 0.25);
+
+  ul { margin: 0.4rem 0 0; padding-left: 1.2rem; }
+  li { margin: 0.25rem 0; color: rgba($htf-ink, 0.85); }
+}
+
+.htf-recap-head {
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $htf-deep;
+}
+
+.htf-continue {
+  @include w.welcome-cta-btn(linear-gradient(120deg, $htf-blue, #5aa8e6), v.$color-white);
+  margin: 1.3rem auto 0;
+  display: block;
+  font-size: 1.1rem;
+}
+
+@keyframes htf-wobble {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  75% { transform: translateX(6px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .htf-card.wobble { animation: none; }
+}

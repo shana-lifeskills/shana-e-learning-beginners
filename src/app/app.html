@@ -1,4 +1,4 @@
-@if (signedIn(); as u) {
+@if (showShell()) {
   <div class="app-shell">
     <app-header />
     <div class="app-shell-body">
@@ -13,5 +13,7 @@
   <router-outlet />
 }
 
-<app-sidekick />
-<app-celebration-overlay />
+@if (showShell()) {
+  <app-sidekick />
+  <app-celebration-overlay />
+}

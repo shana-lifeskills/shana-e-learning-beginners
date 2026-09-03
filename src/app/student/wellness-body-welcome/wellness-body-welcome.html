@@ -1,0 +1,52 @@
+<div class="wbw">
+  <span class="wbw-week">{{ wbw.weekLabel }}</span>
+
+  <h1>
+    <span class="wbw-title-start">{{ wbw.titleStart }}</span>
+    <span class="wbw-title-accent">{{ wbw.titleAccent }}</span>
+  </h1>
+
+  <div class="wbw-scene" aria-hidden="true">
+    <svg viewBox="0 0 220 200" role="img">
+      <circle class="wbw-ring wbw-ring-3" cx="110" cy="100" r="82" />
+      <circle class="wbw-ring wbw-ring-2" cx="110" cy="100" r="66" />
+      <circle class="wbw-ring wbw-ring-1" cx="110" cy="100" r="50" />
+
+      <!-- stretching kid -->
+      <g class="wbw-kid">
+        <circle class="wbw-head" cx="110" cy="58" r="14" />
+        <path class="wbw-body" d="M110 72v42" />
+        <path class="wbw-arms" d="M84 78c14-12 32-12 52 0" />
+        <path class="wbw-legs" d="M110 114l-16 30M110 114l16 30" />
+      </g>
+    </svg>
+    <span class="wbw-caption">{{ wbw.caption }}</span>
+  </div>
+
+  <ul class="wbw-habits">
+    @for (h of wbw.habits; track h.label) {
+      <li class="wbw-habit">
+        <span class="wbw-habit-icon">{{ h.icon }}</span>
+        <span class="wbw-habit-label">{{ h.label }}</span>
+      </li>
+    }
+  </ul>
+
+  <div class="wbw-objective">
+    <span class="wbw-objective-label">{{ wbw.objectiveLabel }}</span>
+    <p>{{ wbw.objectiveText }}</p>
+  </div>
+
+  @if (isCompletedLessonWelcome()) {
+    @if (nextLesson(); as next) {
+      <button type="button" class="wbw-start" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+    } @else {
+      <button type="button" class="wbw-start" (click)="backToMap()">Back to My Modules →</button>
+    }
+    <button type="button" class="wbw-review" (click)="beginLesson()">↺ Review this lesson</button>
+  } @else {
+    <button type="button" class="wbw-start" (click)="beginLesson()">{{ wbw.startLabel }} →</button>
+  }
+
+  <p class="wbw-footer">{{ wbw.footerNote }}</p>
+</div>

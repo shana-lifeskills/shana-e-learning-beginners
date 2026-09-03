@@ -1,0 +1,199 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Hygiene habit-match warm-up (hhm) — Hygiene Module, Week 2 ---- */
+$hhm-bg: #e7f7ef;
+$hhm-bg-2: #d6f0e2;
+$hhm-ink: #123f30;
+$hhm-mint: #3fb98f;
+$hhm-deep: #1f8a67;
+$hhm-coral: #ff7a59;
+
+.hhm {
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: 2rem clamp(1rem, 4vw, 2.5rem) 2.5rem;
+  color: $hhm-ink;
+  border-radius: v.$border-radius-xl;
+  background: linear-gradient(168deg, $hhm-bg 0%, $hhm-bg-2 100%);
+}
+
+.hhm-head { text-align: center; }
+
+.hhm-kicker {
+  @include w.welcome-pill(rgba($hhm-mint, 0.2), $hhm-deep);
+  font-size: 0.76rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.hhm-head h2 {
+  @include m.playful-heading;
+  margin: 0.8rem 0 0.3rem;
+  font-size: clamp(1.6rem, 4.5vw, 2.1rem);
+}
+
+.hhm-sub {
+  margin: 0;
+  font-size: 1rem;
+  color: rgba($hhm-ink, 0.7);
+}
+
+/* --- progress --- */
+.hhm-track {
+  height: 0.6rem;
+  margin: 1.3rem 0 1.4rem;
+  border-radius: v.$border-radius-pill;
+  background: rgba($hhm-deep, 0.14);
+  overflow: hidden;
+}
+
+.hhm-track-fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, $hhm-mint, #6ad7b0);
+  transition: width 0.35s ease;
+}
+
+/* --- board --- */
+.hhm-board {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.7rem 1rem;
+}
+
+.hhm-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.hhm-col-head {
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: $hhm-deep;
+  text-align: center;
+}
+
+.hhm-chip {
+  @include m.tappable;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.8rem 0.85rem;
+  font: inherit;
+  font-weight: 600;
+  text-align: left;
+  color: $hhm-ink;
+  background: v.$color-white;
+  border: 2px solid rgba($hhm-deep, 0.22);
+  border-radius: v.$border-radius-sm;
+  box-shadow: 0 3px 0 rgba($hhm-deep, 0.12);
+
+  &:disabled { cursor: default; }
+  &.hhm-purpose { justify-content: center; text-align: center; }
+
+  &.is-picked {
+    border-color: $hhm-mint;
+    background: rgba($hhm-mint, 0.12);
+    transform: translateY(-1px);
+  }
+
+  &.is-wrong {
+    border-color: $hhm-coral;
+    background: rgba($hhm-coral, 0.14);
+    animation: hhm-shake 0.4s ease;
+  }
+
+  &.is-matched {
+    box-shadow: none;
+    color: v.$color-white;
+  }
+}
+
+.hhm-icon { font-size: 1.15rem; }
+
+.hhm-tick {
+  margin-left: auto;
+  font-weight: 800;
+}
+
+.hhm-purpose .hhm-tick { margin-left: 0.4rem; }
+
+.hhm-chip.slot-0 { background: #3fb98f; border-color: #3fb98f; }
+.hhm-chip.slot-1 { background: #4ea8de; border-color: #4ea8de; }
+.hhm-chip.slot-2 { background: #e8912e; border-color: #e8912e; }
+.hhm-chip.slot-3 { background: #a66dd4; border-color: #a66dd4; }
+.hhm-chip.slot-4 { background: #ff8fa3; border-color: #ff8fa3; }
+
+.hhm-hint {
+  margin: 1.1rem 0 0;
+  text-align: center;
+  font-size: 0.9rem;
+  color: rgba($hhm-ink, 0.6);
+}
+
+/* --- done --- */
+.hhm-done {
+  margin: 0.8rem 0 0;
+  padding: 1.8rem 1.4rem;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: v.$border-radius-lg;
+  box-shadow: 0 4px 0 rgba($hhm-deep, 0.12);
+
+  h3 {
+    @include m.playful-heading;
+    margin: 0.5rem 0 0.3rem;
+    font-size: 1.5rem;
+  }
+
+  p { margin: 0; color: rgba($hhm-ink, 0.75); }
+}
+
+.hhm-done-mark { font-size: 2.6rem; }
+
+.hhm-recap {
+  margin: 1.2rem auto 0;
+  max-width: 30rem;
+  padding: 1rem 1.2rem;
+  text-align: left;
+  border-radius: v.$border-radius-sm;
+  background: rgba($hhm-mint, 0.12);
+  border: 1px solid rgba($hhm-deep, 0.25);
+
+  ul { margin: 0.4rem 0 0; padding-left: 1.2rem; }
+  li { margin: 0.25rem 0; color: rgba($hhm-ink, 0.85); }
+}
+
+.hhm-recap-head {
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $hhm-deep;
+}
+
+.hhm-continue {
+  @include w.welcome-cta-btn(linear-gradient(120deg, $hhm-mint, #57cfa4), v.$color-white);
+  margin: 1.3rem auto 0;
+  display: block;
+  font-size: 1.1rem;
+}
+
+@keyframes hhm-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hhm-chip.is-wrong { animation: none; }
+}

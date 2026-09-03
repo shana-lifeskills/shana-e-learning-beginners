@@ -1,0 +1,65 @@
+<div class="wiw">
+  <span class="wiw-week">{{ wiw.weekLabel }}</span>
+
+  <h1>
+    <span class="wiw-title-start">{{ wiw.titleStart }}</span>
+    <span class="wiw-title-accent">{{ wiw.titleAccent }}</span>
+  </h1>
+
+  <div class="wiw-scene" aria-hidden="true">
+    <svg viewBox="0 0 240 210" role="img">
+      <!-- warm sun glow behind everything -->
+      <circle class="wiw-sun" cx="120" cy="96" r="52" />
+
+      <!-- orbs circling the seedling -->
+      <g class="wiw-orbits">
+        @for (o of orbs; track $index) {
+          <g class="wiw-orbit" [style.animation-delay]="o.delay" [style.animation-duration]="o.dur">
+            <circle class="wiw-orb" cx="120" [attr.cy]="34" [attr.r]="o.r" />
+          </g>
+        }
+      </g>
+
+      <!-- pot -->
+      <path class="wiw-pot" d="M96 150h48l-6 40a8 8 0 0 1-8 7h-12a8 8 0 0 1-8-7Z" />
+      <rect class="wiw-pot-rim" x="90" y="142" width="60" height="12" rx="4" />
+
+      <!-- seedling -->
+      <path class="wiw-stem" d="M120 150c0-22 0-40 0-52" />
+      <path class="wiw-leaf wiw-leaf-l" d="M120 112c-14 2-24-6-26-20 14-2 24 6 26 20Z" />
+      <path class="wiw-leaf wiw-leaf-r" d="M120 104c14 2 24-6 26-20-14-2-24 6-26 20Z" />
+      <path class="wiw-sprout" d="M120 98c-3-9 1-18 10-22 2 10-2 19-10 22Z" />
+
+      <!-- little heart at the crown -->
+      <path class="wiw-heart" d="M120 70c-4-7-16-5-16 4 0 6 9 12 16 18 7-6 16-12 16-18 0-9-12-11-16-4Z" />
+    </svg>
+    <span class="wiw-caption">{{ wiw.caption }}</span>
+  </div>
+
+  <ul class="wiw-pillars">
+    @for (p of wiw.pillars; track p.label) {
+      <li class="wiw-pillar">
+        <span class="wiw-pillar-icon">{{ p.icon }}</span>
+        <span class="wiw-pillar-label">{{ p.label }}</span>
+      </li>
+    }
+  </ul>
+
+  <div class="wiw-packet">
+    <span class="wiw-packet-label">{{ wiw.objectiveLabel }}</span>
+    <p>{{ wiw.objectiveText }}</p>
+  </div>
+
+  @if (isCompletedLessonWelcome()) {
+    @if (nextLesson(); as next) {
+      <button type="button" class="wiw-start" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+    } @else {
+      <button type="button" class="wiw-start" (click)="backToMap()">Back to My Modules →</button>
+    }
+    <button type="button" class="wiw-review" (click)="beginLesson()">↺ Review this lesson</button>
+  } @else {
+    <button type="button" class="wiw-start" (click)="beginLesson()">{{ wiw.startLabel }} →</button>
+  }
+
+  <p class="wiw-footer">{{ wiw.footerNote }}</p>
+</div>

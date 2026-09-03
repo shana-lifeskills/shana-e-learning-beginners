@@ -84,6 +84,23 @@ import { TradeOffQuizStepView } from '../trade-off-quiz-step-view/trade-off-quiz
 import { DisciplineWarmupQuizStepView } from '../discipline-warmup-quiz-step-view/discipline-warmup-quiz-step-view';
 import { ServiceWarmupQuizStepView } from '../service-warmup-quiz-step-view/service-warmup-quiz-step-view';
 import { TeamworkWarmupQuizStepView } from '../teamwork-warmup-quiz-step-view/teamwork-warmup-quiz-step-view';
+import { HygieneWarmupQuizStepView } from '../hygiene-warmup-quiz-step-view/hygiene-warmup-quiz-step-view';
+import { WellnessWarmupQuizStepView } from '../wellness-warmup-quiz-step-view/wellness-warmup-quiz-step-view';
+import { NutritionWarmupQuizStepView } from '../nutrition-warmup-quiz-step-view/nutrition-warmup-quiz-step-view';
+import { NutritionFoodMatchStepView } from '../nutrition-food-match-step-view/nutrition-food-match-step-view';
+import { NutritionTfWarmupStepView } from '../nutrition-tf-warmup-step-view/nutrition-tf-warmup-step-view';
+import { NutritionFillBlankStepView } from '../nutrition-fill-blank-step-view/nutrition-fill-blank-step-view';
+import { WellnessHabitMatchStepView } from '../wellness-habit-match-step-view/wellness-habit-match-step-view';
+import { WellnessTfWarmupStepView } from '../wellness-tf-warmup-step-view/wellness-tf-warmup-step-view';
+import { WellnessFeelingsJournalStepView } from '../wellness-feelings-journal-step-view/wellness-feelings-journal-step-view';
+import { WellnessFillBlankStepView } from '../wellness-fill-blank-step-view/wellness-fill-blank-step-view';
+import { HygieneDetectiveChallengeStepView } from '../hygiene-detective-challenge-step-view/hygiene-detective-challenge-step-view';
+import { HygieneConfidenceLinkStepView } from '../hygiene-confidence-link-step-view/hygiene-confidence-link-step-view';
+import { HygieneHabitMatchStepView } from '../hygiene-habit-match-step-view/hygiene-habit-match-step-view';
+import { HygieneChecklistChallengeStepView } from '../hygiene-checklist-challenge-step-view/hygiene-checklist-challenge-step-view';
+import { HygieneTfWarmupStepView } from '../hygiene-tf-warmup-step-view/hygiene-tf-warmup-step-view';
+import { HygieneFillBlankStepView } from '../hygiene-fill-blank-step-view/hygiene-fill-blank-step-view';
+import { HygieneFinalChallengeStepView } from '../hygiene-final-challenge-step-view/hygiene-final-challenge-step-view';
 import { TeamworkMatchWarmupStepView } from '../teamwork-match-warmup-step-view/teamwork-match-warmup-step-view';
 import { TeamworkTfWarmupStepView } from '../teamwork-tf-warmup-step-view/teamwork-tf-warmup-step-view';
 import { TeamworkFillBlankStepView } from '../teamwork-fill-blank-step-view/teamwork-fill-blank-step-view';
@@ -255,6 +272,23 @@ type PlayerView = 'map' | 'lesson-welcome' | 'exercise' | 'module-complete';
     DisciplineWarmupQuizStepView,
     ServiceWarmupQuizStepView,
     TeamworkWarmupQuizStepView,
+    HygieneWarmupQuizStepView,
+    WellnessWarmupQuizStepView,
+    NutritionWarmupQuizStepView,
+    NutritionFoodMatchStepView,
+    NutritionTfWarmupStepView,
+    NutritionFillBlankStepView,
+    WellnessHabitMatchStepView,
+    WellnessTfWarmupStepView,
+    WellnessFeelingsJournalStepView,
+    WellnessFillBlankStepView,
+    HygieneDetectiveChallengeStepView,
+    HygieneConfidenceLinkStepView,
+    HygieneHabitMatchStepView,
+    HygieneChecklistChallengeStepView,
+    HygieneTfWarmupStepView,
+    HygieneFillBlankStepView,
+    HygieneFinalChallengeStepView,
     TeamworkMatchWarmupStepView,
     TeamworkTfWarmupStepView,
     TeamworkFillBlankStepView,
@@ -488,6 +522,15 @@ export class ModulePlayer implements OnInit {
       case 'discipline-warmup-quiz':
       case 'service-warmup-quiz':
       case 'teamwork-warmup-quiz':
+      case 'hygiene-warmup-quiz':
+      case 'wellness-warmup-quiz':
+      case 'nutrition-warmup-quiz':
+      case 'nutrition-food-match':
+      case 'nutrition-tf-warmup':
+      case 'nutrition-fill-blank':
+      case 'wellness-habit-match':
+      case 'wellness-tf-warmup':
+      case 'wellness-fill-blank':
       case 'teamwork-match-warmup':
       case 'teamwork-tf-warmup':
       case 'teamwork-fill-blank':
@@ -570,6 +613,9 @@ export class ModulePlayer implements OnInit {
       case 'service-act-tracker':
       case 'service-environment-tracker':
       case 'service-kindness-plan':
+      case 'hygiene-detective-challenge':
+      case 'hygiene-checklist-challenge':
+      case 'wellness-feelings-journal':
         return 'Challenge of the Week';
       case 'digital-etiquette-tracker':
       case 'digital-responsibility-tracker':
@@ -579,6 +625,7 @@ export class ModulePlayer implements OnInit {
       case 'financial-audit-challenge':
       case 'service-project-final':
       case 'teamwork-reflection-mission':
+      case 'hygiene-final-challenge':
         return 'Final Challenge';
       case 'confidence-link':
       case 'strategic-thinker-link':
@@ -592,9 +639,13 @@ export class ModulePlayer implements OnInit {
       case 'budget-confidence-link':
       case 'consequence-confidence-link':
       case 'module-outcome-confidence-link':
+      case 'hygiene-confidence-link':
         return 'Confidence Link';
       case 'matching-game':
       case 'plan-it-race':
+      case 'hygiene-habit-match':
+      case 'hygiene-tf-warmup':
+      case 'hygiene-fill-blank':
         return 'Game';
       case 'multiple-choice':
         return 'Question';

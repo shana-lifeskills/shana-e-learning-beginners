@@ -1,0 +1,79 @@
+<div class="nfb">
+  <header class="nfb-head">
+    <span class="nfb-kicker">{{ step().kicker }}</span>
+    <h2>{{ step().heading }}</h2>
+    <p class="nfb-sub">{{ step().subtitle }}</p>
+  </header>
+
+  @if (!allFilled()) {
+    <div class="nfb-progress">
+      <div class="nfb-progress-fill" [style.width.%]="progressPercent()"></div>
+    </div>
+
+    <ul class="nfb-strips">
+      @for (sentence of step().sentences; track sentence.id) {
+        <li class="nfb-strip" [class.rejected]="isRejected(sentence)">
+          <span class="nfb-text">{{ sentence.before }}</span>
+          @if (isFilled(sentence)) {
+            <span class="nfb-slot filled">{{ sentence.answer }}</span>
+          } @else {
+            <button
+              type="button"
+              class="nfb-slot"
+              [disabled]="!picked()"
+              (click)="placeInBlank(sentence)"
+            >
+              {{ picked() ? 'Tap here' : '_____' }}
+            </button>
+          }
+          <span class="nfb-text">{{ sentence.after }}</span>
+        </li>
+      }
+    </ul>
+
+    <div class="nfb-bank">
+      <p class="nfb-bank-label">{{ step().wordBankLabel }}</p>
+      <ul class="nfb-words">
+        @for (word of remainingBank(); track word) {
+          <li>
+            <button
+              type="button"
+              class="nfb-word"
+              [class.picked]="picked() === word"
+              (click)="pickWord(word)"
+            >
+              {{ word }}
+            </button>
+          </li>
+        }
+      </ul>
+    </div>
+
+    @if (rejectedId()) {
+      <p class="nfb-feedback no">Not quite — try another word.</p>
+    } @else if (lastPraise(); as praise) {
+      <p class="nfb-feedback ok">🍎 {{ praise }}</p>
+    }
+
+    <p class="nfb-footer">{{ step().footerNote }}</p>
+  } @else {
+    <div class="nfb-done">
+      <span class="nfb-done-icon" aria-hidden="true">📝</span>
+      <h3>{{ step().allDoneTitle }}</h3>
+      <p>{{ step().allDoneText }}</p>
+
+      @if (step().recapHeading; as recapHeading) {
+        <div class="nfb-recap">
+          <h4>{{ recapHeading }}</h4>
+          <ul>
+            @for (point of step().recapPoints; track point) {
+              <li>{{ point }}</li>
+            }
+          </ul>
+        </div>
+      }
+
+      <button type="button" class="nfb-continue" (click)="finish()">{{ step().continueLabel }} →</button>
+    </div>
+  }
+</div>

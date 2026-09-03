@@ -1,0 +1,180 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Whole-self sprout welcome (wiw) — Wellness Module, Week 1 ---- */
+$wiw-bg: #fff2e4;
+$wiw-bg-2: #e7f6df;
+$wiw-ink: #35482f;
+$wiw-green: #5fae5c;
+$wiw-deep: #3c7d3d;
+$wiw-peach: #f39a5c;
+$wiw-packet: #fffaf0;
+
+.wiw {
+  max-width: 54rem;
+  margin: 0 auto;
+  padding: 2.5rem clamp(1rem, 4vw, 2.75rem) 2.75rem;
+  text-align: center;
+  color: $wiw-ink;
+  border-radius: v.$border-radius-xl;
+  background: linear-gradient(165deg, $wiw-bg 0%, $wiw-bg-2 100%);
+}
+
+.wiw-week {
+  @include w.welcome-pill(rgba($wiw-green, 0.2), $wiw-deep);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.wiw h1 {
+  @include m.playful-heading;
+  margin: 1.2rem 0 0;
+  font-size: clamp(2rem, 5.6vw, 3rem);
+  line-height: 1.12;
+}
+
+.wiw-title-start { color: $wiw-ink; }
+.wiw-title-accent { color: $wiw-peach; }
+
+/* --- seedling scene --- */
+.wiw-scene {
+  width: clamp(13rem, 52vw, 18rem);
+  margin: 1.4rem auto 0;
+
+  svg { width: 100%; height: auto; display: block; overflow: visible; }
+}
+
+.wiw-sun { fill: rgba($wiw-peach, 0.18); }
+
+.wiw-orbit {
+  transform-box: fill-box;
+  transform-origin: 120px 96px;
+  animation-name: wiw-spin;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.wiw-orb {
+  fill: rgba(255, 255, 255, 0.9);
+  stroke: rgba($wiw-deep, 0.4);
+  stroke-width: 1.5;
+}
+
+.wiw-pot { fill: $wiw-peach; }
+.wiw-pot-rim { fill: #e5854a; }
+.wiw-stem { fill: none; stroke: $wiw-deep; stroke-width: 4; stroke-linecap: round; }
+.wiw-leaf { fill: $wiw-green; stroke: $wiw-deep; stroke-width: 2; }
+.wiw-sprout { fill: #7cc36f; stroke: $wiw-deep; stroke-width: 2; }
+.wiw-leaf-l { transform-box: fill-box; transform-origin: right bottom; animation: wiw-unfurl-l 4s ease-in-out infinite; }
+.wiw-leaf-r { transform-box: fill-box; transform-origin: left bottom; animation: wiw-unfurl-r 4s ease-in-out infinite; }
+.wiw-heart { fill: rgba($wiw-peach, 0.85); animation: wiw-beat 2.6s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+
+.wiw-caption {
+  display: block;
+  margin-top: 0.5rem;
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: $wiw-deep;
+}
+
+/* --- pillar chips --- */
+.wiw-pillars {
+  list-style: none;
+  margin: 1.6rem auto 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.7rem;
+}
+
+.wiw-pillar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.95rem;
+  background: rgba(255, 255, 255, 0.75);
+  border: 2px solid rgba($wiw-deep, 0.22);
+  border-radius: 999px;
+  font-weight: 800;
+  color: $wiw-deep;
+}
+
+.wiw-pillar-icon { font-size: 1.2rem; }
+.wiw-pillar-label { font-size: 0.95rem; }
+
+/* --- objective on a seed packet --- */
+.wiw-packet {
+  max-width: 34rem;
+  margin: 1.8rem auto 0;
+  padding: 1.3rem 1.5rem 1.2rem;
+  text-align: left;
+  background: $wiw-packet;
+  border: 2px dashed rgba($wiw-deep, 0.4);
+  border-radius: 14px;
+  box-shadow: 0 6px 0 rgba($wiw-deep, 0.12);
+
+  p {
+    margin: 0.35rem 0 0;
+    font-size: 1.05rem;
+    line-height: 1.55;
+    color: rgba($wiw-ink, 0.92);
+  }
+}
+
+.wiw-packet-label {
+  font-weight: 800;
+  font-size: 0.76rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: $wiw-peach;
+}
+
+/* --- actions --- */
+.wiw-start {
+  @include w.welcome-cta-btn(linear-gradient(120deg, $wiw-green, #7cc36f), v.$color-white);
+  display: block;
+  margin: 2rem auto 0;
+  font-size: 1.15rem;
+}
+
+.wiw-review {
+  @include m.tappable;
+  display: block;
+  margin: 0.8rem auto 0;
+  background: none;
+  border: none;
+  font-weight: 700;
+  color: rgba($wiw-ink, 0.6);
+}
+
+.wiw-footer {
+  margin: 1.4rem 0 0;
+  font-size: 0.92rem;
+  color: rgba($wiw-ink, 0.55);
+}
+
+@keyframes wiw-spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes wiw-unfurl-l {
+  0%, 100% { transform: rotate(4deg); }
+  50% { transform: rotate(-6deg); }
+}
+
+@keyframes wiw-unfurl-r {
+  0%, 100% { transform: rotate(-4deg); }
+  50% { transform: rotate(6deg); }
+}
+
+@keyframes wiw-beat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.12); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wiw-orbit, .wiw-leaf-l, .wiw-leaf-r, .wiw-heart { animation: none; }
+}

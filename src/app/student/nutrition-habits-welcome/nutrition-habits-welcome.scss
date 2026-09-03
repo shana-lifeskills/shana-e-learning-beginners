@@ -1,0 +1,163 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Habit-house welcome (nhw) — Nutrition Module, Week 4 ---- */
+$nhw-bg: #ffeccd;
+$nhw-bg-2: #fff7e8;
+$nhw-ink: #4a3320;
+$nhw-amber: #e6952f;
+$nhw-deep: #b56f1e;
+$nhw-brick: #d9694a;
+$nhw-card: #fffdf6;
+
+.nhw {
+  max-width: 54rem;
+  margin: 0 auto;
+  padding: 2.5rem clamp(1rem, 4vw, 2.75rem) 2.75rem;
+  text-align: center;
+  color: $nhw-ink;
+  border-radius: v.$border-radius-xl;
+  background: linear-gradient(165deg, $nhw-bg 0%, $nhw-bg-2 100%);
+}
+
+.nhw-week {
+  @include w.welcome-pill(rgba($nhw-amber, 0.22), $nhw-deep);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.nhw h1 {
+  @include m.playful-heading;
+  margin: 1.2rem 0 0;
+  font-size: clamp(2rem, 5.6vw, 3rem);
+  line-height: 1.12;
+}
+
+.nhw-title-start { color: $nhw-ink; }
+.nhw-title-accent { color: $nhw-amber; }
+
+/* --- house scene --- */
+.nhw-scene {
+  width: clamp(13rem, 52vw, 18rem);
+  margin: 1.4rem auto 0;
+
+  svg { width: 100%; height: auto; display: block; overflow: visible; }
+}
+
+.nhw-sun { fill: rgba($nhw-amber, 0.25); }
+.nhw-ground { stroke: rgba($nhw-deep, 0.4); stroke-width: 3; stroke-linecap: round; }
+
+.nhw-build > * {
+  transform-box: fill-box;
+  transform-origin: center bottom;
+  animation: nhw-place 4.4s ease-in-out infinite;
+}
+.nhw-build > *:nth-child(1) { animation-delay: 0s; }
+.nhw-build > *:nth-child(2) { animation-delay: -0.4s; }
+.nhw-build > *:nth-child(3) { animation-delay: -0.8s; }
+.nhw-build > *:nth-child(4) { animation-delay: -1.2s; }
+.nhw-build > *:nth-child(5) { animation-delay: -1.6s; }
+.nhw-build > *:nth-child(6) { animation-delay: -2s; }
+.nhw-build > *:nth-child(7) { animation-delay: -2.4s; }
+.nhw-build > *:nth-child(8) { animation-delay: -2.8s; }
+
+.nhw-brick { fill: $nhw-brick; stroke: #fff; stroke-width: 2; }
+.nhw-roof { fill: $nhw-amber; stroke: #fff; stroke-width: 2; }
+.nhw-door { fill: $nhw-deep; }
+
+.nhw-caption {
+  display: block;
+  margin-top: 0.5rem;
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: $nhw-deep;
+}
+
+/* --- habit chips --- */
+.nhw-habits {
+  list-style: none;
+  margin: 1.6rem auto 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.7rem;
+}
+
+.nhw-habit {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.95rem;
+  background: rgba(255, 255, 255, 0.82);
+  border: 2px solid rgba($nhw-deep, 0.22);
+  border-radius: 999px;
+  font-weight: 800;
+  color: $nhw-deep;
+}
+
+.nhw-habit-icon { font-size: 1.2rem; }
+.nhw-habit-label { font-size: 0.95rem; }
+
+/* --- objective card --- */
+.nhw-card {
+  max-width: 34rem;
+  margin: 1.8rem auto 0;
+  padding: 1.3rem 1.5rem 1.2rem;
+  text-align: left;
+  background: $nhw-card;
+  border: 2px solid rgba($nhw-deep, 0.26);
+  border-radius: 14px;
+  box-shadow: 0 6px 0 rgba($nhw-deep, 0.12);
+
+  p {
+    margin: 0.35rem 0 0;
+    font-size: 1.05rem;
+    line-height: 1.55;
+    color: rgba($nhw-ink, 0.92);
+  }
+}
+
+.nhw-card-label {
+  font-weight: 800;
+  font-size: 0.76rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: $nhw-amber;
+}
+
+/* --- actions --- */
+.nhw-start {
+  @include w.welcome-cta-btn(linear-gradient(120deg, $nhw-amber, #f0b45e), v.$color-white);
+  display: block;
+  margin: 2rem auto 0;
+  font-size: 1.15rem;
+}
+
+.nhw-review {
+  @include m.tappable;
+  display: block;
+  margin: 0.8rem auto 0;
+  background: none;
+  border: none;
+  font-weight: 700;
+  color: rgba($nhw-ink, 0.6);
+}
+
+.nhw-footer {
+  margin: 1.4rem 0 0;
+  font-size: 0.92rem;
+  color: rgba($nhw-ink, 0.55);
+}
+
+@keyframes nhw-place {
+  0%, 6% { transform: translateY(-10px) scale(0.2); opacity: 0; }
+  16%, 90% { transform: translateY(0) scale(1); opacity: 1; }
+  100% { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nhw-build > * { animation: none; }
+}

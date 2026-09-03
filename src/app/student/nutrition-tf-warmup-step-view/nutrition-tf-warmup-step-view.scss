@@ -1,0 +1,215 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- Nutrition True-or-False warm-up (ntf) — Nutrition Module, Week 3 ---- */
+$ntf-bg: #fff0e6;
+$ntf-bg-2: #ffe6d5;
+$ntf-ink: #4a2b23;
+$ntf-tomato: #e2603f;
+$ntf-deep: #b8442a;
+$ntf-amber: #f2a63c;
+$ntf-green: #5fae5c;
+
+.ntf {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 1.75rem clamp(1rem, 4vw, 2.25rem) 2rem;
+  color: $ntf-ink;
+  text-align: center;
+  border-radius: v.$border-radius-xl;
+  background: linear-gradient(168deg, $ntf-bg 0%, $ntf-bg-2 100%);
+}
+
+.ntf-head h2 {
+  @include m.playful-heading;
+  margin: 0.4rem 0 0;
+  font-size: clamp(1.4rem, 4.5vw, 1.9rem);
+}
+
+.ntf-kicker {
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: $ntf-tomato;
+}
+
+.ntf-sub {
+  margin: 0.3rem 0 0;
+  font-size: 0.98rem;
+  color: rgba($ntf-ink, 0.7);
+}
+
+/* --- progress dots --- */
+.ntf-dots {
+  list-style: none;
+  margin: 1.2rem 0 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  gap: 0.45rem;
+}
+
+.ntf-dot {
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 50%;
+  background: rgba($ntf-deep, 0.18);
+
+  &.done { background: $ntf-green; }
+}
+
+/* --- stage --- */
+.ntf-stage {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 1.2rem 0 0;
+}
+
+.ntf-lane {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  padding: 0.6rem 0.35rem;
+  border-radius: 10px;
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.ntf-lane-true { background: rgba($ntf-green, 0.18); color: #3f7d3d; }
+.ntf-lane-false { background: rgba($ntf-tomato, 0.16); color: $ntf-deep; transform: rotate(180deg); }
+
+.ntf-card {
+  padding: 1.6rem 1.2rem;
+  background: #fffaf4;
+  border: 2px solid rgba($ntf-tomato, 0.22);
+  border-radius: v.$border-radius-lg;
+  box-shadow: 0 6px 0 rgba($ntf-deep, 0.1);
+
+  &.wobble { animation: ntf-wobble 0.45s ease; }
+  &.leave-true { animation: ntf-leave-true 0.34s ease forwards; }
+  &.leave-false { animation: ntf-leave-false 0.34s ease forwards; }
+}
+
+.ntf-count {
+  font-weight: 800;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  color: rgba($ntf-ink, 0.5);
+}
+
+.ntf-statement {
+  margin: 0.5rem 0 0;
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 1.15rem;
+  line-height: 1.35;
+}
+
+/* --- action buttons --- */
+.ntf-actions {
+  display: flex;
+  justify-content: center;
+  gap: 0.7rem;
+  margin: 1.1rem 0 0;
+}
+
+.ntf-btn {
+  @include m.tappable;
+  padding: 0.7rem 1.4rem;
+  border: 2px solid transparent;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 1rem;
+  color: v.$color-white;
+}
+.ntf-btn-true { background: $ntf-green; }
+.ntf-btn-false { background: $ntf-tomato; }
+
+.ntf-feedback {
+  margin: 0.9rem 0 0;
+  font-weight: 700;
+  font-size: 0.98rem;
+
+  &.ok { color: $ntf-green; }
+  &.no { color: $ntf-deep; }
+}
+
+.ntf-footer {
+  margin: 1rem 0 0;
+  font-size: 0.9rem;
+  color: rgba($ntf-ink, 0.55);
+}
+
+/* --- done panel --- */
+.ntf-done {
+  margin: 1.3rem auto 0;
+  padding: 1.6rem 1.3rem;
+  background: rgba(255, 255, 255, 0.92);
+  border: 2px solid rgba($ntf-amber, 0.45);
+  border-radius: v.$border-radius-lg;
+
+  h3 {
+    @include m.playful-heading;
+    margin: 0.5rem 0 0.3rem;
+    font-size: 1.3rem;
+  }
+
+  p { margin: 0; color: rgba($ntf-ink, 0.75); }
+}
+
+.ntf-done-icon { font-size: 2.4rem; }
+
+.ntf-recap {
+  margin: 1rem auto 0;
+  max-width: 24rem;
+  padding: 0.9rem 1.1rem;
+  text-align: left;
+  background: rgba($ntf-green, 0.1);
+  border: 2px solid rgba($ntf-green, 0.35);
+  border-radius: 12px;
+
+  h4 {
+    margin: 0 0 0.4rem;
+    font-weight: 800;
+    font-size: 0.74rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: $ntf-deep;
+  }
+
+  ul { margin: 0; padding-left: 1.1rem; }
+  li { font-size: 0.95rem; line-height: 1.5; color: rgba($ntf-ink, 0.85); }
+}
+
+.ntf-continue {
+  @include m.tappable;
+  margin: 1.2rem 0 0;
+  padding: 0.8rem 1.8rem;
+  background: linear-gradient(120deg, $ntf-tomato, $ntf-amber);
+  border: none;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: v.$color-white;
+}
+
+@keyframes ntf-wobble {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-6px) rotate(-1.5deg); }
+  75% { transform: translateX(6px) rotate(1.5deg); }
+}
+
+@keyframes ntf-leave-true {
+  to { transform: translateX(-120%) rotate(-12deg); opacity: 0; }
+}
+
+@keyframes ntf-leave-false {
+  to { transform: translateX(120%) rotate(12deg); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ntf-card.wobble, .ntf-card.leave-true, .ntf-card.leave-false { animation: none; }
+}

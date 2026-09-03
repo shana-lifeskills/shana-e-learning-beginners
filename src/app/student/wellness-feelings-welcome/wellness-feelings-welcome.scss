@@ -1,0 +1,176 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Mood-heart welcome (wfw) — Wellness Module, Week 3 ---- */
+$wfw-bg: #efe9fb;
+$wfw-bg-2: #fdf3d9;
+$wfw-ink: #3a3357;
+$wfw-purple: #7b62c9;
+$wfw-deep: #5a44a0;
+$wfw-gold: #edac3c;
+
+.wfw {
+  max-width: 54rem;
+  margin: 0 auto;
+  padding: 2.5rem clamp(1rem, 4vw, 2.75rem) 2.75rem;
+  text-align: center;
+  color: $wfw-ink;
+  border-radius: v.$border-radius-xl;
+  background: linear-gradient(160deg, $wfw-bg 0%, $wfw-bg-2 100%);
+}
+
+.wfw-week {
+  @include w.welcome-pill(rgba($wfw-purple, 0.2), $wfw-deep);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.wfw h1 {
+  @include m.playful-heading;
+  margin: 1.2rem 0 0;
+  font-size: clamp(2rem, 5.6vw, 3rem);
+  line-height: 1.12;
+}
+
+.wfw-title-start { color: $wfw-ink; }
+.wfw-title-accent { color: $wfw-purple; }
+
+/* --- heart + mood faces --- */
+.wfw-scene {
+  width: clamp(13rem, 52vw, 18rem);
+  margin: 1.3rem auto 0;
+
+  svg { width: 100%; height: auto; display: block; overflow: visible; }
+}
+
+.wfw-heart {
+  fill: $wfw-purple;
+  stroke: $wfw-deep;
+  stroke-width: 3;
+  animation: wfw-hue 8s ease-in-out infinite, wfw-beat 3s ease-in-out infinite;
+  transform-box: view-box;
+  transform-origin: 112px 110px;
+}
+
+.wfw-heart-eye { fill: v.$color-white; }
+.wfw-heart-smile { fill: none; stroke: v.$color-white; stroke-width: 4; stroke-linecap: round; }
+
+.wfw-mood {
+  animation: wfw-drift 4.5s ease-in-out infinite;
+}
+
+.wfw-mood-bg { fill: #ffd9a8; stroke: rgba($wfw-ink, 0.25); stroke-width: 1.5; }
+.wfw-mood-bg.is-happy { fill: #ffe08a; }
+.wfw-mood-bg.is-sad { fill: #a9c8f0; }
+.wfw-mood-bg.is-calm { fill: #b7e3c4; }
+.wfw-mood-bg.is-angry { fill: #f4a3a3; }
+.wfw-mood-eye { fill: $wfw-ink; }
+.wfw-mood-mouth { fill: none; stroke: $wfw-ink; stroke-width: 2; stroke-linecap: round; }
+
+.wfw-caption {
+  display: block;
+  margin-top: 0.5rem;
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: $wfw-deep;
+}
+
+/* --- feeling chips --- */
+.wfw-feelings {
+  list-style: none;
+  margin: 1.5rem auto 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.7rem;
+}
+
+.wfw-feeling {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.95rem;
+  background: rgba(255, 255, 255, 0.82);
+  border: 2px solid rgba($wfw-deep, 0.2);
+  border-radius: 999px;
+  font-weight: 800;
+  color: $wfw-deep;
+}
+
+.wfw-feeling-icon { font-size: 1.2rem; }
+.wfw-feeling-label { font-size: 0.95rem; }
+
+/* --- objective --- */
+.wfw-objective {
+  max-width: 34rem;
+  margin: 1.8rem auto 0;
+  padding: 1.3rem 1.5rem 1.2rem;
+  text-align: left;
+  background: rgba(255, 255, 255, 0.9);
+  border: 2px solid rgba($wfw-purple, 0.35);
+  border-radius: 16px;
+  box-shadow: 0 6px 0 rgba($wfw-deep, 0.12);
+
+  p {
+    margin: 0.35rem 0 0;
+    font-size: 1.05rem;
+    line-height: 1.55;
+    color: rgba($wfw-ink, 0.92);
+  }
+}
+
+.wfw-objective-label {
+  font-weight: 800;
+  font-size: 0.76rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: $wfw-gold;
+}
+
+/* --- actions --- */
+.wfw-start {
+  @include w.welcome-cta-btn(linear-gradient(120deg, $wfw-purple, #9179d8), v.$color-white);
+  display: block;
+  margin: 2rem auto 0;
+  font-size: 1.15rem;
+}
+
+.wfw-review {
+  @include m.tappable;
+  display: block;
+  margin: 0.8rem auto 0;
+  background: none;
+  border: none;
+  font-weight: 700;
+  color: rgba($wfw-ink, 0.6);
+}
+
+.wfw-footer {
+  margin: 1.4rem 0 0;
+  font-size: 0.92rem;
+  color: rgba($wfw-ink, 0.55);
+}
+
+@keyframes wfw-beat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+@keyframes wfw-hue {
+  0%, 100% { fill: #7b62c9; }
+  33% { fill: #e0a04a; }
+  50% { fill: #e08bb0; }
+  75% { fill: #6aa9d8; }
+}
+
+@keyframes wfw-drift {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-9px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wfw-heart, .wfw-mood { animation: none; }
+}

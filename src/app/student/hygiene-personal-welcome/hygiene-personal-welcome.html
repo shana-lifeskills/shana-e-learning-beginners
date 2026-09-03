@@ -1,0 +1,61 @@
+<div class="hpw">
+  <span class="hpw-week">{{ hpw.weekLabel }}</span>
+
+  <h1>
+    <span class="hpw-title-start">{{ hpw.titleStart }}</span>
+    <span class="hpw-title-accent">{{ hpw.titleAccent }}</span>
+  </h1>
+
+  <div class="hpw-scene" aria-hidden="true">
+    <svg viewBox="0 0 220 200" role="img">
+      <defs>
+        <clipPath id="hpw-glass">
+          <ellipse cx="110" cy="86" rx="70" ry="62" />
+        </clipPath>
+      </defs>
+
+      <!-- handle -->
+      <rect class="hpw-handle" x="101" y="140" width="18" height="52" rx="9" />
+
+      <!-- mirror glass -->
+      <ellipse class="hpw-sky" cx="110" cy="86" rx="70" ry="62" />
+
+      <g clip-path="url(#hpw-glass)">
+        <!-- rising sun -->
+        <g class="hpw-sun">
+          @for (a of rayAngles; track a) {
+            <rect class="hpw-ray" x="107" y="60" width="6" height="16" rx="3"
+              [attr.transform]="'rotate(' + a + ' 110 104)'" />
+          }
+          <circle class="hpw-sun-core" cx="110" cy="104" r="18" />
+        </g>
+        <rect class="hpw-ground" x="40" y="118" width="140" height="40" />
+        <!-- shine sweep -->
+        <rect class="hpw-shine" x="-60" y="10" width="46" height="160" transform="rotate(18 110 86)" />
+      </g>
+
+      <!-- frame -->
+      <ellipse class="hpw-frame" cx="110" cy="86" rx="70" ry="62" />
+    </svg>
+    <span class="hpw-caption">{{ hpw.caption }}</span>
+  </div>
+
+  <div class="hpw-mirror-card">
+    <span class="hpw-mirror-handle" aria-hidden="true"></span>
+    <span class="hpw-objective-label">{{ hpw.objectiveLabel }}</span>
+    <p>{{ hpw.objectiveText }}</p>
+  </div>
+
+  @if (isCompletedLessonWelcome()) {
+    @if (nextLesson(); as next) {
+      <button type="button" class="hpw-start" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+    } @else {
+      <button type="button" class="hpw-start" (click)="backToMap()">Back to My Modules →</button>
+    }
+    <button type="button" class="hpw-review" (click)="beginLesson()">↺ Review this lesson</button>
+  } @else {
+    <button type="button" class="hpw-start" (click)="beginLesson()">{{ hpw.startLabel }} →</button>
+  }
+
+  <p class="hpw-footer">{{ hpw.footerNote }}</p>
+</div>

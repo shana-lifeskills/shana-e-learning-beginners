@@ -1,0 +1,52 @@
+<div class="hcc">
+  <div class="hcc-chart">
+    <span class="hcc-badge">{{ step().badge }}</span>
+    <h2 class="hcc-title">{{ step().title }}</h2>
+    <p class="hcc-mission">{{ step().missionText }}</p>
+
+    <div class="hcc-grid" [style.--days]="step().dayCount">
+      <div class="hcc-row hcc-row-head">
+        <span class="hcc-task-head">Task</span>
+        @for (day of days(); track day) {
+          <span class="hcc-day-head" [class.done]="dayComplete(day)">
+            <span class="hcc-day-num">{{ day }}</span>
+            <span class="hcc-day-star" aria-hidden="true">{{ dayComplete(day) ? '⭐' : '' }}</span>
+          </span>
+        }
+      </div>
+
+      @for (task of step().tasks; track task.id) {
+        <div class="hcc-row">
+          <span class="hcc-task">{{ task.label }}</span>
+          @for (day of days(); track day) {
+            <button
+              type="button"
+              class="hcc-cell"
+              [class.ticked]="isTicked(task, day)"
+              [attr.aria-label]="task.label + ', day ' + day"
+              [attr.aria-pressed]="isTicked(task, day)"
+              (click)="toggle(task, day)"
+            >{{ isTicked(task, day) ? '✔' : '' }}</button>
+          }
+        </div>
+      }
+    </div>
+
+    <p class="hcc-progress">{{ tickedCount() }} / {{ totalCells() }} ticked</p>
+  </div>
+
+  @if (allDone()) {
+    <div class="hcc-done">
+      <span class="hcc-done-mark" aria-hidden="true">🌟</span>
+      <h3>{{ step().allDoneTitle }}</h3>
+      <p>{{ step().allDoneText }}</p>
+    </div>
+  }
+
+  <button type="button" class="hcc-continue" [disabled]="!allDone()" (click)="finish()">
+    {{ step().continueLabel }} →
+  </button>
+  @if (!allDone()) {
+    <p class="hcc-hint">Tick every box to finish your perfect week.</p>
+  }
+</div>

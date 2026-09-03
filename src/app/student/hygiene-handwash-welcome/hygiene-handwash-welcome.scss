@@ -1,0 +1,160 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Handwashing welcome (hhw) — Hygiene Module, Week 3 ---- */
+$hhw-bg: #e8f2fb;
+$hhw-bg-2: #d3e6f7;
+$hhw-ink: #123a54;
+$hhw-blue: #3d8fd6;
+$hhw-deep: #235d94;
+$hhw-coral: #ff7a59;
+
+.hhw {
+  max-width: 54rem;
+  margin: 0 auto;
+  padding: 2.5rem clamp(1rem, 4vw, 2.75rem) 2.75rem;
+  text-align: center;
+  color: $hhw-ink;
+  border-radius: v.$border-radius-xl;
+  background: linear-gradient(168deg, $hhw-bg 0%, $hhw-bg-2 100%);
+}
+
+.hhw-week {
+  @include w.welcome-pill(rgba($hhw-blue, 0.18), $hhw-deep);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.hhw h1 {
+  @include m.playful-heading;
+  margin: 1.2rem 0 0.3rem;
+  font-size: clamp(1.9rem, 5.2vw, 2.8rem);
+  line-height: 1.12;
+  text-wrap: balance;
+}
+
+.hhw-title-start { color: $hhw-ink; }
+.hhw-title-accent { color: $hhw-blue; }
+
+/* --- scene --- */
+.hhw-scene {
+  width: clamp(12rem, 50vw, 16rem);
+  margin: 1.4rem auto 0;
+
+  svg { width: 100%; height: auto; display: block; }
+}
+
+.hhw-pipe { fill: #b9c6d3; stroke: $hhw-deep; stroke-width: 2.5; }
+.hhw-spout { fill: none; stroke: $hhw-deep; stroke-width: 8; stroke-linecap: round; }
+
+.hhw-stream {
+  fill: rgba($hhw-blue, 0.55);
+  animation: hhw-flow 1.1s linear infinite;
+}
+
+.hhw-hand { fill: #ffe0c7; stroke: $hhw-deep; stroke-width: 3; }
+.hhw-hand-line { fill: none; stroke: rgba($hhw-deep, 0.5); stroke-width: 2.5; stroke-linecap: round; }
+
+.hhw-sud {
+  fill: rgba(255, 255, 255, 0.9);
+  stroke: rgba($hhw-blue, 0.5);
+  stroke-width: 1.5;
+  animation: hhw-foam 3s ease-in-out infinite;
+}
+
+.hhw-germ {
+  fill: rgba($hhw-coral, 0.85);
+  stroke: rgba($hhw-coral, 0.85);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  animation: hhw-rinse 3.4s ease-in infinite;
+}
+
+.hhw-splash { fill: none; stroke: rgba($hhw-blue, 0.6); stroke-width: 3; stroke-linecap: round; }
+
+.hhw-caption {
+  display: block;
+  margin-top: 0.7rem;
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 1rem;
+  color: $hhw-deep;
+}
+
+/* --- objective as a foam bubble --- */
+.hhw-bubble-card {
+  position: relative;
+  max-width: 34rem;
+  margin: 2rem auto 0;
+  padding: 1.5rem 1.7rem 1.4rem;
+  text-align: left;
+  background:
+    radial-gradient(circle at 12% 18%, rgba(255, 255, 255, 0.9) 0 6px, transparent 6px),
+    radial-gradient(circle at 92% 82%, rgba(255, 255, 255, 0.9) 0 5px, transparent 5px),
+    v.$color-white;
+  border: 3px solid rgba($hhw-blue, 0.35);
+  border-radius: 50% 46% 48% 52% / 40% 44% 46% 42%;
+  box-shadow: 0 6px 0 rgba($hhw-deep, 0.14);
+
+  p {
+    margin: 0.35rem 0 0;
+    font-size: 1.05rem;
+    line-height: 1.55;
+    color: rgba($hhw-ink, 0.9);
+  }
+}
+
+.hhw-objective-label {
+  font-weight: 800;
+  font-size: 0.76rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: $hhw-blue;
+}
+
+/* --- actions --- */
+.hhw-start {
+  @include w.welcome-cta-btn(linear-gradient(120deg, $hhw-blue, #5aa8e6), v.$color-white);
+  margin: 2.3rem auto 0;
+  display: block;
+  font-size: 1.15rem;
+}
+
+.hhw-review {
+  @include m.tappable;
+  display: block;
+  margin: 0.8rem auto 0;
+  background: none;
+  border: none;
+  font-weight: 700;
+  color: rgba($hhw-ink, 0.6);
+}
+
+.hhw-footer {
+  margin: 1.4rem 0 0;
+  font-size: 0.92rem;
+  color: rgba($hhw-ink, 0.55);
+}
+
+@keyframes hhw-flow {
+  from { transform: translateY(-6px); }
+  to { transform: translateY(6px); }
+}
+
+@keyframes hhw-foam {
+  0%, 100% { transform: translateY(0); opacity: 0.9; }
+  50% { transform: translateY(-2px); opacity: 1; }
+}
+
+@keyframes hhw-rinse {
+  0% { transform: translateY(0) scale(0.9); opacity: 0; }
+  10% { opacity: 1; }
+  70% { opacity: 1; }
+  100% { transform: translateY(120px) scale(0.5); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hhw-stream, .hhw-sud, .hhw-germ { animation: none; }
+  .hhw-germ { opacity: 0; }
+}

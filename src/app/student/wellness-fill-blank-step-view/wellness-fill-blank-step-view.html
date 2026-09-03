@@ -1,0 +1,70 @@
+<div class="wfb">
+  <header class="wfb-head">
+    <span class="wfb-kicker">{{ step().kicker }}</span>
+    <h2>{{ step().heading }}</h2>
+    <p class="wfb-sub">{{ step().subtitle }}</p>
+  </header>
+
+  <div class="wfb-track" role="img" [attr.aria-label]="filledCount() + ' of ' + total() + ' filled'">
+    <span class="wfb-track-fill" [style.width.%]="progressPercent()"></span>
+  </div>
+
+  @if (!allFilled()) {
+    <ol class="wfb-sentences">
+      @for (sentence of step().sentences; track sentence.id) {
+        <li class="wfb-sentence" [class.shake]="rejectedId() === sentence.id" [class.done]="isFilled(sentence)">
+          <span>{{ sentence.before }}</span>
+          <button
+            type="button"
+            class="wfb-blank"
+            [class.filled]="isFilled(sentence)"
+            [class.armed]="picked() && !isFilled(sentence)"
+            [disabled]="isFilled(sentence) || !picked()"
+            (click)="placeInBlank(sentence)"
+          >{{ isFilled(sentence) ? sentence.answer : '______' }}</button>
+          <span>{{ sentence.after }}</span>
+        </li>
+      }
+    </ol>
+
+    @if (lastPraise(); as praise) {
+      <p class="wfb-praise">✨ {{ praise }}</p>
+    }
+
+    <div class="wfb-bank">
+      <span class="wfb-bank-label">{{ step().wordBankLabel }}</span>
+      <div class="wfb-tiles">
+        @for (word of remainingBank(); track word) {
+          <button
+            type="button"
+            class="wfb-tile"
+            [class.picked]="picked() === word"
+            (click)="pickWord(word)"
+          >{{ word }}</button>
+        }
+      </div>
+      <p class="wfb-hint">Tap a word, then tap the blank it fills.</p>
+    </div>
+
+    <p class="wfb-footer">{{ step().footerNote }}</p>
+  } @else {
+    <div class="wfb-done">
+      <span class="wfb-done-mark" aria-hidden="true">🗓️</span>
+      <h3>{{ step().allDoneTitle }}</h3>
+      <p>{{ step().allDoneText }}</p>
+
+      @if (step().recapPoints?.length) {
+        <div class="wfb-recap">
+          <span class="wfb-recap-head">{{ step().recapHeading }}</span>
+          <ul>
+            @for (point of step().recapPoints; track point) {
+              <li>{{ point }}</li>
+            }
+          </ul>
+        </div>
+      }
+
+      <button type="button" class="wfb-continue" (click)="finish()">{{ step().continueLabel }} →</button>
+    </div>
+  }
+</div>

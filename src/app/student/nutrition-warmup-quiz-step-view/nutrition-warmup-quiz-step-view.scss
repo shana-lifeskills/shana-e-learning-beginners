@@ -1,0 +1,215 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- Nutrition Warm-Up quiz (nwq) — Nutrition Module, Week 1 ---- */
+$nwq-bg: #ffece2;
+$nwq-bg-2: #ffe1cf;
+$nwq-ink: #4a2b23;
+$nwq-tomato: #e2603f;
+$nwq-deep: #b8442a;
+$nwq-amber: #f2a63c;
+$nwq-green: #6fb45c;
+
+.nwq {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 1.75rem clamp(1rem, 4vw, 2.25rem) 2rem;
+  color: $nwq-ink;
+  text-align: center;
+  border-radius: v.$border-radius-xl;
+  background: linear-gradient(168deg, $nwq-bg 0%, $nwq-bg-2 100%);
+}
+
+.nwq-head h2 {
+  @include m.playful-heading;
+  margin: 0.4rem 0 0;
+  font-size: clamp(1.4rem, 4.5vw, 1.9rem);
+}
+
+.nwq-kicker {
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: $nwq-tomato;
+}
+
+.nwq-sub {
+  margin: 0.3rem 0 0;
+  font-size: 0.98rem;
+  color: rgba($nwq-ink, 0.7);
+}
+
+/* --- lunchbox progress --- */
+.nwq-box {
+  position: relative;
+  width: min(19rem, 82vw);
+  margin: 1.3rem auto 0;
+  padding: 0.75rem;
+  background: #fff4e8;
+  border: 3px solid $nwq-deep;
+  border-radius: 14px;
+  box-shadow: 0 6px 0 rgba($nwq-deep, 0.18);
+}
+
+.nwq-box-lid {
+  position: absolute;
+  left: 12%;
+  right: 12%;
+  top: -9px;
+  height: 9px;
+  background: $nwq-tomato;
+  border: 2px solid $nwq-deep;
+  border-radius: 6px 6px 0 0;
+}
+
+.nwq-slots {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.5rem;
+}
+
+.nwq-slot {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  border-radius: 10px;
+  background: rgba($nwq-deep, 0.08);
+  border: 2px dashed rgba($nwq-deep, 0.3);
+  font-size: clamp(1.1rem, 5vw, 1.6rem);
+
+  span { opacity: 0; transform: scale(0.4); }
+
+  &.packed {
+    background: rgba($nwq-green, 0.16);
+    border-style: solid;
+    border-color: rgba($nwq-green, 0.55);
+
+    span {
+      opacity: 1;
+      transform: scale(1);
+      animation: nwq-drop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+  }
+}
+
+/* --- question card --- */
+.nwq-card {
+  margin: 1.3rem auto 0;
+  padding: 1.3rem 1.2rem 1.4rem;
+  background: rgba(255, 255, 255, 0.9);
+  border: 2px solid rgba($nwq-tomato, 0.22);
+  border-radius: v.$border-radius-lg;
+
+  &.wobble { animation: nwq-wobble 0.45s ease; }
+}
+
+.nwq-q {
+  margin: 0 0 1rem;
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 1.1rem;
+}
+
+.nwq-options {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.6rem;
+}
+
+.nwq-label {
+  @include m.tappable;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.8rem 1rem;
+  text-align: left;
+  background: #fffaf4;
+  border: 2px solid rgba($nwq-ink, 0.14);
+  border-radius: 12px;
+  font-size: 1rem;
+  color: $nwq-ink;
+
+  &:disabled { cursor: default; }
+  &.is-correct { border-color: $nwq-green; background: rgba($nwq-green, 0.14); }
+  &.is-wrong { border-color: $nwq-tomato; background: rgba($nwq-tomato, 0.12); }
+}
+
+.nwq-letter {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 1.85rem;
+  height: 1.85rem;
+  border-radius: 8px;
+  background: rgba($nwq-amber, 0.22);
+  font-weight: 800;
+  color: $nwq-deep;
+}
+
+.nwq-feedback {
+  margin: 1rem 0 0;
+  font-weight: 700;
+  font-size: 0.98rem;
+
+  &.ok { color: $nwq-green; }
+  &.no { color: $nwq-deep; }
+}
+
+.nwq-footer {
+  margin: 1rem 0 0;
+  font-size: 0.9rem;
+  color: rgba($nwq-ink, 0.55);
+}
+
+/* --- done panel --- */
+.nwq-done {
+  margin: 1.3rem auto 0;
+  padding: 1.6rem 1.3rem;
+  background: rgba(255, 255, 255, 0.92);
+  border: 2px solid rgba($nwq-amber, 0.45);
+  border-radius: v.$border-radius-lg;
+
+  h3 {
+    @include m.playful-heading;
+    margin: 0.5rem 0 0.3rem;
+    font-size: 1.3rem;
+  }
+
+  p { margin: 0; color: rgba($nwq-ink, 0.75); }
+}
+
+.nwq-done-icon { font-size: 2.4rem; }
+
+.nwq-continue {
+  @include m.tappable;
+  margin: 1.2rem 0 0;
+  padding: 0.8rem 1.8rem;
+  background: linear-gradient(120deg, $nwq-tomato, $nwq-amber);
+  border: none;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: v.$color-white;
+}
+
+@keyframes nwq-drop {
+  0% { opacity: 0; transform: translateY(-14px) scale(0.4); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes nwq-wobble {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px) rotate(-1deg); }
+  75% { transform: translateX(5px) rotate(1deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nwq-slot.packed span, .nwq-card.wobble { animation: none; }
+}

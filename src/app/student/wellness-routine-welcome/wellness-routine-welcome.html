@@ -1,0 +1,61 @@
+<div class="wrw">
+  <span class="wrw-week">{{ wrw.weekLabel }}</span>
+
+  <h1>
+    <span class="wrw-title-start">{{ wrw.titleStart }}</span>
+    <span class="wrw-title-accent">{{ wrw.titleAccent }}</span>
+  </h1>
+
+  <div class="wrw-scene" aria-hidden="true">
+    <svg viewBox="0 0 200 200" role="img">
+      <circle class="wrw-face" cx="100" cy="100" r="82" />
+      <circle class="wrw-face-inner" cx="100" cy="100" r="70" />
+
+      @for (angle of marks; track angle) {
+        <circle
+          class="wrw-mark"
+          cx="100" cy="26" r="3.5"
+          [attr.transform]="'rotate(' + angle + ' 100 100)'"
+        />
+      }
+
+      <g class="wrw-hand">
+        <line x1="100" y1="100" x2="100" y2="44" />
+      </g>
+      <g class="wrw-hand wrw-hand-short">
+        <line x1="100" y1="100" x2="132" y2="100" />
+      </g>
+      <circle class="wrw-hub" cx="100" cy="100" r="6" />
+
+      <circle class="wrw-sun" cx="100" cy="100" r="20" />
+    </svg>
+    <span class="wrw-caption">{{ wrw.caption }}</span>
+  </div>
+
+  <ul class="wrw-steps">
+    @for (s of wrw.routineSteps; track s.label) {
+      <li class="wrw-step">
+        <span class="wrw-step-icon">{{ s.icon }}</span>
+        <span class="wrw-step-label">{{ s.label }}</span>
+      </li>
+    }
+  </ul>
+
+  <div class="wrw-objective">
+    <span class="wrw-objective-label">{{ wrw.objectiveLabel }}</span>
+    <p>{{ wrw.objectiveText }}</p>
+  </div>
+
+  @if (isCompletedLessonWelcome()) {
+    @if (nextLesson(); as next) {
+      <button type="button" class="wrw-start" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+    } @else {
+      <button type="button" class="wrw-start" (click)="backToMap()">Back to My Modules →</button>
+    }
+    <button type="button" class="wrw-review" (click)="beginLesson()">↺ Review this lesson</button>
+  } @else {
+    <button type="button" class="wrw-start" (click)="beginLesson()">{{ wrw.startLabel }} →</button>
+  }
+
+  <p class="wrw-footer">{{ wrw.footerNote }}</p>
+</div>

@@ -1,0 +1,61 @@
+<div class="hhw">
+  <span class="hhw-week">{{ hhw.weekLabel }}</span>
+
+  <h1>
+    <span class="hhw-title-start">{{ hhw.titleStart }}</span>
+    <span class="hhw-title-accent">{{ hhw.titleAccent }}</span>
+  </h1>
+
+  <div class="hhw-scene" aria-hidden="true">
+    <svg viewBox="0 0 220 210" role="img">
+      <!-- tap -->
+      <rect class="hhw-pipe" x="150" y="18" width="16" height="34" rx="4" />
+      <path class="hhw-spout" d="M150 34h-38a10 10 0 0 0-10 10v10" />
+
+      <!-- water stream -->
+      <rect class="hhw-stream" x="104" y="52" width="10" height="96" rx="5" />
+
+      <!-- germs rinsing down the stream -->
+      @for (g of germs; track g.cx) {
+        <g class="hhw-germ" [style.animation-delay]="g.delay">
+          <circle [attr.cx]="g.cx" cy="60" r="6" />
+          <line [attr.x1]="g.cx - 8" y1="52" [attr.x2]="g.cx - 12" y2="48" />
+          <line [attr.x1]="g.cx + 8" y1="52" [attr.x2]="g.cx + 12" y2="48" />
+          <line [attr.x1]="g.cx - 8" y1="68" [attr.x2]="g.cx - 12" y2="72" />
+          <line [attr.x1]="g.cx + 8" y1="68" [attr.x2]="g.cx + 12" y2="72" />
+        </g>
+      }
+
+      <!-- cupped hands -->
+      <path class="hhw-hand" d="M60 150c0-18 16-30 34-30h32c18 0 34 12 34 30 0 22-24 40-50 40s-50-18-50-40Z" />
+      <path class="hhw-hand-line" d="M78 150c8 12 24 20 32 20s24-8 32-20" />
+
+      <!-- soap suds on the hands -->
+      @for (b of suds; track b.cx) {
+        <circle class="hhw-sud" [attr.cx]="b.cx" [attr.cy]="b.cy" [attr.r]="b.r" />
+      }
+
+      <!-- splash -->
+      <path class="hhw-splash" d="M96 190c-6 4-10 2-12-2M124 190c6 4 10 2 12-2" />
+    </svg>
+    <span class="hhw-caption">{{ hhw.caption }}</span>
+  </div>
+
+  <div class="hhw-bubble-card">
+    <span class="hhw-objective-label">{{ hhw.objectiveLabel }}</span>
+    <p>{{ hhw.objectiveText }}</p>
+  </div>
+
+  @if (isCompletedLessonWelcome()) {
+    @if (nextLesson(); as next) {
+      <button type="button" class="hhw-start" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+    } @else {
+      <button type="button" class="hhw-start" (click)="backToMap()">Back to My Modules →</button>
+    }
+    <button type="button" class="hhw-review" (click)="beginLesson()">↺ Review this lesson</button>
+  } @else {
+    <button type="button" class="hhw-start" (click)="beginLesson()">{{ hhw.startLabel }} →</button>
+  }
+
+  <p class="hhw-footer">{{ hhw.footerNote }}</p>
+</div>

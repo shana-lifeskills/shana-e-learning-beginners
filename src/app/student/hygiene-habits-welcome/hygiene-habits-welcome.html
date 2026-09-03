@@ -1,0 +1,53 @@
+<div class="hbw">
+  <span class="hbw-week">{{ hbw.weekLabel }}</span>
+
+  <h1>
+    <span class="hbw-title-start">{{ hbw.titleStart }}</span>
+    <span class="hbw-title-accent">{{ hbw.titleAccent }}</span>
+  </h1>
+
+  <div class="hbw-scene" aria-hidden="true">
+    <svg viewBox="0 0 220 210" role="img">
+      <!-- sun -->
+      <circle class="hbw-sun" cx="176" cy="40" r="16" />
+
+      <!-- windowsill -->
+      <rect class="hbw-sill" x="24" y="168" width="172" height="12" rx="3" />
+
+      <!-- pot -->
+      <path class="hbw-pot" d="M90 148h40l-6 20H96Z" />
+      <rect class="hbw-pot-rim" x="86" y="142" width="48" height="10" rx="3" />
+
+      <!-- stem -->
+      <path class="hbw-stem" d="M110 146c0-24-2-44 0-64" />
+
+      <!-- leaves unfurl one by one -->
+      @for (leaf of leaves; track leaf.d) {
+        <path class="hbw-leaf" [attr.d]="leaf.d" [style.animation-delay]="leaf.delay" />
+      }
+
+      <!-- care drops -->
+      <circle class="hbw-drop" cx="98" cy="70" r="3" />
+      <circle class="hbw-drop hbw-drop-2" cx="126" cy="60" r="3" />
+    </svg>
+    <span class="hbw-caption">{{ hbw.caption }}</span>
+  </div>
+
+  <div class="hbw-leaf-card">
+    <span class="hbw-objective-label">{{ hbw.objectiveLabel }}</span>
+    <p>{{ hbw.objectiveText }}</p>
+  </div>
+
+  @if (isCompletedLessonWelcome()) {
+    @if (nextLesson(); as next) {
+      <button type="button" class="hbw-start" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+    } @else {
+      <button type="button" class="hbw-start" (click)="backToMap()">Back to My Modules →</button>
+    }
+    <button type="button" class="hbw-review" (click)="beginLesson()">↺ Review this lesson</button>
+  } @else {
+    <button type="button" class="hbw-start" (click)="beginLesson()">{{ hbw.startLabel }} →</button>
+  }
+
+  <p class="hbw-footer">{{ hbw.footerNote }}</p>
+</div>

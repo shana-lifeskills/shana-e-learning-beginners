@@ -1,0 +1,67 @@
+<div class="hfc">
+  <div class="hfc-chart">
+    <span class="hfc-badge">{{ step().badge }}</span>
+    <h2 class="hfc-title">{{ step().title }}</h2>
+    <p class="hfc-mission">{{ step().missionText }}</p>
+
+    <div class="hfc-grid" [style.--days]="step().dayCount">
+      <div class="hfc-row hfc-row-head">
+        <span class="hfc-task-head">Task</span>
+        @for (day of days(); track day) {
+          <span class="hfc-day-head" [class.done]="dayComplete(day)">
+            <span class="hfc-day-num">{{ day }}</span>
+            <span class="hfc-day-star" aria-hidden="true">{{ dayComplete(day) ? '⭐' : '' }}</span>
+          </span>
+        }
+      </div>
+
+      @for (task of step().tasks; track task.id) {
+        <div class="hfc-row">
+          <span class="hfc-task">{{ task.label }}</span>
+          @for (day of days(); track day) {
+            <button
+              type="button"
+              class="hfc-cell"
+              [class.ticked]="isTicked(task, day)"
+              [attr.aria-label]="task.label + ', day ' + day"
+              [attr.aria-pressed]="isTicked(task, day)"
+              (click)="toggle(task, day)"
+            >{{ isTicked(task, day) ? '✔' : '' }}</button>
+          }
+        </div>
+      }
+    </div>
+
+    <p class="hfc-progress">{{ tickedCount() }} / {{ totalCells() }} ticked</p>
+  </div>
+
+  <div class="hfc-reflect">
+    <span class="hfc-reflect-head">{{ step().fieldsHeading }}</span>
+    @for (field of step().fields; track field.id) {
+      <label class="hfc-field">
+        <span>{{ field.label }}</span>
+        <input
+          type="text"
+          [placeholder]="field.placeholder"
+          [value]="answerFor(field)"
+          (input)="setAnswer(field, $any($event.target).value)"
+        />
+      </label>
+    }
+  </div>
+
+  @if (canSubmit()) {
+    <div class="hfc-done">
+      <span class="hfc-done-mark" aria-hidden="true">🏅</span>
+      <h3>{{ step().allDoneTitle }}</h3>
+      <p>{{ step().allDoneText }}</p>
+    </div>
+  }
+
+  <button type="button" class="hfc-submit" [disabled]="!canSubmit()" (click)="submit()">
+    {{ step().submitLabel }} →
+  </button>
+  @if (!canSubmit()) {
+    <p class="hfc-hint">Fill the whole grid and answer all three questions to finish.</p>
+  }
+</div>

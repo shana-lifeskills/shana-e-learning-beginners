@@ -1,0 +1,220 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- Nutrition Fill in the Blank (nfb) — Nutrition Module, Week 4 ---- */
+$nfb-bg: #fff1df;
+$nfb-bg-2: #ffe8cd;
+$nfb-ink: #4a3320;
+$nfb-amber: #e6952f;
+$nfb-deep: #b56f1e;
+$nfb-green: #5fae5c;
+$nfb-tomato: #d9694a;
+
+.nfb {
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 1.75rem clamp(1rem, 4vw, 2.25rem) 2rem;
+  color: $nfb-ink;
+  text-align: center;
+  border-radius: v.$border-radius-xl;
+  background: linear-gradient(168deg, $nfb-bg 0%, $nfb-bg-2 100%);
+}
+
+.nfb-head h2 {
+  @include m.playful-heading;
+  margin: 0.4rem 0 0;
+  font-size: clamp(1.4rem, 4.5vw, 1.9rem);
+}
+
+.nfb-kicker {
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: $nfb-amber;
+}
+
+.nfb-sub {
+  margin: 0.3rem 0 0;
+  font-size: 0.98rem;
+  color: rgba($nfb-ink, 0.7);
+}
+
+/* --- progress --- */
+.nfb-progress {
+  height: 0.5rem;
+  margin: 1.2rem 0 0;
+  border-radius: 999px;
+  background: rgba($nfb-deep, 0.14);
+  overflow: hidden;
+}
+.nfb-progress-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, $nfb-amber, $nfb-green);
+  transition: width 0.35s ease;
+}
+
+/* --- sentence strips --- */
+.nfb-strips {
+  list-style: none;
+  margin: 1.2rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.6rem;
+}
+
+.nfb-strip {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  padding: 0.85rem 1rem;
+  background: #fffaf3;
+  border: 2px solid rgba($nfb-ink, 0.12);
+  border-radius: 14px;
+  font-size: 1.02rem;
+  line-height: 1.5;
+
+  &.rejected { animation: nfb-shake 0.4s ease; border-color: $nfb-tomato; }
+}
+
+.nfb-text { font-weight: 600; }
+
+.nfb-slot {
+  @include m.tappable;
+  min-width: 5rem;
+  padding: 0.35rem 0.8rem;
+  border: 2px dashed rgba($nfb-deep, 0.4);
+  border-radius: 9px;
+  background: rgba($nfb-deep, 0.05);
+  font-weight: 800;
+  font-size: 0.98rem;
+  color: rgba($nfb-ink, 0.75);
+
+  &:disabled { opacity: 0.6; cursor: default; }
+  &.filled {
+    border-style: solid;
+    border-color: $nfb-green;
+    background: rgba($nfb-green, 0.16);
+    color: $nfb-deep;
+  }
+}
+
+/* --- word bank --- */
+.nfb-bank { margin: 1.2rem 0 0; }
+
+.nfb-bank-label {
+  margin: 0 0 0.6rem;
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba($nfb-deep, 0.7);
+}
+
+.nfb-words {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.55rem;
+}
+
+.nfb-word {
+  @include m.tappable;
+  padding: 0.6rem 1.1rem;
+  border: 2px solid rgba($nfb-deep, 0.22);
+  border-radius: 999px;
+  background: #fff;
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: $nfb-ink;
+
+  &.picked {
+    border-color: $nfb-amber;
+    background: rgba($nfb-amber, 0.2);
+    transform: translateY(-2px);
+  }
+}
+
+.nfb-feedback {
+  margin: 0.9rem 0 0;
+  font-weight: 700;
+  font-size: 0.98rem;
+
+  &.ok { color: $nfb-green; }
+  &.no { color: $nfb-deep; }
+}
+
+.nfb-footer {
+  margin: 1rem 0 0;
+  font-size: 0.9rem;
+  color: rgba($nfb-ink, 0.55);
+}
+
+/* --- done panel --- */
+.nfb-done {
+  margin: 1.3rem auto 0;
+  padding: 1.6rem 1.3rem;
+  background: rgba(255, 255, 255, 0.92);
+  border: 2px solid rgba($nfb-amber, 0.45);
+  border-radius: v.$border-radius-lg;
+
+  h3 {
+    @include m.playful-heading;
+    margin: 0.5rem 0 0.3rem;
+    font-size: 1.3rem;
+  }
+
+  p { margin: 0; color: rgba($nfb-ink, 0.75); }
+}
+
+.nfb-done-icon { font-size: 2.4rem; }
+
+.nfb-recap {
+  margin: 1rem auto 0;
+  max-width: 24rem;
+  padding: 0.9rem 1.1rem;
+  text-align: left;
+  background: rgba($nfb-green, 0.1);
+  border: 2px solid rgba($nfb-green, 0.35);
+  border-radius: 12px;
+
+  h4 {
+    margin: 0 0 0.4rem;
+    font-weight: 800;
+    font-size: 0.74rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: $nfb-deep;
+  }
+
+  ul { margin: 0; padding-left: 1.1rem; }
+  li { font-size: 0.95rem; line-height: 1.5; color: rgba($nfb-ink, 0.85); }
+}
+
+.nfb-continue {
+  @include m.tappable;
+  margin: 1.2rem 0 0;
+  padding: 0.8rem 1.8rem;
+  background: linear-gradient(120deg, $nfb-amber, #f0b45e);
+  border: none;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: v.$color-white;
+}
+
+@keyframes nfb-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nfb-strip.rejected { animation: none; }
+}

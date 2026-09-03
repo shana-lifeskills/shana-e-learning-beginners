@@ -1,0 +1,60 @@
+<div class="hiw">
+  <span class="hiw-week">{{ hiw.weekLabel }}</span>
+
+  <div class="hiw-tilebar">
+    <h1>
+      <span class="hiw-title-start">{{ hiw.titleStart }}</span>
+      <span class="hiw-title-accent">{{ hiw.titleAccent }}</span>
+    </h1>
+  </div>
+
+  <div class="hiw-scene" aria-hidden="true">
+    <svg viewBox="0 0 236 190" role="img">
+      <!-- rising bubbles -->
+      @for (b of bubbles; track b.cx) {
+        <circle
+          class="hiw-bubble"
+          [attr.cx]="b.cx"
+          cy="150"
+          [attr.r]="b.r"
+          [style.animation-delay]="b.delay"
+          [style.animation-duration]="b.dur"
+        />
+      }
+
+      <!-- water-drop mascot -->
+      <g class="hiw-drop">
+        <path
+          class="hiw-drop-body"
+          d="M118 26c22 30 40 52 40 78a40 40 0 0 1-80 0c0-26 18-48 40-78Z"
+        />
+        <circle class="hiw-drop-shine" cx="104" cy="88" r="9" />
+        <circle class="hiw-eye" cx="104" cy="104" r="4.5" />
+        <circle class="hiw-eye" cx="132" cy="104" r="4.5" />
+        <path class="hiw-smile" d="M102 118c5 7 27 7 32 0" />
+        <circle class="hiw-cheek" cx="96" cy="116" r="4" />
+        <circle class="hiw-cheek" cx="140" cy="116" r="4" />
+      </g>
+    </svg>
+    <span class="hiw-caption">{{ hiw.caption }}</span>
+  </div>
+
+  <div class="hiw-tag">
+    <span class="hiw-tag-hole"></span>
+    <span class="hiw-tag-label">{{ hiw.objectiveLabel }}</span>
+    <p>{{ hiw.objectiveText }}</p>
+  </div>
+
+  @if (isCompletedLessonWelcome()) {
+    @if (nextLesson(); as next) {
+      <button type="button" class="hiw-start" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+    } @else {
+      <button type="button" class="hiw-start" (click)="backToMap()">Back to My Modules →</button>
+    }
+    <button type="button" class="hiw-review" (click)="beginLesson()">↺ Review this lesson</button>
+  } @else {
+    <button type="button" class="hiw-start" (click)="beginLesson()">{{ hiw.startLabel }} →</button>
+  }
+
+  <p class="hiw-footer">{{ hiw.footerNote }}</p>
+</div>

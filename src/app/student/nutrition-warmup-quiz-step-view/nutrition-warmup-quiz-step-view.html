@@ -1,0 +1,58 @@
+<div class="nwq">
+  <header class="nwq-head">
+    <span class="nwq-kicker">Warm-Up</span>
+    <h2>{{ step().heading }}</h2>
+    <p class="nwq-sub">{{ step().subtitle }}</p>
+  </header>
+
+  <div class="nwq-box" role="img"
+    [attr.aria-label]="'Question ' + (allDone() ? questions().length : activeIndex() + 1) + ' of ' + questions().length">
+    <div class="nwq-box-lid" aria-hidden="true"></div>
+    <ul class="nwq-slots">
+      @for (slot of slots(); track $index) {
+        <li class="nwq-slot" [class.packed]="slot.packed">
+          <span>{{ slot.food }}</span>
+        </li>
+      }
+    </ul>
+  </div>
+
+  @if (!allDone() && currentQuestion(); as question) {
+    <div class="nwq-card" [class.wobble]="feedback() === 'incorrect'">
+      <p class="nwq-q">{{ question.prompt }}</p>
+
+      <ul class="nwq-options">
+        @for (option of question.options; track option.id) {
+          <li>
+            <button
+              type="button"
+              class="nwq-label"
+              [class.is-correct]="optionState(option) === 'correct'"
+              [class.is-wrong]="optionState(option) === 'incorrect'"
+              [disabled]="locked()"
+              (click)="selectOption(option)"
+            >
+              <span class="nwq-letter">{{ letterFor($index) }}</span>
+              <span class="nwq-text">{{ option.text }}</span>
+            </button>
+          </li>
+        }
+      </ul>
+
+      @if (feedback() === 'correct') {
+        <p class="nwq-feedback ok">🍎 {{ question.feedbackText }}</p>
+      } @else if (feedback() === 'incorrect') {
+        <p class="nwq-feedback no">Not quite — give it another try!</p>
+      }
+    </div>
+
+    <p class="nwq-footer">{{ step().footerNote }}</p>
+  } @else {
+    <div class="nwq-done">
+      <span class="nwq-done-icon" aria-hidden="true">🍱</span>
+      <h3>{{ step().allDoneTitle }}</h3>
+      <p>{{ step().allDoneText }}</p>
+      <button type="button" class="nwq-continue" (click)="finish()">{{ step().continueLabel }} →</button>
+    </div>
+  }
+</div>

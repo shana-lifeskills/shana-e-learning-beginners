@@ -1,0 +1,143 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Hygiene Confidence Link (hcl) — Hygiene Module, Week 1 ---- */
+$hcl-bg: #e6f8fb;
+$hcl-bg-2: #d2f0f5;
+$hcl-ink: #0d4650;
+$hcl-cyan: #1aa5be;
+$hcl-deep: #0e7c90;
+$hcl-sun: #ffc93c;
+
+.hcl {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 2.2rem clamp(1rem, 4vw, 2.5rem) 2.6rem;
+  text-align: center;
+  color: $hcl-ink;
+  border-radius: v.$border-radius-xl;
+  background: linear-gradient(170deg, $hcl-bg 0%, $hcl-bg-2 100%);
+}
+
+.hcl-badge {
+  @include w.welcome-pill(rgba($hcl-cyan, 0.18), $hcl-deep);
+  font-size: 0.74rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.hcl-week {
+  display: block;
+  margin-top: 0.6rem;
+  font-family: v.$headings-font-family;
+  font-weight: 700;
+  color: rgba($hcl-ink, 0.7);
+}
+
+/* --- soap medal --- */
+.hcl-medal {
+  position: relative;
+  width: clamp(15rem, 60vw, 19rem);
+  margin: 1.6rem auto 0;
+  padding: 0.4rem;
+}
+
+.hcl-rays {
+  position: absolute;
+  inset: -18%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba($hcl-sun, 0.45) 0%, rgba($hcl-sun, 0) 68%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.hcl-medal.lit .hcl-rays { opacity: 1; }
+
+.hcl-soap {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 1.8rem 1.4rem;
+  border-radius: 999px / 130px;
+  background: linear-gradient(140deg, #ffffff, #e4f6f9);
+  border: 3px solid rgba($hcl-deep, 0.35);
+  box-shadow: 0 6px 0 rgba($hcl-deep, 0.16);
+  transition: border-color 0.4s ease;
+}
+
+.hcl-medal.lit .hcl-soap { border-color: $hcl-sun; }
+
+.hcl-bubble {
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 32% 30%, #fff, rgba(255, 255, 255, 0.1) 44%),
+    linear-gradient(140deg, $hcl-cyan, #6ad7e6);
+  border: 2px solid rgba($hcl-deep, 0.4);
+}
+
+.hcl-statement {
+  margin: 0;
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 1.12rem;
+  line-height: 1.4;
+  color: $hcl-ink;
+}
+
+/* --- say it --- */
+.hcl-say {
+  margin: 1.6rem 0 0;
+}
+
+.hcl-say-label {
+  display: block;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: rgba($hcl-ink, 0.7);
+  margin-bottom: 0.6rem;
+}
+
+.hcl-say-btn {
+  @include m.tappable;
+  font: inherit;
+  font-weight: 800;
+  padding: 0.7rem 1.6rem;
+  border-radius: v.$border-radius-pill;
+  color: $hcl-deep;
+  background: v.$color-white;
+  border: 2px solid $hcl-cyan;
+
+  &.done {
+    color: v.$color-white;
+    background: $hcl-cyan;
+    border-color: $hcl-cyan;
+  }
+
+  &:disabled { cursor: default; }
+}
+
+.hcl-reinforce {
+  margin: 1.3rem 0 0;
+  font-size: 0.98rem;
+  color: rgba($hcl-ink, 0.75);
+}
+
+.hcl-complete {
+  @include w.welcome-cta-btn(linear-gradient(120deg, $hcl-cyan, #2ec7dd), v.$color-white);
+  margin: 1.5rem auto 0;
+  display: block;
+  font-size: 1.12rem;
+
+  &:disabled { opacity: 0.45; cursor: not-allowed; }
+}
+
+.hcl-hint {
+  margin: 0.7rem 0 0;
+  font-size: 0.85rem;
+  color: rgba($hcl-ink, 0.55);
+}

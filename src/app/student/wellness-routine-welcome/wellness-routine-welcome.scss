@@ -1,0 +1,166 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Daily-routine-clock welcome (wrw) — Wellness Module, Week 4 ---- */
+$wrw-bg: #ffe9cf;
+$wrw-bg-2: #dfe4f4;
+$wrw-ink: #33324a;
+$wrw-amber: #e79038;
+$wrw-deep: #c56f1f;
+$wrw-blue: #4a5aa8;
+
+.wrw {
+  max-width: 54rem;
+  margin: 0 auto;
+  padding: 2.5rem clamp(1rem, 4vw, 2.75rem) 2.75rem;
+  text-align: center;
+  color: $wrw-ink;
+  border-radius: v.$border-radius-xl;
+  background: linear-gradient(160deg, $wrw-bg 0%, $wrw-bg-2 100%);
+}
+
+.wrw-week {
+  @include w.welcome-pill(rgba($wrw-amber, 0.22), $wrw-deep);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.wrw h1 {
+  @include m.playful-heading;
+  margin: 1.2rem 0 0;
+  font-size: clamp(2rem, 5.6vw, 3rem);
+  line-height: 1.12;
+}
+
+.wrw-title-start { color: $wrw-ink; }
+.wrw-title-accent { color: $wrw-amber; }
+
+/* --- clock --- */
+.wrw-scene {
+  width: clamp(12rem, 46vw, 16rem);
+  margin: 1.3rem auto 0;
+
+  svg { width: 100%; height: auto; display: block; overflow: visible; }
+}
+
+.wrw-face { fill: v.$color-white; stroke: $wrw-deep; stroke-width: 4; }
+.wrw-face-inner { fill: rgba($wrw-amber, 0.08); }
+.wrw-mark { fill: rgba($wrw-blue, 0.5); }
+
+.wrw-hand {
+  stroke: $wrw-blue;
+  stroke-width: 5;
+  stroke-linecap: round;
+  transform-box: view-box;
+  transform-origin: 100px 100px;
+  animation: wrw-sweep 12s linear infinite;
+}
+
+.wrw-hand-short {
+  stroke: $wrw-amber;
+  stroke-width: 6;
+  animation-duration: 48s;
+}
+
+.wrw-hub { fill: $wrw-deep; }
+.wrw-sun { fill: rgba($wrw-amber, 0.25); animation: wrw-glow 4s ease-in-out infinite; }
+
+.wrw-caption {
+  display: block;
+  margin-top: 0.5rem;
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: $wrw-deep;
+}
+
+/* --- routine step chips --- */
+.wrw-steps {
+  list-style: none;
+  margin: 1.5rem auto 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.7rem;
+}
+
+.wrw-step {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.95rem;
+  background: rgba(255, 255, 255, 0.85);
+  border: 2px solid rgba($wrw-deep, 0.2);
+  border-radius: 999px;
+  font-weight: 800;
+  color: $wrw-deep;
+}
+
+.wrw-step-icon { font-size: 1.2rem; }
+.wrw-step-label { font-size: 0.95rem; }
+
+/* --- objective --- */
+.wrw-objective {
+  max-width: 34rem;
+  margin: 1.8rem auto 0;
+  padding: 1.3rem 1.5rem 1.2rem;
+  text-align: left;
+  background: rgba(255, 255, 255, 0.9);
+  border: 2px solid rgba($wrw-amber, 0.4);
+  border-radius: 16px;
+  box-shadow: 0 6px 0 rgba($wrw-deep, 0.14);
+
+  p {
+    margin: 0.35rem 0 0;
+    font-size: 1.05rem;
+    line-height: 1.55;
+    color: rgba($wrw-ink, 0.92);
+  }
+}
+
+.wrw-objective-label {
+  font-weight: 800;
+  font-size: 0.76rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: $wrw-blue;
+}
+
+/* --- actions --- */
+.wrw-start {
+  @include w.welcome-cta-btn(linear-gradient(120deg, $wrw-amber, #f2a75a), v.$color-white);
+  display: block;
+  margin: 2rem auto 0;
+  font-size: 1.15rem;
+}
+
+.wrw-review {
+  @include m.tappable;
+  display: block;
+  margin: 0.8rem auto 0;
+  background: none;
+  border: none;
+  font-weight: 700;
+  color: rgba($wrw-ink, 0.6);
+}
+
+.wrw-footer {
+  margin: 1.4rem 0 0;
+  font-size: 0.92rem;
+  color: rgba($wrw-ink, 0.55);
+}
+
+@keyframes wrw-sweep {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes wrw-glow {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wrw-hand, .wrw-sun { animation: none; }
+}

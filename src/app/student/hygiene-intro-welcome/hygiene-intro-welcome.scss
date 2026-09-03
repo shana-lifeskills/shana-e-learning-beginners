@@ -1,0 +1,165 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Bubble-bath welcome (hiw) — Hygiene Module ---- */
+$hiw-bg: #e0f7fb;
+$hiw-bg-2: #c3edf4;
+$hiw-ink: #0d4650;
+$hiw-cyan: #1aa5be;
+$hiw-deep: #0e7c90;
+$hiw-coral: #ff7a59;
+$hiw-tag: #fff6e9;
+
+.hiw {
+  max-width: 54rem;
+  margin: 0 auto;
+  padding: 2.5rem clamp(1rem, 4vw, 2.75rem) 2.75rem;
+  text-align: center;
+  color: $hiw-ink;
+  border-radius: v.$border-radius-xl;
+  background: linear-gradient(168deg, $hiw-bg 0%, $hiw-bg-2 100%);
+}
+
+.hiw-week {
+  @include w.welcome-pill(rgba($hiw-cyan, 0.18), $hiw-deep);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* --- title on a strip of tiles --- */
+.hiw-tilebar {
+  margin: 1.3rem auto 0;
+  padding: 0.9rem 1rem;
+  max-width: 40rem;
+  border-radius: v.$border-radius-lg;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)),
+    repeating-linear-gradient(0deg, transparent 0 33px, rgba($hiw-deep, 0.14) 33px 35px),
+    repeating-linear-gradient(90deg, transparent 0 47px, rgba($hiw-deep, 0.14) 47px 49px);
+  box-shadow: inset 0 0 0 2px rgba($hiw-deep, 0.16);
+}
+
+.hiw h1 {
+  @include m.playful-heading;
+  margin: 0;
+  font-size: clamp(2rem, 5.6vw, 3rem);
+  line-height: 1.12;
+}
+
+.hiw-title-start { color: $hiw-ink; }
+.hiw-title-accent { color: $hiw-coral; }
+
+/* --- mascot + bubbles --- */
+.hiw-scene {
+  width: clamp(13rem, 52vw, 18rem);
+  margin: 1.5rem auto 0;
+
+  svg { width: 100%; height: auto; display: block; overflow: visible; }
+}
+
+.hiw-drop { animation: hiw-bob 3.4s ease-in-out infinite; transform-origin: 118px 104px; }
+.hiw-drop-body { fill: rgba(255, 255, 255, 0.95); stroke: $hiw-deep; stroke-width: 3; }
+.hiw-drop-shine { fill: rgba($hiw-cyan, 0.25); }
+.hiw-eye { fill: $hiw-ink; }
+.hiw-smile { fill: none; stroke: $hiw-ink; stroke-width: 3.5; stroke-linecap: round; }
+.hiw-cheek { fill: rgba($hiw-coral, 0.4); }
+
+.hiw-bubble {
+  fill: rgba(255, 255, 255, 0.75);
+  stroke: rgba($hiw-deep, 0.35);
+  stroke-width: 1.5;
+  animation-name: hiw-rise;
+  animation-timing-function: ease-in;
+  animation-iteration-count: infinite;
+}
+
+.hiw-caption {
+  display: block;
+  margin-top: 0.6rem;
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: $hiw-deep;
+}
+
+/* --- objective on a luggage tag --- */
+.hiw-tag {
+  position: relative;
+  max-width: 34rem;
+  margin: 1.9rem auto 0;
+  padding: 1.3rem 1.5rem 1.2rem;
+  text-align: left;
+  background: $hiw-tag;
+  border: 2px dashed rgba($hiw-deep, 0.4);
+  border-radius: 14px;
+  box-shadow: 0 6px 0 rgba($hiw-deep, 0.12);
+
+  p {
+    margin: 0.35rem 0 0;
+    font-size: 1.05rem;
+    line-height: 1.55;
+    color: rgba($hiw-ink, 0.92);
+  }
+}
+
+.hiw-tag-hole {
+  position: absolute;
+  top: -9px;
+  left: 50%;
+  width: 18px;
+  height: 18px;
+  margin-left: -9px;
+  background: $hiw-bg-2;
+  border: 2px solid rgba($hiw-deep, 0.4);
+  border-radius: 50%;
+}
+
+.hiw-tag-label {
+  font-weight: 800;
+  font-size: 0.76rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: $hiw-coral;
+}
+
+/* --- actions --- */
+.hiw-start {
+  @include w.welcome-cta-btn(linear-gradient(120deg, $hiw-cyan, #2ec7dd), v.$color-white);
+  display: block;
+  margin: 2rem auto 0;
+  font-size: 1.15rem;
+}
+
+.hiw-review {
+  @include m.tappable;
+  display: block;
+  margin: 0.8rem auto 0;
+  background: none;
+  border: none;
+  font-weight: 700;
+  color: rgba($hiw-ink, 0.6);
+}
+
+.hiw-footer {
+  margin: 1.4rem 0 0;
+  font-size: 0.92rem;
+  color: rgba($hiw-ink, 0.55);
+}
+
+@keyframes hiw-bob {
+  0%, 100% { transform: translateY(0) rotate(-1deg); }
+  50% { transform: translateY(-7px) rotate(1deg); }
+}
+
+@keyframes hiw-rise {
+  0% { transform: translateY(0) scale(0.6); opacity: 0; }
+  15% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { transform: translateY(-140px) scale(1); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hiw-drop, .hiw-bubble { animation: none; }
+  .hiw-bubble { opacity: 0.9; }
+}

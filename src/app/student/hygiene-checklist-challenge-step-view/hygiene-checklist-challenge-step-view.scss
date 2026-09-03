@@ -1,0 +1,156 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- My Hygiene Checklist challenge (hcc) — Hygiene Module, Week 2 ---- */
+$hcc-bg: #e7f7ef;
+$hcc-bg-2: #d6f0e2;
+$hcc-ink: #123f30;
+$hcc-mint: #3fb98f;
+$hcc-deep: #1f8a67;
+$hcc-sun: #ffc93c;
+
+.hcc {
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 1.5rem clamp(0.75rem, 3vw, 1.5rem) 2.5rem;
+  text-align: center;
+}
+
+.hcc-chart {
+  padding: 1.8rem clamp(0.9rem, 3vw, 1.8rem);
+  text-align: left;
+  color: $hcc-ink;
+  background: linear-gradient(168deg, $hcc-bg 0%, $hcc-bg-2 100%);
+  border: 1px solid rgba($hcc-deep, 0.25);
+  border-radius: v.$border-radius-lg;
+  box-shadow: 0 8px 20px rgba($hcc-deep, 0.14);
+}
+
+.hcc-badge {
+  @include w.welcome-pill(rgba($hcc-mint, 0.2), $hcc-deep);
+  font-size: 0.74rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.hcc-title {
+  @include m.playful-heading;
+  margin: 0.8rem 0 0.3rem;
+  font-size: clamp(1.5rem, 4.5vw, 2rem);
+}
+
+.hcc-mission {
+  margin: 0 0 1.2rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: rgba($hcc-ink, 0.8);
+}
+
+/* --- grid --- */
+.hcc-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.hcc-row {
+  display: grid;
+  grid-template-columns: minmax(5.5rem, 1.4fr) repeat(var(--days), minmax(0, 1fr));
+  gap: 0.35rem;
+  align-items: stretch;
+}
+
+.hcc-row-head {
+  align-items: end;
+}
+
+.hcc-task-head,
+.hcc-day-head {
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: $hcc-deep;
+}
+
+.hcc-day-head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1.1;
+  padding-bottom: 0.15rem;
+}
+
+.hcc-day-head.done { color: $hcc-sun; }
+.hcc-day-star { font-size: 0.8rem; min-height: 0.9rem; }
+
+.hcc-task {
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  font-size: 0.86rem;
+  padding-right: 0.3rem;
+}
+
+.hcc-cell {
+  @include m.tappable;
+  aspect-ratio: 1 / 1;
+  min-height: 2rem;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  color: v.$color-white;
+  background: v.$color-white;
+  border: 2px solid rgba($hcc-deep, 0.28);
+  border-radius: 8px;
+
+  &.ticked {
+    background: $hcc-mint;
+    border-color: $hcc-mint;
+  }
+}
+
+.hcc-progress {
+  margin: 1rem 0 0;
+  font-weight: 700;
+  font-size: 0.86rem;
+  color: rgba($hcc-ink, 0.65);
+}
+
+/* --- done --- */
+.hcc-done {
+  margin: 1.4rem 0 0;
+  padding: 1.4rem;
+  text-align: center;
+  border-radius: v.$border-radius-lg;
+  background: rgba($hcc-sun, 0.16);
+  border: 2px solid rgba($hcc-sun, 0.6);
+
+  h3 {
+    @include m.playful-heading;
+    margin: 0.4rem 0 0.3rem;
+    font-size: 1.4rem;
+    color: $hcc-deep;
+  }
+
+  p { margin: 0; color: rgba($hcc-ink, 0.8); }
+}
+
+.hcc-done-mark { font-size: 2.2rem; }
+
+.hcc-continue {
+  @include w.welcome-cta-btn(linear-gradient(120deg, $hcc-mint, #57cfa4), v.$color-white);
+  margin: 1.6rem auto 0;
+  display: block;
+  font-size: 1.1rem;
+
+  &:disabled { opacity: 0.45; cursor: not-allowed; }
+}
+
+.hcc-hint {
+  margin: 0.7rem 0 0;
+  font-size: 0.85rem;
+  color: rgba($hcc-ink, 0.55);
+}

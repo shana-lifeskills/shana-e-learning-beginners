@@ -1,0 +1,72 @@
+<div class="nhc">
+  <span class="nhc-week">{{ nhc.weekLabel }}</span>
+
+  <h1>
+    <span class="nhc-title-start">{{ nhc.titleStart }}</span>
+    <span class="nhc-title-accent">{{ nhc.titleAccent }}</span>
+  </h1>
+
+  <div class="nhc-scene" aria-hidden="true">
+    <svg viewBox="0 0 260 180" role="img">
+      <!-- stand -->
+      <rect class="nhc-post" x="126" y="40" width="8" height="108" rx="4" />
+      <path class="nhc-base" d="M96 150h68l10 14H86Z" />
+      <circle class="nhc-pivot" cx="130" cy="44" r="6" />
+
+      <!-- rocking beam with two pans -->
+      <g class="nhc-beam">
+        <line class="nhc-arm" x1="60" y1="44" x2="200" y2="44" />
+
+        <!-- healthy pan (left, settles lower) -->
+        <line class="nhc-string" x1="60" y1="44" x2="60" y2="88" />
+        <path class="nhc-pan nhc-pan-good" d="M36 88h48a24 12 0 0 1-48 0Z" />
+        <circle class="nhc-apple" cx="60" cy="80" r="11" />
+        <path class="nhc-leaf" d="M60 69c4-5 11-5 13-2-2 5-9 7-13 2Z" />
+
+        <!-- treat pan (right, rides higher) -->
+        <line class="nhc-string" x1="200" y1="44" x2="200" y2="72" />
+        <path class="nhc-pan nhc-pan-treat" d="M178 72h44a22 11 0 0 1-44 0Z" />
+        <circle class="nhc-candy" cx="200" cy="64" r="9" />
+        <line class="nhc-stick" x1="200" y1="73" x2="200" y2="86" />
+      </g>
+    </svg>
+    <span class="nhc-caption">{{ nhc.caption }}</span>
+  </div>
+
+  <div class="nhc-cols">
+    <div class="nhc-col nhc-col-good">
+      <span class="nhc-col-label">{{ nhc.everydayLabel }}</span>
+      <ul>
+        @for (f of nhc.everydayFoods; track f.label) {
+          <li><span class="nhc-food-icon">{{ f.icon }}</span>{{ f.label }}</li>
+        }
+      </ul>
+    </div>
+    <div class="nhc-col nhc-col-treat">
+      <span class="nhc-col-label">{{ nhc.sometimesLabel }}</span>
+      <ul>
+        @for (f of nhc.sometimesFoods; track f.label) {
+          <li><span class="nhc-food-icon">{{ f.icon }}</span>{{ f.label }}</li>
+        }
+      </ul>
+    </div>
+  </div>
+
+  <div class="nhc-card">
+    <span class="nhc-card-label">{{ nhc.objectiveLabel }}</span>
+    <p>{{ nhc.objectiveText }}</p>
+  </div>
+
+  @if (isCompletedLessonWelcome()) {
+    @if (nextLesson(); as next) {
+      <button type="button" class="nhc-start" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+    } @else {
+      <button type="button" class="nhc-start" (click)="backToMap()">Back to My Modules →</button>
+    }
+    <button type="button" class="nhc-review" (click)="beginLesson()">↺ Review this lesson</button>
+  } @else {
+    <button type="button" class="nhc-start" (click)="beginLesson()">{{ nhc.startLabel }} →</button>
+  }
+
+  <p class="nhc-footer">{{ nhc.footerNote }}</p>
+</div>

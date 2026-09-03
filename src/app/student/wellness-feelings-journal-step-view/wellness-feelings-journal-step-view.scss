@@ -1,0 +1,161 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- Wellness feelings journal (wfj) — Wellness Module, Week 3 ---- */
+$wfj-bg: #f2ecfb;
+$wfj-bg-2: #efe6f8;
+$wfj-ink: #3c3357;
+$wfj-purple: #7b62c9;
+$wfj-deep: #5a44a0;
+
+.wfj {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 1.75rem clamp(1rem, 4vw, 2.25rem) 2rem;
+  color: $wfj-ink;
+  text-align: center;
+  border-radius: v.$border-radius-xl;
+  background: linear-gradient(168deg, $wfj-bg 0%, $wfj-bg-2 100%);
+}
+
+.wfj-badge {
+  display: inline-block;
+  padding: 0.3rem 0.9rem;
+  border-radius: 999px;
+  background: rgba($wfj-purple, 0.18);
+  font-weight: 800;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $wfj-deep;
+}
+
+.wfj h2 {
+  @include m.playful-heading;
+  margin: 0.6rem 0 0;
+  font-size: clamp(1.4rem, 4.5vw, 1.9rem);
+}
+
+.wfj-subtitle { margin: 0.3rem 0 0; font-weight: 700; color: rgba($wfj-ink, 0.75); }
+.wfj-intro { margin: 0.6rem 0 0; font-size: 0.95rem; color: rgba($wfj-ink, 0.7); }
+
+.wfj-streak {
+  margin: 1.1rem 0 0;
+  display: flex;
+  justify-content: center;
+  gap: 0.4rem;
+  font-size: 1.5rem;
+}
+
+.wfj-heart { transition: transform 0.2s ease; }
+.wfj-heart.filled { transform: scale(1.1); }
+
+.wfj-days {
+  list-style: none;
+  margin: 1.2rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.55rem;
+  text-align: left;
+}
+
+.wfj-day {
+  border: 2px solid rgba($wfj-deep, 0.16);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.8);
+  overflow: hidden;
+
+  &.logged { border-color: rgba($wfj-purple, 0.5); }
+  &.open { border-color: $wfj-purple; }
+}
+
+.wfj-day-head {
+  @include m.tappable;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  background: none;
+  border: none;
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 1rem;
+  color: $wfj-ink;
+}
+
+.wfj-day-state { font-size: 0.85rem; color: $wfj-deep; }
+
+.wfj-day-body {
+  padding: 0.4rem 1rem 1rem;
+  display: grid;
+  gap: 0.7rem;
+}
+
+.wfj-field {
+  display: grid;
+  gap: 0.3rem;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: rgba($wfj-ink, 0.85);
+
+  textarea {
+    width: 100%;
+    padding: 0.55rem 0.7rem;
+    border: 1.5px solid rgba($wfj-deep, 0.25);
+    border-radius: 9px;
+    font: inherit;
+    font-weight: 500;
+    resize: vertical;
+  }
+}
+
+.wfj-log {
+  @include m.tappable;
+  justify-self: start;
+  padding: 0.55rem 1.2rem;
+  background: $wfj-purple;
+  border: none;
+  border-radius: 999px;
+  font-weight: 800;
+  color: v.$color-white;
+}
+
+.wfj-progress {
+  margin: 1rem 0 0;
+  font-weight: 800;
+  color: $wfj-deep;
+}
+
+.wfj-parent {
+  margin: 0.8rem 0 0;
+  padding: 0.8rem 1rem;
+  background: rgba($wfj-purple, 0.1);
+  border-radius: 10px;
+  font-size: 0.88rem;
+  color: rgba($wfj-ink, 0.8);
+}
+
+.wfj-done {
+  margin: 1.2rem 0 0;
+  padding: 1.4rem 1.2rem;
+  background: rgba(255, 255, 255, 0.92);
+  border: 2px solid rgba($wfj-purple, 0.4);
+  border-radius: v.$border-radius-lg;
+
+  span { font-size: 2.2rem; }
+  h3 { @include m.playful-heading; margin: 0.4rem 0 0.3rem; font-size: 1.25rem; }
+  p { margin: 0; color: rgba($wfj-ink, 0.75); }
+}
+
+.wfj-continue {
+  @include m.tappable;
+  margin: 1.3rem 0 0;
+  padding: 0.8rem 1.8rem;
+  background: linear-gradient(120deg, $wfj-purple, #9179d8);
+  border: none;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: v.$color-white;
+}

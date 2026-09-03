@@ -1,0 +1,61 @@
+<div class="nfg">
+  <span class="nfg-week">{{ nfg.weekLabel }}</span>
+
+  <h1>
+    <span class="nfg-title-start">{{ nfg.titleStart }}</span>
+    <span class="nfg-title-accent">{{ nfg.titleAccent }}</span>
+  </h1>
+
+  <div class="nfg-scene" aria-hidden="true">
+    <svg viewBox="0 0 240 210" role="img">
+      <!-- soft glow behind the stack -->
+      <ellipse class="nfg-glow" cx="120" cy="120" rx="104" ry="86" />
+
+      <g class="nfg-stack">
+        @for (t of tiers; track $index) {
+          <g class="nfg-tier">
+            <rect
+              [attr.x]="t.x" [attr.y]="150 - $index * 40"
+              [attr.width]="t.w" height="36" rx="8"
+              [attr.fill]="t.fill"
+            />
+            @if (nfg.groups[$index]; as g) {
+              <text
+                [attr.x]="120" [attr.y]="150 - $index * 40 + 25"
+                text-anchor="middle" class="nfg-tier-icon"
+              >{{ g.icon }}</text>
+            }
+          </g>
+        }
+      </g>
+    </svg>
+    <span class="nfg-caption">{{ nfg.caption }}</span>
+  </div>
+
+  <ul class="nfg-groups">
+    @for (g of nfg.groups; track g.label) {
+      <li class="nfg-group">
+        <span class="nfg-group-icon">{{ g.icon }}</span>
+        <span class="nfg-group-label">{{ g.label }}</span>
+      </li>
+    }
+  </ul>
+
+  <div class="nfg-card">
+    <span class="nfg-card-label">{{ nfg.objectiveLabel }}</span>
+    <p>{{ nfg.objectiveText }}</p>
+  </div>
+
+  @if (isCompletedLessonWelcome()) {
+    @if (nextLesson(); as next) {
+      <button type="button" class="nfg-start" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+    } @else {
+      <button type="button" class="nfg-start" (click)="backToMap()">Back to My Modules →</button>
+    }
+    <button type="button" class="nfg-review" (click)="beginLesson()">↺ Review this lesson</button>
+  } @else {
+    <button type="button" class="nfg-start" (click)="beginLesson()">{{ nfg.startLabel }} →</button>
+  }
+
+  <p class="nfg-footer">{{ nfg.footerNote }}</p>
+</div>

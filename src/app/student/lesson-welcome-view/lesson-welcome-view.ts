@@ -59,6 +59,18 @@ import { WelcomeBackWelcome } from '../welcome-back-welcome/welcome-back-welcome
 import { MasteryHeroWelcome } from '../mastery-hero-welcome/mastery-hero-welcome';
 import { JourneyWelcome } from '../journey-welcome/journey-welcome';
 import { ClassicWelcome } from '../classic-welcome/classic-welcome';
+import { HygieneIntroWelcome } from '../hygiene-intro-welcome/hygiene-intro-welcome';
+import { HygienePersonalWelcome } from '../hygiene-personal-welcome/hygiene-personal-welcome';
+import { HygieneHandwashWelcome } from '../hygiene-handwash-welcome/hygiene-handwash-welcome';
+import { HygieneHabitsWelcome } from '../hygiene-habits-welcome/hygiene-habits-welcome';
+import { WellnessIntroWelcome } from '../wellness-intro-welcome/wellness-intro-welcome';
+import { WellnessBodyWelcome } from '../wellness-body-welcome/wellness-body-welcome';
+import { WellnessFeelingsWelcome } from '../wellness-feelings-welcome/wellness-feelings-welcome';
+import { WellnessRoutineWelcome } from '../wellness-routine-welcome/wellness-routine-welcome';
+import { NutritionWhyFoodWelcome } from '../nutrition-why-food-welcome/nutrition-why-food-welcome';
+import { NutritionFoodGroupsWelcome } from '../nutrition-food-groups-welcome/nutrition-food-groups-welcome';
+import { NutritionHealthyChoicesWelcome } from '../nutrition-healthy-choices-welcome/nutrition-healthy-choices-welcome';
+import { NutritionHabitsWelcome } from '../nutrition-habits-welcome/nutrition-habits-welcome';
 
 /**
  * The lesson-welcome screen: one big `@if / @else if` chain that picks the
@@ -133,6 +145,18 @@ import { ClassicWelcome } from '../classic-welcome/classic-welcome';
     MasteryHeroWelcome,
     JourneyWelcome,
     ClassicWelcome,
+    HygieneIntroWelcome,
+    HygienePersonalWelcome,
+    HygieneHandwashWelcome,
+    HygieneHabitsWelcome,
+    WellnessIntroWelcome,
+    WellnessBodyWelcome,
+    WellnessFeelingsWelcome,
+    WellnessRoutineWelcome,
+    NutritionWhyFoodWelcome,
+    NutritionFoodGroupsWelcome,
+    NutritionHealthyChoicesWelcome,
+    NutritionHabitsWelcome,
   ],
   templateUrl: './lesson-welcome-view.html',
   styleUrl: './lesson-welcome-view.scss',

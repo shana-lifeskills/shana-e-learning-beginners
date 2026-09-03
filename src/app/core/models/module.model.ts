@@ -171,7 +171,24 @@ export type ExerciseType =
   | 'teamwork-match-warmup'
   | 'teamwork-tf-warmup'
   | 'teamwork-fill-blank'
-  | 'teamwork-reflection-mission';
+  | 'teamwork-reflection-mission'
+  | 'hygiene-warmup-quiz'
+  | 'hygiene-detective-challenge'
+  | 'hygiene-confidence-link'
+  | 'hygiene-habit-match'
+  | 'hygiene-checklist-challenge'
+  | 'hygiene-tf-warmup'
+  | 'hygiene-fill-blank'
+  | 'hygiene-final-challenge'
+  | 'wellness-warmup-quiz'
+  | 'wellness-habit-match'
+  | 'wellness-tf-warmup'
+  | 'wellness-feelings-journal'
+  | 'wellness-fill-blank'
+  | 'nutrition-warmup-quiz'
+  | 'nutrition-food-match'
+  | 'nutrition-tf-warmup'
+  | 'nutrition-fill-blank';
 
 export interface BaseExercise {
   id: string;
@@ -726,6 +743,561 @@ export interface WarmupQuizStep extends BaseExercise {
   footerNote: string;
   /** Callout encouraging a parent/guardian to help the student with this exercise. */
   parentNote: string;
+  continueLabel: string;
+}
+
+/** One lettered option inside a HygieneWarmupQuizQuestion. */
+export interface HygieneWarmupQuizOption {
+  id: string;
+  text: string;
+}
+
+/** One question inside a HygieneWarmupQuizStep. */
+export interface HygieneWarmupQuizQuestion {
+  id: string;
+  prompt: string;
+  options: HygieneWarmupQuizOption[];
+  correctOptionId: string;
+  /** Short line shown when the learner picks the right answer. */
+  feedbackText: string;
+}
+
+/**
+ * "Hygiene Warm-Up" multiple-choice game (Hygiene Module, Week 1). Its own
+ * look, distinct from the other modules' warm-up quizzes: a row of soap
+ * bubbles across the top that shimmer full one at a time as questions are
+ * answered, lettered options shaped like bars of soap, a wrong pick that
+ * wobbles and stays put, and a "squeaky clean" panel once every question is
+ * right. The Continue button is withheld until the bubble row is full, so the
+ * learner must answer every question correctly.
+ */
+export interface HygieneWarmupQuizStep extends BaseExercise {
+  type: 'hygiene-warmup-quiz';
+  heading: string;
+  subtitle: string;
+  questions: HygieneWarmupQuizQuestion[];
+  /** Title of the panel shown after every question is answered correctly. */
+  allDoneTitle: string;
+  /** Body line of that panel. */
+  allDoneText: string;
+  footerNote: string;
+  continueLabel: string;
+}
+
+/** One lettered option inside a WellnessWarmupQuizQuestion. */
+export interface WellnessWarmupQuizOption {
+  id: string;
+  text: string;
+}
+
+/** One question inside a WellnessWarmupQuizStep. */
+export interface WellnessWarmupQuizQuestion {
+  id: string;
+  prompt: string;
+  options: WellnessWarmupQuizOption[];
+  correctOptionId: string;
+  /** Short line shown when the learner picks the right answer. */
+  feedbackText: string;
+}
+
+/**
+ * "Wellness Warm-Up" multiple-choice game (Wellness Module, Week 1). Its own
+ * look, distinct from the other modules' warm-up quizzes: a friendly sun in the
+ * centre that gains one golden ray for every question answered correctly, on a
+ * sky-blue page, with lettered options shaped like smooth river pebbles. A
+ * wrong pick shivers and stays put; once the sun has all its rays a "bright and
+ * strong" panel appears. The Continue button is withheld until every question
+ * is right.
+ */
+export interface WellnessWarmupQuizStep extends BaseExercise {
+  type: 'wellness-warmup-quiz';
+  heading: string;
+  subtitle: string;
+  questions: WellnessWarmupQuizQuestion[];
+  /** Title of the panel shown after every question is answered correctly. */
+  allDoneTitle: string;
+  /** Body line of that panel. */
+  allDoneText: string;
+  footerNote: string;
+  continueLabel: string;
+}
+
+/** One lettered option inside a NutritionWarmupQuizQuestion. */
+export interface NutritionWarmupQuizOption {
+  id: string;
+  text: string;
+}
+
+/** One question inside a NutritionWarmupQuizStep. */
+export interface NutritionWarmupQuizQuestion {
+  id: string;
+  prompt: string;
+  options: NutritionWarmupQuizOption[];
+  correctOptionId: string;
+  /** Short line shown when the learner picks the right answer. */
+  feedbackText: string;
+}
+
+/**
+ * "Nutrition Warm-Up" multiple-choice game (Nutrition Module, Week 1). Its own
+ * look, distinct from the other modules' warm-up quizzes: an open lunchbox on a
+ * warm tomato-and-cream page that gains one packed food item for every question
+ * answered correctly, with lettered options shaped like rounded food-label
+ * cards. A wrong pick wobbles and stays put; once the lunchbox is full a
+ * "packed and ready" panel appears. The Continue button is withheld until every
+ * question is right.
+ */
+export interface NutritionWarmupQuizStep extends BaseExercise {
+  type: 'nutrition-warmup-quiz';
+  heading: string;
+  subtitle: string;
+  questions: NutritionWarmupQuizQuestion[];
+  /** Title of the panel shown after every question is answered correctly. */
+  allDoneTitle: string;
+  /** Body line of that panel. */
+  allDoneText: string;
+  footerNote: string;
+  continueLabel: string;
+}
+
+/** One food/benefit pair inside a NutritionFoodMatchStep. */
+export interface NutritionFoodMatchPair {
+  id: string;
+  food: string;
+  /** Optional emoji shown on the food card. */
+  icon?: string;
+  benefit: string;
+}
+
+/**
+ * "Nutrition Warm-Up" matching game (Nutrition Module, Week 2). Its own look,
+ * distinct from Week 1's lunchbox quiz: a warm two-column food tray where fixed
+ * food cards on the left are the targets and shuffled benefit tags sit in a
+ * bank below — tap a benefit tag, then tap the food it belongs to. A wrong pick
+ * wobbles and clears; a correct pick snaps the tag onto the food card with a
+ * tick. The Continue button is withheld until every food is matched.
+ */
+export interface NutritionFoodMatchStep extends BaseExercise {
+  type: 'nutrition-food-match';
+  /** Small eyebrow label above the heading, e.g. "Warm-Up · Matching". */
+  kicker: string;
+  heading: string;
+  subtitle: string;
+  foodColumnLabel: string;
+  benefitColumnLabel: string;
+  pairs: NutritionFoodMatchPair[];
+  allDoneTitle: string;
+  allDoneText: string;
+  footerNote: string;
+  continueLabel: string;
+}
+
+/** One statement inside a NutritionTfWarmupStep. */
+export interface NutritionTfStatement {
+  id: string;
+  text: string;
+  /** The correct verdict — true for "True", false for "False". */
+  answer: boolean;
+  /** Short line shown once the learner sorts this statement correctly. */
+  praise: string;
+}
+
+/**
+ * "Warm-Up – True or False" game (Nutrition Module, Week 3). Its own look,
+ * distinct from Weeks 1–2: a warm card sits between a green "True" lane and a
+ * coral "False" lane, with a row of dots tracking progress. A correct verdict
+ * slides the card off toward that lane and brings up the next one; a wrong
+ * verdict wobbles and stays put. The Continue button is withheld until every
+ * statement is sorted.
+ */
+export interface NutritionTfWarmupStep extends BaseExercise {
+  type: 'nutrition-tf-warmup';
+  /** Small eyebrow label above the heading, e.g. "Warm-Up · True or False". */
+  kicker: string;
+  heading: string;
+  subtitle: string;
+  trueLabel: string;
+  falseLabel: string;
+  statements: NutritionTfStatement[];
+  allDoneTitle: string;
+  allDoneText: string;
+  footerNote: string;
+  continueLabel: string;
+  /** Optional recap card shown on the celebration panel — a heading over a short bullet list. */
+  recapHeading?: string;
+  recapPoints?: string[];
+}
+
+/** One sentence with a missing word inside a NutritionFillBlankStep. */
+export interface NutritionFillBlankSentence {
+  id: string;
+  /** Sentence text before the blank. */
+  before: string;
+  /** Sentence text after the blank. */
+  after: string;
+  /** The word that belongs in the blank. */
+  answer: string;
+  /** Short affirmation shown once the blank is filled correctly. */
+  praise: string;
+}
+
+/**
+ * "Fill in the Blank" game (Nutrition Module, Week 4). Its own look, distinct
+ * from Weeks 1–3: warm sentence strips each with an empty slot, and a word bank
+ * of rounded food-label tokens below. The learner taps a word then the blank it
+ * belongs in; the right word snaps in and its token leaves the bank, a wrong
+ * word shakes the strip and stays available. Continue unlocks once every blank
+ * is filled.
+ */
+export interface NutritionFillBlankStep extends BaseExercise {
+  type: 'nutrition-fill-blank';
+  /** Small eyebrow label above the heading, e.g. "Warm-Up · Fill in the Blank". */
+  kicker: string;
+  heading: string;
+  subtitle: string;
+  wordBankLabel: string;
+  sentences: NutritionFillBlankSentence[];
+  allDoneTitle: string;
+  allDoneText: string;
+  footerNote: string;
+  continueLabel: string;
+  /** Optional recap card shown on the all-filled screen — a heading over a short bullet list. */
+  recapHeading?: string;
+  recapPoints?: string[];
+}
+
+/** One habit/benefit pair inside a WellnessHabitMatchStep. */
+export interface WellnessHabitMatchPair {
+  id: string;
+  habit: string;
+  benefit: string;
+}
+
+/**
+ * "Wellness Warm-Up" matching game (Wellness Module, Week 2). Its own look: a
+ * fresh green two-column board where fixed healthy-habit rows on the left are
+ * the targets and shuffled benefit chips sit in a bank below — tap a benefit,
+ * then tap the habit it belongs to. A wrong pick shivers and clears; a correct
+ * pick locks the benefit into the row with a tick. The Continue button is
+ * withheld until every habit is matched.
+ */
+export interface WellnessHabitMatchStep extends BaseExercise {
+  type: 'wellness-habit-match';
+  /** Small eyebrow label above the heading, e.g. "Warm-Up · Matching" or "Let's Explore · Matching". */
+  kicker: string;
+  heading: string;
+  subtitle: string;
+  habitColumnLabel: string;
+  benefitColumnLabel: string;
+  pairs: WellnessHabitMatchPair[];
+  allDoneTitle: string;
+  allDoneText: string;
+  footerNote: string;
+  continueLabel: string;
+  /** Optional recap card shown on the celebration panel — a heading over a short bullet list. */
+  recapHeading?: string;
+  recapPoints?: string[];
+}
+
+/** One statement inside a WellnessTfWarmupStep. */
+export interface WellnessTfStatement {
+  id: string;
+  text: string;
+  /** The correct verdict — true for "True", false for "False". */
+  answer: boolean;
+  /** Short line shown once the learner sorts this statement correctly. */
+  praise: string;
+}
+
+/**
+ * "Warm-Up – True or False" game (Wellness Module, Week 3). Its own look: a
+ * rosy page with a feelings-themed statement card between a thumbs-up "True"
+ * side and a thumbs-down "False" side. A correct verdict floats the card onto
+ * that side; a wrong verdict wobbles and stays put. The Continue button is
+ * withheld until every statement is sorted.
+ */
+export interface WellnessTfWarmupStep extends BaseExercise {
+  type: 'wellness-tf-warmup';
+  /** Small eyebrow label above the heading, e.g. "Warm-Up · True or False" or "Let's Explore · True or False". */
+  kicker: string;
+  heading: string;
+  subtitle: string;
+  trueLabel: string;
+  falseLabel: string;
+  statements: WellnessTfStatement[];
+  allDoneTitle: string;
+  allDoneText: string;
+  footerNote: string;
+  continueLabel: string;
+  /** Optional recap card shown on the celebration panel — a heading over a short bullet list. */
+  recapHeading?: string;
+  recapPoints?: string[];
+}
+
+/** One write-prompt line inside a WellnessFeelingsJournalStep day entry. */
+export interface WellnessJournalField {
+  id: string;
+  label: string;
+  placeholder: string;
+}
+
+/**
+ * "Challenge of the Week" shaped as a five-day feelings journal (Wellness
+ * Module, Week 3). Each day is an expanding card with a few short write
+ * prompts — "Today I felt", "Why", "What helped me feel better" — and a Log Day
+ * button; logged days bloom into a row of hearts. Self-reported, so continuing
+ * is never blocked on how many days are logged. Its own look, distinct from the
+ * checklist trackers used in Weeks 1–2.
+ */
+export interface WellnessFeelingsJournalStep extends BaseExercise {
+  type: 'wellness-feelings-journal';
+  badge: string;
+  title: string;
+  subtitle: string;
+  intro: string;
+  dayCount: number;
+  fields: WellnessJournalField[];
+  dayLoggedLabel: string;
+  progressLabel: string;
+  parentNote: string;
+  allDoneTitle: string;
+  allDoneText: string;
+  continueLabel: string;
+}
+
+/** One sentence with a missing word inside a WellnessFillBlankStep. */
+export interface WellnessFillBlankSentence {
+  id: string;
+  /** Sentence text before the blank. */
+  before: string;
+  /** Sentence text after the blank. */
+  after: string;
+  /** The word that belongs in the blank. */
+  answer: string;
+  /** Short affirmation shown once the blank is filled correctly. */
+  praise: string;
+}
+
+/**
+ * "Fill in the Blank" game (Wellness Module, Week 4). Its own look: a warm
+ * routine board of sentence strips each with a blank slot, and a word bank of
+ * rounded tokens below. The learner taps a word then the blank it belongs in;
+ * the right word snaps in and its token leaves the bank, a wrong word shakes
+ * the strip and stays available. Continue unlocks once every blank is filled.
+ * Used for both the Week 4 warm-up and the "Let's Explore" discussion.
+ */
+export interface WellnessFillBlankStep extends BaseExercise {
+  type: 'wellness-fill-blank';
+  /** Small eyebrow label above the heading, e.g. "Warm-Up · Fill in the Blank". */
+  kicker: string;
+  heading: string;
+  subtitle: string;
+  wordBankLabel: string;
+  sentences: WellnessFillBlankSentence[];
+  allDoneTitle: string;
+  allDoneText: string;
+  footerNote: string;
+  continueLabel: string;
+  /** Optional recap card shown on the all-filled screen — a heading over a short bullet list. */
+  recapHeading?: string;
+  recapPoints?: string[];
+}
+
+/** One habit to spot inside a HygieneDetectiveChallengeStep. */
+export interface HygieneDetectiveClue {
+  id: string;
+  label: string;
+}
+
+/**
+ * "Hygiene Detective" challenge of the week (Hygiene Module, Week 1). Its own
+ * look — a detective case file. The learner spends five days spotting hygiene
+ * habits around them and ticks each clue off as they see it; a small day strip
+ * marks the five-day run. The Continue button unlocks only once every clue has
+ * been found ("case closed").
+ */
+export interface HygieneDetectiveChallengeStep extends BaseExercise {
+  type: 'hygiene-detective-challenge';
+  badge: string;
+  title: string;
+  missionText: string;
+  /** Number of days the take-home challenge runs, e.g. 5 — rendered as a day strip. */
+  dayCount: number;
+  clues: HygieneDetectiveClue[];
+  caseClosedTitle: string;
+  caseClosedText: string;
+  continueLabel: string;
+}
+
+/**
+ * The "Confidence Link" closing page for Hygiene Module, Week 1. Its own look —
+ * a shining bar-of-soap medal carrying the week's affirmation; the learner taps
+ * "I said it out loud!" to light the medal, which unlocks the "Complete Week 1"
+ * button.
+ */
+export interface HygieneConfidenceLinkStep extends BaseExercise {
+  type: 'hygiene-confidence-link';
+  badge: string;
+  weekLabel: string;
+  statement: string;
+  sayItLabel: string;
+  saidItLabel: string;
+  reinforceLine: string;
+  completeLabel: string;
+}
+
+/** One sentence with a missing word inside a HygieneFillBlankStep. */
+export interface HygieneFillBlankSentence {
+  id: string;
+  /** Sentence text before the blank. */
+  before: string;
+  /** Sentence text after the blank. */
+  after: string;
+  /** The word that belongs in the blank. */
+  answer: string;
+  /** Short affirmation shown once the blank is filled correctly. */
+  praise: string;
+}
+
+/**
+ * "Warm-Up – Fill in the Blank" game (Hygiene Module, Week 4). Its own look: a
+ * word bank of leaf-tile words and a stack of sentences with a blank slot. The
+ * learner taps a word then the blank it belongs in; the right word plants
+ * itself and the tile leaves the bank, a wrong word shakes the sentence and
+ * stays available. Continue unlocks once every blank is filled.
+ */
+export interface HygieneFillBlankStep extends BaseExercise {
+  type: 'hygiene-fill-blank';
+  heading: string;
+  subtitle: string;
+  wordBankLabel: string;
+  sentences: HygieneFillBlankSentence[];
+  allDoneTitle: string;
+  allDoneText: string;
+  /** Optional recap card shown on the all-filled screen — a heading over a short bullet list. */
+  recapHeading?: string;
+  recapPoints?: string[];
+  continueLabel: string;
+}
+
+/** One statement inside a HygieneTfWarmupStep. */
+export interface HygieneTfStatement {
+  id: string;
+  text: string;
+  /** The correct verdict for this statement. */
+  answer: boolean;
+  /** Short affirmation shown once the learner answers it correctly. */
+  praise: string;
+}
+
+/**
+ * "Warm-Up – True or False" game (Hygiene Module, Week 3). Its own look: one
+ * statement card at a time with big True / False buttons; a correct answer
+ * drops the statement into a "True" or "False" tray and advances, a wrong
+ * answer wobbles and stays put. Continue unlocks once every statement is
+ * sorted.
+ */
+export interface HygieneTfWarmupStep extends BaseExercise {
+  type: 'hygiene-tf-warmup';
+  heading: string;
+  subtitle: string;
+  trueLabel: string;
+  falseLabel: string;
+  statements: HygieneTfStatement[];
+  allDoneTitle: string;
+  allDoneText: string;
+  /** Optional recap card shown on the all-sorted screen — a heading over a short bullet list. */
+  recapHeading?: string;
+  recapPoints?: string[];
+  continueLabel: string;
+}
+
+/** One daily task inside a HygieneChecklistChallengeStep. */
+export interface HygieneChecklistTask {
+  id: string;
+  label: string;
+}
+
+/** One free-text reflection field inside a HygieneFinalChallengeStep. */
+export interface HygieneFinalField {
+  id: string;
+  label: string;
+  placeholder: string;
+}
+
+/**
+ * "My Hygiene Habit Tracker" — the final challenge of the Hygiene Module
+ * (Week 4). Its own look: the same five-day habit grid as
+ * HygieneChecklistChallengeStep, followed by a few short "reflect on your
+ * habits" text fields the trainer can read. The submit button unlocks once the
+ * whole grid is filled and every field has an answer; submitting saves the
+ * written answers.
+ */
+export interface HygieneFinalChallengeStep extends BaseExercise {
+  type: 'hygiene-final-challenge';
+  badge: string;
+  title: string;
+  missionText: string;
+  /** Number of days the grid runs, e.g. 5. */
+  dayCount: number;
+  tasks: HygieneChecklistTask[];
+  fieldsHeading: string;
+  fields: HygieneFinalField[];
+  allDoneTitle: string;
+  allDoneText: string;
+  submitLabel: string;
+}
+
+/**
+ * "My Hygiene Checklist" challenge of the week (Hygiene Module, Week 2). Its own
+ * look — a weekly habit grid: the learner's daily hygiene tasks down the side,
+ * a column per day, and a tappable cell for each. A day earns a star once all
+ * its tasks are ticked; the Continue button unlocks once the whole grid is
+ * filled ("perfect week").
+ */
+export interface HygieneChecklistChallengeStep extends BaseExercise {
+  type: 'hygiene-checklist-challenge';
+  badge: string;
+  title: string;
+  missionText: string;
+  /** Number of days the grid runs, e.g. 5. */
+  dayCount: number;
+  tasks: HygieneChecklistTask[];
+  allDoneTitle: string;
+  allDoneText: string;
+  continueLabel: string;
+}
+
+/** One habit-to-purpose pair inside a HygieneHabitMatchStep. */
+export interface HygieneHabitMatchPair {
+  id: string;
+  /** The hygiene habit, e.g. "Brushing teeth". */
+  habit: string;
+  /** The purpose it serves, e.g. "Healthy smile". */
+  purpose: string;
+  /** Emoji shown beside the habit, e.g. "🪥". */
+  icon?: string;
+}
+
+/**
+ * "Warm-Up – Matching" game (Hygiene Module, Week 2). Its own look: a habits
+ * column and a shuffled purposes column. The learner taps a habit then the
+ * purpose it serves; a correct pair links up in a colour and locks, a wrong
+ * pair flashes and clears. The Continue button unlocks once every pair is
+ * matched.
+ */
+export interface HygieneHabitMatchStep extends BaseExercise {
+  type: 'hygiene-habit-match';
+  heading: string;
+  subtitle: string;
+  habitHeading: string;
+  purposeHeading: string;
+  pairs: HygieneHabitMatchPair[];
+  allDoneTitle: string;
+  allDoneText: string;
+  /** Optional recap card shown on the all-matched screen — a heading over a short bullet list. */
+  recapHeading?: string;
+  recapPoints?: string[];
   continueLabel: string;
 }
 
@@ -4197,7 +4769,14 @@ export interface ChallengeTrackerStep extends BaseExercise {
   trackerHeading: string;
   trackerIntro: string;
   days: string[];
+  /** When set, each day row also gets a short free-text box under it with this label (e.g. "One healthy breakfast food I ate"). Purely self-reported — never gates continuing. */
+  dailyNoteLabel?: string;
+  /** Placeholder for the per-day note box; only used when `dailyNoteLabel` is set. */
+  dailyNotePlaceholder?: string;
   progressHeading: string;
+  /** When set, a "Complete:" block of free-text reflection boxes shows below the tracker; Continue is then also gated on every one being answered. Used by a module's final challenge. */
+  reflectionHeading?: string;
+  reflectionPrompts?: { id: string; label: string; placeholder: string }[];
   continueLabel: string;
 }
 
@@ -5383,7 +5962,24 @@ export type Exercise =
   | TeamworkMatchWarmupStep
   | TeamworkTfWarmupStep
   | TeamworkFillBlankStep
-  | TeamworkReflectionMissionStep;
+  | TeamworkReflectionMissionStep
+  | HygieneWarmupQuizStep
+  | HygieneDetectiveChallengeStep
+  | HygieneConfidenceLinkStep
+  | HygieneHabitMatchStep
+  | HygieneChecklistChallengeStep
+  | HygieneTfWarmupStep
+  | HygieneFillBlankStep
+  | HygieneFinalChallengeStep
+  | WellnessWarmupQuizStep
+  | WellnessHabitMatchStep
+  | WellnessTfWarmupStep
+  | WellnessFeelingsJournalStep
+  | WellnessFillBlankStep
+  | NutritionWarmupQuizStep
+  | NutritionFoodMatchStep
+  | NutritionTfWarmupStep
+  | NutritionFillBlankStep;
 
 /** Content for the newer, richer lesson-welcome layout. When a lesson has this, its welcome screen uses this design instead of the plain card. */
 /** One preview card inside a LessonWelcomeCard's "This Week's Mission" section. */
@@ -5939,6 +6535,30 @@ export interface Lesson {
   teamworkTalkWelcome?: LessonTeamworkTalkWelcome;
   /** When set, renders the "meshing gears" welcome layout (Teamwork Module, Week 4 — "Respect and Cooperation": a mint-to-teal page, a two-tone title, a hand-drawn pair of interlocking gears that turn together, a caption, and a single Objective card) — takes priority over all other welcome fields. */
   teamworkGearsWelcome?: LessonTeamworkGearsWelcome;
+  /** When set, renders the "bubble bath" welcome layout (Hygiene Module — a fresh cyan tiled card, a two-tone title on a bathroom-tile strip, a smiling water-drop mascot with bubbles rising past it, a friendly caption, and the objective on a punched paper luggage-tag instead of the usual bordered card) — takes priority over all other welcome fields. */
+  hygieneIntroWelcome?: LessonHygieneIntroWelcome;
+  /** When set, renders the "mirror" welcome layout (Hygiene Module, Week 2 — a soft mint page, a two-tone title, an oval hand-mirror with a slow shine sweep framing a small sun rising over a horizon, a friendly caption, and the objective inside a rounded hand-mirror card) — takes priority over all other welcome fields. */
+  hygienePersonalWelcome?: LessonHygienePersonalWelcome;
+  /** When set, renders the "handwashing" welcome layout (Hygiene Module, Week 3 — a sky-blue page, a two-tone title, an SVG tap running water over two cupped soapy hands while little germ blobs rinse away, a friendly caption, and the objective inside a soft foam-bubble card) — takes priority over all other welcome fields. */
+  hygieneHandwashWelcome?: LessonHygieneHandwashWelcome;
+  /** When set, renders the "growing habit" welcome layout (Hygiene Module, Week 4 — a warm honey-and-cream page, a two-tone title, an SVG potted plant on a windowsill whose four leaves unfurl one by one under a slow-rising sun, a friendly caption, and the objective inside a leaf-shaped card) — takes priority over all other welcome fields. */
+  hygieneHabitsWelcome?: LessonHygieneHabitsWelcome;
+  /** When set, renders the "whole self sprout" welcome layout (Wellness Module, Week 1 — a sunny peach-and-green page, a two-tone title, an SVG seedling growing from a pot with three glowing orbs (body, mind, feelings) circling it, a caption, a trio of labelled pillar chips, and the objective inside a seed-packet card) — takes priority over all other welcome fields. */
+  wellnessIntroWelcome?: LessonWellnessIntroWelcome;
+  /** When set, renders the "moving body" welcome layout (Wellness Module, Week 2 — a fresh teal-and-coral page, a two-tone title, an SVG kid mid-stretch inside a pulsing energy ring, a caption, a row of labelled body-care habit chips, and the objective inside a rounded card) — takes priority over all other welcome fields. */
+  wellnessBodyWelcome?: LessonWellnessBodyWelcome;
+  /** When set, renders the "mood heart" welcome layout (Wellness Module, Week 3 — a soft lavender-and-yellow page, a two-tone title, an SVG heart that gently shifts colour with small mood faces drifting around it, a caption, a row of labelled feeling chips, and the objective inside a rounded card) — takes priority over all other welcome fields. */
+  wellnessFeelingsWelcome?: LessonWellnessFeelingsWelcome;
+  /** When set, renders the "daily routine clock" welcome layout (Wellness Module, Week 4 — an amber-to-deep-blue day-to-night page, a two-tone title, an SVG clock face with a sweeping hand and small routine icons at the hour marks, a caption, a row of labelled routine-step chips, and the objective inside a rounded card) — takes priority over all other welcome fields. */
+  wellnessRoutineWelcome?: LessonWellnessRoutineWelcome;
+  /** When set, renders the "fuel plate" welcome layout (Nutrition Module, Week 1 — "Why Do We Need Food?": a warm tomato-and-amber page, a two-tone title, an SVG dinner plate whose three food wedges light up in turn while an energy bolt rises and a small battery charges to full, a caption, a row of labelled benefit chips, and the objective inside a menu-card) — takes priority over all other welcome fields. */
+  nutritionWhyFoodWelcome?: LessonNutritionWhyFoodWelcome;
+  /** When set, renders the "food-group pyramid" welcome layout (Nutrition Module, Week 2 — "Different Foods Help Our Bodies": a leaf-green-and-cream page, a two-tone title, an SVG stack of food-group tiers that build up from the base one after another, a caption, a row of labelled food-group chips, and the objective inside a card) — takes priority over all other welcome fields. */
+  nutritionFoodGroupsWelcome?: LessonNutritionFoodGroupsWelcome;
+  /** When set, renders the "balance scale" welcome layout (Nutrition Module, Week 3 — "Healthy Choices vs Unhealthy Choices": a split mint / peach page, a two-tone title, an SVG balance scale that rocks and settles with the healthy pan lower, a caption, two labelled chip columns for "everyday" and "sometimes" foods, and the objective inside a card) — takes priority over all other welcome fields. */
+  nutritionHealthyChoicesWelcome?: LessonNutritionHealthyChoicesWelcome;
+  /** When set, renders the "habit house" welcome layout (Nutrition Module, Week 4 — "Building Healthy Eating Habits": a warm amber-and-cream page, a two-tone title, an SVG house that builds itself brick by brick then adds its roof, a caption, a row of labelled daily-habit chips, and the objective inside a card) — takes priority over all other welcome fields. */
+  nutritionHabitsWelcome?: LessonNutritionHabitsWelcome;
   /** Ordered steps the student walks through — warm-up, story, discussion, activity, challenge, questions. */
   exercises: Exercise[];
 }
@@ -6726,6 +7346,262 @@ export interface LessonTeamworkGearsWelcome {
   titleAccent: string;
   /** Caption under the gears, e.g. "We work better together". */
   gearsMark: string;
+  objectiveLabel: string;
+  objectiveText: string;
+  startLabel: string;
+  footerNote: string;
+}
+
+/**
+ * The "bubble bath" welcome layout — Hygiene Module. A deliberately spare
+ * beginner intro screen with its own look, distinct from the other modules'
+ * gradient-hero-plus-objective-card layouts: a fresh cyan card edged like a
+ * tiled bathroom wall, a two-tone title sitting on a strip of tiles, a smiling
+ * water-drop mascot with soap bubbles drifting up past it, a short friendly
+ * caption, and the objective printed on a punched paper luggage-tag rather than
+ * a bordered card. Purely presentational — the week's teaching is left to the
+ * lesson steps.
+ */
+export interface LessonHygieneIntroWelcome {
+  weekLabel: string;
+  /** Plain first part of the title, e.g. "What is ". */
+  titleStart: string;
+  /** Accent-coloured second part of the title, e.g. "Hygiene?". */
+  titleAccent: string;
+  /** Friendly one-liner under the mascot scene, e.g. "Clean body, happy day!". */
+  caption: string;
+  objectiveLabel: string;
+  objectiveText: string;
+  startLabel: string;
+  footerNote: string;
+}
+
+/**
+ * The "mirror" welcome layout — Hygiene Module, Week 2 ("Personal Hygiene").
+ * Its own look, distinct from Week 1's bubble-bath card: a soft mint page, a
+ * two-tone title, an oval hand-mirror with a slow diagonal shine sweep that
+ * frames a small sun rising over a horizon line (a fresh new day of routines),
+ * a friendly caption, and the objective set inside a rounded hand-mirror card.
+ * Purely presentational — the week's teaching is left to the lesson steps.
+ */
+export interface LessonHygienePersonalWelcome {
+  weekLabel: string;
+  titleStart: string;
+  titleAccent: string;
+  caption: string;
+  objectiveLabel: string;
+  objectiveText: string;
+  startLabel: string;
+  footerNote: string;
+}
+
+/**
+ * The "handwashing" welcome layout — Hygiene Module, Week 3 ("Handwashing &
+ * Stopping Germs"). Its own look, distinct from Week 1's bubble-bath card and
+ * Week 2's mirror: a sky-blue page, a two-tone title, an SVG tap running water
+ * over two cupped soapy hands while little germ blobs rinse away down the
+ * stream, a friendly caption, and the objective set inside a soft foam-bubble
+ * card. Purely presentational — the week's teaching is left to the lesson steps.
+ */
+export interface LessonHygieneHandwashWelcome {
+  weekLabel: string;
+  titleStart: string;
+  titleAccent: string;
+  caption: string;
+  objectiveLabel: string;
+  objectiveText: string;
+  startLabel: string;
+  footerNote: string;
+}
+
+/**
+ * The "growing habit" welcome layout — Hygiene Module, Week 4 ("Building
+ * Lifelong Hygiene Habits"). Its own look, distinct from Weeks 1–3: a warm
+ * honey-and-cream page, a two-tone title, an SVG potted plant on a windowsill
+ * whose four leaves unfurl one by one (four weeks of practice) under a
+ * slow-rising sun, a friendly caption, and the objective set inside a
+ * leaf-shaped card. Purely presentational — the week's teaching is left to the
+ * lesson steps.
+ */
+export interface LessonHygieneHabitsWelcome {
+  weekLabel: string;
+  titleStart: string;
+  titleAccent: string;
+  caption: string;
+  objectiveLabel: string;
+  objectiveText: string;
+  startLabel: string;
+  footerNote: string;
+}
+
+/**
+ * The "whole self sprout" welcome layout — Wellness Module, Week 1 ("What is
+ * Wellness?"). Its own look: a sunny peach-to-green page, a two-tone title, an
+ * SVG seedling rising from a little pot with three soft glowing orbs circling
+ * it — one each for body, mind, and feelings — a friendly caption, a row of
+ * three labelled pillar chips, and the objective set inside a seed-packet card.
+ * Purely presentational — the week's teaching is left to the lesson steps.
+ */
+export interface LessonWellnessIntroWelcome {
+  weekLabel: string;
+  titleStart: string;
+  titleAccent: string;
+  caption: string;
+  /** The three things wellness cares for — shown as chips under the mascot. */
+  pillars: { icon: string; label: string }[];
+  objectiveLabel: string;
+  objectiveText: string;
+  startLabel: string;
+  footerNote: string;
+}
+
+/**
+ * The "moving body" welcome layout — Wellness Module, Week 2 ("Taking Care of
+ * Our Bodies"). Its own look, distinct from Week 1's sprout card: a fresh
+ * teal-to-coral page, a two-tone title, an SVG kid mid-stretch inside a slowly
+ * pulsing energy ring, a friendly caption, a row of labelled body-care habit
+ * chips, and the objective inside a rounded card. Purely presentational — the
+ * week's teaching is left to the lesson steps.
+ */
+export interface LessonWellnessBodyWelcome {
+  weekLabel: string;
+  titleStart: string;
+  titleAccent: string;
+  caption: string;
+  /** Body-care habits — shown as chips under the mascot. */
+  habits: { icon: string; label: string }[];
+  objectiveLabel: string;
+  objectiveText: string;
+  startLabel: string;
+  footerNote: string;
+}
+
+/**
+ * The "mood heart" welcome layout — Wellness Module, Week 3 ("Taking Care of
+ * Our Feelings"). Its own look, distinct from Weeks 1–2: a soft lavender-to-
+ * yellow page, a two-tone title, an SVG heart that gently shifts colour with
+ * small mood faces drifting around it, a friendly caption, a row of labelled
+ * feeling chips, and the objective inside a rounded card. Purely
+ * presentational — the week's teaching is left to the lesson steps.
+ */
+export interface LessonWellnessFeelingsWelcome {
+  weekLabel: string;
+  titleStart: string;
+  titleAccent: string;
+  caption: string;
+  /** Feelings to name — shown as chips under the mascot. */
+  feelings: { icon: string; label: string }[];
+  objectiveLabel: string;
+  objectiveText: string;
+  startLabel: string;
+  footerNote: string;
+}
+
+/**
+ * The "daily routine clock" welcome layout — Wellness Module, Week 4 ("Building
+ * a Wellness Routine"). Its own look, distinct from Weeks 1–3: an amber-to-
+ * deep-blue day-to-night page, a two-tone title, an SVG clock face with a
+ * sweeping hand and small routine icons at the hour marks, a friendly caption,
+ * a row of labelled routine-step chips, and the objective inside a rounded
+ * card. Purely presentational — the week's teaching is left to the lesson steps.
+ */
+export interface LessonWellnessRoutineWelcome {
+  weekLabel: string;
+  titleStart: string;
+  titleAccent: string;
+  caption: string;
+  /** Steps of a daily wellness routine — shown as chips under the clock. */
+  routineSteps: { icon: string; label: string }[];
+  objectiveLabel: string;
+  objectiveText: string;
+  startLabel: string;
+  footerNote: string;
+}
+
+/**
+ * The "fuel plate" welcome layout — Nutrition Module, Week 1 ("Why Do We Need
+ * Food?"). Its own look: a warm tomato-to-amber page, a two-tone title, an SVG
+ * dinner plate whose three food wedges light up in turn while an energy bolt
+ * rises from the plate and a small battery beside it charges to full, a
+ * friendly caption, a row of labelled "food gives us…" benefit chips, and the
+ * objective inside a rounded menu-card. Purely presentational — the week's
+ * teaching is left to the lesson steps.
+ */
+export interface LessonNutritionWhyFoodWelcome {
+  weekLabel: string;
+  titleStart: string;
+  titleAccent: string;
+  caption: string;
+  /** What food gives our bodies — shown as chips under the plate. */
+  benefits: { icon: string; label: string }[];
+  objectiveLabel: string;
+  objectiveText: string;
+  startLabel: string;
+  footerNote: string;
+}
+
+/**
+ * The "food-group pyramid" welcome layout — Nutrition Module, Week 2
+ * ("Different Foods Help Our Bodies"). Its own look, distinct from Week 1's
+ * plate: a fresh leaf-green-to-cream page, a two-tone title, an SVG stack of
+ * food-group tiers that build up from the base one after another, each tier
+ * carrying its group's emoji, a friendly caption, a row of labelled food-group
+ * chips, and the objective inside a rounded card. Purely presentational — the
+ * week's teaching is left to the lesson steps.
+ */
+export interface LessonNutritionFoodGroupsWelcome {
+  weekLabel: string;
+  titleStart: string;
+  titleAccent: string;
+  caption: string;
+  /** The food-group tiers, base first — each is drawn on the pyramid and shown as a chip. */
+  groups: { icon: string; label: string }[];
+  objectiveLabel: string;
+  objectiveText: string;
+  startLabel: string;
+  footerNote: string;
+}
+
+/**
+ * The "balance scale" welcome layout — Nutrition Module, Week 3 ("Healthy
+ * Choices vs Unhealthy Choices"). Its own look, distinct from Weeks 1–2: a
+ * split mint-green / warm-peach page, a two-tone title, an SVG balance scale
+ * that gently rocks and settles with the healthy pan sitting lower, a friendly
+ * caption, and two labelled chip columns — "everyday" foods and "sometimes"
+ * foods — followed by the objective inside a rounded card. Purely
+ * presentational — the week's teaching is left to the lesson steps.
+ */
+export interface LessonNutritionHealthyChoicesWelcome {
+  weekLabel: string;
+  titleStart: string;
+  titleAccent: string;
+  caption: string;
+  everydayLabel: string;
+  everydayFoods: { icon: string; label: string }[];
+  sometimesLabel: string;
+  sometimesFoods: { icon: string; label: string }[];
+  objectiveLabel: string;
+  objectiveText: string;
+  startLabel: string;
+  footerNote: string;
+}
+
+/**
+ * The "habit house" welcome layout — Nutrition Module, Week 4 ("Building
+ * Healthy Eating Habits"). Its own look, distinct from Weeks 1–3: a warm
+ * amber-to-cream page, a two-tone title, an SVG little house that builds itself
+ * brick by brick from the ground up and then adds its roof, a friendly
+ * caption, a row of labelled daily-habit chips, and the objective inside a
+ * rounded card. Purely presentational — the week's teaching is left to the
+ * lesson steps.
+ */
+export interface LessonNutritionHabitsWelcome {
+  weekLabel: string;
+  titleStart: string;
+  titleAccent: string;
+  caption: string;
+  /** Everyday eating habits — shown as chips under the house. */
+  habits: { icon: string; label: string }[];
   objectiveLabel: string;
   objectiveText: string;
   startLabel: string;
