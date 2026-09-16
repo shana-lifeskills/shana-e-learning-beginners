@@ -20,6 +20,15 @@ const STUDENT_NAV: NavItem[] = [
   { label: 'Settings', icon: '⚙️' },
 ];
 
+const ADVANCED_STUDENT_NAV: NavItem[] = [
+  { label: 'Home', icon: '🏠', link: '/student', exact: true },
+  { label: 'Rewards', icon: '🏅', link: '/student/rewards' },
+  { label: 'Arcade', icon: '🎮', link: '/student/games' },
+  { label: 'Leaderboard', icon: '📊' },
+  { label: 'Crew', icon: '👥' },
+  { label: 'Settings', icon: '⚙️' },
+];
+
 const TRAINER_NAV: NavItem[] = [
   { label: 'Home', icon: '🏠', link: '/trainer', exact: true },
   { label: 'My Modules', icon: '📘', link: '/trainer/modules' },
@@ -37,9 +46,11 @@ const TRAINER_NAV: NavItem[] = [
 export class Sidebar {
   private auth = inject(AuthService);
 
-  readonly navItems = computed<NavItem[]>(() =>
-    this.auth.currentUser()?.role === 'trainer' ? TRAINER_NAV : STUDENT_NAV
-  );
+  readonly navItems = computed<NavItem[]>(() => {
+    const user = this.auth.currentUser();
+    if (user?.role === 'trainer') return TRAINER_NAV;
+    return (user as Student)?.ageGroup === 'advanced' ? ADVANCED_STUDENT_NAV : STUDENT_NAV;
+  });
 
   /** The streak tip only makes sense for students — trainers don't have a learning streak. */
   readonly student = computed(() => {

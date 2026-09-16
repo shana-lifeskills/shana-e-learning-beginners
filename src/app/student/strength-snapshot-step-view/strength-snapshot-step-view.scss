@@ -1,0 +1,150 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- Strength Snapshot (ssw) — Self-Confidence Module, Week 1 ---- */
+$ssw-coral: #ff6f59;
+$ssw-navy: #1e2749;
+$ssw-ink: #2b2d42;
+$ssw-line: rgba(43, 45, 66, 0.16);
+
+.ssw {
+  max-width: 34rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.ssw-badge {
+  @include m.playful-heading;
+  display: inline-block;
+  background: rgba($ssw-coral, 0.14);
+  color: $ssw-coral;
+  font-size: 0.85rem;
+  padding: 0.4rem 1.1rem;
+  border-radius: v.$border-radius-pill;
+}
+
+.ssw h1 {
+  @include m.playful-heading;
+  margin: 1rem 0 0.5rem;
+  font-size: clamp(1.9rem, 4.6vw, 2.4rem);
+  color: $ssw-navy;
+}
+
+.ssw-subtitle {
+  color: rgba($ssw-ink, 0.65);
+  font-size: 1.02rem;
+  line-height: 1.5;
+  max-width: 28rem;
+  margin: 0 auto;
+}
+
+.ssw-card {
+  @include m.bouncy-card;
+
+  &:hover {
+    transform: none;
+    box-shadow: 0 6px 0 rgba(0, 0, 0, 0.08);
+  }
+
+  background: v.$color-white;
+  border-radius: v.$border-radius-xl;
+  padding: 1.75rem clamp(1.1rem, 4vw, 2rem) 2rem;
+  text-align: left;
+  margin-top: 1.5rem;
+}
+
+.ssw-field {
+  display: block;
+  margin-bottom: 1.1rem;
+}
+
+.ssw-label {
+  display: block;
+  font-weight: 800;
+  font-size: 0.92rem;
+  color: $ssw-navy;
+  margin-bottom: 0.4rem;
+}
+
+.ssw-input,
+.ssw-textarea {
+  width: 100%;
+  border: 1.5px solid $ssw-line;
+  border-radius: 12px;
+  padding: 0.75rem 0.9rem;
+  font-size: 0.98rem;
+  font-family: inherit;
+  color: $ssw-ink;
+  background: v.$color-cream-bg;
+  resize: none;
+
+  &:focus {
+    outline: none;
+    border-color: $ssw-coral;
+  }
+}
+
+.ssw-submit {
+  @include m.tappable;
+  display: block;
+  width: 100%;
+  margin-top: 0.5rem;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  padding: 0.9rem 1.5rem;
+  font-weight: 800;
+  font-size: 1.02rem;
+  background: linear-gradient(120deg, $ssw-coral, #ff9478);
+  color: v.$color-white;
+  box-shadow: 0 4px 0 rgba($ssw-navy, 0.12);
+
+  &:disabled {
+    opacity: 0.45;
+    cursor: default;
+  }
+}
+
+.ssw-reveal {
+  @include m.bouncy-card;
+
+  &:hover {
+    transform: none;
+    box-shadow: 0 6px 0 rgba(0, 0, 0, 0.08);
+  }
+
+  background: rgba($ssw-coral, 0.08);
+  border-radius: v.$border-radius-xl;
+  padding: 2.5rem clamp(1.25rem, 4vw, 2rem) 2rem;
+  margin-top: 1rem;
+}
+
+.ssw-reveal-icon {
+  font-size: 2.75rem;
+}
+
+.ssw-reveal h2 {
+  @include m.playful-heading;
+  font-size: 1.5rem;
+  color: $ssw-navy;
+  margin: 0.5rem 0 0.9rem;
+}
+
+.ssw-reveal-strength {
+  @include m.playful-heading;
+  font-size: 1.15rem;
+  color: $ssw-coral;
+  margin: 0 0 0.5rem;
+}
+
+.ssw-reveal-discovery {
+  color: rgba($ssw-ink, 0.8);
+  line-height: 1.5;
+  font-style: italic;
+  margin: 0 0 1.1rem;
+}
+
+.ssw-reveal-note {
+  color: rgba($ssw-ink, 0.65);
+  line-height: 1.5;
+  margin: 0 0 1.75rem;
+}

@@ -1,0 +1,138 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Growth path welcome (pgrw) — Planning Module, Week 4 ---- */
+$pgrw-sage: #3f8a5c;
+$pgrw-deep: #2a6b41;
+$pgrw-gold: #d9a441;
+$pgrw-ink: #263426;
+
+.pgrw {
+  display: flex;
+  justify-content: center;
+  padding: 2.5rem 1rem;
+}
+
+.pgrw-card {
+  @include w.soft-card;
+  max-width: 30rem;
+  width: 100%;
+  padding: 2.5rem clamp(1.5rem, 5vw, 2.5rem);
+  text-align: center;
+}
+
+.pgrw-pills {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1.1rem;
+}
+
+.pgrw-week-pill {
+  @include w.welcome-pill($pgrw-sage, v.$color-white);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.78rem;
+}
+
+.pgrw-stage-pill {
+  @include w.welcome-pill(rgba($pgrw-gold, 0.2), #a5721c);
+  font-size: 0.82rem;
+}
+
+.pgrw h1 {
+  @include m.playful-heading;
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  color: $pgrw-deep;
+  margin: 0 0 0.5rem;
+}
+
+.pgrw-subtitle {
+  color: rgba($pgrw-ink, 0.65);
+  font-size: 1rem;
+  line-height: 1.5;
+  margin: 0 0 1.6rem;
+}
+
+/* --- growth row --- */
+.pgrw-growth {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 0 0 1.75rem;
+}
+
+.pgrw-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.pgrw-stage-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 50%;
+  background: rgba($pgrw-sage, 0.12);
+  font-size: 1.3rem;
+}
+
+.pgrw-stage-label {
+  font-size: 0.66rem;
+  font-weight: 700;
+  color: rgba($pgrw-ink, 0.6);
+}
+
+.pgrw-arrow {
+  font-size: 1.1rem;
+  color: rgba($pgrw-sage, 0.5);
+  margin-bottom: 1.3rem;
+}
+
+.pgrw-objectives {
+  list-style: none;
+  margin: 0 0 1.75rem;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  text-align: left;
+
+  li {
+    position: relative;
+    padding-left: 1.4rem;
+    font-size: 0.96rem;
+    line-height: 1.4;
+    color: $pgrw-ink;
+  }
+
+  li::before {
+    content: '🌱';
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: 0.85rem;
+  }
+}
+
+.pgrw-start {
+  @include w.welcome-cta-btn(linear-gradient(120deg, $pgrw-sage, $pgrw-gold), v.$color-white);
+  display: block;
+  width: 100%;
+  font-size: 1.05rem;
+}
+
+.pgrw-review {
+  @include m.tappable;
+  display: block;
+  margin: 0.75rem auto 0;
+  background: none;
+  border: none;
+  font-weight: 700;
+  color: rgba($pgrw-ink, 0.6);
+}

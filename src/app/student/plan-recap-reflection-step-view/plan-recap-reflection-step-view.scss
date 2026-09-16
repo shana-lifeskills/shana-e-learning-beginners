@@ -1,0 +1,243 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- Week 2 Recap: Reflect and Refine (prr) — Planning Module, Week 2 ---- */
+$prr-ink: #2a2b3c;
+$prr-plum: #5a4b86;
+$prr-berry: #b8477e;
+$prr-gold: #e0a53a;
+$prr-paper: #faf8fd;
+
+.prr {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 1.6rem clamp(0.75rem, 3vw, 1.5rem) 2rem;
+  color: $prr-ink;
+}
+
+.prr-head {
+  text-align: center;
+}
+
+.prr-badge {
+  display: inline-block;
+  padding: 0.32rem 0.95rem;
+  border-radius: 999px;
+  background: rgba($prr-plum, 0.14);
+  font-weight: 800;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $prr-plum;
+}
+
+.prr-head h2 {
+  @include m.playful-heading;
+  margin: 0.5rem 0 0.4rem;
+  font-size: clamp(1.35rem, 4.5vw, 1.85rem);
+}
+
+.prr-intro {
+  margin: 0;
+  font-size: 0.96rem;
+  color: rgba($prr-ink, 0.75);
+}
+
+.prr-lead {
+  margin: 0.35rem 0 0;
+  font-size: 0.9rem;
+  font-style: italic;
+  color: rgba($prr-ink, 0.55);
+}
+
+/* --- review list --- */
+.prr-list {
+  list-style: none;
+  margin: 1.4rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.prr-item {
+  display: flex;
+  gap: 0.8rem;
+  padding: 1rem;
+  background: $prr-paper;
+  border: 1.5px solid rgba($prr-plum, 0.18);
+  border-left: 4px solid $prr-plum;
+  border-radius: 0 12px 12px 0;
+}
+
+.prr-num {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.7rem;
+  height: 1.7rem;
+  border-radius: 50%;
+  background: $prr-plum;
+  color: v.$color-white;
+  font-weight: 800;
+  font-size: 0.85rem;
+}
+
+.prr-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.prr-q {
+  margin: 0.1rem 0 0.6rem;
+  font-weight: 700;
+  font-size: 0.98rem;
+  line-height: 1.35;
+}
+
+.prr-textarea {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  border: 1.5px solid rgba($prr-plum, 0.25);
+  border-radius: 9px;
+  font: inherit;
+  resize: vertical;
+  background: v.$color-white;
+
+  &:focus {
+    outline: none;
+    border-color: $prr-berry;
+  }
+}
+
+.prr-example {
+  margin: 0.35rem 0 0;
+  font-size: 0.82rem;
+  color: rgba($prr-ink, 0.5);
+}
+
+/* --- rating scale --- */
+.prr-scale {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.prr-dot {
+  @include m.tappable;
+  width: 2.2rem;
+  height: 2.2rem;
+  border: 1.5px solid rgba($prr-plum, 0.3);
+  border-radius: 50%;
+  background: v.$color-white;
+  font-weight: 800;
+  font-size: 0.9rem;
+  color: rgba($prr-ink, 0.6);
+
+  &.on {
+    background: $prr-berry;
+    border-color: $prr-berry;
+    color: v.$color-white;
+  }
+}
+
+.prr-scale-caption {
+  margin: 0.4rem 0 0;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: $prr-berry;
+  min-height: 1.1rem;
+}
+
+.prr-submit,
+.prr-continue {
+  @include m.tappable;
+  display: block;
+  width: 100%;
+  margin-top: 1.4rem;
+  padding: 0.85rem 1.5rem;
+  border: none;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 1.04rem;
+  color: v.$color-white;
+}
+
+.prr-submit {
+  background: linear-gradient(120deg, $prr-plum, $prr-berry);
+
+  &:disabled { opacity: 0.4; }
+}
+
+/* --- result --- */
+.prr-result {
+  margin-top: 1rem;
+  padding: 1.7rem clamp(1.1rem, 4vw, 1.8rem);
+  background: v.$color-white;
+  border: 2px solid rgba($prr-plum, 0.2);
+  border-radius: v.$border-radius-xl;
+  box-shadow: 0 10px 26px rgba($prr-plum, 0.14);
+}
+
+.prr-result h3 {
+  @include m.playful-heading;
+  margin: 0 0 0.2rem;
+  font-size: 1.3rem;
+  color: $prr-plum;
+  text-align: center;
+}
+
+.prr-result-sub {
+  margin: 0 0 1.2rem;
+  text-align: center;
+  font-size: 0.92rem;
+  color: rgba($prr-ink, 0.6);
+}
+
+.prr-summary {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+
+  div {
+    padding: 0.7rem 0.85rem;
+    background: $prr-paper;
+    border-radius: 9px;
+  }
+
+  dt {
+    font-weight: 800;
+    font-size: 0.82rem;
+    color: rgba($prr-ink, 0.7);
+  }
+
+  dd {
+    margin: 0.25rem 0 0;
+    font-size: 0.94rem;
+    line-height: 1.45;
+    color: $prr-ink;
+  }
+}
+
+.prr-tip {
+  margin: 1.2rem 0 0;
+  padding: 0.9rem 1rem;
+  background: rgba($prr-gold, 0.12);
+  border: 1.5px solid rgba($prr-gold, 0.4);
+  border-radius: 10px;
+
+  span {
+    font-weight: 800;
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #a5721c;
+  }
+
+  p { margin: 0.3rem 0 0; font-size: 0.92rem; line-height: 1.5; color: rgba($prr-ink, 0.85); }
+}
+
+.prr-continue {
+  background: $prr-plum;
+}

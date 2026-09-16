@@ -1,0 +1,163 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- "Let's Talk About the Story" Q&A (stk) — Planning Module, Week 1 ---- */
+$stk-ink: #23303a;
+$stk-navy: #1f4d63;
+$stk-teal: #2f9e93;
+$stk-amber: #e8a33c;
+$stk-mist: #eef4f5;
+
+.stk {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 1.75rem clamp(1rem, 4vw, 2.25rem) 2rem;
+  color: $stk-ink;
+}
+
+.stk-head {
+  text-align: center;
+}
+
+.stk-badge {
+  display: inline-block;
+  padding: 0.35rem 0.95rem;
+  border-radius: 999px;
+  background: rgba($stk-teal, 0.16);
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #1f7a70;
+}
+
+.stk-head h2 {
+  @include m.playful-heading;
+  margin: 0.5rem 0 0;
+  font-size: clamp(1.4rem, 4.5vw, 1.9rem);
+}
+
+.stk-sub {
+  margin: 0.3rem 0 0;
+  font-size: 0.98rem;
+  color: rgba($stk-ink, 0.7);
+}
+
+.stk-progress {
+  margin: 1.2rem 0 0.5rem;
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba($stk-ink, 0.5);
+}
+
+.stk-card {
+  padding: 1.5rem 1.3rem 1.4rem;
+  background: v.$color-white;
+  border: 2px solid rgba($stk-navy, 0.16);
+  border-radius: v.$border-radius-lg;
+  box-shadow: 0 6px 0 rgba($stk-navy, 0.08);
+}
+
+.stk-question {
+  margin: 0;
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 1.15rem;
+  line-height: 1.35;
+  color: $stk-navy;
+}
+
+.stk-hint {
+  margin: 0.4rem 0 1rem;
+  font-size: 0.92rem;
+  font-style: italic;
+  color: rgba($stk-ink, 0.6);
+}
+
+.stk-answer-label {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-weight: 800;
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba($stk-ink, 0.65);
+}
+
+.stk-textarea {
+  width: 100%;
+  padding: 0.75rem 0.85rem;
+  border: 2px solid rgba($stk-navy, 0.22);
+  border-radius: 12px;
+  font: inherit;
+  resize: vertical;
+  background: $stk-mist;
+
+  &:focus {
+    outline: none;
+    border-color: $stk-teal;
+  }
+
+  &:disabled {
+    opacity: 0.75;
+  }
+}
+
+.stk-submit,
+.stk-next {
+  @include m.tappable;
+  margin-top: 1rem;
+  padding: 0.75rem 1.6rem;
+  border: none;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 1rem;
+  color: v.$color-white;
+}
+
+.stk-submit {
+  background: $stk-navy;
+
+  &:disabled { opacity: 0.4; }
+}
+
+.stk-next {
+  background: linear-gradient(120deg, $stk-teal, $stk-amber);
+}
+
+.stk-reveal {
+  margin-top: 1.1rem;
+  padding: 1rem 1.1rem;
+  background: rgba($stk-teal, 0.1);
+  border: 2px solid rgba($stk-teal, 0.3);
+  border-radius: 12px;
+
+  h4 {
+    margin: 0 0 0.5rem;
+    font-weight: 800;
+    font-size: 0.74rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #1f7a70;
+  }
+
+  p { margin: 0; font-size: 0.98rem; line-height: 1.5; }
+
+  ul { margin: 0; padding-left: 1.2rem; }
+  li { font-size: 0.98rem; line-height: 1.55; }
+}
+
+.stk-tip {
+  margin-top: 0.75rem !important;
+  padding-top: 0.65rem;
+  border-top: 1px dashed rgba($stk-navy, 0.25);
+  font-size: 0.92rem !important;
+  color: rgba($stk-ink, 0.8);
+
+  span {
+    font-weight: 800;
+    color: $stk-amber;
+  }
+}

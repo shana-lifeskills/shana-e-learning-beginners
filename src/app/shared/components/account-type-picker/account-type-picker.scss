@@ -1,0 +1,70 @@
+@use '../../../../assets/styles/variables' as v;
+@use '../../../../assets/styles/mixins' as m;
+
+.account-type-field {
+  margin-bottom: 0.85rem;
+
+  .form-label {
+    font-weight: 700;
+    color: v.$color-navy-text;
+    display: block;
+    margin-bottom: 0.4rem;
+  }
+}
+
+.account-type-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: 0.6rem;
+}
+
+.account-type-card {
+  @include m.tappable;
+  text-align: left;
+  background: v.$color-white;
+  border: 2px solid rgba(43, 45, 66, 0.12);
+  border-radius: v.$border-radius-sm;
+  padding: 0.6rem 0.7rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+
+  .type-icon {
+    width: 1.7rem;
+    height: 1.7rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(v.$color-brand-blue, 0.12);
+    color: v.$color-brand-blue;
+
+    svg {
+      width: 0.9rem;
+      height: 0.9rem;
+    }
+  }
+
+  .type-label {
+    font-weight: 800;
+    color: v.$color-navy-text;
+    font-size: 0.88rem;
+  }
+
+  .type-desc {
+    color: rgba(43, 45, 66, 0.6);
+    font-weight: 600;
+    font-size: 0.72rem;
+    line-height: 1.3;
+  }
+
+  &.active {
+    border-color: v.$color-coral;
+    background: rgba(242, 146, 30, 0.06);
+
+    .type-icon {
+      background: rgba(v.$color-coral, 0.15);
+      color: v.$color-coral;
+    }
+  }
+}

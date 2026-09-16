@@ -1,0 +1,19 @@
+<div class="rcl">
+  <div class="rcl-card">
+    <span class="rcl-eyebrow">{{ step().eyebrow }}</span>
+
+    <svg class="rcl-pool" viewBox="0 0 100 60" aria-hidden="true">
+      <ellipse cx="50" cy="30" rx="42" ry="14" class="rcl-ring rcl-ring-1" />
+      <ellipse cx="50" cy="30" rx="30" ry="10" class="rcl-ring rcl-ring-2" />
+      <ellipse cx="50" cy="30" rx="18" ry="6" class="rcl-ring rcl-ring-3" />
+    </svg>
+
+    <h2>{{ step().title }}</h2>
+
+    <blockquote class="rcl-quote">{{ step().quote }}</blockquote>
+
+    <p class="rcl-caption">{{ step().caption }}</p>
+
+    <button type="button" class="rcl-continue" (click)="finish()">{{ step().completeLabel }} →</button>
+  </div>
+</div>

@@ -1,0 +1,318 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- This or That warm-up (tot) — Identity Module, Week 3 ---- */
+$tot-navy: #2b2350;
+$tot-coral: #ef6f52;
+$tot-ink: #2b2d42;
+$tot-green: #7ecb9a;
+$tot-line: rgba(43, 45, 66, 0.12);
+
+.tot {
+  max-width: 52rem;
+  margin: 0 auto;
+}
+
+/* --- Hero --- */
+.tot-hero {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.tot-kicker {
+  @include w.welcome-pill(rgba($tot-coral, 0.14), $tot-coral);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.78rem;
+}
+
+.tot-hero h1 {
+  @include m.playful-heading;
+  font-size: clamp(2.2rem, 6vw, 3rem);
+  line-height: 1.05;
+  color: $tot-navy;
+  margin: 1rem 0 0.75rem;
+}
+
+.tot-accent {
+  color: $tot-coral;
+}
+
+.tot-subtitle {
+  color: rgba($tot-ink, 0.6);
+  font-size: 1.02rem;
+  line-height: 1.55;
+  max-width: 30rem;
+  margin: 0 auto;
+}
+
+/* --- Section head --- */
+.tot-section-head {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: 0.75rem;
+
+  h2 {
+    @include m.playful-heading;
+    font-size: 1.25rem;
+    color: $tot-navy;
+    margin: 0;
+  }
+}
+
+.tot-section-num {
+  @include w.icon-chip(1.9rem, 0.95rem);
+  background: $tot-coral;
+  color: v.$color-white;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.tot-hint {
+  margin-left: auto;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: rgba($tot-ink, 0.5);
+
+  &--shared {
+    color: $tot-green;
+  }
+}
+
+/* --- This or That grid --- */
+.tot-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+
+  @media (max-width: 560px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.tot-q {
+  background: v.$color-white;
+  border-radius: v.$border-radius-lg;
+  box-shadow: 0 2px 12px rgba($tot-navy, 0.06);
+  padding: 1.1rem 1.2rem 1.25rem;
+}
+
+.tot-q-label {
+  font-weight: 800;
+  font-size: 0.8rem;
+  color: rgba($tot-ink, 0.45);
+}
+
+.tot-q-prompt {
+  @include m.playful-heading;
+  font-size: 1.05rem;
+  color: $tot-navy;
+  margin: 0.35rem 0 0.8rem;
+}
+
+.tot-q-options {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.tot-opt {
+  @include m.tappable;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  flex: 1 1 0%;
+  min-width: 0;
+  justify-content: center;
+  border: 1.5px solid $tot-line;
+  border-radius: 12px;
+  padding: 0.7rem 0.6rem;
+  background: v.$color-cream-bg;
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: $tot-ink;
+
+  &--picked {
+    border-color: $tot-coral;
+    background: rgba($tot-coral, 0.12);
+    color: $tot-coral;
+  }
+}
+
+.tot-opt-icon {
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+/* --- Footer / CTA --- */
+.tot-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.tot-foot-note {
+  color: rgba($tot-ink, 0.5);
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.tot-cta {
+  @include m.tappable;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  padding: 0.9rem 1.75rem;
+  font-weight: 800;
+  font-size: 1rem;
+  background: $tot-coral;
+  color: v.$color-white;
+  box-shadow: 0 4px 0 rgba($tot-navy, 0.15);
+
+  &:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+}
+
+/* --- Recap --- */
+.tot-recap-intro {
+  color: rgba($tot-ink, 0.6);
+  line-height: 1.55;
+  margin: 0 0 1.25rem;
+}
+
+.tot-recap-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.tot-recap-card {
+  background: v.$color-white;
+  border-radius: v.$border-radius-lg;
+  box-shadow: 0 2px 12px rgba($tot-navy, 0.06);
+  padding: 1.1rem 1.2rem 1.25rem;
+
+  &--mine {
+    border: 2px solid $tot-green;
+  }
+}
+
+.tot-recap-head {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-bottom: 0.7rem;
+}
+
+.tot-recap-icon {
+  @include w.icon-chip(2.4rem, 1.15rem);
+  background: v.$color-cream-bg;
+  flex-shrink: 0;
+}
+
+.tot-recap-head strong {
+  display: block;
+  color: $tot-navy;
+  font-size: 1rem;
+}
+
+.tot-recap-author {
+  font-size: 0.82rem;
+  color: rgba($tot-ink, 0.5);
+}
+
+.tot-recap-quote {
+  font-style: italic;
+  color: rgba($tot-ink, 0.8);
+  line-height: 1.5;
+  margin: 0 0 0.7rem;
+}
+
+.tot-recap-time {
+  display: inline-block;
+  background: v.$color-cream-bg;
+  border-radius: v.$border-radius-pill;
+  padding: 0.3rem 0.7rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: rgba($tot-ink, 0.55);
+}
+
+/* --- Share box --- */
+.tot-share {
+  background: rgba($tot-green, 0.14);
+  border-radius: v.$border-radius-lg;
+  padding: 1.4rem 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.tot-share-label {
+  @include m.playful-heading;
+  color: $tot-navy;
+  margin: 0 0 0.9rem;
+}
+
+.tot-share-row {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.tot-share-avatar {
+  @include w.icon-chip(2.4rem, 1.15rem);
+  background: v.$color-white;
+  flex-shrink: 0;
+}
+
+.tot-share-row input {
+  flex: 1 1 0%;
+  min-width: 0;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  padding: 0.75rem 1.1rem;
+  font-family: inherit;
+  font-size: 0.95rem;
+  color: $tot-ink;
+  background: v.$color-white;
+
+  &:focus {
+    outline: 2px solid $tot-green;
+  }
+}
+
+.tot-post {
+  @include m.tappable;
+  flex-shrink: 0;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  padding: 0.75rem 1.5rem;
+  font-weight: 800;
+  background: $tot-green;
+  color: v.$color-white;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.tot-share .tot-cta {
+  display: block;
+  width: 100%;
+  background: $tot-green;
+}
+
+.tot-footer {
+  text-align: center;
+  color: rgba($tot-ink, 0.45);
+  font-size: 0.88rem;
+  margin: 0;
+}

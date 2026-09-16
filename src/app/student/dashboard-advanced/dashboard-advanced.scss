@@ -1,0 +1,338 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+$indigo: #4c4fd1;
+$grape: #a66dd4;
+$sunset: #f2921e;
+
+// Pulled from the welcome-banner illustration itself (deep navy shapes, an
+// orange accent, on a cream ground) so the card reads as one piece with it.
+$banner-navy: #116997; // sampled from the Shana LifeSkills Centre logo mark
+$banner-orange: #e8590c;
+$banner-cream: #fdf6ea;
+
+.dashboard-advanced-page {
+  max-width: 96rem;
+  margin: 0 auto;
+  padding: 2rem 2.5rem 4rem;
+  font-family: v.$font-family-sans-serif;
+}
+
+// --- Welcome banner ------------------------------------------------------
+
+.welcome-banner {
+  position: relative;
+  border-radius: v.$border-radius-lg;
+  padding: 2.25rem 2.5rem;
+  margin-bottom: 1.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  overflow: hidden;
+  background: linear-gradient(100deg, $banner-navy 0%, $banner-navy 68%, $banner-orange 100%);
+}
+
+.art-frame {
+  flex-shrink: 0;
+  background: $banner-cream;
+  border-radius: v.$border-radius;
+  padding: 0.6rem 0.75rem 0;
+  overflow: hidden;
+  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.12);
+
+  @media (max-width: 700px) {
+    display: none;
+  }
+}
+
+.banner-art {
+  display: block;
+  height: 11rem;
+  width: auto;
+  object-fit: contain;
+}
+
+.banner-copy {
+  max-width: 30rem;
+  color: v.$color-white;
+
+  .eyebrow {
+    display: block;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: rgba(255, 255, 255, 0.75);
+    margin-bottom: 0.5rem;
+  }
+
+  h1 {
+    font-weight: 800;
+    font-size: 2rem;
+    margin: 0 0 0.6rem;
+  }
+
+  p {
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 500;
+    margin: 0 0 1.25rem;
+  }
+}
+
+.banner-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.btn-resume,
+.btn-challenge {
+  border: none;
+  border-radius: v.$border-radius-pill;
+  padding: 0.7rem 1.4rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn-resume {
+  background: $sunset;
+  color: v.$color-white;
+}
+
+.btn-challenge {
+  background: rgba(255, 255, 255, 0.2);
+  color: v.$color-white;
+}
+
+// --- Stats row -------------------------------------------------------------
+
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.stat-tile {
+  background: v.$color-white;
+  border-radius: v.$border-radius-lg;
+  padding: 1.25rem 1.5rem;
+
+  .stat-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    strong {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: v.$color-navy-text;
+    }
+  }
+
+  .stat-icon {
+    width: 2.25rem;
+    height: 2.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba($indigo, 0.12);
+    color: $sunset;
+
+    svg {
+      width: 1.15rem;
+      height: 1.15rem;
+    }
+  }
+
+  .stat-label {
+    font-weight: 700;
+    color: v.$color-navy-text;
+    margin: 0.25rem 0 0.1rem;
+  }
+
+  .stat-sub {
+    font-size: 0.8rem;
+    color: rgba(43, 45, 66, 0.55);
+    margin: 0;
+  }
+}
+
+// --- Modules section ---------------------------------------------------
+
+.section-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+
+  h2 {
+    font-weight: 800;
+    color: v.$color-navy-text;
+    margin-bottom: 0.15rem;
+  }
+}
+
+.section-sub {
+  color: rgba(43, 45, 66, 0.6);
+  font-weight: 500;
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.see-all-link {
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: $indigo;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.module-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 1.75rem;
+}
+
+.loading-copy {
+  color: rgba(43, 45, 66, 0.6);
+  font-weight: 600;
+}
+
+.empty-state {
+  background: v.$color-white;
+  border-radius: v.$border-radius-lg;
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  color: rgba(43, 45, 66, 0.65);
+  font-weight: 600;
+
+  .art {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+  }
+}
+
+.module-card {
+  background: v.$color-white;
+  border-radius: v.$border-radius-lg;
+  padding: 1.5rem;
+  border-top: 4px solid var(--accent, #{$indigo});
+
+  .category-pill {
+    display: inline-block;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-size: 0.7rem;
+    font-weight: 800;
+    color: $indigo;
+    background: rgba($indigo, 0.12);
+    padding: 0.3rem 0.75rem;
+    border-radius: v.$border-radius-pill;
+    margin-bottom: 0.85rem;
+  }
+
+  .module-icon {
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.35rem;
+    margin-bottom: 0.75rem;
+  }
+
+  h3 {
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: v.$color-navy-text;
+    margin-bottom: 0.5rem;
+  }
+
+  .module-description {
+    font-size: 0.85rem;
+    color: rgba(43, 45, 66, 0.65);
+    margin: 0 0 0.85rem;
+  }
+
+  .progress-line {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: rgba(43, 45, 66, 0.65);
+    margin: 0 0 0.5rem;
+  }
+
+  .progress-track {
+    height: 0.5rem;
+    background: v.$color-cream-bg;
+    border-radius: v.$border-radius-pill;
+    overflow: hidden;
+    margin-bottom: 0.6rem;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: $sunset;
+    border-radius: v.$border-radius-pill;
+  }
+
+  .progress-percent {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: v.$color-navy-text;
+    margin: 0 0 1rem;
+  }
+
+  .module-cta {
+    @include m.tappable;
+    width: 100%;
+    border: none;
+    border-radius: v.$border-radius-pill;
+    padding: 0.75rem 1.6rem;
+    font-weight: 700;
+    color: v.$color-white;
+    background: linear-gradient(120deg, var(--accent, #{$indigo}), color-mix(in srgb, var(--accent, #{$indigo}) 70%, white));
+    cursor: pointer;
+  }
+}
+
+// --- Weekly crew challenge -----------------------------------------------
+
+.crew-challenge {
+  background: v.$color-white;
+  border-radius: v.$border-radius-lg;
+  padding: 1.75rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+
+  h3 {
+    font-weight: 800;
+    color: v.$color-navy-text;
+    margin: 0 0 0.35rem;
+  }
+
+  p {
+    margin: 0;
+    color: rgba(43, 45, 66, 0.65);
+    font-weight: 500;
+  }
+}
+
+.btn-join {
+  border: none;
+  border-radius: v.$border-radius-pill;
+  padding: 0.75rem 1.6rem;
+  font-weight: 700;
+  color: v.$color-white;
+  background: linear-gradient(120deg, #d6449c, #c23bd4);
+  cursor: pointer;
+  white-space: nowrap;
+}

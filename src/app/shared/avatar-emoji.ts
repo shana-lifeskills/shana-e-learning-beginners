@@ -1,8 +1,8 @@
 export const AVATAR_EMOJI: Record<string, string> = {
-  fox: '🦊',
-  panda: '🐼',
-  owl: '🦉',
-  otter: '🦦',
-  dino: '🦕',
-  unicorn: '🦄',
+  nova: '🧑',
+  milo: '👦',
+  zoe: '👧',
+  kai: '🧑‍🦱',
+  ruby: '👩‍🦰',
+  theo: '👨‍🦲',
 };

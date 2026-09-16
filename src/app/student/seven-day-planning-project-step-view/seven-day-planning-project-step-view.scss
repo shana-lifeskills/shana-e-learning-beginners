@@ -1,0 +1,243 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- The 7-Day Planning Challenge (sdp) — Planning Module, End-of-Module Project ---- */
+$sdp-ink: #2c2a1f;
+$sdp-gold: #d9a441;
+$sdp-navy: #2a2b45;
+$sdp-mist: #fbf6ea;
+
+.sdp {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 1.6rem clamp(0.75rem, 3vw, 1.5rem) 2rem;
+  color: $sdp-ink;
+}
+
+.sdp-head { text-align: center; }
+
+.sdp-badge {
+  display: inline-block;
+  padding: 0.32rem 0.95rem;
+  border-radius: 999px;
+  background: linear-gradient(120deg, rgba($sdp-gold, 0.2), rgba($sdp-gold, 0.32));
+  font-weight: 800;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #a5721c;
+}
+
+.sdp-head h2 {
+  @include m.playful-heading;
+  margin: 0.5rem 0 0.3rem;
+  font-size: clamp(1.35rem, 4.5vw, 1.8rem);
+  color: $sdp-navy;
+}
+
+.sdp-intro {
+  margin: 0;
+  font-size: 0.92rem;
+  color: rgba($sdp-ink, 0.7);
+}
+
+.sdp-steps {
+  margin: 1rem 0 0;
+  padding-left: 1.2rem;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: rgba($sdp-ink, 0.78);
+}
+
+.sdp-block {
+  margin-top: 1.2rem;
+  padding: 1rem 1.1rem;
+  background: $sdp-mist;
+  border: 1.5px solid rgba($sdp-gold, 0.3);
+  border-radius: 14px;
+}
+
+.sdp-field-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 800;
+  font-size: 0.94rem;
+  color: $sdp-navy;
+}
+
+.sdp-block textarea {
+  width: 100%;
+  padding: 0.65rem 0.8rem;
+  border: 1.5px solid rgba($sdp-gold, 0.35);
+  border-radius: 9px;
+  font: inherit;
+  resize: vertical;
+  background: v.$color-white;
+
+  &:focus { outline: none; border-color: $sdp-navy; }
+}
+
+.sdp-bonus {
+  background: v.$color-white;
+  border-style: dashed;
+}
+
+.sdp-bonus-tag {
+  display: inline-block;
+  margin-bottom: 0.4rem;
+  padding: 0.24rem 0.7rem;
+  border-radius: 999px;
+  background: rgba($sdp-gold, 0.18);
+  font-weight: 800;
+  font-size: 0.64rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #a5721c;
+}
+
+.sdp-h {
+  @include m.playful-heading;
+  margin: 0 0 0.3rem;
+  font-size: 1.02rem;
+  color: $sdp-navy;
+}
+
+.sdp-hint {
+  margin: 0 0 0.7rem;
+  font-size: 0.84rem;
+  color: rgba($sdp-ink, 0.6);
+}
+
+.sdp-dropzone {
+  @include m.tappable;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  width: 100%;
+  padding: 1.2rem 1rem;
+  border: 2px dashed rgba($sdp-gold, 0.5);
+  border-radius: 12px;
+  background: $sdp-mist;
+  font-weight: 700;
+  font-size: 0.88rem;
+  color: #a5721c;
+
+  span { font-size: 1.4rem; }
+}
+
+.sdp-file-preview {
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1.5px solid rgba($sdp-gold, 0.35);
+
+  img, video { display: block; width: 100%; max-height: 12rem; object-fit: cover; }
+}
+
+.sdp-file-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.sdp-file-btn {
+  @include m.tappable;
+  flex: 1;
+  padding: 0.45rem 0.7rem;
+  border: 1.5px solid rgba($sdp-gold, 0.5);
+  border-radius: 999px;
+  background: v.$color-white;
+  font-weight: 700;
+  font-size: 0.8rem;
+  color: #a5721c;
+}
+
+.sdp-file-remove {
+  border-color: rgba(#c8362b, 0.4);
+  color: #c8362b;
+}
+
+.sdp-submit,
+.sdp-continue {
+  @include m.tappable;
+  display: block;
+  width: 100%;
+  margin-top: 1.3rem;
+  padding: 0.85rem 1.5rem;
+  border: none;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 1.03rem;
+  color: v.$color-white;
+  background: linear-gradient(120deg, $sdp-gold, #e0902f);
+
+  &:disabled { opacity: 0.4; }
+}
+
+.sdp-continue { background: $sdp-navy; }
+
+/* --- result --- */
+.sdp-result {
+  margin-top: 1rem;
+  padding: 1.8rem clamp(1.1rem, 4vw, 1.8rem);
+  text-align: center;
+  background: v.$color-white;
+  border: 2px solid rgba($sdp-gold, 0.45);
+  border-radius: v.$border-radius-xl;
+  box-shadow: 0 10px 26px rgba($sdp-gold, 0.18);
+}
+
+.sdp-result-icon { font-size: 2.6rem; }
+
+.sdp-result h3 {
+  @include m.playful-heading;
+  margin: 0.3rem 0 0.2rem;
+  font-size: 1.3rem;
+  color: $sdp-navy;
+}
+
+.sdp-result-sub {
+  margin: 0 0 1rem;
+  font-size: 0.92rem;
+  color: rgba($sdp-ink, 0.6);
+}
+
+.sdp-result-box {
+  margin: 0 0 1rem;
+  padding: 0.8rem 0.95rem;
+  text-align: left;
+  background: $sdp-mist;
+  border-radius: 10px;
+
+  span {
+    font-weight: 800;
+    font-size: 0.72rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #a5721c;
+  }
+
+  p { margin: 0.3rem 0 0; font-size: 0.95rem; line-height: 1.5; }
+}
+
+.sdp-result-file {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1.5px solid rgba($sdp-gold, 0.35);
+  margin-bottom: 1rem;
+
+  img, video { display: block; width: 100%; max-height: 14rem; object-fit: cover; }
+}
+
+.sdp-done {
+  margin: 0.5rem 0 0;
+
+  h4 {
+    @include m.playful-heading;
+    margin: 0 0 0.3rem;
+    font-size: 1.1rem;
+    color: $sdp-gold;
+  }
+
+  p { margin: 0; font-size: 0.9rem; color: rgba($sdp-ink, 0.75); }
+}

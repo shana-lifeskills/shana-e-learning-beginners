@@ -1,0 +1,24 @@
+<div class="account-type-field">
+  <label class="form-label">{{ heading() }}</label>
+  <div class="account-type-cards">
+    @for (option of options; track option.id) {
+      <button type="button" class="account-type-card" [class.active]="selected() === option.id" (click)="choose(option.id)">
+        <span class="type-icon">
+          @switch (option.id) {
+            @case ('beginner') {
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M4 5.5c2-1 5-1 8 0v13c-3-1-6-1-8 0v-13z" stroke-linejoin="round" /><path d="M20 5.5c-2-1-5-1-8 0v13c3-1 6-1 8 0v-13z" stroke-linejoin="round" /></svg>
+            }
+            @case ('advanced') {
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M12 2.5c2.5 2 4 5.3 4 9 0 2-.5 3.8-1.3 5.2L12 19l-2.7-2.3C8.5 15.3 8 13.5 8 11.5c0-3.7 1.5-7 4-9z" stroke-linejoin="round" /><circle cx="12" cy="10.5" r="1.6" /><path d="M9 16.5l-2 4M15 16.5l2 4" stroke-linecap="round" /></svg>
+            }
+            @case ('trainer') {
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M12 4L3 8.5l9 4.5 9-4.5L12 4z" stroke-linejoin="round" /><path d="M7 10.5V15c0 1.5 2.2 3 5 3s5-1.5 5-3v-4.5" /></svg>
+            }
+          }
+        </span>
+        <span class="type-label">{{ option.label }}</span>
+        <span class="type-desc">{{ option.description }}</span>
+      </button>
+    }
+  </div>
+</div>

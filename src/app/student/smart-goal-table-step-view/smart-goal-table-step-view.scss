@@ -1,0 +1,237 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- Write your SMART goal (sgt) — Planning Module, Week 3 ---- */
+$sgt-ink: #22301f;
+$sgt-green: #2f7d45;
+$sgt-green-lt: #4caf6c;
+$sgt-plum: #7a4f9c;
+$sgt-mist: #eff6ef;
+
+.sgt {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 1.6rem clamp(0.75rem, 3vw, 1.5rem) 2rem;
+  color: $sgt-ink;
+}
+
+.sgt-head { text-align: center; }
+
+.sgt-badge {
+  display: inline-block;
+  padding: 0.32rem 0.95rem;
+  border-radius: 999px;
+  background: rgba($sgt-green, 0.14);
+  font-weight: 800;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $sgt-green;
+}
+
+.sgt-head h2 {
+  @include m.playful-heading;
+  margin: 0.5rem 0 0;
+  font-size: clamp(1.35rem, 4.5vw, 1.8rem);
+}
+
+.sgt-phase { margin-top: 1.3rem; }
+
+.sgt-field-label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-weight: 800;
+  font-size: 0.94rem;
+  color: rgba($sgt-ink, 0.8);
+}
+
+.sgt-textarea {
+  width: 100%;
+  padding: 0.7rem 0.85rem;
+  border: 1.5px solid rgba($sgt-green, 0.3);
+  border-radius: 10px;
+  font: inherit;
+  resize: vertical;
+  background: v.$color-white;
+
+  &:focus { outline: none; border-color: $sgt-green; }
+}
+
+.sgt-example {
+  margin: 0.5rem 0 0;
+  font-size: 0.85rem;
+  font-style: italic;
+  color: rgba($sgt-ink, 0.55);
+}
+
+.sgt-ext-badge {
+  display: inline-block;
+  padding: 0.28rem 0.85rem;
+  border-radius: 999px;
+  background: rgba($sgt-plum, 0.14);
+  font-weight: 800;
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $sgt-plum;
+}
+
+.sgt-h {
+  @include m.playful-heading;
+  margin: 0.4rem 0 0.3rem;
+  font-size: 1.15rem;
+  color: $sgt-plum;
+}
+
+.sgt-intro {
+  margin: 0 0 1rem;
+  font-size: 0.92rem;
+  color: rgba($sgt-ink, 0.72);
+}
+
+/* --- SMART table --- */
+.sgt-table {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.sgt-row {
+  display: flex;
+  gap: 0.7rem;
+  padding: 0.85rem;
+  background: $sgt-mist;
+  border-radius: 12px;
+  border-left: 4px solid $sgt-plum;
+}
+
+.sgt-letter {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.1rem;
+  height: 2.1rem;
+  border-radius: 8px;
+  background: $sgt-plum;
+  color: v.$color-white;
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: 1.05rem;
+}
+
+.sgt-row-body {
+  flex: 1;
+  min-width: 0;
+
+  label {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-size: 0.86rem;
+    line-height: 1.35;
+    color: rgba($sgt-ink, 0.85);
+
+    strong { color: $sgt-ink; }
+  }
+
+  textarea {
+    width: 100%;
+    padding: 0.55rem 0.7rem;
+    border: 1.5px solid rgba($sgt-plum, 0.25);
+    border-radius: 9px;
+    font: inherit;
+    resize: vertical;
+    background: v.$color-white;
+
+    &:focus { outline: none; border-color: $sgt-plum; }
+  }
+}
+
+.sgt-btn,
+.sgt-continue {
+  @include m.tappable;
+  display: block;
+  width: 100%;
+  margin-top: 1.3rem;
+  padding: 0.85rem 1.5rem;
+  border: none;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 1.03rem;
+  color: v.$color-white;
+  background: linear-gradient(120deg, $sgt-green, $sgt-green-lt);
+
+  &:disabled { opacity: 0.4; }
+}
+
+.sgt-continue { background: $sgt-plum; }
+
+/* --- result --- */
+.sgt-result {
+  margin-top: 1rem;
+  padding: 1.8rem clamp(1.1rem, 4vw, 1.8rem);
+  text-align: center;
+  background: v.$color-white;
+  border: 2px solid rgba($sgt-green, 0.3);
+  border-radius: v.$border-radius-xl;
+  box-shadow: 0 10px 26px rgba($sgt-green, 0.14);
+}
+
+.sgt-result-icon { font-size: 2.6rem; }
+
+.sgt-result h3 {
+  @include m.playful-heading;
+  margin: 0.3rem 0 0.2rem;
+  font-size: 1.3rem;
+  color: $sgt-green;
+}
+
+.sgt-result-sub {
+  margin: 0 0 1rem;
+  font-size: 0.92rem;
+  color: rgba($sgt-ink, 0.6);
+}
+
+.sgt-result-goal {
+  margin: 0 0 1rem;
+  padding: 0.8rem 0.95rem;
+  text-align: left;
+  background: rgba($sgt-green, 0.08);
+  border-left: 4px solid $sgt-green;
+  border-radius: 0 10px 10px 0;
+
+  span {
+    font-weight: 800;
+    font-size: 0.72rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: $sgt-green;
+  }
+
+  p { margin: 0.3rem 0 0; font-weight: 700; font-size: 0.98rem; }
+}
+
+.sgt-result-table {
+  margin: 0 0 1rem;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+
+  div { padding: 0.65rem 0.8rem; background: $sgt-mist; border-radius: 9px; }
+  dt { font-weight: 800; font-size: 0.8rem; color: $sgt-plum; }
+  dd { margin: 0.2rem 0 0; font-size: 0.9rem; line-height: 1.4; }
+}
+
+.sgt-done {
+  margin: 1.2rem 0 0;
+
+  h4 {
+    @include m.playful-heading;
+    margin: 0 0 0.3rem;
+    font-size: 1.1rem;
+    color: $sgt-green;
+  }
+
+  p { margin: 0; font-size: 0.9rem; color: rgba($sgt-ink, 0.75); }
+}

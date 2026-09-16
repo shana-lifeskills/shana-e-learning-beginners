@@ -1,0 +1,40 @@
+<div class="pgrw">
+  <div class="pgrw-card">
+    <div class="pgrw-pills">
+      <span class="pgrw-week-pill">{{ pgrw.weekPill }}</span>
+      <span class="pgrw-stage-pill">{{ pgrw.stagePill }}</span>
+    </div>
+
+    <h1>{{ pgrw.title }}</h1>
+    <p class="pgrw-subtitle">{{ pgrw.subtitle }}</p>
+
+    <div class="pgrw-growth" aria-hidden="true">
+      @for (s of pgrw.growthStages; track s.label; let last = $last) {
+        <span class="pgrw-stage">
+          <span class="pgrw-stage-icon">{{ s.icon }}</span>
+          <span class="pgrw-stage-label">{{ s.label }}</span>
+        </span>
+        @if (!last) {
+          <span class="pgrw-arrow">→</span>
+        }
+      }
+    </div>
+
+    <ul class="pgrw-objectives">
+      @for (o of pgrw.objectives; track o.text) {
+        <li>{{ o.text }}</li>
+      }
+    </ul>
+
+    @if (isCompletedLessonWelcome()) {
+      @if (nextLesson(); as next) {
+        <button type="button" class="pgrw-start" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+      } @else {
+        <button type="button" class="pgrw-start" (click)="backToMap()">Back to My Modules →</button>
+      }
+      <button type="button" class="pgrw-review" (click)="beginLesson()">↺ Review this lesson</button>
+    } @else {
+      <button type="button" class="pgrw-start" (click)="beginLesson()">{{ pgrw.startLabel }} →</button>
+    }
+  </div>
+</div>

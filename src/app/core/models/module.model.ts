@@ -1,3 +1,5 @@
+import { AgeGroup } from './user.model';
+
 export interface ExerciseOption {
   id: string;
   text: string;
@@ -188,7 +190,50 @@ export type ExerciseType =
   | 'nutrition-warmup-quiz'
   | 'nutrition-food-match'
   | 'nutrition-tf-warmup'
-  | 'nutrition-fill-blank';
+  | 'nutrition-fill-blank'
+  | 'two-truths-and-a-twist'
+  | 'strength-snapshot'
+  | 'opinion-corners'
+  | 'strength-map'
+  | 'big-question'
+  | 'voice-confidence-link'
+  | 'risk-or-reward'
+  | 'confidence-ladder'
+  | 'growth-confidence-link'
+  | 'trophy-confidence-link'
+  | 'confidence-contract'
+  | 'discussion-prompt-samples'
+  | 'reflection-prompt-answers'
+  | 'identity-snapshot-challenge'
+  | 'pick-your-power'
+  | 'temperament-quiz'
+  | 'this-or-that-warmup'
+  | 'choices-board'
+  | 'choice-journal-challenge'
+  | 'pass-the-dream-warmup'
+  | 'plan-or-panic-warmup'
+  | 'late-project-story'
+  | 'story-talk'
+  | 'time-reflection-worksheet'
+  | 'plan-it-better-challenge'
+  | 'plan-confidence-link'
+  | 'plan-recap-reflection'
+  | 'day-planner-grid'
+  | 'video-reflect'
+  | 'priority-planner-challenge'
+  | 'pattern-spotter-challenge'
+  | 'time-confidence-link'
+  | 'goal-detective-warmup'
+  | 'goal-video-reflect'
+  | 'smart-goal-table'
+  | 'stay-smart-challenge'
+  | 'promise-confidence-link'
+  | 'planning-relay-warmup'
+  | 'personal-growth-map'
+  | 'share-reflect-challenge'
+  | 'reflection-confidence-link'
+  | 'seven-day-planning-project'
+  | 'share-your-plan-challenge';
 
 export interface BaseExercise {
   id: string;
@@ -919,6 +964,42 @@ export interface NutritionTfWarmupStep extends BaseExercise {
   trueLabel: string;
   falseLabel: string;
   statements: NutritionTfStatement[];
+  allDoneTitle: string;
+  allDoneText: string;
+  footerNote: string;
+  continueLabel: string;
+  /** Optional recap card shown on the celebration panel — a heading over a short bullet list. */
+  recapHeading?: string;
+  recapPoints?: string[];
+}
+
+/** One scenario inside a PlanOrPanicWarmupStep. */
+export interface PlanOrPanicScenario {
+  id: string;
+  text: string;
+  /** true when the scenario shows good planning ("Planned"); false when it shows poor planning ("Panic"). */
+  planned: boolean;
+  /** Short line shown once the learner sorts this scenario correctly. */
+  praise: string;
+}
+
+/**
+ * "Warm-Up – Plan or Panic?" game (Planning Module — Advanced, Week 1). Its
+ * own look: one scenario card at a time between a calm "Planned" bin and a
+ * frazzled "Panic" bin, each bin filling with a little stack as cards land in
+ * it. A correct choice drops the card into that bin and brings up the next; a
+ * wrong choice shakes the card and leaves it in play. Continue unlocks once
+ * every scenario is sorted.
+ */
+export interface PlanOrPanicWarmupStep extends BaseExercise {
+  type: 'plan-or-panic-warmup';
+  /** Small eyebrow label above the heading, e.g. "Warm-Up · Plan or Panic?". */
+  kicker: string;
+  heading: string;
+  subtitle: string;
+  plannedLabel: string;
+  panicLabel: string;
+  scenarios: PlanOrPanicScenario[];
   allDoneTitle: string;
   allDoneText: string;
   footerNote: string;
@@ -5801,6 +5882,1379 @@ export interface KindnessBannerChallengeStep extends BaseExercise {
   parentNote: string;
 }
 
+/**
+ * "Two Truths and a Twist" — Identity Module (Advanced), Week 1 warm-up. A
+ * "Warm-Up" pill and title over a "Write your statements" card with three
+ * text areas (two truths, one twist highlighted in blue) and quick-fill
+ * buttons; a "Next" button (locked until all three are filled in) swaps in
+ * a "Reveal the twist" card whose big button unlocks the twist, plus a "Why
+ * this works" tips box — swapped in place, not a route change, so the page
+ * reads as two short steps instead of one long scroll.
+ */
+export interface TwoTruthsAndATwistStep extends BaseExercise {
+  type: 'two-truths-and-a-twist';
+  badge: string;
+  title: string;
+  subtitle: string;
+  step1Heading: string;
+  step1Intro: string;
+  truth1Label: string;
+  truth1Placeholder: string;
+  truth2Label: string;
+  truth2Placeholder: string;
+  twistLabel: string;
+  twistPlaceholder: string;
+  exampleTruth1: string;
+  exampleTruth2: string;
+  exampleTwist: string;
+  pickTwistLabel: string;
+  showExampleLabel: string;
+  resetLabel: string;
+  step2Heading: string;
+  step2Intro: string;
+  revealLabel: string;
+  revealedText: string;
+  continueLabel: string;
+  whyHeading: string;
+  whyPoints: { icon: string; text: string }[];
+}
+
+/** One question in a DiscussionPromptSamplesStep, with the sample answers revealed after the student submits their own. */
+export interface DiscussionPromptSample {
+  id: string;
+  question: string;
+  placeholder: string;
+  sampleAnswers: string[];
+}
+
+/**
+ * "Discussion Prompts and Sample Answers" — a free-response reflection
+ * activity with no right answer. For each question, the student types and
+ * submits their own answer, then the sample answers reveal one at a time
+ * (via a "Next" button) instead of all at once. After the last question's
+ * samples are all shown, a closing "Key Lesson" card takes over the screen.
+ */
+export interface DiscussionPromptSamplesStep extends BaseExercise {
+  type: 'discussion-prompt-samples';
+  badge: string;
+  title: string;
+  subtitle?: string;
+  prompts: DiscussionPromptSample[];
+  submitLabel: string;
+  yourAnswerLabel: string;
+  sampleAnswersLabel: string;
+  nextSampleLabel: string;
+  nextQuestionLabel: string;
+  seeKeyLessonLabel: string;
+  keyLessonLabel: string;
+  keyLessonText: string;
+  continueLabel: string;
+}
+
+/** One attributed peer answer shown after the student submits their own, e.g. "…" – Ayeyi, 12. */
+export interface PeerAnswer {
+  text: string;
+  author: string;
+  age: number;
+}
+
+/** One question in a ReflectionPromptAnswersStep, with peer answers revealed after the student submits their own. */
+export interface ReflectionPromptWithAnswers {
+  id: string;
+  question: string;
+  placeholder: string;
+  peerAnswers: PeerAnswer[];
+}
+
+/**
+ * "Reflection Questions" — a free-response activity, close cousin of
+ * DiscussionPromptSamplesStep but with attributed peer answers ("– Name,
+ * age") instead of unattributed sample answers. For each question, the
+ * student types and submits their own answer, then peer answers reveal one
+ * at a time via a "Next" button. After the last question's answers are all
+ * shown, the "Continue" button finishes the step directly — unless
+ * `closingHeading` is set, in which case a closing card (any of a
+ * key-takeaway line, a research link, a book recommendation) is shown first.
+ */
+export interface ReflectionPromptAnswersStep extends BaseExercise {
+  type: 'reflection-prompt-answers';
+  badge: string;
+  title: string;
+  subtitle?: string;
+  prompts: ReflectionPromptWithAnswers[];
+  submitLabel: string;
+  yourAnswerLabel: string;
+  peerAnswersLabel: string;
+  nextAnswerLabel: string;
+  nextQuestionLabel: string;
+  continueLabel: string;
+  /** When set, a closing card (any of: a key-takeaway line, a research link, a book recommendation) is shown after the last question's answers are revealed, before the final Continue. */
+  closingHeading?: string;
+  takeawayLabel?: string;
+  takeawayText?: string;
+  researchLabel?: string;
+  researchText?: string;
+  researchLinkLabel?: string;
+  researchUrl?: string;
+  readingLabel?: string;
+  readingText?: string;
+}
+
+/** One panel of a LateProjectStoryStep — an illustrated beat of the story. */
+export interface LateProjectStoryPanel {
+  /** Large emoji "illustration" for the panel. */
+  emoji: string;
+  caption: string;
+  /** Drives the panel's mood tint — 'stressed' early, 'calm' once things turn around. */
+  mood: 'stressed' | 'calm';
+}
+
+/**
+ * "Picture story" step (Planning Module — Advanced, Week 1 — "The Late
+ * Project"): a storyboard the learner steps through one panel at a time, with
+ * a mood tint that shifts from anxious to calm as the story turns. Its own
+ * comic-strip look. Continue is always available.
+ */
+export interface LateProjectStoryStep extends BaseExercise {
+  type: 'late-project-story';
+  kicker: string;
+  heading: string;
+  subtitle: string;
+  panels: LateProjectStoryPanel[];
+  takeaway: string;
+  continueLabel: string;
+}
+
+/** One question in a StoryTalkStep. */
+export interface StoryTalkQuestion {
+  id: string;
+  question: string;
+  /** A nudge shown under the question, e.g. "Think about what made her panic before the deadline." */
+  hint: string;
+  placeholder: string;
+  /** Button that opens the reveal, e.g. "Check Answer" / "See What Others Said". */
+  revealLabel: string;
+  /** Heading on the revealed panel, e.g. "Suggested answer" / "What others said" / "Model answer". */
+  revealHeading: string;
+  /** Prose reveal (used when `revealList` is absent). */
+  revealText?: string;
+  /** List reveal — used for "what others said" style answers. */
+  revealList?: string[];
+  /** The "Lesson Tip:" line shown under the reveal. */
+  lessonTip: string;
+}
+
+/**
+ * "Let's Talk About the Story" — a free-response Q&A that follows a story
+ * step. For each question the learner types an answer (required before
+ * continuing), then reveals a suggested/model answer or a list of what other
+ * learners said, each followed by a short lesson tip. No answer is graded;
+ * the gate is simply that every question must be answered in the learner's
+ * own words first. Its own design.
+ */
+export interface StoryTalkStep extends BaseExercise {
+  type: 'story-talk';
+  badge: string;
+  title: string;
+  subtitle?: string;
+  questions: StoryTalkQuestion[];
+  yourAnswerLabel: string;
+  submitLabel: string;
+  nextQuestionLabel: string;
+  continueLabel: string;
+}
+
+/**
+ * "Identity Snapshot" — Challenge of the Week (Identity Module, Advanced).
+ * Three side-by-side slots, each a photo/drawing dropzone paired with a
+ * "why did you choose this?" reason field. Submitting is locked until all
+ * three slots have both a picture and a reason. On submit, the page swaps
+ * (in place, no route change) to a scrapbook-style reveal — the three
+ * photos and their reasons laid out as a keepsake card — above a closing
+ * message and the final continue button.
+ */
+export interface IdentitySnapshotChallengeStep extends BaseExercise {
+  type: 'identity-snapshot-challenge';
+  badge: string;
+  title: string;
+  subtitle: string;
+  instructionHeading: string;
+  instructions: string[];
+  slotHeading: string;
+  photoLabel: string;
+  reasonLabel: string;
+  reasonPlaceholder: string;
+  chooseLabel: string;
+  changeLabel: string;
+  submitLabel: string;
+  scrapbookHeading: string;
+  scrapbookSubtitle: string;
+  completeHeading: string;
+  completeText: string;
+  continueLabel: string;
+  /** Shown under the dropzones, e.g. reminding a parent/caregiver to help with this activity. */
+  parentNote?: string;
+}
+
+/** One trait card in a PickYourPowerStep's grid, e.g. "Kind" with its own description for the reveal panel. */
+export interface PickYourPowerOption {
+  icon: string;
+  label: string;
+  description: string;
+}
+
+/**
+ * "Pick Your Power" — a trait-picker warm-up (Identity Module, Advanced,
+ * Week 2). A two-column layout: a left panel with a sticky-note "Warm-Up"
+ * tag, an underlined two-line title, and a reveal card that starts as a
+ * prompt and swaps to show the chosen trait's name and description once
+ * picked; a right panel with a grid of pastel trait cards (no wrong
+ * answer — any pick is valid) that turn solid on selection. A "Continue"
+ * button unlocks once a trait is chosen.
+ */
+export interface PickYourPowerStep extends BaseExercise {
+  type: 'pick-your-power';
+  badge: string;
+  kicker: string;
+  titleLine1: string;
+  titleLine2: string;
+  subtitle: string;
+  promptHint: string;
+  gridHeading: string;
+  pickOneLabel: string;
+  noWrongAnswerLabel: string;
+  powers: PickYourPowerOption[];
+  resultEyebrow: string;
+  chooseAgainLabel: string;
+  footerNote: string;
+  continueLabel: string;
+}
+
+/** One A–D option inside a TemperamentQuizQuestion. */
+export interface TemperamentQuizOption {
+  letter: 'A' | 'B' | 'C' | 'D';
+  text: string;
+}
+
+/** One question in a TemperamentQuizStep — always exactly four options, one per letter. */
+export interface TemperamentQuizQuestion {
+  id: string;
+  prompt: string;
+  options: TemperamentQuizOption[];
+}
+
+/** The character/temperament result for one letter, shown when it's the student's most-picked answer. */
+export interface TemperamentQuizResult {
+  letter: 'A' | 'B' | 'C' | 'D';
+  icon: string;
+  name: string;
+  tagline: string;
+  description: string;
+}
+
+/**
+ * "Temperament Quiz: Which One Sounds Like You?" — a personality-style
+ * quiz, not a graded one: one question at a time, four lettered options,
+ * no right answer. After the last question, the letter picked most often
+ * decides which of the four results (tied to the mini-story's characters)
+ * is revealed, with a "Retake Quiz" option.
+ */
+export interface TemperamentQuizStep extends BaseExercise {
+  type: 'temperament-quiz';
+  badge: string;
+  title: string;
+  subtitle: string;
+  instruction: string;
+  questions: TemperamentQuizQuestion[];
+  results: TemperamentQuizResult[];
+  resultHeading: string;
+  retakeLabel: string;
+  continueLabel: string;
+}
+
+/** One binary "this or that" question — a prompt and two icon+label options. */
+export interface ThisOrThatQuestion {
+  id: string;
+  prompt: string;
+  optionA: { icon: string; label: string };
+  optionB: { icon: string; label: string };
+}
+
+/** One peer "strength" card shown in the recap feed of a ThisOrThatWarmupStep. */
+export interface StrengthRecapCard {
+  icon: string;
+  strength: string;
+  author: string;
+  age: number;
+  quote: string;
+  timeAgo: string;
+}
+
+/**
+ * "This or That, you pick" — a two-phase warm-up (Identity Module,
+ * Advanced, Week 3). Phase one: a set of quick binary "this or that"
+ * choices (no wrong answers) that must all be answered before continuing.
+ * Phase two: a "Recap · Strength Tracker" feed of peer strength shares
+ * plus a box for the student to post one strength of their own, which
+ * completes the step.
+ */
+export interface ThisOrThatWarmupStep extends BaseExercise {
+  type: 'this-or-that-warmup';
+  kicker: string;
+  titleLine1: string;
+  titleLine2: string;
+  subtitle: string;
+  sectionOneLabel: string;
+  pickHint: string;
+  questions: ThisOrThatQuestion[];
+  noWrongAnswerNote: string;
+  toRecapLabel: string;
+  sectionTwoLabel: string;
+  recapIntro: string;
+  sharedCountLabel: string;
+  recapCards: StrengthRecapCard[];
+  sharePromptLabel: string;
+  sharePlaceholder: string;
+  postLabel: string;
+  footerNote: string;
+  continueLabel: string;
+}
+
+/**
+ * "Strength Snapshot" — a warm-up share (Self-Confidence Module, Advanced,
+ * Week 1). The student names one personal strength and how they discovered
+ * it; submitting always completes and reveals the pair on a small keepsake
+ * card before continuing.
+ */
+export interface StrengthSnapshotStep extends BaseExercise {
+  type: 'strength-snapshot';
+  badge: string;
+  title: string;
+  subtitle: string;
+  strengthLabel: string;
+  strengthPlaceholder: string;
+  discoveryLabel: string;
+  discoveryPlaceholder: string;
+  submitLabel: string;
+  revealHeading: string;
+  revealNote: string;
+  continueLabel: string;
+}
+
+/** One statement in an OpinionCornersStep. */
+export interface OpinionCornersStatement {
+  id: string;
+  text: string;
+}
+
+/**
+ * "Opinion Corners" — a self-paced stand-in for the facilitator-led
+ * Agree/Neutral/Disagree corners activity (Self-Confidence Module, Advanced,
+ * Week 1). One statement at a time; the student picks the corner that
+ * matches their opinion (no right answer) and moves on. After the last
+ * statement, a debrief prompt asks them to reflect on how it felt to voice
+ * their opinion, in their own words.
+ */
+export interface OpinionCornersStep extends BaseExercise {
+  type: 'opinion-corners';
+  badge: string;
+  title: string;
+  subtitle: string;
+  agreeLabel: string;
+  neutralLabel: string;
+  disagreeLabel: string;
+  noWrongAnswerNote: string;
+  statements: OpinionCornersStatement[];
+  toDebriefLabel: string;
+  debriefHeading: string;
+  debriefIntro: string;
+  debriefQuestion: string;
+  debriefPlaceholder: string;
+  submitLabel: string;
+  completeHeading: string;
+  completeText: string;
+  continueLabel: string;
+}
+
+/**
+ * "My Strength Map" — a writing activity (Self-Confidence Module, Advanced,
+ * Week 1). Three fixed stops on a path, each pairing a personal strength
+ * with one concrete action to grow it. Submitting is locked until every
+ * field is filled. On submit, the page swaps (in place) to a map-style
+ * reveal — the three stops laid out along a connected trail — above a
+ * closing message and the final continue button.
+ */
+export interface StrengthMapStep extends BaseExercise {
+  type: 'strength-map';
+  badge: string;
+  title: string;
+  subtitle: string;
+  instructionHeading: string;
+  instructions: string[];
+  stopLabel: string;
+  strengthLabel: string;
+  strengthPlaceholder: string;
+  actionLabel: string;
+  actionPlaceholder: string;
+  submitLabel: string;
+  mapHeading: string;
+  mapSubtitle: string;
+  completeHeading: string;
+  completeText: string;
+  continueLabel: string;
+}
+
+/** One strategy card in a BigQuestionStep — a short tip plus a worked example. */
+export interface BigQuestionStrategy {
+  id: string;
+  icon: string;
+  title: string;
+  tip: string;
+  example: string;
+}
+
+/**
+ * "The Big Question!" — a read-only reference step (Self-Confidence Module,
+ * Advanced, Week 2). A big open question at the top, then a stack of
+ * strategy cards answering it — each with an icon, a short tip, and a
+ * worked example — no input, just read and continue.
+ */
+export interface BigQuestionStep extends BaseExercise {
+  type: 'big-question';
+  badge: string;
+  question: string;
+  subtitle: string;
+  strategiesHeading: string;
+  strategies: BigQuestionStrategy[];
+  continueLabel: string;
+}
+
+/**
+ * "Confidence Link" affirmation step (Self-Confidence Module — Advanced,
+ * Week 2). A single line for the learner to hold onto — no input, just read
+ * and continue. A megaphone/speech-bubble design, distinct from Week 1's
+ * `plan-confidence-link`.
+ */
+export interface VoiceConfidenceLinkStep extends BaseExercise {
+  type: 'voice-confidence-link';
+  eyebrow: string;
+  title: string;
+  quote: string;
+  caption: string;
+  completeLabel: string;
+}
+
+/** One fun challenge in a RiskOrRewardStep. */
+export interface RiskOrRewardChallenge {
+  id: string;
+  text: string;
+}
+
+/**
+ * "Risk or Reward" — a self-paced interactive poll warm-up (Self-Confidence
+ * Module, Advanced, Week 3). An intro slide explains the three buttons
+ * (Yes / Maybe / No — no wrong answers), then one fun challenge at a time,
+ * each with instant, tone-matched feedback on tap before the student
+ * advances. After the last challenge, a two-part reflection box asks which
+ * challenge they might actually try and one small action they'll take. A
+ * closing slide wraps it up.
+ */
+export interface RiskOrRewardStep extends BaseExercise {
+  type: 'risk-or-reward';
+  badge: string;
+  introTitle: string;
+  introText: string;
+  yesLabel: string;
+  maybeLabel: string;
+  noLabel: string;
+  noWrongAnswerNote: string;
+  startLabel: string;
+  challenges: RiskOrRewardChallenge[];
+  yesFeedback: string;
+  maybeFeedback: string;
+  noFeedback: string;
+  nextLabel: string;
+  reflectionHeading: string;
+  reflectionIntro: string;
+  reflectionChallengeLabel: string;
+  reflectionChallengePlaceholder: string;
+  reflectionActionLabel: string;
+  reflectionActionPlaceholder: string;
+  submitLabel: string;
+  wrapUpHeading: string;
+  wrapUpText: string;
+  continueLabel: string;
+}
+
+/**
+ * "Confidence Ladder" — a writing activity (Self-Confidence Module,
+ * Advanced, Week 3). The student names one personal challenge, then three
+ * small steps to begin it. Submitting is locked until every field is
+ * filled. On submit, the page swaps (in place) to a ladder-style reveal —
+ * the challenge as the goal at the top, the three steps as rungs leading up
+ * to it — above a closing message and the final continue button.
+ */
+export interface ConfidenceLadderStep extends BaseExercise {
+  type: 'confidence-ladder';
+  badge: string;
+  title: string;
+  subtitle: string;
+  instructionHeading: string;
+  instructions: string[];
+  challengeLabel: string;
+  challengePlaceholder: string;
+  stepLabel: string;
+  step1Placeholder: string;
+  step2Placeholder: string;
+  step3Placeholder: string;
+  submitLabel: string;
+  ladderHeading: string;
+  ladderSubtitle: string;
+  goalLabel: string;
+  completeHeading: string;
+  completeText: string;
+  continueLabel: string;
+}
+
+/**
+ * "Confidence Link" affirmation step (Self-Confidence Module — Advanced,
+ * Week 3). A single line for the learner to hold onto — no input, just read
+ * and continue. A sprouting-plant design, distinct from Week 1's
+ * `plan-confidence-link` and Week 2's `voice-confidence-link`.
+ */
+export interface GrowthConfidenceLinkStep extends BaseExercise {
+  type: 'growth-confidence-link';
+  eyebrow: string;
+  title: string;
+  quote: string;
+  caption: string;
+  completeLabel: string;
+}
+
+/**
+ * "Confidence Link" affirmation step (Self-Confidence Module — Advanced,
+ * Week 4 — the module's closing week). A single line for the learner to
+ * hold onto — no input, just read and continue. A trophy design, distinct
+ * from Weeks 1-3's confidence-link variants.
+ */
+export interface TrophyConfidenceLinkStep extends BaseExercise {
+  type: 'trophy-confidence-link';
+  eyebrow: string;
+  title: string;
+  quote: string;
+  caption: string;
+  completeLabel: string;
+}
+
+/** One presentation format option in a ConfidenceContractStep. */
+export interface ConfidenceContractFormat {
+  id: string;
+  icon: string;
+  label: string;
+  description: string;
+}
+
+/**
+ * "Confidence Contract" — the End-of-Module Project's creative reflection
+ * (Self-Confidence Module, Advanced). The student picks one presentation
+ * format (vision board, video diary, or written pledge), writes their
+ * personal action plan, and can optionally attach a photo or video of
+ * whichever format they made. Submitting reveals a "Sharing & Celebration"
+ * closing card before the final continue.
+ */
+export interface ConfidenceContractStep extends BaseExercise {
+  type: 'confidence-contract';
+  badge: string;
+  title: string;
+  intro: string;
+  formatsHeading: string;
+  formats: ConfidenceContractFormat[];
+  planLabel: string;
+  planPlaceholder: string;
+  uploadHeading: string;
+  uploadHint: string;
+  uploadChooseLabel: string;
+  uploadChangeLabel: string;
+  uploadRemoveLabel: string;
+  submitLabel: string;
+  revealHeading: string;
+  revealSubtitle: string;
+  shareHeading: string;
+  shareText: string;
+  completeHeading: string;
+  completeText: string;
+  continueLabel: string;
+}
+
+/** One choice in a ChoicesBoardScenario — a short label, the choice text, whether it's the responsible one, and the feedback shown on click. */
+export interface ChoicesBoardChoice {
+  label: string;
+  text: string;
+  correct: boolean;
+  feedback: string;
+}
+
+/** One real-life scenario in a ChoicesBoardStep, with exactly two choices. */
+export interface ChoicesBoardScenario {
+  id: string;
+  situation: string;
+  choices: ChoicesBoardChoice[];
+}
+
+/**
+ * "Choices Board" — an interactive decision activity (Identity Module,
+ * Advanced, Week 3). One real-life scenario at a time, two choices each.
+ * Tapping a choice reveals instant feedback (a responsible "correct" one or
+ * a softer "alternative"); the student must land on the responsible choice
+ * to move to the next scenario. After the last scenario, a short closing
+ * card takes over the screen.
+ */
+export interface ChoicesBoardStep extends BaseExercise {
+  type: 'choices-board';
+  badge: string;
+  title: string;
+  subtitle: string;
+  scenarios: ChoicesBoardScenario[];
+  correctLabel: string;
+  alternativeLabel: string;
+  nextLabel: string;
+  retryHint: string;
+  completeHeading: string;
+  completeText: string;
+  continueLabel: string;
+}
+
+/**
+ * "Choice Journal" — Challenge of the Week (Identity Module, Advanced, Week
+ * 3). Three day entries, each pairing "the choice I made" with "what it
+ * says about me". Submitting is locked until every field is filled. On
+ * submit, the page swaps (in place) to a journal-style reveal — the three
+ * days laid out as journal pages — above a closing message and the final
+ * continue button.
+ */
+export interface ChoiceJournalChallengeStep extends BaseExercise {
+  type: 'choice-journal-challenge';
+  badge: string;
+  title: string;
+  subtitle: string;
+  instructionHeading: string;
+  instructions: string[];
+  dayLabel: string;
+  choiceLabel: string;
+  choicePlaceholder: string;
+  meaningLabel: string;
+  meaningPlaceholder: string;
+  submitLabel: string;
+  journalHeading: string;
+  journalSubtitle: string;
+  completeHeading: string;
+  completeText: string;
+  continueLabel: string;
+}
+
+/** One friend in the "Pass the Dream" toss chain — a name, avatar emoji, and the dream they'd share. */
+export interface PassTheDreamFriend {
+  name: string;
+  avatar: string;
+  dream: string;
+}
+
+/** One peer "proud choice" card in the recap feed of a PassTheDreamWarmupStep. */
+export interface ChoiceRecapCard {
+  name: string;
+  avatar: string;
+  emoji: string;
+  choice: string;
+  feeling: string;
+}
+
+/**
+ * "Pass the Dream" — a two-panel warm-up (Identity Module, Advanced, Week
+ * 4). Left panel: the student names one thing they'd love to try or
+ * achieve (pick a chip or type their own), then "tosses the ball" round
+ * the room, each friend sharing their dream in turn. Right panel: a
+ * "Choice Journal Sharing" recap feed of peer proud-moment cards plus a
+ * box to add one of the student's own. The step completes once the ball
+ * has been round the room and the student has shared a proud moment.
+ */
+export interface PassTheDreamWarmupStep extends BaseExercise {
+  type: 'pass-the-dream-warmup';
+  roomName: string;
+  roomTagline: string;
+  roomMeta: string;
+  warmupBadge: string;
+  warmupTitle: string;
+  warmupIntro: string;
+  tossingToLabel: string;
+  friends: PassTheDreamFriend[];
+  dreamChips: { icon: string; label: string }[];
+  dreamInputPlaceholder: string;
+  tossLabel: string;
+  tossedAllMessage: string;
+  recapBadge: string;
+  recapTitle: string;
+  recapIntro: string;
+  recapCards: ChoiceRecapCard[];
+  sharePlaceholder: string;
+  shareLabel: string;
+  footerNote: string;
+  continueLabel: string;
+}
+
+/**
+ * "Share Your Plan" — Challenge of the Week (Identity Module, Advanced,
+ * Week 4). The student names one goal from their identity plan and how
+ * they'll start on it — by typing, by recording a short voice note, or
+ * both. Submitting is locked until there's a written plan or a recording.
+ * On submit, the page swaps (in place) to a plan-card reveal with a
+ * playback control for any voice note, above a closing message.
+ */
+export interface ShareYourPlanChallengeStep extends BaseExercise {
+  type: 'share-your-plan-challenge';
+  badge: string;
+  title: string;
+  subtitle: string;
+  instructionHeading: string;
+  instructions: string[];
+  goalLabel: string;
+  goalPlaceholder: string;
+  startLabel: string;
+  startPlaceholder: string;
+  voiceLabel: string;
+  recordLabel: string;
+  stopLabel: string;
+  reRecordLabel: string;
+  submitLabel: string;
+  revealHeading: string;
+  revealSubtitle: string;
+  completeHeading: string;
+  completeText: string;
+  continueLabel: string;
+}
+
+/**
+ * "Personal Reflection Worksheet" activity (Planning Module — Advanced, Week
+ * 1). The learner lists three weekly activities, ranks how well they plan
+ * each (Always / Sometimes / Never), picks one to plan better, and writes a
+ * short reason. Submitting is locked until every field is filled; after that
+ * a summary "worksheet" card is shown. Its own clipboard-worksheet design.
+ */
+export interface TimeReflectionWorksheetStep extends BaseExercise {
+  type: 'time-reflection-worksheet';
+  badge: string;
+  title: string;
+  intro: string;
+  instructions: string[];
+  rowCount: number;
+  activityLabel: string;
+  activityPlaceholder: string;
+  rankQuestion: string;
+  /** Exactly three rank options, most-planned first, e.g. ["Always", "Sometimes", "Never"]. */
+  rankOptions: string[];
+  focusLabel: string;
+  focusHint: string;
+  reasonLabel: string;
+  reasonPlaceholder: string;
+  submitLabel: string;
+  revealHeading: string;
+  revealSubtitle: string;
+  completeHeading: string;
+  completeText: string;
+  continueLabel: string;
+}
+
+/**
+ * "Challenge of the Week: Plan It Better!" (Planning Module — Advanced, Week
+ * 1). The learner picks a planning strategy (a suggested chip or their own),
+ * names the activity they'll apply it to, ticks the days they follow it across
+ * a 7-day tracker, then completes an end-of-week reflection: a days-used count
+ * (from the tracker), a 1–5 "felt more organized" star rating, and a short
+ * "what I learned" note. Submitting is locked until the strategy, activity,
+ * rating and note are all set; after that a proud summary card is shown. Its
+ * own celebratory design.
+ */
+export interface PlanItBetterChallengeStep extends BaseExercise {
+  type: 'plan-it-better-challenge';
+  badge: string;
+  title: string;
+  intro: string;
+  strategyLabel: string;
+  strategyHint: string;
+  /** Suggested strategies shown as pickable chips; the learner can also write their own. */
+  strategyOptions: string[];
+  customStrategyLabel: string;
+  customStrategyPlaceholder: string;
+  activityLabel: string;
+  activityPlaceholder: string;
+  trackerHeading: string;
+  trackerHint: string;
+  /** Exactly seven short day labels, e.g. ["Mon","Tue",…,"Sun"]. */
+  dayLabels: string[];
+  reflectionHeading: string;
+  daysUsedLabel: string;
+  organizedLabel: string;
+  learnedLabel: string;
+  learnedPlaceholder: string;
+  submitLabel: string;
+  revealHeading: string;
+  revealSubtitle: string;
+  completeHeading: string;
+  completeText: string;
+  continueLabel: string;
+}
+
+/** One statement inside a GoalDetectiveWarmupStep. */
+export interface GoalDetectiveStatement {
+  id: string;
+  text: string;
+  /** The correct bin — 'wish' for vague/general statements, 'goal' for clear/doable ones. */
+  kind: 'wish' | 'goal';
+}
+
+/**
+ * "Warm-Up Game: Goal Detective!" (Planning Module — Advanced, Week 3). Real
+ * drag-and-drop: the learner drags each statement card onto the "Wish" or
+ * "Goal" folder. A correct drop settles the card into that folder; a wrong
+ * drop shakes and bounces it back to the tray, so no wrong answer passes.
+ * Continue unlocks once every statement is sorted. Its own detective-board
+ * design.
+ */
+export interface GoalDetectiveWarmupStep extends BaseExercise {
+  type: 'goal-detective-warmup';
+  kicker: string;
+  heading: string;
+  subtitle: string;
+  instructions: string[];
+  wishLabel: string;
+  goalLabel: string;
+  statements: GoalDetectiveStatement[];
+  allDoneTitle: string;
+  allDoneText: string;
+  footerNote: string;
+  continueLabel: string;
+  recapHeading?: string;
+  recapPoints?: string[];
+}
+
+/** A short-text discussion question after the video in a GoalVideoReflectStep. */
+export interface GoalVideoTextQuestion {
+  id: string;
+  question: string;
+  placeholder: string;
+  example?: string;
+}
+
+/** The single-select "which part of SMART is most useful" question in a GoalVideoReflectStep. */
+export interface GoalVideoChoiceQuestion {
+  id: string;
+  question: string;
+  options: string[];
+}
+
+/**
+ * "How to Write a SMART Goal" video step (Planning Module — Advanced, Week
+ * 3). Phased: set a personal goal before watching, watch the video, then
+ * answer two short-text discussion prompts and pick the most useful SMART
+ * letter. Every field must be filled before submitting; then an auto summary
+ * is shown. Its own "goal journal" design.
+ */
+export interface GoalVideoReflectStep extends BaseExercise {
+  type: 'goal-video-reflect';
+  badge: string;
+  title: string;
+  beforeLabel: string;
+  beforeIntro: string;
+  beforeExample: string;
+  goalLabel: string;
+  goalPlaceholder: string;
+  beforeContinueLabel: string;
+  videoYoutubeUrl: string;
+  videoTitle: string;
+  videoCredit: string;
+  videoDurationLabel?: string;
+  videoCaption: string;
+  watchedLabel: string;
+  videoContinueLabel: string;
+  questionsHeading: string;
+  textQuestions: GoalVideoTextQuestion[];
+  choiceQuestion: GoalVideoChoiceQuestion;
+  submitLabel: string;
+  summaryHeading: string;
+  summaryText: string[];
+  continueLabel: string;
+}
+
+/** One row of the SMART breakdown table in a SmartGoalTableStep. */
+export interface SmartGoalTableRow {
+  /** 'S' | 'M' | 'A' | 'R' | 'T'. */
+  letter: string;
+  /** e.g. "Specific". */
+  label: string;
+  question: string;
+  placeholder: string;
+}
+
+/**
+ * "Write your SMART goal" activity (Planning Module — Advanced, Week 3). The
+ * learner writes one SMART goal to start this week, then an optional
+ * extension breaks it down row by row against each SMART letter. Submitting
+ * only requires the goal statement — the breakdown table is a deepening
+ * extension. Its own worksheet-table design.
+ */
+export interface SmartGoalTableStep extends BaseExercise {
+  type: 'smart-goal-table';
+  badge: string;
+  title: string;
+  goalLabel: string;
+  goalPlaceholder: string;
+  goalExample: string;
+  goalContinueLabel: string;
+  extensionBadge: string;
+  extensionHeading: string;
+  extensionIntro: string;
+  rows: SmartGoalTableRow[];
+  submitLabel: string;
+  revealHeading: string;
+  revealSubtitle: string;
+  completeHeading: string;
+  completeText: string;
+  continueLabel: string;
+}
+
+/** One reflection prompt in a StaySmartChallengeStep. */
+export interface StaySmartReflectPrompt {
+  id: string;
+  question: string;
+  placeholder: string;
+}
+
+/**
+ * "Challenge of the Week: Stay SMART!" (Planning Module — Advanced, Week 3).
+ * A phased challenge: track a 7-day tracker of the learner's SMART goal
+ * action, name an accountability partner, reflect on consistency, and
+ * optionally upload a photo of their tracker or a short video. Submitting
+ * requires the partner and every reflection prompt; the upload is optional.
+ * Its own design.
+ */
+export interface StaySmartChallengeStep extends BaseExercise {
+  type: 'stay-smart-challenge';
+  badge: string;
+  title: string;
+  intro: string;
+  trackerHeading: string;
+  trackerHint: string;
+  /** Exactly seven day labels, e.g. ["Mon", …, "Sun"]. */
+  dayLabels: string[];
+  trackerContinueLabel: string;
+  partnerHeading: string;
+  partnerHint: string;
+  partnerLabel: string;
+  partnerPlaceholder: string;
+  partnerContinueLabel: string;
+  reflectHeading: string;
+  reflectPrompts: StaySmartReflectPrompt[];
+  uploadHeading: string;
+  uploadHint: string;
+  uploadChooseLabel: string;
+  uploadChangeLabel: string;
+  uploadRemoveLabel: string;
+  submitLabel: string;
+  revealHeading: string;
+  revealSubtitle: string;
+  completeHeading: string;
+  completeText: string;
+  continueLabel: string;
+}
+
+/**
+ * "Confidence Link" affirmation step (Planning Module — Advanced, Week 3). A
+ * single line for the learner to hold onto — no input, just read and
+ * continue. A "kept promise" ribbon-seal design, distinct from the Week 1 and
+ * Week 2 confidence links.
+ */
+export interface PromiseConfidenceLinkStep extends BaseExercise {
+  type: 'promise-confidence-link';
+  eyebrow: string;
+  title: string;
+  quote: string;
+  caption: string;
+  completeLabel: string;
+}
+
+/** One draggable checkpoint card in a PlanningRelayWarmupStep, e.g. { icon: '🧠', label: 'Think' }. */
+export interface PlanningRelayOption {
+  id: string;
+  icon: string;
+  label: string;
+}
+
+/**
+ * "Warm-Up Game: Planning Relay" (Planning Module — Advanced, Week 4). Real
+ * drag-and-drop: the learner drags the 5 planning-cycle checkpoints into
+ * order along a relay track, then presses Check to validate against the one
+ * correct sequence (the general planning process has a single right order).
+ * A wrong arrangement must be retried before continuing. Once correct, a
+ * follow-up text prompt appears. Its own relay-track design.
+ */
+export interface PlanningRelayWarmupStep extends BaseExercise {
+  type: 'planning-relay-warmup';
+  kicker: string;
+  heading: string;
+  subtitle: string;
+  poolHeading: string;
+  trackHeading: string;
+  options: PlanningRelayOption[];
+  /** Ids from `options`, listed in the one correct order. */
+  correctOrder: string[];
+  checkLabel: string;
+  successMessage: string;
+  retryMessage: string;
+  followUpQuestion: string;
+  followUpPlaceholder: string;
+  continueLabel: string;
+}
+
+/** One section of a PersonalGrowthMapStep, e.g. { id: 'achieved', icon: '🌱', label: 'What I Achieved' }. */
+export interface GrowthMapSection {
+  id: string;
+  icon: string;
+  label: string;
+  placeholder: string;
+}
+
+/**
+ * "My Personal Growth Map" activity (Planning Module — Advanced, Week 4). A
+ * 3-section template — What I Achieved, What I Learnt, My Next Goal — each
+ * filled by typing or by attaching a file (e.g. an exported Canva/Slides
+ * page). Submitting requires each section to have text or a file; then an
+ * auto encouragement message is shown. Its own growth-trail design.
+ */
+export interface PersonalGrowthMapStep extends BaseExercise {
+  type: 'personal-growth-map';
+  badge: string;
+  title: string;
+  intro: string;
+  sections: GrowthMapSection[];
+  uploadInsteadLabel: string;
+  uploadChooseLabel: string;
+  uploadChangeLabel: string;
+  uploadRemoveLabel: string;
+  submitLabel: string;
+  encouragementHeading: string;
+  encouragementText: string;
+  continueLabel: string;
+}
+
+/**
+ * "Challenge of the Week: Share & Reflect" (Planning Module — Advanced, Week
+ * 4). The learner shares their Personal Growth Map with someone and asks what
+ * they did well, then records that feedback — typed or spoken — and
+ * optionally records a short voice note about what they learned from it.
+ * Submitting requires the feedback (text or recording); the voice note is
+ * optional. Its own design.
+ */
+export interface ShareReflectChallengeStep extends BaseExercise {
+  type: 'share-reflect-challenge';
+  badge: string;
+  title: string;
+  intro: string;
+  instructions: string[];
+  feedbackLabel: string;
+  feedbackPlaceholder: string;
+  recordInsteadLabel: string;
+  typeInsteadLabel: string;
+  recordLabel: string;
+  stopLabel: string;
+  reRecordLabel: string;
+  noteLabel: string;
+  noteHint: string;
+  submitLabel: string;
+  revealHeading: string;
+  revealSubtitle: string;
+  completeHeading: string;
+  completeText: string;
+  continueLabel: string;
+}
+
+/**
+ * "Confidence Link" affirmation step (Planning Module — Advanced, Week 4). A
+ * single line for the learner to hold onto — no input, just read and
+ * continue. A "still reflection pool" ripple design, distinct from Weeks 1–3.
+ */
+export interface ReflectionConfidenceLinkStep extends BaseExercise {
+  type: 'reflection-confidence-link';
+  eyebrow: string;
+  title: string;
+  quote: string;
+  caption: string;
+  completeLabel: string;
+}
+
+/**
+ * "The 7-Day Planning Challenge" end-of-module project (Planning Module —
+ * Advanced). The learner plans and journals one real week of activities,
+ * writes a short reflection, and may optionally attach a "My Week of Wins"
+ * collage or video. Submitting requires only the reflection; the bonus
+ * upload is optional. Its own capstone-certificate design.
+ */
+export interface SevenDayPlanningProjectStep extends BaseExercise {
+  type: 'seven-day-planning-project';
+  badge: string;
+  title: string;
+  intro: string;
+  instructions: string[];
+  reflectionLabel: string;
+  reflectionPlaceholder: string;
+  bonusHeading: string;
+  bonusHint: string;
+  uploadChooseLabel: string;
+  uploadChangeLabel: string;
+  uploadRemoveLabel: string;
+  submitLabel: string;
+  revealHeading: string;
+  revealSubtitle: string;
+  completeHeading: string;
+  completeText: string;
+  continueLabel: string;
+}
+
+/**
+ * "Challenge of the Week: Pattern Spotter" (Planning Module — Advanced, Week
+ * 2). The learner follows their planner for three days, ticking each day, then
+ * notes one adjustment they made and one pattern they discovered about their
+ * time use. Submitting is locked until the pattern note is written; then an
+ * insight card is shown. Its own compact design.
+ */
+export interface PatternSpotterChallengeStep extends BaseExercise {
+  type: 'pattern-spotter-challenge';
+  badge: string;
+  title: string;
+  intro: string;
+  instructions: string[];
+  /** Exactly three day labels, e.g. ["Day 1", "Day 2", "Day 3"]. */
+  dayLabels: string[];
+  dayPrompt: string;
+  adjustLabel: string;
+  adjustPlaceholder: string;
+  patternLabel: string;
+  patternPlaceholder: string;
+  submitLabel: string;
+  revealHeading: string;
+  revealSubtitle: string;
+  completeHeading: string;
+  completeText: string;
+  continueLabel: string;
+}
+
+/**
+ * "Confidence Link" affirmation step (Planning Module — Advanced, Week 2). A
+ * single line for the learner to hold onto — no input, just read and continue.
+ * A clock-face design, distinct from Week 1's `plan-confidence-link`.
+ */
+export interface TimeConfidenceLinkStep extends BaseExercise {
+  type: 'time-confidence-link';
+  eyebrow: string;
+  title: string;
+  quote: string;
+  caption: string;
+  completeLabel: string;
+}
+
+/** One quadrant of the Eisenhower matrix in a PriorityPlannerChallengeStep. */
+export interface EisenhowerQuadrant {
+  /** 'A' | 'B' | 'C' | 'D'. */
+  key: string;
+  /** e.g. "Urgent & Important". */
+  name: string;
+  /** The one-word action, e.g. "Do now" / "Plan to do" / "Delegate or delay" / "Eliminate". */
+  action: string;
+  description: string;
+  example: string;
+  /** Placeholder for the learner's own entries in the planner phase. */
+  placeholder: string;
+}
+
+/** One reflection prompt (with a follow-up nudge) in a PriorityPlannerChallengeStep. */
+export interface PriorityReflectPrompt {
+  id: string;
+  question: string;
+  /** The "→" follow-up shown under the question. */
+  followUp: string;
+  placeholder: string;
+}
+
+/**
+ * "The Weekly Priority Planner Challenge" (Planning Module — Advanced, Week
+ * 2). One connected activity in phases: learn the Eisenhower matrix, watch a
+ * short video, fill a box per quadrant with tasks from the learner's own week,
+ * then answer reflection prompts. Every quadrant and every prompt must be
+ * filled before submitting; then a filled-in matrix and the reflections are
+ * shown with a learner tip. Its own design.
+ */
+export interface PriorityPlannerChallengeStep extends BaseExercise {
+  type: 'priority-planner-challenge';
+  badge: string;
+  title: string;
+  objective: string;
+  learnHeading: string;
+  learnIntro: string;
+  quadrants: EisenhowerQuadrant[];
+  learnContinueLabel: string;
+  videoYoutubeUrl: string;
+  videoTitle: string;
+  videoCredit: string;
+  videoDurationLabel?: string;
+  watchedLabel: string;
+  videoContinueLabel: string;
+  planHeading: string;
+  planIntro: string;
+  planContinueLabel: string;
+  reflectHeading: string;
+  prompts: PriorityReflectPrompt[];
+  tipLabel: string;
+  tip: string;
+  submitLabel: string;
+  revealHeading: string;
+  revealSubtitle: string;
+  completeHeading: string;
+  completeText: string;
+  continueLabel: string;
+}
+
+/** One question after the video in a VideoReflectStep — a short text box or a multi-select checkbox list. */
+export interface VideoReflectQuestion {
+  id: string;
+  kind: 'text' | 'multi';
+  question: string;
+  /** text only — a nudge shown under the question. */
+  hint?: string;
+  /** text only — placeholder for the box. */
+  placeholder?: string;
+  /** multi only — the checkbox options; any number may be selected. */
+  options?: string[];
+  /** multi only — when true, adds an "Other" checkbox with its own text field. */
+  allowOther?: boolean;
+}
+
+/**
+ * "Watch and Reflect" video step (Planning Module — Advanced, Week 2). A
+ * YouTube video (click-to-play embed plus a watch-on-YouTube link), a
+ * "watched it" check, then a set of reflect-and-respond questions — short text
+ * boxes and multi-select checkbox lists, none graded. Every question must be
+ * answered before submitting; then an auto self-check summary is shown. Its
+ * own design.
+ */
+export interface VideoReflectStep extends BaseExercise {
+  type: 'video-reflect';
+  badge: string;
+  title: string;
+  videoYoutubeUrl: string;
+  videoTitle: string;
+  videoCredit: string;
+  videoDurationLabel: string;
+  watchedLabel: string;
+  questionsHeading: string;
+  questions: VideoReflectQuestion[];
+  submitLabel: string;
+  summaryHeading: string;
+  summaryText: string[];
+  continueLabel: string;
+}
+
+/** One task block the learner fits into the 24-hour day grid of a DayPlannerGridStep. */
+export interface DayPlannerBlock {
+  id: string;
+  label: string;
+  icon: string;
+  /** The suggested number of hours — the block's starting size; the learner can shorten or stretch it. */
+  suggestedHours: number;
+}
+
+/**
+ * "Build Your Day" 24-hour planner (Planning Module — Advanced, Week 2). A
+ * real cursor drag-and-drop activity: the learner drags labelled task blocks
+ * from a tray onto a 24-hour day bar, reorders them by dragging, drags them
+ * back to the tray to remove them, and resizes each with an hours stepper. The
+ * plan must add up to exactly 24 hours to continue; any arrangement is
+ * accepted (there is no single correct day). On submit, an auto-generated
+ * review reflects the learner's own choices back — what was left out, what was
+ * shortened, and which task took the most time. Its own timeline design.
+ */
+export interface DayPlannerGridStep extends BaseExercise {
+  type: 'day-planner-grid';
+  badge: string;
+  title: string;
+  instructions: string[];
+  /** Total hours in the day — 24. */
+  totalHours: number;
+  blocks: DayPlannerBlock[];
+  trayLabel: string;
+  gridLabel: string;
+  totalLabel: string;
+  overHint: string;
+  resizeHint: string;
+  submitLabel: string;
+  reviewHeading: string;
+  reviewSubtitle: string;
+  includedAllText: string;
+  leftOutLabel: string;
+  shortenedLabel: string;
+  nothingShortenedText: string;
+  biggestLabel: string;
+  completeHeading: string;
+  completeText: string;
+  continueLabel: string;
+}
+
+/** One question in a PlanRecapReflectionStep — either a short-text box or a 1–5 rating scale. */
+export interface PlanRecapQuestion {
+  id: string;
+  kind: 'text' | 'scale';
+  question: string;
+  /** text only — placeholder for the box. */
+  placeholder?: string;
+  /** text only — a greyed example shown under the box. */
+  example?: string;
+  /** scale only — exactly five labels for ratings 1 through 5. */
+  scaleLabels?: string[];
+}
+
+/**
+ * "Week 2 Recap: Reflect and Refine" (Planning Module — Advanced, Week 2). A
+ * look-back on the Week 1 "Plan It Better!" challenge: a short review journal
+ * of text prompts and 1–5 rating scales. Every question must be answered
+ * before submitting; then a summary card with a learner tip is shown. Its own
+ * review-journal design.
+ */
+export interface PlanRecapReflectionStep extends BaseExercise {
+  type: 'plan-recap-reflection';
+  badge: string;
+  title: string;
+  intro: string;
+  lead: string;
+  questions: PlanRecapQuestion[];
+  submitLabel: string;
+  revealHeading: string;
+  revealSubtitle: string;
+  tipLabel: string;
+  tip: string;
+  continueLabel: string;
+}
+
+/**
+ * "Confidence Link" affirmation step (Planning Module — Advanced, Week 1). A
+ * single calm card carrying one line for the learner to hold onto — no input,
+ * just read and continue.
+ */
+export interface PlanConfidenceLinkStep extends BaseExercise {
+  type: 'plan-confidence-link';
+  eyebrow: string;
+  title: string;
+  quote: string;
+  caption: string;
+  completeLabel: string;
+}
+
 export type Exercise =
   | MultipleChoiceExercise
   | SharePromptExercise
@@ -5979,7 +7433,50 @@ export type Exercise =
   | NutritionWarmupQuizStep
   | NutritionFoodMatchStep
   | NutritionTfWarmupStep
-  | NutritionFillBlankStep;
+  | NutritionFillBlankStep
+  | TwoTruthsAndATwistStep
+  | StrengthSnapshotStep
+  | OpinionCornersStep
+  | StrengthMapStep
+  | BigQuestionStep
+  | VoiceConfidenceLinkStep
+  | RiskOrRewardStep
+  | ConfidenceLadderStep
+  | GrowthConfidenceLinkStep
+  | TrophyConfidenceLinkStep
+  | ConfidenceContractStep
+  | DiscussionPromptSamplesStep
+  | ReflectionPromptAnswersStep
+  | IdentitySnapshotChallengeStep
+  | PickYourPowerStep
+  | TemperamentQuizStep
+  | ThisOrThatWarmupStep
+  | ChoicesBoardStep
+  | ChoiceJournalChallengeStep
+  | PassTheDreamWarmupStep
+  | PlanOrPanicWarmupStep
+  | LateProjectStoryStep
+  | StoryTalkStep
+  | TimeReflectionWorksheetStep
+  | PlanItBetterChallengeStep
+  | PlanConfidenceLinkStep
+  | PlanRecapReflectionStep
+  | DayPlannerGridStep
+  | VideoReflectStep
+  | PriorityPlannerChallengeStep
+  | PatternSpotterChallengeStep
+  | TimeConfidenceLinkStep
+  | GoalDetectiveWarmupStep
+  | GoalVideoReflectStep
+  | SmartGoalTableStep
+  | StaySmartChallengeStep
+  | PromiseConfidenceLinkStep
+  | PlanningRelayWarmupStep
+  | PersonalGrowthMapStep
+  | ShareReflectChallengeStep
+  | ReflectionConfidenceLinkStep
+  | SevenDayPlanningProjectStep
+  | ShareYourPlanChallengeStep;
 
 /** Content for the newer, richer lesson-welcome layout. When a lesson has this, its welcome screen uses this design instead of the plain card. */
 /** One preview card inside a LessonWelcomeCard's "This Week's Mission" section. */
@@ -6413,6 +7910,8 @@ export interface Lesson {
   week: number;
   /** Short stage label shown on the lesson welcome screen, e.g. "Awareness". */
   stage?: string;
+  /** When true, the lesson card shows on the module map but stays locked ("Coming soon") regardless of the student's progress — used for weeks whose content isn't ready yet. */
+  comingSoon?: boolean;
   /** Quoted one-liner under the lesson title, e.g. "I am me because…". */
   tagline?: string;
   mainFocus?: string;
@@ -6559,6 +8058,24 @@ export interface Lesson {
   nutritionHealthyChoicesWelcome?: LessonNutritionHealthyChoicesWelcome;
   /** When set, renders the "habit house" welcome layout (Nutrition Module, Week 4 — "Building Healthy Eating Habits": a warm amber-and-cream page, a two-tone title, an SVG house that builds itself brick by brick then adds its roof, a caption, a row of labelled daily-habit chips, and the objective inside a card) — takes priority over all other welcome fields. */
   nutritionHabitsWelcome?: LessonNutritionHabitsWelcome;
+  /** When set, renders the "identity mosaic" welcome layout (Identity Module — Advanced, Week 1 — "What Makes Me, Me?": a full-width theme banner, an ages badge, a two-tone title over an illustration, and a bordered card with week/stage pills, a quoted title, an Objective box, and a row of identity-piece tag pills) — takes priority over all other welcome fields. */
+  identityMosaicWelcome?: LessonIdentityMosaicWelcome;
+  /** When set, renders the plain "spare intro" welcome layout (Identity Module — Advanced: a single spare card — a week/stage pill, title, one short subtitle line, and a compact objective list, with no banner, hero image, or tag row) — takes priority over all other welcome fields. */
+  identityStrengthsWelcome?: LessonIdentityStrengthsWelcome;
+  /** When set, renders the "planning route" welcome layout (Planning Module — Advanced, Week 1 — "Why Planning Matters": a spare teal card with week/stage pills, a short title, one subtitle line, and the objectives drawn as a numbered route of dashed-linked nodes) — takes priority over all other welcome fields. */
+  planningWhyWelcome?: LessonPlanningWhyWelcome;
+  /** When set, renders the "priority matrix" welcome layout (Planning Module — Advanced, Week 2 — "Strategic Planning": a spare navy/amber card with week/stage pills, a short title, one subtitle line, an important-vs-urgent 2×2 matrix graphic, and a compact objective list) — takes priority over all other welcome fields. */
+  planningPrioritiesWelcome?: LessonPlanningPrioritiesWelcome;
+  /** When set, renders the "SMART goals" welcome layout (Planning Module — Advanced, Week 3 — "Smart Goals and Follow-Through": a spare coral/gold card with week/stage pills, a short title, one subtitle line, a row of S-M-A-R-T letter tiles, and a compact objective list) — takes priority over all other welcome fields. */
+  planningGoalsWelcome?: LessonPlanningGoalsWelcome;
+  /** When set, renders the "growth path" welcome layout (Planning Module — Advanced, Week 4 — "Reflection and Growth: From Plans to Habits": a spare sage-green card with week/stage pills, a short title, one subtitle line, a seed-to-sprout-to-plant growth row, and a compact objective list) — takes priority over all other welcome fields. */
+  planningGrowthWelcome?: LessonPlanningGrowthWelcome;
+  /** When set, renders the "capstone trophy" welcome layout (Planning Module — Advanced, End-of-Module Project: a gold-gradient card with a trophy badge, a short title, one subtitle line, and a compact task list) — takes priority over all other welcome fields. */
+  planningCapstoneWelcome?: LessonPlanningCapstoneWelcome;
+  /** When set, renders the "spark" welcome layout (Self-Confidence Module — Advanced, Week 1 — "Believing in Myself": a spare coral card with week/stage pills, a short title, one subtitle line, the week's objective, and a short reflection prompt recapping the Planning module with a sample answer) — takes priority over all other welcome fields. */
+  confidenceSparkWelcome?: LessonConfidenceSparkWelcome;
+  /** When set, renders the "capstone trophy" welcome layout (Self-Confidence Module — Advanced, End-of-Module Project: a coral-gradient card with a trophy badge, a short title, one subtitle line, and a compact task list) — takes priority over all other welcome fields. */
+  confidenceCapstoneWelcome?: LessonConfidenceCapstoneWelcome;
   /** Ordered steps the student walks through — warm-up, story, discussion, activity, challenge, questions. */
   exercises: Exercise[];
 }
@@ -8667,6 +10184,139 @@ export interface LessonTinyVoicesWelcome {
   footerChecks: string[];
 }
 
+/**
+ * The "identity mosaic" welcome layout (Identity Module — Advanced, Week 1 —
+ * "What Makes Me, Me?"). A full-width theme banner sits above an ages badge,
+ * a two-tone title, and an illustration of teens each thinking about a
+ * different piece of themselves. Below, a bordered card carries the week and
+ * stage pills, the quoted week title, an Objective box with icon-led bullets,
+ * and a row of tag pills naming the pieces that make up identity. A closing
+ * line sits under the card. Purely presentational.
+ */
+export interface LessonIdentityMosaicWelcome {
+  themeLabel: string;
+  ageBadge: string;
+  titleStart: string;
+  titleAccent: string;
+  subtitle: string;
+  image: string;
+  imageAlt: string;
+  weekPill: string;
+  stagePill: string;
+  cardTitle: string;
+  objectiveLabel: string;
+  objectives: { icon: string; text: string }[];
+  tagsHeading: string;
+  tags: { icon: string; label: string; variant: 'peach' | 'blue' }[];
+  startLabel: string;
+  footerNote: string;
+}
+
+/**
+ * The plain "spare intro" welcome layout (Identity Module — Advanced) —
+ * used for weeks whose intro is meant to read as nice, straightforward, and
+ * less wordy than the Week 1 mosaic layout: a week/stage pill, a title, one
+ * short subtitle line, and a compact objective list on a single card — no
+ * banner, hero image, or tag row. First used for Week 2 ("My Strengths &
+ * Temperament"), reused as-is for later weeks that want the same brief.
+ */
+export interface LessonIdentityStrengthsWelcome {
+  weekPill: string;
+  stagePill: string;
+  title: string;
+  subtitle: string;
+  objectives: { icon: string; text: string }[];
+  startLabel: string;
+}
+
+export interface LessonPlanningWhyWelcome {
+  weekPill: string;
+  stagePill: string;
+  title: string;
+  subtitle: string;
+  /** The week's objectives, drawn as a numbered route. */
+  objectives: { text: string }[];
+  startLabel: string;
+}
+
+export interface LessonPlanningPrioritiesWelcome {
+  weekPill: string;
+  stagePill: string;
+  title: string;
+  subtitle: string;
+  /** Horizontal axis ends, e.g. ["Urgent", "Not urgent"]. */
+  axisX: string[];
+  /** Vertical axis ends, top then bottom, e.g. ["Important", "Not important"]. */
+  axisY: string[];
+  /** Four short quadrant labels in reading order: top-left, top-right, bottom-left, bottom-right. */
+  quadrants: string[];
+  objectives: { text: string }[];
+  startLabel: string;
+}
+
+export interface LessonPlanningGoalsWelcome {
+  weekPill: string;
+  stagePill: string;
+  title: string;
+  subtitle: string;
+  /** The SMART breakdown — one entry per letter, e.g. { letter: 'S', word: 'Specific' }. */
+  smartLetters: { letter: string; word: string }[];
+  objectives: { text: string }[];
+  startLabel: string;
+}
+
+export interface LessonPlanningGrowthWelcome {
+  weekPill: string;
+  stagePill: string;
+  title: string;
+  subtitle: string;
+  /** The growth row — a small progression, e.g. seed → sprout → plant. */
+  growthStages: { icon: string; label: string }[];
+  objectives: { text: string }[];
+  startLabel: string;
+}
+
+export interface LessonPlanningCapstoneWelcome {
+  /** Small badge above the title, e.g. "Bonus · End-of-Module Project". */
+  badgeLabel: string;
+  title: string;
+  subtitle: string;
+  tasks: { text: string }[];
+  startLabel: string;
+}
+
+/**
+ * Week 1 welcome layout — Self-Confidence Module (Advanced). A single spark-themed
+ * card: week/stage pills, a title, one short subtitle, the week's objective on
+ * its own line, and a small reflection prompt that recaps a point from the
+ * Planning module (a question plus a sample answer) instead of a wall of text.
+ */
+export interface LessonConfidenceSparkWelcome {
+  weekPill: string;
+  stagePill: string;
+  title: string;
+  subtitle: string;
+  objectiveText: string;
+  recapLabel: string;
+  recapQuestion: string;
+  sampleAnswerLabel: string;
+  sampleAnswerText: string;
+  startLabel: string;
+}
+
+/**
+ * "Capstone trophy" welcome layout — Self-Confidence Module (Advanced), End-of-
+ * Module Project ("Confidence Check-In"). A single coral-gradient card: a
+ * trophy badge, a short title, one subtitle line, and a compact task list.
+ */
+export interface LessonConfidenceCapstoneWelcome {
+  badgeLabel: string;
+  title: string;
+  subtitle: string;
+  tasks: { text: string }[];
+  startLabel: string;
+}
+
 /** 'game' modules show up on the Games page instead of the main module list. */
 export type ModuleCategory = 'life-skills' | 'game';
 
@@ -8682,6 +10332,8 @@ export interface Module {
   category: ModuleCategory;
   /** Curriculum track a life-skills module belongs to, e.g. "Personal Empowerment" — shown as a group heading. */
   trackName?: string;
+  /** Which student age group this module was built for; only shown to students with a matching ageGroup. */
+  ageGroup: AgeGroup;
 }
 
 /** Module joined with a student's progress, used for dashboard/player views. */

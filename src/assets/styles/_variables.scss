@@ -1,12 +1,18 @@
-// Warm, playful palette for young learners — avoid anything clinical/corporate.
-$color-coral: #ff6f59;
+// Playful-but-branded palette for young learners, tuned to match the
+// shanalifeskills.com marketing site: a deep teal-blue identity colour paired
+// with a warm orange call-to-action, over a cool, light neutral background.
+$color-coral: #f2921e; // brand orange — "Start Learning" / CTA colour
 $color-sunshine: #ffc93c;
-$color-sky: #4ecdc4;
+$color-sky: #2f7a8c; // brand teal-blue — hero/identity colour
 $color-grape: #a66dd4;
 $color-leaf: #6bcb77;
 $color-bubble-pink: #ff8fa3;
-$color-navy-text: #2b2d42;
-$color-cream-bg: #ffe0b2;
+$color-navy-text: #1f2d3d;
+$app-header-height: 4.5rem; // shared by app-header (min-height) and sidebar (sticky offset)
+$color-brand-blue: #3b6fdc; // auth pages — logo mark, active tab, links
+$color-hero-cream: #fdf6ea; // auth pages — hero panel background
+$color-panel-blue-tint: #eaf3fc; // auth pages — form panel background
+$color-cream-bg: #eaf3f3;
 $color-white: #ffffff;
 
 // Bootstrap theme overrides — imported before `bootstrap/scss/bootstrap`.

@@ -1,0 +1,73 @@
+<div class="pop">
+  <header class="pop-head">
+    <span class="pop-kicker">{{ step().kicker }}</span>
+    <h2>{{ step().heading }}</h2>
+    <p class="pop-sub">{{ step().subtitle }}</p>
+  </header>
+
+  @if (!allSolved()) {
+    <p class="pop-progress">{{ solvedCount() }} / {{ total() }} sorted</p>
+
+    @if (activeScenario(); as scenario) {
+      <div class="pop-stage">
+        <div class="pop-bin pop-bin-planned">
+          <span class="pop-bin-face" aria-hidden="true">🗂️</span>
+          <span class="pop-bin-label">{{ step().plannedLabel }}</span>
+          <span class="pop-bin-count">{{ plannedCount() }}</span>
+        </div>
+
+        <div
+          class="pop-card"
+          [class.shake]="wrongChoice() !== null"
+          [class.drop-planned]="leavingChoice() === true"
+          [class.drop-panic]="leavingChoice() === false"
+        >
+          <span class="pop-count">{{ activeNumber() }} / {{ total() }}</span>
+          <p class="pop-scenario">{{ scenario.text }}</p>
+        </div>
+
+        <div class="pop-bin pop-bin-panic">
+          <span class="pop-bin-face" aria-hidden="true">😰</span>
+          <span class="pop-bin-label">{{ step().panicLabel }}</span>
+          <span class="pop-bin-count">{{ panicCount() }}</span>
+        </div>
+      </div>
+
+      <div class="pop-actions">
+        <button type="button" class="pop-btn pop-btn-planned" (click)="choose(scenario, true)">
+          {{ step().plannedLabel }}
+        </button>
+        <button type="button" class="pop-btn pop-btn-panic" (click)="choose(scenario, false)">
+          {{ step().panicLabel }}
+        </button>
+      </div>
+
+      @if (wrongChoice() !== null) {
+        <p class="pop-feedback no">Not quite — picture how that day would go, then try again.</p>
+      } @else if (lastPraise(); as praise) {
+        <p class="pop-feedback ok">✅ {{ praise }}</p>
+      }
+    }
+
+    <p class="pop-footer">{{ step().footerNote }}</p>
+  } @else {
+    <div class="pop-done">
+      <span class="pop-done-icon" aria-hidden="true">🧭</span>
+      <h3>{{ step().allDoneTitle }}</h3>
+      <p>{{ step().allDoneText }}</p>
+
+      @if (step().recapHeading; as recapHeading) {
+        <div class="pop-recap">
+          <h4>{{ recapHeading }}</h4>
+          <ul>
+            @for (point of step().recapPoints; track point) {
+              <li>{{ point }}</li>
+            }
+          </ul>
+        </div>
+      }
+
+      <button type="button" class="pop-continue" (click)="finish()">{{ step().continueLabel }} →</button>
+    </div>
+  }
+</div>

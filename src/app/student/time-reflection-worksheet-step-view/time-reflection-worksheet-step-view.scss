@@ -1,0 +1,329 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- Personal Reflection Worksheet (trw) — Planning Module, Week 1 ---- */
+$trw-ink: #33302a;
+$trw-line: #c9b48f;
+$trw-amber: #d98a2b;
+$trw-green: #4f8a5b;
+$trw-paper: #fffdf6;
+$trw-board: #8a5a3c;
+
+.trw {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 1.5rem clamp(0.75rem, 3vw, 1.5rem) 2rem;
+}
+
+.trw-clip {
+  width: 5rem;
+  height: 1.1rem;
+  margin: 0 auto -0.6rem;
+  background: $trw-board;
+  border-radius: 6px 6px 3px 3px;
+  box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.2);
+  position: relative;
+  z-index: 1;
+}
+
+.trw-sheet {
+  padding: 1.8rem clamp(1rem, 4vw, 2rem);
+  background: $trw-paper;
+  border: 1px solid $trw-line;
+  border-radius: 4px;
+  box-shadow: 0 10px 24px rgba($trw-board, 0.22);
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 2.1rem,
+    rgba($trw-line, 0.28) 2.1rem,
+    rgba($trw-line, 0.28) calc(2.1rem + 1px)
+  );
+}
+
+.trw-head {
+  text-align: center;
+}
+
+.trw-badge {
+  display: inline-block;
+  padding: 0.3rem 0.9rem;
+  border-radius: 999px;
+  background: rgba($trw-amber, 0.16);
+  font-weight: 800;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #a5651c;
+}
+
+.trw-head h2 {
+  @include m.playful-heading;
+  margin: 0.5rem 0 0;
+  font-size: clamp(1.35rem, 4.5vw, 1.85rem);
+  color: $trw-ink;
+}
+
+.trw-intro {
+  margin: 0.3rem 0 0;
+  font-size: 0.96rem;
+  color: rgba($trw-ink, 0.7);
+}
+
+.trw-steps {
+  margin: 1.2rem 0 0;
+  padding-left: 1.2rem;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: rgba($trw-ink, 0.8);
+}
+
+/* --- activity rows --- */
+.trw-rows {
+  margin: 1.2rem 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.trw-row {
+  margin: 0;
+  padding: 0.9rem 1rem 1rem;
+  border: 1.5px solid rgba($trw-line, 0.8);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.6);
+
+  legend {
+    padding: 0 0.4rem;
+    font-weight: 800;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba($trw-ink, 0.55);
+  }
+}
+
+.trw-name {
+  width: 100%;
+  padding: 0.55rem 0.7rem;
+  border: none;
+  border-bottom: 2px solid $trw-line;
+  background: transparent;
+  font: inherit;
+  color: $trw-ink;
+
+  &:focus {
+    outline: none;
+    border-bottom-color: $trw-amber;
+  }
+}
+
+.trw-rank-q {
+  display: block;
+  margin: 0.7rem 0 0.4rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: rgba($trw-ink, 0.65);
+}
+
+.trw-ranks {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.trw-rank {
+  @include m.tappable;
+  padding: 0.4rem 0.9rem;
+  border: 1.5px solid $trw-line;
+  border-radius: 999px;
+  background: v.$color-white;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: rgba($trw-ink, 0.7);
+
+  &.on {
+    background: $trw-green;
+    border-color: $trw-green;
+    color: v.$color-white;
+  }
+}
+
+/* --- focus pick --- */
+.trw-focus {
+  margin: 1.3rem 0 0;
+  padding: 0.9rem 1rem;
+  border: 1.5px dashed $trw-amber;
+  border-radius: 10px;
+  background: rgba($trw-amber, 0.07);
+}
+
+.trw-focus-label {
+  font-weight: 800;
+  font-size: 0.9rem;
+  color: #a5651c;
+}
+
+.trw-focus-hint {
+  margin: 0.2rem 0 0.6rem;
+  font-size: 0.85rem;
+  color: rgba($trw-ink, 0.6);
+}
+
+.trw-focus-opts {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.trw-focus-opt {
+  @include m.tappable;
+  padding: 0.45rem 1rem;
+  border: 1.5px solid $trw-amber;
+  border-radius: 999px;
+  background: v.$color-white;
+  font-weight: 700;
+  font-size: 0.88rem;
+  color: #a5651c;
+
+  &.on {
+    background: $trw-amber;
+    color: v.$color-white;
+  }
+}
+
+.trw-focus-empty {
+  margin: 0;
+  font-size: 0.85rem;
+  font-style: italic;
+  color: rgba($trw-ink, 0.5);
+}
+
+.trw-reason-label {
+  display: block;
+  margin: 1.2rem 0 0.35rem;
+  font-weight: 800;
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba($trw-ink, 0.6);
+}
+
+.trw-reason {
+  width: 100%;
+  padding: 0.7rem 0.8rem;
+  border: 1.5px solid $trw-line;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.7);
+  font: inherit;
+  resize: vertical;
+
+  &:focus {
+    outline: none;
+    border-color: $trw-amber;
+  }
+}
+
+.trw-submit,
+.trw-continue {
+  @include m.tappable;
+  margin-top: 1.3rem;
+  padding: 0.8rem 1.9rem;
+  border: none;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 1.02rem;
+  color: v.$color-white;
+}
+
+.trw-submit {
+  background: linear-gradient(120deg, $trw-amber, #eab558);
+
+  &:disabled { opacity: 0.4; }
+}
+
+.trw-continue {
+  background: $trw-green;
+}
+
+/* --- result --- */
+.trw-result h3 {
+  @include m.playful-heading;
+  margin: 0.5rem 0 0;
+  font-size: 1.3rem;
+  color: $trw-ink;
+  text-align: center;
+}
+
+.trw-result-sub {
+  margin: 0.2rem 0 1rem;
+  text-align: center;
+  font-size: 0.92rem;
+  color: rgba($trw-ink, 0.65);
+}
+
+.trw-result-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+
+  li {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.5rem 0.8rem;
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba($trw-line, 0.7);
+    border-radius: 8px;
+  }
+}
+
+.trw-result-act { font-weight: 700; color: $trw-ink; }
+.trw-result-rank { font-weight: 800; color: $trw-green; }
+
+.trw-result-focus {
+  margin: 1rem 0 0;
+  padding: 0.9rem 1rem;
+  border-left: 4px solid $trw-amber;
+  background: rgba($trw-amber, 0.08);
+  border-radius: 0 8px 8px 0;
+
+  .trw-result-focus-label {
+    display: block;
+    font-weight: 800;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #a5651c;
+  }
+
+  strong { font-size: 1.05rem; color: $trw-ink; }
+  p { margin: 0.3rem 0 0; font-size: 0.94rem; line-height: 1.5; color: rgba($trw-ink, 0.8); }
+}
+
+.trw-done {
+  margin: 1.1rem 0 0;
+  padding: 1rem;
+  text-align: center;
+  background: rgba($trw-green, 0.1);
+  border: 1.5px solid rgba($trw-green, 0.3);
+  border-radius: 10px;
+
+  h4 {
+    @include m.playful-heading;
+    margin: 0 0 0.3rem;
+    font-size: 1.05rem;
+    color: #3c6b46;
+  }
+
+  p { margin: 0; font-size: 0.92rem; color: rgba($trw-ink, 0.8); }
+}
+
+.trw-result .trw-continue {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}

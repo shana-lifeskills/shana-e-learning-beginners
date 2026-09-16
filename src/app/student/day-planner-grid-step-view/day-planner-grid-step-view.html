@@ -1,0 +1,162 @@
+<div class="dpg">
+  <header class="dpg-head">
+    <span class="dpg-badge">{{ step().badge }}</span>
+    <h2>{{ step().title }}</h2>
+  </header>
+
+  @if (!locked()) {
+    <ol class="dpg-steps">
+      @for (line of step().instructions; track line) {
+        <li>{{ line }}</li>
+      }
+    </ol>
+
+    <div class="dpg-meter" [class.done]="isComplete()" [class.over]="remaining() < 0">
+      <span class="dpg-meter-label">{{ step().totalLabel }}</span>
+      <span class="dpg-meter-value">{{ placedHours() }} / {{ total() }}h</span>
+      @if (remaining() > 0) {
+        <span class="dpg-meter-note">{{ remaining() }}h left to plan</span>
+      } @else if (remaining() < 0) {
+        <span class="dpg-meter-note">{{ step().overHint }}</span>
+      } @else {
+        <span class="dpg-meter-note">Your day adds up to 24h 🎉</span>
+      }
+    </div>
+
+    <!-- 24-hour day bar (drop target) -->
+    <div class="dpg-bar-wrap">
+      <div class="dpg-ticks">
+        @for (t of hourTicks(); track t) {
+          <span>{{ t }}</span>
+        }
+      </div>
+      <div
+        class="dpg-bar"
+        (dragover)="allowDrop($event)"
+        (drop)="onGridDrop($event)"
+        (click)="tapGrid()"
+      >
+        @for (p of placedView(); track p.id) {
+          <div
+            class="dpg-seg"
+            [style.flexGrow]="p.hours"
+            draggable="true"
+            (dragstart)="onPlacedDragStart($event, p.id)"
+            (dragover)="allowDrop($event)"
+            (drop)="onGridDrop($event, p.id); $event.stopPropagation()"
+            [title]="p.label + ' — ' + p.hours + 'h'"
+          >
+            <span class="dpg-seg-icon">{{ p.icon }}</span>
+            <span class="dpg-seg-hours">{{ p.hours }}h</span>
+          </div>
+        }
+        @if (remaining() > 0) {
+          <div class="dpg-seg-empty" [style.flexGrow]="remaining()">Drop here</div>
+        }
+      </div>
+    </div>
+
+    <!-- placed blocks with resize controls -->
+    @if (placedView().length) {
+      <ul class="dpg-placed">
+        @for (p of placedView(); track p.id) {
+          <li
+            class="dpg-placed-row"
+            draggable="true"
+            (dragstart)="onPlacedDragStart($event, p.id)"
+            (dragover)="allowDrop($event)"
+            (drop)="onGridDrop($event, p.id)"
+          >
+            <span class="dpg-grip" aria-hidden="true">⠿</span>
+            <span class="dpg-placed-icon">{{ p.icon }}</span>
+            <span class="dpg-placed-label">{{ p.label }}</span>
+            <span class="dpg-stepper">
+              <button type="button" (click)="bump(p.id, -1)" [disabled]="p.hours <= 1" aria-label="Fewer hours">−</button>
+              <span class="dpg-placed-hours">{{ p.hours }}h</span>
+              <button type="button" (click)="bump(p.id, 1)" [disabled]="remaining() < 1" aria-label="More hours">+</button>
+            </span>
+            <button type="button" class="dpg-remove" (click)="removeToTray(p.id)" aria-label="Remove">×</button>
+          </li>
+        }
+      </ul>
+      <p class="dpg-resize-hint">{{ step().resizeHint }}</p>
+    }
+
+    <!-- tray of unplaced task blocks -->
+    <div class="dpg-tray" (dragover)="allowDrop($event)" (drop)="onTrayDrop($event)">
+      <span class="dpg-tray-label">{{ step().trayLabel }}</span>
+      @if (trayBlocks().length) {
+        <div class="dpg-chips">
+          @for (b of trayBlocks(); track b.id) {
+            <button
+              type="button"
+              class="dpg-chip"
+              [class.picked]="selectedTrayId() === b.id"
+              draggable="true"
+              (dragstart)="onTrayDragStart($event, b.id)"
+              (click)="tapTrayBlock(b.id)"
+            >
+              <span class="dpg-chip-icon">{{ b.icon }}</span>
+              <span class="dpg-chip-label">{{ b.label }}</span>
+              <span class="dpg-chip-hours">~{{ b.suggestedHours }}h</span>
+            </button>
+          }
+        </div>
+      } @else {
+        <p class="dpg-tray-empty">Every task is on your timeline.</p>
+      }
+    </div>
+
+    <button type="button" class="dpg-submit" [disabled]="!canSubmit()" (click)="submit()">
+      {{ step().submitLabel }}
+    </button>
+  } @else {
+    <div class="dpg-review">
+      <h3>{{ step().reviewHeading }}</h3>
+      <p class="dpg-review-sub">{{ step().reviewSubtitle }}</p>
+
+      <div class="dpg-bar dpg-bar-static">
+        @for (p of placedView(); track p.id) {
+          <div class="dpg-seg" [style.flexGrow]="p.hours" [title]="p.label + ' — ' + p.hours + 'h'">
+            <span class="dpg-seg-icon">{{ p.icon }}</span>
+            <span class="dpg-seg-hours">{{ p.hours }}h</span>
+          </div>
+        }
+      </div>
+
+      <dl class="dpg-review-list">
+        <div>
+          <dt>Did you include everything?</dt>
+          <dd>
+            @if (leftOutLabels().length === 0) {
+              {{ step().includedAllText }}
+            } @else {
+              {{ step().leftOutLabel }} {{ leftOutLabels().join(', ') }}
+            }
+          </dd>
+        </div>
+        <div>
+          <dt>Did you shorten anything?</dt>
+          <dd>
+            @if (shortenedLabels().length === 0) {
+              {{ step().nothingShortenedText }}
+            } @else {
+              {{ step().shortenedLabel }} {{ shortenedLabels().join(', ') }}
+            }
+          </dd>
+        </div>
+        <div>
+          <dt>Which task took the most time?</dt>
+          <dd>{{ step().biggestLabel }} {{ biggestLabel() }}</dd>
+        </div>
+      </dl>
+
+      <div class="dpg-done">
+        <h4>{{ step().completeHeading }}</h4>
+        <p>{{ step().completeText }}</p>
+      </div>
+
+      <button type="button" class="dpg-continue" (click)="finish()">{{ step().continueLabel }} →</button>
+    </div>
+  }
+</div>

@@ -1,0 +1,221 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- My Personal Growth Map (pgm) — Planning Module, Week 4 ---- */
+$pgm-ink: #2c2418;
+$pgm-moss: #4f7d3c;
+$pgm-terra: #c1683f;
+$pgm-mist: #f5f1e6;
+
+.pgm {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 1.6rem clamp(0.75rem, 3vw, 1.5rem) 2rem;
+  color: $pgm-ink;
+}
+
+.pgm-head { text-align: center; }
+
+.pgm-badge {
+  display: inline-block;
+  padding: 0.32rem 0.95rem;
+  border-radius: 999px;
+  background: rgba($pgm-moss, 0.14);
+  font-weight: 800;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $pgm-moss;
+}
+
+.pgm-head h2 {
+  @include m.playful-heading;
+  margin: 0.5rem 0 0.3rem;
+  font-size: clamp(1.35rem, 4.5vw, 1.8rem);
+}
+
+.pgm-intro {
+  margin: 0;
+  font-size: 0.92rem;
+  color: rgba($pgm-ink, 0.7);
+}
+
+/* --- growth trail --- */
+.pgm-trail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1.3rem;
+}
+
+.pgm-connector {
+  font-size: 1.1rem;
+  color: rgba($pgm-moss, 0.4);
+  margin: 0.2rem 0;
+}
+
+.pgm-section {
+  width: 100%;
+  padding: 1rem 1.1rem;
+  background: $pgm-mist;
+  border: 1.5px solid rgba($pgm-moss, 0.25);
+  border-radius: 14px;
+}
+
+.pgm-section-head {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.6rem;
+
+  h3 {
+    @include m.playful-heading;
+    margin: 0;
+    font-size: 1.02rem;
+    color: $pgm-moss;
+  }
+}
+
+.pgm-icon { font-size: 1.3rem; }
+
+.pgm-section textarea {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  border: 1.5px solid rgba($pgm-moss, 0.3);
+  border-radius: 9px;
+  font: inherit;
+  resize: vertical;
+  background: v.$color-white;
+
+  &:focus { outline: none; border-color: $pgm-terra; }
+}
+
+.pgm-mode-link {
+  @include m.tappable;
+  display: block;
+  margin: 0.5rem 0 0;
+  padding: 0;
+  background: none;
+  border: none;
+  font-weight: 700;
+  font-size: 0.82rem;
+  color: $pgm-terra;
+  text-decoration: underline;
+}
+
+/* --- upload --- */
+.pgm-dropzone {
+  @include m.tappable;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  width: 100%;
+  padding: 1.2rem 1rem;
+  border: 2px dashed rgba($pgm-terra, 0.4);
+  border-radius: 12px;
+  background: v.$color-white;
+  font-weight: 700;
+  font-size: 0.88rem;
+  color: $pgm-terra;
+
+  span { font-size: 1.4rem; }
+}
+
+.pgm-file-preview {
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1.5px solid rgba($pgm-terra, 0.3);
+
+  img { display: block; width: 100%; max-height: 10rem; object-fit: cover; }
+}
+
+.pgm-file-badge {
+  display: block;
+  padding: 0.8rem;
+  text-align: center;
+  background: v.$color-white;
+  font-weight: 700;
+  font-size: 0.86rem;
+}
+
+.pgm-file-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.pgm-file-btn {
+  @include m.tappable;
+  flex: 1;
+  padding: 0.45rem 0.7rem;
+  border: 1.5px solid rgba($pgm-terra, 0.4);
+  border-radius: 999px;
+  background: v.$color-white;
+  font-weight: 700;
+  font-size: 0.8rem;
+  color: $pgm-terra;
+}
+
+.pgm-file-remove {
+  border-color: rgba(#c8362b, 0.4);
+  color: #c8362b;
+}
+
+.pgm-submit,
+.pgm-continue {
+  @include m.tappable;
+  display: block;
+  width: 100%;
+  margin-top: 1.3rem;
+  padding: 0.85rem 1.5rem;
+  border: none;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 1.03rem;
+  color: v.$color-white;
+  background: linear-gradient(120deg, $pgm-moss, #6fa855);
+
+  &:disabled { opacity: 0.4; }
+}
+
+.pgm-continue { background: $pgm-terra; }
+
+/* --- result --- */
+.pgm-result {
+  margin-top: 1rem;
+  padding: 1.8rem clamp(1.1rem, 4vw, 1.8rem);
+  text-align: center;
+  background: v.$color-white;
+  border: 2px solid rgba($pgm-moss, 0.3);
+  border-radius: v.$border-radius-xl;
+  box-shadow: 0 10px 26px rgba($pgm-moss, 0.14);
+}
+
+.pgm-result-icon { font-size: 2.6rem; }
+
+.pgm-result h3 {
+  @include m.playful-heading;
+  margin: 0.3rem 0 0.5rem;
+  font-size: 1.3rem;
+  color: $pgm-moss;
+}
+
+.pgm-result-text {
+  margin: 0 0 1.2rem;
+  font-size: 0.96rem;
+  line-height: 1.5;
+  color: rgba($pgm-ink, 0.8);
+}
+
+.pgm-result-list {
+  margin: 0;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+
+  div { padding: 0.65rem 0.8rem; background: $pgm-mist; border-radius: 9px; }
+  dt { font-weight: 800; font-size: 0.84rem; color: $pgm-moss; }
+  dd { margin: 0.2rem 0 0; font-size: 0.9rem; line-height: 1.4; }
+}

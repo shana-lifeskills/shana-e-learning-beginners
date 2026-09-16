@@ -1,0 +1,25 @@
+<div class="bq">
+  <span class="bq-badge">{{ step().badge }}</span>
+  <h1>{{ step().question }}</h1>
+  <p class="bq-subtitle">{{ step().subtitle }}</p>
+
+  <p class="bq-strategies-heading">{{ step().strategiesHeading }}</p>
+
+  <div class="bq-list">
+    @for (strategy of step().strategies; track strategy.id; let i = $index) {
+      <div class="bq-card">
+        <div class="bq-card-head">
+          <span class="bq-icon">{{ strategy.icon }}</span>
+          <h2>{{ strategy.title }}</h2>
+        </div>
+        <p class="bq-tip">{{ strategy.tip }}</p>
+        <div class="bq-example">
+          <span class="bq-example-label">Example</span>
+          <p>“{{ strategy.example }}”</p>
+        </div>
+      </div>
+    }
+  </div>
+
+  <button type="button" class="bq-continue" (click)="continued.emit()">{{ step().continueLabel }} →</button>
+</div>

@@ -1,0 +1,225 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- Confidence Ladder (cl) — Self-Confidence Module, Week 3 ---- */
+$cl-purple: #7c5cbf;
+$cl-navy: #1e2749;
+$cl-ink: #2b2d42;
+$cl-line: rgba(43, 45, 66, 0.16);
+$cl-gold: #cf8324;
+
+.cl {
+  max-width: 34rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.cl-badge {
+  @include m.playful-heading;
+  display: inline-block;
+  background: rgba($cl-purple, 0.14);
+  color: $cl-purple;
+  font-size: 0.85rem;
+  padding: 0.4rem 1.1rem;
+  border-radius: v.$border-radius-pill;
+}
+
+.cl h1 {
+  @include m.playful-heading;
+  margin: 1rem 0 0.5rem;
+  font-size: clamp(1.6rem, 4.2vw, 2.1rem);
+  color: $cl-navy;
+}
+
+.cl-subtitle {
+  color: rgba($cl-ink, 0.65);
+  font-size: 1rem;
+  line-height: 1.5;
+  max-width: 28rem;
+  margin: 0 auto;
+}
+
+.cl-instructions {
+  text-align: left;
+  background: v.$color-cream-bg;
+  border-radius: v.$border-radius-lg;
+  padding: 1.1rem 1.3rem;
+  margin: 1.5rem 0;
+
+  h2 {
+    @include m.playful-heading;
+    font-size: 0.95rem;
+    color: $cl-navy;
+    margin: 0 0 0.5rem;
+  }
+
+  ol {
+    margin: 0;
+    padding-left: 1.2rem;
+    color: rgba($cl-ink, 0.75);
+    line-height: 1.55;
+    font-size: 0.92rem;
+  }
+}
+
+.cl-form {
+  text-align: left;
+}
+
+.cl-field-label {
+  display: block;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: $cl-navy;
+  margin: 0.9rem 0 0.35rem;
+
+  &:first-child {
+    margin-top: 0;
+  }
+}
+
+.cl-form input {
+  width: 100%;
+  border: 1.5px solid $cl-line;
+  border-radius: 10px;
+  padding: 0.65rem 0.85rem;
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: $cl-ink;
+  background: v.$color-white;
+
+  &:focus {
+    outline: none;
+    border-color: $cl-purple;
+  }
+}
+
+.cl-submit {
+  @include m.tappable;
+  display: block;
+  width: 100%;
+  margin-top: 1.5rem;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  padding: 0.9rem 1.5rem;
+  font-weight: 800;
+  font-size: 1.02rem;
+  background: linear-gradient(120deg, $cl-purple, #a389d9);
+  color: v.$color-white;
+  box-shadow: 0 4px 0 rgba($cl-navy, 0.12);
+
+  &:disabled {
+    opacity: 0.45;
+    cursor: default;
+  }
+}
+
+.cl-ladder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.65rem;
+  margin: 1.5rem 0;
+}
+
+.cl-goal {
+  background: rgba($cl-gold, 0.14);
+  border: 1.5px solid rgba($cl-gold, 0.4);
+  border-radius: v.$border-radius-lg;
+  padding: 0.85rem 1.2rem;
+  width: 100%;
+  text-align: center;
+
+  p {
+    @include m.playful-heading;
+    margin: 0.25rem 0 0;
+    color: $cl-navy;
+    font-size: 1.02rem;
+  }
+}
+
+.cl-goal-label {
+  font-weight: 800;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: $cl-gold;
+}
+
+.cl-rung {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  background: v.$color-white;
+  border: 1.5px solid $cl-line;
+  border-radius: v.$border-radius-lg;
+  padding: 0.75rem 1.1rem;
+  text-align: left;
+  width: 100%;
+
+  p {
+    margin: 0;
+    color: $cl-ink;
+    font-weight: 600;
+    font-size: 0.94rem;
+  }
+
+  &--3 { width: 94%; }
+  &--2 { width: 86%; }
+  &--1 { width: 78%; }
+}
+
+.cl-rung-num {
+  flex-shrink: 0;
+  width: 1.8rem;
+  height: 1.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba($cl-purple, 0.14);
+  color: $cl-purple;
+  font-weight: 800;
+  font-size: 0.88rem;
+}
+
+.cl-complete {
+  @include m.bouncy-card;
+
+  &:hover {
+    transform: none;
+    box-shadow: 0 6px 0 rgba(0, 0, 0, 0.08);
+  }
+
+  background: rgba($cl-purple, 0.08);
+  border-radius: v.$border-radius-xl;
+  padding: 2rem clamp(1.25rem, 4vw, 2rem);
+  text-align: center;
+
+  h2 {
+    @include m.playful-heading;
+    font-size: 1.4rem;
+    color: $cl-navy;
+    margin: 0 0 0.75rem;
+  }
+
+  p {
+    color: rgba($cl-ink, 0.8);
+    line-height: 1.6;
+    margin: 0 0 1.75rem;
+  }
+}
+
+.cl-continue {
+  @include m.tappable;
+  display: block;
+  width: 100%;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  padding: 0.9rem 1.5rem;
+  font-weight: 800;
+  font-size: 1.02rem;
+  background: linear-gradient(120deg, $cl-purple, #a389d9);
+  color: v.$color-white;
+  box-shadow: 0 4px 0 rgba($cl-navy, 0.12);
+}

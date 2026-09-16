@@ -1,0 +1,15 @@
+<div class="pcl">
+  <div class="pcl-card">
+    <span class="pcl-eyebrow">{{ step().eyebrow }}</span>
+    <h2>{{ step().title }}</h2>
+
+    <blockquote class="pcl-quote">
+      <span class="pcl-mark" aria-hidden="true">“</span>
+      {{ step().quote }}
+    </blockquote>
+
+    <p class="pcl-caption">{{ step().caption }}</p>
+
+    <button type="button" class="pcl-continue" (click)="finish()">{{ step().completeLabel }} →</button>
+  </div>
+</div>

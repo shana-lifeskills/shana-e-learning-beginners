@@ -1,0 +1,23 @@
+<div class="vcl">
+  <div class="vcl-card">
+    <span class="vcl-eyebrow">{{ step().eyebrow }}</span>
+
+    <svg class="vcl-bubble" viewBox="0 0 100 100" aria-hidden="true">
+      <path
+        class="vcl-shape"
+        d="M50 12c22 0 38 14 38 32s-16 32-38 32c-4.6 0-9-.6-13-1.7L20 84l4.4-16.7C16.6 61 12 51.8 12 44 12 26 28 12 50 12z"
+      />
+      <circle cx="36" cy="44" r="4" class="vcl-dot" />
+      <circle cx="50" cy="44" r="4" class="vcl-dot" />
+      <circle cx="64" cy="44" r="4" class="vcl-dot" />
+    </svg>
+
+    <h2>{{ step().title }}</h2>
+
+    <blockquote class="vcl-quote">{{ step().quote }}</blockquote>
+
+    <p class="vcl-caption">{{ step().caption }}</p>
+
+    <button type="button" class="vcl-continue" (click)="finish()">{{ step().completeLabel }} →</button>
+  </div>
+</div>

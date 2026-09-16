@@ -1,0 +1,41 @@
+<div class="lps">
+  <header class="lps-head">
+    <span class="lps-kicker">{{ step().kicker }}</span>
+    <h2>{{ step().heading }}</h2>
+    <p class="lps-sub">{{ step().subtitle }}</p>
+  </header>
+
+  @if (panel(); as panel) {
+    <figure class="lps-panel" [class.calm]="panel.mood === 'calm'">
+      <span class="lps-frame-no">Panel {{ index() + 1 }} / {{ total() }}</span>
+      <span class="lps-scene" aria-hidden="true">{{ panel.emoji }}</span>
+      <figcaption class="lps-caption">{{ panel.caption }}</figcaption>
+    </figure>
+  }
+
+  <div class="lps-nav">
+    <button type="button" class="lps-arrow" (click)="prev()" [disabled]="isFirst()" aria-label="Previous panel">←</button>
+
+    <ol class="lps-dots">
+      @for (p of step().panels; track $index) {
+        <li>
+          <button
+            type="button"
+            class="lps-dot"
+            [class.active]="$index === index()"
+            (click)="go($index)"
+            [attr.aria-label]="'Go to panel ' + ($index + 1)"
+          ></button>
+        </li>
+      }
+    </ol>
+
+    <button type="button" class="lps-arrow" (click)="next()" [disabled]="isLast()" aria-label="Next panel">→</button>
+  </div>
+
+  @if (isLast()) {
+    <p class="lps-takeaway">{{ step().takeaway }}</p>
+  }
+
+  <button type="button" class="lps-continue" (click)="finish()">{{ step().continueLabel }} →</button>
+</div>

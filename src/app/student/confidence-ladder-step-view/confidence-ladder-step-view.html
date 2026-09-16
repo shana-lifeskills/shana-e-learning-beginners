@@ -1,0 +1,85 @@
+<div class="cl">
+  @if (!revealed()) {
+    <span class="cl-badge">{{ step().badge }}</span>
+    <h1>{{ step().title }}</h1>
+    <p class="cl-subtitle">{{ step().subtitle }}</p>
+
+    <div class="cl-instructions">
+      <h2>{{ step().instructionHeading }}</h2>
+      <ol>
+        @for (line of step().instructions; track line) {
+          <li>{{ line }}</li>
+        }
+      </ol>
+    </div>
+
+    <div class="cl-form">
+      <label class="cl-field-label">{{ step().challengeLabel }}</label>
+      <input
+        type="text"
+        [value]="challenge()"
+        [disabled]="locked()"
+        (input)="challenge.set($any($event.target).value)"
+        [placeholder]="step().challengePlaceholder"
+      />
+
+      <label class="cl-field-label">{{ step().stepLabel }} 1</label>
+      <input
+        type="text"
+        [value]="step1()"
+        [disabled]="locked()"
+        (input)="step1.set($any($event.target).value)"
+        [placeholder]="step().step1Placeholder"
+      />
+
+      <label class="cl-field-label">{{ step().stepLabel }} 2</label>
+      <input
+        type="text"
+        [value]="step2()"
+        [disabled]="locked()"
+        (input)="step2.set($any($event.target).value)"
+        [placeholder]="step().step2Placeholder"
+      />
+
+      <label class="cl-field-label">{{ step().stepLabel }} 3</label>
+      <input
+        type="text"
+        [value]="step3()"
+        [disabled]="locked()"
+        (input)="step3.set($any($event.target).value)"
+        [placeholder]="step().step3Placeholder"
+      />
+    </div>
+
+    <button type="button" class="cl-submit" [disabled]="!canSubmit()" (click)="submit()">🪜 {{ step().submitLabel }}</button>
+  } @else {
+    <span class="cl-badge">{{ step().ladderHeading }}</span>
+    <p class="cl-subtitle">{{ step().ladderSubtitle }}</p>
+
+    <div class="cl-ladder">
+      <div class="cl-goal">
+        <span class="cl-goal-label">{{ step().goalLabel }}</span>
+        <p>{{ challenge() }}</p>
+      </div>
+
+      <div class="cl-rung cl-rung--3">
+        <span class="cl-rung-num">3</span>
+        <p>{{ step3() }}</p>
+      </div>
+      <div class="cl-rung cl-rung--2">
+        <span class="cl-rung-num">2</span>
+        <p>{{ step2() }}</p>
+      </div>
+      <div class="cl-rung cl-rung--1">
+        <span class="cl-rung-num">1</span>
+        <p>{{ step1() }}</p>
+      </div>
+    </div>
+
+    <div class="cl-complete">
+      <h2>{{ step().completeHeading }}</h2>
+      <p>{{ step().completeText }}</p>
+      <button type="button" class="cl-continue" (click)="finish()">{{ step().continueLabel }} →</button>
+    </div>
+  }
+</div>

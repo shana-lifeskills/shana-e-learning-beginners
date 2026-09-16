@@ -14,9 +14,11 @@
   display: flex;
   align-items: center;
   gap: 1.25rem;
+  min-height: v.$app-header-height;
   padding: 0.85rem 1.5rem;
   background: v.$color-white;
   box-shadow: 0 4px 0 rgba(0, 0, 0, 0.05);
+  box-sizing: border-box;
 }
 
 .brand {
@@ -91,7 +93,7 @@
   cursor: pointer;
 
   &:hover {
-    background: rgba(78, 205, 196, 0.18);
+    background: rgba(47, 122, 140, 0.18);
   }
 
   .ping {
@@ -121,7 +123,7 @@
   cursor: pointer;
 
   &:hover {
-    background: rgba(78, 205, 196, 0.18);
+    background: rgba(47, 122, 140, 0.18);
   }
 
   .avatar {

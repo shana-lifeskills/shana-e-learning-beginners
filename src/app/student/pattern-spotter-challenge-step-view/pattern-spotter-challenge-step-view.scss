@@ -1,0 +1,237 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- Challenge: Pattern Spotter (psc) — Planning Module, Week 2 ---- */
+$psc-ink: #2b2a3d;
+$psc-navy: #29335c;
+$psc-amber: #e0902f;
+$psc-teal: #2f9c8f;
+$psc-mist: #f2f1f6;
+
+.psc {
+  max-width: 38rem;
+  margin: 0 auto;
+  padding: 1.6rem clamp(0.75rem, 3vw, 1.5rem) 2rem;
+  color: $psc-ink;
+}
+
+.psc-head {
+  text-align: center;
+}
+
+.psc-badge {
+  display: inline-block;
+  padding: 0.32rem 0.95rem;
+  border-radius: 999px;
+  background: rgba($psc-amber, 0.16);
+  font-weight: 800;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #a5651c;
+}
+
+.psc-glass {
+  display: block;
+  margin: 0.6rem 0 0.2rem;
+  font-size: 2.4rem;
+}
+
+.psc-head h2 {
+  @include m.playful-heading;
+  margin: 0 0 0.3rem;
+  font-size: clamp(1.35rem, 4.5vw, 1.8rem);
+}
+
+.psc-intro {
+  margin: 0;
+  font-size: 0.94rem;
+  line-height: 1.5;
+  color: rgba($psc-ink, 0.75);
+}
+
+.psc-steps {
+  margin: 1.2rem 0 0;
+  padding-left: 1.2rem;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: rgba($psc-ink, 0.8);
+}
+
+/* --- 3-day tracker --- */
+.psc-days {
+  margin: 1.2rem 0 0;
+  padding: 0.9rem 1rem;
+  background: $psc-mist;
+  border-radius: 12px;
+}
+
+.psc-days-prompt {
+  display: block;
+  margin-bottom: 0.6rem;
+  font-weight: 800;
+  font-size: 0.82rem;
+  color: rgba($psc-ink, 0.7);
+}
+
+.psc-day-row {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.psc-day {
+  @include m.tappable;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.7rem 0.3rem;
+  border: 2px solid rgba($psc-teal, 0.3);
+  border-radius: 12px;
+  background: v.$color-white;
+  font-weight: 700;
+  font-size: 0.82rem;
+  color: rgba($psc-ink, 0.7);
+
+  &.on {
+    background: rgba($psc-teal, 0.14);
+    border-color: $psc-teal;
+    color: $psc-ink;
+  }
+}
+
+.psc-day-tick {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background: rgba($psc-teal, 0.18);
+  color: transparent;
+  font-size: 0.9rem;
+  font-weight: 800;
+
+  .psc-day.on & {
+    background: $psc-teal;
+    color: v.$color-white;
+  }
+}
+
+/* --- fields --- */
+.psc-field-label {
+  display: block;
+  margin: 1.1rem 0 0.35rem;
+  font-weight: 800;
+  font-size: 0.84rem;
+  color: rgba($psc-ink, 0.72);
+}
+
+.psc-textarea {
+  width: 100%;
+  padding: 0.65rem 0.8rem;
+  border: 1.5px solid rgba($psc-navy, 0.22);
+  border-radius: 10px;
+  font: inherit;
+  resize: vertical;
+  background: v.$color-white;
+
+  &:focus {
+    outline: none;
+    border-color: $psc-amber;
+  }
+}
+
+.psc-submit,
+.psc-continue {
+  @include m.tappable;
+  display: block;
+  width: 100%;
+  margin-top: 1.3rem;
+  padding: 0.85rem 1.5rem;
+  border: none;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 1.03rem;
+  color: v.$color-white;
+}
+
+.psc-submit {
+  background: linear-gradient(120deg, $psc-navy, $psc-amber);
+
+  &:disabled { opacity: 0.4; }
+}
+
+.psc-continue { background: $psc-teal; }
+
+/* --- result --- */
+.psc-result {
+  margin-top: 1rem;
+  padding: 1.8rem clamp(1.1rem, 4vw, 1.8rem);
+  text-align: center;
+  background: v.$color-white;
+  border: 2px solid rgba($psc-amber, 0.4);
+  border-radius: v.$border-radius-xl;
+  box-shadow: 0 10px 26px rgba($psc-navy, 0.14);
+}
+
+.psc-result-icon { font-size: 2.6rem; }
+
+.psc-result h3 {
+  @include m.playful-heading;
+  margin: 0.3rem 0 0.2rem;
+  font-size: 1.3rem;
+  color: $psc-navy;
+}
+
+.psc-result-sub {
+  margin: 0 0 1rem;
+  font-size: 0.92rem;
+  color: rgba($psc-ink, 0.6);
+}
+
+.psc-result-days {
+  margin: 0 0 1rem;
+  font-size: 0.94rem;
+
+  strong { color: $psc-teal; }
+}
+
+.psc-result-box {
+  margin: 0 0 0.7rem;
+  padding: 0.8rem 0.95rem;
+  text-align: left;
+  background: $psc-mist;
+  border-radius: 10px;
+
+  span {
+    font-weight: 800;
+    font-size: 0.72rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: rgba($psc-ink, 0.6);
+  }
+
+  p { margin: 0.3rem 0 0; font-size: 0.94rem; line-height: 1.45; }
+}
+
+.psc-result-pattern {
+  background: rgba($psc-amber, 0.1);
+  border-left: 4px solid $psc-amber;
+
+  span { color: #a5651c; }
+}
+
+.psc-done {
+  margin: 1.2rem 0 0;
+
+  h4 {
+    @include m.playful-heading;
+    margin: 0 0 0.3rem;
+    font-size: 1.1rem;
+    color: $psc-teal;
+  }
+
+  p { margin: 0; font-size: 0.9rem; color: rgba($psc-ink, 0.75); }
+}

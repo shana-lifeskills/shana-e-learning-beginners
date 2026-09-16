@@ -1,0 +1,199 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- Choices Board (cb) — Identity Module, Week 3 ---- */
+$cb-navy: #1e2749;
+$cb-blue: #3f7fd6;
+$cb-green: #2f9e63;
+$cb-amber: #cf8324;
+$cb-ink: #2b2d42;
+$cb-card: #fffdf8;
+$cb-line: rgba(43, 45, 66, 0.16);
+
+.cb {
+  max-width: 42rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.cb-badge {
+  @include m.playful-heading;
+  display: inline-block;
+  background: rgba($cb-blue, 0.14);
+  color: $cb-blue;
+  font-size: 0.85rem;
+  padding: 0.4rem 1.1rem;
+  border-radius: v.$border-radius-pill;
+}
+
+.cb h1 {
+  @include m.playful-heading;
+  margin: 1rem 0 0.5rem;
+  font-size: clamp(1.9rem, 4.6vw, 2.4rem);
+  color: $cb-navy;
+}
+
+.cb-subtitle {
+  color: rgba($cb-ink, 0.65);
+  font-size: 1.02rem;
+  line-height: 1.5;
+  max-width: 30rem;
+  margin: 0 auto;
+}
+
+.cb-progress {
+  font-weight: 800;
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: rgba($cb-ink, 0.5);
+  margin: 1.25rem 0 0.5rem;
+}
+
+.cb-card {
+  @include m.bouncy-card;
+
+  &:hover {
+    transform: none;
+    box-shadow: 0 6px 0 rgba(0, 0, 0, 0.08);
+  }
+
+  background: $cb-card;
+  border-radius: v.$border-radius-xl;
+  padding: 1.75rem clamp(1.1rem, 4vw, 2rem) 2rem;
+  text-align: left;
+}
+
+.cb-situation {
+  @include m.playful-heading;
+  font-size: 1.2rem;
+  color: $cb-navy;
+  margin: 0 0 1.1rem;
+}
+
+.cb-choices {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.cb-choice {
+  border: 1.5px solid $cb-line;
+  border-radius: 14px;
+  overflow: hidden;
+
+  &--correct {
+    border-color: rgba($cb-green, 0.6);
+  }
+
+  &--alt {
+    border-color: rgba($cb-amber, 0.6);
+  }
+}
+
+.cb-choice-btn {
+  @include m.tappable;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  width: 100%;
+  border: none;
+  background: v.$color-cream-bg;
+  padding: 0.9rem 1rem;
+  text-align: left;
+
+  &:hover:not(:disabled) {
+    background: rgba($cb-blue, 0.06);
+  }
+
+  &:disabled {
+    cursor: default;
+  }
+}
+
+.cb-choice-tag {
+  @include m.playful-heading;
+  flex-shrink: 0;
+  color: $cb-blue;
+  font-size: 0.95rem;
+}
+
+.cb-choice-text {
+  color: $cb-ink;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.cb-feedback {
+  padding: 0.9rem 1rem 1rem;
+  background: v.$color-white;
+
+  p {
+    margin: 0.35rem 0 0;
+    color: rgba($cb-ink, 0.8);
+    line-height: 1.5;
+  }
+}
+
+.cb-feedback-tag {
+  font-weight: 800;
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+
+  .cb-choice--correct & { color: $cb-green; }
+  .cb-choice--alt & { color: $cb-amber; }
+}
+
+.cb-retry-hint {
+  text-align: center;
+  font-weight: 700;
+  font-size: 0.88rem;
+  color: $cb-amber;
+  margin: 1rem 0 0;
+}
+
+.cb-next {
+  @include m.tappable;
+  display: block;
+  width: 100%;
+  margin-top: 1.25rem;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  padding: 0.9rem 1.5rem;
+  font-weight: 800;
+  font-size: 1.02rem;
+  background: linear-gradient(120deg, $cb-green, #57bd87);
+  color: v.$color-white;
+  box-shadow: 0 4px 0 rgba($cb-navy, 0.12);
+}
+
+.cb-complete {
+  @include m.bouncy-card;
+
+  &:hover {
+    transform: none;
+    box-shadow: 0 6px 0 rgba(0, 0, 0, 0.08);
+  }
+
+  background: rgba($cb-green, 0.1);
+  border-radius: v.$border-radius-xl;
+  padding: 2.5rem clamp(1.25rem, 4vw, 2rem) 2rem;
+  margin-top: 1rem;
+
+  h2 {
+    @include m.playful-heading;
+    font-size: 1.5rem;
+    color: $cb-navy;
+    margin: 0.5rem 0 0.75rem;
+  }
+
+  p {
+    color: rgba($cb-ink, 0.8);
+    line-height: 1.6;
+    margin: 0 0 1.75rem;
+  }
+}
+
+.cb-complete-icon {
+  font-size: 2.75rem;
+}

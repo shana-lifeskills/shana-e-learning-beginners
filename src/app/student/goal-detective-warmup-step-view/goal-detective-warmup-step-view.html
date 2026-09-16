@@ -1,0 +1,76 @@
+<div class="gdw">
+  <header class="gdw-head">
+    <span class="gdw-kicker">{{ step().kicker }}</span>
+    <h2>{{ step().heading }}</h2>
+    <p class="gdw-sub">{{ step().subtitle }}</p>
+  </header>
+
+  @if (!allSorted()) {
+    <ol class="gdw-steps">
+      @for (line of step().instructions; track line) {
+        <li>{{ line }}</li>
+      }
+    </ol>
+
+    <p class="gdw-progress">{{ sortedCount() }} / {{ total() }} filed</p>
+
+    <!-- tray of unsorted clue cards -->
+    @if (trayStatements().length) {
+      <div class="gdw-tray">
+        @for (s of trayStatements(); track s.id) {
+          <button
+            type="button"
+            class="gdw-card"
+            [class.selected]="isSelected(s.id)"
+            [class.wrong]="isWrong(s.id)"
+            draggable="true"
+            (dragstart)="onDragStart($event, s.id)"
+            (click)="selectCard(s.id)"
+          >
+            “{{ s.text }}”
+          </button>
+        }
+      </div>
+    }
+
+    <!-- two folders -->
+    <div class="gdw-folders">
+      <div class="gdw-folder gdw-folder-wish" (dragover)="allowDrop($event)" (drop)="onDrop($event, 'wish')" (click)="tapBin('wish')">
+        <span class="gdw-folder-icon" aria-hidden="true">🌫️</span>
+        <span class="gdw-folder-label">{{ step().wishLabel }}</span>
+        @for (s of filedIn('wish'); track s.id) {
+          <p class="gdw-filed">“{{ s.text }}”</p>
+        }
+      </div>
+
+      <div class="gdw-folder gdw-folder-goal" (dragover)="allowDrop($event)" (drop)="onDrop($event, 'goal')" (click)="tapBin('goal')">
+        <span class="gdw-folder-icon" aria-hidden="true">🎯</span>
+        <span class="gdw-folder-label">{{ step().goalLabel }}</span>
+        @for (s of filedIn('goal'); track s.id) {
+          <p class="gdw-filed">“{{ s.text }}”</p>
+        }
+      </div>
+    </div>
+
+    <p class="gdw-footer">{{ step().footerNote }}</p>
+  } @else {
+    <div class="gdw-done">
+      <span class="gdw-done-icon" aria-hidden="true">🕵️</span>
+      <h3>{{ step().allDoneTitle }}</h3>
+      <p>{{ step().allDoneText }}</p>
+
+      @if (step().recapHeading; as recapHeading) {
+        <div class="gdw-recap">
+          <h4>{{ recapHeading }}</h4>
+          <ul>
+            @for (point of step().recapPoints; track point) {
+              <li>{{ point }}</li>
+            }
+          </ul>
+        </div>
+      }
+
+      <button type="button" class="gdw-continue" (click)="finish()">{{ step().continueLabel }} →</button>
+    </div>
+  }
+</div>

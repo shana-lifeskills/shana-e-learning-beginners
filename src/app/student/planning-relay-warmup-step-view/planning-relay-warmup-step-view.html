@@ -1,0 +1,93 @@
+<div class="prl">
+  <header class="prl-head">
+    <span class="prl-kicker">{{ step().kicker }}</span>
+    <h2>{{ step().heading }}</h2>
+    <p class="prl-sub">{{ step().subtitle }}</p>
+  </header>
+
+  <!-- relay track: 5 checkpoint slots -->
+  <p class="prl-label">{{ step().trackHeading }}</p>
+  <div class="prl-track">
+    @for (id of slots(); track $index; let i = $index) {
+      <div
+        class="prl-checkpoint"
+        [class.filled]="id !== null"
+        [class.over]="dragOverIndex() === i"
+        (dragover)="onDragOverSlot($event, i)"
+        (dragleave)="onDragLeaveSlot(i)"
+        (drop)="onDropOnSlot($event, i)"
+      >
+        <span class="prl-checkpoint-no">{{ i + 1 }}</span>
+        @if (id; as optionId) {
+          <button
+            type="button"
+            class="prl-card"
+            draggable="true"
+            (dragstart)="onDragStartFromSlot($event, i)"
+            (dragend)="onDragEnd()"
+            (click)="removeFromSlot(i)"
+          >
+            <span class="prl-card-icon">{{ optionById(optionId)?.icon }}</span>
+            <span class="prl-card-label">{{ optionById(optionId)?.label }}</span>
+          </button>
+        }
+      </div>
+      @if (i < slots().length - 1) {
+        <span class="prl-link" aria-hidden="true">→</span>
+      }
+    }
+  </div>
+
+  @if (checked() === 'incorrect') {
+    <p class="prl-feedback no">{{ step().retryMessage }}</p>
+  } @else if (isCorrect()) {
+    <p class="prl-feedback ok">{{ step().successMessage }}</p>
+  }
+
+  @if (!isCorrect()) {
+    <!-- pool of unplaced checkpoints -->
+    <p class="prl-label">{{ step().poolHeading }}</p>
+    <div
+      class="prl-pool"
+      [class.over]="dragOverPool()"
+      (dragover)="onDragOverPool($event)"
+      (dragleave)="onDragLeavePool()"
+      (drop)="onDropOnPool($event)"
+    >
+      @for (o of pool(); track o.id) {
+        <button
+          type="button"
+          class="prl-card prl-card-pool"
+          draggable="true"
+          (dragstart)="onDragStartFromPool($event, o.id)"
+          (dragend)="onDragEnd()"
+          (click)="placeInNextSlot(o.id)"
+        >
+          <span class="prl-card-icon">{{ o.icon }}</span>
+          <span class="prl-card-label">{{ o.label }}</span>
+        </button>
+      }
+      @if (!pool().length) {
+        <p class="prl-pool-empty">All checkpoints placed — tap Check!</p>
+      }
+    </div>
+
+    <button type="button" class="prl-check" [disabled]="!allFilled()" (click)="checkAnswer()">
+      {{ step().checkLabel }}
+    </button>
+  } @else {
+    <div class="prl-followup">
+      <p class="prl-followup-q">{{ step().followUpQuestion }}</p>
+      <textarea
+        rows="3"
+        [value]="followUp()"
+        [placeholder]="step().followUpPlaceholder"
+        (input)="setFollowUp($any($event.target).value)"
+      ></textarea>
+    </div>
+
+    <button type="button" class="prl-continue" [disabled]="!canContinue()" (click)="finish()">
+      {{ step().continueLabel }} →
+    </button>
+  }
+</div>

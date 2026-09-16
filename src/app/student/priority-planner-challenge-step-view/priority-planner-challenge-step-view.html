@@ -1,0 +1,169 @@
+<div class="ppc" [attr.data-phase]="phase()">
+  <header class="ppc-head">
+    <span class="ppc-badge">{{ step().badge }}</span>
+    <h2>{{ step().title }}</h2>
+    <p class="ppc-objective">{{ step().objective }}</p>
+  </header>
+
+  <ol class="ppc-track" aria-hidden="true">
+    <li [class.on]="phase() === 'learn'" [class.done]="phase() !== 'learn'">Learn</li>
+    <li [class.on]="phase() === 'video'" [class.done]="phase() === 'plan' || phase() === 'reflect' || phase() === 'done'">Watch</li>
+    <li [class.on]="phase() === 'plan'" [class.done]="phase() === 'reflect' || phase() === 'done'">Plan</li>
+    <li [class.on]="phase() === 'reflect'" [class.done]="phase() === 'done'">Reflect</li>
+  </ol>
+
+  <!-- PHASE 1: LEARN -->
+  @if (phase() === 'learn') {
+    <section class="ppc-phase">
+      <h3 class="ppc-h">{{ step().learnHeading }}</h3>
+      <p class="ppc-intro">{{ step().learnIntro }}</p>
+
+      <div class="ppc-matrix">
+        @for (q of step().quadrants; track trackQuadrant($index, q)) {
+          <article class="ppc-quad" [attr.data-key]="q.key">
+            <span class="ppc-quad-tag">{{ q.key }} · {{ q.action }}</span>
+            <h4>{{ q.name }}</h4>
+            <p class="ppc-quad-desc">{{ q.description }}</p>
+            <p class="ppc-quad-eg"><span>e.g.</span> {{ q.example }}</p>
+          </article>
+        }
+      </div>
+
+      <button type="button" class="ppc-btn" (click)="goTo('video')">{{ step().learnContinueLabel }} →</button>
+    </section>
+  }
+
+  <!-- PHASE 2: VIDEO -->
+  @if (phase() === 'video') {
+    <section class="ppc-phase">
+      <figure class="ppc-video">
+        <div class="ppc-frame">
+          @if (playing() && embedUrl(); as src) {
+            <iframe
+              class="ppc-iframe"
+              [src]="src"
+              title="Video"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+            ></iframe>
+          } @else {
+            <button type="button" class="ppc-play" (click)="play()">
+              <span aria-hidden="true">▶</span> Play video
+            </button>
+          }
+        </div>
+        <figcaption class="ppc-video-meta">
+          <strong>{{ step().videoTitle }}</strong>
+          <span>
+            {{ step().videoCredit }}
+            @if (step().videoDurationLabel) { · 🎥 {{ step().videoDurationLabel }} }
+          </span>
+          <a [href]="step().videoYoutubeUrl" target="_blank" rel="noopener">Watch on YouTube ↗</a>
+        </figcaption>
+      </figure>
+
+      <label class="ppc-watched">
+        <input type="checkbox" [checked]="watched()" (change)="toggleWatched()" />
+        <span>{{ step().watchedLabel }}</span>
+      </label>
+
+      <button type="button" class="ppc-btn" [disabled]="!watched()" (click)="goTo('plan')">
+        {{ step().videoContinueLabel }} →
+      </button>
+    </section>
+  }
+
+  <!-- PHASE 3: PLAN -->
+  @if (phase() === 'plan') {
+    <section class="ppc-phase">
+      <h3 class="ppc-h">{{ step().planHeading }}</h3>
+      <p class="ppc-intro">{{ step().planIntro }}</p>
+
+      <div class="ppc-plan-grid">
+        @for (q of step().quadrants; track trackQuadrant($index, q)) {
+          <div class="ppc-plan-cell" [attr.data-key]="q.key">
+            <label [attr.for]="'ppc-' + q.key">
+              <span class="ppc-plan-key">{{ q.key }}</span>
+              {{ q.name }} <em>— {{ q.action }}</em>
+            </label>
+            <textarea
+              [id]="'ppc-' + q.key"
+              rows="3"
+              [value]="planValue(q.key)"
+              [placeholder]="q.placeholder"
+              (input)="setPlan(q.key, $any($event.target).value)"
+            ></textarea>
+          </div>
+        }
+      </div>
+
+      <button type="button" class="ppc-btn" [disabled]="!planComplete()" (click)="goTo('reflect')">
+        {{ step().planContinueLabel }} →
+      </button>
+    </section>
+  }
+
+  <!-- PHASE 4: REFLECT -->
+  @if (phase() === 'reflect') {
+    <section class="ppc-phase">
+      <h3 class="ppc-h">{{ step().reflectHeading }}</h3>
+
+      <ol class="ppc-prompts">
+        @for (p of step().prompts; track trackPrompt($index, p)) {
+          <li>
+            <p class="ppc-prompt-q">{{ p.question }}</p>
+            <p class="ppc-prompt-follow">→ {{ p.followUp }}</p>
+            <textarea
+              rows="2"
+              [value]="reflectionValue(p.id)"
+              [placeholder]="p.placeholder"
+              (input)="setReflection(p.id, $any($event.target).value)"
+            ></textarea>
+          </li>
+        }
+      </ol>
+
+      <div class="ppc-tip">
+        <span>{{ step().tipLabel }}</span>
+        <p>{{ step().tip }}</p>
+      </div>
+
+      <button type="button" class="ppc-btn" [disabled]="!reflectComplete()" (click)="submit()">
+        {{ step().submitLabel }}
+      </button>
+    </section>
+  }
+
+  <!-- PHASE 5: DONE -->
+  @if (phase() === 'done') {
+    <section class="ppc-phase ppc-done">
+      <h3>{{ step().revealHeading }}</h3>
+      <p class="ppc-done-sub">{{ step().revealSubtitle }}</p>
+
+      <div class="ppc-matrix ppc-matrix-filled">
+        @for (q of step().quadrants; track trackQuadrant($index, q)) {
+          <article class="ppc-quad" [attr.data-key]="q.key">
+            <span class="ppc-quad-tag">{{ q.key }} · {{ q.name }}</span>
+            <p class="ppc-quad-answer">{{ planValue(q.key) }}</p>
+          </article>
+        }
+      </div>
+
+      <dl class="ppc-reflect-summary">
+        @for (p of step().prompts; track trackPrompt($index, p)) {
+          <div>
+            <dt>{{ p.question }}</dt>
+            <dd>{{ reflectionValue(p.id) }}</dd>
+          </div>
+        }
+      </dl>
+
+      <div class="ppc-complete">
+        <h4>{{ step().completeHeading }}</h4>
+        <p>{{ step().completeText }}</p>
+      </div>
+
+      <button type="button" class="ppc-btn ppc-btn-finish" (click)="finish()">{{ step().continueLabel }} →</button>
+    </section>
+  }
+</div>

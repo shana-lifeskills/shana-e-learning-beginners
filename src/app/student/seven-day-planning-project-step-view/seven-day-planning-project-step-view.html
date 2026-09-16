@@ -1,0 +1,84 @@
+<div class="sdp">
+  <header class="sdp-head">
+    <span class="sdp-badge">{{ step().badge }}</span>
+    <h2>{{ step().title }}</h2>
+    <p class="sdp-intro">{{ step().intro }}</p>
+  </header>
+
+  @if (!locked()) {
+    <ol class="sdp-steps">
+      @for (line of step().instructions; track line) {
+        <li>{{ line }}</li>
+      }
+    </ol>
+
+    <section class="sdp-block">
+      <label class="sdp-field-label" for="sdp-reflection">{{ step().reflectionLabel }}</label>
+      <textarea
+        id="sdp-reflection"
+        rows="4"
+        [value]="reflection()"
+        [placeholder]="step().reflectionPlaceholder"
+        (input)="setReflection($any($event.target).value)"
+      ></textarea>
+    </section>
+
+    <section class="sdp-block sdp-bonus">
+      <span class="sdp-bonus-tag">Optional Bonus</span>
+      <h3 class="sdp-h">{{ step().bonusHeading }}</h3>
+      <p class="sdp-hint">{{ step().bonusHint }}</p>
+
+      <input #fileInput type="file" accept="image/*,video/*" hidden (change)="onFileSelected($event)" />
+
+      @if (fileUrl(); as url) {
+        <div class="sdp-file-preview">
+          @if (fileIsImage()) {
+            <img [src]="url" alt="My Week of Wins" />
+          } @else {
+            <video [src]="url" controls></video>
+          }
+        </div>
+        <div class="sdp-file-actions">
+          <button type="button" class="sdp-file-btn" (click)="chooseFile()">{{ step().uploadChangeLabel }}</button>
+          <button type="button" class="sdp-file-btn sdp-file-remove" (click)="removeFile()">{{ step().uploadRemoveLabel }}</button>
+        </div>
+      } @else {
+        <button type="button" class="sdp-dropzone" (click)="chooseFile()">
+          <span aria-hidden="true">🏆</span> {{ step().uploadChooseLabel }}
+        </button>
+      }
+    </section>
+
+    <button type="button" class="sdp-submit" [disabled]="!canSubmit()" (click)="submit()">
+      {{ step().submitLabel }}
+    </button>
+  } @else {
+    <div class="sdp-result">
+      <span class="sdp-result-icon" aria-hidden="true">🎓</span>
+      <h3>{{ step().revealHeading }}</h3>
+      <p class="sdp-result-sub">{{ step().revealSubtitle }}</p>
+
+      <div class="sdp-result-box">
+        <span>{{ step().reflectionLabel }}</span>
+        <p>{{ reflection() }}</p>
+      </div>
+
+      @if (fileUrl(); as url) {
+        <div class="sdp-result-file">
+          @if (fileIsImage()) {
+            <img [src]="url" alt="My Week of Wins" />
+          } @else {
+            <video [src]="url" controls></video>
+          }
+        </div>
+      }
+
+      <div class="sdp-done">
+        <h4>{{ step().completeHeading }}</h4>
+        <p>{{ step().completeText }}</p>
+      </div>
+
+      <button type="button" class="sdp-continue" (click)="finish()">{{ step().continueLabel }} →</button>
+    </div>
+  }
+</div>

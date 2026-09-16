@@ -1,0 +1,36 @@
+<div class="tq">
+  @if (!finished()) {
+    <span class="tq-badge">{{ step().badge }}</span>
+    <h1>{{ step().title }}</h1>
+    <p class="tq-subtitle">{{ step().subtitle }}</p>
+    <p class="tq-instruction">{{ step().instruction }}</p>
+
+    <p class="tq-progress">Question {{ qIndex() + 1 }} of {{ step().questions.length }}</p>
+
+    @if (currentQuestion(); as question) {
+      <div class="tq-card">
+        <p class="tq-question">{{ question.prompt }}</p>
+
+        <div class="tq-options">
+          @for (option of question.options; track option.letter) {
+            <button type="button" class="tq-option" (click)="answer(option.letter)">
+              <span class="tq-option-letter">{{ option.letter }}</span>
+              <span class="tq-option-text">{{ option.text }}</span>
+            </button>
+          }
+        </div>
+      </div>
+    }
+  } @else {
+    <div class="tq-result">
+      <span class="tq-result-icon">{{ result().icon }}</span>
+      <span class="tq-result-heading">{{ step().resultHeading }}</span>
+      <h2>{{ result().name }}</h2>
+      <p class="tq-result-tagline">{{ result().tagline }}</p>
+      <p class="tq-result-description">{{ result().description }}</p>
+
+      <button type="button" class="tq-continue" (click)="finish()">{{ step().continueLabel }} →</button>
+      <button type="button" class="tq-retake" (click)="retake()">↺ {{ step().retakeLabel }}</button>
+    </div>
+  }
+</div>

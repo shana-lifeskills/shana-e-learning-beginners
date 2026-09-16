@@ -1,0 +1,30 @@
+<div class="isw">
+  <div class="isw-card">
+    <span class="isw-icon">🧭</span>
+
+    <div class="isw-pills">
+      <span class="isw-week-pill">{{ isw.weekPill }}</span>
+      <span class="isw-stage-pill">{{ isw.stagePill }}</span>
+    </div>
+
+    <h1>{{ isw.title }}</h1>
+    <p class="isw-subtitle">{{ isw.subtitle }}</p>
+
+    <ul class="isw-objectives">
+      @for (o of isw.objectives; track o.text) {
+        <li><span class="isw-objective-icon">{{ o.icon }}</span>{{ o.text }}</li>
+      }
+    </ul>
+
+    @if (isCompletedLessonWelcome()) {
+      @if (nextLesson(); as next) {
+        <button type="button" class="isw-start" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+      } @else {
+        <button type="button" class="isw-start" (click)="backToMap()">Back to My Modules →</button>
+      }
+      <button type="button" class="isw-review" (click)="beginLesson()">↺ Review this lesson</button>
+    } @else {
+      <button type="button" class="isw-start" (click)="beginLesson()">{{ isw.startLabel }} →</button>
+    }
+  </div>
+</div>

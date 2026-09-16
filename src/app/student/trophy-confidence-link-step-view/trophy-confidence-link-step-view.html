@@ -1,0 +1,21 @@
+<div class="tpl">
+  <div class="tpl-card">
+    <span class="tpl-eyebrow">{{ step().eyebrow }}</span>
+
+    <svg class="tpl-trophy" viewBox="0 0 100 100" aria-hidden="true">
+      <path class="tpl-cup" d="M32 20h36v18c0 12-8 20-18 20s-18-8-18-20V20z" />
+      <path class="tpl-handle" d="M32 24c-8 0-12 5-12 11s4 10 12 11" />
+      <path class="tpl-handle" d="M68 24c8 0 12 5 12 11s-4 10-12 11" />
+      <rect x="46" y="58" width="8" height="10" class="tpl-stem" />
+      <path class="tpl-base" d="M36 68h28l4 10H32z" />
+    </svg>
+
+    <h2>{{ step().title }}</h2>
+
+    <blockquote class="tpl-quote">{{ step().quote }}</blockquote>
+
+    <p class="tpl-caption">{{ step().caption }}</p>
+
+    <button type="button" class="tpl-continue" (click)="finish()">{{ step().completeLabel }} →</button>
+  </div>
+</div>

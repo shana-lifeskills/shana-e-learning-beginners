@@ -55,6 +55,7 @@ export class ModuleService {
       createdAt: new Date().toISOString(),
       lessons: draft.lessons.map((lessonDraft, lessonIndex) => this.buildLesson(lessonDraft, lessonIndex)),
       category: 'life-skills',
+      ageGroup: 'beginner',
     };
 
     this.db.insert(COLLECTIONS.modules, module);

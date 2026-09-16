@@ -1,0 +1,128 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- The Big Question (bq) — Self-Confidence Module, Week 2 ---- */
+$bq-blue: #3f7fd6;
+$bq-navy: #1e2749;
+$bq-ink: #2b2d42;
+$bq-gold: #cf8324;
+$bq-line: rgba(43, 45, 66, 0.16);
+
+.bq {
+  max-width: 40rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.bq-badge {
+  @include m.playful-heading;
+  display: inline-block;
+  background: rgba($bq-blue, 0.14);
+  color: $bq-blue;
+  font-size: 0.85rem;
+  padding: 0.4rem 1.1rem;
+  border-radius: v.$border-radius-pill;
+}
+
+.bq h1 {
+  @include m.playful-heading;
+  margin: 1rem 0 0.5rem;
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  color: $bq-navy;
+}
+
+.bq-subtitle {
+  color: rgba($bq-ink, 0.65);
+  font-size: 1rem;
+  line-height: 1.5;
+  max-width: 30rem;
+  margin: 0 auto;
+}
+
+.bq-strategies-heading {
+  font-weight: 800;
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: rgba($bq-ink, 0.5);
+  margin: 1.5rem 0 0.75rem;
+}
+
+.bq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  text-align: left;
+}
+
+.bq-card {
+  background: v.$color-white;
+  border: 1.5px solid $bq-line;
+  border-radius: v.$border-radius-lg;
+  padding: 1.1rem 1.25rem;
+}
+
+.bq-card-head {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.5rem;
+}
+
+.bq-icon {
+  flex-shrink: 0;
+  font-size: 1.3rem;
+}
+
+.bq-card h2 {
+  @include m.playful-heading;
+  font-size: 1.05rem;
+  color: $bq-navy;
+  margin: 0;
+}
+
+.bq-tip {
+  color: rgba($bq-ink, 0.75);
+  line-height: 1.5;
+  font-size: 0.95rem;
+  margin: 0 0 0.85rem;
+}
+
+.bq-example {
+  background: rgba($bq-gold, 0.1);
+  border-radius: 12px;
+  padding: 0.75rem 0.9rem;
+}
+
+.bq-example-label {
+  display: block;
+  font-weight: 800;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: $bq-gold;
+  margin-bottom: 0.3rem;
+}
+
+.bq-example p {
+  margin: 0;
+  color: $bq-ink;
+  font-style: italic;
+  line-height: 1.45;
+  font-size: 0.92rem;
+}
+
+.bq-continue {
+  @include m.tappable;
+  display: block;
+  width: 100%;
+  margin-top: 1.5rem;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  padding: 0.9rem 1.5rem;
+  font-weight: 800;
+  font-size: 1.02rem;
+  background: linear-gradient(120deg, $bq-blue, #6fa3e8);
+  color: v.$color-white;
+  box-shadow: 0 4px 0 rgba($bq-navy, 0.12);
+}

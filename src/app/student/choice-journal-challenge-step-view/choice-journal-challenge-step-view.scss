@@ -1,0 +1,235 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- Choice Journal challenge (cj) — Identity Module, Week 3 closer ---- */
+$cj-navy: #1e2749;
+$cj-blue: #3f7fd6;
+$cj-plum: #7c5cc4;
+$cj-ink: #2b2d42;
+$cj-paper: #fffdf6;
+$cj-line: rgba(43, 45, 66, 0.16);
+
+.cj {
+  max-width: 44rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.cj-badge {
+  @include m.playful-heading;
+  display: inline-block;
+  background: rgba($cj-plum, 0.14);
+  color: $cj-plum;
+  font-size: 0.85rem;
+  padding: 0.4rem 1.1rem;
+  border-radius: v.$border-radius-pill;
+}
+
+.cj h1 {
+  @include m.playful-heading;
+  margin: 1rem 0 0.5rem;
+  font-size: clamp(1.9rem, 4.6vw, 2.4rem);
+  color: $cj-navy;
+}
+
+.cj-subtitle {
+  color: rgba($cj-ink, 0.65);
+  font-size: 1.02rem;
+  line-height: 1.5;
+  max-width: 32rem;
+  margin: 0 auto;
+}
+
+.cj-instructions {
+  background: rgba($cj-plum, 0.07);
+  border: 1.5px dashed rgba($cj-plum, 0.4);
+  border-radius: v.$border-radius-xl;
+  padding: 1.2rem 1.5rem;
+  margin: 1.5rem 0;
+  text-align: left;
+
+  h2 {
+    @include m.playful-heading;
+    font-size: 1.05rem;
+    color: $cj-navy;
+    margin: 0 0 0.6rem;
+  }
+
+  ol {
+    margin: 0;
+    padding-left: 1.25rem;
+    color: rgba($cj-ink, 0.75);
+    line-height: 1.6;
+  }
+}
+
+.cj-days {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.cj-day {
+  position: relative;
+  background: $cj-paper;
+  border: 1.5px solid $cj-line;
+  border-left: 4px solid rgba($cj-plum, 0.5);
+  border-radius: 12px;
+  box-shadow: 0 4px 0 rgba($cj-navy, 0.06);
+  padding: 1.75rem 1.3rem 1.3rem;
+  text-align: left;
+
+  &--filled {
+    border-left-color: $cj-plum;
+  }
+}
+
+.cj-day-tab {
+  position: absolute;
+  top: -0.75rem;
+  left: 1rem;
+  background: $cj-plum;
+  color: v.$color-white;
+  font-weight: 800;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.8rem;
+  border-radius: 999px;
+}
+
+.cj-field-label {
+  display: block;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: $cj-navy;
+  margin: 0.7rem 0 0.35rem;
+
+  &:first-of-type {
+    margin-top: 0;
+  }
+}
+
+.cj-day textarea {
+  width: 100%;
+  resize: vertical;
+  border: 1px solid $cj-line;
+  border-radius: 9px;
+  padding: 0.55rem 0.75rem;
+  font-family: inherit;
+  font-size: 0.92rem;
+  color: $cj-ink;
+  background: v.$color-white;
+
+  &:focus {
+    outline: 2px solid $cj-plum;
+    outline-offset: 1px;
+  }
+}
+
+.cj-submit {
+  @include m.tappable;
+  display: block;
+  width: 100%;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  padding: 1rem 1.5rem;
+  font-weight: 800;
+  font-size: 1.05rem;
+  background: linear-gradient(120deg, $cj-plum, #9b7ee0);
+  color: v.$color-white;
+  box-shadow: 0 4px 0 rgba($cj-navy, 0.12);
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+}
+
+/* --- Journal reveal --- */
+.cj-journal {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin: 2rem 0;
+}
+
+.cj-page {
+  position: relative;
+  background: v.$color-white;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba($cj-navy, 0.12);
+  padding: 1.6rem 1.4rem 1.3rem;
+  text-align: left;
+
+  &--0 { transform: rotate(-1deg); }
+  &--1 { transform: rotate(0.8deg); }
+  &--2 { transform: rotate(-0.5deg); }
+}
+
+.cj-page-tab {
+  display: inline-block;
+  background: rgba($cj-plum, 0.14);
+  color: $cj-plum;
+  font-weight: 800;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.7rem;
+  border-radius: 999px;
+  margin-bottom: 0.7rem;
+}
+
+.cj-page-choice {
+  @include m.playful-heading;
+  font-size: 1.1rem;
+  color: $cj-navy;
+  margin: 0 0 0.6rem;
+}
+
+.cj-page-meaning {
+  color: rgba($cj-ink, 0.8);
+  line-height: 1.5;
+  margin: 0;
+
+  span {
+    font-weight: 700;
+    color: $cj-plum;
+  }
+}
+
+.cj-complete {
+  background: rgba($cj-plum, 0.1);
+  border-radius: v.$border-radius-xl;
+  padding: 2rem clamp(1.25rem, 4vw, 2rem) 1.75rem;
+
+  h2 {
+    @include m.playful-heading;
+    font-size: 1.4rem;
+    color: $cj-navy;
+    margin: 0 0 0.75rem;
+  }
+
+  p {
+    color: rgba($cj-ink, 0.85);
+    line-height: 1.6;
+    margin: 0 0 1.5rem;
+  }
+}
+
+.cj-continue {
+  @include m.tappable;
+  display: block;
+  width: 100%;
+  max-width: 24rem;
+  margin: 0 auto;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  padding: 0.95rem 1.5rem;
+  font-weight: 800;
+  font-size: 1.05rem;
+  background: $cj-navy;
+  color: v.$color-white;
+}

@@ -1,0 +1,123 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Planning route welcome (pww) — Planning Module, Week 1 ---- */
+$pww-teal: #1f8f86;
+$pww-deep: #16323a;
+$pww-ink: #2b2d42;
+
+.pww {
+  display: flex;
+  justify-content: center;
+  padding: 2.5rem 1rem;
+}
+
+.pww-card {
+  @include w.soft-card;
+  max-width: 30rem;
+  width: 100%;
+  padding: 2.5rem clamp(1.5rem, 5vw, 2.5rem);
+  text-align: center;
+}
+
+.pww-pills {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1.1rem;
+}
+
+.pww-week-pill {
+  @include w.welcome-pill($pww-teal, v.$color-white);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.78rem;
+}
+
+.pww-stage-pill {
+  @include w.welcome-pill(rgba($pww-teal, 0.15), $pww-teal);
+  font-size: 0.82rem;
+}
+
+.pww h1 {
+  @include m.playful-heading;
+  font-size: clamp(1.6rem, 4vw, 2.1rem);
+  color: $pww-deep;
+  margin: 0 0 0.6rem;
+}
+
+.pww-subtitle {
+  color: rgba($pww-ink, 0.65);
+  font-size: 1rem;
+  line-height: 1.5;
+  margin: 0 0 2rem;
+}
+
+.pww-route {
+  list-style: none;
+  margin: 0 0 2rem;
+  padding: 0;
+  text-align: left;
+
+  li {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding-bottom: 1.1rem;
+  }
+
+  li:not(:last-child) .pww-node::after {
+    content: '';
+    position: absolute;
+    top: 2rem;
+    left: 50%;
+    width: 0;
+    height: calc(100% - 1.4rem);
+    border-left: 2px dashed rgba($pww-teal, 0.4);
+    transform: translateX(-50%);
+  }
+
+  li:last-child {
+    padding-bottom: 0;
+  }
+}
+
+.pww-node {
+  position: relative;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: $pww-teal;
+  color: v.$color-white;
+  font-weight: 800;
+  font-size: 0.95rem;
+}
+
+.pww-step {
+  font-size: 0.98rem;
+  line-height: 1.45;
+  color: $pww-ink;
+}
+
+.pww-start {
+  @include w.welcome-cta-btn(linear-gradient(120deg, $pww-teal, #35b6a4), v.$color-white);
+  display: block;
+  width: 100%;
+  font-size: 1.05rem;
+}
+
+.pww-review {
+  @include m.tappable;
+  display: block;
+  margin: 0.75rem auto 0;
+  background: none;
+  border: none;
+  font-weight: 700;
+  color: rgba($pww-ink, 0.6);
+}

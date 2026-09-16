@@ -1,0 +1,89 @@
+<div class="sgt">
+  <header class="sgt-head">
+    <span class="sgt-badge">{{ step().badge }}</span>
+    <h2>{{ step().title }}</h2>
+  </header>
+
+  <!-- PHASE: GOAL -->
+  @if (phase() === 'goal') {
+    <section class="sgt-phase">
+      <label class="sgt-field-label" for="sgt-goal">{{ step().goalLabel }}</label>
+      <textarea
+        id="sgt-goal"
+        class="sgt-textarea"
+        rows="3"
+        [value]="goal()"
+        [placeholder]="step().goalPlaceholder"
+        (input)="setGoal($any($event.target).value)"
+      ></textarea>
+      <p class="sgt-example">e.g. {{ step().goalExample }}</p>
+
+      <button type="button" class="sgt-btn" [disabled]="!canLeaveGoal()" (click)="goTo('table')">
+        {{ step().goalContinueLabel }} →
+      </button>
+    </section>
+  }
+
+  <!-- PHASE: TABLE -->
+  @if (phase() === 'table') {
+    <section class="sgt-phase">
+      <span class="sgt-ext-badge">{{ step().extensionBadge }}</span>
+      <h3 class="sgt-h">{{ step().extensionHeading }}</h3>
+      <p class="sgt-intro">{{ step().extensionIntro }}</p>
+
+      <div class="sgt-table">
+        @for (row of step().rows; track row.letter) {
+          <div class="sgt-row">
+            <span class="sgt-letter">{{ row.letter }}</span>
+            <div class="sgt-row-body">
+              <label [attr.for]="'sgt-row-' + row.letter">
+                <strong>{{ row.label }}</strong> — {{ row.question }}
+              </label>
+              <textarea
+                [id]="'sgt-row-' + row.letter"
+                rows="2"
+                [value]="rowValue(row.letter)"
+                [placeholder]="row.placeholder"
+                (input)="setRow(row.letter, $any($event.target).value)"
+              ></textarea>
+            </div>
+          </div>
+        }
+      </div>
+
+      <button type="button" class="sgt-btn" (click)="submit()">{{ step().submitLabel }}</button>
+    </section>
+  }
+
+  <!-- PHASE: DONE -->
+  @if (phase() === 'done') {
+    <div class="sgt-result">
+      <span class="sgt-result-icon" aria-hidden="true">🎯</span>
+      <h3>{{ step().revealHeading }}</h3>
+      <p class="sgt-result-sub">{{ step().revealSubtitle }}</p>
+
+      <div class="sgt-result-goal">
+        <span>{{ step().goalLabel }}</span>
+        <p>{{ goal() }}</p>
+      </div>
+
+      @if (filledRows().length) {
+        <dl class="sgt-result-table">
+          @for (row of filledRows(); track row.letter) {
+            <div>
+              <dt>{{ row.letter }} — {{ row.label }}</dt>
+              <dd>{{ rowValue(row.letter) }}</dd>
+            </div>
+          }
+        </dl>
+      }
+
+      <div class="sgt-done">
+        <h4>{{ step().completeHeading }}</h4>
+        <p>{{ step().completeText }}</p>
+      </div>
+
+      <button type="button" class="sgt-continue" (click)="finish()">{{ step().continueLabel }} →</button>
+    </div>
+  }
+</div>

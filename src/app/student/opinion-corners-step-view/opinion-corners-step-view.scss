@@ -1,0 +1,196 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- Opinion Corners (oc) — Self-Confidence Module, Week 1 ---- */
+$oc-navy: #1e2749;
+$oc-ink: #2b2d42;
+$oc-agree: #2f9e63;
+$oc-neutral: #cf8324;
+$oc-disagree: #e0554b;
+$oc-blue: #3f7fd6;
+$oc-line: rgba(43, 45, 66, 0.16);
+
+.oc {
+  max-width: 40rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.oc-badge {
+  @include m.playful-heading;
+  display: inline-block;
+  background: rgba($oc-blue, 0.14);
+  color: $oc-blue;
+  font-size: 0.85rem;
+  padding: 0.4rem 1.1rem;
+  border-radius: v.$border-radius-pill;
+}
+
+.oc h1 {
+  @include m.playful-heading;
+  margin: 1rem 0 0.5rem;
+  font-size: clamp(1.6rem, 4.2vw, 2.2rem);
+  color: $oc-navy;
+}
+
+.oc-subtitle {
+  color: rgba($oc-ink, 0.65);
+  font-size: 1.02rem;
+  line-height: 1.5;
+  max-width: 30rem;
+  margin: 0 auto;
+}
+
+.oc-no-wrong {
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: rgba($oc-ink, 0.5);
+  margin: 0.6rem 0 0;
+}
+
+.oc-progress {
+  font-weight: 800;
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: rgba($oc-ink, 0.5);
+  margin: 1.25rem 0 0.5rem;
+}
+
+.oc-card {
+  @include m.bouncy-card;
+
+  &:hover {
+    transform: none;
+    box-shadow: 0 6px 0 rgba(0, 0, 0, 0.08);
+  }
+
+  background: v.$color-white;
+  border-radius: v.$border-radius-xl;
+  padding: 1.75rem clamp(1.1rem, 4vw, 2rem) 2rem;
+}
+
+.oc-statement {
+  @include m.playful-heading;
+  font-size: 1.2rem;
+  color: $oc-navy;
+  margin: 0 0 1.25rem;
+}
+
+.oc-corners {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.7rem;
+}
+
+.oc-corner {
+  @include m.tappable;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  border: 1.5px solid $oc-line;
+  border-radius: 14px;
+  background: v.$color-cream-bg;
+  padding: 0.9rem 0.5rem;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: $oc-ink;
+
+  &--agree.oc-corner--picked {
+    border-color: $oc-agree;
+    background: rgba($oc-agree, 0.12);
+    color: $oc-agree;
+  }
+
+  &--neutral.oc-corner--picked {
+    border-color: $oc-neutral;
+    background: rgba($oc-neutral, 0.12);
+    color: $oc-neutral;
+  }
+
+  &--disagree.oc-corner--picked {
+    border-color: $oc-disagree;
+    background: rgba($oc-disagree, 0.12);
+    color: $oc-disagree;
+  }
+}
+
+.oc-corner-icon {
+  font-size: 1.4rem;
+}
+
+.oc-textarea {
+  width: 100%;
+  border: 1.5px solid $oc-line;
+  border-radius: 12px;
+  padding: 0.75rem 0.9rem;
+  font-size: 0.98rem;
+  font-family: inherit;
+  color: $oc-ink;
+  background: v.$color-cream-bg;
+  resize: none;
+  margin-bottom: 1.1rem;
+
+  &:focus {
+    outline: none;
+    border-color: $oc-blue;
+  }
+}
+
+.oc-next {
+  @include m.tappable;
+  display: block;
+  width: 100%;
+  margin-top: 1.25rem;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  padding: 0.9rem 1.5rem;
+  font-weight: 800;
+  font-size: 1.02rem;
+  background: linear-gradient(120deg, $oc-blue, #6fa3e8);
+  color: v.$color-white;
+  box-shadow: 0 4px 0 rgba($oc-navy, 0.12);
+
+  &:disabled {
+    opacity: 0.45;
+    cursor: default;
+  }
+}
+
+.oc-complete {
+  @include m.bouncy-card;
+
+  &:hover {
+    transform: none;
+    box-shadow: 0 6px 0 rgba(0, 0, 0, 0.08);
+  }
+
+  background: rgba($oc-blue, 0.1);
+  border-radius: v.$border-radius-xl;
+  padding: 2.5rem clamp(1.25rem, 4vw, 2rem) 2rem;
+  margin-top: 1rem;
+
+  h2 {
+    @include m.playful-heading;
+    font-size: 1.5rem;
+    color: $oc-navy;
+    margin: 0.5rem 0 0.75rem;
+  }
+
+  p {
+    color: rgba($oc-ink, 0.8);
+    line-height: 1.6;
+    margin: 0 0 1.75rem;
+  }
+}
+
+.oc-complete-icon {
+  font-size: 2.75rem;
+}
+
+@media (max-width: 30rem) {
+  .oc-corners {
+    grid-template-columns: 1fr;
+  }
+}

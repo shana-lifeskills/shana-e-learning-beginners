@@ -1,0 +1,53 @@
+<div class="stk">
+  <header class="stk-head">
+    <span class="stk-badge">{{ step().badge }}</span>
+    <h2>{{ step().title }}</h2>
+    @if (step().subtitle) {
+      <p class="stk-sub">{{ step().subtitle }}</p>
+    }
+  </header>
+
+  @if (question(); as q) {
+    <p class="stk-progress">Question {{ index() + 1 }} of {{ total() }}</p>
+
+    <div class="stk-card">
+      <h3 class="stk-question">{{ q.question }}</h3>
+      <p class="stk-hint">{{ q.hint }}</p>
+
+      <label class="stk-answer-label" [attr.for]="'stk-' + q.id">{{ step().yourAnswerLabel }}</label>
+      <textarea
+        [id]="'stk-' + q.id"
+        class="stk-textarea"
+        rows="4"
+        [value]="draft()"
+        [disabled]="submitted()"
+        [placeholder]="q.placeholder"
+        (input)="setDraft($any($event.target).value)"
+      ></textarea>
+
+      @if (!submitted()) {
+        <button type="button" class="stk-submit" [disabled]="!canSubmit()" (click)="submit()">
+          {{ q.revealLabel }}
+        </button>
+      } @else {
+        <div class="stk-reveal">
+          <h4>{{ q.revealHeading }}</h4>
+          @if (q.revealList) {
+            <ul>
+              @for (item of q.revealList; track item) {
+                <li>{{ item }}</li>
+              }
+            </ul>
+          } @else {
+            <p>{{ q.revealText }}</p>
+          }
+          <p class="stk-tip"><span>💡 Lesson Tip:</span> {{ q.lessonTip }}</p>
+        </div>
+
+        <button type="button" class="stk-next" (click)="advance()">
+          {{ isLast() ? step().continueLabel : step().nextQuestionLabel }} →
+        </button>
+      }
+    </div>
+  }
+</div>

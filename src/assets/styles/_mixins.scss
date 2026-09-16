@@ -28,3 +28,12 @@
   font-weight: 800;
   letter-spacing: 0.01em;
 }
+
+// A cleaner, non-rounded heading face for the login/signup pages — the
+// bubbly Baloo 2 used elsewhere in the app reads too playful for this
+// screen's brand reference, which uses a plain heavy system sans instead.
+@mixin auth-heading {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}

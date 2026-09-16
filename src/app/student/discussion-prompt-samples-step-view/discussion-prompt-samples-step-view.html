@@ -1,0 +1,53 @@
+<div class="dps">
+  @if (!showKeyLesson()) {
+    <span class="dps-badge">{{ step().badge }}</span>
+    <h1>{{ step().title }}</h1>
+    @if (step().subtitle) { <p class="dps-subtitle">{{ step().subtitle }}</p> }
+
+    <p class="dps-progress">Question {{ qIndex() + 1 }} of {{ step().prompts.length }}</p>
+
+    @if (currentPrompt(); as prompt) {
+      <div class="dps-card">
+        <p class="dps-question">{{ prompt.question }}</p>
+
+        @if (!submitted()) {
+          <textarea
+            rows="3"
+            [value]="draft()"
+            (input)="setDraft($any($event.target).value)"
+            [placeholder]="prompt.placeholder"
+          ></textarea>
+          <button type="button" class="dps-submit" [disabled]="!canSubmit()" (click)="submitAnswer()">{{ step().submitLabel }}</button>
+        } @else {
+          <div class="dps-your-answer">
+            <span class="dps-label">{{ step().yourAnswerLabel }}</span>
+            <p>{{ draft() }}</p>
+          </div>
+
+          <div class="dps-samples">
+            <span class="dps-label">{{ step().sampleAnswersLabel }}</span>
+            @for (sample of prompt.sampleAnswers; track sample; let i = $index) {
+              @if (i < revealedCount()) {
+                <p class="dps-sample">"{{ sample }}"</p>
+              }
+            }
+          </div>
+
+          @if (!allSamplesRevealed()) {
+            <button type="button" class="dps-next" (click)="revealNextSample()">{{ step().nextSampleLabel }} →</button>
+          } @else {
+            <button type="button" class="dps-next" (click)="nextQuestion()">
+              {{ isLastQuestion() ? step().seeKeyLessonLabel : step().nextQuestionLabel }} →
+            </button>
+          }
+        }
+      </div>
+    }
+  } @else {
+    <div class="dps-key">
+      <h2>{{ step().keyLessonLabel }}</h2>
+      <p>{{ step().keyLessonText }}</p>
+      <button type="button" class="dps-continue" (click)="finish()">{{ step().continueLabel }} →</button>
+    </div>
+  }
+</div>

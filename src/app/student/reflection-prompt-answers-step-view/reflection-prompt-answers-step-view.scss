@@ -1,0 +1,230 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- Reflection Questions (rpa) — Identity Module, Week 1 ---- */
+$rpa-navy: #1e2749;
+$rpa-blue: #3f7fd6;
+$rpa-orange: #d9791f;
+$rpa-ink: #2b2d42;
+$rpa-card: #fffdf8;
+$rpa-line: rgba(43, 45, 66, 0.16);
+
+.rpa {
+  max-width: 44rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.rpa-badge {
+  @include m.playful-heading;
+  display: inline-block;
+  background: rgba($rpa-orange, 0.14);
+  color: $rpa-orange;
+  font-size: 0.85rem;
+  padding: 0.4rem 1.1rem;
+  border-radius: v.$border-radius-pill;
+}
+
+.rpa h1 {
+  @include m.playful-heading;
+  margin: 1rem 0 0.6rem;
+  font-size: clamp(2rem, 5vw, 2.6rem);
+  color: $rpa-navy;
+}
+
+.rpa-subtitle {
+  color: rgba($rpa-ink, 0.65);
+  font-size: 1.05rem;
+  line-height: 1.55;
+  max-width: 32rem;
+  margin: 0 auto;
+}
+
+.rpa-progress {
+  font-weight: 800;
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba($rpa-ink, 0.5);
+  margin: 1rem 0 0;
+}
+
+.rpa-card {
+  @include m.bouncy-card;
+
+  &:hover {
+    transform: none;
+    box-shadow: 0 6px 0 rgba(0, 0, 0, 0.08);
+  }
+
+  background: $rpa-card;
+  border-radius: v.$border-radius-xl;
+  padding: 1.75rem clamp(1.1rem, 4vw, 2rem) 2rem;
+  margin-top: 0.75rem;
+  text-align: left;
+}
+
+.rpa-question {
+  @include m.playful-heading;
+  font-size: 1.3rem;
+  color: $rpa-navy;
+  margin: 0 0 1.1rem;
+}
+
+.rpa-card textarea {
+  width: 100%;
+  resize: vertical;
+  border: 1px solid $rpa-line;
+  border-radius: 10px;
+  padding: 0.75rem 0.9rem;
+  font-family: inherit;
+  font-size: 1rem;
+  color: $rpa-ink;
+  background: v.$color-cream-bg;
+
+  &:focus {
+    outline: 2px solid $rpa-blue;
+    outline-offset: 1px;
+  }
+}
+
+.rpa-submit {
+  @include m.tappable;
+  display: block;
+  width: 100%;
+  margin-top: 1rem;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  padding: 0.9rem 1.5rem;
+  font-weight: 800;
+  font-size: 1.02rem;
+  background: linear-gradient(120deg, $rpa-blue, #6ea3e8);
+  color: v.$color-white;
+  box-shadow: 0 4px 0 rgba($rpa-navy, 0.1);
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+}
+
+.rpa-label {
+  display: block;
+  font-weight: 800;
+  font-size: 0.76rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $rpa-blue;
+  margin-bottom: 0.4rem;
+}
+
+.rpa-your-answer {
+  background: rgba($rpa-orange, 0.08);
+  border: 1.5px solid rgba($rpa-orange, 0.3);
+  border-radius: 12px;
+  padding: 0.9rem 1.1rem;
+  margin-bottom: 1.1rem;
+
+  p {
+    margin: 0;
+    color: $rpa-navy;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+}
+
+.rpa-peers {
+  margin-bottom: 1.25rem;
+}
+
+.rpa-peer-answer {
+  border: 1.5px solid $rpa-line;
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  margin: 0 0 0.6rem;
+}
+
+.rpa-peer-text {
+  margin: 0 0 0.35rem;
+  font-style: italic;
+  color: rgba($rpa-ink, 0.85);
+  line-height: 1.5;
+}
+
+.rpa-peer-author {
+  font-weight: 800;
+  font-size: 0.85rem;
+  color: $rpa-blue;
+}
+
+.rpa-next {
+  @include m.tappable;
+  display: block;
+  width: 100%;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  padding: 0.9rem 1.5rem;
+  font-weight: 800;
+  font-size: 1.02rem;
+  background: $rpa-navy;
+  color: v.$color-white;
+}
+
+/* --- Closing "keep exploring" card --- */
+
+.rpa-closing {
+  text-align: left;
+
+  h2 {
+    @include m.playful-heading;
+    font-size: 1.6rem;
+    color: $rpa-navy;
+    margin: 0 0 1.1rem;
+    text-align: center;
+  }
+}
+
+.rpa-takeaway {
+  background: rgba($rpa-orange, 0.12);
+  border: 1.5px solid rgba($rpa-orange, 0.35);
+  border-radius: 14px;
+  padding: 1.1rem 1.3rem;
+  margin-bottom: 1rem;
+
+  p {
+    margin: 0.35rem 0 0;
+    font-style: italic;
+    font-weight: 700;
+    color: $rpa-navy;
+    line-height: 1.5;
+  }
+}
+
+.rpa-closing-card {
+  background: rgba($rpa-blue, 0.06);
+  border: 1.5px solid rgba($rpa-blue, 0.3);
+  border-radius: 14px;
+  padding: 1.1rem 1.3rem;
+  margin-bottom: 1rem;
+
+  p {
+    margin: 0.3rem 0 0;
+    color: rgba($rpa-ink, 0.8);
+    line-height: 1.5;
+  }
+}
+
+.rpa-closing-label {
+  font-weight: 800;
+  font-size: 0.85rem;
+  color: $rpa-navy;
+}
+
+.rpa-closing-link {
+  display: inline-block;
+  margin-top: 0.6rem;
+  font-weight: 800;
+  color: $rpa-blue;
+  text-decoration: none;
+}

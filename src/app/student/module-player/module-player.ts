@@ -87,6 +87,49 @@ import { TeamworkWarmupQuizStepView } from '../teamwork-warmup-quiz-step-view/te
 import { HygieneWarmupQuizStepView } from '../hygiene-warmup-quiz-step-view/hygiene-warmup-quiz-step-view';
 import { WellnessWarmupQuizStepView } from '../wellness-warmup-quiz-step-view/wellness-warmup-quiz-step-view';
 import { NutritionWarmupQuizStepView } from '../nutrition-warmup-quiz-step-view/nutrition-warmup-quiz-step-view';
+import { TwoTruthsAndATwistStepView } from '../two-truths-and-a-twist-step-view/two-truths-and-a-twist-step-view';
+import { StrengthSnapshotStepView } from '../strength-snapshot-step-view/strength-snapshot-step-view';
+import { OpinionCornersStepView } from '../opinion-corners-step-view/opinion-corners-step-view';
+import { StrengthMapStepView } from '../strength-map-step-view/strength-map-step-view';
+import { BigQuestionStepView } from '../big-question-step-view/big-question-step-view';
+import { RiskOrRewardStepView } from '../risk-or-reward-step-view/risk-or-reward-step-view';
+import { ConfidenceLadderStepView } from '../confidence-ladder-step-view/confidence-ladder-step-view';
+import { DiscussionPromptSamplesStepView } from '../discussion-prompt-samples-step-view/discussion-prompt-samples-step-view';
+import { ReflectionPromptAnswersStepView } from '../reflection-prompt-answers-step-view/reflection-prompt-answers-step-view';
+import { LateProjectStoryStepView } from '../late-project-story-step-view/late-project-story-step-view';
+import { StoryTalkStepView } from '../story-talk-step-view/story-talk-step-view';
+import { IdentitySnapshotChallengeStepView } from '../identity-snapshot-challenge-step-view/identity-snapshot-challenge-step-view';
+import { PickYourPowerStepView } from '../pick-your-power-step-view/pick-your-power-step-view';
+import { TemperamentQuizStepView } from '../temperament-quiz-step-view/temperament-quiz-step-view';
+import { ThisOrThatWarmupStepView } from '../this-or-that-warmup-step-view/this-or-that-warmup-step-view';
+import { ChoicesBoardStepView } from '../choices-board-step-view/choices-board-step-view';
+import { ChoiceJournalChallengeStepView } from '../choice-journal-challenge-step-view/choice-journal-challenge-step-view';
+import { PassTheDreamWarmupStepView } from '../pass-the-dream-warmup-step-view/pass-the-dream-warmup-step-view';
+import { PlanOrPanicWarmupStepView } from '../plan-or-panic-warmup-step-view/plan-or-panic-warmup-step-view';
+import { ShareYourPlanChallengeStepView } from '../share-your-plan-challenge-step-view/share-your-plan-challenge-step-view';
+import { TimeReflectionWorksheetStepView } from '../time-reflection-worksheet-step-view/time-reflection-worksheet-step-view';
+import { PlanItBetterChallengeStepView } from '../plan-it-better-challenge-step-view/plan-it-better-challenge-step-view';
+import { PlanConfidenceLinkStepView } from '../plan-confidence-link-step-view/plan-confidence-link-step-view';
+import { PlanRecapReflectionStepView } from '../plan-recap-reflection-step-view/plan-recap-reflection-step-view';
+import { DayPlannerGridStepView } from '../day-planner-grid-step-view/day-planner-grid-step-view';
+import { VideoReflectStepView } from '../video-reflect-step-view/video-reflect-step-view';
+import { PriorityPlannerChallengeStepView } from '../priority-planner-challenge-step-view/priority-planner-challenge-step-view';
+import { PatternSpotterChallengeStepView } from '../pattern-spotter-challenge-step-view/pattern-spotter-challenge-step-view';
+import { TimeConfidenceLinkStepView } from '../time-confidence-link-step-view/time-confidence-link-step-view';
+import { VoiceConfidenceLinkStepView } from '../voice-confidence-link-step-view/voice-confidence-link-step-view';
+import { GrowthConfidenceLinkStepView } from '../growth-confidence-link-step-view/growth-confidence-link-step-view';
+import { TrophyConfidenceLinkStepView } from '../trophy-confidence-link-step-view/trophy-confidence-link-step-view';
+import { ConfidenceContractStepView } from '../confidence-contract-step-view/confidence-contract-step-view';
+import { GoalDetectiveWarmupStepView } from '../goal-detective-warmup-step-view/goal-detective-warmup-step-view';
+import { GoalVideoReflectStepView } from '../goal-video-reflect-step-view/goal-video-reflect-step-view';
+import { SmartGoalTableStepView } from '../smart-goal-table-step-view/smart-goal-table-step-view';
+import { StaySmartChallengeStepView } from '../stay-smart-challenge-step-view/stay-smart-challenge-step-view';
+import { PromiseConfidenceLinkStepView } from '../promise-confidence-link-step-view/promise-confidence-link-step-view';
+import { PlanningRelayWarmupStepView } from '../planning-relay-warmup-step-view/planning-relay-warmup-step-view';
+import { PersonalGrowthMapStepView } from '../personal-growth-map-step-view/personal-growth-map-step-view';
+import { ShareReflectChallengeStepView } from '../share-reflect-challenge-step-view/share-reflect-challenge-step-view';
+import { ReflectionConfidenceLinkStepView } from '../reflection-confidence-link-step-view/reflection-confidence-link-step-view';
+import { SevenDayPlanningProjectStepView } from '../seven-day-planning-project-step-view/seven-day-planning-project-step-view';
 import { NutritionFoodMatchStepView } from '../nutrition-food-match-step-view/nutrition-food-match-step-view';
 import { NutritionTfWarmupStepView } from '../nutrition-tf-warmup-step-view/nutrition-tf-warmup-step-view';
 import { NutritionFillBlankStepView } from '../nutrition-fill-blank-step-view/nutrition-fill-blank-step-view';
@@ -275,6 +318,49 @@ type PlayerView = 'map' | 'lesson-welcome' | 'exercise' | 'module-complete';
     HygieneWarmupQuizStepView,
     WellnessWarmupQuizStepView,
     NutritionWarmupQuizStepView,
+    TwoTruthsAndATwistStepView,
+    StrengthSnapshotStepView,
+    OpinionCornersStepView,
+    StrengthMapStepView,
+    BigQuestionStepView,
+    RiskOrRewardStepView,
+    ConfidenceLadderStepView,
+    DiscussionPromptSamplesStepView,
+    ReflectionPromptAnswersStepView,
+    LateProjectStoryStepView,
+    StoryTalkStepView,
+    IdentitySnapshotChallengeStepView,
+    PickYourPowerStepView,
+    TemperamentQuizStepView,
+    ThisOrThatWarmupStepView,
+    ChoicesBoardStepView,
+    ChoiceJournalChallengeStepView,
+    PassTheDreamWarmupStepView,
+    PlanOrPanicWarmupStepView,
+    ShareYourPlanChallengeStepView,
+    TimeReflectionWorksheetStepView,
+    PlanItBetterChallengeStepView,
+    PlanConfidenceLinkStepView,
+    PlanRecapReflectionStepView,
+    DayPlannerGridStepView,
+    VideoReflectStepView,
+    PriorityPlannerChallengeStepView,
+    PatternSpotterChallengeStepView,
+    TimeConfidenceLinkStepView,
+    VoiceConfidenceLinkStepView,
+    GrowthConfidenceLinkStepView,
+    TrophyConfidenceLinkStepView,
+    ConfidenceContractStepView,
+    GoalDetectiveWarmupStepView,
+    GoalVideoReflectStepView,
+    SmartGoalTableStepView,
+    StaySmartChallengeStepView,
+    PromiseConfidenceLinkStepView,
+    PlanningRelayWarmupStepView,
+    PersonalGrowthMapStepView,
+    ShareReflectChallengeStepView,
+    ReflectionConfidenceLinkStepView,
+    SevenDayPlanningProjectStepView,
     NutritionFoodMatchStepView,
     NutritionTfWarmupStepView,
     NutritionFillBlankStepView,
@@ -543,11 +629,26 @@ export class ModulePlayer implements OnInit {
       case 'money-match':
       case 'money-myth-buster':
       case 'step-sequence':
+      case 'two-truths-and-a-twist':
+      case 'strength-snapshot':
+      case 'risk-or-reward':
+      case 'pick-your-power':
+      case 'this-or-that-warmup':
+      case 'pass-the-dream-warmup':
+      case 'plan-or-panic-warmup':
+      case 'goal-detective-warmup':
+      case 'planning-relay-warmup':
         return 'Warm-Up';
+      case 'plan-recap-reflection':
+        return 'Recap';
       case 'story':
       case 'story-tabs':
       case 'story-carousel':
+      case 'late-project-story':
         return 'Story Time';
+      case 'video-reflect':
+      case 'goal-video-reflect':
+        return 'Watch & Reflect';
       case 'share-prompt':
       case 'day-planner':
       case 'proud-moment':
@@ -560,12 +661,25 @@ export class ModulePlayer implements OnInit {
       case 'photo-upload-activity':
       case 'sticker-poster':
       case 'diversity-poster':
+      case 'temperament-quiz':
+      case 'choices-board':
+      case 'opinion-corners':
+      case 'strength-map':
+      case 'confidence-ladder':
+      case 'time-reflection-worksheet':
+      case 'day-planner-grid':
+      case 'priority-planner-challenge':
+      case 'smart-goal-table':
+      case 'personal-growth-map':
         return 'My Activity';
       case 'reflection':
       case 'discussion-mcq':
       case 'discussion-quiz':
       case 'discussion-match':
       case 'discussion-sequence':
+      case 'discussion-prompt-samples':
+      case 'reflection-prompt-answers':
+      case 'story-talk':
         return 'Discussion Points';
       case 'challenge':
       case 'challenge-checklist':
@@ -575,6 +689,9 @@ export class ModulePlayer implements OnInit {
       case 'challenge-minimal':
       case 'weekly-challenge':
       case 'challenge-of-the-week':
+      case 'identity-snapshot-challenge':
+      case 'choice-journal-challenge':
+      case 'share-your-plan-challenge':
       case 'challenge-confidence-week':
       case 'detective-challenge':
       case 'goal-challenge-tracker':
@@ -616,6 +733,10 @@ export class ModulePlayer implements OnInit {
       case 'hygiene-detective-challenge':
       case 'hygiene-checklist-challenge':
       case 'wellness-feelings-journal':
+      case 'plan-it-better-challenge':
+      case 'pattern-spotter-challenge':
+      case 'stay-smart-challenge':
+      case 'share-reflect-challenge':
         return 'Challenge of the Week';
       case 'digital-etiquette-tracker':
       case 'digital-responsibility-tracker':
@@ -626,6 +747,8 @@ export class ModulePlayer implements OnInit {
       case 'service-project-final':
       case 'teamwork-reflection-mission':
       case 'hygiene-final-challenge':
+      case 'seven-day-planning-project':
+      case 'confidence-contract':
         return 'Final Challenge';
       case 'confidence-link':
       case 'strategic-thinker-link':
@@ -640,6 +763,13 @@ export class ModulePlayer implements OnInit {
       case 'consequence-confidence-link':
       case 'module-outcome-confidence-link':
       case 'hygiene-confidence-link':
+      case 'plan-confidence-link':
+      case 'time-confidence-link':
+      case 'voice-confidence-link':
+      case 'growth-confidence-link':
+      case 'trophy-confidence-link':
+      case 'promise-confidence-link':
+      case 'reflection-confidence-link':
         return 'Confidence Link';
       case 'matching-game':
       case 'plan-it-race':
@@ -650,13 +780,18 @@ export class ModulePlayer implements OnInit {
       case 'multiple-choice':
         return 'Question';
       case 'smart-goals-lesson':
+      case 'big-question':
         return 'Lesson';
       case 'smart-goal-builder':
         return 'My Activity';
+      default:
+        return 'Step';
     }
   }
 
   lessonStatus(lesson: Lesson): LessonStatus {
+    // A "coming soon" lesson always stays locked, whatever the student's progress.
+    if (lesson.comingSoon) return 'locked';
     const progress = this.progress();
     if (!progress) return 'locked';
     if (progress.status === 'completed' || progress.completedLessonIds.includes(lesson.id)) return 'completed';
@@ -728,7 +863,31 @@ export class ModulePlayer implements OnInit {
       exercise?.type === 'day-planner' ||
       exercise?.type === 'confidence-badge' ||
       exercise?.type === 'confidence-plan' ||
-      exercise?.type === 'activity-steps';
+      exercise?.type === 'activity-steps' ||
+      exercise?.type === 'identity-snapshot-challenge' ||
+      exercise?.type === 'choice-journal-challenge' ||
+      exercise?.type === 'share-your-plan-challenge' ||
+      exercise?.type === 'this-or-that-warmup' ||
+      exercise?.type === 'strength-snapshot' ||
+      exercise?.type === 'opinion-corners' ||
+      exercise?.type === 'strength-map' ||
+      exercise?.type === 'confidence-ladder' ||
+      exercise?.type === 'risk-or-reward' ||
+      exercise?.type === 'pass-the-dream-warmup' ||
+      exercise?.type === 'time-reflection-worksheet' ||
+      exercise?.type === 'plan-it-better-challenge' ||
+      exercise?.type === 'plan-recap-reflection' ||
+      exercise?.type === 'day-planner-grid' ||
+      exercise?.type === 'video-reflect' ||
+      exercise?.type === 'priority-planner-challenge' ||
+      exercise?.type === 'pattern-spotter-challenge' ||
+      exercise?.type === 'goal-video-reflect' ||
+      exercise?.type === 'smart-goal-table' ||
+      exercise?.type === 'stay-smart-challenge' ||
+      exercise?.type === 'personal-growth-map' ||
+      exercise?.type === 'share-reflect-challenge' ||
+      exercise?.type === 'seven-day-planning-project' ||
+      exercise?.type === 'confidence-contract';
 
     this.progressService
       .submitShare(student.id, `${student.firstName} ${student.lastName}`, module, lessonId, exerciseId, values)

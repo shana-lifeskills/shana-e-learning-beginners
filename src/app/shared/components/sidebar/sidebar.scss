@@ -4,10 +4,18 @@
 // the full row height — but that stretch only resizes the host's own box.
 // Without these, the .app-sidebar panel inside would stay shrink-to-fit and
 // stop short of the footer instead of filling the stretched host.
+//
+// It's also pinned in place while the page scrolls, matching the header:
+// `sticky` with `top` offset by the header's height (so it tucks in right
+// below it instead of sliding underneath), and its own height capped to
+// the remaining viewport so a tall page scrolls the main content only.
 :host {
   display: flex;
   flex-direction: column;
-  align-self: stretch;
+  align-self: flex-start;
+  position: sticky;
+  top: v.$app-header-height;
+  height: calc(100vh - #{v.$app-header-height});
 
   @media (max-width: 900px) {
     display: none;
@@ -20,8 +28,9 @@
   display: flex;
   flex-direction: column;
   padding: 1.5rem 1rem;
-  background: linear-gradient(190deg, rgba(78, 205, 196, 0.5), rgba(166, 109, 212, 0.28));
+  background: linear-gradient(190deg, rgba(47, 122, 140, 0.45), rgba(242, 146, 30, 0.16));
   box-shadow: inset -1px 0 0 rgba(43, 45, 66, 0.08);
+  overflow-y: auto;
 }
 
 nav {
@@ -47,7 +56,7 @@ nav {
   }
 
   &.active {
-    background: linear-gradient(90deg, #{v.$color-sky}, #{v.$color-grape});
+    background: linear-gradient(90deg, #{v.$color-sky}, #{v.$color-coral});
     color: v.$color-white;
     box-shadow: 0 4px 0 rgba(0, 0, 0, 0.08);
   }

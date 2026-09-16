@@ -1,0 +1,101 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- Confidence Link: owning my voice (vcl) — Self-Confidence Module, Week 2 ---- */
+$vcl-ink: #1f2937;
+$vcl-coral: #ff6f59;
+$vcl-coral-lt: #ff9478;
+$vcl-bg: #fff1ec;
+
+.vcl {
+  display: flex;
+  justify-content: center;
+  padding: 2.5rem 1rem;
+}
+
+.vcl-card {
+  max-width: 30rem;
+  width: 100%;
+  padding: 2.75rem clamp(1.5rem, 5vw, 2.75rem);
+  text-align: center;
+  background: radial-gradient(circle at 50% 0%, #fff8f5, $vcl-bg 72%);
+  border: 2px solid rgba($vcl-coral, 0.2);
+  border-radius: v.$border-radius-xl;
+  box-shadow: 0 12px 30px rgba($vcl-coral, 0.16);
+}
+
+.vcl-eyebrow {
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: $vcl-coral-lt;
+}
+
+.vcl-bubble {
+  display: block;
+  width: 5rem;
+  height: 5rem;
+  margin: 1rem auto 0.75rem;
+}
+
+.vcl-shape {
+  fill: v.$color-white;
+  stroke: $vcl-coral;
+  stroke-width: 3;
+  stroke-linejoin: round;
+}
+
+.vcl-dot {
+  fill: $vcl-coral;
+  animation: vcl-bounce 1.4s ease-in-out infinite;
+}
+
+.vcl-dot:nth-child(2) { animation-delay: 0.15s; }
+.vcl-dot:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes vcl-bounce {
+  0%, 60%, 100% { transform: translateY(0); }
+  30% { transform: translateY(-3px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vcl-dot { animation: none; }
+}
+
+.vcl-card h2 {
+  @include m.playful-heading;
+  margin: 0 0 1.25rem;
+  font-size: clamp(1.25rem, 4vw, 1.6rem);
+  color: $vcl-ink;
+}
+
+.vcl-quote {
+  margin: 0;
+  padding: 0 0.5rem;
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: clamp(1.2rem, 4.5vw, 1.55rem);
+  line-height: 1.4;
+  color: $vcl-coral;
+
+  &::before { content: '“'; }
+  &::after { content: '”'; }
+}
+
+.vcl-caption {
+  margin: 1.4rem 0 2rem;
+  font-size: 0.96rem;
+  color: rgba($vcl-ink, 0.6);
+}
+
+.vcl-continue {
+  @include m.tappable;
+  padding: 0.85rem 2rem;
+  background: linear-gradient(120deg, $vcl-coral, $vcl-coral-lt);
+  border: none;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: v.$color-white;
+}

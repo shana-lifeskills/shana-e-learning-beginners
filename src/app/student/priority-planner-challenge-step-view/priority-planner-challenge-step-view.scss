@@ -1,0 +1,410 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- Weekly Priority Planner Challenge (ppc) — Planning Module, Week 2 ---- */
+$ppc-ink: #23283a;
+$ppc-navy: #2f3a63;
+$ppc-a: #d24b3e;   // urgent + important — do now
+$ppc-b: #3a9b64;   // important not urgent — plan
+$ppc-c: #e0972f;   // urgent not important — delegate
+$ppc-d: #7c8296;   // neither — eliminate
+$ppc-mist: #eef0f7;
+
+.ppc {
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 1.6rem clamp(0.75rem, 3vw, 1.5rem) 2rem;
+  color: $ppc-ink;
+}
+
+.ppc-head {
+  text-align: center;
+}
+
+.ppc-badge {
+  display: inline-block;
+  padding: 0.32rem 0.95rem;
+  border-radius: 999px;
+  background: rgba($ppc-navy, 0.14);
+  font-weight: 800;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $ppc-navy;
+}
+
+.ppc-head h2 {
+  @include m.playful-heading;
+  margin: 0.5rem 0 0.3rem;
+  font-size: clamp(1.35rem, 4.5vw, 1.8rem);
+}
+
+.ppc-objective {
+  margin: 0;
+  font-size: 0.92rem;
+  color: rgba($ppc-ink, 0.68);
+}
+
+/* --- phase track --- */
+.ppc-track {
+  list-style: none;
+  display: flex;
+  gap: 0.35rem;
+  margin: 1.2rem 0 0;
+  padding: 0;
+
+  li {
+    flex: 1;
+    text-align: center;
+    padding: 0.4rem 0.2rem;
+    border-radius: 999px;
+    background: $ppc-mist;
+    font-weight: 800;
+    font-size: 0.68rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: rgba($ppc-ink, 0.45);
+
+    &.on { background: $ppc-navy; color: v.$color-white; }
+    &.done { background: rgba($ppc-b, 0.2); color: #2f7d55; }
+  }
+}
+
+.ppc-phase {
+  margin-top: 1.3rem;
+}
+
+.ppc-h {
+  @include m.playful-heading;
+  margin: 0 0 0.3rem;
+  font-size: 1.15rem;
+  color: $ppc-navy;
+}
+
+.ppc-intro {
+  margin: 0 0 1rem;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: rgba($ppc-ink, 0.75);
+}
+
+/* --- matrix --- */
+.ppc-matrix {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+}
+
+.ppc-quad {
+  padding: 0.9rem;
+  border-radius: 12px;
+  border: 2px solid;
+  background: v.$color-white;
+
+  h4 {
+    margin: 0.3rem 0 0.35rem;
+    font-family: v.$headings-font-family;
+    font-weight: 800;
+    font-size: 0.98rem;
+  }
+
+  &[data-key='A'] { border-color: $ppc-a; background: rgba($ppc-a, 0.07); }
+  &[data-key='B'] { border-color: $ppc-b; background: rgba($ppc-b, 0.07); }
+  &[data-key='C'] { border-color: $ppc-c; background: rgba($ppc-c, 0.07); }
+  &[data-key='D'] { border-color: $ppc-d; background: rgba($ppc-d, 0.09); }
+}
+
+.ppc-quad-tag {
+  font-weight: 800;
+  font-size: 0.66rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+
+  .ppc-quad[data-key='A'] & { color: $ppc-a; }
+  .ppc-quad[data-key='B'] & { color: #2f7d55; }
+  .ppc-quad[data-key='C'] & { color: #a5651c; }
+  .ppc-quad[data-key='D'] & { color: #5a6172; }
+}
+
+.ppc-quad-desc {
+  margin: 0 0 0.4rem;
+  font-size: 0.84rem;
+  line-height: 1.4;
+  color: rgba($ppc-ink, 0.8);
+}
+
+.ppc-quad-eg {
+  margin: 0;
+  font-size: 0.8rem;
+  color: rgba($ppc-ink, 0.6);
+
+  span { font-weight: 800; text-transform: uppercase; font-size: 0.66rem; letter-spacing: 0.04em; }
+}
+
+.ppc-quad-answer {
+  margin: 0.3rem 0 0;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  white-space: pre-wrap;
+}
+
+@media (max-width: 30rem) {
+  .ppc-matrix { grid-template-columns: 1fr; }
+}
+
+/* --- video --- */
+.ppc-video { margin: 0; }
+
+.ppc-frame {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: v.$border-radius-lg;
+  overflow: hidden;
+  background: #0d0d14;
+  border: 2px solid rgba($ppc-ink, 0.15);
+}
+
+.ppc-iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
+.ppc-play {
+  @include m.tappable;
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  border: none;
+  background: radial-gradient(circle at 50% 45%, #2a2740, #0d0d14);
+  color: v.$color-white;
+  font-weight: 800;
+  font-size: 0.95rem;
+
+  span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.8rem;
+    height: 2.8rem;
+    border-radius: 50%;
+    background: $ppc-a;
+    padding-left: 0.2rem;
+  }
+}
+
+.ppc-video-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  margin: 0.7rem 0 0;
+  font-size: 0.87rem;
+  color: rgba($ppc-ink, 0.7);
+
+  strong { color: $ppc-ink; }
+  a { color: $ppc-a; font-weight: 700; text-decoration: none; }
+}
+
+.ppc-watched {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin: 1rem 0 0;
+  padding: 0.65rem 0.9rem;
+  background: rgba($ppc-b, 0.1);
+  border: 1.5px solid rgba($ppc-b, 0.35);
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+
+  input { width: 1.1rem; height: 1.1rem; accent-color: $ppc-b; }
+}
+
+/* --- plan grid --- */
+.ppc-plan-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.7rem;
+}
+
+@media (max-width: 34rem) {
+  .ppc-plan-grid { grid-template-columns: 1fr; }
+}
+
+.ppc-plan-cell {
+  padding: 0.7rem;
+  border-radius: 10px;
+  border: 2px solid;
+
+  &[data-key='A'] { border-color: rgba($ppc-a, 0.5); }
+  &[data-key='B'] { border-color: rgba($ppc-b, 0.5); }
+  &[data-key='C'] { border-color: rgba($ppc-c, 0.5); }
+  &[data-key='D'] { border-color: rgba($ppc-d, 0.5); }
+
+  label {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-weight: 700;
+    font-size: 0.82rem;
+    line-height: 1.3;
+
+    em { color: rgba($ppc-ink, 0.55); font-style: normal; }
+  }
+
+  textarea {
+    width: 100%;
+    padding: 0.55rem 0.65rem;
+    border: 1.5px solid rgba($ppc-navy, 0.22);
+    border-radius: 8px;
+    font: inherit;
+    resize: vertical;
+    background: v.$color-white;
+
+    &:focus { outline: none; border-color: $ppc-navy; }
+  }
+}
+
+.ppc-plan-key {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.3rem;
+  height: 1.3rem;
+  margin-right: 0.3rem;
+  border-radius: 50%;
+  background: $ppc-navy;
+  color: v.$color-white;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+/* --- reflect --- */
+.ppc-prompts {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+
+  li {
+    padding: 0.9rem;
+    background: $ppc-mist;
+    border-radius: 10px;
+    border-left: 4px solid $ppc-navy;
+  }
+
+  textarea {
+    width: 100%;
+    margin-top: 0.5rem;
+    padding: 0.55rem 0.7rem;
+    border: 1.5px solid rgba($ppc-navy, 0.22);
+    border-radius: 8px;
+    font: inherit;
+    resize: vertical;
+    background: v.$color-white;
+
+    &:focus { outline: none; border-color: $ppc-b; }
+  }
+}
+
+.ppc-prompt-q {
+  margin: 0;
+  font-weight: 700;
+  font-size: 0.94rem;
+  line-height: 1.35;
+}
+
+.ppc-prompt-follow {
+  margin: 0.2rem 0 0;
+  font-size: 0.85rem;
+  font-style: italic;
+  color: rgba($ppc-ink, 0.6);
+}
+
+.ppc-tip {
+  margin: 1.1rem 0 0;
+  padding: 0.9rem 1rem;
+  background: rgba($ppc-c, 0.12);
+  border: 1.5px solid rgba($ppc-c, 0.4);
+  border-radius: 10px;
+
+  span {
+    font-weight: 800;
+    font-size: 0.72rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #a5651c;
+  }
+
+  p { margin: 0.3rem 0 0; font-size: 0.9rem; line-height: 1.5; }
+}
+
+/* --- buttons --- */
+.ppc-btn {
+  @include m.tappable;
+  display: block;
+  width: 100%;
+  margin-top: 1.3rem;
+  padding: 0.85rem 1.5rem;
+  border: none;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 1.03rem;
+  color: v.$color-white;
+  background: linear-gradient(120deg, $ppc-navy, #4a5a9c);
+
+  &:disabled { opacity: 0.4; }
+}
+
+.ppc-btn-finish { background: $ppc-b; }
+
+/* --- done --- */
+.ppc-done {
+  padding: 1.6rem clamp(1rem, 4vw, 1.7rem);
+  background: v.$color-white;
+  border: 2px solid rgba($ppc-navy, 0.18);
+  border-radius: v.$border-radius-xl;
+  box-shadow: 0 10px 26px rgba($ppc-navy, 0.14);
+
+  h3 {
+    @include m.playful-heading;
+    margin: 0 0 0.2rem;
+    font-size: 1.3rem;
+    color: $ppc-navy;
+    text-align: center;
+  }
+}
+
+.ppc-done-sub {
+  margin: 0 0 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: rgba($ppc-ink, 0.6);
+}
+
+.ppc-reflect-summary {
+  margin: 1rem 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+
+  div { padding: 0.65rem 0.8rem; background: $ppc-mist; border-radius: 9px; }
+  dt { font-weight: 800; font-size: 0.8rem; color: rgba($ppc-ink, 0.7); }
+  dd { margin: 0.2rem 0 0; font-size: 0.9rem; line-height: 1.4; }
+}
+
+.ppc-complete {
+  margin: 1.2rem 0 0;
+  text-align: center;
+
+  h4 {
+    @include m.playful-heading;
+    margin: 0 0 0.3rem;
+    font-size: 1.1rem;
+    color: $ppc-b;
+  }
+
+  p { margin: 0; font-size: 0.9rem; color: rgba($ppc-ink, 0.75); }
+}

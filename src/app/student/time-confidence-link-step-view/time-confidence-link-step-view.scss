@@ -1,0 +1,120 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- Confidence Link: design your time (tcl) — Planning Module, Week 2 ---- */
+$tcl-ink: #1f2937;
+$tcl-teal: #1f7a70;
+$tcl-teal-lt: #35b6a4;
+$tcl-gold: #e0a53a;
+$tcl-bg: #ecf6f4;
+
+.tcl {
+  display: flex;
+  justify-content: center;
+  padding: 2.5rem 1rem;
+}
+
+.tcl-card {
+  max-width: 30rem;
+  width: 100%;
+  padding: 2.75rem clamp(1.5rem, 5vw, 2.75rem);
+  text-align: center;
+  background: radial-gradient(circle at 50% 0%, #f2faf8, $tcl-bg 72%);
+  border: 2px solid rgba($tcl-teal, 0.2);
+  border-radius: v.$border-radius-xl;
+  box-shadow: 0 12px 30px rgba($tcl-teal, 0.16);
+}
+
+.tcl-eyebrow {
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: $tcl-teal-lt;
+}
+
+.tcl-clock {
+  display: block;
+  width: 5.5rem;
+  height: 5.5rem;
+  margin: 1rem auto 0.75rem;
+}
+
+.tcl-face {
+  fill: v.$color-white;
+  stroke: $tcl-teal;
+  stroke-width: 3;
+}
+
+.tcl-mark {
+  stroke: rgba($tcl-teal, 0.5);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+}
+
+.tcl-hand {
+  stroke: $tcl-ink;
+  stroke-linecap: round;
+}
+
+.tcl-hand-hour {
+  stroke-width: 4;
+  transform-origin: 50px 50px;
+  animation: tcl-hour 36s linear infinite;
+}
+
+.tcl-hand-min {
+  stroke-width: 3;
+  stroke: $tcl-gold;
+  transform-origin: 50px 50px;
+  animation: tcl-min 3s linear infinite;
+}
+
+.tcl-pin { fill: $tcl-ink; }
+
+@keyframes tcl-hour {
+  to { transform: rotate(360deg); }
+}
+@keyframes tcl-min {
+  to { transform: rotate(360deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tcl-hand-hour, .tcl-hand-min { animation: none; }
+}
+
+.tcl-card h2 {
+  @include m.playful-heading;
+  margin: 0 0 1.25rem;
+  font-size: clamp(1.25rem, 4vw, 1.6rem);
+  color: $tcl-ink;
+}
+
+.tcl-quote {
+  margin: 0;
+  padding: 0 0.5rem;
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: clamp(1.2rem, 4.5vw, 1.55rem);
+  line-height: 1.4;
+  color: $tcl-teal;
+
+  &::before { content: '“'; }
+  &::after { content: '”'; }
+}
+
+.tcl-caption {
+  margin: 1.4rem 0 2rem;
+  font-size: 0.96rem;
+  color: rgba($tcl-ink, 0.6);
+}
+
+.tcl-continue {
+  @include m.tappable;
+  padding: 0.85rem 2rem;
+  background: linear-gradient(120deg, $tcl-teal, $tcl-teal-lt);
+  border: none;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: v.$color-white;
+}

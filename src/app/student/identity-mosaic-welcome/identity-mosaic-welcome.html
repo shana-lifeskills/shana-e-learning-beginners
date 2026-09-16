@@ -1,0 +1,55 @@
+<div class="imw">
+  <div class="imw-banner">🌟 Theme: {{ imw.themeLabel }} 🌟</div>
+
+  <div class="imw-hero">
+    <div class="imw-hero-copy">
+      <span class="imw-age-badge">{{ imw.ageBadge }}</span>
+      <h1>
+        <span class="imw-title-start">{{ imw.titleStart }}</span>
+        <span class="imw-title-accent">{{ imw.titleAccent }}</span>
+      </h1>
+      <p class="imw-subtitle">{{ imw.subtitle }}</p>
+    </div>
+    <div class="imw-image-wrap">
+      <img [src]="imw.image" [alt]="imw.imageAlt" />
+    </div>
+  </div>
+
+  <div class="imw-card">
+    <div class="imw-pill-row">
+      <span class="imw-week-pill">{{ imw.weekPill }}</span>
+      <span class="imw-stage-pill">{{ imw.stagePill }}</span>
+    </div>
+
+    <h2 class="imw-card-title">"{{ imw.cardTitle }}"</h2>
+
+    <div class="imw-objective-box">
+      <p class="imw-objective-label">🎯 {{ imw.objectiveLabel }}</p>
+      <ul class="imw-objectives">
+        @for (o of imw.objectives; track o.text) {
+          <li><span class="imw-objective-icon">{{ o.icon }}</span>{{ o.text }}</li>
+        }
+      </ul>
+    </div>
+
+    <p class="imw-tags-heading">{{ imw.tagsHeading }}</p>
+    <div class="imw-tags">
+      @for (tag of imw.tags; track tag.label) {
+        <span class="imw-tag" [class]="'imw-tag--' + tag.variant">{{ tag.icon }} {{ tag.label }}</span>
+      }
+    </div>
+  </div>
+
+  @if (isCompletedLessonWelcome()) {
+    @if (nextLesson(); as next) {
+      <button type="button" class="imw-start" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+    } @else {
+      <button type="button" class="imw-start" (click)="backToMap()">Back to My Modules →</button>
+    }
+    <button type="button" class="imw-review" (click)="beginLesson()">↺ Review this lesson</button>
+  } @else {
+    <button type="button" class="imw-start" (click)="beginLesson()">{{ imw.startLabel }} →</button>
+  }
+
+  <p class="imw-footer">{{ imw.footerNote }}</p>
+</div>

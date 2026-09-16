@@ -9,7 +9,7 @@ import { AppFooter } from './shared/components/app-footer/app-footer';
 import { AuthService } from './core/services/auth.service';
 
 /** Routes that are their own full page — no app shell, even while a user stays signed in. */
-const AUTH_ROUTES = ['/welcome', '/login', '/signup'];
+const AUTH_ROUTES = ['/login', '/signup'];
 
 @Component({
   selector: 'app-root',
@@ -26,7 +26,7 @@ export class App {
 
   /**
    * The header/sidebar/footer chrome shows only for a signed-in user on an
-   * in-app route. Auth screens (welcome, login, signup) render bare even if the
+   * in-app route. Auth screens (login, signup) render bare even if the
    * user is still signed in — otherwise visiting them shows the app shell
    * wrapped around the sign-in page.
    */

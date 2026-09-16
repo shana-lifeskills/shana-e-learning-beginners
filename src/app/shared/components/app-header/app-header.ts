@@ -29,7 +29,7 @@ export class AppHeader {
   logout(): void {
     this.menuOpen.set(false);
     this.auth.logout();
-    this.router.navigate(['/welcome']);
+    this.router.navigate(['/login']);
   }
 
   @HostListener('document:click', ['$event'])

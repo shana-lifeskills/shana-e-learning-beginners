@@ -1,0 +1,359 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- Challenge: Plan It Better! (pib) — Planning Module, Week 1 ---- */
+$pib-ink: #23243f;
+$pib-violet: #6a4fd0;
+$pib-pink: #e0559a;
+$pib-gold: #f2b134;
+$pib-teal: #2fb0a3;
+$pib-mist: #f2f0fc;
+
+.pib {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 1.5rem clamp(0.75rem, 3vw, 1.5rem) 2rem;
+  color: $pib-ink;
+}
+
+/* --- hero --- */
+.pib-hero {
+  padding: 1.8rem 1.4rem;
+  text-align: center;
+  color: v.$color-white;
+  background: linear-gradient(135deg, $pib-violet, $pib-pink);
+  border-radius: v.$border-radius-xl v.$border-radius-xl 0 0;
+}
+
+.pib-badge {
+  display: inline-block;
+  padding: 0.35rem 1rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.22);
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.pib-hero h2 {
+  @include m.playful-heading;
+  margin: 0.6rem 0 0.3rem;
+  font-size: clamp(1.6rem, 5vw, 2.2rem);
+}
+
+.pib-intro {
+  margin: 0;
+  font-size: 0.98rem;
+  opacity: 0.92;
+}
+
+/* --- blocks --- */
+.pib-block {
+  padding: 1.3rem clamp(1rem, 4vw, 1.6rem);
+  background: v.$color-white;
+  border: 2px solid $pib-mist;
+  border-top: none;
+
+  &:last-of-type { border-radius: 0 0 v.$border-radius-xl v.$border-radius-xl; }
+}
+
+.pib-h {
+  @include m.playful-heading;
+  margin: 0 0 0.2rem;
+  font-size: 1.1rem;
+  color: $pib-violet;
+}
+
+.pib-hint {
+  margin: 0 0 0.8rem;
+  font-size: 0.88rem;
+  color: rgba($pib-ink, 0.6);
+}
+
+.pib-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.pib-chip {
+  @include m.tappable;
+  padding: 0.5rem 1rem;
+  border: 2px solid rgba($pib-violet, 0.3);
+  border-radius: 999px;
+  background: v.$color-white;
+  font-weight: 700;
+  font-size: 0.88rem;
+  color: $pib-violet;
+
+  &.on {
+    background: $pib-violet;
+    border-color: $pib-violet;
+    color: v.$color-white;
+  }
+}
+
+.pib-custom-label {
+  display: block;
+  margin: 0.9rem 0 0.35rem;
+  font-weight: 700;
+  font-size: 0.82rem;
+  color: rgba($pib-ink, 0.6);
+}
+
+.pib-input {
+  width: 100%;
+  padding: 0.65rem 0.8rem;
+  border: 2px solid rgba($pib-violet, 0.22);
+  border-radius: 10px;
+  font: inherit;
+  background: $pib-mist;
+
+  &:focus {
+    outline: none;
+    border-color: $pib-pink;
+  }
+}
+
+/* --- 7-day tracker --- */
+.pib-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.4rem;
+}
+
+.pib-day {
+  @include m.tappable;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.55rem 0.2rem;
+  border: 2px solid rgba($pib-teal, 0.3);
+  border-radius: 12px;
+  background: v.$color-white;
+
+  &.on {
+    background: rgba($pib-teal, 0.14);
+    border-color: $pib-teal;
+  }
+}
+
+.pib-day-check {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.4rem;
+  height: 1.4rem;
+  border-radius: 50%;
+  background: rgba($pib-teal, 0.18);
+  color: transparent;
+  font-size: 0.85rem;
+  font-weight: 800;
+
+  .pib-day.on & {
+    background: $pib-teal;
+    color: v.$color-white;
+  }
+}
+
+.pib-day-label {
+  font-weight: 700;
+  font-size: 0.68rem;
+  color: rgba($pib-ink, 0.65);
+}
+
+/* --- reflection --- */
+.pib-reflect {
+  background: $pib-mist;
+}
+
+.pib-daysused {
+  margin: 0 0 1rem;
+  font-size: 0.98rem;
+
+  strong {
+    margin-left: 0.3rem;
+    color: $pib-teal;
+    font-size: 1.05rem;
+  }
+}
+
+.pib-rating {
+  margin-bottom: 1rem;
+}
+
+.pib-rating-label {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: rgba($pib-ink, 0.7);
+}
+
+.pib-stars {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.pib-star {
+  @include m.tappable;
+  padding: 0;
+  border: none;
+  background: none;
+  font-size: 1.9rem;
+  line-height: 1;
+  color: rgba($pib-ink, 0.2);
+
+  &.on { color: $pib-gold; }
+}
+
+.pib-learned-label {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: rgba($pib-ink, 0.7);
+}
+
+.pib-textarea {
+  width: 100%;
+  padding: 0.7rem 0.8rem;
+  border: 2px solid rgba($pib-violet, 0.22);
+  border-radius: 10px;
+  font: inherit;
+  resize: vertical;
+  background: v.$color-white;
+
+  &:focus {
+    outline: none;
+    border-color: $pib-pink;
+  }
+}
+
+.pib-submit,
+.pib-continue {
+  @include m.tappable;
+  display: block;
+  width: 100%;
+  margin-top: 1.3rem;
+  padding: 0.9rem 1.5rem;
+  border: none;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: v.$color-white;
+}
+
+.pib-submit {
+  background: linear-gradient(120deg, $pib-violet, $pib-pink);
+  box-shadow: 0 6px 0 rgba($pib-violet, 0.25);
+
+  &:disabled {
+    opacity: 0.4;
+    box-shadow: none;
+  }
+}
+
+/* --- result / certificate --- */
+.pib-result {
+  margin-top: 1rem;
+  padding: 2rem clamp(1.2rem, 4vw, 2rem);
+  text-align: center;
+  background: v.$color-white;
+  border: 3px solid $pib-gold;
+  border-radius: v.$border-radius-xl;
+  box-shadow: 0 12px 30px rgba($pib-violet, 0.16);
+}
+
+.pib-result-seal { font-size: 2.8rem; }
+
+.pib-result h3 {
+  @include m.playful-heading;
+  margin: 0.4rem 0 0.2rem;
+  font-size: 1.4rem;
+  color: $pib-violet;
+}
+
+.pib-result-sub {
+  margin: 0 0 1.3rem;
+  font-size: 0.94rem;
+  color: rgba($pib-ink, 0.65);
+}
+
+.pib-result-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.7rem;
+  margin: 0 0 1rem;
+  text-align: left;
+
+  div {
+    padding: 0.7rem 0.85rem;
+    background: $pib-mist;
+    border-radius: 10px;
+  }
+
+  dt {
+    font-weight: 800;
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: rgba($pib-ink, 0.55);
+  }
+
+  dd {
+    margin: 0.2rem 0 0;
+    font-weight: 700;
+    font-size: 0.96rem;
+    color: $pib-ink;
+  }
+}
+
+.pib-result-stars span {
+  color: rgba($pib-ink, 0.2);
+  font-size: 1rem;
+
+  &.on { color: $pib-gold; }
+}
+
+.pib-result-learned {
+  padding: 0.9rem 1rem;
+  text-align: left;
+  background: rgba($pib-teal, 0.1);
+  border-left: 4px solid $pib-teal;
+  border-radius: 0 10px 10px 0;
+
+  span {
+    font-weight: 800;
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #1f7a70;
+  }
+
+  p { margin: 0.3rem 0 0; font-size: 0.95rem; line-height: 1.5; }
+}
+
+.pib-done {
+  margin: 1.2rem 0 0;
+
+  h4 {
+    @include m.playful-heading;
+    margin: 0 0 0.3rem;
+    font-size: 1.1rem;
+    color: $pib-pink;
+  }
+
+  p { margin: 0; font-size: 0.92rem; color: rgba($pib-ink, 0.75); }
+}
+
+.pib-continue {
+  background: $pib-teal;
+}
+
+@media (max-width: 26rem) {
+  .pib-result-grid { grid-template-columns: 1fr; }
+  .pib-day-label { font-size: 0.6rem; }
+}

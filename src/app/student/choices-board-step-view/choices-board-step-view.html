@@ -1,0 +1,54 @@
+<div class="cb">
+  @if (!finished()) {
+    <span class="cb-badge">{{ step().badge }}</span>
+    <h1>{{ step().title }}</h1>
+    <p class="cb-subtitle">{{ step().subtitle }}</p>
+
+    <p class="cb-progress">Scenario {{ sIndex() + 1 }} of {{ step().scenarios.length }}</p>
+
+    @if (currentScenario(); as scenario) {
+      <div class="cb-card">
+        <p class="cb-situation">{{ scenario.situation }}</p>
+
+        <div class="cb-choices">
+          @for (choice of scenario.choices; track choice.label; let i = $index) {
+            <div
+              class="cb-choice"
+              [class.cb-choice--correct]="isRevealed(i) && choice.correct"
+              [class.cb-choice--alt]="isRevealed(i) && !choice.correct"
+            >
+              <button type="button" class="cb-choice-btn" [disabled]="isRevealed(i)" (click)="pick(i)">
+                <span class="cb-choice-tag">{{ choice.label }}</span>
+                <span class="cb-choice-text">{{ choice.text }}</span>
+              </button>
+
+              @if (isRevealed(i)) {
+                <div class="cb-feedback">
+                  <span class="cb-feedback-tag">
+                    {{ choice.correct ? '✅ ' + step().correctLabel : '❌ ' + step().alternativeLabel }}
+                  </span>
+                  <p>{{ choice.feedback }}</p>
+                </div>
+              }
+            </div>
+          }
+        </div>
+
+        @if (correctReached()) {
+          <button type="button" class="cb-next" (click)="next()">
+            {{ isLastScenario() ? step().continueLabel : step().nextLabel }} →
+          </button>
+        } @else if (revealed().length > 0) {
+          <p class="cb-retry-hint">{{ step().retryHint }}</p>
+        }
+      </div>
+    }
+  } @else {
+    <div class="cb-complete">
+      <span class="cb-complete-icon">🧭</span>
+      <h2>{{ step().completeHeading }}</h2>
+      <p>{{ step().completeText }}</p>
+      <button type="button" class="cb-next" (click)="finish()">{{ step().continueLabel }} →</button>
+    </div>
+  }
+</div>

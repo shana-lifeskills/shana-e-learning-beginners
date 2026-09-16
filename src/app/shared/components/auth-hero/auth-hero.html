@@ -1,20 +1,19 @@
 <div class="hero-panel">
-  <span class="dot dot-1"></span>
-  <span class="dot dot-2"></span>
-  <span class="dot dot-3"></span>
-  <span class="dot dot-4"></span>
+  <div class="hero-brand">
+    <span class="brand-mark">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M4 5.5c2-1 5-1 8 0v13c-3-1-6-1-8 0v-13z" stroke-linejoin="round" /><path d="M20 5.5c-2-1-5-1-8 0v13c3-1 6-1 8 0v-13z" stroke-linejoin="round" /></svg>
+    </span>
+    <span class="brand-name">ShanaLifeSkills</span>
+  </div>
 
-  <div class="illustration-wrap">
-    <span class="glow"></span>
-    <img class="owl-img" src="/assets/images/hero-owl.png" alt="Ollie the owl, holding a book that says Let's Learn" />
-
-    <span class="feature-pill pill-1">🏅 Earn real badges</span>
-    <span class="feature-pill pill-2">🛡️ Safe for kids</span>
-    <span class="feature-pill pill-3">🎯 Bite-sized lessons</span>
+  <div class="hero-illustration">
+    <img [src]="heroImage()" alt="Illustration of learners on ShanaLifeSkills" />
+    <span class="floaty-pill pill-1">{{ streakPillText() }}</span>
+    <span class="floaty-pill pill-2">{{ adventurePillText() }}</span>
   </div>
 
   <div class="hero-copy">
-    <h2>Learning made for little explorers.</h2>
-    <p>Fun, safe lessons that help kids build confidence — one badge at a time.</p>
+    <p class="tagline">{{ tagline() }}</p>
+    <h2>{{ headline() }}</h2>
   </div>
 </div>

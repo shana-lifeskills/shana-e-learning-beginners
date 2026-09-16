@@ -1,0 +1,78 @@
+<div class="prr">
+  <header class="prr-head">
+    <span class="prr-badge">{{ step().badge }}</span>
+    <h2>{{ step().title }}</h2>
+    <p class="prr-intro">{{ step().intro }}</p>
+    <p class="prr-lead">{{ step().lead }}</p>
+  </header>
+
+  @if (!locked()) {
+    <ol class="prr-list">
+      @for (q of step().questions; track q.id; let i = $index) {
+        <li class="prr-item">
+          <span class="prr-num">{{ i + 1 }}</span>
+          <div class="prr-body">
+            <p class="prr-q">{{ q.question }}</p>
+
+            @if (q.kind === 'text') {
+              <textarea
+                class="prr-textarea"
+                rows="2"
+                [value]="text()[q.id] ?? ''"
+                [placeholder]="q.placeholder ?? ''"
+                (input)="setText(q.id, $any($event.target).value)"
+              ></textarea>
+              @if (q.example) {
+                <p class="prr-example">e.g. {{ q.example }}</p>
+              }
+            } @else {
+              <div class="prr-scale">
+                @for (r of ratings; track r) {
+                  <button
+                    type="button"
+                    class="prr-dot"
+                    [class.on]="scaleValue(q.id) === r"
+                    (click)="setScale(q.id, r)"
+                    [attr.aria-label]="r + ' out of 5'"
+                  >{{ r }}</button>
+                }
+              </div>
+              <p class="prr-scale-caption">{{ scaleCaption(q) || 'Tap a number' }}</p>
+            }
+          </div>
+        </li>
+      }
+    </ol>
+
+    <button type="button" class="prr-submit" [disabled]="!canSubmit()" (click)="submit()">
+      {{ step().submitLabel }}
+    </button>
+  } @else {
+    <div class="prr-result">
+      <h3>{{ step().revealHeading }}</h3>
+      <p class="prr-result-sub">{{ step().revealSubtitle }}</p>
+
+      <dl class="prr-summary">
+        @for (q of step().questions; track q.id) {
+          <div>
+            <dt>{{ q.question }}</dt>
+            <dd>
+              @if (q.kind === 'text') {
+                {{ text()[q.id] }}
+              } @else {
+                {{ scaleValue(q.id) }} / 5 — {{ scaleCaption(q) }}
+              }
+            </dd>
+          </div>
+        }
+      </dl>
+
+      <div class="prr-tip">
+        <span>{{ step().tipLabel }}</span>
+        <p>{{ step().tip }}</p>
+      </div>
+
+      <button type="button" class="prr-continue" (click)="finish()">{{ step().continueLabel }} →</button>
+    </div>
+  }
+</div>

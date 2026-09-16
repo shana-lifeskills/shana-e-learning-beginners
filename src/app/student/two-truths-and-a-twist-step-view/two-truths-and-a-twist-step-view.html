@@ -1,0 +1,85 @@
+<div class="ttt">
+  <span class="ttt-badge">{{ step().badge }}</span>
+  <h1>{{ step().title }}</h1>
+  <p class="ttt-subtitle">{{ step().subtitle }}</p>
+
+  @if (phase() === 'write') {
+    <div class="ttt-card">
+      <div class="ttt-step-head">
+        <span class="ttt-step-num">1</span>
+        <h2>{{ step().step1Heading }}</h2>
+      </div>
+      <p class="ttt-step-intro">{{ step().step1Intro }}</p>
+
+      <div class="ttt-field">
+        <div class="ttt-field-head"><span class="ttt-field-num">1</span><strong>{{ step().truth1Label }}</strong></div>
+        <textarea
+          rows="2"
+          [value]="truth1()"
+          (input)="setField('truth1', $any($event.target).value)"
+          [placeholder]="step().truth1Placeholder"
+        ></textarea>
+      </div>
+
+      <div class="ttt-field">
+        <div class="ttt-field-head"><span class="ttt-field-num">2</span><strong>{{ step().truth2Label }}</strong></div>
+        <textarea
+          rows="2"
+          [value]="truth2()"
+          (input)="setField('truth2', $any($event.target).value)"
+          [placeholder]="step().truth2Placeholder"
+        ></textarea>
+      </div>
+
+      <div class="ttt-field ttt-field--twist">
+        <div class="ttt-field-head"><span class="ttt-field-num ttt-field-num--twist">?</span><strong>{{ step().twistLabel }}</strong></div>
+        <textarea
+          rows="2"
+          [value]="twist()"
+          (input)="setField('twist', $any($event.target).value)"
+          [placeholder]="step().twistPlaceholder"
+        ></textarea>
+      </div>
+
+      <div class="ttt-actions">
+        <button type="button" class="ttt-btn ttt-btn--dice" (click)="pickTwistForMe()">🎲 {{ step().pickTwistLabel }}</button>
+        <button type="button" class="ttt-btn ttt-btn--example" (click)="fillExample()">💡 {{ step().showExampleLabel }}</button>
+        <button type="button" class="ttt-btn ttt-btn--reset" (click)="reset()">↺ {{ step().resetLabel }}</button>
+      </div>
+
+      <button type="button" class="ttt-next" [disabled]="!canReveal()" (click)="goToReveal()">Next: {{ step().step2Heading }} →</button>
+      @if (!canReveal()) {
+        <p class="ttt-hint">Fill in all three statements above to continue.</p>
+      }
+    </div>
+  } @else {
+    <button type="button" class="ttt-back" (click)="backToWrite()">← Back to my statements</button>
+
+    <div class="ttt-card">
+      <div class="ttt-step-head">
+        <span class="ttt-step-num">2</span>
+        <h2>{{ step().step2Heading }}</h2>
+      </div>
+      <p class="ttt-step-intro">{{ step().step2Intro }}</p>
+
+      @if (!revealed()) {
+        <button type="button" class="ttt-reveal" (click)="reveal()">✨ {{ step().revealLabel }}</button>
+      } @else {
+        <div class="ttt-revealed">
+          <p>{{ step().revealedText }}</p>
+          <p class="ttt-revealed-quote">"{{ twist() }}"</p>
+        </div>
+        <button type="button" class="ttt-continue" (click)="finish()">{{ step().continueLabel }} →</button>
+      }
+    </div>
+
+    <div class="ttt-why">
+      <h3>{{ step().whyHeading }}</h3>
+      <ul>
+        @for (point of step().whyPoints; track point.text) {
+          <li><span class="ttt-why-icon">{{ point.icon }}</span>{{ point.text }}</li>
+        }
+      </ul>
+    </div>
+  }
+</div>

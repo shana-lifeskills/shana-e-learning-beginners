@@ -1,0 +1,106 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- Confidence Link: stepping into growth (gcl) — Self-Confidence Module, Week 3 ---- */
+$gcl-ink: #1f2937;
+$gcl-purple: #7c5cbf;
+$gcl-purple-lt: #a389d9;
+$gcl-green: #2f9e63;
+$gcl-soil: #b98a5a;
+$gcl-bg: #f4f0fb;
+
+.gcl {
+  display: flex;
+  justify-content: center;
+  padding: 2.5rem 1rem;
+}
+
+.gcl-card {
+  max-width: 30rem;
+  width: 100%;
+  padding: 2.75rem clamp(1.5rem, 5vw, 2.75rem);
+  text-align: center;
+  background: radial-gradient(circle at 50% 0%, #faf8ff, $gcl-bg 72%);
+  border: 2px solid rgba($gcl-purple, 0.2);
+  border-radius: v.$border-radius-xl;
+  box-shadow: 0 12px 30px rgba($gcl-purple, 0.16);
+}
+
+.gcl-eyebrow {
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: $gcl-purple-lt;
+}
+
+.gcl-sprout {
+  display: block;
+  width: 5rem;
+  height: 5rem;
+  margin: 1rem auto 0.75rem;
+}
+
+.gcl-soil {
+  fill: $gcl-soil;
+}
+
+.gcl-stem {
+  fill: none;
+  stroke: $gcl-green;
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+.gcl-leaf {
+  fill: $gcl-green;
+
+  &--left { transform-origin: 50px 55px; animation: gcl-sway 3.5s ease-in-out infinite; }
+  &--right { transform-origin: 50px 44px; animation: gcl-sway 3.5s ease-in-out infinite 0.4s reverse; }
+}
+
+@keyframes gcl-sway {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(4deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gcl-leaf { animation: none; }
+}
+
+.gcl-card h2 {
+  @include m.playful-heading;
+  margin: 0 0 1.25rem;
+  font-size: clamp(1.25rem, 4vw, 1.6rem);
+  color: $gcl-ink;
+}
+
+.gcl-quote {
+  margin: 0;
+  padding: 0 0.5rem;
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: clamp(1.2rem, 4.5vw, 1.55rem);
+  line-height: 1.4;
+  color: $gcl-purple;
+
+  &::before { content: '“'; }
+  &::after { content: '”'; }
+}
+
+.gcl-caption {
+  margin: 1.4rem 0 2rem;
+  font-size: 0.96rem;
+  color: rgba($gcl-ink, 0.6);
+}
+
+.gcl-continue {
+  @include m.tappable;
+  padding: 0.85rem 2rem;
+  background: linear-gradient(120deg, $gcl-purple, $gcl-purple-lt);
+  border: none;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: v.$color-white;
+}

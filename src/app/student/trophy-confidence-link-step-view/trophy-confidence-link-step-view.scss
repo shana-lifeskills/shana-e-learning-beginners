@@ -1,0 +1,110 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- Confidence Link: celebrating growth (tpl) — Self-Confidence Module, Week 4 ---- */
+$tpl-ink: #1f2937;
+$tpl-gold: #cf8324;
+$tpl-gold-lt: #e0a53a;
+$tpl-bg: #fbf3e4;
+
+.tpl {
+  display: flex;
+  justify-content: center;
+  padding: 2.5rem 1rem;
+}
+
+.tpl-card {
+  max-width: 30rem;
+  width: 100%;
+  padding: 2.75rem clamp(1.5rem, 5vw, 2.75rem);
+  text-align: center;
+  background: radial-gradient(circle at 50% 0%, #fffaf0, $tpl-bg 72%);
+  border: 2px solid rgba($tpl-gold, 0.2);
+  border-radius: v.$border-radius-xl;
+  box-shadow: 0 12px 30px rgba($tpl-gold, 0.16);
+}
+
+.tpl-eyebrow {
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: $tpl-gold-lt;
+}
+
+.tpl-trophy {
+  display: block;
+  width: 5rem;
+  height: 5rem;
+  margin: 1rem auto 0.75rem;
+  animation: tpl-pop 0.6s ease-out;
+}
+
+@keyframes tpl-pop {
+  0% { transform: scale(0.6); opacity: 0; }
+  70% { transform: scale(1.08); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tpl-trophy { animation: none; }
+}
+
+.tpl-cup,
+.tpl-handle,
+.tpl-base {
+  fill: none;
+  stroke: $tpl-gold;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.tpl-cup {
+  fill: $tpl-gold-lt;
+}
+
+.tpl-stem {
+  fill: $tpl-gold;
+}
+
+.tpl-base {
+  fill: $tpl-gold;
+}
+
+.tpl-card h2 {
+  @include m.playful-heading;
+  margin: 0 0 1.25rem;
+  font-size: clamp(1.25rem, 4vw, 1.6rem);
+  color: $tpl-ink;
+}
+
+.tpl-quote {
+  margin: 0;
+  padding: 0 0.5rem;
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: clamp(1.2rem, 4.5vw, 1.55rem);
+  line-height: 1.4;
+  color: $tpl-gold;
+
+  &::before { content: '“'; }
+  &::after { content: '”'; }
+}
+
+.tpl-caption {
+  margin: 1.4rem 0 2rem;
+  font-size: 0.96rem;
+  color: rgba($tpl-ink, 0.6);
+}
+
+.tpl-continue {
+  @include m.tappable;
+  padding: 0.85rem 2rem;
+  background: linear-gradient(120deg, $tpl-gold, $tpl-gold-lt);
+  border: none;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: v.$color-white;
+}

@@ -1,0 +1,287 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- Watch and Reflect video step (vrf) — Planning Module, Week 2 ---- */
+$vrf-ink: #202433;
+$vrf-red: #c8362b;
+$vrf-plum: #4a3d7a;
+$vrf-teal: #2f9c8f;
+$vrf-mist: #f1f0f7;
+
+.vrf {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 1.6rem clamp(0.75rem, 3vw, 1.5rem) 2rem;
+  color: $vrf-ink;
+}
+
+.vrf-head {
+  text-align: center;
+}
+
+.vrf-badge {
+  display: inline-block;
+  padding: 0.32rem 0.95rem;
+  border-radius: 999px;
+  background: rgba($vrf-red, 0.14);
+  font-weight: 800;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $vrf-red;
+}
+
+.vrf-head h2 {
+  @include m.playful-heading;
+  margin: 0.5rem 0 0;
+  font-size: clamp(1.35rem, 4.5vw, 1.85rem);
+}
+
+/* --- video --- */
+.vrf-video {
+  margin: 1.3rem 0 0;
+}
+
+.vrf-frame {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: v.$border-radius-lg;
+  overflow: hidden;
+  background: #0d0d14;
+  border: 2px solid rgba($vrf-ink, 0.15);
+}
+
+.vrf-iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.vrf-play {
+  @include m.tappable;
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  border: none;
+  background: radial-gradient(circle at 50% 45%, #2a2740, #0d0d14);
+  color: v.$color-white;
+  font-weight: 800;
+  font-size: 0.95rem;
+}
+
+.vrf-play-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.6rem;
+  height: 3.6rem;
+  border-radius: 50%;
+  background: $vrf-red;
+  font-size: 1.3rem;
+  padding-left: 0.2rem;
+}
+
+.vrf-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  margin: 0.7rem 0 0;
+  font-size: 0.88rem;
+  color: rgba($vrf-ink, 0.7);
+
+  strong { color: $vrf-ink; font-size: 0.95rem; }
+  a { color: $vrf-red; font-weight: 700; text-decoration: none; }
+}
+
+/* --- watched check --- */
+.vrf-watched {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin: 1.2rem 0 0;
+  padding: 0.7rem 0.9rem;
+  background: rgba($vrf-teal, 0.1);
+  border: 1.5px solid rgba($vrf-teal, 0.35);
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+
+  input { width: 1.1rem; height: 1.1rem; accent-color: $vrf-teal; }
+}
+
+/* --- questions --- */
+.vrf-questions {
+  margin: 1.3rem 0 0;
+  transition: opacity 0.2s ease;
+
+  &.dim { opacity: 0.45; pointer-events: none; }
+}
+
+.vrf-q-heading {
+  @include m.playful-heading;
+  margin: 0 0 0.8rem;
+  font-size: 1.15rem;
+  color: $vrf-plum;
+}
+
+.vrf-questions ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.vrf-q {
+  padding: 1rem;
+  background: $vrf-mist;
+  border-radius: 12px;
+  border-left: 4px solid $vrf-plum;
+}
+
+.vrf-q-text {
+  margin: 0 0 0.5rem;
+  font-weight: 700;
+  font-size: 0.98rem;
+  line-height: 1.35;
+}
+
+.vrf-q-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.4rem;
+  height: 1.4rem;
+  margin-right: 0.5rem;
+  border-radius: 50%;
+  background: $vrf-plum;
+  color: v.$color-white;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.vrf-hint {
+  margin: 0 0 0.5rem;
+  font-size: 0.84rem;
+  font-style: italic;
+  color: rgba($vrf-ink, 0.6);
+}
+
+.vrf-textarea,
+.vrf-other {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  border: 1.5px solid rgba($vrf-plum, 0.25);
+  border-radius: 9px;
+  font: inherit;
+  background: v.$color-white;
+
+  &:focus {
+    outline: none;
+    border-color: $vrf-teal;
+  }
+}
+
+.vrf-textarea { resize: vertical; }
+.vrf-other { margin-top: 0.5rem; }
+
+.vrf-checks {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.vrf-check {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.5rem 0.7rem;
+  background: v.$color-white;
+  border: 1.5px solid rgba($vrf-plum, 0.22);
+  border-radius: 9px;
+  font-size: 0.9rem;
+  cursor: pointer;
+
+  input { width: 1.05rem; height: 1.05rem; accent-color: $vrf-plum; }
+
+  &.on {
+    border-color: $vrf-plum;
+    background: rgba($vrf-plum, 0.08);
+    font-weight: 700;
+  }
+}
+
+.vrf-submit,
+.vrf-continue {
+  @include m.tappable;
+  display: block;
+  width: 100%;
+  margin-top: 1.3rem;
+  padding: 0.85rem 1.5rem;
+  border: none;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 1.04rem;
+  color: v.$color-white;
+}
+
+.vrf-submit {
+  background: linear-gradient(120deg, $vrf-plum, $vrf-teal);
+
+  &:disabled { opacity: 0.4; }
+}
+
+.vrf-continue { background: $vrf-teal; }
+
+/* --- summary --- */
+.vrf-summary {
+  margin-top: 1rem;
+  padding: 1.8rem clamp(1.1rem, 4vw, 1.8rem);
+  text-align: center;
+  background: v.$color-white;
+  border: 2px solid rgba($vrf-plum, 0.2);
+  border-radius: v.$border-radius-xl;
+  box-shadow: 0 10px 26px rgba($vrf-plum, 0.14);
+}
+
+.vrf-summary-icon { font-size: 2.6rem; }
+
+.vrf-summary h3 {
+  @include m.playful-heading;
+  margin: 0.3rem 0 1rem;
+  font-size: 1.3rem;
+  color: $vrf-plum;
+}
+
+.vrf-recap {
+  margin: 0 0 1rem;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+
+  div {
+    padding: 0.7rem 0.85rem;
+    background: $vrf-mist;
+    border-radius: 9px;
+  }
+
+  dt { font-weight: 800; font-size: 0.82rem; color: rgba($vrf-ink, 0.7); }
+  dd { margin: 0.25rem 0 0; font-size: 0.93rem; line-height: 1.45; }
+}
+
+.vrf-summary-text {
+  margin: 0.5rem 0 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: rgba($vrf-ink, 0.8);
+}

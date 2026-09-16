@@ -1,0 +1,63 @@
+<div class="cj">
+  @if (!revealed()) {
+    <span class="cj-badge">{{ step().badge }}</span>
+    <h1>{{ step().title }}</h1>
+    <p class="cj-subtitle">{{ step().subtitle }}</p>
+
+    <div class="cj-instructions">
+      <h2>{{ step().instructionHeading }}</h2>
+      <ol>
+        @for (line of step().instructions; track line) {
+          <li>{{ line }}</li>
+        }
+      </ol>
+    </div>
+
+    <div class="cj-days">
+      @for (entry of entries(); track $index; let i = $index) {
+        <div class="cj-day" [class.cj-day--filled]="entry.choice && entry.meaning">
+          <span class="cj-day-tab">{{ step().dayLabel }} {{ i + 1 }}</span>
+
+          <label class="cj-field-label">{{ step().choiceLabel }}</label>
+          <textarea
+            rows="2"
+            [value]="entry.choice"
+            [disabled]="locked()"
+            (input)="setField(i, 'choice', $any($event.target).value)"
+            [placeholder]="step().choicePlaceholder"
+          ></textarea>
+
+          <label class="cj-field-label">{{ step().meaningLabel }}</label>
+          <textarea
+            rows="2"
+            [value]="entry.meaning"
+            [disabled]="locked()"
+            (input)="setField(i, 'meaning', $any($event.target).value)"
+            [placeholder]="step().meaningPlaceholder"
+          ></textarea>
+        </div>
+      }
+    </div>
+
+    <button type="button" class="cj-submit" [disabled]="!canSubmit()" (click)="submit()">✨ {{ step().submitLabel }}</button>
+  } @else {
+    <span class="cj-badge">{{ step().journalHeading }}</span>
+    <p class="cj-subtitle">{{ step().journalSubtitle }}</p>
+
+    <div class="cj-journal">
+      @for (entry of entries(); track $index; let i = $index) {
+        <div class="cj-page" [class]="'cj-page--' + (i % 3)">
+          <span class="cj-page-tab">{{ step().dayLabel }} {{ i + 1 }}</span>
+          <p class="cj-page-choice">"{{ entry.choice }}"</p>
+          <p class="cj-page-meaning"><span>What it says about me:</span> {{ entry.meaning }}</p>
+        </div>
+      }
+    </div>
+
+    <div class="cj-complete">
+      <h2>{{ step().completeHeading }}</h2>
+      <p>{{ step().completeText }}</p>
+      <button type="button" class="cj-continue" (click)="finish()">{{ step().continueLabel }} →</button>
+    </div>
+  }
+</div>

@@ -1,0 +1,153 @@
+<div class="ssc">
+  <header class="ssc-head">
+    <span class="ssc-badge">{{ step().badge }}</span>
+    <h2>{{ step().title }}</h2>
+    <p class="ssc-intro">{{ step().intro }}</p>
+  </header>
+
+  <ol class="ssc-track" aria-hidden="true">
+    <li [class.on]="phase() === 'tracker'" [class.done]="phase() !== 'tracker'">Track</li>
+    <li [class.on]="phase() === 'partner'" [class.done]="phase() === 'reflect' || phase() === 'upload' || phase() === 'done'">Partner</li>
+    <li [class.on]="phase() === 'reflect'" [class.done]="phase() === 'upload' || phase() === 'done'">Reflect</li>
+    <li [class.on]="phase() === 'upload'" [class.done]="phase() === 'done'">Upload</li>
+  </ol>
+
+  <!-- PHASE: TRACKER -->
+  @if (phase() === 'tracker') {
+    <section class="ssc-phase">
+      <h3 class="ssc-h">{{ step().trackerHeading }}</h3>
+      <p class="ssc-hint">{{ step().trackerHint }}</p>
+
+      <div class="ssc-days">
+        @for (label of step().dayLabels; track $index) {
+          <button
+            type="button"
+            class="ssc-day"
+            [class.on]="isDayOn($index)"
+            (click)="toggleDay($index)"
+            [attr.aria-pressed]="isDayOn($index)"
+          >
+            <span class="ssc-day-check" aria-hidden="true">✅</span>
+            {{ label }}
+          </button>
+        }
+      </div>
+
+      <button type="button" class="ssc-btn" (click)="goTo('partner')">{{ step().trackerContinueLabel }} →</button>
+    </section>
+  }
+
+  <!-- PHASE: PARTNER -->
+  @if (phase() === 'partner') {
+    <section class="ssc-phase">
+      <h3 class="ssc-h">{{ step().partnerHeading }}</h3>
+      <p class="ssc-hint">{{ step().partnerHint }}</p>
+
+      <label class="ssc-field-label" for="ssc-partner">{{ step().partnerLabel }}</label>
+      <input
+        id="ssc-partner"
+        type="text"
+        class="ssc-input"
+        [value]="partner()"
+        [placeholder]="step().partnerPlaceholder"
+        (input)="setPartner($any($event.target).value)"
+      />
+
+      <button type="button" class="ssc-btn" [disabled]="!canLeavePartner()" (click)="goTo('reflect')">
+        {{ step().partnerContinueLabel }} →
+      </button>
+    </section>
+  }
+
+  <!-- PHASE: REFLECT -->
+  @if (phase() === 'reflect') {
+    <section class="ssc-phase">
+      <h3 class="ssc-h">{{ step().reflectHeading }}</h3>
+
+      <ol class="ssc-prompts">
+        @for (p of step().reflectPrompts; track p.id) {
+          <li>
+            <p class="ssc-q">{{ p.question }}</p>
+            <textarea
+              rows="2"
+              [value]="reflectionValue(p.id)"
+              [placeholder]="p.placeholder"
+              (input)="setReflection(p.id, $any($event.target).value)"
+            ></textarea>
+          </li>
+        }
+      </ol>
+
+      <button type="button" class="ssc-btn" [disabled]="!canSubmit()" (click)="goTo('upload')">Continue →</button>
+    </section>
+  }
+
+  <!-- PHASE: UPLOAD (optional) -->
+  @if (phase() === 'upload') {
+    <section class="ssc-phase">
+      <h3 class="ssc-h">{{ step().uploadHeading }}</h3>
+      <p class="ssc-hint">{{ step().uploadHint }}</p>
+
+      <input #fileInput type="file" accept="image/*,video/*" hidden (change)="onFileSelected($event)" />
+
+      @if (uploadUrl(); as url) {
+        <div class="ssc-upload-preview">
+          @if (uploadIsVideo()) {
+            <video [src]="url" controls></video>
+          } @else {
+            <img [src]="url" alt="Uploaded tracker" />
+          }
+        </div>
+        <div class="ssc-upload-actions">
+          <button type="button" class="ssc-upload-btn" (click)="chooseFile()">{{ step().uploadChangeLabel }}</button>
+          <button type="button" class="ssc-upload-btn ssc-upload-remove" (click)="removeUpload()">{{ step().uploadRemoveLabel }}</button>
+        </div>
+      } @else {
+        <button type="button" class="ssc-dropzone" (click)="chooseFile()">
+          <span aria-hidden="true">📎</span>
+          {{ step().uploadChooseLabel }}
+        </button>
+      }
+
+      <button type="button" class="ssc-submit" (click)="submit()">{{ step().submitLabel }}</button>
+    </section>
+  }
+
+  <!-- PHASE: DONE -->
+  @if (phase() === 'done') {
+    <div class="ssc-result">
+      <span class="ssc-result-icon" aria-hidden="true">🏅</span>
+      <h3>{{ step().revealHeading }}</h3>
+      <p class="ssc-result-sub">{{ step().revealSubtitle }}</p>
+
+      <p class="ssc-result-days">Tracked <strong>{{ daysDone() }} / 7</strong> days</p>
+      <p class="ssc-result-partner">Accountability partner: <strong>{{ partner() }}</strong></p>
+
+      <dl class="ssc-result-reflect">
+        @for (p of step().reflectPrompts; track p.id) {
+          <div>
+            <dt>{{ p.question }}</dt>
+            <dd>{{ reflectionValue(p.id) }}</dd>
+          </div>
+        }
+      </dl>
+
+      @if (uploadUrl(); as url) {
+        <div class="ssc-result-upload">
+          @if (uploadIsVideo()) {
+            <video [src]="url" controls></video>
+          } @else {
+            <img [src]="url" alt="Uploaded tracker" />
+          }
+        </div>
+      }
+
+      <div class="ssc-done">
+        <h4>{{ step().completeHeading }}</h4>
+        <p>{{ step().completeText }}</p>
+      </div>
+
+      <button type="button" class="ssc-continue" (click)="finish()">{{ step().continueLabel }} →</button>
+    </div>
+  }
+</div>

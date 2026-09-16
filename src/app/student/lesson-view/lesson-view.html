@@ -13,10 +13,16 @@
 
   <span class="lesson-copy">
     <strong>{{ lesson().title }}</strong>
-    <small>Week {{ lesson().week }} • {{ lesson().exercises.length }} questions</small>
+    @if (lesson().comingSoon) {
+      <small>Week {{ lesson().week }} • Coming soon</small>
+    } @else {
+      <small>Week {{ lesson().week }} • {{ lesson().exercises.length }} questions</small>
+    }
   </span>
 
   @if (status() === 'current') {
     <span class="play-hint">Play ▶</span>
+  } @else if (lesson().comingSoon) {
+    <span class="coming-soon-hint">Coming soon</span>
   }
 </button>

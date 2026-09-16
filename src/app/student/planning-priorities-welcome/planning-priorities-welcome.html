@@ -1,0 +1,40 @@
+<div class="ppw">
+  <div class="ppw-card">
+    <div class="ppw-pills">
+      <span class="ppw-week-pill">{{ ppw.weekPill }}</span>
+      <span class="ppw-stage-pill">{{ ppw.stagePill }}</span>
+    </div>
+
+    <h1>{{ ppw.title }}</h1>
+    <p class="ppw-subtitle">{{ ppw.subtitle }}</p>
+
+    <div class="ppw-matrix" aria-hidden="true">
+      <span class="ppw-axis-x ppw-axis-x-1">{{ ppw.axisX[0] }}</span>
+      <span class="ppw-axis-x ppw-axis-x-2">{{ ppw.axisX[1] }}</span>
+      <span class="ppw-axis-y ppw-axis-y-1">{{ ppw.axisY[0] }}</span>
+      <span class="ppw-axis-y ppw-axis-y-2">{{ ppw.axisY[1] }}</span>
+      <div class="ppw-grid">
+        @for (q of ppw.quadrants; track $index) {
+          <span class="ppw-quad">{{ q }}</span>
+        }
+      </div>
+    </div>
+
+    <ul class="ppw-objectives">
+      @for (o of ppw.objectives; track o.text) {
+        <li>{{ o.text }}</li>
+      }
+    </ul>
+
+    @if (isCompletedLessonWelcome()) {
+      @if (nextLesson(); as next) {
+        <button type="button" class="ppw-start" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+      } @else {
+        <button type="button" class="ppw-start" (click)="backToMap()">Back to My Modules →</button>
+      }
+      <button type="button" class="ppw-review" (click)="beginLesson()">↺ Review this lesson</button>
+    } @else {
+      <button type="button" class="ppw-start" (click)="beginLesson()">{{ ppw.startLabel }} →</button>
+    }
+  </div>
+</div>

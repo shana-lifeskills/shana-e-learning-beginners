@@ -1,0 +1,120 @@
+<div class="vrf">
+  <header class="vrf-head">
+    <span class="vrf-badge">{{ step().badge }}</span>
+    <h2>{{ step().title }}</h2>
+  </header>
+
+  <figure class="vrf-video">
+    <div class="vrf-frame">
+      @if (playing() && embedUrl(); as src) {
+        <iframe
+          class="vrf-iframe"
+          [src]="src"
+          title="Video"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+      } @else {
+        <button type="button" class="vrf-play" (click)="play()">
+          <span class="vrf-play-icon" aria-hidden="true">▶</span>
+          <span>Play video</span>
+        </button>
+      }
+    </div>
+    <figcaption class="vrf-meta">
+      <strong>{{ step().videoTitle }}</strong>
+      <span>{{ step().videoCredit }} · 🎥 {{ step().videoDurationLabel }}</span>
+      <a [href]="step().videoYoutubeUrl" target="_blank" rel="noopener">Watch on YouTube ↗</a>
+    </figcaption>
+  </figure>
+
+  @if (!locked()) {
+    <label class="vrf-watched">
+      <input type="checkbox" [checked]="watched()" (change)="toggleWatched()" />
+      <span>{{ step().watchedLabel }}</span>
+    </label>
+
+    <section class="vrf-questions" [class.dim]="!watched()">
+      <h3 class="vrf-q-heading">{{ step().questionsHeading }}</h3>
+
+      <ol>
+        @for (q of step().questions; track q.id; let i = $index) {
+          <li class="vrf-q">
+            <p class="vrf-q-text"><span class="vrf-q-num">{{ i + 1 }}</span>{{ q.question }}</p>
+
+            @if (q.kind === 'text') {
+              @if (q.hint) { <p class="vrf-hint">{{ q.hint }}</p> }
+              <textarea
+                class="vrf-textarea"
+                rows="2"
+                [disabled]="!watched()"
+                [value]="text()[q.id] ?? ''"
+                [placeholder]="q.placeholder ?? ''"
+                (input)="setText(q.id, $any($event.target).value)"
+              ></textarea>
+            } @else {
+              <div class="vrf-checks">
+                @for (opt of q.options; track opt) {
+                  <label class="vrf-check" [class.on]="isPicked(q.id, opt)">
+                    <input
+                      type="checkbox"
+                      [disabled]="!watched()"
+                      [checked]="isPicked(q.id, opt)"
+                      (change)="togglePick(q.id, opt)"
+                    />
+                    <span>{{ opt }}</span>
+                  </label>
+                }
+                @if (q.allowOther) {
+                  <label class="vrf-check" [class.on]="isOtherOn(q.id)">
+                    <input
+                      type="checkbox"
+                      [disabled]="!watched()"
+                      [checked]="isOtherOn(q.id)"
+                      (change)="toggleOther(q.id)"
+                    />
+                    <span>Other</span>
+                  </label>
+                  @if (isOtherOn(q.id)) {
+                    <input
+                      type="text"
+                      class="vrf-other"
+                      [disabled]="!watched()"
+                      [value]="otherText()[q.id] ?? ''"
+                      placeholder="Your own idea…"
+                      (input)="setOtherText(q.id, $any($event.target).value)"
+                    />
+                  }
+                }
+              </div>
+            }
+          </li>
+        }
+      </ol>
+
+      <button type="button" class="vrf-submit" [disabled]="!canSubmit()" (click)="submit()">
+        {{ step().submitLabel }}
+      </button>
+    </section>
+  } @else {
+    <div class="vrf-summary">
+      <span class="vrf-summary-icon" aria-hidden="true">🧠</span>
+      <h3>{{ step().summaryHeading }}</h3>
+
+      <dl class="vrf-recap">
+        @for (q of step().questions; track q.id) {
+          <div>
+            <dt>{{ q.question }}</dt>
+            <dd>{{ answerSummary(q) }}</dd>
+          </div>
+        }
+      </dl>
+
+      @for (para of step().summaryText; track para) {
+        <p class="vrf-summary-text">{{ para }}</p>
+      }
+
+      <button type="button" class="vrf-continue" (click)="finish()">{{ step().continueLabel }} →</button>
+    </div>
+  }
+</div>

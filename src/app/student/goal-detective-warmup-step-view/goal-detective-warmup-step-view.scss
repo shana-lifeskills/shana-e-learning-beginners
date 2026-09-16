@@ -1,0 +1,221 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- Warm-Up Game: Goal Detective! (gdw) — Planning Module, Week 3 ---- */
+$gdw-navy: #1f2a44;
+$gdw-mustard: #d9a441;
+$gdw-ink: #262b3a;
+$gdw-wish: #7c8299;
+$gdw-goal: #3a9b64;
+$gdw-paper: #fdfaf2;
+
+.gdw {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 1.75rem clamp(1rem, 4vw, 2.25rem) 2rem;
+  color: $gdw-ink;
+  text-align: center;
+}
+
+.gdw-kicker {
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: $gdw-mustard;
+}
+
+.gdw-head h2 {
+  @include m.playful-heading;
+  margin: 0.4rem 0 0;
+  font-size: clamp(1.4rem, 4.5vw, 1.9rem);
+  color: $gdw-navy;
+}
+
+.gdw-sub {
+  margin: 0.3rem 0 0;
+  font-size: 0.98rem;
+  color: rgba($gdw-ink, 0.7);
+}
+
+.gdw-steps {
+  margin: 1rem auto 0;
+  max-width: 26rem;
+  text-align: left;
+  padding-left: 1.2rem;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: rgba($gdw-ink, 0.75);
+}
+
+.gdw-progress {
+  margin: 0.9rem 0 0;
+  font-weight: 800;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba($gdw-navy, 0.6);
+}
+
+/* --- clue card tray --- */
+.gdw-tray {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 0.9rem 0 0;
+}
+
+.gdw-card {
+  @include m.tappable;
+  padding: 0.6rem 0.9rem;
+  max-width: 15rem;
+  border: 2px solid rgba($gdw-navy, 0.25);
+  border-radius: 10px;
+  background: $gdw-paper;
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: $gdw-ink;
+  cursor: grab;
+
+  &.selected {
+    border-color: $gdw-mustard;
+    box-shadow: 0 0 0 3px rgba($gdw-mustard, 0.25);
+  }
+
+  &.wrong { animation: gdw-shake 0.45s ease; border-color: #c8362b; }
+
+  &:active { cursor: grabbing; }
+}
+
+/* --- folders --- */
+.gdw-folders {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8rem;
+  margin: 1.3rem 0 0;
+}
+
+@media (max-width: 28rem) {
+  .gdw-folders { grid-template-columns: 1fr; }
+}
+
+.gdw-folder {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  min-height: 8rem;
+  padding: 1rem 0.9rem;
+  border-radius: 14px;
+  border: 3px dashed;
+  cursor: pointer;
+  text-align: left;
+}
+
+.gdw-folder-wish {
+  border-color: rgba($gdw-wish, 0.5);
+  background: rgba($gdw-wish, 0.08);
+}
+
+.gdw-folder-goal {
+  border-color: rgba($gdw-goal, 0.5);
+  background: rgba($gdw-goal, 0.08);
+}
+
+.gdw-folder-icon {
+  display: block;
+  text-align: center;
+  font-size: 1.6rem;
+}
+
+.gdw-folder-label {
+  display: block;
+  text-align: center;
+  font-weight: 800;
+  font-size: 0.9rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+
+  .gdw-folder-wish & { color: #565c72; }
+  .gdw-folder-goal & { color: #2f7d55; }
+}
+
+.gdw-filed {
+  margin: 0;
+  padding: 0.5rem 0.6rem;
+  background: v.$color-white;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.gdw-footer {
+  margin: 1.1rem 0 0;
+  font-size: 0.86rem;
+  color: rgba($gdw-ink, 0.55);
+}
+
+/* --- done panel --- */
+.gdw-done {
+  margin: 1.3rem auto 0;
+  padding: 1.6rem 1.3rem;
+  background: $gdw-paper;
+  border: 2px solid rgba($gdw-mustard, 0.5);
+  border-radius: v.$border-radius-lg;
+
+  h3 {
+    @include m.playful-heading;
+    margin: 0.5rem 0 0.3rem;
+    font-size: 1.3rem;
+    color: $gdw-navy;
+  }
+
+  p { margin: 0; color: rgba($gdw-ink, 0.75); }
+}
+
+.gdw-done-icon { font-size: 2.4rem; }
+
+.gdw-recap {
+  margin: 1rem auto 0;
+  max-width: 24rem;
+  padding: 0.9rem 1.1rem;
+  text-align: left;
+  background: rgba($gdw-goal, 0.1);
+  border: 2px solid rgba($gdw-goal, 0.35);
+  border-radius: 12px;
+
+  h4 {
+    margin: 0 0 0.4rem;
+    font-weight: 800;
+    font-size: 0.74rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #2f7d55;
+  }
+
+  ul { margin: 0; padding-left: 1.1rem; }
+  li { font-size: 0.95rem; line-height: 1.5; color: rgba($gdw-ink, 0.85); }
+}
+
+.gdw-continue {
+  @include m.tappable;
+  margin: 1.2rem 0 0;
+  padding: 0.8rem 1.8rem;
+  background: linear-gradient(120deg, $gdw-navy, #3a4a76);
+  border: none;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: v.$color-white;
+}
+
+@keyframes gdw-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-6px) rotate(-1.5deg); }
+  75% { transform: translateX(6px) rotate(1.5deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gdw-card.wrong { animation: none; }
+}

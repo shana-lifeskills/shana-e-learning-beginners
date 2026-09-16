@@ -110,6 +110,162 @@
             <div class="story-shell">
               <app-challenge-feeling-report-step-view [step]="exercise" (submitted)="onShared($event)" />
             </div>
+          } @else if (exercise.type === 'two-truths-and-a-twist') {
+            <div class="story-shell">
+              <app-two-truths-and-a-twist-step-view [step]="exercise" (continued)="onStepContinue()" />
+            </div>
+          } @else if (exercise.type === 'discussion-prompt-samples') {
+            <div class="story-shell">
+              <app-discussion-prompt-samples-step-view [step]="exercise" (continued)="onStepContinue()" />
+            </div>
+          } @else if (exercise.type === 'reflection-prompt-answers') {
+            <div class="story-shell">
+              <app-reflection-prompt-answers-step-view [step]="exercise" (continued)="onStepContinue()" />
+            </div>
+          } @else if (exercise.type === 'identity-snapshot-challenge') {
+            <div class="story-shell">
+              <app-identity-snapshot-challenge-step-view [step]="exercise" (submitted)="onShared($event)" (continued)="onCardContinue()" />
+            </div>
+          } @else if (exercise.type === 'pick-your-power') {
+            <div class="story-shell">
+              <app-pick-your-power-step-view [step]="exercise" (continued)="onStepContinue()" />
+            </div>
+          } @else if (exercise.type === 'temperament-quiz') {
+            <div class="story-shell">
+              <app-temperament-quiz-step-view [step]="exercise" (continued)="onStepContinue()" />
+            </div>
+          } @else if (exercise.type === 'this-or-that-warmup') {
+            <div class="story-shell">
+              <app-this-or-that-warmup-step-view [step]="exercise" (submitted)="onShared($event)" (continued)="onCardContinue()" />
+            </div>
+          } @else if (exercise.type === 'pass-the-dream-warmup') {
+            <div class="story-shell">
+              <app-pass-the-dream-warmup-step-view [step]="exercise" (submitted)="onShared($event)" (continued)="onCardContinue()" />
+            </div>
+          } @else if (exercise.type === 'choices-board') {
+            <div class="story-shell">
+              <app-choices-board-step-view [step]="exercise" (continued)="onStepContinue()" />
+            </div>
+          } @else if (exercise.type === 'strength-snapshot') {
+            <div class="story-shell">
+              <app-strength-snapshot-step-view [step]="exercise" (submitted)="onShared($event)" (continued)="onCardContinue()" />
+            </div>
+          } @else if (exercise.type === 'opinion-corners') {
+            <div class="story-shell">
+              <app-opinion-corners-step-view [step]="exercise" (submitted)="onShared($event)" (continued)="onCardContinue()" />
+            </div>
+          } @else if (exercise.type === 'risk-or-reward') {
+            <div class="story-shell">
+              <app-risk-or-reward-step-view [step]="exercise" (submitted)="onShared($event)" (continued)="onCardContinue()" />
+            </div>
+          } @else if (exercise.type === 'strength-map') {
+            <div class="story-shell">
+              <app-strength-map-step-view [step]="exercise" (submitted)="onShared($event)" (continued)="onCardContinue()" />
+            </div>
+          } @else if (exercise.type === 'confidence-ladder') {
+            <div class="story-shell">
+              <app-confidence-ladder-step-view [step]="exercise" (submitted)="onShared($event)" (continued)="onCardContinue()" />
+            </div>
+          } @else if (exercise.type === 'choice-journal-challenge') {
+            <div class="story-shell">
+              <app-choice-journal-challenge-step-view [step]="exercise" (submitted)="onShared($event)" (continued)="onCardContinue()" />
+            </div>
+          } @else if (exercise.type === 'share-your-plan-challenge') {
+            <div class="story-shell">
+              <app-share-your-plan-challenge-step-view [step]="exercise" (submitted)="onShared($event)" (continued)="onCardContinue()" />
+            </div>
+          } @else if (exercise.type === 'time-reflection-worksheet') {
+            <div class="story-shell">
+              <app-time-reflection-worksheet-step-view [step]="exercise" (submitted)="onShared($event)" (continued)="onCardContinue()" />
+            </div>
+          } @else if (exercise.type === 'plan-it-better-challenge') {
+            <div class="story-shell">
+              <app-plan-it-better-challenge-step-view [step]="exercise" (submitted)="onShared($event)" (continued)="onCardContinue()" />
+            </div>
+          } @else if (exercise.type === 'plan-confidence-link') {
+            <div class="story-shell">
+              <app-plan-confidence-link-step-view [step]="exercise" (continued)="onStepContinue()" />
+            </div>
+          } @else if (exercise.type === 'plan-recap-reflection') {
+            <div class="story-shell">
+              <app-plan-recap-reflection-step-view [step]="exercise" (submitted)="onShared($event)" (continued)="onCardContinue()" />
+            </div>
+          } @else if (exercise.type === 'day-planner-grid') {
+            <div class="story-shell">
+              <app-day-planner-grid-step-view [step]="exercise" (submitted)="onShared($event)" (continued)="onCardContinue()" />
+            </div>
+          } @else if (exercise.type === 'video-reflect') {
+            <div class="story-shell">
+              <app-video-reflect-step-view [step]="exercise" (submitted)="onShared($event)" (continued)="onCardContinue()" />
+            </div>
+          } @else if (exercise.type === 'priority-planner-challenge') {
+            <div class="story-shell">
+              <app-priority-planner-challenge-step-view [step]="exercise" (submitted)="onShared($event)" (continued)="onCardContinue()" />
+            </div>
+          } @else if (exercise.type === 'pattern-spotter-challenge') {
+            <div class="story-shell">
+              <app-pattern-spotter-challenge-step-view [step]="exercise" (submitted)="onShared($event)" (continued)="onCardContinue()" />
+            </div>
+          } @else if (exercise.type === 'time-confidence-link') {
+            <div class="story-shell">
+              <app-time-confidence-link-step-view [step]="exercise" (continued)="onStepContinue()" />
+            </div>
+          } @else if (exercise.type === 'voice-confidence-link') {
+            <div class="story-shell">
+              <app-voice-confidence-link-step-view [step]="exercise" (continued)="onStepContinue()" />
+            </div>
+          } @else if (exercise.type === 'growth-confidence-link') {
+            <div class="story-shell">
+              <app-growth-confidence-link-step-view [step]="exercise" (continued)="onStepContinue()" />
+            </div>
+          } @else if (exercise.type === 'trophy-confidence-link') {
+            <div class="story-shell">
+              <app-trophy-confidence-link-step-view [step]="exercise" (continued)="onStepContinue()" />
+            </div>
+          } @else if (exercise.type === 'goal-detective-warmup') {
+            <div class="story-shell">
+              <app-goal-detective-warmup-step-view [step]="exercise" (continued)="onStepContinue()" />
+            </div>
+          } @else if (exercise.type === 'planning-relay-warmup') {
+            <div class="story-shell">
+              <app-planning-relay-warmup-step-view [step]="exercise" (continued)="onStepContinue()" />
+            </div>
+          } @else if (exercise.type === 'personal-growth-map') {
+            <div class="story-shell">
+              <app-personal-growth-map-step-view [step]="exercise" (submitted)="onShared($event)" (continued)="onCardContinue()" />
+            </div>
+          } @else if (exercise.type === 'reflection-confidence-link') {
+            <div class="story-shell">
+              <app-reflection-confidence-link-step-view [step]="exercise" (continued)="onStepContinue()" />
+            </div>
+          } @else if (exercise.type === 'share-reflect-challenge') {
+            <div class="story-shell">
+              <app-share-reflect-challenge-step-view [step]="exercise" (submitted)="onShared($event)" (continued)="onCardContinue()" />
+            </div>
+          } @else if (exercise.type === 'seven-day-planning-project') {
+            <div class="story-shell">
+              <app-seven-day-planning-project-step-view [step]="exercise" (submitted)="onShared($event)" (continued)="onCardContinue()" />
+            </div>
+          } @else if (exercise.type === 'confidence-contract') {
+            <div class="story-shell">
+              <app-confidence-contract-step-view [step]="exercise" (submitted)="onShared($event)" (continued)="onCardContinue()" />
+            </div>
+          } @else if (exercise.type === 'goal-video-reflect') {
+            <div class="story-shell">
+              <app-goal-video-reflect-step-view [step]="exercise" (submitted)="onShared($event)" (continued)="onCardContinue()" />
+            </div>
+          } @else if (exercise.type === 'smart-goal-table') {
+            <div class="story-shell">
+              <app-smart-goal-table-step-view [step]="exercise" (submitted)="onShared($event)" (continued)="onCardContinue()" />
+            </div>
+          } @else if (exercise.type === 'promise-confidence-link') {
+            <div class="story-shell">
+              <app-promise-confidence-link-step-view [step]="exercise" (continued)="onStepContinue()" />
+            </div>
+          } @else if (exercise.type === 'stay-smart-challenge') {
+            <div class="story-shell">
+              <app-stay-smart-challenge-step-view [step]="exercise" (submitted)="onShared($event)" (continued)="onCardContinue()" />
+            </div>
           } @else if (exercise.type === 'warmup-quiz') {
             <div class="story-shell">
               <app-warmup-quiz-step-view [step]="exercise" (continued)="onStepContinue()" />
@@ -197,6 +353,14 @@
           } @else if (exercise.type === 'story-carousel') {
             <div class="story-shell">
               <app-story-carousel-step-view [step]="exercise" (continued)="onStepContinue()" />
+            </div>
+          } @else if (exercise.type === 'late-project-story') {
+            <div class="story-shell">
+              <app-late-project-story-step-view [step]="exercise" (continued)="onStepContinue()" />
+            </div>
+          } @else if (exercise.type === 'story-talk') {
+            <div class="story-shell">
+              <app-story-talk-step-view [step]="exercise" (continued)="onStepContinue()" />
             </div>
           } @else if (exercise.type === 'warmup-parade') {
             <div class="story-shell">
@@ -402,6 +566,8 @@
                 <app-nutrition-food-match-step-view [step]="exercise" (continued)="onStepContinue()" />
               } @else if (exercise.type === 'nutrition-tf-warmup') {
                 <app-nutrition-tf-warmup-step-view [step]="exercise" (continued)="onStepContinue()" />
+              } @else if (exercise.type === 'plan-or-panic-warmup') {
+                <app-plan-or-panic-warmup-step-view [step]="exercise" (continued)="onStepContinue()" />
               } @else if (exercise.type === 'nutrition-fill-blank') {
                 <app-nutrition-fill-blank-step-view [step]="exercise" (continued)="onStepContinue()" />
               } @else if (exercise.type === 'wellness-habit-match') {
@@ -582,6 +748,8 @@
                 <app-goal-matchup-step-view [step]="exercise" (continued)="onStepContinue()" />
               } @else if (exercise.type === 'smart-goals-lesson') {
                 <app-smart-goals-lesson-step-view [step]="exercise" (continued)="onStepContinue()" />
+              } @else if (exercise.type === 'big-question') {
+                <app-big-question-step-view [step]="exercise" (continued)="onStepContinue()" />
               } @else if (exercise.type === 'smart-goal-builder') {
                 <app-smart-goal-builder-step-view [step]="exercise" (submitted)="onShared($event)" />
               } @else if (exercise.type === 'goal-challenge-tracker') {

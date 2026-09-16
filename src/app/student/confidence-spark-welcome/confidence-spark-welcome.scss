@@ -1,0 +1,143 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Spark welcome (csw) — Self-Confidence Module, Week 1 ---- */
+$csw-coral: #ff6f59;
+$csw-navy: #1e2749;
+$csw-ink: #2b2d42;
+$csw-peach: #fff1ec;
+
+.csw {
+  display: flex;
+  justify-content: center;
+  padding: 2.5rem 1rem;
+}
+
+.csw-card {
+  @include w.soft-card;
+  max-width: 30rem;
+  width: 100%;
+  padding: 2.5rem clamp(1.5rem, 5vw, 2.5rem);
+  text-align: center;
+}
+
+.csw-icon {
+  display: inline-block;
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.csw-pills {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1.1rem;
+}
+
+.csw-week-pill {
+  @include w.welcome-pill($csw-coral, v.$color-white);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.78rem;
+}
+
+.csw-stage-pill {
+  @include w.welcome-pill(rgba($csw-coral, 0.14), $csw-coral);
+  font-size: 0.82rem;
+}
+
+.csw h1 {
+  @include m.playful-heading;
+  font-size: clamp(1.6rem, 4vw, 2.1rem);
+  color: $csw-navy;
+  margin: 0 0 0.6rem;
+}
+
+.csw-subtitle {
+  color: rgba($csw-ink, 0.65);
+  font-size: 1rem;
+  line-height: 1.5;
+  margin: 0 0 1.25rem;
+}
+
+.csw-objective {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  text-align: left;
+  font-size: 0.98rem;
+  font-weight: 700;
+  line-height: 1.45;
+  color: $csw-ink;
+  margin: 0 0 1.5rem;
+}
+
+.csw-objective-icon {
+  flex-shrink: 0;
+  font-size: 1.1rem;
+}
+
+.csw-recap {
+  background: $csw-peach;
+  border-radius: v.$border-radius-lg;
+  padding: 1.1rem 1.25rem;
+  margin: 0 0 1.75rem;
+  text-align: left;
+}
+
+.csw-recap-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: $csw-coral;
+  margin-bottom: 0.45rem;
+}
+
+.csw-recap-question {
+  font-size: 0.98rem;
+  font-weight: 700;
+  line-height: 1.4;
+  color: $csw-navy;
+  margin: 0 0 0.85rem;
+}
+
+.csw-sample {
+  border-left: 3px solid rgba($csw-coral, 0.35);
+  padding-left: 0.7rem;
+}
+
+.csw-sample-label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: rgba($csw-ink, 0.55);
+  margin-bottom: 0.2rem;
+}
+
+.csw-sample-text {
+  font-size: 0.92rem;
+  font-style: italic;
+  line-height: 1.4;
+  color: rgba($csw-ink, 0.75);
+  margin: 0;
+}
+
+.csw-start {
+  @include w.welcome-cta-btn(linear-gradient(120deg, $csw-coral, #ff9478), v.$color-white);
+  display: block;
+  width: 100%;
+  font-size: 1.05rem;
+}
+
+.csw-review {
+  @include m.tappable;
+  display: block;
+  margin: 0.75rem auto 0;
+  background: none;
+  border: none;
+  font-weight: 700;
+  color: rgba($csw-ink, 0.6);
+}

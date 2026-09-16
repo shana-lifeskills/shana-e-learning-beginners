@@ -1,0 +1,159 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Priority matrix welcome (ppw) — Planning Module, Week 2 ---- */
+$ppw-navy: #1c2c4c;
+$ppw-slate: #46587c;
+$ppw-amber: #e0902f;
+$ppw-ink: #26303f;
+$ppw-line: #c3cede;
+
+.ppw {
+  display: flex;
+  justify-content: center;
+  padding: 2.5rem 1rem;
+}
+
+.ppw-card {
+  @include w.soft-card;
+  max-width: 30rem;
+  width: 100%;
+  padding: 2.5rem clamp(1.5rem, 5vw, 2.5rem);
+  text-align: center;
+}
+
+.ppw-pills {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1.1rem;
+}
+
+.ppw-week-pill {
+  @include w.welcome-pill($ppw-navy, v.$color-white);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.78rem;
+}
+
+.ppw-stage-pill {
+  @include w.welcome-pill(rgba($ppw-amber, 0.18), #a5651c);
+  font-size: 0.82rem;
+}
+
+.ppw h1 {
+  @include m.playful-heading;
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  color: $ppw-navy;
+  margin: 0 0 0.5rem;
+}
+
+.ppw-subtitle {
+  color: rgba($ppw-ink, 0.65);
+  font-size: 1rem;
+  line-height: 1.5;
+  margin: 0 0 1.75rem;
+}
+
+/* --- 2x2 matrix graphic --- */
+.ppw-matrix {
+  position: relative;
+  max-width: 17rem;
+  margin: 0 auto 1.75rem;
+  padding: 1.4rem 0 0 1.4rem;
+}
+
+.ppw-axis-x,
+.ppw-axis-y {
+  position: absolute;
+  font-weight: 800;
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: $ppw-slate;
+}
+
+.ppw-axis-x { top: 0; }
+.ppw-axis-x-1 { left: 1.4rem; }
+.ppw-axis-x-2 { right: 0; }
+
+.ppw-axis-y {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  left: 0;
+}
+.ppw-axis-y-1 { top: 1.4rem; }
+.ppw-axis-y-2 { bottom: 0; }
+
+.ppw-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3px;
+  background: $ppw-line;
+  border: 3px solid $ppw-navy;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.ppw-quad {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3.4rem;
+  padding: 0.4rem;
+  background: v.$color-white;
+  font-weight: 700;
+  font-size: 0.72rem;
+  line-height: 1.25;
+  color: $ppw-ink;
+
+  &:first-child { background: rgba($ppw-amber, 0.14); }
+}
+
+.ppw-objectives {
+  list-style: none;
+  margin: 0 0 1.75rem;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  text-align: left;
+
+  li {
+    position: relative;
+    padding-left: 1.4rem;
+    font-size: 0.96rem;
+    line-height: 1.4;
+    color: $ppw-ink;
+  }
+
+  li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.42rem;
+    width: 0.6rem;
+    height: 0.6rem;
+    background: $ppw-amber;
+    border-radius: 2px;
+    transform: rotate(45deg);
+  }
+}
+
+.ppw-start {
+  @include w.welcome-cta-btn(linear-gradient(120deg, $ppw-navy, $ppw-slate), v.$color-white);
+  display: block;
+  width: 100%;
+  font-size: 1.05rem;
+}
+
+.ppw-review {
+  @include m.tappable;
+  display: block;
+  margin: 0.75rem auto 0;
+  background: none;
+  border: none;
+  font-weight: 700;
+  color: rgba($ppw-ink, 0.6);
+}

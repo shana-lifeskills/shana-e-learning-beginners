@@ -1,0 +1,95 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Capstone trophy welcome (pcw) — Planning Module, End-of-Module Project ---- */
+$pcw-gold: #d9a441;
+$pcw-deep: #a5721c;
+$pcw-navy: #2a2b45;
+$pcw-ink: #2c2a1f;
+
+.pcw {
+  display: flex;
+  justify-content: center;
+  padding: 2.5rem 1rem;
+}
+
+.pcw-card {
+  @include w.soft-card;
+  max-width: 30rem;
+  width: 100%;
+  padding: 2.5rem clamp(1.5rem, 5vw, 2.5rem);
+  text-align: center;
+  background: linear-gradient(180deg, #fffaf0 0%, v.$color-white 55%);
+  border: 2px solid rgba($pcw-gold, 0.4);
+}
+
+.pcw-trophy {
+  display: block;
+  font-size: 2.8rem;
+  margin-bottom: 0.4rem;
+}
+
+.pcw-badge {
+  @include w.welcome-pill(linear-gradient(120deg, $pcw-gold, #f2c264), v.$color-white);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.76rem;
+}
+
+.pcw h1 {
+  @include m.playful-heading;
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  color: $pcw-navy;
+  margin: 0.9rem 0 0.5rem;
+}
+
+.pcw-subtitle {
+  color: rgba($pcw-ink, 0.65);
+  font-size: 1rem;
+  line-height: 1.5;
+  margin: 0 0 1.6rem;
+}
+
+.pcw-tasks {
+  list-style: none;
+  margin: 0 0 1.75rem;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  text-align: left;
+
+  li {
+    position: relative;
+    padding-left: 1.5rem;
+    font-size: 0.96rem;
+    line-height: 1.4;
+    color: $pcw-ink;
+  }
+
+  li::before {
+    content: '⭐';
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: 0.85rem;
+  }
+}
+
+.pcw-start {
+  @include w.welcome-cta-btn(linear-gradient(120deg, $pcw-gold, #e0902f), v.$color-white);
+  display: block;
+  width: 100%;
+  font-size: 1.05rem;
+}
+
+.pcw-review {
+  @include m.tappable;
+  display: block;
+  margin: 0.75rem auto 0;
+  background: none;
+  border: none;
+  font-weight: 700;
+  color: rgba($pcw-ink, 0.6);
+}

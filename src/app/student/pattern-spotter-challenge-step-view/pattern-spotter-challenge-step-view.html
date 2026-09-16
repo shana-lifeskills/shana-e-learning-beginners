@@ -1,0 +1,85 @@
+<div class="psc">
+  <header class="psc-head">
+    <span class="psc-badge">{{ step().badge }}</span>
+    <span class="psc-glass" aria-hidden="true">🔍</span>
+    <h2>{{ step().title }}</h2>
+    <p class="psc-intro">{{ step().intro }}</p>
+  </header>
+
+  @if (!locked()) {
+    <ol class="psc-steps">
+      @for (line of step().instructions; track line) {
+        <li>{{ line }}</li>
+      }
+    </ol>
+
+    <div class="psc-days">
+      <span class="psc-days-prompt">{{ step().dayPrompt }}</span>
+      <div class="psc-day-row">
+        @for (label of step().dayLabels; track $index) {
+          <button
+            type="button"
+            class="psc-day"
+            [class.on]="isDayOn($index)"
+            (click)="toggleDay($index)"
+            [attr.aria-pressed]="isDayOn($index)"
+          >
+            <span class="psc-day-tick" aria-hidden="true">✓</span>
+            {{ label }}
+          </button>
+        }
+      </div>
+    </div>
+
+    <label class="psc-field-label" for="psc-adjust">{{ step().adjustLabel }}</label>
+    <textarea
+      id="psc-adjust"
+      class="psc-textarea"
+      rows="2"
+      [value]="adjust()"
+      [placeholder]="step().adjustPlaceholder"
+      (input)="setAdjust($any($event.target).value)"
+    ></textarea>
+
+    <label class="psc-field-label" for="psc-pattern">{{ step().patternLabel }}</label>
+    <textarea
+      id="psc-pattern"
+      class="psc-textarea"
+      rows="3"
+      [value]="pattern()"
+      [placeholder]="step().patternPlaceholder"
+      (input)="setPattern($any($event.target).value)"
+    ></textarea>
+
+    <button type="button" class="psc-submit" [disabled]="!canSubmit()" (click)="submit()">
+      {{ step().submitLabel }}
+    </button>
+  } @else {
+    <div class="psc-result">
+      <span class="psc-result-icon" aria-hidden="true">💡</span>
+      <h3>{{ step().revealHeading }}</h3>
+      <p class="psc-result-sub">{{ step().revealSubtitle }}</p>
+
+      <p class="psc-result-days">Followed the plan on <strong>{{ daysDone() }} / 3</strong> days</p>
+
+      @if (adjust().trim()) {
+        <div class="psc-result-box">
+          <span>{{ step().adjustLabel }}</span>
+          <p>{{ adjust() }}</p>
+        </div>
+      }
+
+      <div class="psc-result-box psc-result-pattern">
+        <span>{{ step().patternLabel }}</span>
+        <p>{{ pattern() }}</p>
+      </div>
+
+      <div class="psc-done">
+        <h4>{{ step().completeHeading }}</h4>
+        <p>{{ step().completeText }}</p>
+      </div>
+
+      <button type="button" class="psc-continue" (click)="finish()">{{ step().continueLabel }} →</button>
+    </div>
+  }
+</div>

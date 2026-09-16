@@ -1,0 +1,232 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- Share Your Plan challenge (syp) — Identity Module, Week 4 closer ---- */
+$syp-navy: #1e2749;
+$syp-plum: #7c5cc4;
+$syp-coral: #ef6f52;
+$syp-ink: #2b2d42;
+$syp-paper: #fffdf6;
+$syp-line: rgba(43, 45, 66, 0.16);
+
+.syp {
+  max-width: 42rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.syp-badge {
+  @include m.playful-heading;
+  display: inline-block;
+  background: rgba($syp-plum, 0.14);
+  color: $syp-plum;
+  font-size: 0.85rem;
+  padding: 0.4rem 1.1rem;
+  border-radius: v.$border-radius-pill;
+}
+
+.syp h1 {
+  @include m.playful-heading;
+  margin: 1rem 0 0.5rem;
+  font-size: clamp(1.9rem, 4.6vw, 2.4rem);
+  color: $syp-navy;
+}
+
+.syp-subtitle {
+  color: rgba($syp-ink, 0.65);
+  font-size: 1.02rem;
+  line-height: 1.5;
+  max-width: 32rem;
+  margin: 0 auto;
+}
+
+.syp-instructions {
+  background: rgba($syp-plum, 0.07);
+  border: 1.5px dashed rgba($syp-plum, 0.4);
+  border-radius: v.$border-radius-xl;
+  padding: 1.2rem 1.5rem;
+  margin: 1.5rem 0;
+  text-align: left;
+
+  h2 {
+    @include m.playful-heading;
+    font-size: 1.05rem;
+    color: $syp-navy;
+    margin: 0 0 0.6rem;
+  }
+
+  ol {
+    margin: 0;
+    padding-left: 1.25rem;
+    color: rgba($syp-ink, 0.75);
+    line-height: 1.6;
+  }
+}
+
+.syp-card {
+  background: $syp-paper;
+  border: 1.5px solid $syp-line;
+  border-radius: v.$border-radius-xl;
+  box-shadow: 0 4px 0 rgba($syp-navy, 0.06);
+  padding: 1.5rem 1.4rem 1.6rem;
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.syp-field-label {
+  display: block;
+  font-weight: 700;
+  font-size: 0.88rem;
+  color: $syp-navy;
+  margin: 0 0 0.4rem;
+
+  & + textarea { margin-bottom: 1rem; }
+}
+
+.syp-card textarea {
+  width: 100%;
+  resize: vertical;
+  border: 1px solid $syp-line;
+  border-radius: 9px;
+  padding: 0.6rem 0.8rem;
+  font-family: inherit;
+  font-size: 0.95rem;
+  color: $syp-ink;
+  background: v.$color-white;
+
+  &:focus {
+    outline: 2px solid $syp-plum;
+    outline-offset: 1px;
+  }
+}
+
+.syp-voice {
+  border-top: 1px dashed $syp-line;
+  padding-top: 1rem;
+  margin-top: 0.25rem;
+}
+
+.syp-voice-label {
+  display: block;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: rgba($syp-ink, 0.6);
+  margin-bottom: 0.6rem;
+}
+
+.syp-voice audio {
+  width: 100%;
+  margin-bottom: 0.6rem;
+}
+
+.syp-voice-btn {
+  @include m.tappable;
+  border: 1.5px solid $syp-plum;
+  border-radius: v.$border-radius-pill;
+  padding: 0.6rem 1.3rem;
+  font-weight: 800;
+  font-size: 0.9rem;
+  background: v.$color-white;
+  color: $syp-plum;
+
+  &--rec {
+    background: $syp-coral;
+    border-color: $syp-coral;
+    color: v.$color-white;
+  }
+
+  &--clear {
+    border-color: $syp-line;
+    color: rgba($syp-ink, 0.6);
+  }
+}
+
+.syp-submit {
+  @include m.tappable;
+  display: block;
+  width: 100%;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  padding: 1rem 1.5rem;
+  font-weight: 800;
+  font-size: 1.05rem;
+  background: linear-gradient(120deg, $syp-plum, #9b7ee0);
+  color: v.$color-white;
+  box-shadow: 0 4px 0 rgba($syp-navy, 0.12);
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+}
+
+/* --- reveal --- */
+.syp-plan-card {
+  background: v.$color-white;
+  border-radius: v.$border-radius-xl;
+  box-shadow: 0 8px 22px rgba($syp-navy, 0.12);
+  padding: 1.75rem 1.5rem;
+  margin: 1.75rem 0;
+  text-align: left;
+  transform: rotate(-0.6deg);
+}
+
+.syp-plan-row {
+  padding: 0.85rem 0;
+
+  & + & { border-top: 1px solid $syp-line; }
+
+  p {
+    margin: 0.3rem 0 0;
+    color: $syp-ink;
+    line-height: 1.5;
+  }
+
+  audio {
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+}
+
+.syp-plan-label {
+  font-weight: 800;
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: $syp-plum;
+}
+
+.syp-complete {
+  background: rgba($syp-plum, 0.1);
+  border-radius: v.$border-radius-xl;
+  padding: 2rem clamp(1.25rem, 4vw, 2rem) 1.75rem;
+
+  h2 {
+    @include m.playful-heading;
+    font-size: 1.4rem;
+    color: $syp-navy;
+    margin: 0 0 0.75rem;
+  }
+
+  p {
+    color: rgba($syp-ink, 0.85);
+    line-height: 1.6;
+    margin: 0 0 1.5rem;
+  }
+}
+
+.syp-continue {
+  @include m.tappable;
+  display: block;
+  width: 100%;
+  max-width: 24rem;
+  margin: 0 auto;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  padding: 0.95rem 1.5rem;
+  font-weight: 800;
+  font-size: 1.05rem;
+  background: $syp-navy;
+  color: v.$color-white;
+}

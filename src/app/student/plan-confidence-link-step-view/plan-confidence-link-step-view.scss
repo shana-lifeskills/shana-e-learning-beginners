@@ -1,0 +1,76 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- Confidence Link affirmation (pcl) — Planning Module, Week 1 ---- */
+$pcl-ink: #1f2a3d;
+$pcl-indigo: #3b4a8c;
+$pcl-glow: #6c7fd6;
+$pcl-bg: #eef1fb;
+
+.pcl {
+  display: flex;
+  justify-content: center;
+  padding: 2.5rem 1rem;
+}
+
+.pcl-card {
+  position: relative;
+  max-width: 30rem;
+  width: 100%;
+  padding: 2.75rem clamp(1.5rem, 5vw, 2.75rem);
+  text-align: center;
+  background: radial-gradient(circle at 50% 0%, #f4f6fd, $pcl-bg 70%);
+  border: 2px solid rgba($pcl-indigo, 0.18);
+  border-radius: v.$border-radius-xl;
+  box-shadow: 0 12px 30px rgba($pcl-indigo, 0.16);
+}
+
+.pcl-eyebrow {
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: $pcl-glow;
+}
+
+.pcl-card h2 {
+  @include m.playful-heading;
+  margin: 0.5rem 0 1.5rem;
+  font-size: clamp(1.3rem, 4vw, 1.7rem);
+  color: $pcl-ink;
+}
+
+.pcl-quote {
+  position: relative;
+  margin: 0;
+  padding: 0 0.5rem;
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: clamp(1.25rem, 4.5vw, 1.6rem);
+  line-height: 1.4;
+  color: $pcl-indigo;
+}
+
+.pcl-mark {
+  display: block;
+  font-size: 3rem;
+  line-height: 0.6;
+  color: rgba($pcl-glow, 0.4);
+}
+
+.pcl-caption {
+  margin: 1.5rem 0 2rem;
+  font-size: 0.96rem;
+  color: rgba($pcl-ink, 0.6);
+}
+
+.pcl-continue {
+  @include m.tappable;
+  padding: 0.85rem 2rem;
+  background: linear-gradient(120deg, $pcl-indigo, $pcl-glow);
+  border: none;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: v.$color-white;
+}

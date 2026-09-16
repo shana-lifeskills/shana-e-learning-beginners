@@ -1,0 +1,103 @@
+<div class="cc">
+  <header class="cc-head">
+    <span class="cc-badge">{{ step().badge }}</span>
+    <h2>{{ step().title }}</h2>
+    <p class="cc-intro">{{ step().intro }}</p>
+  </header>
+
+  @if (!locked()) {
+    <section class="cc-block">
+      <h3 class="cc-h">{{ step().formatsHeading }}</h3>
+      <div class="cc-formats">
+        @for (format of step().formats; track format.id) {
+          <button
+            type="button"
+            class="cc-format"
+            [class.cc-format--picked]="formatId() === format.id"
+            (click)="chooseFormat(format.id)"
+          >
+            <span class="cc-format-icon">{{ format.icon }}</span>
+            <span class="cc-format-label">{{ format.label }}</span>
+            <span class="cc-format-desc">{{ format.description }}</span>
+          </button>
+        }
+      </div>
+    </section>
+
+    <section class="cc-block">
+      <label class="cc-field-label" for="cc-plan">{{ step().planLabel }}</label>
+      <textarea
+        id="cc-plan"
+        rows="4"
+        [value]="plan()"
+        [placeholder]="step().planPlaceholder"
+        (input)="setPlan($any($event.target).value)"
+      ></textarea>
+    </section>
+
+    <section class="cc-block cc-upload">
+      <span class="cc-optional-tag">Optional</span>
+      <h3 class="cc-h">{{ step().uploadHeading }}</h3>
+      <p class="cc-hint">{{ step().uploadHint }}</p>
+
+      <input #fileInput type="file" accept="image/*,video/*" hidden (change)="onFileSelected($event)" />
+
+      @if (fileUrl(); as url) {
+        <div class="cc-file-preview">
+          @if (fileIsImage()) {
+            <img [src]="url" alt="My confidence showcase" />
+          } @else {
+            <video [src]="url" controls></video>
+          }
+        </div>
+        <div class="cc-file-actions">
+          <button type="button" class="cc-file-btn" (click)="chooseFile()">{{ step().uploadChangeLabel }}</button>
+          <button type="button" class="cc-file-btn cc-file-remove" (click)="removeFile()">{{ step().uploadRemoveLabel }}</button>
+        </div>
+      } @else {
+        <button type="button" class="cc-dropzone" (click)="chooseFile()">
+          <span aria-hidden="true">📎</span> {{ step().uploadChooseLabel }}
+        </button>
+      }
+    </section>
+
+    <button type="button" class="cc-submit" [disabled]="!canSubmit()" (click)="submit()">
+      {{ step().submitLabel }}
+    </button>
+  } @else {
+    <div class="cc-result">
+      <span class="cc-result-icon" aria-hidden="true">🎉</span>
+      <h3>{{ step().revealHeading }}</h3>
+      <p class="cc-result-sub">{{ step().revealSubtitle }}</p>
+
+      @if (chosenFormat(); as format) {
+        <div class="cc-result-box">
+          <span>{{ format.icon }} {{ format.label }}</span>
+          <p>{{ plan() }}</p>
+        </div>
+      }
+
+      @if (fileUrl(); as url) {
+        <div class="cc-result-file">
+          @if (fileIsImage()) {
+            <img [src]="url" alt="My confidence showcase" />
+          } @else {
+            <video [src]="url" controls></video>
+          }
+        </div>
+      }
+
+      <div class="cc-share">
+        <h4>{{ step().shareHeading }}</h4>
+        <p>{{ step().shareText }}</p>
+      </div>
+
+      <div class="cc-done">
+        <h4>{{ step().completeHeading }}</h4>
+        <p>{{ step().completeText }}</p>
+      </div>
+
+      <button type="button" class="cc-continue" (click)="finish()">{{ step().continueLabel }} →</button>
+    </div>
+  }
+</div>

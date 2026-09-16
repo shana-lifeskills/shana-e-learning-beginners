@@ -1,0 +1,192 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Temperament Quiz (tq) — Identity Module, Week 2 ---- */
+$tq-navy: #1e2749;
+$tq-blue: #3f7fd6;
+$tq-orange: #d9791f;
+$tq-ink: #2b2d42;
+$tq-card: #fffdf8;
+$tq-line: rgba(43, 45, 66, 0.16);
+
+.tq {
+  max-width: 40rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.tq-badge {
+  @include m.playful-heading;
+  display: inline-block;
+  background: rgba($tq-blue, 0.14);
+  color: $tq-blue;
+  font-size: 0.85rem;
+  padding: 0.4rem 1.1rem;
+  border-radius: v.$border-radius-pill;
+}
+
+.tq h1 {
+  @include m.playful-heading;
+  margin: 1rem 0 0.5rem;
+  font-size: clamp(1.9rem, 4.6vw, 2.4rem);
+  color: $tq-navy;
+}
+
+.tq-subtitle {
+  color: rgba($tq-ink, 0.65);
+  font-size: 1.02rem;
+  line-height: 1.5;
+  margin: 0 auto 0.4rem;
+  max-width: 30rem;
+}
+
+.tq-instruction {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: $tq-orange;
+  margin: 0;
+}
+
+.tq-progress {
+  font-weight: 800;
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: rgba($tq-ink, 0.5);
+  margin: 1.25rem 0 0.5rem;
+}
+
+.tq-card {
+  @include m.bouncy-card;
+
+  &:hover {
+    transform: none;
+    box-shadow: 0 6px 0 rgba(0, 0, 0, 0.08);
+  }
+
+  background: $tq-card;
+  border-radius: v.$border-radius-xl;
+  padding: 1.75rem clamp(1.1rem, 4vw, 2rem) 2rem;
+  text-align: left;
+}
+
+.tq-question {
+  @include m.playful-heading;
+  font-size: 1.25rem;
+  color: $tq-navy;
+  margin: 0 0 1.1rem;
+}
+
+.tq-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.tq-option {
+  @include m.tappable;
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  width: 100%;
+  border: 1.5px solid $tq-line;
+  border-radius: 12px;
+  padding: 0.85rem 1rem;
+  background: v.$color-cream-bg;
+  text-align: left;
+
+  &:hover {
+    border-color: rgba($tq-blue, 0.5);
+    background: rgba($tq-blue, 0.06);
+  }
+}
+
+.tq-option-letter {
+  @include w.icon-chip(1.9rem, 0.95rem);
+  background: rgba($tq-orange, 0.16);
+  color: $tq-orange;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.tq-option-text {
+  color: $tq-ink;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+/* --- Result screen --- */
+
+.tq-result {
+  @include m.bouncy-card;
+
+  &:hover {
+    transform: none;
+    box-shadow: 0 6px 0 rgba(0, 0, 0, 0.08);
+  }
+
+  background: rgba($tq-orange, 0.1);
+  border-radius: v.$border-radius-xl;
+  padding: 2.5rem clamp(1.25rem, 4vw, 2rem) 2rem;
+  margin-top: 1rem;
+}
+
+.tq-result-icon {
+  display: block;
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+}
+
+.tq-result-heading {
+  display: block;
+  font-weight: 800;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $tq-orange;
+  margin-bottom: 0.5rem;
+}
+
+.tq-result h2 {
+  @include m.playful-heading;
+  font-size: 1.9rem;
+  color: $tq-navy;
+  margin: 0 0 0.35rem;
+}
+
+.tq-result-tagline {
+  font-weight: 700;
+  color: $tq-blue;
+  margin: 0 0 0.9rem;
+}
+
+.tq-result-description {
+  color: rgba($tq-ink, 0.8);
+  line-height: 1.6;
+  margin: 0 0 1.75rem;
+}
+
+.tq-continue {
+  @include m.tappable;
+  display: block;
+  width: 100%;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  padding: 0.95rem 1.5rem;
+  font-weight: 800;
+  font-size: 1.05rem;
+  background: linear-gradient(120deg, $tq-orange, #f0a94c);
+  color: v.$color-white;
+  box-shadow: 0 4px 0 rgba($tq-navy, 0.1);
+}
+
+.tq-retake {
+  @include m.tappable;
+  display: block;
+  margin: 0.85rem auto 0;
+  background: none;
+  border: none;
+  font-weight: 700;
+  color: rgba($tq-ink, 0.6);
+}

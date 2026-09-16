@@ -1,0 +1,20 @@
+<div class="gcl">
+  <div class="gcl-card">
+    <span class="gcl-eyebrow">{{ step().eyebrow }}</span>
+
+    <svg class="gcl-sprout" viewBox="0 0 100 100" aria-hidden="true">
+      <path class="gcl-soil" d="M20 78 Q50 70 80 78 L80 82 L20 82 Z" />
+      <path class="gcl-stem" d="M50 78 C50 60 50 55 50 40" />
+      <path class="gcl-leaf gcl-leaf--left" d="M50 55 C36 55 30 46 32 36 C44 38 50 46 50 55Z" />
+      <path class="gcl-leaf gcl-leaf--right" d="M50 44 C64 44 70 35 68 25 C56 27 50 35 50 44Z" />
+    </svg>
+
+    <h2>{{ step().title }}</h2>
+
+    <blockquote class="gcl-quote">{{ step().quote }}</blockquote>
+
+    <p class="gcl-caption">{{ step().caption }}</p>
+
+    <button type="button" class="gcl-continue" (click)="finish()">{{ step().completeLabel }} →</button>
+  </div>
+</div>

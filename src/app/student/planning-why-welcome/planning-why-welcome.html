@@ -1,0 +1,31 @@
+<div class="pww">
+  <div class="pww-card">
+    <div class="pww-pills">
+      <span class="pww-week-pill">{{ pww.weekPill }}</span>
+      <span class="pww-stage-pill">{{ pww.stagePill }}</span>
+    </div>
+
+    <h1>{{ pww.title }}</h1>
+    <p class="pww-subtitle">{{ pww.subtitle }}</p>
+
+    <ol class="pww-route">
+      @for (o of pww.objectives; track o.text; let i = $index) {
+        <li>
+          <span class="pww-node">{{ i + 1 }}</span>
+          <span class="pww-step">{{ o.text }}</span>
+        </li>
+      }
+    </ol>
+
+    @if (isCompletedLessonWelcome()) {
+      @if (nextLesson(); as next) {
+        <button type="button" class="pww-start" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+      } @else {
+        <button type="button" class="pww-start" (click)="backToMap()">Back to My Modules →</button>
+      }
+      <button type="button" class="pww-review" (click)="beginLesson()">↺ Review this lesson</button>
+    } @else {
+      <button type="button" class="pww-start" (click)="beginLesson()">{{ pww.startLabel }} →</button>
+    }
+  </div>
+</div>

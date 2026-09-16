@@ -1,0 +1,37 @@
+<div class="pgw">
+  <div class="pgw-card">
+    <div class="pgw-pills">
+      <span class="pgw-week-pill">{{ pgw.weekPill }}</span>
+      <span class="pgw-stage-pill">{{ pgw.stagePill }}</span>
+    </div>
+
+    <h1>{{ pgw.title }}</h1>
+    <p class="pgw-subtitle">{{ pgw.subtitle }}</p>
+
+    <ul class="pgw-smart" aria-hidden="true">
+      @for (s of pgw.smartLetters; track s.letter) {
+        <li>
+          <span class="pgw-letter">{{ s.letter }}</span>
+          <span class="pgw-word">{{ s.word }}</span>
+        </li>
+      }
+    </ul>
+
+    <ul class="pgw-objectives">
+      @for (o of pgw.objectives; track o.text) {
+        <li>{{ o.text }}</li>
+      }
+    </ul>
+
+    @if (isCompletedLessonWelcome()) {
+      @if (nextLesson(); as next) {
+        <button type="button" class="pgw-start" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+      } @else {
+        <button type="button" class="pgw-start" (click)="backToMap()">Back to My Modules →</button>
+      }
+      <button type="button" class="pgw-review" (click)="beginLesson()">↺ Review this lesson</button>
+    } @else {
+      <button type="button" class="pgw-start" (click)="beginLesson()">{{ pgw.startLabel }} →</button>
+    }
+  </div>
+</div>

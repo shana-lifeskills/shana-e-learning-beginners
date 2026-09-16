@@ -37,10 +37,10 @@ export interface Trainer extends BaseUser {
 
 export type AppUser = Student | Trainer;
 
-export const AVATAR_IDS = ['fox', 'panda', 'owl', 'otter', 'dino', 'unicorn'] as const;
+export const AVATAR_IDS = ['nova', 'milo', 'zoe', 'kai', 'ruby', 'theo'] as const;
 export type AvatarId = (typeof AVATAR_IDS)[number];
 
 export const AGE_GROUPS: { id: AgeGroup; label: string; range: string }[] = [
   { id: 'beginner', label: 'Beginner', range: '3–9' },
-  { id: 'advanced', label: 'Advanced', range: '9–13' },
+  { id: 'advanced', label: 'Advanced', range: '10–17' },
 ];

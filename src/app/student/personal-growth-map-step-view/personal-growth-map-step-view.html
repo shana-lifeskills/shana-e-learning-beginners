@@ -1,0 +1,84 @@
+<div class="pgm">
+  <header class="pgm-head">
+    <span class="pgm-badge">{{ step().badge }}</span>
+    <h2>{{ step().title }}</h2>
+    <p class="pgm-intro">{{ step().intro }}</p>
+  </header>
+
+  @if (!locked()) {
+    <div class="pgm-trail">
+      @for (section of step().sections; track section.id; let last = $last) {
+        <section class="pgm-section">
+          <div class="pgm-section-head">
+            <span class="pgm-icon">{{ section.icon }}</span>
+            <h3>{{ section.label }}</h3>
+          </div>
+
+          @if (!isUploadMode(section.id)) {
+            <textarea
+              rows="3"
+              [value]="sectionText(section.id)"
+              [placeholder]="section.placeholder"
+              (input)="setText(section.id, $any($event.target).value)"
+            ></textarea>
+            <button type="button" class="pgm-mode-link" (click)="toggleUploadMode(section.id)">
+              {{ step().uploadInsteadLabel }}
+            </button>
+          } @else {
+            <input #fileInput type="file" accept="image/*,.pdf" hidden (change)="onFileSelected(section.id, $event)" />
+
+            @if (sectionFile(section.id); as url) {
+              <div class="pgm-file-preview">
+                @if (sectionFileIsImage(section.id)) {
+                  <img [src]="url" alt="{{ section.label }} upload" />
+                } @else {
+                  <span class="pgm-file-badge">📄 File attached</span>
+                }
+              </div>
+              <div class="pgm-file-actions">
+                <button type="button" class="pgm-file-btn" (click)="fileInput.click()">{{ step().uploadChangeLabel }}</button>
+                <button type="button" class="pgm-file-btn pgm-file-remove" (click)="removeFile(section.id)">{{ step().uploadRemoveLabel }}</button>
+              </div>
+            } @else {
+              <button type="button" class="pgm-dropzone" (click)="fileInput.click()">
+                <span aria-hidden="true">📎</span> {{ step().uploadChooseLabel }}
+              </button>
+            }
+
+            <button type="button" class="pgm-mode-link" (click)="toggleUploadMode(section.id)">Type it in instead</button>
+          }
+        </section>
+        @if (!last) {
+          <span class="pgm-connector" aria-hidden="true">↓</span>
+        }
+      }
+    </div>
+
+    <button type="button" class="pgm-submit" [disabled]="!canSubmit()" (click)="submit()">
+      {{ step().submitLabel }}
+    </button>
+  } @else {
+    <div class="pgm-result">
+      <span class="pgm-result-icon" aria-hidden="true">🗺️</span>
+      <h3>{{ step().encouragementHeading }}</h3>
+      <p class="pgm-result-text">{{ step().encouragementText }}</p>
+
+      <dl class="pgm-result-list">
+        @for (section of step().sections; track section.id) {
+          <div>
+            <dt>{{ section.icon }} {{ section.label }}</dt>
+            <dd>
+              @if (sectionText(section.id).trim()) {
+                {{ sectionText(section.id) }}
+              } @else if (sectionFile(section.id)) {
+                📎 File attached
+              }
+            </dd>
+          </div>
+        }
+      </dl>
+
+      <button type="button" class="pgm-continue" (click)="finish()">{{ step().continueLabel }} →</button>
+    </div>
+  }
+</div>

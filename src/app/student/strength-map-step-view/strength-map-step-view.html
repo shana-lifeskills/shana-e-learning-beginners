@@ -1,0 +1,68 @@
+<div class="sm">
+  @if (!revealed()) {
+    <span class="sm-badge">{{ step().badge }}</span>
+    <h1>{{ step().title }}</h1>
+    <p class="sm-subtitle">{{ step().subtitle }}</p>
+
+    <div class="sm-instructions">
+      <h2>{{ step().instructionHeading }}</h2>
+      <ol>
+        @for (line of step().instructions; track line) {
+          <li>{{ line }}</li>
+        }
+      </ol>
+    </div>
+
+    <div class="sm-trail">
+      @for (stop of stops(); track $index; let i = $index) {
+        <div class="sm-stop" [class.sm-stop--filled]="stop.strength && stop.action">
+          <span class="sm-stop-icon">{{ stopIcons[i] }}</span>
+          <div class="sm-stop-body">
+            <span class="sm-stop-tab">{{ step().stopLabel }} {{ i + 1 }}</span>
+
+            <label class="sm-field-label">{{ step().strengthLabel }}</label>
+            <input
+              type="text"
+              [value]="stop.strength"
+              [disabled]="locked()"
+              (input)="setField(i, 'strength', $any($event.target).value)"
+              [placeholder]="step().strengthPlaceholder"
+            />
+
+            <label class="sm-field-label">{{ step().actionLabel }}</label>
+            <input
+              type="text"
+              [value]="stop.action"
+              [disabled]="locked()"
+              (input)="setField(i, 'action', $any($event.target).value)"
+              [placeholder]="step().actionPlaceholder"
+            />
+          </div>
+        </div>
+      }
+    </div>
+
+    <button type="button" class="sm-submit" [disabled]="!canSubmit()" (click)="submit()">🗺️ {{ step().submitLabel }}</button>
+  } @else {
+    <span class="sm-badge">{{ step().mapHeading }}</span>
+    <p class="sm-subtitle">{{ step().mapSubtitle }}</p>
+
+    <div class="sm-map">
+      @for (stop of stops(); track $index; let i = $index) {
+        <div class="sm-pin">
+          <span class="sm-pin-icon">{{ stopIcons[i] }}</span>
+          <div class="sm-pin-card">
+            <p class="sm-pin-strength">{{ stop.strength }}</p>
+            <p class="sm-pin-action"><span>Next step:</span> {{ stop.action }}</p>
+          </div>
+        </div>
+      }
+    </div>
+
+    <div class="sm-complete">
+      <h2>{{ step().completeHeading }}</h2>
+      <p>{{ step().completeText }}</p>
+      <button type="button" class="sm-continue" (click)="finish()">{{ step().continueLabel }} →</button>
+    </div>
+  }
+</div>

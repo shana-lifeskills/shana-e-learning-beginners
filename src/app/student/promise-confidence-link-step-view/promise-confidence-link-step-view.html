@@ -1,0 +1,19 @@
+<div class="pcm">
+  <div class="pcm-card">
+    <span class="pcm-eyebrow">{{ step().eyebrow }}</span>
+
+    <svg class="pcm-seal" viewBox="0 0 100 100" aria-hidden="true">
+      <circle cx="50" cy="50" r="40" class="pcm-ring" />
+      <circle cx="50" cy="50" r="32" class="pcm-ring-in" />
+      <path d="M32 51 L44 63 L69 37" class="pcm-check" />
+    </svg>
+
+    <h2>{{ step().title }}</h2>
+
+    <blockquote class="pcm-quote">{{ step().quote }}</blockquote>
+
+    <p class="pcm-caption">{{ step().caption }}</p>
+
+    <button type="button" class="pcm-continue" (click)="finish()">{{ step().completeLabel }} →</button>
+  </div>
+</div>

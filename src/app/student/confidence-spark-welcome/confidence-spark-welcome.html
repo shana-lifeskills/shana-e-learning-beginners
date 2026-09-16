@@ -1,0 +1,35 @@
+<div class="csw">
+  <div class="csw-card">
+    <span class="csw-icon">✨</span>
+
+    <div class="csw-pills">
+      <span class="csw-week-pill">{{ csw.weekPill }}</span>
+      <span class="csw-stage-pill">{{ csw.stagePill }}</span>
+    </div>
+
+    <h1>{{ csw.title }}</h1>
+    <p class="csw-subtitle">{{ csw.subtitle }}</p>
+
+    <p class="csw-objective"><span class="csw-objective-icon">🎯</span>{{ csw.objectiveText }}</p>
+
+    <div class="csw-recap">
+      <span class="csw-recap-label">{{ csw.recapLabel }}</span>
+      <p class="csw-recap-question">“{{ csw.recapQuestion }}”</p>
+      <div class="csw-sample">
+        <span class="csw-sample-label">{{ csw.sampleAnswerLabel }}</span>
+        <p class="csw-sample-text">{{ csw.sampleAnswerText }}</p>
+      </div>
+    </div>
+
+    @if (isCompletedLessonWelcome()) {
+      @if (nextLesson(); as next) {
+        <button type="button" class="csw-start" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+      } @else {
+        <button type="button" class="csw-start" (click)="backToMap()">Back to My Modules →</button>
+      }
+      <button type="button" class="csw-review" (click)="beginLesson()">↺ Review this lesson</button>
+    } @else {
+      <button type="button" class="csw-start" (click)="beginLesson()">{{ csw.startLabel }} →</button>
+    }
+  </div>
+</div>

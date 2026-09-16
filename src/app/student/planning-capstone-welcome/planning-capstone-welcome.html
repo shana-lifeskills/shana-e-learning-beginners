@@ -1,0 +1,26 @@
+<div class="pcw">
+  <div class="pcw-card">
+    <span class="pcw-trophy" aria-hidden="true">🏆</span>
+    <span class="pcw-badge">{{ pcw.badgeLabel }}</span>
+
+    <h1>{{ pcw.title }}</h1>
+    <p class="pcw-subtitle">{{ pcw.subtitle }}</p>
+
+    <ul class="pcw-tasks">
+      @for (t of pcw.tasks; track t.text) {
+        <li>{{ t.text }}</li>
+      }
+    </ul>
+
+    @if (isCompletedLessonWelcome()) {
+      @if (nextLesson(); as next) {
+        <button type="button" class="pcw-start" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+      } @else {
+        <button type="button" class="pcw-start" (click)="backToMap()">Back to My Modules →</button>
+      }
+      <button type="button" class="pcw-review" (click)="beginLesson()">↺ Review this lesson</button>
+    } @else {
+      <button type="button" class="pcw-start" (click)="beginLesson()">{{ pcw.startLabel }} →</button>
+    }
+  </div>
+</div>

@@ -1,0 +1,106 @@
+<div class="trw">
+  <div class="trw-clip" aria-hidden="true"></div>
+
+  <div class="trw-sheet">
+    <header class="trw-head">
+      <span class="trw-badge">{{ step().badge }}</span>
+      <h2>{{ step().title }}</h2>
+      <p class="trw-intro">{{ step().intro }}</p>
+    </header>
+
+    @if (!locked()) {
+      <ol class="trw-steps">
+        @for (line of step().instructions; track line) {
+          <li>{{ line }}</li>
+        }
+      </ol>
+
+      <div class="trw-rows">
+        @for (row of rows(); track $index) {
+          <fieldset class="trw-row">
+            <legend>{{ step().activityLabel }} {{ $index + 1 }}</legend>
+            <input
+              type="text"
+              class="trw-name"
+              [value]="row.name"
+              [placeholder]="step().activityPlaceholder"
+              (input)="setName($index, $any($event.target).value)"
+            />
+
+            <span class="trw-rank-q">{{ step().rankQuestion }}</span>
+            <div class="trw-ranks">
+              @for (opt of step().rankOptions; track opt) {
+                <button
+                  type="button"
+                  class="trw-rank"
+                  [class.on]="row.rank === opt"
+                  (click)="setRank($index, opt)"
+                >{{ opt }}</button>
+              }
+            </div>
+          </fieldset>
+        }
+      </div>
+
+      <div class="trw-focus">
+        <span class="trw-focus-label">{{ step().focusLabel }}</span>
+        <p class="trw-focus-hint">{{ step().focusHint }}</p>
+        @if (namedRows().length) {
+          <div class="trw-focus-opts">
+            @for (entry of namedRows(); track entry.index) {
+              <button
+                type="button"
+                class="trw-focus-opt"
+                [class.on]="focusIndex() === entry.index"
+                (click)="setFocus(entry.index)"
+              >{{ entry.row.name }}</button>
+            }
+          </div>
+        } @else {
+          <p class="trw-focus-empty">Name an activity above first.</p>
+        }
+      </div>
+
+      <label class="trw-reason-label" for="trw-reason">{{ step().reasonLabel }}</label>
+      <textarea
+        id="trw-reason"
+        class="trw-reason"
+        rows="3"
+        [value]="reason()"
+        [placeholder]="step().reasonPlaceholder"
+        (input)="setReason($any($event.target).value)"
+      ></textarea>
+
+      <button type="button" class="trw-submit" [disabled]="!canSubmit()" (click)="submit()">
+        {{ step().submitLabel }}
+      </button>
+    } @else {
+      <div class="trw-result">
+        <h3>{{ step().revealHeading }}</h3>
+        <p class="trw-result-sub">{{ step().revealSubtitle }}</p>
+
+        <ul class="trw-result-list">
+          @for (row of rows(); track $index) {
+            <li>
+              <span class="trw-result-act">{{ row.name }}</span>
+              <span class="trw-result-rank">{{ row.rank }}</span>
+            </li>
+          }
+        </ul>
+
+        <div class="trw-result-focus">
+          <span class="trw-result-focus-label">{{ step().focusLabel }}</span>
+          <strong>{{ focusRow()?.name }}</strong>
+          <p>{{ reason() }}</p>
+        </div>
+
+        <div class="trw-done">
+          <h4>{{ step().completeHeading }}</h4>
+          <p>{{ step().completeText }}</p>
+        </div>
+
+        <button type="button" class="trw-continue" (click)="finish()">{{ step().continueLabel }} →</button>
+      </div>
+    }
+  </div>
+</div>

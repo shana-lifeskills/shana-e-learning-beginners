@@ -1,0 +1,94 @@
+<div class="rr">
+  @if (phase() === 'intro') {
+    <span class="rr-badge">{{ step().badge }}</span>
+    <h1>{{ step().introTitle }}</h1>
+    <p class="rr-subtitle">{{ step().introText }}</p>
+
+    <div class="rr-legend">
+      <span class="rr-legend-item rr-legend-item--yes">{{ step().yesLabel }}</span>
+      <span class="rr-legend-item rr-legend-item--maybe">{{ step().maybeLabel }}</span>
+      <span class="rr-legend-item rr-legend-item--no">{{ step().noLabel }}</span>
+    </div>
+    <p class="rr-no-wrong">{{ step().noWrongAnswerNote }}</p>
+
+    <button type="button" class="rr-next" (click)="begin()">{{ step().startLabel }} →</button>
+  } @else if (phase() === 'challenges') {
+    <span class="rr-badge">{{ step().badge }}</span>
+    <p class="rr-progress">Challenge {{ cIndex() + 1 }} of {{ step().challenges.length }}</p>
+
+    @if (currentChallenge(); as challenge) {
+      <div class="rr-card">
+        <p class="rr-challenge">{{ challenge.text }}</p>
+
+        <div class="rr-choices">
+          <button
+            type="button"
+            class="rr-choice rr-choice--yes"
+            [class.rr-choice--picked]="currentPick() === 'yes'"
+            [disabled]="!!currentPick()"
+            (click)="choose('yes')"
+          >
+            {{ step().yesLabel }}
+          </button>
+          <button
+            type="button"
+            class="rr-choice rr-choice--maybe"
+            [class.rr-choice--picked]="currentPick() === 'maybe'"
+            [disabled]="!!currentPick()"
+            (click)="choose('maybe')"
+          >
+            {{ step().maybeLabel }}
+          </button>
+          <button
+            type="button"
+            class="rr-choice rr-choice--no"
+            [class.rr-choice--picked]="currentPick() === 'no'"
+            [disabled]="!!currentPick()"
+            (click)="choose('no')"
+          >
+            {{ step().noLabel }}
+          </button>
+        </div>
+
+        @if (currentFeedback(); as feedback) {
+          <div class="rr-feedback" [class]="'rr-feedback--' + currentPick()">
+            <p>{{ feedback }}</p>
+          </div>
+          <button type="button" class="rr-next" (click)="next()">
+            {{ isLastChallenge() ? 'Continue to reflection' : step().nextLabel }} →
+          </button>
+        }
+      </div>
+    }
+  } @else if (phase() === 'reflection') {
+    <span class="rr-badge">{{ step().reflectionHeading }}</span>
+    <p class="rr-subtitle">{{ step().reflectionIntro }}</p>
+
+    <div class="rr-card">
+      <label class="rr-field-label">{{ step().reflectionChallengeLabel }}</label>
+      <input
+        type="text"
+        [value]="reflectionChallenge()"
+        (input)="setReflectionChallenge($any($event.target).value)"
+        [placeholder]="step().reflectionChallengePlaceholder"
+      />
+
+      <label class="rr-field-label">{{ step().reflectionActionLabel }}</label>
+      <textarea
+        rows="3"
+        [value]="reflectionAction()"
+        (input)="setReflectionAction($any($event.target).value)"
+        [placeholder]="step().reflectionActionPlaceholder"
+      ></textarea>
+
+      <button type="button" class="rr-next" [disabled]="!canPost()" (click)="post()">{{ step().submitLabel }} →</button>
+    </div>
+  } @else {
+    <div class="rr-wrapup">
+      <span class="rr-wrapup-icon">🌟</span>
+      <h2>{{ step().wrapUpHeading }}</h2>
+      <p>{{ step().wrapUpText }}</p>
+      <button type="button" class="rr-next" (click)="finish()">{{ step().continueLabel }} →</button>
+    </div>
+  }
+</div>

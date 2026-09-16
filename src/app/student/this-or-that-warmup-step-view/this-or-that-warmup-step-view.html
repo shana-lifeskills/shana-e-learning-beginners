@@ -1,0 +1,107 @@
+<div class="tot">
+  @if (phase() === 'pick') {
+    <div class="tot-hero">
+      <span class="tot-kicker">{{ step().kicker }}</span>
+      <h1>
+        {{ step().titleLine1 }}<br />
+        <span class="tot-accent">{{ step().titleLine2 }}</span> ✨
+      </h1>
+      <p class="tot-subtitle">{{ step().subtitle }}</p>
+    </div>
+
+    <div class="tot-section-head">
+      <span class="tot-section-num">1</span>
+      <h2>{{ step().sectionOneLabel }}</h2>
+      <span class="tot-hint">{{ step().pickHint }}</span>
+    </div>
+
+    <div class="tot-grid">
+      @for (q of step().questions; track q.id; let i = $index) {
+        <div class="tot-q">
+          <span class="tot-q-label">Q{{ i + 1 }}</span>
+          <p class="tot-q-prompt">{{ q.prompt }}</p>
+          <div class="tot-q-options">
+            <button
+              type="button"
+              class="tot-opt"
+              [class.tot-opt--picked]="answers()[q.id] === 'A'"
+              (click)="pick(q.id, 'A')"
+            >
+              <span class="tot-opt-icon">{{ q.optionA.icon }}</span>{{ q.optionA.label }}
+            </button>
+            <button
+              type="button"
+              class="tot-opt"
+              [class.tot-opt--picked]="answers()[q.id] === 'B'"
+              (click)="pick(q.id, 'B')"
+            >
+              <span class="tot-opt-icon">{{ q.optionB.icon }}</span>{{ q.optionB.label }}
+            </button>
+          </div>
+        </div>
+      }
+    </div>
+
+    <div class="tot-foot">
+      <p class="tot-foot-note">{{ step().noWrongAnswerNote }}</p>
+      <button type="button" class="tot-cta" [disabled]="!allAnswered()" (click)="goToRecap()">{{ step().toRecapLabel }} →</button>
+    </div>
+  } @else {
+    <div class="tot-section-head">
+      <span class="tot-section-num">2</span>
+      <h2>{{ step().sectionTwoLabel }}</h2>
+      <span class="tot-hint tot-hint--shared">{{ step().sharedCountLabel }}</span>
+    </div>
+    <p class="tot-recap-intro">{{ step().recapIntro }}</p>
+
+    <div class="tot-recap-grid">
+      @for (card of step().recapCards; track card.author) {
+        <div class="tot-recap-card">
+          <div class="tot-recap-head">
+            <span class="tot-recap-icon">{{ card.icon }}</span>
+            <div>
+              <strong>{{ card.strength }}</strong>
+              <span class="tot-recap-author">{{ card.author }} · {{ card.age }}</span>
+            </div>
+          </div>
+          <p class="tot-recap-quote">"{{ card.quote }}"</p>
+          <span class="tot-recap-time">🎉 shared {{ card.timeAgo }}</span>
+        </div>
+      }
+
+      @if (posted()) {
+        <div class="tot-recap-card tot-recap-card--mine">
+          <div class="tot-recap-head">
+            <span class="tot-recap-icon">🌟</span>
+            <div>
+              <strong>Your strength</strong>
+              <span class="tot-recap-author">You · just now</span>
+            </div>
+          </div>
+          <p class="tot-recap-quote">"{{ shareText() }}"</p>
+          <span class="tot-recap-time">🎉 shared just now</span>
+        </div>
+      }
+    </div>
+
+    <div class="tot-share">
+      <p class="tot-share-label">{{ step().sharePromptLabel }}</p>
+      @if (!posted()) {
+        <div class="tot-share-row">
+          <span class="tot-share-avatar">🙂</span>
+          <input
+            type="text"
+            [value]="shareText()"
+            (input)="setShareText($any($event.target).value)"
+            [placeholder]="step().sharePlaceholder"
+          />
+          <button type="button" class="tot-post" [disabled]="!canPost()" (click)="post()">{{ step().postLabel }}</button>
+        </div>
+      } @else {
+        <button type="button" class="tot-cta" (click)="finish()">{{ step().continueLabel }} →</button>
+      }
+    </div>
+
+    <p class="tot-footer">{{ step().footerNote }}</p>
+  }
+</div>

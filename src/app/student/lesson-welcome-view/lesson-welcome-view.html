@@ -1,5 +1,32 @@
 <div class="welcome-shell">
-  @if (lesson.nutritionWhyFoodWelcome; as nwf) {
+  @if (lesson.identityMosaicWelcome; as imw) {
+    <app-identity-mosaic-welcome [imw]="imw" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.identityStrengthsWelcome; as isw) {
+    <app-identity-strengths-welcome [isw]="isw" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.planningWhyWelcome; as pww) {
+    <app-planning-why-welcome [pww]="pww" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.planningPrioritiesWelcome; as ppw) {
+    <app-planning-priorities-welcome [ppw]="ppw" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.planningGoalsWelcome; as pgw) {
+    <app-planning-goals-welcome [pgw]="pgw" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.planningGrowthWelcome; as pgrw) {
+    <app-planning-growth-welcome [pgrw]="pgrw" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.planningCapstoneWelcome; as pcw) {
+    <app-planning-capstone-welcome [pcw]="pcw" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.confidenceSparkWelcome; as csw) {
+    <app-confidence-spark-welcome [csw]="csw" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.confidenceCapstoneWelcome; as ccw) {
+    <app-confidence-capstone-welcome [ccw]="ccw" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.nutritionWhyFoodWelcome; as nwf) {
     <app-nutrition-why-food-welcome [nwf]="nwf" [completed]="completed" [next]="next" [firstName]="firstName"
       (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
   } @else if (lesson.nutritionFoodGroupsWelcome; as nfg) {

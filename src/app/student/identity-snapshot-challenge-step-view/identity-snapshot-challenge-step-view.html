@@ -1,0 +1,74 @@
+<div class="isc">
+  <input #fileInput type="file" accept="image/*" hidden (change)="onFileSelected($event)" />
+
+  @if (!revealed()) {
+    <span class="isc-badge">{{ step().badge }}</span>
+    <h1>{{ step().title }}</h1>
+    <p class="isc-subtitle">{{ step().subtitle }}</p>
+
+    <div class="isc-instructions">
+      <h2>{{ step().instructionHeading }}</h2>
+      <ol>
+        @for (line of step().instructions; track line) {
+          <li>{{ line }}</li>
+        }
+      </ol>
+    </div>
+
+    <div class="isc-slots">
+      @for (slot of slots(); track $index; let i = $index) {
+        <div class="isc-slot" [class.isc-slot--filled]="slot.image">
+          <span class="isc-slot-heading">{{ step().slotHeading }} {{ i + 1 }}</span>
+
+          <button type="button" class="isc-dropzone" [disabled]="locked()" (click)="chooseFile(i)">
+            @if (slot.image; as img) {
+              <img [src]="img" alt="" />
+            } @else {
+              <span class="isc-upload-icon">📷</span>
+              <span class="isc-photo-label">{{ step().photoLabel }}</span>
+            }
+          </button>
+
+          @if (slot.image) {
+            <button type="button" class="isc-change" [disabled]="locked()" (click)="chooseFile(i)">🔄 {{ step().changeLabel }}</button>
+          } @else {
+            <button type="button" class="isc-choose" [disabled]="locked()" (click)="chooseFile(i)">{{ step().chooseLabel }}</button>
+          }
+
+          <label class="isc-reason-label">{{ step().reasonLabel }}</label>
+          <textarea
+            rows="3"
+            [value]="slot.reason"
+            [disabled]="locked()"
+            (input)="setReason(i, $any($event.target).value)"
+            [placeholder]="step().reasonPlaceholder"
+          ></textarea>
+        </div>
+      }
+    </div>
+
+    @if (step().parentNote; as note) {
+      <p class="isc-parent-note">👪 {{ note }}</p>
+    }
+
+    <button type="button" class="isc-submit" [disabled]="!canSubmit()" (click)="submit()">✨ {{ step().submitLabel }}</button>
+  } @else {
+    <span class="isc-badge">{{ step().scrapbookHeading }}</span>
+    <p class="isc-subtitle">{{ step().scrapbookSubtitle }}</p>
+
+    <div class="isc-scrapbook">
+      @for (slot of slots(); track $index; let i = $index) {
+        <div class="isc-scrap-card" [class]="'isc-scrap-card--' + (i % 3)">
+          <img [src]="slot.image" alt="" />
+          <p>"{{ slot.reason }}"</p>
+        </div>
+      }
+    </div>
+
+    <div class="isc-complete">
+      <h2>{{ step().completeHeading }}</h2>
+      <p>{{ step().completeText }}</p>
+      <button type="button" class="isc-continue" (click)="finish()">{{ step().continueLabel }} →</button>
+    </div>
+  }
+</div>

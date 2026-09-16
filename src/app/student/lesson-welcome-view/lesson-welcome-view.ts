@@ -71,6 +71,15 @@ import { NutritionWhyFoodWelcome } from '../nutrition-why-food-welcome/nutrition
 import { NutritionFoodGroupsWelcome } from '../nutrition-food-groups-welcome/nutrition-food-groups-welcome';
 import { NutritionHealthyChoicesWelcome } from '../nutrition-healthy-choices-welcome/nutrition-healthy-choices-welcome';
 import { NutritionHabitsWelcome } from '../nutrition-habits-welcome/nutrition-habits-welcome';
+import { IdentityMosaicWelcome } from '../identity-mosaic-welcome/identity-mosaic-welcome';
+import { IdentityStrengthsWelcome } from '../identity-strengths-welcome/identity-strengths-welcome';
+import { PlanningWhyWelcome } from '../planning-why-welcome/planning-why-welcome';
+import { PlanningPrioritiesWelcome } from '../planning-priorities-welcome/planning-priorities-welcome';
+import { PlanningGoalsWelcome } from '../planning-goals-welcome/planning-goals-welcome';
+import { PlanningGrowthWelcome } from '../planning-growth-welcome/planning-growth-welcome';
+import { PlanningCapstoneWelcome } from '../planning-capstone-welcome/planning-capstone-welcome';
+import { ConfidenceCapstoneWelcome } from '../confidence-capstone-welcome/confidence-capstone-welcome';
+import { ConfidenceSparkWelcome } from '../confidence-spark-welcome/confidence-spark-welcome';
 
 /**
  * The lesson-welcome screen: one big `@if / @else if` chain that picks the
@@ -157,6 +166,15 @@ import { NutritionHabitsWelcome } from '../nutrition-habits-welcome/nutrition-ha
     NutritionFoodGroupsWelcome,
     NutritionHealthyChoicesWelcome,
     NutritionHabitsWelcome,
+    IdentityMosaicWelcome,
+    IdentityStrengthsWelcome,
+    PlanningWhyWelcome,
+    PlanningPrioritiesWelcome,
+    PlanningGoalsWelcome,
+    PlanningGrowthWelcome,
+    PlanningCapstoneWelcome,
+    ConfidenceSparkWelcome,
+    ConfidenceCapstoneWelcome,
   ],
   templateUrl: './lesson-welcome-view.html',
   styleUrl: './lesson-welcome-view.scss',

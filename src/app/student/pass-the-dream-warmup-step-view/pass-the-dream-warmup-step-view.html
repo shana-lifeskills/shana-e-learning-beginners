@@ -1,0 +1,116 @@
+<div class="ptd">
+  <div class="ptd-topbar">
+    <div class="ptd-room">
+      <span class="ptd-room-icon">🎈</span>
+      <div>
+        <strong>{{ step().roomName }}</strong>
+        <span class="ptd-room-tagline">{{ step().roomTagline }}</span>
+      </div>
+    </div>
+    <span class="ptd-room-meta">{{ step().roomMeta }}</span>
+  </div>
+
+  <div class="ptd-layout">
+    <!-- Left: Pass the Dream -->
+    <div class="ptd-panel ptd-panel--warmup">
+      <div class="ptd-panel-head">
+        <span class="ptd-panel-icon">🏀</span>
+        <span class="ptd-badge ptd-badge--warmup">{{ step().warmupBadge }}</span>
+      </div>
+      <h1>{{ step().warmupTitle }}</h1>
+      <p class="ptd-intro">{{ step().warmupIntro }}</p>
+
+      @if (!tossedAll() && currentFriend(); as friend) {
+        <div class="ptd-tossing">
+          <span class="ptd-tossing-label">{{ step().tossingToLabel }}</span>
+          <div class="ptd-tossing-friend">
+            <span class="ptd-avatar">{{ friend.avatar }}</span>
+            <div>
+              <strong>{{ friend.name }}</strong>
+              <span class="ptd-friend-dream">"{{ friend.dream }}"</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="ptd-chips">
+          @for (chip of step().dreamChips; track chip.label) {
+            <button
+              type="button"
+              class="ptd-chip"
+              [class.ptd-chip--picked]="dream() === chip.label"
+              (click)="pickChip(chip.label)"
+            >{{ chip.icon }} {{ chip.label }}</button>
+          }
+        </div>
+
+        <input
+          class="ptd-dream-input"
+          type="text"
+          [value]="dream()"
+          (input)="setDream($any($event.target).value)"
+          [placeholder]="step().dreamInputPlaceholder"
+        />
+
+        <button type="button" class="ptd-toss" [disabled]="!canToss()" (click)="toss()">{{ step().tossLabel }} →</button>
+      } @else {
+        <div class="ptd-tossed-all">
+          <span class="ptd-tossed-icon">🎉</span>
+          <p>{{ step().tossedAllMessage }}</p>
+          @if (dream()) { <p class="ptd-your-dream">Your dream: "{{ dream() }}"</p> }
+        </div>
+      }
+    </div>
+
+    <!-- Right: Recap -->
+    <div class="ptd-panel ptd-panel--recap">
+      <div class="ptd-panel-head">
+        <span class="ptd-panel-icon">📓</span>
+        <span class="ptd-badge ptd-badge--recap">{{ step().recapBadge }}</span>
+      </div>
+      <h1>{{ step().recapTitle }}</h1>
+      <p class="ptd-intro">{{ step().recapIntro }}</p>
+
+      <div class="ptd-recap-cards">
+        @for (card of step().recapCards; track card.name) {
+          <div class="ptd-recap-card">
+            <div class="ptd-recap-head">
+              <span class="ptd-avatar">{{ card.avatar }}</span>
+              <strong>{{ card.name }}</strong>
+              <span class="ptd-recap-emoji">{{ card.emoji }}</span>
+            </div>
+            <p class="ptd-recap-choice">{{ card.choice }}</p>
+            <p class="ptd-recap-feeling">{{ card.feeling }}</p>
+          </div>
+        }
+
+        @if (posted()) {
+          <div class="ptd-recap-card ptd-recap-card--mine">
+            <div class="ptd-recap-head">
+              <span class="ptd-avatar">🌟</span>
+              <strong>You</strong>
+            </div>
+            <p class="ptd-recap-choice">{{ shareText() }}</p>
+          </div>
+        }
+      </div>
+
+      @if (!posted()) {
+        <div class="ptd-share-row">
+          <input
+            type="text"
+            [value]="shareText()"
+            (input)="setShareText($any($event.target).value)"
+            [placeholder]="step().sharePlaceholder"
+          />
+          <button type="button" class="ptd-share" [disabled]="!canShare()" (click)="share()">{{ step().shareLabel }}</button>
+        </div>
+      }
+    </div>
+  </div>
+
+  @if (canFinish()) {
+    <button type="button" class="ptd-continue" (click)="finish()">{{ step().continueLabel }} →</button>
+  }
+
+  <p class="ptd-footer">{{ step().footerNote }}</p>
+</div>

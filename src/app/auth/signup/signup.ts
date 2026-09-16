@@ -1,16 +1,17 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
-import { AgeGroup, AGE_GROUPS, Role } from '../../core/models/user.model';
+import { Role } from '../../core/models/user.model';
 import { FriendlyAlert } from '../../shared/components/friendly-alert/friendly-alert';
 import { AuthHero } from '../../shared/components/auth-hero/auth-hero';
+import { AccountType, AccountTypePicker } from '../../shared/components/account-type-picker/account-type-picker';
 
 @Component({
   selector: 'app-signup',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink, FriendlyAlert, AuthHero],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, FriendlyAlert, AuthHero, AccountTypePicker],
   templateUrl: './signup.html',
   styleUrl: './signup.scss',
 })
@@ -22,43 +23,37 @@ export class Signup {
 
   readonly errorMessage = signal('');
   readonly submitting = signal(false);
-  readonly role = signal<Role>('student');
-  readonly ageGroup = signal<AgeGroup>('beginner');
-  readonly ageGroups = AGE_GROUPS;
   readonly showPassword = signal(false);
-  readonly avatarPreview = signal<string | null>(null);
+  readonly accountType = signal<AccountType>('beginner');
+
+  readonly ctaLabel = computed(() => {
+    switch (this.accountType()) {
+      case 'advanced':
+        return 'Create account as an advanced student';
+      case 'trainer':
+        return 'Create account as a trainer';
+      default:
+        return 'Create account as a beginner';
+    }
+  });
 
   readonly form = this.fb.nonNullable.group({
-    firstName: ['', [Validators.required, Validators.minLength(2)]],
-    lastName: ['', [Validators.required, Validators.minLength(2)]],
+    fullName: ['', [Validators.required, Validators.minLength(2)]],
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(4)]],
   });
 
   constructor() {
-    const queryRole = this.route.snapshot.queryParamMap.get('role');
-    if (queryRole === 'trainer' || queryRole === 'student') this.role.set(queryRole);
+    const queryType = this.route.snapshot.queryParamMap.get('accountType');
+    if (queryType === 'beginner' || queryType === 'advanced' || queryType === 'trainer') this.accountType.set(queryType);
   }
 
-  chooseRole(role: Role): void {
-    this.role.set(role);
-  }
-
-  chooseAgeGroup(ageGroup: AgeGroup): void {
-    this.ageGroup.set(ageGroup);
+  chooseAccountType(type: AccountType): void {
+    this.accountType.set(type);
   }
 
   togglePasswordVisibility(): void {
     this.showPassword.update((show) => !show);
-  }
-
-  onAvatarSelected(event: Event): void {
-    const file = (event.target as HTMLInputElement).files?.[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = () => this.avatarPreview.set(reader.result as string);
-    reader.readAsDataURL(file);
   }
 
   submit(): void {
@@ -71,12 +66,21 @@ export class Signup {
     this.errorMessage.set('');
     this.submitting.set(true);
 
+    const { fullName, email, password } = this.form.getRawValue();
+    const [firstName, ...rest] = fullName.trim().split(/\s+/);
+    const lastName = rest.join(' ');
+    const accountType = this.accountType();
+    const isTrainer = accountType === 'trainer';
+    const role: Role = isTrainer ? 'trainer' : 'student';
+
     this.auth
       .createAccount({
-        ...this.form.getRawValue(),
-        role: this.role(),
-        ageGroup: this.role() === 'student' ? this.ageGroup() : undefined,
-        avatarUrl: this.avatarPreview() ?? undefined,
+        firstName,
+        lastName,
+        email,
+        password,
+        role,
+        ageGroup: isTrainer ? undefined : accountType,
       })
       .subscribe({
         next: (user) => {
@@ -90,13 +94,12 @@ export class Signup {
       });
   }
 
-  friendlyFieldMessage(field: 'firstName' | 'lastName' | 'email' | 'password'): string | null {
+  friendlyFieldMessage(field: 'fullName' | 'email' | 'password'): string | null {
     const control = this.form.controls[field];
     if (!control.touched || control.valid) return null;
 
     switch (field) {
-      case 'firstName':
-      case 'lastName':
+      case 'fullName':
         return 'This one needs at least 2 letters.';
       case 'email':
         return 'That email doesn’t look quite right yet.';

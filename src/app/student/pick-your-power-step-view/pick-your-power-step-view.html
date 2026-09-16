@@ -1,0 +1,57 @@
+<div class="pyp">
+  <p class="pyp-no-wrong">{{ step().noWrongAnswerLabel }}</p>
+
+  <div class="pyp-layout">
+    <div class="pyp-left">
+      <span class="pyp-badge">💡 {{ step().badge }}</span>
+
+      <p class="pyp-kicker">{{ step().kicker }}</p>
+      <h1>
+        {{ step().titleLine1 }}<br />
+        <span class="pyp-underline">{{ step().titleLine2 }}</span>
+      </h1>
+      <p class="pyp-subtitle">{{ step().subtitle }}</p>
+
+      <div class="pyp-panel">
+        @if (selectedIndex() === null) {
+          <span class="pyp-panel-icon">🤲</span>
+          <p class="pyp-panel-hint">{{ step().promptHint }}</p>
+        } @else {
+          @if (step().powers[selectedIndex()!]; as power) {
+            <span class="pyp-panel-icon">{{ power.icon }}</span>
+            <span class="pyp-result-eyebrow">{{ step().resultEyebrow }}</span>
+            <h2>{{ power.label }}!</h2>
+            <p class="pyp-panel-hint">{{ power.description }}</p>
+            <button type="button" class="pyp-choose-again" (click)="chooseAgain()">{{ step().chooseAgainLabel }}</button>
+          }
+        }
+      </div>
+
+      <button type="button" class="pyp-continue" [disabled]="!canContinue()" (click)="finish()">{{ step().continueLabel }} →</button>
+    </div>
+
+    <div class="pyp-right">
+      <div class="pyp-grid-head">
+        <h2>{{ step().gridHeading }}</h2>
+        <span class="pyp-pick-one">⚡ {{ step().pickOneLabel }}</span>
+      </div>
+
+      <div class="pyp-grid">
+        @for (power of step().powers; track power.label; let i = $index) {
+          <button
+            type="button"
+            class="pyp-card"
+            [class]="'pyp-card--' + variantFor(i)"
+            [class.pyp-card--selected]="selectedIndex() === i"
+            (click)="choose(i)"
+          >
+            <span class="pyp-card-icon">{{ power.icon }}</span>
+            <span class="pyp-card-label">{{ power.label }}</span>
+          </button>
+        }
+      </div>
+
+      <p class="pyp-footer">{{ step().footerNote }}</p>
+    </div>
+  </div>
+</div>

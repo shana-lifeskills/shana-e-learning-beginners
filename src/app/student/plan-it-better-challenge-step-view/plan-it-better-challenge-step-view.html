@@ -1,0 +1,142 @@
+<div class="pib">
+  <header class="pib-hero">
+    <span class="pib-badge">{{ step().badge }}</span>
+    <h2>{{ step().title }}</h2>
+    <p class="pib-intro">{{ step().intro }}</p>
+  </header>
+
+  @if (!locked()) {
+    <section class="pib-block">
+      <h3 class="pib-h">{{ step().strategyLabel }}</h3>
+      <p class="pib-hint">{{ step().strategyHint }}</p>
+      <div class="pib-chips">
+        @for (option of step().strategyOptions; track option) {
+          <button
+            type="button"
+            class="pib-chip"
+            [class.on]="pickedStrategy() === option"
+            (click)="pickStrategy(option)"
+          >{{ option }}</button>
+        }
+      </div>
+      <label class="pib-custom-label" for="pib-custom">{{ step().customStrategyLabel }}</label>
+      <input
+        id="pib-custom"
+        type="text"
+        class="pib-input"
+        [value]="customStrategy()"
+        [placeholder]="step().customStrategyPlaceholder"
+        (input)="setCustomStrategy($any($event.target).value)"
+      />
+    </section>
+
+    <section class="pib-block">
+      <h3 class="pib-h">{{ step().activityLabel }}</h3>
+      <input
+        type="text"
+        class="pib-input"
+        [value]="activity()"
+        [placeholder]="step().activityPlaceholder"
+        (input)="setActivity($any($event.target).value)"
+      />
+    </section>
+
+    <section class="pib-block">
+      <h3 class="pib-h">{{ step().trackerHeading }}</h3>
+      <p class="pib-hint">{{ step().trackerHint }}</p>
+      <div class="pib-days">
+        @for (label of step().dayLabels; track $index) {
+          <button
+            type="button"
+            class="pib-day"
+            [class.on]="isDayOn($index)"
+            (click)="toggleDay($index)"
+            [attr.aria-pressed]="isDayOn($index)"
+          >
+            <span class="pib-day-check" aria-hidden="true">✓</span>
+            <span class="pib-day-label">{{ label }}</span>
+          </button>
+        }
+      </div>
+    </section>
+
+    <section class="pib-block pib-reflect">
+      <h3 class="pib-h">{{ step().reflectionHeading }}</h3>
+
+      <p class="pib-daysused">
+        {{ step().daysUsedLabel }}
+        <strong>{{ daysUsed() }} / 7</strong>
+      </p>
+
+      <div class="pib-rating">
+        <span class="pib-rating-label">{{ step().organizedLabel }}</span>
+        <div class="pib-stars">
+          @for (star of ratingStars; track star) {
+            <button
+              type="button"
+              class="pib-star"
+              [class.on]="rating() >= star"
+              (click)="setRating(star)"
+              [attr.aria-label]="star + ' out of 5'"
+            >★</button>
+          }
+        </div>
+      </div>
+
+      <label class="pib-learned-label" for="pib-learned">{{ step().learnedLabel }}</label>
+      <textarea
+        id="pib-learned"
+        class="pib-textarea"
+        rows="3"
+        [value]="learned()"
+        [placeholder]="step().learnedPlaceholder"
+        (input)="setLearned($any($event.target).value)"
+      ></textarea>
+    </section>
+
+    <button type="button" class="pib-submit" [disabled]="!canSubmit()" (click)="submit()">
+      {{ step().submitLabel }}
+    </button>
+  } @else {
+    <div class="pib-result">
+      <span class="pib-result-seal" aria-hidden="true">🏆</span>
+      <h3>{{ step().revealHeading }}</h3>
+      <p class="pib-result-sub">{{ step().revealSubtitle }}</p>
+
+      <dl class="pib-result-grid">
+        <div>
+          <dt>{{ step().strategyLabel }}</dt>
+          <dd>{{ effectiveStrategy() }}</dd>
+        </div>
+        <div>
+          <dt>{{ step().activityLabel }}</dt>
+          <dd>{{ activity() }}</dd>
+        </div>
+        <div>
+          <dt>Days followed</dt>
+          <dd>{{ daysUsed() }} / 7</dd>
+        </div>
+        <div>
+          <dt>{{ step().organizedLabel }}</dt>
+          <dd class="pib-result-stars">
+            @for (star of ratingStars; track star) {
+              <span [class.on]="rating() >= star">★</span>
+            }
+          </dd>
+        </div>
+      </dl>
+
+      <div class="pib-result-learned">
+        <span>{{ step().learnedLabel }}</span>
+        <p>{{ learned() }}</p>
+      </div>
+
+      <div class="pib-done">
+        <h4>{{ step().completeHeading }}</h4>
+        <p>{{ step().completeText }}</p>
+      </div>
+
+      <button type="button" class="pib-continue" (click)="finish()">{{ step().continueLabel }} →</button>
+    </div>
+  }
+</div>

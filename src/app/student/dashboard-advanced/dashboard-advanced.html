@@ -1,0 +1,97 @@
+@if (student(); as s) {
+  <div class="dashboard-advanced-page">
+    <section class="welcome-banner">
+      <div class="banner-copy">
+        <span class="eyebrow">Level {{ level }} · Rising</span>
+        <h1>Back at it, {{ s.firstName }}</h1>
+        <p>You're {{ xpToNextLevel }} XP off Level {{ level + 1 }}. One module today closes the gap.</p>
+        <div class="banner-actions">
+          <button type="button" class="btn-resume" (click)="notifyComingSoon()">▷ Resume module</button>
+          <button type="button" class="btn-challenge" (click)="notifyComingSoon()">Daily challenge</button>
+        </div>
+      </div>
+      <div class="art-frame">
+        <img class="banner-art" src="/assets/images/Advanced/Advanced-illustration.jpg" alt="A group of teens ready for their next challenge" />
+      </div>
+    </section>
+
+    <section class="stats-row">
+      <div class="stat-tile stars">
+        <div class="stat-head">
+          <strong>{{ totals().stars | number }}</strong>
+          <span class="stat-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M12 3.5l2.6 5.27 5.82.85-4.21 4.1 1 5.8L12 16.9l-5.21 2.62 1-5.8-4.21-4.1 5.82-.85L12 3.5z" stroke-linejoin="round" /></svg>
+          </span>
+        </div>
+        <p class="stat-label">Stars earned</p>
+        <p class="stat-sub">{{ highlights().starsThisWeek > 0 ? '+' + highlights().starsThisWeek + ' since Monday' : 'Earn a star today!' }}</p>
+      </div>
+
+      <div class="stat-tile badges">
+        <div class="stat-head">
+          <strong>{{ totals().badges | number }}</strong>
+          <span class="stat-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="12" cy="8" r="5" /><path d="M8.5 12.5L7 21l5-2.5 5 2.5-1.5-8.5" stroke-linejoin="round" /></svg>
+          </span>
+        </div>
+        <p class="stat-label">Badges received</p>
+        <p class="stat-sub">{{ highlights().badgesAlmostUnlocked > 0 ? highlights().badgesAlmostUnlocked + ' new this week' : 'Finish a lesson for one!' }}</p>
+      </div>
+
+      <div class="stat-tile trophies">
+        <div class="stat-head">
+          <strong>{{ totals().trophies | number }}</strong>
+          <span class="stat-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M7 4h10v4a5 5 0 01-10 0V4z" /><path d="M7 5H4v1a4 4 0 004 4M17 5h3v1a4 4 0 01-4 4" /><path d="M12 13v3m-3 4h6m-3-4v0" stroke-linecap="round" /></svg>
+          </span>
+        </div>
+        <p class="stat-label">Trophies won</p>
+        <p class="stat-sub">{{ totals().trophies > 0 ? 'Finish a module for another!' : 'Finish a module to earn one!' }}</p>
+      </div>
+    </section>
+
+    <section class="modules-section">
+      <div class="section-head">
+        <div>
+          <h2>My modules</h2>
+          <p class="section-sub">Pick up where you left off.</p>
+        </div>
+        <a routerLink="/student/rewards" class="see-all-link">All rewards →</a>
+      </div>
+
+      @if (loading()) {
+        <p class="loading-copy">Loading your modules…</p>
+      } @else if (modules().length === 0) {
+        <div class="empty-state">
+          <div class="art">📦</div>
+          <p>No modules yet! Ask your trainer to assign one — it'll show up right here.</p>
+        </div>
+      } @else {
+        <div class="module-grid">
+          @for (module of modules(); track module.id) {
+            <div class="module-card" [style.--accent]="module.themeColor">
+              <span class="category-pill">{{ module.trackName ?? module.category | uppercase }}</span>
+              <div class="module-icon" [style.background]="module.themeColor">{{ module.icon }}</div>
+              <h3>{{ module.title }}</h3>
+              <p class="module-description">{{ module.description }}</p>
+              <p class="progress-line">{{ module.lessonsCompleted }} of {{ module.lessonsTotal }} lessons</p>
+              <div class="progress-track">
+                <div class="progress-fill" [style.width.%]="module.progressPercent"></div>
+              </div>
+              <p class="progress-percent">{{ module.progressPercent }}% complete</p>
+              <button type="button" class="module-cta" (click)="openModule(module.id)">▷ {{ buttonLabel(module) }}</button>
+            </div>
+          }
+        </div>
+      }
+    </section>
+
+    <section class="crew-challenge">
+      <div>
+        <h3>Weekly crew challenge</h3>
+        <p>Finish 3 lessons before Sunday to unlock the Focus badge.</p>
+      </div>
+      <button type="button" class="btn-join" (click)="notifyComingSoon()">Join challenge</button>
+    </section>
+  </div>
+}

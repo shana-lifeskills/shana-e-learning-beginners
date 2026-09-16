@@ -7,7 +7,7 @@ export const studentGuard: CanActivateFn = () => {
   const router = inject(Router);
   const user = auth.currentUser();
 
-  if (!user) return router.createUrlTree(['/welcome']);
+  if (!user) return router.createUrlTree(['/login']);
   if (user.role !== 'student') return router.createUrlTree(['/trainer']);
 
   return true;

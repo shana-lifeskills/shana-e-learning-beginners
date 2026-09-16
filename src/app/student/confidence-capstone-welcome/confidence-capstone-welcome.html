@@ -1,0 +1,26 @@
+<div class="ccw">
+  <div class="ccw-card">
+    <span class="ccw-trophy" aria-hidden="true">🏆</span>
+    <span class="ccw-badge">{{ ccw.badgeLabel }}</span>
+
+    <h1>{{ ccw.title }}</h1>
+    <p class="ccw-subtitle">{{ ccw.subtitle }}</p>
+
+    <ul class="ccw-tasks">
+      @for (t of ccw.tasks; track t.text) {
+        <li>{{ t.text }}</li>
+      }
+    </ul>
+
+    @if (isCompletedLessonWelcome()) {
+      @if (nextLesson(); as next) {
+        <button type="button" class="ccw-start" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+      } @else {
+        <button type="button" class="ccw-start" (click)="backToMap()">Back to My Modules →</button>
+      }
+      <button type="button" class="ccw-review" (click)="beginLesson()">↺ Review this lesson</button>
+    } @else {
+      <button type="button" class="ccw-start" (click)="beginLesson()">{{ ccw.startLabel }} →</button>
+    }
+  </div>
+</div>

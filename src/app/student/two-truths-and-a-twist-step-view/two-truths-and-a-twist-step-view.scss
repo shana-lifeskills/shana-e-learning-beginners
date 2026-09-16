@@ -1,0 +1,294 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Two Truths and a Twist (ttt) — Identity Module, Week 1 warm-up ---- */
+$ttt-navy: #1e2749;
+$ttt-blue: #3f7fd6;
+$ttt-orange: #d9791f;
+$ttt-ink: #2b2d42;
+$ttt-card: #fffdf8;
+$ttt-line: rgba(43, 45, 66, 0.16);
+
+.ttt {
+  max-width: 64rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.ttt-badge {
+  @include m.playful-heading;
+  display: inline-block;
+  background: rgba($ttt-blue, 0.14);
+  color: $ttt-blue;
+  font-size: 0.85rem;
+  padding: 0.4rem 1.1rem;
+  border-radius: v.$border-radius-pill;
+}
+
+.ttt h1 {
+  @include m.playful-heading;
+  margin: 1rem 0 0.6rem;
+  font-size: clamp(2rem, 5vw, 2.6rem);
+  color: $ttt-navy;
+}
+
+.ttt-subtitle {
+  color: rgba($ttt-ink, 0.65);
+  font-size: 1.05rem;
+  line-height: 1.55;
+  max-width: 32rem;
+  margin: 0 auto;
+}
+
+.ttt-card {
+  @include m.bouncy-card;
+
+  &:hover {
+    transform: none;
+    box-shadow: 0 6px 0 rgba(0, 0, 0, 0.08);
+  }
+
+  background: $ttt-card;
+  border-radius: v.$border-radius-xl;
+  padding: 1.75rem clamp(1.1rem, 4vw, 2rem) 2rem;
+  margin-top: 1.75rem;
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.ttt-next {
+  @include m.tappable;
+  display: block;
+  width: 100%;
+  margin-top: 1.25rem;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  padding: 0.9rem 1.5rem;
+  font-weight: 800;
+  font-size: 1.02rem;
+  background: linear-gradient(120deg, $ttt-orange, #f0a94c);
+  color: v.$color-white;
+  box-shadow: 0 4px 0 rgba($ttt-navy, 0.1);
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+}
+
+.ttt-back {
+  @include m.tappable;
+  display: inline-block;
+  margin: 0 0 1rem;
+  background: none;
+  border: none;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: rgba($ttt-ink, 0.6);
+}
+
+.ttt-step-head {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+
+  h2 {
+    @include m.playful-heading;
+    font-size: 1.4rem;
+    color: $ttt-navy;
+    margin: 0;
+  }
+}
+
+.ttt-step-num {
+  @include w.icon-chip(2rem, 1rem);
+  background: $ttt-orange;
+  color: v.$color-white;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.ttt-step-intro {
+  color: rgba($ttt-ink, 0.65);
+  line-height: 1.55;
+  margin: 0 0 1.25rem;
+}
+
+.ttt-field {
+  border: 1.5px solid $ttt-line;
+  border-radius: 14px;
+  padding: 1rem 1.1rem 1.1rem;
+  margin-bottom: 1rem;
+
+  &--twist {
+    background: rgba($ttt-blue, 0.06);
+    border-color: rgba($ttt-blue, 0.45);
+  }
+}
+
+.ttt-field-head {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.6rem;
+  font-size: 0.95rem;
+  color: $ttt-navy;
+}
+
+.ttt-field-num {
+  @include w.icon-chip(1.5rem, 0.8rem);
+  background: rgba($ttt-orange, 0.18);
+  color: $ttt-orange;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.ttt-field-num--twist {
+  background: $ttt-blue;
+  color: v.$color-white;
+}
+
+.ttt-field textarea {
+  width: 100%;
+  resize: vertical;
+  border: 1px solid $ttt-line;
+  border-radius: 10px;
+  padding: 0.65rem 0.8rem;
+  font-family: inherit;
+  font-size: 0.98rem;
+  color: $ttt-ink;
+  background: v.$color-cream-bg;
+
+  &:focus {
+    outline: 2px solid $ttt-blue;
+    outline-offset: 1px;
+  }
+}
+
+.ttt-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 0.5rem;
+}
+
+.ttt-btn {
+  @include m.tappable;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  padding: 0.65rem 1.15rem;
+  font-weight: 800;
+  font-size: 0.9rem;
+
+  &--dice {
+    background: $ttt-blue;
+    color: v.$color-white;
+  }
+
+  &--example {
+    background: rgba($ttt-orange, 0.16);
+    color: $ttt-orange;
+  }
+
+  &--reset {
+    background: transparent;
+    color: rgba($ttt-ink, 0.6);
+    border: 1.5px solid $ttt-line;
+  }
+}
+
+.ttt-reveal {
+  @include m.tappable;
+  display: block;
+  width: 100%;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  padding: 1rem 1.5rem;
+  font-weight: 800;
+  font-size: 1.05rem;
+  background: linear-gradient(120deg, $ttt-orange, #f0a94c);
+  color: v.$color-white;
+  box-shadow: 0 4px 0 rgba($ttt-navy, 0.1);
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.ttt-hint {
+  text-align: center;
+  font-size: 0.85rem;
+  color: rgba($ttt-ink, 0.55);
+  margin: 0.6rem 0 0;
+}
+
+.ttt-revealed {
+  background: rgba($ttt-blue, 0.08);
+  border-radius: 14px;
+  padding: 1.1rem 1.3rem;
+  text-align: center;
+
+  p {
+    margin: 0;
+    font-weight: 700;
+    color: $ttt-navy;
+  }
+}
+
+.ttt-revealed-quote {
+  margin-top: 0.4rem !important;
+  font-style: italic;
+  color: $ttt-blue !important;
+}
+
+.ttt-continue {
+  @include m.tappable;
+  display: block;
+  width: 100%;
+  margin-top: 1rem;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  padding: 0.9rem 1.5rem;
+  font-weight: 800;
+  font-size: 1.05rem;
+  background: $ttt-navy;
+  color: v.$color-white;
+}
+
+.ttt-why {
+  background: rgba($ttt-orange, 0.1);
+  border-radius: v.$border-radius-xl;
+  padding: 1.5rem 1.75rem 1.6rem;
+  text-align: left;
+
+  h3 {
+    @include m.playful-heading;
+    font-size: 1.15rem;
+    color: $ttt-navy;
+    margin: 0 0 0.85rem;
+  }
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+  }
+
+  li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    color: rgba($ttt-ink, 0.8);
+  }
+}
+
+.ttt-why-icon {
+  flex-shrink: 0;
+}

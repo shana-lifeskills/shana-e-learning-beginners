@@ -1,0 +1,42 @@
+<div class="ssw">
+  @if (!posted()) {
+    <span class="ssw-badge">{{ step().badge }}</span>
+    <h1>{{ step().title }}</h1>
+    <p class="ssw-subtitle">{{ step().subtitle }}</p>
+
+    <div class="ssw-card">
+      <label class="ssw-field">
+        <span class="ssw-label">{{ step().strengthLabel }}</span>
+        <input
+          type="text"
+          class="ssw-input"
+          [value]="strength()"
+          (input)="setStrength($any($event.target).value)"
+          [placeholder]="step().strengthPlaceholder"
+        />
+      </label>
+
+      <label class="ssw-field">
+        <span class="ssw-label">{{ step().discoveryLabel }}</span>
+        <textarea
+          class="ssw-textarea"
+          rows="3"
+          [value]="discovery()"
+          (input)="setDiscovery($any($event.target).value)"
+          [placeholder]="step().discoveryPlaceholder"
+        ></textarea>
+      </label>
+
+      <button type="button" class="ssw-submit" [disabled]="!canPost()" (click)="post()">{{ step().submitLabel }} →</button>
+    </div>
+  } @else {
+    <div class="ssw-reveal">
+      <span class="ssw-reveal-icon">💪</span>
+      <h2>{{ step().revealHeading }}</h2>
+      <p class="ssw-reveal-strength">{{ strength() }}</p>
+      <p class="ssw-reveal-discovery">{{ discovery() }}</p>
+      <p class="ssw-reveal-note">{{ step().revealNote }}</p>
+      <button type="button" class="ssw-submit" (click)="finish()">{{ step().continueLabel }} →</button>
+    </div>
+  }
+</div>

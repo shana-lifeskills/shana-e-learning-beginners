@@ -1,0 +1,27 @@
+<div class="tcl">
+  <div class="tcl-card">
+    <span class="tcl-eyebrow">{{ step().eyebrow }}</span>
+
+    <svg class="tcl-clock" viewBox="0 0 100 100" aria-hidden="true">
+      <circle cx="50" cy="50" r="44" class="tcl-face" />
+      @for (t of [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]; track t) {
+        <line
+          x1="50" y1="8" x2="50" y2="14"
+          class="tcl-mark"
+          [attr.transform]="'rotate(' + (t * 30) + ' 50 50)'"
+        />
+      }
+      <line x1="50" y1="50" x2="50" y2="26" class="tcl-hand tcl-hand-hour" />
+      <line x1="50" y1="50" x2="72" y2="50" class="tcl-hand tcl-hand-min" />
+      <circle cx="50" cy="50" r="3" class="tcl-pin" />
+    </svg>
+
+    <h2>{{ step().title }}</h2>
+
+    <blockquote class="tcl-quote">{{ step().quote }}</blockquote>
+
+    <p class="tcl-caption">{{ step().caption }}</p>
+
+    <button type="button" class="tcl-continue" (click)="finish()">{{ step().completeLabel }} →</button>
+  </div>
+</div>

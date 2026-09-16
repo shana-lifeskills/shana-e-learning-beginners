@@ -1,0 +1,116 @@
+<div class="src">
+  <header class="src-head">
+    <span class="src-badge">{{ step().badge }}</span>
+    <h2>{{ step().title }}</h2>
+    <p class="src-intro">{{ step().intro }}</p>
+  </header>
+
+  @if (!locked()) {
+    <ol class="src-steps">
+      @for (line of step().instructions; track line) {
+        <li>{{ line }}</li>
+      }
+    </ol>
+
+    <!-- feedback: type or record -->
+    <section class="src-block">
+      <h3 class="src-h">{{ step().feedbackLabel }}</h3>
+
+      @if (!feedbackRecordMode()) {
+        <textarea
+          rows="3"
+          [value]="feedbackText()"
+          [placeholder]="step().feedbackPlaceholder"
+          (input)="setFeedbackText($any($event.target).value)"
+        ></textarea>
+        @if (recordingSupported) {
+          <button type="button" class="src-mode-link" (click)="toggleFeedbackRecordMode()">
+            🎙️ {{ step().recordInsteadLabel }}
+          </button>
+        }
+      } @else {
+        <div class="src-recorder">
+          @if (slotAudio('feedback'); as url) {
+            <audio [src]="url" controls></audio>
+            <button type="button" class="src-rec-btn" (click)="toggleRecording('feedback')">
+              🎙️ {{ step().reRecordLabel }}
+            </button>
+          } @else {
+            <button type="button" class="src-rec-btn" [class.on]="isRecording('feedback')" (click)="toggleRecording('feedback')">
+              @if (isRecording('feedback')) {
+                ⏹ {{ step().stopLabel }}
+              } @else {
+                🎙️ {{ step().recordLabel }}
+              }
+            </button>
+          }
+        </div>
+        <button type="button" class="src-mode-link" (click)="toggleFeedbackRecordMode()">{{ step().typeInsteadLabel }}</button>
+      }
+    </section>
+
+    <!-- optional voice note -->
+    <section class="src-block src-block-note">
+      <h3 class="src-h">{{ step().noteLabel }}</h3>
+      <p class="src-hint">{{ step().noteHint }}</p>
+
+      @if (recordingSupported) {
+        <div class="src-recorder">
+          @if (slotAudio('note'); as url) {
+            <audio [src]="url" controls></audio>
+            <div class="src-note-actions">
+              <button type="button" class="src-rec-btn" (click)="toggleRecording('note')">🎙️ {{ step().reRecordLabel }}</button>
+              <button type="button" class="src-rec-remove" (click)="clearRecording('note')">Remove</button>
+            </div>
+          } @else {
+            <button type="button" class="src-rec-btn" [class.on]="isRecording('note')" (click)="toggleRecording('note')">
+              @if (isRecording('note')) {
+                ⏹ {{ step().stopLabel }}
+              } @else {
+                🎙️ {{ step().recordLabel }}
+              }
+            </button>
+          }
+        </div>
+      } @else {
+        <p class="src-hint">Voice recording isn’t available on this device — that’s okay, this part is optional.</p>
+      }
+    </section>
+
+    <button type="button" class="src-submit" [disabled]="!canSubmit()" (click)="submit()">
+      {{ step().submitLabel }}
+    </button>
+  } @else {
+    <div class="src-result">
+      <span class="src-result-icon" aria-hidden="true">🤝</span>
+      <h3>{{ step().revealHeading }}</h3>
+      <p class="src-result-sub">{{ step().revealSubtitle }}</p>
+
+      @if (feedbackText().trim()) {
+        <div class="src-result-box">
+          <span>{{ step().feedbackLabel }}</span>
+          <p>{{ feedbackText() }}</p>
+        </div>
+      } @else if (slotAudio('feedback')) {
+        <div class="src-result-box">
+          <span>{{ step().feedbackLabel }}</span>
+          <audio [src]="slotAudio('feedback')" controls></audio>
+        </div>
+      }
+
+      @if (slotAudio('note'); as url) {
+        <div class="src-result-box">
+          <span>{{ step().noteLabel }}</span>
+          <audio [src]="url" controls></audio>
+        </div>
+      }
+
+      <div class="src-done">
+        <h4>{{ step().completeHeading }}</h4>
+        <p>{{ step().completeText }}</p>
+      </div>
+
+      <button type="button" class="src-continue" (click)="finish()">{{ step().continueLabel }} →</button>
+    </div>
+  }
+</div>

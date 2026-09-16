@@ -1,0 +1,147 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- "The Late Project" picture story (lps) — Planning Module, Week 1 ---- */
+$lps-ink: #2f2540;
+$lps-plum: #6c4a8f;
+$lps-coral: #e0715e;
+$lps-teal: #2fa39a;
+$lps-paper: #fbf7f2;
+
+.lps {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 1.75rem clamp(1rem, 4vw, 2.25rem) 2rem;
+  text-align: center;
+  color: $lps-ink;
+}
+
+.lps-kicker {
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: $lps-plum;
+}
+
+.lps-head h2 {
+  @include m.playful-heading;
+  margin: 0.4rem 0 0;
+  font-size: clamp(1.4rem, 4.5vw, 1.9rem);
+}
+
+.lps-sub {
+  margin: 0.3rem 0 0;
+  font-size: 0.98rem;
+  color: rgba($lps-ink, 0.7);
+}
+
+/* --- comic panel --- */
+.lps-panel {
+  position: relative;
+  margin: 1.4rem 0 0;
+  padding: 2.4rem 1.4rem 1.6rem;
+  background: $lps-paper;
+  border: 3px solid $lps-ink;
+  border-radius: 6px;
+  box-shadow: 8px 8px 0 rgba($lps-coral, 0.35);
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+
+  &.calm {
+    box-shadow: 8px 8px 0 rgba($lps-teal, 0.35);
+  }
+}
+
+.lps-frame-no {
+  position: absolute;
+  top: 0.6rem;
+  left: 0.9rem;
+  font-weight: 800;
+  font-size: 0.66rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba($lps-ink, 0.5);
+}
+
+.lps-scene {
+  display: block;
+  font-size: clamp(3.5rem, 14vw, 5rem);
+  line-height: 1;
+}
+
+.lps-caption {
+  margin: 1rem auto 0;
+  max-width: 26rem;
+  font-family: v.$headings-font-family;
+  font-weight: 700;
+  font-size: 1.08rem;
+  line-height: 1.4;
+}
+
+/* --- navigation --- */
+.lps-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin: 1.1rem 0 0;
+}
+
+.lps-arrow {
+  @include m.tappable;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 50%;
+  border: 2px solid $lps-ink;
+  background: v.$color-white;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: $lps-ink;
+
+  &:disabled { opacity: 0.3; }
+}
+
+.lps-dots {
+  display: flex;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lps-dot {
+  width: 0.7rem;
+  height: 0.7rem;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: rgba($lps-plum, 0.25);
+  cursor: pointer;
+
+  &.active { background: $lps-plum; }
+}
+
+.lps-takeaway {
+  margin: 1.3rem auto 0;
+  max-width: 28rem;
+  padding: 0.9rem 1.1rem;
+  background: rgba($lps-teal, 0.14);
+  border-left: 4px solid $lps-teal;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.98rem;
+  color: #1f6f68;
+  text-align: left;
+}
+
+.lps-continue {
+  @include m.tappable;
+  margin: 1.4rem 0 0;
+  padding: 0.8rem 1.9rem;
+  background: linear-gradient(120deg, $lps-plum, $lps-coral);
+  border: none;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: v.$color-white;
+}

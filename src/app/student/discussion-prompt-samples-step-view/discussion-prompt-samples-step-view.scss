@@ -1,0 +1,204 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- Discussion Prompts and Sample Answers (dps) — Identity Module, Week 1 ---- */
+$dps-navy: #1e2749;
+$dps-blue: #3f7fd6;
+$dps-orange: #d9791f;
+$dps-ink: #2b2d42;
+$dps-card: #fffdf8;
+$dps-line: rgba(43, 45, 66, 0.16);
+
+.dps {
+  max-width: 44rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.dps-badge {
+  @include m.playful-heading;
+  display: inline-block;
+  background: rgba($dps-blue, 0.14);
+  color: $dps-blue;
+  font-size: 0.85rem;
+  padding: 0.4rem 1.1rem;
+  border-radius: v.$border-radius-pill;
+}
+
+.dps h1 {
+  @include m.playful-heading;
+  margin: 1rem 0 0.6rem;
+  font-size: clamp(2rem, 5vw, 2.6rem);
+  color: $dps-navy;
+}
+
+.dps-subtitle {
+  color: rgba($dps-ink, 0.65);
+  font-size: 1.05rem;
+  line-height: 1.55;
+  max-width: 32rem;
+  margin: 0 auto;
+}
+
+.dps-progress {
+  font-weight: 800;
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba($dps-ink, 0.5);
+  margin: 1rem 0 0;
+}
+
+.dps-card {
+  @include m.bouncy-card;
+
+  &:hover {
+    transform: none;
+    box-shadow: 0 6px 0 rgba(0, 0, 0, 0.08);
+  }
+
+  background: $dps-card;
+  border-radius: v.$border-radius-xl;
+  padding: 1.75rem clamp(1.1rem, 4vw, 2rem) 2rem;
+  margin-top: 0.75rem;
+  text-align: left;
+}
+
+.dps-question {
+  @include m.playful-heading;
+  font-size: 1.3rem;
+  color: $dps-navy;
+  margin: 0 0 1.1rem;
+}
+
+.dps-card textarea {
+  width: 100%;
+  resize: vertical;
+  border: 1px solid $dps-line;
+  border-radius: 10px;
+  padding: 0.75rem 0.9rem;
+  font-family: inherit;
+  font-size: 1rem;
+  color: $dps-ink;
+  background: v.$color-cream-bg;
+
+  &:focus {
+    outline: 2px solid $dps-blue;
+    outline-offset: 1px;
+  }
+}
+
+.dps-submit {
+  @include m.tappable;
+  display: block;
+  width: 100%;
+  margin-top: 1rem;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  padding: 0.9rem 1.5rem;
+  font-weight: 800;
+  font-size: 1.02rem;
+  background: linear-gradient(120deg, $dps-orange, #f0a94c);
+  color: v.$color-white;
+  box-shadow: 0 4px 0 rgba($dps-navy, 0.1);
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+}
+
+.dps-label {
+  display: block;
+  font-weight: 800;
+  font-size: 0.76rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $dps-orange;
+  margin-bottom: 0.4rem;
+}
+
+.dps-your-answer {
+  background: rgba($dps-blue, 0.06);
+  border: 1.5px solid rgba($dps-blue, 0.3);
+  border-radius: 12px;
+  padding: 0.9rem 1.1rem;
+  margin-bottom: 1.1rem;
+
+  p {
+    margin: 0;
+    color: $dps-navy;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+}
+
+.dps-samples {
+  margin-bottom: 1.25rem;
+}
+
+.dps-sample {
+  border: 1.5px solid $dps-line;
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  margin: 0 0 0.6rem;
+  font-style: italic;
+  color: rgba($dps-ink, 0.8);
+  line-height: 1.5;
+}
+
+.dps-next {
+  @include m.tappable;
+  display: block;
+  width: 100%;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  padding: 0.9rem 1.5rem;
+  font-weight: 800;
+  font-size: 1.02rem;
+  background: $dps-navy;
+  color: v.$color-white;
+}
+
+.dps-key {
+  @include m.bouncy-card;
+
+  &:hover {
+    transform: none;
+    box-shadow: 0 6px 0 rgba(0, 0, 0, 0.08);
+  }
+
+  background: rgba($dps-orange, 0.1);
+  border-radius: v.$border-radius-xl;
+  padding: 2.25rem clamp(1.25rem, 4vw, 2rem) 2rem;
+  margin-top: 1.5rem;
+
+  h2 {
+    @include m.playful-heading;
+    font-size: 1.5rem;
+    color: $dps-navy;
+    margin: 0 0 0.85rem;
+  }
+
+  p {
+    font-size: 1.08rem;
+    line-height: 1.6;
+    color: rgba($dps-ink, 0.85);
+    margin: 0 0 1.5rem;
+  }
+}
+
+.dps-continue {
+  @include m.tappable;
+  display: block;
+  width: 100%;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  padding: 0.95rem 1.5rem;
+  font-weight: 800;
+  font-size: 1.05rem;
+  background: linear-gradient(120deg, $dps-orange, #f0a94c);
+  color: v.$color-white;
+  box-shadow: 0 4px 0 rgba($dps-navy, 0.1);
+}

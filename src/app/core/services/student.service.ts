@@ -53,7 +53,7 @@ export class StudentService {
 
     const modules: ModuleWithProgress[] = student.assignedModuleIds
       .map((moduleId) => allModules.find((m) => m.id === moduleId))
-      .filter((m): m is Module => !!m)
+      .filter((m): m is Module => !!m && m.ageGroup === student.ageGroup)
       .map((module) => {
         const progress = allProgress.find((p) => p.studentId === studentId && p.moduleId === module.id);
         const totalExercises = module.lessons.reduce((sum, lesson) => sum + lesson.exercises.length, 0);

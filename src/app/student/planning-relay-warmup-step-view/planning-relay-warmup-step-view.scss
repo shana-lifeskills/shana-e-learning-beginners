@@ -1,0 +1,194 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- Warm-Up Game: Planning Relay (prl) — Planning Module, Week 4 ---- */
+$prl-ink: #202b3d;
+$prl-blue: #2f6fb0;
+$prl-coral: #e0664f;
+$prl-green: #3a9b64;
+$prl-mist: #eef4fa;
+
+.prl {
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 1.75rem clamp(0.75rem, 3vw, 1.5rem) 2rem;
+  color: $prl-ink;
+  text-align: center;
+}
+
+.prl-kicker {
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: $prl-coral;
+}
+
+.prl-head h2 {
+  @include m.playful-heading;
+  margin: 0.4rem 0 0;
+  font-size: clamp(1.4rem, 4.5vw, 1.9rem);
+  color: $prl-blue;
+}
+
+.prl-sub {
+  margin: 0.3rem 0 0;
+  font-size: 0.96rem;
+  color: rgba($prl-ink, 0.7);
+}
+
+.prl-label {
+  margin: 1.2rem 0 0.6rem;
+  font-weight: 800;
+  font-size: 0.76rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba($prl-ink, 0.55);
+  text-align: left;
+}
+
+/* --- relay track --- */
+.prl-track {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  padding: 0.9rem;
+  background: $prl-mist;
+  border-radius: 14px;
+}
+
+.prl-checkpoint {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 5.4rem;
+  min-height: 4.6rem;
+  border: 2px dashed rgba($prl-blue, 0.35);
+  border-radius: 12px;
+  background: v.$color-white;
+
+  &.over { border-color: $prl-coral; background: rgba($prl-coral, 0.08); }
+  &.filled { border-style: solid; }
+}
+
+.prl-checkpoint-no {
+  position: absolute;
+  top: 0.2rem;
+  left: 0.35rem;
+  font-weight: 800;
+  font-size: 0.6rem;
+  color: rgba($prl-blue, 0.5);
+}
+
+.prl-link {
+  font-size: 1.1rem;
+  color: rgba($prl-blue, 0.4);
+}
+
+.prl-card {
+  @include m.tappable;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  width: 100%;
+  padding: 0.5rem 0.3rem;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(160deg, $prl-blue, #1f4d7d);
+  color: v.$color-white;
+  cursor: grab;
+
+  &:active { cursor: grabbing; }
+}
+
+.prl-card-icon { font-size: 1.2rem; }
+.prl-card-label { font-size: 0.68rem; font-weight: 700; }
+
+/* --- pool --- */
+.prl-pool {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 3.6rem;
+  padding: 0.8rem;
+  border: 2px dashed rgba($prl-coral, 0.35);
+  border-radius: 14px;
+
+  &.over { background: rgba($prl-coral, 0.08); }
+}
+
+.prl-card-pool {
+  width: auto;
+  padding: 0.5rem 0.8rem;
+  background: linear-gradient(160deg, $prl-coral, #b8442a);
+  flex-direction: row;
+}
+
+.prl-pool-empty {
+  margin: 0;
+  align-self: center;
+  font-size: 0.88rem;
+  font-style: italic;
+  color: rgba($prl-ink, 0.5);
+}
+
+/* --- feedback --- */
+.prl-feedback {
+  margin: 1rem 0 0;
+  font-weight: 700;
+  font-size: 0.96rem;
+
+  &.ok { color: $prl-green; }
+  &.no { color: $prl-coral; }
+}
+
+/* --- buttons --- */
+.prl-check,
+.prl-continue {
+  @include m.tappable;
+  margin-top: 1.2rem;
+  padding: 0.8rem 1.9rem;
+  border: none;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 1.02rem;
+  color: v.$color-white;
+  background: linear-gradient(120deg, $prl-blue, $prl-coral);
+
+  &:disabled { opacity: 0.4; }
+}
+
+.prl-continue { background: $prl-green; }
+
+/* --- follow-up --- */
+.prl-followup {
+  margin-top: 1rem;
+  padding: 1rem 1.1rem;
+  text-align: left;
+  background: rgba($prl-green, 0.08);
+  border: 1.5px solid rgba($prl-green, 0.35);
+  border-radius: 12px;
+}
+
+.prl-followup-q {
+  margin: 0 0 0.5rem;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.prl-followup textarea {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  border: 1.5px solid rgba($prl-green, 0.3);
+  border-radius: 9px;
+  font: inherit;
+  resize: vertical;
+  background: v.$color-white;
+
+  &:focus { outline: none; border-color: $prl-blue; }
+}

@@ -1,0 +1,80 @@
+<div class="rpa">
+  @if (showClosing()) {
+    <div class="rpa-closing">
+      <h2>{{ step().closingHeading }}</h2>
+
+      @if (step().takeawayText) {
+        <div class="rpa-takeaway">
+          <span class="rpa-closing-label">⭐ {{ step().takeawayLabel }}</span>
+          <p>"{{ step().takeawayText }}"</p>
+        </div>
+      }
+
+      @if (step().researchText) {
+        <div class="rpa-closing-card">
+          <span class="rpa-closing-label">🔗 {{ step().researchLabel }}</span>
+          <p>{{ step().researchText }}</p>
+          @if (step().researchUrl) {
+            <a class="rpa-closing-link" [href]="step().researchUrl" target="_blank" rel="noopener">{{ step().researchLinkLabel }} →</a>
+          }
+        </div>
+      }
+
+      @if (step().readingText) {
+        <div class="rpa-closing-card">
+          <span class="rpa-closing-label">📖 {{ step().readingLabel }}</span>
+          <p>{{ step().readingText }}</p>
+        </div>
+      }
+
+      <button type="button" class="rpa-next" (click)="finish()">{{ step().continueLabel }} →</button>
+    </div>
+  } @else {
+  <span class="rpa-badge">{{ step().badge }}</span>
+  <h1>{{ step().title }}</h1>
+  @if (step().subtitle) { <p class="rpa-subtitle">{{ step().subtitle }}</p> }
+
+  <p class="rpa-progress">Question {{ qIndex() + 1 }} of {{ step().prompts.length }}</p>
+
+  @if (currentPrompt(); as prompt) {
+    <div class="rpa-card">
+      <p class="rpa-question">{{ prompt.question }}</p>
+
+      @if (!submitted()) {
+        <textarea
+          rows="3"
+          [value]="draft()"
+          (input)="setDraft($any($event.target).value)"
+          [placeholder]="prompt.placeholder"
+        ></textarea>
+        <button type="button" class="rpa-submit" [disabled]="!canSubmit()" (click)="submitAnswer()">{{ step().submitLabel }}</button>
+      } @else {
+        <div class="rpa-your-answer">
+          <span class="rpa-label">{{ step().yourAnswerLabel }}</span>
+          <p>{{ draft() }}</p>
+        </div>
+
+        <div class="rpa-peers">
+          <span class="rpa-label">{{ step().peerAnswersLabel }}</span>
+          @for (answer of prompt.peerAnswers; track answer.author; let i = $index) {
+            @if (i < revealedCount()) {
+              <div class="rpa-peer-answer">
+                <p class="rpa-peer-text">"{{ answer.text }}"</p>
+                <span class="rpa-peer-author">— {{ answer.author }}, {{ answer.age }}</span>
+              </div>
+            }
+          }
+        </div>
+
+        @if (!allAnswersRevealed()) {
+          <button type="button" class="rpa-next" (click)="revealNextAnswer()">{{ step().nextAnswerLabel }} →</button>
+        } @else {
+          <button type="button" class="rpa-next" (click)="advance()">
+            {{ isLastQuestion() ? step().continueLabel : step().nextQuestionLabel }} →
+          </button>
+        }
+      }
+    </div>
+  }
+  }
+</div>

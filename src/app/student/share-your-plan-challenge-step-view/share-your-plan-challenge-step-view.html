@@ -1,0 +1,85 @@
+<div class="syp">
+  @if (!revealed()) {
+    <span class="syp-badge">{{ step().badge }}</span>
+    <h1>{{ step().title }}</h1>
+    <p class="syp-subtitle">{{ step().subtitle }}</p>
+
+    <div class="syp-instructions">
+      <h2>{{ step().instructionHeading }}</h2>
+      <ol>
+        @for (line of step().instructions; track line) {
+          <li>{{ line }}</li>
+        }
+      </ol>
+    </div>
+
+    <div class="syp-card">
+      <label class="syp-field-label">{{ step().goalLabel }}</label>
+      <textarea
+        rows="2"
+        [value]="goal()"
+        [disabled]="locked()"
+        (input)="setGoal($any($event.target).value)"
+        [placeholder]="step().goalPlaceholder"
+      ></textarea>
+
+      <label class="syp-field-label">{{ step().startLabel }}</label>
+      <textarea
+        rows="2"
+        [value]="start()"
+        [disabled]="locked()"
+        (input)="setStart($any($event.target).value)"
+        [placeholder]="step().startPlaceholder"
+      ></textarea>
+
+      @if (recordingSupported) {
+        <div class="syp-voice">
+          <span class="syp-voice-label">{{ step().voiceLabel }}</span>
+
+          @if (audioUrl(); as url) {
+            <audio [src]="url" controls></audio>
+            <button type="button" class="syp-voice-btn syp-voice-btn--clear" [disabled]="locked()" (click)="clearRecording()">
+              🔄 {{ step().reRecordLabel }}
+            </button>
+          } @else {
+            <button type="button" class="syp-voice-btn" [class.syp-voice-btn--rec]="recording()" [disabled]="locked()" (click)="toggleRecording()">
+              @if (recording()) { ⏺ {{ step().stopLabel }} } @else { 🎙️ {{ step().recordLabel }} }
+            </button>
+          }
+        </div>
+      }
+    </div>
+
+    <button type="button" class="syp-submit" [disabled]="!canSubmit()" (click)="submit()">✨ {{ step().submitLabel }}</button>
+  } @else {
+    <span class="syp-badge">{{ step().revealHeading }}</span>
+    <p class="syp-subtitle">{{ step().revealSubtitle }}</p>
+
+    <div class="syp-plan-card">
+      @if (goal()) {
+        <div class="syp-plan-row">
+          <span class="syp-plan-label">{{ step().goalLabel }}</span>
+          <p>{{ goal() }}</p>
+        </div>
+      }
+      @if (start()) {
+        <div class="syp-plan-row">
+          <span class="syp-plan-label">{{ step().startLabel }}</span>
+          <p>{{ start() }}</p>
+        </div>
+      }
+      @if (audioUrl(); as url) {
+        <div class="syp-plan-row">
+          <span class="syp-plan-label">🎙️ My voice note</span>
+          <audio [src]="url" controls></audio>
+        </div>
+      }
+    </div>
+
+    <div class="syp-complete">
+      <h2>{{ step().completeHeading }}</h2>
+      <p>{{ step().completeText }}</p>
+      <button type="button" class="syp-continue" (click)="finish()">{{ step().continueLabel }} →</button>
+    </div>
+  }
+</div>

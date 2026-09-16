@@ -1,0 +1,75 @@
+<div class="oc">
+  @if (phase() === 'corners') {
+    <span class="oc-badge">{{ step().badge }}</span>
+    <h1>{{ step().title }}</h1>
+    <p class="oc-subtitle">{{ step().subtitle }}</p>
+    <p class="oc-no-wrong">{{ step().noWrongAnswerNote }}</p>
+
+    <p class="oc-progress">Statement {{ sIndex() + 1 }} of {{ step().statements.length }}</p>
+
+    @if (currentStatement(); as statement) {
+      <div class="oc-card">
+        <p class="oc-statement">“{{ statement.text }}”</p>
+
+        <div class="oc-corners">
+          <button
+            type="button"
+            class="oc-corner oc-corner--agree"
+            [class.oc-corner--picked]="currentPick() === 'agree'"
+            (click)="choose('agree')"
+          >
+            <span class="oc-corner-icon">👍</span>
+            <span>{{ step().agreeLabel }}</span>
+          </button>
+          <button
+            type="button"
+            class="oc-corner oc-corner--neutral"
+            [class.oc-corner--picked]="currentPick() === 'neutral'"
+            (click)="choose('neutral')"
+          >
+            <span class="oc-corner-icon">🤔</span>
+            <span>{{ step().neutralLabel }}</span>
+          </button>
+          <button
+            type="button"
+            class="oc-corner oc-corner--disagree"
+            [class.oc-corner--picked]="currentPick() === 'disagree'"
+            (click)="choose('disagree')"
+          >
+            <span class="oc-corner-icon">👎</span>
+            <span>{{ step().disagreeLabel }}</span>
+          </button>
+        </div>
+
+        @if (currentPick()) {
+          <button type="button" class="oc-next" (click)="next()">
+            {{ isLastStatement() ? step().toDebriefLabel : 'Next statement' }} →
+          </button>
+        }
+      </div>
+    }
+  } @else if (!posted()) {
+    <span class="oc-badge">{{ step().debriefHeading }}</span>
+    <h1>{{ step().debriefQuestion }}</h1>
+    <p class="oc-subtitle">{{ step().debriefIntro }}</p>
+
+    <div class="oc-card">
+      <textarea
+        class="oc-textarea"
+        rows="4"
+        [value]="debriefText()"
+        (input)="setDebriefText($any($event.target).value)"
+        [placeholder]="step().debriefPlaceholder"
+      ></textarea>
+
+      <button type="button" class="oc-next" [disabled]="!canPost()" (click)="post()">{{ step().submitLabel }} →</button>
+    </div>
+  } @else {
+    <div class="oc-complete">
+      <span class="oc-complete-icon">🧭</span>
+      <h2>{{ step().completeHeading }}</h2>
+      <p>{{ step().completeText }}</p>
+      <button type="button" class="oc-next" (click)="finish()">{{ step().continueLabel }} →</button>
+    </div>
+  }
+</div>

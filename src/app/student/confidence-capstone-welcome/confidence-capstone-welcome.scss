@@ -1,0 +1,95 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Capstone trophy welcome (ccw) — Self-Confidence Module, End-of-Module Project ---- */
+$ccw-coral: #ff6f59;
+$ccw-deep: #c94a37;
+$ccw-navy: #1e2749;
+$ccw-ink: #2b2d42;
+
+.ccw {
+  display: flex;
+  justify-content: center;
+  padding: 2.5rem 1rem;
+}
+
+.ccw-card {
+  @include w.soft-card;
+  max-width: 30rem;
+  width: 100%;
+  padding: 2.5rem clamp(1.5rem, 5vw, 2.5rem);
+  text-align: center;
+  background: linear-gradient(180deg, #fff4f0 0%, v.$color-white 55%);
+  border: 2px solid rgba($ccw-coral, 0.4);
+}
+
+.ccw-trophy {
+  display: block;
+  font-size: 2.8rem;
+  margin-bottom: 0.4rem;
+}
+
+.ccw-badge {
+  @include w.welcome-pill(linear-gradient(120deg, $ccw-coral, #ff9478), v.$color-white);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.76rem;
+}
+
+.ccw h1 {
+  @include m.playful-heading;
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  color: $ccw-navy;
+  margin: 0.9rem 0 0.5rem;
+}
+
+.ccw-subtitle {
+  color: rgba($ccw-ink, 0.65);
+  font-size: 1rem;
+  line-height: 1.5;
+  margin: 0 0 1.6rem;
+}
+
+.ccw-tasks {
+  list-style: none;
+  margin: 0 0 1.75rem;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  text-align: left;
+
+  li {
+    position: relative;
+    padding-left: 1.5rem;
+    font-size: 0.96rem;
+    line-height: 1.4;
+    color: $ccw-ink;
+  }
+
+  li::before {
+    content: '⭐';
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: 0.85rem;
+  }
+}
+
+.ccw-start {
+  @include w.welcome-cta-btn(linear-gradient(120deg, $ccw-coral, $ccw-deep), v.$color-white);
+  display: block;
+  width: 100%;
+  font-size: 1.05rem;
+}
+
+.ccw-review {
+  @include m.tappable;
+  display: block;
+  margin: 0.75rem auto 0;
+  background: none;
+  border: none;
+  font-weight: 700;
+  color: rgba($ccw-ink, 0.6);
+}

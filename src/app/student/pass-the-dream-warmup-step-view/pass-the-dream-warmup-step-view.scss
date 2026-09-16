@@ -1,0 +1,352 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- Pass the Dream warm-up (ptd) — Identity Module, Week 4 ---- */
+$ptd-navy: #2a2545;
+$ptd-purple: #6c5ce7;
+$ptd-pink: #f28ab2;
+$ptd-green: #4fc78a;
+$ptd-ink: #3a3550;
+$ptd-lilac: #efeafb;
+
+.ptd {
+  max-width: 60rem;
+  margin: 0 auto;
+}
+
+.ptd-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.ptd-room {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.ptd-room-icon {
+  width: 2.6rem;
+  height: 2.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  background: v.$color-white;
+  box-shadow: 0 3px 10px rgba($ptd-navy, 0.12);
+  font-size: 1.2rem;
+}
+
+.ptd-room strong {
+  display: block;
+  color: $ptd-navy;
+}
+
+.ptd-room-tagline {
+  font-size: 0.82rem;
+  color: rgba($ptd-ink, 0.55);
+}
+
+.ptd-room-meta {
+  background: v.$color-white;
+  border-radius: v.$border-radius-pill;
+  padding: 0.5rem 1rem;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: rgba($ptd-ink, 0.6);
+  box-shadow: 0 3px 10px rgba($ptd-navy, 0.08);
+}
+
+.ptd-layout {
+  display: flex;
+  gap: 1.5rem;
+
+  @media (max-width: 800px) {
+    flex-direction: column;
+  }
+}
+
+.ptd-panel {
+  flex: 1 1 0%;
+  min-width: 0;
+  border-radius: v.$border-radius-xl;
+  padding: 1.5rem 1.6rem 1.75rem;
+
+  &--warmup { background: $ptd-lilac; }
+  &--recap { background: rgba($ptd-pink, 0.13); }
+}
+
+.ptd-panel-head {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.85rem;
+}
+
+.ptd-panel-icon {
+  font-size: 1.5rem;
+}
+
+.ptd-badge {
+  @include m.playful-heading;
+  border-radius: v.$border-radius-pill;
+  padding: 0.3rem 0.85rem;
+  font-size: 0.8rem;
+
+  &--warmup { background: #f5c451; color: $ptd-navy; }
+  &--recap { background: $ptd-green; color: v.$color-white; }
+}
+
+.ptd-panel h1 {
+  @include m.playful-heading;
+  font-size: clamp(1.7rem, 4vw, 2.2rem);
+  color: $ptd-navy;
+  margin: 0 0 0.6rem;
+}
+
+.ptd-intro {
+  color: rgba($ptd-ink, 0.7);
+  line-height: 1.55;
+  margin: 0 0 1.25rem;
+}
+
+/* --- tossing card --- */
+.ptd-tossing {
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 14px;
+  padding: 1.1rem 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.ptd-tossing-label {
+  font-weight: 800;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $ptd-purple;
+}
+
+.ptd-tossing-friend {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.6rem;
+}
+
+.ptd-avatar {
+  width: 2.6rem;
+  height: 2.6rem;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: v.$color-white;
+  font-size: 1.3rem;
+}
+
+.ptd-tossing-friend strong {
+  display: block;
+  color: $ptd-navy;
+  font-size: 1.05rem;
+}
+
+.ptd-friend-dream {
+  font-style: italic;
+  color: rgba($ptd-ink, 0.65);
+  font-size: 0.92rem;
+}
+
+/* --- chips + input --- */
+.ptd-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.85rem;
+}
+
+.ptd-chip {
+  @include m.tappable;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  padding: 0.5rem 0.95rem;
+  font-weight: 700;
+  font-size: 0.88rem;
+  background: v.$color-white;
+  color: $ptd-ink;
+  box-shadow: 0 2px 8px rgba($ptd-navy, 0.08);
+
+  &--picked {
+    background: $ptd-purple;
+    color: v.$color-white;
+  }
+}
+
+.ptd-dream-input {
+  width: 100%;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  padding: 0.8rem 1.1rem;
+  font-family: inherit;
+  font-size: 0.95rem;
+  color: $ptd-ink;
+  background: v.$color-white;
+  box-shadow: 0 2px 8px rgba($ptd-navy, 0.08);
+  margin-bottom: 1rem;
+
+  &:focus {
+    outline: 2px solid $ptd-purple;
+  }
+}
+
+.ptd-toss {
+  @include m.tappable;
+  display: block;
+  width: 100%;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  padding: 1rem 1.5rem;
+  font-weight: 800;
+  font-size: 1.05rem;
+  background: $ptd-purple;
+  color: v.$color-white;
+  box-shadow: 0 4px 0 rgba($ptd-navy, 0.2);
+
+  &:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+}
+
+.ptd-tossed-all {
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 14px;
+  padding: 1.4rem 1.2rem;
+  text-align: center;
+
+  p {
+    margin: 0.3rem 0 0;
+    font-weight: 700;
+    color: $ptd-navy;
+  }
+}
+
+.ptd-tossed-icon {
+  font-size: 2rem;
+}
+
+.ptd-your-dream {
+  font-style: italic;
+  color: rgba($ptd-ink, 0.65) !important;
+  font-weight: 600 !important;
+}
+
+/* --- recap --- */
+.ptd-recap-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.ptd-recap-card {
+  background: rgba(255, 255, 255, 0.75);
+  border-radius: 14px;
+  padding: 1rem 1.1rem;
+
+  &--mine {
+    border: 2px solid $ptd-green;
+  }
+}
+
+.ptd-recap-head {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.5rem;
+
+  strong { color: $ptd-navy; }
+}
+
+.ptd-recap-emoji {
+  margin-left: auto;
+  font-size: 1.1rem;
+}
+
+.ptd-recap-choice {
+  color: $ptd-ink;
+  font-weight: 600;
+  line-height: 1.4;
+  margin: 0 0 0.2rem;
+}
+
+.ptd-recap-feeling {
+  color: rgba($ptd-ink, 0.55);
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.ptd-share-row {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.ptd-share-row input {
+  flex: 1 1 0%;
+  min-width: 0;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  padding: 0.8rem 1.1rem;
+  font-family: inherit;
+  font-size: 0.95rem;
+  color: $ptd-ink;
+  background: v.$color-white;
+
+  &:focus {
+    outline: 2px solid $ptd-pink;
+  }
+}
+
+.ptd-share {
+  @include m.tappable;
+  flex-shrink: 0;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  padding: 0.8rem 1.4rem;
+  font-weight: 800;
+  background: $ptd-pink;
+  color: v.$color-white;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+/* --- footer / continue --- */
+.ptd-continue {
+  @include m.tappable;
+  display: block;
+  width: 100%;
+  max-width: 26rem;
+  margin: 1.75rem auto 0;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  padding: 1rem 1.5rem;
+  font-weight: 800;
+  font-size: 1.05rem;
+  background: $ptd-navy;
+  color: v.$color-white;
+}
+
+.ptd-footer {
+  text-align: center;
+  color: rgba($ptd-ink, 0.45);
+  font-size: 0.88rem;
+  margin: 1.5rem 0 0;
+}

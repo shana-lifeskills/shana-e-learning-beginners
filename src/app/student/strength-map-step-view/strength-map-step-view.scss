@@ -1,0 +1,257 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- My Strength Map (sm) — Self-Confidence Module, Week 1 ---- */
+$sm-coral: #ff6f59;
+$sm-navy: #1e2749;
+$sm-ink: #2b2d42;
+$sm-line: rgba(43, 45, 66, 0.16);
+
+.sm {
+  max-width: 34rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.sm-badge {
+  @include m.playful-heading;
+  display: inline-block;
+  background: rgba($sm-coral, 0.14);
+  color: $sm-coral;
+  font-size: 0.85rem;
+  padding: 0.4rem 1.1rem;
+  border-radius: v.$border-radius-pill;
+}
+
+.sm h1 {
+  @include m.playful-heading;
+  margin: 1rem 0 0.5rem;
+  font-size: clamp(1.7rem, 4.2vw, 2.2rem);
+  color: $sm-navy;
+}
+
+.sm-subtitle {
+  color: rgba($sm-ink, 0.65);
+  font-size: 1rem;
+  line-height: 1.5;
+  max-width: 28rem;
+  margin: 0 auto;
+}
+
+.sm-instructions {
+  text-align: left;
+  background: v.$color-cream-bg;
+  border-radius: v.$border-radius-lg;
+  padding: 1.1rem 1.3rem;
+  margin: 1.5rem 0;
+
+  h2 {
+    @include m.playful-heading;
+    font-size: 0.95rem;
+    color: $sm-navy;
+    margin: 0 0 0.5rem;
+  }
+
+  ol {
+    margin: 0;
+    padding-left: 1.2rem;
+    color: rgba($sm-ink, 0.75);
+    line-height: 1.55;
+    font-size: 0.92rem;
+  }
+}
+
+.sm-trail {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.sm-stop {
+  display: flex;
+  gap: 0.85rem;
+  position: relative;
+  padding-bottom: 1.6rem;
+
+  &:not(:last-child)::before {
+    content: '';
+    position: absolute;
+    left: 1.15rem;
+    top: 2.6rem;
+    bottom: 0;
+    border-left: 2px dashed rgba($sm-coral, 0.35);
+  }
+}
+
+.sm-stop-icon {
+  flex-shrink: 0;
+  width: 2.3rem;
+  height: 2.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+  border-radius: 50%;
+  background: v.$color-white;
+  border: 1.5px solid $sm-line;
+
+  .sm-stop--filled & {
+    border-color: $sm-coral;
+    background: rgba($sm-coral, 0.14);
+  }
+}
+
+.sm-stop-body {
+  flex: 1;
+  background: v.$color-white;
+  border-radius: v.$border-radius-lg;
+  padding: 0.9rem 1.1rem 1.1rem;
+  border: 1.5px solid $sm-line;
+}
+
+.sm-stop-tab {
+  @include m.playful-heading;
+  display: block;
+  font-size: 0.82rem;
+  color: $sm-coral;
+  margin-bottom: 0.5rem;
+}
+
+.sm-field-label {
+  display: block;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: $sm-navy;
+  margin: 0.6rem 0 0.3rem;
+}
+
+.sm-stop-body input {
+  width: 100%;
+  border: 1.5px solid $sm-line;
+  border-radius: 10px;
+  padding: 0.6rem 0.8rem;
+  font-size: 0.92rem;
+  font-family: inherit;
+  color: $sm-ink;
+  background: v.$color-cream-bg;
+
+  &:focus {
+    outline: none;
+    border-color: $sm-coral;
+  }
+}
+
+.sm-submit {
+  @include m.tappable;
+  display: block;
+  width: 100%;
+  margin-top: 1.5rem;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  padding: 0.9rem 1.5rem;
+  font-weight: 800;
+  font-size: 1.02rem;
+  background: linear-gradient(120deg, $sm-coral, #ff9478);
+  color: v.$color-white;
+  box-shadow: 0 4px 0 rgba($sm-navy, 0.12);
+
+  &:disabled {
+    opacity: 0.45;
+    cursor: default;
+  }
+}
+
+.sm-map {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 1.5rem 0;
+  text-align: left;
+}
+
+.sm-pin {
+  display: flex;
+  gap: 0.85rem;
+  align-items: flex-start;
+}
+
+.sm-pin-icon {
+  flex-shrink: 0;
+  width: 2.3rem;
+  height: 2.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+  border-radius: 50%;
+  background: rgba($sm-coral, 0.14);
+  border: 1.5px solid $sm-coral;
+}
+
+.sm-pin-card {
+  flex: 1;
+  background: v.$color-white;
+  border-radius: v.$border-radius-lg;
+  padding: 0.85rem 1.1rem;
+  border: 1.5px solid $sm-line;
+}
+
+.sm-pin-strength {
+  @include m.playful-heading;
+  font-size: 1.02rem;
+  color: $sm-navy;
+  margin: 0 0 0.3rem;
+}
+
+.sm-pin-action {
+  color: rgba($sm-ink, 0.75);
+  line-height: 1.45;
+  font-size: 0.9rem;
+  margin: 0;
+
+  span {
+    font-weight: 700;
+    color: $sm-coral;
+  }
+}
+
+.sm-complete {
+  @include m.bouncy-card;
+
+  &:hover {
+    transform: none;
+    box-shadow: 0 6px 0 rgba(0, 0, 0, 0.08);
+  }
+
+  background: rgba($sm-coral, 0.08);
+  border-radius: v.$border-radius-xl;
+  padding: 2rem clamp(1.25rem, 4vw, 2rem);
+  text-align: center;
+
+  h2 {
+    @include m.playful-heading;
+    font-size: 1.4rem;
+    color: $sm-navy;
+    margin: 0 0 0.75rem;
+  }
+
+  p {
+    color: rgba($sm-ink, 0.8);
+    line-height: 1.6;
+    margin: 0 0 1.75rem;
+  }
+}
+
+.sm-continue {
+  @include m.tappable;
+  display: block;
+  width: 100%;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  padding: 0.9rem 1.5rem;
+  font-weight: 800;
+  font-size: 1.02rem;
+  background: linear-gradient(120deg, $sm-coral, #ff9478);
+  color: v.$color-white;
+  box-shadow: 0 4px 0 rgba($sm-navy, 0.12);
+}

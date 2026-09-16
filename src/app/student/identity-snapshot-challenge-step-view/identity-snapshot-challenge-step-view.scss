@@ -1,0 +1,287 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- Identity Snapshot Challenge (isc) — Identity Module, Week 1 closer ---- */
+$isc-navy: #1e2749;
+$isc-blue: #3f7fd6;
+$isc-orange: #d9791f;
+$isc-ink: #2b2d42;
+$isc-card: #fffdf8;
+$isc-line: rgba(43, 45, 66, 0.16);
+
+.isc {
+  max-width: 56rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.isc-badge {
+  @include m.playful-heading;
+  display: inline-block;
+  background: rgba($isc-orange, 0.14);
+  color: $isc-orange;
+  font-size: 0.85rem;
+  padding: 0.4rem 1.1rem;
+  border-radius: v.$border-radius-pill;
+}
+
+.isc h1 {
+  @include m.playful-heading;
+  margin: 1rem 0 0.6rem;
+  font-size: clamp(2rem, 5vw, 2.6rem);
+  color: $isc-navy;
+}
+
+.isc-subtitle {
+  color: rgba($isc-ink, 0.65);
+  font-size: 1.05rem;
+  line-height: 1.55;
+  max-width: 34rem;
+  margin: 0 auto;
+}
+
+.isc-instructions {
+  background: rgba($isc-blue, 0.06);
+  border: 1.5px dashed rgba($isc-blue, 0.4);
+  border-radius: v.$border-radius-xl;
+  padding: 1.25rem 1.5rem;
+  margin: 1.5rem 0;
+  text-align: left;
+
+  h2 {
+    @include m.playful-heading;
+    font-size: 1.05rem;
+    color: $isc-navy;
+    margin: 0 0 0.6rem;
+  }
+
+  ol {
+    margin: 0;
+    padding-left: 1.25rem;
+    color: rgba($isc-ink, 0.75);
+    line-height: 1.6;
+  }
+}
+
+.isc-slots {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.isc-slot {
+  @include m.bouncy-card;
+
+  &:hover {
+    transform: none;
+    box-shadow: 0 6px 0 rgba(0, 0, 0, 0.08);
+  }
+
+  background: $isc-card;
+  border-radius: v.$border-radius-xl;
+  padding: 1.25rem;
+  text-align: left;
+
+  &--filled {
+    border: 2px solid rgba($isc-orange, 0.4);
+  }
+}
+
+.isc-slot-heading {
+  display: block;
+  font-weight: 800;
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: $isc-orange;
+  margin-bottom: 0.65rem;
+}
+
+.isc-dropzone {
+  @include m.tappable;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border: 2px dashed $isc-line;
+  border-radius: 14px;
+  background: v.$color-cream-bg;
+  color: rgba($isc-ink, 0.55);
+  overflow: hidden;
+  padding: 0;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  &:disabled {
+    cursor: default;
+  }
+}
+
+.isc-upload-icon {
+  font-size: 1.6rem;
+}
+
+.isc-photo-label {
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.isc-choose,
+.isc-change {
+  @include m.tappable;
+  display: block;
+  width: 100%;
+  margin-top: 0.6rem;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  padding: 0.55rem 1rem;
+  font-weight: 800;
+  font-size: 0.85rem;
+}
+
+.isc-choose {
+  background: rgba($isc-blue, 0.14);
+  color: $isc-blue;
+}
+
+.isc-change {
+  background: transparent;
+  color: rgba($isc-ink, 0.55);
+  border: 1.5px solid $isc-line;
+}
+
+.isc-reason-label {
+  display: block;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: $isc-navy;
+  margin: 0.9rem 0 0.4rem;
+}
+
+.isc-slot textarea {
+  width: 100%;
+  resize: vertical;
+  border: 1px solid $isc-line;
+  border-radius: 10px;
+  padding: 0.6rem 0.75rem;
+  font-family: inherit;
+  font-size: 0.92rem;
+  color: $isc-ink;
+  background: v.$color-cream-bg;
+
+  &:focus {
+    outline: 2px solid $isc-blue;
+    outline-offset: 1px;
+  }
+}
+
+.isc-parent-note {
+  font-size: 0.85rem;
+  color: rgba($isc-ink, 0.55);
+  margin: 0 0 1.25rem;
+}
+
+.isc-submit {
+  @include m.tappable;
+  display: block;
+  width: 100%;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  padding: 1rem 1.5rem;
+  font-weight: 800;
+  font-size: 1.05rem;
+  background: linear-gradient(120deg, $isc-orange, #f0a94c);
+  color: v.$color-white;
+  box-shadow: 0 4px 0 rgba($isc-navy, 0.1);
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+}
+
+/* --- Scrapbook reveal --- */
+.isc-scrapbook {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.isc-scrap-card {
+  background: v.$color-white;
+  border-radius: 8px;
+  box-shadow: 0 8px 20px rgba($isc-navy, 0.14);
+  padding: 0.6rem 0.6rem 1rem;
+  width: 13rem;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: translateY(-4px) rotate(0deg) !important;
+  }
+
+  &--0 { transform: rotate(-4deg); }
+  &--1 { transform: rotate(3deg); }
+  &--2 { transform: rotate(-2deg); }
+
+  img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-bottom: 0.7rem;
+  }
+
+  p {
+    margin: 0;
+    font-style: italic;
+    font-size: 0.9rem;
+    color: rgba($isc-ink, 0.8);
+    line-height: 1.4;
+  }
+}
+
+.isc-complete {
+  background: rgba($isc-orange, 0.1);
+  border-radius: v.$border-radius-xl;
+  padding: 2rem clamp(1.25rem, 4vw, 2rem) 1.75rem;
+
+  h2 {
+    @include m.playful-heading;
+    font-size: 1.4rem;
+    color: $isc-navy;
+    margin: 0 0 0.75rem;
+  }
+
+  p {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: rgba($isc-ink, 0.85);
+    margin: 0 0 1.5rem;
+  }
+}
+
+.isc-continue {
+  @include m.tappable;
+  display: block;
+  width: 100%;
+  max-width: 24rem;
+  margin: 0 auto;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  padding: 0.95rem 1.5rem;
+  font-weight: 800;
+  font-size: 1.05rem;
+  background: $isc-navy;
+  color: v.$color-white;
+}

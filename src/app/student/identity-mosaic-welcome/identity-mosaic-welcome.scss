@@ -1,0 +1,204 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Identity mosaic welcome (imw) — Identity Module, Week 1 ---- */
+$imw-cream: #fdf3e7;
+$imw-navy: #1e3a6e;
+$imw-orange: #e8791a;
+$imw-blue: #2f66c8;
+$imw-ink: #2b2d42;
+
+.imw {
+  max-width: 60rem;
+  margin: 0 auto;
+  padding: 0 clamp(1rem, 4vw, 2rem) 2.5rem;
+  color: $imw-ink;
+}
+
+.imw-banner {
+  text-align: center;
+  font-weight: 800;
+  color: $imw-navy;
+  padding: 1rem 1rem 1.1rem;
+  margin: 0 -2rem 1.75rem;
+  border-bottom: 2px dashed rgba($imw-blue, 0.35);
+  background: $imw-cream;
+}
+
+.imw-hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.imw-hero-copy {
+  flex: 1 1 20rem;
+}
+
+.imw-age-badge {
+  @include w.welcome-pill(rgba($imw-orange, 0.16), $imw-orange);
+  letter-spacing: 0.02em;
+}
+
+.imw h1 {
+  @include m.playful-heading;
+  margin: 1rem 0 0.75rem;
+  font-size: clamp(2rem, 5vw, 2.75rem);
+  line-height: 1.15;
+}
+
+.imw-title-start { color: $imw-navy; }
+.imw-title-accent { color: $imw-orange; }
+
+.imw-subtitle {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: rgba($imw-ink, 0.75);
+  margin: 0;
+  max-width: 26rem;
+}
+
+.imw-image-wrap {
+  flex: 1 1 16rem;
+  max-width: 22rem;
+
+  img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: v.$border-radius-xl;
+    border: 3px solid v.$color-white;
+    box-shadow: 0 6px 0 rgba($imw-navy, 0.08);
+  }
+}
+
+.imw-card {
+  @include w.soft-card;
+  margin-top: 2rem;
+  padding: 1.75rem clamp(1.25rem, 4vw, 2.25rem) 2rem;
+  border: 2px solid rgba($imw-orange, 0.3);
+}
+
+.imw-pill-row {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.imw-week-pill {
+  @include w.welcome-pill($imw-blue, v.$color-white);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.8rem;
+}
+
+.imw-stage-pill {
+  @include w.welcome-pill(rgba($imw-orange, 0.16), $imw-orange);
+  font-size: 0.85rem;
+}
+
+.imw-card-title {
+  @include m.playful-heading;
+  font-size: clamp(1.4rem, 3.4vw, 1.85rem);
+  color: $imw-navy;
+  margin: 0 0 1.25rem;
+}
+
+.imw-objective-box {
+  border: 2px dashed rgba($imw-blue, 0.4);
+  border-radius: 14px;
+  padding: 1.1rem 1.3rem 1.2rem;
+  margin-bottom: 1.5rem;
+}
+
+.imw-objective-label {
+  font-weight: 800;
+  color: $imw-orange;
+  margin: 0 0 0.6rem;
+}
+
+.imw-objectives {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+
+  li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+}
+
+.imw-objective-icon {
+  flex-shrink: 0;
+  font-size: 1.1rem;
+}
+
+.imw-tags-heading {
+  font-weight: 800;
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba($imw-ink, 0.55);
+  margin: 0 0 0.75rem;
+}
+
+.imw-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.imw-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.55rem 1.1rem;
+  border-radius: v.$border-radius-pill;
+  font-weight: 800;
+  font-size: 0.9rem;
+
+  &--peach {
+    background: rgba($imw-orange, 0.14);
+    color: $imw-orange;
+  }
+
+  &--blue {
+    background: $imw-blue;
+    color: v.$color-white;
+  }
+}
+
+.imw-start {
+  @include w.welcome-cta-btn(linear-gradient(120deg, $imw-orange, #f2a94c), v.$color-white);
+  display: block;
+  margin: 2rem auto 0;
+  font-size: 1.1rem;
+}
+
+.imw-review {
+  @include m.tappable;
+  display: block;
+  margin: 0.8rem auto 0;
+  background: none;
+  border: none;
+  font-weight: 700;
+  color: rgba($imw-ink, 0.6);
+}
+
+.imw-footer {
+  text-align: center;
+  margin: 1.4rem 0 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: rgba($imw-ink, 0.6);
+}

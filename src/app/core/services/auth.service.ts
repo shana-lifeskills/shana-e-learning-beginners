@@ -117,7 +117,7 @@ export class AuthService {
   }
 
   private randomAvatar(): string {
-    const avatars = ['fox', 'panda', 'owl', 'otter', 'dino', 'unicorn'];
+    const avatars = ['nova', 'milo', 'zoe', 'kai', 'ruby', 'theo'];
     return avatars[Math.floor(Math.random() * avatars.length)];
   }
 }
