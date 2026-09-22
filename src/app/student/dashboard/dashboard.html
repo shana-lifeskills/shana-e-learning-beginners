@@ -29,12 +29,19 @@
 
     @if (loading()) {
       <p class="loading-copy">Loading your adventures…</p>
-    } @else if (tracks().length === 0) {
-      <div class="empty-state">
-        <div class="art">📦</div>
-        <p>No modules yet! Ask your trainer to assign one — it'll show up right here.</p>
-      </div>
-    } @else {
+    } @else if (student(); as s) {
+      @if (!s.hasPaid) {
+        <div class="empty-state payment-required">
+          <div class="art">🔒</div>
+          <p>Your modules are ready and waiting! Complete payment to unlock full access.</p>
+          <button type="button" class="btn btn-primary btn-lg-tappable" (click)="openPaymentModal()">Pay with Paystack</button>
+        </div>
+      } @else if (tracks().length === 0) {
+        <div class="empty-state">
+          <div class="art">📦</div>
+          <p>No modules yet! Ask your trainer to assign one — it'll show up right here.</p>
+        </div>
+      } @else {
       @for (track of tracks(); track track.trackName) {
         <div class="track-group">
           <h3 class="track-heading">{{ track.trackName }}</h3>
@@ -61,9 +68,14 @@
           </div>
         </div>
       }
+      }
     }
   </section>
 </div>
+
+@if (showPaymentModal() && student(); as s) {
+  <app-payment-modal [email]="s.email" (closed)="showPaymentModal.set(false)" (paid)="onPaymentSuccess()" />
+}
 
 @if (showWelcome() && student(); as s) {
   <div class="welcome-overlay">

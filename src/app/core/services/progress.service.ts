@@ -1,8 +1,7 @@
-import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { delay } from 'rxjs/operators';
-import { DatabaseService } from './database.service';
-import { COLLECTIONS } from './collections';
+import { Injectable, inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable, catchError, map, of, switchMap, throwError } from 'rxjs';
+import { environment } from '../../../environments/environment';
 import { GamificationService } from './gamification.service';
 import { Module } from '../models/module.model';
 import { StudentProgress } from '../models/progress.model';
@@ -21,57 +20,111 @@ export interface AdvanceResult {
   moduleCompleted: boolean;
 }
 
+/** Shape the backend's `/api/progress/*` routes return — `userId` instead of `studentId`,
+ *  since the server only ever knows the caller's own JWT-derived id. */
+interface ProgressDto {
+  id: string;
+  userId: string;
+  moduleId: string;
+  status: StudentProgress['status'];
+  completedExerciseIds: string[];
+  completedLessonIds: string[];
+  currentLessonId: string | null;
+  currentExerciseId: string | null;
+  startedAt: string | null;
+  completedAt: string | null;
+}
+
+interface CompleteStepResponse {
+  progress: ProgressDto;
+  lessonCompleted: boolean;
+  moduleCompleted: boolean;
+  starAwarded: boolean;
+  badgeAwarded: boolean;
+  trophyAwarded: boolean;
+}
+
+/**
+ * Curriculum order/structure (which exercise is next, when a lesson or module is
+ * "done") lives only in the frontend's static content, so it stays computed here,
+ * exactly as before — `advance()` below is unchanged, pure logic. Only its two
+ * side-effecting statements changed: instead of writing to localStorage and calling
+ * GamificationService synchronously, it POSTs the already-computed outcome to the
+ * backend, which does the actual persistence and idempotent star/badge/trophy award.
+ *
+ * A small in-memory cache holds the last-fetched progress per module so submitAnswer/
+ * submitShare/completeStep — which are always called after startModule during the same
+ * module-player session — can run their pure computation synchronously, the same way
+ * they used to read straight from localStorage.
+ */
 @Injectable({ providedIn: 'root' })
 export class ProgressService {
-  constructor(private db: DatabaseService, private gamification: GamificationService) {}
+  private http = inject(HttpClient);
+  private gamification = inject(GamificationService);
+  private readonly apiUrl = `${environment.apiUrl}/progress`;
 
-  getProgress(studentId: string, moduleId: string): StudentProgress | undefined {
-    return this.db
-      .getAll<StudentProgress>(COLLECTIONS.progress)
-      .find((p) => p.studentId === studentId && p.moduleId === moduleId);
+  private readonly cache = new Map<string, StudentProgress>();
+
+  private cacheKey(studentId: string, moduleId: string): string {
+    return `${studentId}__${moduleId}`;
   }
 
-  /** Fetches existing progress, or creates+starts a fresh record for this module. */
-  startModule(studentId: string, module: Module): Observable<StudentProgress> {
-    const existing = this.getProgress(studentId, module.id);
-    if (existing) {
-      // Self-heal: a lesson can be added to a module after a student already started it
-      // with zero lessons, leaving `currentLessonId: null` stuck forever. Pick up the
-      // first not-yet-completed lesson so the student isn't permanently locked out.
-      if (existing.status !== 'completed' && existing.currentLessonId === null) {
-        const nextLesson = [...module.lessons]
-          .sort((a, b) => a.order - b.order)
-          .find((lesson) => !existing.completedLessonIds.includes(lesson.id));
-        if (nextLesson) {
-          const nextExercise = [...nextLesson.exercises].sort((a, b) => a.order - b.order)[0] ?? null;
-          const healed = this.db.update<StudentProgress>(COLLECTIONS.progress, existing.id, {
-            currentLessonId: nextLesson.id,
-            currentExerciseId: nextExercise?.id ?? null,
-          });
-          if (healed) return of(healed).pipe(delay(100));
-        }
-      }
-      return of(existing).pipe(delay(100));
-    }
-
-    const firstLesson = [...module.lessons].sort((a, b) => a.order - b.order)[0];
-    const firstExercise = firstLesson ? [...firstLesson.exercises].sort((a, b) => a.order - b.order)[0] : null;
-
-    const progress: StudentProgress = {
-      id: `${studentId}__${module.id}`,
+  private toStudentProgress(studentId: string, dto: ProgressDto): StudentProgress {
+    return {
+      id: dto.id,
       studentId,
-      moduleId: module.id,
-      status: 'in-progress',
-      completedExerciseIds: [],
-      completedLessonIds: [],
-      currentLessonId: firstLesson?.id ?? null,
-      currentExerciseId: firstExercise?.id ?? null,
-      startedAt: new Date().toISOString(),
-      completedAt: null,
+      moduleId: dto.moduleId,
+      status: dto.status,
+      completedExerciseIds: dto.completedExerciseIds ?? [],
+      completedLessonIds: dto.completedLessonIds ?? [],
+      currentLessonId: dto.currentLessonId,
+      currentExerciseId: dto.currentExerciseId,
+      startedAt: dto.startedAt,
+      completedAt: dto.completedAt,
     };
+  }
 
-    this.db.insert(COLLECTIONS.progress, progress);
-    return of(progress).pipe(delay(100));
+  /** Fetches existing progress, or creates+starts a fresh record for this module —
+   *  including the same "first not-yet-completed lesson" self-heal the module used to
+   *  do purely off localStorage, now informed by one GET before the start/heal POST. */
+  startModule(studentId: string, module: Module): Observable<StudentProgress> {
+    return this.http.get<ProgressDto>(`${this.apiUrl}/${module.id}`, { withCredentials: true }).pipe(
+      map((dto) => this.toStudentProgress(studentId, dto)),
+      catchError((err) => (err?.status === 404 ? of(null) : throwError(() => err))),
+      switchMap((existing) => {
+        let resumeLessonId: string | null = null;
+        let resumeExerciseId: string | null = null;
+
+        if (existing && existing.status !== 'completed' && existing.currentLessonId === null) {
+          // Self-heal: a lesson can be added to a module after a student already started
+          // it with zero lessons, leaving `currentLessonId: null` stuck forever. Pick up
+          // the first not-yet-completed lesson so the student isn't permanently locked out.
+          const nextLesson = [...module.lessons]
+            .sort((a, b) => a.order - b.order)
+            .find((lesson) => !existing.completedLessonIds.includes(lesson.id));
+          resumeLessonId = nextLesson?.id ?? null;
+          resumeExerciseId = nextLesson ? ([...nextLesson.exercises].sort((a, b) => a.order - b.order)[0]?.id ?? null) : null;
+        } else if (existing) {
+          resumeLessonId = existing.currentLessonId;
+          resumeExerciseId = existing.currentExerciseId;
+        } else {
+          const firstLesson = [...module.lessons].sort((a, b) => a.order - b.order)[0];
+          resumeLessonId = firstLesson?.id ?? null;
+          resumeExerciseId = firstLesson ? ([...firstLesson.exercises].sort((a, b) => a.order - b.order)[0]?.id ?? null) : null;
+        }
+
+        return this.http.post<ProgressDto>(
+          `${this.apiUrl}/${module.id}/start`,
+          { resumeLessonId, resumeExerciseId },
+          { withCredentials: true }
+        );
+      }),
+      map((dto) => {
+        const progress = this.toStudentProgress(studentId, dto);
+        this.cache.set(this.cacheKey(studentId, module.id), progress);
+        return progress;
+      })
+    );
   }
 
   /**
@@ -88,7 +141,7 @@ export class ProgressService {
   ): Observable<AnswerResult> {
     const lesson = module.lessons.find((l) => l.id === lessonId);
     const exercise = lesson?.exercises.find((e) => e.id === exerciseId);
-    const progress = this.getProgress(studentId, module.id);
+    const progress = this.cache.get(this.cacheKey(studentId, module.id));
 
     if (!lesson || !exercise || !progress || exercise.type !== 'multiple-choice') {
       throw new Error('Cannot submit an answer before the module has been started.');
@@ -96,11 +149,12 @@ export class ProgressService {
 
     const correct = exercise.correctOptionId === selectedOptionId;
     if (!correct) {
-      return of({ correct, progress, lessonCompleted: false, moduleCompleted: false }).pipe(delay(150));
+      return of({ correct, progress, lessonCompleted: false, moduleCompleted: false });
     }
 
-    const result = this.advance(studentId, module, lesson, exerciseId, progress);
-    return of({ correct: true, ...result }).pipe(delay(150));
+    return this.advance(studentId, module, lesson, exerciseId, progress).pipe(
+      map((result) => ({ correct: true, ...result }))
+    );
   }
 
   /**
@@ -117,30 +171,35 @@ export class ProgressService {
     values: Record<string, string>
   ): Observable<AdvanceResult> {
     const lesson = module.lessons.find((l) => l.id === lessonId);
-    const progress = this.getProgress(studentId, module.id);
+    const progress = this.cache.get(this.cacheKey(studentId, module.id));
 
     if (!lesson || !progress) {
       throw new Error('Cannot submit before the module has been started.');
     }
 
-    const submission: Submission = {
-      id: `${studentId}__${exerciseId}`,
-      studentId,
-      studentName,
-      moduleId: module.id,
-      lessonId,
-      exerciseId,
-      values,
-      submittedAt: new Date().toISOString(),
-    };
-    this.db.upsert(COLLECTIONS.submissions, submission);
-
-    const result = this.advance(studentId, module, lesson, exerciseId, progress);
-    return of(result).pipe(delay(150));
+    return this.advance(studentId, module, lesson, exerciseId, progress, { studentName, values });
   }
 
-  getSubmissionsForExercise(exerciseId: string): Submission[] {
-    return this.db.getAll<Submission>(COLLECTIONS.submissions).filter((s) => s.exerciseId === exerciseId);
+  getSubmissionsForExercise(exerciseId: string): Observable<Submission[]> {
+    return this.http
+      .get<{ userId: string; studentName: string; moduleId: string; lessonId: string; exerciseId: string; values: Record<string, string>; submittedAt: string }[]>(
+        `${this.apiUrl}/submissions`,
+        { params: { exerciseId }, withCredentials: true }
+      )
+      .pipe(
+        map((rows) =>
+          rows.map((r) => ({
+            id: `${r.userId}__${r.exerciseId}`,
+            studentId: r.userId,
+            studentName: r.studentName,
+            moduleId: r.moduleId,
+            lessonId: r.lessonId,
+            exerciseId: r.exerciseId,
+            values: r.values,
+            submittedAt: r.submittedAt,
+          }))
+        )
+      );
   }
 
   /**
@@ -150,14 +209,13 @@ export class ProgressService {
    */
   completeStep(studentId: string, module: Module, lessonId: string, exerciseId: string): Observable<AdvanceResult> {
     const lesson = module.lessons.find((l) => l.id === lessonId);
-    const progress = this.getProgress(studentId, module.id);
+    const progress = this.cache.get(this.cacheKey(studentId, module.id));
 
     if (!lesson || !progress) {
       throw new Error('Cannot complete a step before the module has been started.');
     }
 
-    const result = this.advance(studentId, module, lesson, exerciseId, progress);
-    return of(result).pipe(delay(150));
+    return this.advance(studentId, module, lesson, exerciseId, progress);
   }
 
   private advance(
@@ -165,10 +223,9 @@ export class ProgressService {
     module: Module,
     lesson: Module['lessons'][number],
     exerciseId: string,
-    progress: StudentProgress
-  ): AdvanceResult {
-    this.gamification.awardStar(studentId, module.id, exerciseId);
-
+    progress: StudentProgress,
+    submission?: { studentName: string; values: Record<string, string> }
+  ): Observable<AdvanceResult> {
     const completedExerciseIds = progress.completedExerciseIds.includes(exerciseId)
       ? progress.completedExerciseIds
       : [...progress.completedExerciseIds, exerciseId];
@@ -187,7 +244,6 @@ export class ProgressService {
       // Finished every exercise in this lesson.
       lessonCompleted = !progress.completedLessonIds.includes(lesson.id);
       completedLessonIds = lessonCompleted ? [...progress.completedLessonIds, lesson.id] : progress.completedLessonIds;
-      if (lessonCompleted) this.gamification.awardBadge(studentId, module.id, lesson.id);
 
       const sortedLessons = [...module.lessons].sort((a, b) => a.order - b.order);
       const lessonIndex = sortedLessons.findIndex((l) => l.id === lesson.id);
@@ -200,23 +256,38 @@ export class ProgressService {
       } else {
         // That was the last lesson — the whole module is complete.
         moduleCompleted = progress.status !== 'completed';
-        if (moduleCompleted) this.gamification.awardTrophy(studentId, module.id);
         currentLessonId = null;
         currentExerciseId = null;
       }
     }
 
-    const updated: StudentProgress = {
-      ...progress,
-      completedExerciseIds,
-      completedLessonIds,
-      currentLessonId,
-      currentExerciseId,
-      status: moduleCompleted ? 'completed' : 'in-progress',
-      completedAt: moduleCompleted ? new Date().toISOString() : progress.completedAt,
-    };
+    return this.http
+      .post<CompleteStepResponse>(
+        `${this.apiUrl}/${module.id}/steps/${exerciseId}/complete`,
+        {
+          lessonId: lesson.id,
+          lessonCompleted,
+          moduleCompleted,
+          completedExerciseIds,
+          completedLessonIds,
+          currentLessonId,
+          currentExerciseId,
+          submissionValues: submission?.values,
+          studentName: submission?.studentName,
+        },
+        { withCredentials: true }
+      )
+      .pipe(
+        map((response) => {
+          const updated = this.toStudentProgress(studentId, response.progress);
+          this.cache.set(this.cacheKey(studentId, module.id), updated);
 
-    this.db.upsert(COLLECTIONS.progress, updated);
-    return { progress: updated, lessonCompleted, moduleCompleted };
+          if (response.starAwarded) this.gamification.notifyReward('star', 1, 'Great job! You earned a star!');
+          if (response.badgeAwarded) this.gamification.notifyReward('badge', 1, 'Lesson complete! You earned a badge!');
+          if (response.trophyAwarded) this.gamification.notifyReward('trophy', 1, 'Module complete! You earned a trophy!');
+
+          return { progress: updated, lessonCompleted: response.lessonCompleted, moduleCompleted: response.moduleCompleted };
+        })
+      );
   }
 }

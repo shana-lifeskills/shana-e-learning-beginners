@@ -1,0 +1,163 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- Needs First Confidence Link (ncl) — Budgeting Module, Week 2 close ---- */
+$ncl-ink: v.$color-navy-text;
+$ncl-blue: #2f6fb0;
+$ncl-orange: v.$color-coral;
+$ncl-bg: #fdece0;
+
+.ncl {
+  max-width: 34rem;
+  margin: 0 auto;
+  padding: 2.4rem clamp(1rem, 4vw, 2.5rem) 2.6rem;
+  text-align: center;
+  border-radius: v.$border-radius-xl;
+  color: $ncl-ink;
+  background: $ncl-bg;
+}
+
+.ncl-badge {
+  display: inline-block;
+  padding: 0.32rem 1rem;
+  border-radius: v.$border-radius-pill;
+  background: $ncl-blue;
+  color: v.$color-white;
+  font-weight: 800;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.ncl-week {
+  display: block;
+  margin-top: 0.6rem;
+  font-weight: 800;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba($ncl-ink, 0.55);
+}
+
+/* --- coin --- */
+.ncl-coin {
+  position: relative;
+  width: min(17rem, 80vw);
+  aspect-ratio: 1;
+  margin: 1.6rem auto 1.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ncl-coin-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: $ncl-orange;
+  opacity: 0.22;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.ncl-coin--lit .ncl-coin-ring {
+  opacity: 1;
+  animation: ncl-spin 8s linear infinite;
+}
+
+.ncl-coin-core {
+  position: relative;
+  width: 76%;
+  height: 76%;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1.2rem;
+  background: v.$color-white;
+  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.1);
+}
+
+.ncl-coin-mark { font-size: 2rem; }
+
+.ncl-statement {
+  margin: 0;
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: clamp(1.05rem, 3.6vw, 1.3rem);
+  line-height: 1.35;
+  color: $ncl-ink;
+}
+
+/* --- say it out loud --- */
+.ncl-say {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.ncl-say-label {
+  font-weight: 800;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $ncl-blue;
+}
+
+.ncl-say-btn {
+  @include m.tappable;
+  padding: 0.75rem 1.8rem;
+  border: 2px solid $ncl-blue;
+  border-radius: v.$border-radius-pill;
+  background: v.$color-white;
+  color: $ncl-blue;
+  font-weight: 800;
+  font-size: 1rem;
+}
+
+.ncl-say-btn--done {
+  background: $ncl-blue;
+  color: v.$color-white;
+  border-color: $ncl-blue;
+}
+
+.ncl-reinforce {
+  max-width: 26rem;
+  margin: 1.4rem auto 0;
+  font-size: 0.98rem;
+  line-height: 1.5;
+  color: rgba($ncl-ink, 0.78);
+}
+
+.ncl-complete {
+  @include m.tappable;
+  display: block;
+  width: 100%;
+  margin: 1.6rem 0 0;
+  padding: 0.95rem 1.6rem;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  background: $ncl-blue;
+  color: v.$color-white;
+  font-weight: 800;
+  font-size: 1.12rem;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.13);
+
+  &:disabled { background: rgba($ncl-ink, 0.18); cursor: not-allowed; box-shadow: none; }
+}
+
+.ncl-hint {
+  margin: 0.6rem 0 0;
+  font-size: 0.85rem;
+  color: rgba($ncl-ink, 0.55);
+}
+
+@keyframes ncl-spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ncl-coin--lit .ncl-coin-ring { animation: none; }
+}

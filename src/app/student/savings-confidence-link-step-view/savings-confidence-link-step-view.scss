@@ -1,0 +1,110 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Savings Confidence Link (scl) — Savings Module, Week 1 close ---- */
+$scl-teal: #0d9488;
+$scl-teal-soft: #ccfbf1;
+$scl-gold: #f5b82e;
+
+.scl {
+  max-width: 34rem;
+  margin: 0 auto;
+  padding: 2.2rem clamp(1rem, 4vw, 2.5rem) 2.4rem;
+  text-align: center;
+  background: v.$color-white;
+  border-radius: v.$border-radius-xl;
+  box-shadow: 0 2px 14px w.navy(0.06);
+}
+
+.scl-badge {
+  display: inline-block;
+  padding: 0.32rem 1rem;
+  border-radius: v.$border-radius-pill;
+  background: $scl-teal;
+  color: v.$color-white;
+  font-weight: 800;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.scl-week {
+  display: block;
+  margin-top: 0.6rem;
+  font-weight: 800;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: w.navy(0.55);
+}
+
+.scl-scene { margin: 1.6rem 0 1.4rem; }
+
+.scl-bubble {
+  position: relative;
+  padding: 1.4rem 1.5rem;
+  background: $scl-teal-soft;
+  border: 3px solid transparent;
+  border-radius: 1.6rem;
+  transition: background 0.4s, border-color 0.4s;
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -0.9rem;
+    width: 1.4rem;
+    height: 1.4rem;
+    background: inherit;
+    border-right: 3px solid transparent;
+    border-bottom: 3px solid transparent;
+    border-color: inherit;
+    transform: translateX(-50%) rotate(45deg);
+  }
+
+  &--lit { background: lighten($scl-gold, 30%); border-color: $scl-gold; }
+
+  p {
+    @include m.playful-heading;
+    margin: 0;
+    font-size: 1.4rem;
+    line-height: 1.35;
+    color: v.$color-navy-text;
+  }
+}
+
+.scl-pig {
+  display: inline-block;
+  margin-top: 1.4rem;
+  font-size: 4.5rem;
+  line-height: 1;
+
+  &--happy { animation: scl-hop 0.7s ease 2; }
+}
+
+@keyframes scl-hop {
+  50% { transform: translateY(-0.9rem) rotate(-6deg); }
+}
+
+.scl-say {
+  @include w.welcome-cta-btn($scl-gold, v.$color-navy-text);
+  &--done { background: $scl-teal-soft; color: $scl-teal; box-shadow: none; }
+}
+
+.scl-reinforce {
+  margin: 1.2rem 0;
+  color: w.navy(0.6);
+  line-height: 1.5;
+}
+
+.scl-complete {
+  @include w.welcome-cta-btn($scl-teal);
+  &:disabled { opacity: 0.45; cursor: default; }
+}
+
+.scl-hint {
+  margin: 0.6rem 0 0;
+  font-size: 0.85rem;
+  color: w.navy(0.55);
+}

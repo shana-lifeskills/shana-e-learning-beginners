@@ -1,0 +1,29 @@
+<div class="spl">
+  <span class="spl-badge">{{ step().badge }}</span>
+  <span class="spl-week">{{ step().weekLabel }}</span>
+
+  <div class="spl-coin" [class.spl-coin--lit]="saidIt()">
+    <span class="spl-coin-ring" aria-hidden="true"></span>
+    <span class="spl-coin-core">
+      <span class="spl-coin-mark" aria-hidden="true">🛍️</span>
+      <p class="spl-statement">{{ step().statement }}</p>
+    </span>
+  </div>
+
+  <div class="spl-say">
+    <span class="spl-say-label">{{ step().sayItLabel }}</span>
+    <button type="button" class="spl-say-btn" [class.spl-say-btn--done]="saidIt()"
+      [disabled]="saidIt()" (click)="toggleSaidIt()">
+      {{ saidIt() ? '✓ ' + step().saidItLabel : step().saidItLabel }}
+    </button>
+  </div>
+
+  <p class="spl-reinforce">{{ step().reinforceLine }}</p>
+
+  <button type="button" class="spl-complete" [disabled]="!saidIt()" (click)="finish()">
+    {{ step().completeLabel }} 🎉
+  </button>
+  @if (!saidIt()) {
+    <p class="spl-hint">Say the sentence out loud, then tap the button above.</p>
+  }
+</div>

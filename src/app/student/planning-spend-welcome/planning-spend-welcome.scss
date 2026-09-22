@@ -1,0 +1,182 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+$psw-blue: #2f6fb0;
+$psw-blue-soft: #e5eefb;
+$psw-orange: v.$color-coral;
+$psw-orange-soft: #fdece0;
+
+.planning-spend-welcome {
+  max-width: 52rem;
+  margin: 0 auto;
+  text-align: left;
+
+  h1 {
+    @include m.playful-heading;
+    font-size: 2.5rem;
+    line-height: 1.15;
+    margin: 0 0 0.6rem;
+    color: v.$color-navy-text;
+  }
+}
+
+.psw-week-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: $psw-blue-soft;
+  color: $psw-blue;
+  font-weight: 800;
+  font-size: 0.85rem;
+  padding: 0.5rem 1.3rem;
+  border-radius: v.$border-radius-pill;
+  margin-bottom: 1.1rem;
+}
+
+.psw-subtitle {
+  color: w.navy(0.6);
+  font-size: 1.1rem;
+  line-height: 1.5;
+  margin: 0 0 2rem;
+  max-width: 34rem;
+}
+
+/* --- CSS-drawn spiral notepad --- */
+.psw-notepad {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.75rem;
+}
+
+.psw-notepad-spiral {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  padding: 1.1rem 0;
+}
+
+.psw-spiral-dot {
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 50%;
+  border: 0.16rem solid $psw-blue;
+  background: v.$color-white;
+  margin: 0.35rem 0;
+}
+
+.psw-notepad-sheet {
+  position: relative;
+  width: min(26rem, 100%);
+  background: v.$color-white;
+  border-radius: 0 v.$border-radius-lg v.$border-radius-lg 0;
+  padding: 1.5rem 1.75rem;
+  box-shadow: 0 2px 14px w.navy(0.06);
+}
+
+.psw-notepad-heading {
+  display: block;
+  font-weight: 800;
+  font-size: 0.9rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: $psw-blue;
+  margin-bottom: 0.9rem;
+}
+
+.psw-notepad-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.6rem;
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-weight: 700;
+    font-size: 1rem;
+    color: v.$color-navy-text;
+    padding-bottom: 0.6rem;
+    border-bottom: 1px dashed w.navy(0.12);
+
+    &:last-child { border-bottom: none; padding-bottom: 0; }
+  }
+}
+
+.psw-check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background: $psw-orange;
+  color: v.$color-white;
+  font-size: 0.85rem;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.psw-pencil {
+  position: absolute;
+  right: -0.6rem;
+  bottom: -0.6rem;
+  font-size: 1.6rem;
+  transform: rotate(-40deg);
+}
+
+.psw-objective-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  background: v.$color-white;
+  border-radius: v.$border-radius-xl;
+  padding: 1.5rem 1.75rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 14px w.navy(0.06);
+
+  h2 {
+    @include m.playful-heading;
+    font-size: 1.15rem;
+    color: $psw-blue;
+    margin: 0 0 0.35rem;
+  }
+
+  p {
+    color: w.navy(0.6);
+    font-size: 1rem;
+    line-height: 1.5;
+    margin: 0;
+  }
+}
+
+.psw-objective-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  background: $psw-orange-soft;
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+
+.psw-start-btn {
+  @include m.tappable;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: $psw-orange;
+  color: v.$color-white;
+  border: none;
+  font-weight: 800;
+  font-size: 1.05rem;
+  padding: 0.85rem 2rem;
+  border-radius: v.$border-radius-pill;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.1);
+
+  &:hover { opacity: 0.92; }
+}

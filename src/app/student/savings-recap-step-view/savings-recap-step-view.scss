@@ -1,0 +1,74 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Savings recap (srp) — Savings Module, Week 2 ---- */
+$srp-teal: #0d9488;
+$srp-teal-soft: #ccfbf1;
+$srp-gold: #f5b82e;
+
+.srp {
+  max-width: 38rem;
+  margin: 0 auto;
+  padding: 1.5rem 1rem;
+  text-align: center;
+}
+
+.srp-badge {
+  display: inline-block;
+  padding: 0.35rem 1.1rem;
+  border-radius: v.$border-radius-pill;
+  background: $srp-teal-soft;
+  color: $srp-teal;
+  font-weight: 800;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.srp-heading {
+  @include m.playful-heading;
+  font-size: 1.9rem;
+  color: v.$color-navy-text;
+  margin: 0.7rem 0 0.3rem;
+}
+
+.srp-subtitle { color: w.navy(0.6); margin: 0 0 1.4rem; }
+
+.srp-points {
+  list-style: none;
+  margin: 0 0 1.75rem;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  text-align: left;
+}
+
+.srp-point {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.2rem;
+  background: v.$color-white;
+  border-left: 0.35rem solid $srp-teal;
+  border-radius: v.$border-radius-lg;
+  box-shadow: 0 2px 14px w.navy(0.06);
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: v.$color-navy-text;
+}
+
+.srp-coin {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 50%;
+  background: $srp-gold;
+  font-weight: 800;
+}
+
+.srp-continue { @include w.welcome-cta-btn($srp-teal); }

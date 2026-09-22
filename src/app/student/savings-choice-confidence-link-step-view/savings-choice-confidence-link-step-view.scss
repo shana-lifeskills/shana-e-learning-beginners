@@ -1,0 +1,103 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Savings choice Confidence Link (scc) — Savings Module, Week 2 close ---- */
+$scc-teal: #0d9488;
+$scc-teal-soft: #ccfbf1;
+$scc-gold: #f5b82e;
+$scc-wood: #b7834f;
+
+.scc {
+  max-width: 34rem;
+  margin: 0 auto;
+  padding: 2.2rem clamp(1rem, 4vw, 2.5rem) 2.4rem;
+  text-align: center;
+  background: v.$color-white;
+  border-radius: v.$border-radius-xl;
+  box-shadow: 0 2px 14px w.navy(0.06);
+}
+
+.scc-badge {
+  display: inline-block;
+  padding: 0.32rem 1rem;
+  border-radius: v.$border-radius-pill;
+  background: $scc-teal;
+  color: v.$color-white;
+  font-weight: 800;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.scc-week {
+  display: block;
+  margin-top: 0.6rem;
+  font-weight: 800;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: w.navy(0.55);
+}
+
+/* --- signpost: two arms on one post, the Save arm lights up --- */
+.scc-sign {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 1.6rem 0 1.2rem;
+  padding-bottom: 2.6rem;
+}
+
+.scc-arm {
+  position: relative;
+  z-index: 1;
+  padding: 0.6rem 1.4rem;
+  background: $scc-wood;
+  border-radius: 0.5rem;
+  color: v.$color-white;
+  font-weight: 800;
+  transition: background 0.4s, color 0.4s, transform 0.4s;
+
+  &--spend { opacity: 0.55; transform: rotate(4deg); }
+  &--save { transform: rotate(-3deg); }
+  &--lit { background: $scc-gold; color: v.$color-navy-text; transform: rotate(-3deg) scale(1.1); }
+}
+
+.scc-post {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0.9rem;
+  height: 100%;
+  transform: translateX(-50%);
+  background: darken($scc-wood, 12%);
+  border-radius: 0.3rem;
+}
+
+.scc-statement {
+  @include m.playful-heading;
+  margin: 0 0 1.4rem;
+  font-size: 1.5rem;
+  line-height: 1.35;
+  color: v.$color-navy-text;
+  transition: color 0.4s;
+
+  &--lit { color: $scc-teal; }
+}
+
+.scc-say {
+  @include w.welcome-cta-btn($scc-gold, v.$color-navy-text);
+  &--done { background: $scc-teal-soft; color: $scc-teal; box-shadow: none; }
+}
+
+.scc-reinforce { margin: 1.2rem 0; color: w.navy(0.6); line-height: 1.5; }
+
+.scc-complete {
+  @include w.welcome-cta-btn($scc-teal);
+  &:disabled { opacity: 0.45; cursor: default; }
+}
+
+.scc-hint { margin: 0.6rem 0 0; font-size: 0.85rem; color: w.navy(0.55); }

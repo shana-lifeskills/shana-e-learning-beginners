@@ -1,0 +1,259 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- My First Budget challenge (bpt) — Budgeting Module, Week 1 ---- */
+$bpt-ink: v.$color-navy-text;
+$bpt-blue: #2f6fb0;
+$bpt-blue-deep: #1f4d80;
+$bpt-orange: v.$color-coral;
+$bpt-paper: #eef4fb;
+
+.bpt {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 1rem;
+  color: $bpt-ink;
+}
+
+.bpt-head {
+  text-align: center;
+  padding: 1.6rem 1.2rem 1.4rem;
+  border-radius: v.$border-radius-xl v.$border-radius-xl 0 0;
+  background: $bpt-blue;
+  color: v.$color-white;
+}
+
+.bpt-badge {
+  display: inline-block;
+  padding: 0.32rem 1rem;
+  border-radius: v.$border-radius-pill;
+  background: $bpt-orange;
+  color: v.$color-white;
+  font-weight: 800;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.bpt-title {
+  @include m.playful-heading;
+  font-size: clamp(1.5rem, 4.5vw, 2rem);
+  margin: 0.7rem 0 0.3rem;
+}
+
+.bpt-intro {
+  margin: 0;
+  font-size: 0.98rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.bpt-coins {
+  margin: 0.8rem 0 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.9rem;
+  border-radius: v.$border-radius-pill;
+  background: rgba(255, 255, 255, 0.16);
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+/* --- plan card --- */
+.bpt-card {
+  padding: 1.3rem 1.1rem;
+  background: $bpt-paper;
+  border-left: 4px solid $bpt-orange;
+  border-right: 4px solid $bpt-orange;
+}
+
+.bpt-card-heading {
+  display: block;
+  margin-bottom: 0.9rem;
+  font-weight: 800;
+  font-size: 0.86rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: $bpt-blue-deep;
+}
+
+.bpt-line {
+  display: grid;
+  grid-template-columns: 1.6rem 1fr;
+  align-items: center;
+  gap: 0.3rem 0.6rem;
+  margin-bottom: 0.9rem;
+}
+
+.bpt-line-icon { font-size: 1.2rem; grid-row: span 2; }
+
+.bpt-line-label {
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.bpt-line input {
+  grid-column: 2;
+  width: 100%;
+  padding: 0.55rem 0.7rem;
+  border-radius: v.$border-radius-sm;
+  border: 2px solid rgba($bpt-ink, 0.16);
+  font: inherit;
+  font-size: 0.95rem;
+
+  &:focus { outline: none; border-color: $bpt-blue; }
+}
+
+/* --- track --- */
+.bpt-track {
+  padding: 1.2rem 1.1rem 1.4rem;
+  background: $bpt-paper;
+  border-radius: 0 0 v.$border-radius-xl v.$border-radius-xl;
+  border-left: 4px solid $bpt-orange;
+  border-right: 4px solid $bpt-orange;
+  border-bottom: 4px solid $bpt-orange;
+}
+
+.bpt-track-heading {
+  font-weight: 800;
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $bpt-blue-deep;
+}
+
+.bpt-track-intro {
+  margin: 0.4rem 0 1rem;
+  font-size: 0.92rem;
+  color: rgba($bpt-ink, 0.65);
+}
+
+.bpt-progress {
+  margin-bottom: 1rem;
+}
+
+.bpt-progress-bar {
+  height: 0.55rem;
+  border-radius: v.$border-radius-pill;
+  background: rgba($bpt-blue, 0.15);
+  overflow: hidden;
+}
+
+.bpt-progress-fill {
+  display: block;
+  height: 100%;
+  background: $bpt-orange;
+  transition: width 0.3s ease;
+}
+
+.bpt-progress-label {
+  display: block;
+  margin-top: 0.4rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: rgba($bpt-ink, 0.6);
+}
+
+.bpt-days {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.6rem;
+}
+
+.bpt-day {
+  @include m.tappable;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.6rem 0.9rem;
+  border-radius: v.$border-radius-sm;
+  border: 2px solid rgba($bpt-blue, 0.25);
+  background: v.$color-white;
+  text-align: left;
+}
+
+.bpt-day--done {
+  border-color: $bpt-orange;
+  background: rgba($bpt-orange, 0.1);
+}
+
+.bpt-day-node {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.9rem;
+  height: 1.9rem;
+  border-radius: 50%;
+  background: $bpt-blue;
+  color: v.$color-white;
+  font-weight: 800;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+
+.bpt-day--done .bpt-day-node { background: $bpt-orange; }
+
+.bpt-day-name {
+  font-weight: 800;
+  font-size: 0.9rem;
+}
+
+.bpt-day-state {
+  margin-left: auto;
+  font-size: 0.78rem;
+  color: rgba($bpt-ink, 0.55);
+}
+
+.bpt-parent-note {
+  display: flex;
+  gap: 0.5rem;
+  margin: 1rem 0 0;
+  padding: 0.8rem 1rem;
+  border-radius: v.$border-radius-sm;
+  background: rgba($bpt-orange, 0.1);
+  border: 1px dashed rgba($bpt-orange, 0.5);
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: #6b3d04;
+}
+
+.bpt-done {
+  margin-top: 1rem;
+  padding: 1.3rem 1.1rem;
+  text-align: center;
+  border-radius: v.$border-radius-lg;
+  background: rgba($bpt-blue, 0.1);
+
+  h3 { @include m.playful-heading; font-size: 1.25rem; margin: 0.4rem 0 0.3rem; }
+  p { margin: 0; font-size: 0.95rem; color: rgba($bpt-ink, 0.8); }
+}
+
+.bpt-done-mark { font-size: 1.9rem; }
+
+.bpt-complete {
+  @include m.tappable;
+  display: block;
+  width: 100%;
+  margin: 1.1rem 0 0;
+  padding: 0.95rem 1.6rem;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  background: $bpt-orange;
+  color: v.$color-white;
+  font-weight: 800;
+  font-size: 1.1rem;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.12);
+
+  &:disabled { background: rgba($bpt-ink, 0.2); cursor: not-allowed; box-shadow: none; }
+}
+
+.bpt-hint {
+  margin: 0.6rem 0 0;
+  text-align: center;
+  font-size: 0.85rem;
+  color: rgba($bpt-ink, 0.55);
+}

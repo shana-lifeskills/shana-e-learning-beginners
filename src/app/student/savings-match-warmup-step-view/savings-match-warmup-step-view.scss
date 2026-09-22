@@ -1,0 +1,131 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Savings match warm-up (smw) — Savings Module, Week 2 ---- */
+$smw-teal: #0d9488;
+$smw-teal-soft: #ccfbf1;
+$smw-gold: #f5b82e;
+$smw-gold-soft: #fdf1cf;
+$smw-red: #e5484d;
+
+.smw {
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: 1rem;
+  text-align: center;
+}
+
+.smw-badge {
+  display: inline-block;
+  padding: 0.35rem 1.1rem;
+  border-radius: v.$border-radius-pill;
+  background: $smw-teal-soft;
+  color: $smw-teal;
+  font-weight: 800;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.smw-heading {
+  @include m.playful-heading;
+  font-size: 1.9rem;
+  color: v.$color-navy-text;
+  margin: 0.7rem 0 0.3rem;
+}
+
+.smw-subtitle { color: w.navy(0.6); margin: 0 0 1.4rem; }
+
+.smw-board {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  padding: 1.25rem;
+  background: v.$color-white;
+  border-radius: v.$border-radius-xl;
+  box-shadow: 0 2px 14px w.navy(0.06);
+
+  &--shake { animation: smw-shake 0.4s; }
+}
+
+@keyframes smw-shake {
+  20%, 60% { transform: translateX(-6px); }
+  40%, 80% { transform: translateX(6px); }
+}
+
+.smw-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.smw-col-label {
+  font-weight: 800;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: w.navy(0.5);
+}
+
+.smw-card {
+  @include m.tappable;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 3.4rem;
+  padding: 0.6rem 0.8rem;
+  border: 2px solid transparent;
+  border-radius: v.$border-radius-lg;
+  font: inherit;
+  font-weight: 700;
+  color: v.$color-navy-text;
+
+  &--word { background: $smw-teal-soft; }
+  &--meaning { background: $smw-gold-soft; }
+  &--picked { border-color: $smw-teal; box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.25); }
+  &--wrong { border-color: $smw-red; background: #fde3e4; }
+  &--done { background: #d7f4e5; border-color: #1f9d63; opacity: 1; }
+  &:disabled:not(.smw-card--done) { opacity: 0.7; cursor: default; }
+}
+
+.smw-coin {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: $smw-gold;
+  font-weight: 800;
+  font-size: 0.85rem;
+}
+
+.smw-hint {
+  min-height: 1.5rem;
+  margin: 0.9rem 0 0;
+  font-weight: 700;
+  color: w.navy(0.6);
+}
+
+.smw-done {
+  margin-top: 0.5rem;
+
+  span { font-size: 2.4rem; }
+  h3 { @include m.playful-heading; color: $smw-teal; margin: 0.3rem 0; }
+  p { color: w.navy(0.6); margin: 0 0 1rem; }
+}
+
+.smw-continue { @include w.welcome-cta-btn($smw-teal); }
+
+.smw-parent-note {
+  margin: 1.25rem auto 0;
+  max-width: 34rem;
+  padding: 0.7rem 1rem;
+  background: $smw-gold-soft;
+  border-radius: v.$border-radius-lg;
+  font-size: 0.9rem;
+  color: v.$color-navy-text;
+}

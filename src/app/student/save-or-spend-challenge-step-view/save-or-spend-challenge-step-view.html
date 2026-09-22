@@ -1,0 +1,45 @@
+<div class="sos">
+  <header class="sos-head">
+    <span class="sos-badge">{{ step().badge }}</span>
+    <h2 class="sos-title">{{ step().title }}</h2>
+    <p class="sos-intro">{{ step().intro }}</p>
+    <div class="sos-progress"><span class="sos-progress-fill" [style.width.%]="(doneCount() / step().dayCount) * 100"></span></div>
+    <span class="sos-progress-label">{{ doneCount() }} / {{ step().dayCount }} {{ step().progressLabel }}</span>
+  </header>
+
+  <ol class="sos-days">
+    @for (choice of choices(); track $index; let i = $index) {
+      <li class="sos-day" [class.sos-day--done]="isDayDone(i)">
+        <div class="sos-day-top">
+          <span class="sos-day-name">Day {{ i + 1 }}</span>
+          <span class="sos-day-q">{{ step().decideLabel }}</span>
+        </div>
+        <div class="sos-fork">
+          <button type="button" class="sos-pick sos-pick--save" [class.sos-pick--on]="choice === 'save'"
+            [attr.aria-pressed]="choice === 'save'" (click)="choose(i, 'save')">🐷 {{ step().saveLabel }}</button>
+          <button type="button" class="sos-pick sos-pick--spend" [class.sos-pick--on]="choice === 'spend'"
+            [attr.aria-pressed]="choice === 'spend'" (click)="choose(i, 'spend')">🛍️ {{ step().spendLabel }}</button>
+        </div>
+        <input type="text" [value]="reasons()[i]" [placeholder]="step().reasonPlaceholder"
+          [attr.aria-label]="'Why on day ' + (i + 1)" (input)="setReason(i, $any($event.target).value)" />
+      </li>
+    }
+  </ol>
+
+  <p class="sos-parent-note"><span aria-hidden="true">👪</span> {{ step().parentNote }}</p>
+
+  @if (canComplete()) {
+    <div class="sos-done">
+      <span aria-hidden="true">🐷</span>
+      <h3>{{ step().allDoneTitle }}</h3>
+      <p>{{ step().allDoneText }}</p>
+    </div>
+  }
+
+  <button type="button" class="sos-complete" [disabled]="!canComplete()" (click)="complete()">
+    {{ step().completeLabel }}
+  </button>
+  @if (!canComplete()) {
+    <p class="sos-hint">Choose Save or Spend and say why, for every day, to finish.</p>
+  }
+</div>

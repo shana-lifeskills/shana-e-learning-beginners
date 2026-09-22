@@ -1,0 +1,34 @@
+<div class="saving-steps-welcome">
+  <div class="ssw-copy">
+    <span class="ssw-week-pill">{{ ssw.weekLabel }}</span>
+    <h1>{{ ssw.titleStart }}<span class="ssw-accent">{{ ssw.titleAccent }}</span></h1>
+    <p class="ssw-subtitle">{{ ssw.subtitle }}</p>
+  </div>
+
+  <div class="ssw-stairs" aria-hidden="true">
+    <span class="ssw-step ssw-step--1"><span class="ssw-coin">🪙</span></span>
+    <span class="ssw-step ssw-step--2"><span class="ssw-coin">🪙</span></span>
+    <span class="ssw-step ssw-step--3"><span class="ssw-coin">🪙</span></span>
+    <span class="ssw-step ssw-step--4"><span class="ssw-coin">🪙</span></span>
+    <span class="ssw-flag">🏁</span>
+  </div>
+
+  <div class="ssw-objective">
+    <span class="ssw-objective-icon">🎯</span>
+    <div>
+      <h2>{{ ssw.objectiveLabel }}</h2>
+      <p>{{ ssw.objectiveText }}</p>
+    </div>
+  </div>
+
+  @if (isCompletedLessonWelcome()) {
+    @if (nextLesson(); as next) {
+      <button type="button" class="btn ssw-start-btn" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+    } @else {
+      <button type="button" class="btn ssw-start-btn" (click)="backToMap()">Back to My Modules →</button>
+    }
+    <button type="button" class="review-lesson-link" (click)="beginLesson()">↺ Review this lesson</button>
+  } @else {
+    <button type="button" class="btn ssw-start-btn" (click)="beginLesson()">{{ ssw.startLabel }} →</button>
+  }
+</div>

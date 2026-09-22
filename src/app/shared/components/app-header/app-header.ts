@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, inject, signal } from '@angular/core';
+import { Component, ElementRef, HostListener, computed, inject, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
 import { AVATAR_EMOJI } from '../../avatar-emoji';
@@ -21,6 +21,13 @@ export class AppHeader {
   readonly menuOpen = signal(false);
 
   readonly homeLink = () => (this.user()?.role === 'trainer' ? '/trainer' : '/student');
+
+  readonly roleLabel = computed(() => {
+    const u = this.user();
+    if (!u) return '';
+    if (u.role === 'trainer') return 'Trainer';
+    return u.ageGroup === 'advanced' ? 'Advanced' : 'Beginner';
+  });
 
   toggleMenu(): void {
     this.menuOpen.update((open) => !open);

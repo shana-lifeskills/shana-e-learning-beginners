@@ -1,80 +1,64 @@
-import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
-import { DatabaseService } from './database.service';
-import { COLLECTIONS } from './collections';
-import { BadgeLog, RewardEvent, RewardTotals, StarLog, TrophyLog } from '../models/gamification.model';
+import { Injectable, inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable, Subject } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
+import { RawRewardDetails, RewardEvent, RewardKind, RewardTotals } from '../models/gamification.model';
 
 /**
- * Single place that awards stars/badges/trophies and idempotently guards
- * against double-awarding (e.g. revisiting an already-completed exercise).
- * Emits `rewardEvent$` so any component (e.g. the global celebration
- * overlay) can react to a reward being earned, wherever it happens.
+ * Talks to the backend's idempotent star/badge/trophy bookkeeping (see
+ * `/api/progress/rewards/*` and the standalone star endpoint). Badge/trophy awarding
+ * itself happens server-side as part of `ProgressService`'s step-completion call — this
+ * service's `awardStar` is only used for the one standalone case (a story-tabs
+ * sub-question) that isn't part of the normal advance-a-step flow.
+ *
+ * Also owns `rewardEvent$`, a purely local event bus (no server round-trip) that any
+ * component (e.g. the global celebration overlay) can react to whenever a reward is
+ * newly earned, wherever that happens.
  */
 @Injectable({ providedIn: 'root' })
 export class GamificationService {
+  private http = inject(HttpClient);
+  private readonly apiUrl = `${environment.apiUrl}/progress`;
+
   private readonly rewardEventSubject = new Subject<RewardEvent>();
   readonly rewardEvent$ = this.rewardEventSubject.asObservable();
 
-  constructor(private db: DatabaseService) {}
-
-  awardStar(studentId: string, moduleId: string, exerciseId: string): boolean {
-    const existing = this.db
-      .getAll<StarLog>(COLLECTIONS.stars)
-      .some((log) => log.studentId === studentId && log.exerciseId === exerciseId);
-    if (existing) return false;
-
-    const log: StarLog = {
-      id: this.db.generateId(),
-      studentId,
-      moduleId,
-      exerciseId,
-      earnedAt: new Date().toISOString(),
-    };
-    this.db.insert(COLLECTIONS.stars, log);
-    this.rewardEventSubject.next({ kind: 'star', count: 1, message: 'Great job! You earned a star!' });
-    return true;
+  awardStar(studentId: string, moduleId: string, exerciseId: string): Observable<boolean> {
+    return this.http
+      .post<{ awarded: boolean }>(`${this.apiUrl}/${moduleId}/stars/${exerciseId}`, {}, { withCredentials: true })
+      .pipe(
+        map(({ awarded }) => {
+          if (awarded) this.notifyReward('star', 1, 'Great job! You earned a star!');
+          return awarded;
+        })
+      );
   }
 
-  awardBadge(studentId: string, moduleId: string, lessonId: string): boolean {
-    const existing = this.db
-      .getAll<BadgeLog>(COLLECTIONS.badges)
-      .some((log) => log.studentId === studentId && log.lessonId === lessonId);
-    if (existing) return false;
-
-    const log: BadgeLog = {
-      id: this.db.generateId(),
-      studentId,
-      moduleId,
-      lessonId,
-      earnedAt: new Date().toISOString(),
-    };
-    this.db.insert(COLLECTIONS.badges, log);
-    this.rewardEventSubject.next({ kind: 'badge', count: 1, message: 'Lesson complete! You earned a badge!' });
-    return true;
+  getTotals(studentId?: string): Observable<RewardTotals> {
+    return this.http.get<RewardTotals>(`${this.apiUrl}/rewards/totals`, {
+      params: studentId ? { studentId } : {},
+      withCredentials: true,
+    });
   }
 
-  awardTrophy(studentId: string, moduleId: string): boolean {
-    const existing = this.db
-      .getAll<TrophyLog>(COLLECTIONS.trophies)
-      .some((log) => log.studentId === studentId && log.moduleId === moduleId);
-    if (existing) return false;
-
-    const log: TrophyLog = {
-      id: this.db.generateId(),
-      studentId,
-      moduleId,
-      earnedAt: new Date().toISOString(),
-    };
-    this.db.insert(COLLECTIONS.trophies, log);
-    this.rewardEventSubject.next({ kind: 'trophy', count: 1, message: 'Module complete! You earned a trophy!' });
-    return true;
+  getDetails(studentId?: string): Observable<RawRewardDetails> {
+    return this.http.get<RawRewardDetails>(`${this.apiUrl}/rewards/details`, {
+      params: studentId ? { studentId } : {},
+      withCredentials: true,
+    });
   }
 
-  getTotals(studentId: string): RewardTotals {
-    return {
-      stars: this.db.getAll<StarLog>(COLLECTIONS.stars).filter((l) => l.studentId === studentId).length,
-      badges: this.db.getAll<BadgeLog>(COLLECTIONS.badges).filter((l) => l.studentId === studentId).length,
-      trophies: this.db.getAll<TrophyLog>(COLLECTIONS.trophies).filter((l) => l.studentId === studentId).length,
-    };
+  getStarsThisWeek(studentId?: string): Observable<{ starsThisWeek: number }> {
+    return this.http.get<{ starsThisWeek: number }>(`${this.apiUrl}/rewards/stars-this-week`, {
+      params: studentId ? { studentId } : {},
+      withCredentials: true,
+    });
+  }
+
+  /** Fires the local celebration-toast event with no server round-trip — used by
+   *  ProgressService after a step-completion response reports what was newly awarded. */
+  notifyReward(kind: RewardKind, count: number, message: string): void {
+    this.rewardEventSubject.next({ kind, count, message });
   }
 }

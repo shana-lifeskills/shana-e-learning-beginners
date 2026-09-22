@@ -550,6 +550,16 @@
                 <app-smart-choices-warmup-step-view [step]="exercise" (continued)="onStepContinue()" />
               } @else if (exercise.type === 'trade-off-quiz') {
                 <app-trade-off-quiz-step-view [step]="exercise" (continued)="onStepContinue()" />
+              } @else if (exercise.type === 'savings-recap') {
+                <app-savings-recap-step-view [step]="exercise" (continued)="onStepContinue()" />
+              } @else if (exercise.type === 'save-or-spend-challenge') {
+                <app-save-or-spend-challenge-step-view [step]="exercise" (submitted)="onShared($event)" />
+              } @else if (exercise.type === 'savings-choice-confidence-link') {
+                <app-savings-choice-confidence-link-step-view [step]="exercise" (completed)="onStepContinue()" />
+              } @else if (exercise.type === 'savings-match-warmup') {
+                <app-savings-match-warmup-step-view [step]="exercise" (continued)="onStepContinue()" />
+              } @else if (exercise.type === 'savings-warmup-quiz') {
+                <app-savings-warmup-quiz-step-view [step]="exercise" (continued)="onStepContinue()" />
               } @else if (exercise.type === 'discipline-warmup-quiz') {
                 <app-discipline-warmup-quiz-step-view [step]="exercise" (continued)="onStepContinue()" />
               } @else if (exercise.type === 'service-warmup-quiz') {
@@ -644,6 +654,22 @@
                 <app-simple-budget-challenge-step-view [step]="exercise" (submitted)="onShared($event)" />
               } @else if (exercise.type === 'budget-confidence-link') {
                 <app-budget-confidence-link-step-view [step]="exercise" (completed)="onStepContinue()" />
+              } @else if (exercise.type === 'savings-jar-challenge') {
+                <app-savings-jar-challenge-step-view [step]="exercise" (submitted)="onShared($event)" />
+              } @else if (exercise.type === 'savings-confidence-link') {
+                <app-savings-confidence-link-step-view [step]="exercise" (completed)="onStepContinue()" />
+              } @else if (exercise.type === 'budget-plan-tracker-challenge') {
+                <app-budget-plan-tracker-challenge-step-view [step]="exercise" (submitted)="onShared($event)" />
+              } @else if (exercise.type === 'budget-plan-confidence-link') {
+                <app-budget-plan-confidence-link-step-view [step]="exercise" (completed)="onStepContinue()" />
+              } @else if (exercise.type === 'needs-first-budget-challenge') {
+                <app-needs-first-budget-challenge-step-view [step]="exercise" (submitted)="onShared($event)" />
+              } @else if (exercise.type === 'needs-first-confidence-link') {
+                <app-needs-first-confidence-link-step-view [step]="exercise" (completed)="onStepContinue()" />
+              } @else if (exercise.type === 'shopping-planner-challenge') {
+                <app-shopping-planner-challenge-step-view [step]="exercise" (submitted)="onShared($event)" />
+              } @else if (exercise.type === 'shopping-planner-confidence-link') {
+                <app-shopping-planner-confidence-link-step-view [step]="exercise" (completed)="onStepContinue()" />
               } @else if (exercise.type === 'spot-the-difference-warmup') {
                 <app-spot-the-difference-warmup-step-view [step]="exercise" (continued)="onStepContinue()" />
               } @else if (exercise.type === 'weekly-attention-challenge') {
@@ -674,6 +700,10 @@
                 <app-small-steps-link-step-view [step]="exercise" (completed)="onStepContinue()" />
               } @else if (exercise.type === 'discussion-match') {
                 <app-discussion-match-step-view [step]="exercise" (continued)="onStepContinue()" />
+              } @else if (exercise.type === 'discussion-true-false') {
+                <app-discussion-true-false-step-view [step]="exercise" (submitted)="onShared($event)" />
+              } @else if (exercise.type === 'discussion-fill-blank') {
+                <app-discussion-fill-blank-step-view [step]="exercise" (submitted)="onShared($event)" />
               } @else if (exercise.type === 'discussion-sequence') {
                 <app-discussion-sequence-step-view [step]="exercise" (continued)="onStepContinue()" />
               } @else if (exercise.type === 'strategy-detective-challenge') {

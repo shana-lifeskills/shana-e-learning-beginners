@@ -1,0 +1,285 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+$bhw-blue: #2f6fb0;
+$bhw-blue-soft: #e5eefb;
+$bhw-orange: v.$color-coral;
+$bhw-orange-soft: #fdece0;
+$bhw-skin: #f0b487;
+
+.budget-habits-welcome {
+  max-width: 52rem;
+  margin: 0 auto;
+  text-align: left;
+
+  h1 {
+    @include m.playful-heading;
+    font-size: 2.5rem;
+    line-height: 1.15;
+    margin: 0 0 0.6rem;
+    color: v.$color-navy-text;
+  }
+}
+
+.bhw-week-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: $bhw-blue-soft;
+  color: $bhw-blue;
+  font-weight: 800;
+  font-size: 0.85rem;
+  padding: 0.5rem 1.3rem;
+  border-radius: v.$border-radius-pill;
+  margin-bottom: 1.1rem;
+}
+
+.bhw-subtitle {
+  color: w.navy(0.6);
+  font-size: 1.1rem;
+  line-height: 1.5;
+  margin: 0 0 1.75rem;
+  max-width: 34rem;
+}
+
+.bhw-scene {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  background: $bhw-blue-soft;
+  border-radius: v.$border-radius-xl;
+  padding: 1.75rem;
+  margin-bottom: 1.75rem;
+
+  @media (max-width: 640px) {
+    flex-direction: column-reverse;
+  }
+}
+
+/* --- habit chain --- */
+.bhw-chain-wrap {
+  flex: 1;
+}
+
+.bhw-chain-label {
+  display: block;
+  font-weight: 800;
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: $bhw-blue;
+  margin-bottom: 0.8rem;
+}
+
+.bhw-chain {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.bhw-chain-node {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 50%;
+  background: $bhw-orange;
+  color: v.$color-white;
+  font-weight: 800;
+  font-size: 0.95rem;
+  flex-shrink: 0;
+}
+
+.bhw-chain-link {
+  width: 1.1rem;
+  height: 0.25rem;
+  background: $bhw-orange;
+  flex-shrink: 0;
+}
+
+/* --- teacher, CSS-drawn, orange & blue only --- */
+.bhw-teacher-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.bhw-bubble {
+  position: relative;
+  background: v.$color-white;
+  border-radius: v.$border-radius-lg;
+  padding: 0.8rem 1.1rem;
+  margin-bottom: 0.6rem;
+  max-width: 12rem;
+  box-shadow: 0 2px 10px w.navy(0.08);
+
+  p {
+    margin: 0;
+    color: v.$color-navy-text;
+    font-weight: 700;
+    font-size: 0.85rem;
+    line-height: 1.4;
+    text-align: center;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -0.4rem;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 0.4rem solid transparent;
+    border-right: 0.4rem solid transparent;
+    border-top: 0.5rem solid v.$color-white;
+  }
+}
+
+.bhw-teacher {
+  position: relative;
+  width: 6rem;
+  height: 8.4rem;
+}
+
+.bhw-teacher-hair {
+  position: absolute;
+  top: -0.3rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2.9rem;
+  height: 1.8rem;
+  background: #2b2b2b;
+  border-radius: 1.5rem 1.5rem 0 0;
+}
+
+.bhw-teacher-head {
+  position: absolute;
+  top: 0.3rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2.6rem;
+  height: 2.6rem;
+  background: $bhw-skin;
+  border-radius: 50%;
+}
+
+.bhw-teacher-eye {
+  position: absolute;
+  top: 1.15rem;
+  width: 0.26rem;
+  height: 0.26rem;
+  background: v.$color-navy-text;
+  border-radius: 50%;
+}
+.bhw-eye-left { left: 0.75rem; }
+.bhw-eye-right { right: 0.75rem; }
+
+.bhw-teacher-smile {
+  position: absolute;
+  top: 1.6rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0.9rem;
+  height: 0.45rem;
+  border-bottom: 0.13rem solid #7a4a2a;
+  border-radius: 0 0 0.5rem 0.5rem;
+}
+
+.bhw-teacher-body {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4.3rem;
+  height: 4.8rem;
+  background: $bhw-orange;
+  border-radius: 1.3rem 1.3rem 0 0;
+}
+
+.bhw-teacher-collar {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1.2rem;
+  height: 0.6rem;
+  background: v.$color-white;
+  border-radius: 0 0 0.4rem 0.4rem;
+}
+
+.bhw-teacher-arm {
+  position: absolute;
+  top: 0.5rem;
+  width: 0.75rem;
+  height: 2rem;
+  background: $bhw-orange;
+  border-radius: 0.45rem;
+}
+.bhw-arm-left {
+  left: -0.3rem;
+  transform: rotate(22deg);
+}
+.bhw-arm-point {
+  right: -0.15rem;
+  transform: rotate(-62deg);
+  transform-origin: top center;
+}
+
+.bhw-objective-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  background: v.$color-white;
+  border-radius: v.$border-radius-xl;
+  padding: 1.5rem 1.75rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 14px w.navy(0.06);
+
+  h2 {
+    @include m.playful-heading;
+    font-size: 1.15rem;
+    color: $bhw-blue;
+    margin: 0 0 0.35rem;
+  }
+
+  p {
+    color: w.navy(0.6);
+    font-size: 1rem;
+    line-height: 1.5;
+    margin: 0;
+  }
+}
+
+.bhw-objective-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  background: $bhw-orange-soft;
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+
+.bhw-start-btn {
+  @include m.tappable;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: $bhw-orange;
+  color: v.$color-white;
+  border: none;
+  font-weight: 800;
+  font-size: 1.05rem;
+  padding: 0.85rem 2rem;
+  border-radius: v.$border-radius-pill;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.1);
+
+  &:hover { opacity: 0.92; }
+}

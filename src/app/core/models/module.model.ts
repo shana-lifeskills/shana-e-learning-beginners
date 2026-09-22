@@ -157,6 +157,11 @@ export type ExerciseType =
   | 'financial-audit-challenge'
   | 'module-outcome-confidence-link'
   | 'discipline-warmup-quiz'
+  | 'savings-warmup-quiz'
+  | 'savings-match-warmup'
+  | 'savings-recap'
+  | 'save-or-spend-challenge'
+  | 'savings-choice-confidence-link'
   | 'discipline-tf-warmup'
   | 'discipline-match-warmup'
   | 'discipline-sequence-warmup'
@@ -233,7 +238,17 @@ export type ExerciseType =
   | 'share-reflect-challenge'
   | 'reflection-confidence-link'
   | 'seven-day-planning-project'
-  | 'share-your-plan-challenge';
+  | 'share-your-plan-challenge'
+  | 'budget-plan-tracker-challenge'
+  | 'savings-jar-challenge'
+  | 'savings-confidence-link'
+  | 'budget-plan-confidence-link'
+  | 'needs-first-budget-challenge'
+  | 'needs-first-confidence-link'
+  | 'discussion-true-false'
+  | 'shopping-planner-challenge'
+  | 'shopping-planner-confidence-link'
+  | 'discussion-fill-blank';
 
 export interface BaseExercise {
   id: string;
@@ -1422,6 +1437,122 @@ export interface TradeOffQuizStep extends BaseExercise {
   continueLabel: string;
 }
 
+/** "Recap" page (Savings Module, Week 2): the week's key points as numbered coins. */
+export interface SavingsRecapStep extends BaseExercise {
+  type: 'savings-recap';
+  badge: string;
+  heading: string;
+  subtitle: string;
+  points: string[];
+  continueLabel: string;
+}
+
+/**
+ * "Save or Spend?" challenge of the week (Savings Module, Week 2). For each
+ * day the learner picks Save or Spend and records why. Complete unlocks only
+ * once every day has both a choice and a reason.
+ */
+export interface SaveOrSpendChallengeStep extends BaseExercise {
+  type: 'save-or-spend-challenge';
+  badge: string;
+  title: string;
+  intro: string;
+  dayCount: number;
+  decideLabel: string;
+  saveLabel: string;
+  spendLabel: string;
+  reasonPlaceholder: string;
+  progressLabel: string;
+  /** Callout reminding a parent/guardian to help across the week. */
+  parentNote: string;
+  allDoneTitle: string;
+  allDoneText: string;
+  completeLabel: string;
+}
+
+/**
+ * The "Confidence Link" closing page for Savings Module, Week 2. A signpost
+ * points the way to "Save"; saying the affirmation out loud lights it up and
+ * unlocks the "Complete" button.
+ */
+export interface SavingsChoiceConfidenceLinkStep extends BaseExercise {
+  type: 'savings-choice-confidence-link';
+  badge: string;
+  weekLabel: string;
+  saveLabel: string;
+  spendLabel: string;
+  statement: string;
+  sayItLabel: string;
+  saidItLabel: string;
+  reinforceLine: string;
+  completeLabel: string;
+}
+
+/** One word-and-meaning pair in the "Match the Money Words" warm-up. */
+export interface SavingsMatchPair {
+  id: string;
+  action: string;
+  meaning: string;
+}
+
+/**
+ * The "Match the Money Words" warm-up (Savings Module, Week 2 — "How to Save
+ * Money"). The learner taps a word, then the meaning that fits. A wrong pair
+ * shakes and can be retried; a right pair locks with a matching coin number.
+ * "Continue" appears only once every word is matched.
+ */
+export interface SavingsMatchWarmupStep extends BaseExercise {
+  type: 'savings-match-warmup';
+  badge: string;
+  heading: string;
+  subtitle: string;
+  actionColumnLabel: string;
+  meaningColumnLabel: string;
+  pickWordHint: string;
+  pickMeaningHint: string;
+  pairs: SavingsMatchPair[];
+  allDoneTitle: string;
+  allDoneText: string;
+  /** Callout reminding a parent/guardian to help the learner with this exercise. */
+  parentNote: string;
+  continueLabel: string;
+}
+
+/** One lettered option inside a SavingsWarmupQuizQuestion. */
+export interface SavingsWarmupQuizOption {
+  id: string;
+  text: string;
+}
+
+/** One question in the "Fill the Savings Jar" multiple-choice warm-up. */
+export interface SavingsWarmupQuizQuestion {
+  id: string;
+  prompt: string;
+  options: SavingsWarmupQuizOption[];
+  correctOptionId: string;
+  /** Short line shown when the learner picks the right answer. */
+  feedbackText: string;
+}
+
+/**
+ * The "Fill the Savings Jar" multiple-choice warm-up (Savings Module, Week 1 —
+ * "Understanding Saving"). A glass jar gains one coin per correct answer. A
+ * wrong pick shakes and the question stays put, so the learner retries until
+ * correct; "Continue" appears only once the jar is full.
+ */
+export interface SavingsWarmupQuizStep extends BaseExercise {
+  type: 'savings-warmup-quiz';
+  badge: string;
+  heading: string;
+  subtitle: string;
+  questions: SavingsWarmupQuizQuestion[];
+  allDoneTitle: string;
+  allDoneText: string;
+  /** Callout reminding a parent/guardian to help the learner with this exercise. */
+  parentNote: string;
+  continueLabel: string;
+}
+
 /** One lettered option inside a DisciplineWarmupQuizQuestion. */
 export interface DisciplineWarmupQuizOption {
   id: string;
@@ -2111,6 +2242,179 @@ export interface SimpleBudgetChallengeStep extends BaseExercise {
   parentNote: string;
   allDoneTitle: string;
   allDoneText: string;
+  completeLabel: string;
+}
+
+/**
+ * "Start Your Saving Jar" challenge of the week (Savings Module, Week 1). The
+ * learner confirms their jar or box is ready, then over several days types how
+ * much they saved (real or pretend) and drops it in the jar. Complete unlocks
+ * only once the jar is ready and every day is logged.
+ */
+export interface SavingsJarChallengeStep extends BaseExercise {
+  type: 'savings-jar-challenge';
+  badge: string;
+  title: string;
+  intro: string;
+  jarStepLabel: string;
+  dayCount: number;
+  currencyLabel: string;
+  amountPlaceholder: string;
+  dropLabel: string;
+  droppedLabel: string;
+  totalLabel: string;
+  /** Callout reminding a parent/guardian to help across the week. */
+  parentNote: string;
+  allDoneTitle: string;
+  allDoneText: string;
+  completeLabel: string;
+}
+
+/**
+ * The "Confidence Link" closing page for Savings Module, Week 1. A short
+ * affirmation the learner says out loud, unlocking the "Complete" button.
+ */
+export interface SavingsConfidenceLinkStep extends BaseExercise {
+  type: 'savings-confidence-link';
+  badge: string;
+  weekLabel: string;
+  statement: string;
+  sayItLabel: string;
+  saidItLabel: string;
+  reinforceLine: string;
+  completeLabel: string;
+}
+
+/**
+ * "My First Budget" challenge of the week (Budgeting Module, Week 1). The learner
+ * plans a pretend 20-coin budget (spend / save / keep for later), then logs a
+ * short daily tracker across several days. Complete unlocks only once the plan
+ * is filled in and every tracked day is logged.
+ */
+export interface BudgetPlanTrackerChallengeStep extends BaseExercise {
+  type: 'budget-plan-tracker-challenge';
+  badge: string;
+  title: string;
+  intro: string;
+  coinsNote: string;
+  planHeading: string;
+  spendLabel: string;
+  spendPlaceholder: string;
+  saveLabel: string;
+  savePlaceholder: string;
+  keepLabel: string;
+  keepPlaceholder: string;
+  trackHeading: string;
+  trackIntro: string;
+  dayCount: number;
+  dayCheckLabel: string;
+  dayLoggedLabel: string;
+  progressLabel: string;
+  /** Callout reminding a parent/guardian to help across the week. */
+  parentNote: string;
+  allDoneTitle: string;
+  allDoneText: string;
+  completeLabel: string;
+}
+
+/**
+ * The "Confidence Link" closing page for Budgeting Module, Week 1. A short
+ * affirmation the learner says out loud, unlocking the "Complete" button.
+ */
+export interface BudgetPlanConfidenceLinkStep extends BaseExercise {
+  type: 'budget-plan-confidence-link';
+  badge: string;
+  weekLabel: string;
+  statement: string;
+  sayItLabel: string;
+  saidItLabel: string;
+  reinforceLine: string;
+  completeLabel: string;
+}
+
+/**
+ * "Needs First Budget Game" challenge of the week (Budgeting Module, Week 2).
+ * The learner logs a short daily entry across several days — one Need, one
+ * Want, and which one their budget should cover first. Complete unlocks only
+ * once every tracked day is logged.
+ */
+export interface NeedsFirstBudgetChallengeStep extends BaseExercise {
+  type: 'needs-first-budget-challenge';
+  badge: string;
+  title: string;
+  intro: string;
+  dayCount: number;
+  needLabel: string;
+  needPlaceholder: string;
+  wantLabel: string;
+  wantPlaceholder: string;
+  decideLabel: string;
+  decideQuestion: string;
+  needFirstLabel: string;
+  wantFirstLabel: string;
+  dayCheckLabel: string;
+  dayLoggedLabel: string;
+  progressLabel: string;
+  /** Callout reminding a parent/guardian to help across the week. */
+  parentNote: string;
+  allDoneTitle: string;
+  allDoneText: string;
+  completeLabel: string;
+}
+
+/**
+ * The "Confidence Link" closing page for Budgeting Module, Week 2. A short
+ * affirmation the learner says out loud, unlocking the "Complete" button.
+ */
+export interface NeedsFirstConfidenceLinkStep extends BaseExercise {
+  type: 'needs-first-confidence-link';
+  badge: string;
+  weekLabel: string;
+  statement: string;
+  sayItLabel: string;
+  saidItLabel: string;
+  reinforceLine: string;
+  completeLabel: string;
+}
+
+/**
+ * "Shopping Planner" challenge of the week (Budgeting Module, Week 3). Before
+ * buying anything for several days, the learner confirms they asked
+ * themselves a couple of checkpoint questions, then writes one smart choice
+ * they made that day. Complete unlocks only once every tracked day is logged.
+ */
+export interface ShoppingPlannerChallengeStep extends BaseExercise {
+  type: 'shopping-planner-challenge';
+  badge: string;
+  title: string;
+  intro: string;
+  askHeading: string;
+  askQuestions: string[];
+  dayCount: number;
+  choiceLabel: string;
+  choicePlaceholder: string;
+  dayCheckLabel: string;
+  dayLoggedLabel: string;
+  progressLabel: string;
+  /** Callout reminding a parent/guardian to help across the week. */
+  parentNote: string;
+  allDoneTitle: string;
+  allDoneText: string;
+  completeLabel: string;
+}
+
+/**
+ * The "Confidence Link" closing page for Budgeting Module, Week 3. A short
+ * affirmation the learner says out loud, unlocking the "Complete" button.
+ */
+export interface ShoppingPlannerConfidenceLinkStep extends BaseExercise {
+  type: 'shopping-planner-confidence-link';
+  badge: string;
+  weekLabel: string;
+  statement: string;
+  sayItLabel: string;
+  saidItLabel: string;
+  reinforceLine: string;
   completeLabel: string;
 }
 
@@ -3848,6 +4152,66 @@ export interface DiscussionMatchStep extends BaseExercise {
   pairs: DiscussionMatchPair[];
   continueLabel: string;
   /** Optional recap card shown once every pair is matched — a heading over a short bullet list. */
+  recapHeading?: string;
+  recapPoints?: string[];
+}
+
+/** One statement to judge True or False in a DiscussionTrueFalseStep. */
+export interface DiscussionTrueFalseStatement {
+  id: string;
+  text: string;
+  answer: boolean;
+  feedbackText?: string;
+}
+
+/**
+ * A graded "discussion points" step in True/False form — one statement at a
+ * time about the story just read. Picking wrong shows feedback and lets the
+ * student try again instead of advancing, the same "must get it right to
+ * proceed" rule as DiscussionQuizStep/DiscussionMatchStep.
+ */
+export interface DiscussionTrueFalseStep extends BaseExercise {
+  type: 'discussion-true-false';
+  heading: string;
+  subtitle?: string;
+  trueLabel: string;
+  falseLabel: string;
+  statements: DiscussionTrueFalseStatement[];
+  reviewHeading: string;
+  continueLabel: string;
+  /** Optional recap card shown once every statement is answered correctly — a heading over a short bullet list. */
+  recapHeading?: string;
+  recapPoints?: string[];
+}
+
+/** One sentence with a single blank in a DiscussionFillBlankStep. */
+export interface DiscussionFillBlankSentence {
+  id: string;
+  /** Sentence text before the blank. */
+  before: string;
+  /** Sentence text after the blank. */
+  after: string;
+  /** The word that belongs in the blank. */
+  answer: string;
+  feedbackText?: string;
+}
+
+/**
+ * A graded "discussion points" step in fill-in-the-blank form — a word bank
+ * shared across every sentence; one sentence at a time, tap the bank word
+ * that completes it. Picking wrong shows feedback and lets the student try
+ * again instead of advancing, the same "must get it right to proceed" rule
+ * as DiscussionQuizStep/DiscussionMatchStep/DiscussionTrueFalseStep.
+ */
+export interface DiscussionFillBlankStep extends BaseExercise {
+  type: 'discussion-fill-blank';
+  heading: string;
+  subtitle?: string;
+  wordBankLabel: string;
+  sentences: DiscussionFillBlankSentence[];
+  reviewHeading: string;
+  continueLabel: string;
+  /** Optional recap card shown once every sentence is answered correctly — a heading over a short bullet list. */
   recapHeading?: string;
   recapPoints?: string[];
 }
@@ -7396,6 +7760,11 @@ export type Exercise =
   | MoneyMythBusterStep
   | ThinkAheadChallengeStep
   | DisciplineWarmupQuizStep
+  | SavingsWarmupQuizStep
+  | SavingsMatchWarmupStep
+  | SavingsRecapStep
+  | SaveOrSpendChallengeStep
+  | SavingsChoiceConfidenceLinkStep
   | DisciplineTfWarmupStep
   | DisciplineMatchWarmupStep
   | DisciplineSequenceWarmupStep
@@ -7476,7 +7845,17 @@ export type Exercise =
   | ShareReflectChallengeStep
   | ReflectionConfidenceLinkStep
   | SevenDayPlanningProjectStep
-  | ShareYourPlanChallengeStep;
+  | ShareYourPlanChallengeStep
+  | BudgetPlanTrackerChallengeStep
+  | SavingsJarChallengeStep
+  | SavingsConfidenceLinkStep
+  | BudgetPlanConfidenceLinkStep
+  | NeedsFirstBudgetChallengeStep
+  | NeedsFirstConfidenceLinkStep
+  | DiscussionTrueFalseStep
+  | ShoppingPlannerChallengeStep
+  | ShoppingPlannerConfidenceLinkStep
+  | DiscussionFillBlankStep;
 
 /** Content for the newer, richer lesson-welcome layout. When a lesson has this, its welcome screen uses this design instead of the plain card. */
 /** One preview card inside a LessonWelcomeCard's "This Week's Mission" section. */
@@ -7902,6 +8281,124 @@ export interface LessonDailyGoalWelcome {
   startLabel: string;
 }
 
+/**
+ * A warm "meet the teacher" welcome layout for a module's very first week —
+ * a small WEEK pill, a two-tone title, a short intro line, a cartoon human
+ * teacher (CSS-drawn, orange-and-blue, no gradients) standing beside a
+ * speech-bubble greeting, and a single Objective card, followed by one CTA
+ * button.
+ */
+export interface LessonBudgetIntroWelcome {
+  weekLabel: string;
+  title: string;
+  subtitle: string;
+  teacherSpeech: string;
+  objectiveLabel: string;
+  objectiveText: string;
+  startLabel: string;
+}
+
+/** One icon + short label sitting on a NeedsWantsWelcome scale pan. */
+export interface NeedsWantsScaleItem {
+  icon: string;
+  label: string;
+}
+
+/**
+ * A "balance scale" welcome layout (Budgeting Module, Week 2 — "Needs, Wants
+ * & Budgeting"): a small WEEK pill, a two-tone title, a short intro line, a
+ * CSS-drawn balance scale tipping toward a Needs pan (blue) over a Wants pan
+ * (orange), and a single Objective card, followed by one CTA button.
+ */
+export interface LessonNeedsWantsWelcome {
+  weekLabel: string;
+  title: string;
+  subtitle: string;
+  needsLabel: string;
+  needsItems: NeedsWantsScaleItem[];
+  wantsLabel: string;
+  wantsItems: NeedsWantsScaleItem[];
+  objectiveLabel: string;
+  objectiveText: string;
+  startLabel: string;
+}
+
+/**
+ * A "planning notepad" welcome layout (Budgeting Module, Week 3 — "Planning
+ * Before Spending"): a small WEEK pill, a two-tone title, a short intro line,
+ * a CSS-drawn notepad with a pencil ticking off a short planning checklist,
+ * and a single Objective card, followed by one CTA button.
+ */
+export interface LessonPlanningWelcome {
+  weekLabel: string;
+  title: string;
+  subtitle: string;
+  listHeading: string;
+  listItems: string[];
+  objectiveLabel: string;
+  objectiveText: string;
+  startLabel: string;
+}
+
+/**
+ * A warm "teacher and habit chain" welcome layout (Budgeting Module, Week 4 —
+ * "Building Good Budgeting Habits"): a small WEEK pill, a two-tone title, a
+ * short intro line, a CSS-drawn human teacher pointing at a linked chain of
+ * day-circles (orange-and-blue, no gradients), and a single Objective card,
+ * followed by one CTA button.
+ */
+export interface LessonBudgetHabitsWelcome {
+  weekLabel: string;
+  title: string;
+  subtitle: string;
+  teacherSpeech: string;
+  streakLabel: string;
+  streakDays: number;
+  objectiveLabel: string;
+  objectiveText: string;
+  startLabel: string;
+}
+
+/** One icon + short line in the piggy-bank welcome's "What is saving?" list. */
+export interface PiggySavingsPoint {
+  icon: string;
+  text: string;
+}
+
+/**
+ * A "piggy bank" welcome layout (Savings Module, Week 1 — "Understanding
+ * Saving"): a small WEEK pill, a two-tone title, a short intro line, a
+ * CSS-drawn piggy bank with coins dropping in beside the "What is saving?"
+ * points, and a single Objective card, followed by one CTA button.
+ */
+export interface LessonPiggySavingsWelcome {
+  weekLabel: string;
+  titleStart: string;
+  titleAccent: string;
+  subtitle: string;
+  pointsHeading: string;
+  points: PiggySavingsPoint[];
+  objectiveLabel: string;
+  objectiveText: string;
+  startLabel: string;
+}
+
+/**
+ * A "saving steps" welcome layout (Savings Module, Week 2 — "How to Save
+ * Money"): a small WEEK pill, a two-tone title, a short intro line, a
+ * CSS-drawn staircase of coins climbing toward a goal flag, and a single
+ * Objective card, followed by one CTA button.
+ */
+export interface LessonSavingStepsWelcome {
+  weekLabel: string;
+  titleStart: string;
+  titleAccent: string;
+  subtitle: string;
+  objectiveLabel: string;
+  objectiveText: string;
+  startLabel: string;
+}
+
 export interface Lesson {
   id: string;
   title: string;
@@ -8076,6 +8573,18 @@ export interface Lesson {
   confidenceSparkWelcome?: LessonConfidenceSparkWelcome;
   /** When set, renders the "capstone trophy" welcome layout (Self-Confidence Module — Advanced, End-of-Module Project: a coral-gradient card with a trophy badge, a short title, one subtitle line, and a compact task list) — takes priority over all other welcome fields. */
   confidenceCapstoneWelcome?: LessonConfidenceCapstoneWelcome;
+  /** When set, renders the "meet the teacher" welcome layout (Budgeting Module, Week 1 — "What Is a Budget?": a warm orange-and-blue card with a cartoon human teacher, a short greeting, and a single Objective card) — takes priority over all other welcome fields. */
+  budgetIntroWelcome?: LessonBudgetIntroWelcome;
+  /** When set, renders the "balance scale" welcome layout (Budgeting Module, Week 2 — "Needs, Wants & Budgeting": a CSS-drawn scale weighing a Needs pan against a Wants pan, plus a single Objective card) — takes priority over all other welcome fields. */
+  needsWantsWelcome?: LessonNeedsWantsWelcome;
+  /** When set, renders the "planning notepad" welcome layout (Budgeting Module, Week 3 — "Planning Before Spending": a CSS-drawn notepad with a pencil ticking off a planning checklist, plus a single Objective card) — takes priority over all other welcome fields. */
+  planningSpendWelcome?: LessonPlanningWelcome;
+  /** When set, renders the "teacher and habit chain" welcome layout (Budgeting Module, Week 4 — "Building Good Budgeting Habits": a cartoon human teacher beside a linked chain of day-circles, plus a single Objective card) — takes priority over all other welcome fields. */
+  budgetHabitsWelcome?: LessonBudgetHabitsWelcome;
+  /** When set, renders the "piggy bank" welcome layout (Savings Module, Week 1 — "Understanding Saving": a CSS-drawn piggy bank with coins dropping in beside the "What is saving?" points, plus a single Objective card) — takes priority over all other welcome fields. */
+  piggySavingsWelcome?: LessonPiggySavingsWelcome;
+  /** When set, renders the "saving steps" welcome layout (Savings Module, Week 2 — "How to Save Money": a CSS-drawn staircase of coins climbing toward a goal flag, plus a single Objective card) — takes priority over all other welcome fields. */
+  savingStepsWelcome?: LessonSavingStepsWelcome;
   /** Ordered steps the student walks through — warm-up, story, discussion, activity, challenge, questions. */
   exercises: Exercise[];
 }

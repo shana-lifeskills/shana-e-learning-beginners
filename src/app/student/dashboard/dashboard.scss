@@ -115,6 +115,11 @@ h2 {
 
   .art { font-size: 3rem; margin-bottom: 0.5rem; }
   p { font-weight: 600; color: rgba(43, 45, 66, 0.7); margin: 0; }
+
+  &.payment-required {
+    p { margin-bottom: 1.25rem; }
+    button { max-width: 16rem; margin: 0 auto; }
+  }
 }
 
 .track-group {

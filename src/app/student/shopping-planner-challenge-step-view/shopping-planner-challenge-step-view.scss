@@ -1,0 +1,249 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- Shopping Planner challenge (spc) — Budgeting Module, Week 3 ---- */
+$spc-ink: v.$color-navy-text;
+$spc-blue: #2f6fb0;
+$spc-blue-deep: #1f4d80;
+$spc-orange: v.$color-coral;
+$spc-paper: #eef4fb;
+
+.spc {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 1rem;
+  color: $spc-ink;
+}
+
+.spc-head {
+  text-align: center;
+  padding: 1.6rem 1.2rem 1.5rem;
+  border-radius: v.$border-radius-xl v.$border-radius-xl 0 0;
+  background: $spc-blue;
+  color: v.$color-white;
+}
+
+.spc-badge {
+  display: inline-block;
+  padding: 0.32rem 1rem;
+  border-radius: v.$border-radius-pill;
+  background: $spc-orange;
+  color: v.$color-white;
+  font-weight: 800;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.spc-title {
+  @include m.playful-heading;
+  font-size: clamp(1.5rem, 4.5vw, 2rem);
+  margin: 0.7rem 0 0.3rem;
+}
+
+.spc-intro {
+  margin: 0;
+  font-size: 0.98rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.spc-progress {
+  padding: 1rem 1.1rem 0;
+  background: $spc-paper;
+}
+
+.spc-progress-bar {
+  height: 0.55rem;
+  border-radius: v.$border-radius-pill;
+  background: rgba($spc-blue, 0.15);
+  overflow: hidden;
+}
+
+.spc-progress-fill {
+  display: block;
+  height: 100%;
+  background: $spc-orange;
+  transition: width 0.3s ease;
+}
+
+.spc-progress-label {
+  display: block;
+  margin: 0.4rem 0 1rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: rgba($spc-ink, 0.6);
+}
+
+.spc-days {
+  list-style: none;
+  margin: 0;
+  padding: 0 1.1rem 1.2rem;
+  background: $spc-paper;
+  border-radius: 0 0 v.$border-radius-xl v.$border-radius-xl;
+  display: grid;
+  gap: 0.7rem;
+}
+
+.spc-day {
+  border-radius: v.$border-radius-sm;
+  background: v.$color-white;
+  overflow: hidden;
+  border: 2px solid rgba($spc-blue, 0.18);
+}
+
+.spc-day--done { border-color: $spc-orange; }
+
+.spc-day-head {
+  @include m.tappable;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.7rem 0.9rem;
+  background: transparent;
+  border: none;
+  text-align: left;
+}
+
+.spc-day-node {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.9rem;
+  height: 1.9rem;
+  border-radius: 50%;
+  background: $spc-blue;
+  color: v.$color-white;
+  font-weight: 800;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+
+.spc-day--done .spc-day-node { background: $spc-orange; }
+
+.spc-day-name {
+  font-weight: 800;
+  font-size: 0.9rem;
+}
+
+.spc-day-state {
+  margin-left: auto;
+  font-size: 0.78rem;
+  color: rgba($spc-ink, 0.55);
+}
+
+.spc-day-body {
+  padding: 0 0.9rem 0.9rem;
+  display: grid;
+  gap: 0.6rem;
+}
+
+.spc-ask-heading {
+  font-weight: 800;
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: $spc-blue-deep;
+}
+
+.spc-check {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  font-size: 0.92rem;
+
+  input {
+    width: 1.15rem;
+    height: 1.15rem;
+    accent-color: $spc-blue;
+  }
+}
+
+.spc-field {
+  display: block;
+}
+
+.spc-field-label {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.spc-field textarea {
+  width: 100%;
+  padding: 0.55rem 0.7rem;
+  border-radius: v.$border-radius-sm;
+  border: 2px solid rgba($spc-ink, 0.16);
+  font: inherit;
+  font-size: 0.95rem;
+  resize: vertical;
+
+  &:focus { outline: none; border-color: $spc-blue; }
+  &:disabled { background: rgba($spc-ink, 0.05); }
+}
+
+.spc-log {
+  @include m.tappable;
+  padding: 0.6rem 1rem;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  background: $spc-orange;
+  color: v.$color-white;
+  font-weight: 800;
+  font-size: 0.9rem;
+
+  &:disabled { background: rgba($spc-ink, 0.18); cursor: not-allowed; }
+}
+
+.spc-parent-note {
+  display: flex;
+  gap: 0.5rem;
+  margin: 1rem 0 0;
+  padding: 0.8rem 1rem;
+  border-radius: v.$border-radius-sm;
+  background: rgba($spc-orange, 0.1);
+  border: 1px dashed rgba($spc-orange, 0.5);
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: #6b3d04;
+}
+
+.spc-done {
+  margin-top: 1rem;
+  padding: 1.3rem 1.1rem;
+  text-align: center;
+  border-radius: v.$border-radius-lg;
+  background: rgba($spc-blue, 0.1);
+
+  h3 { @include m.playful-heading; font-size: 1.25rem; margin: 0.4rem 0 0.3rem; }
+  p { margin: 0; font-size: 0.95rem; color: rgba($spc-ink, 0.8); }
+}
+
+.spc-done-mark { font-size: 1.9rem; }
+
+.spc-complete {
+  @include m.tappable;
+  display: block;
+  width: 100%;
+  margin: 1.1rem 0 0;
+  padding: 0.95rem 1.6rem;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  background: $spc-orange;
+  color: v.$color-white;
+  font-weight: 800;
+  font-size: 1.1rem;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.12);
+
+  &:disabled { background: rgba($spc-ink, 0.2); cursor: not-allowed; box-shadow: none; }
+}
+
+.spc-hint {
+  margin: 0.6rem 0 0;
+  text-align: center;
+  font-size: 0.85rem;
+  color: rgba($spc-ink, 0.55);
+}

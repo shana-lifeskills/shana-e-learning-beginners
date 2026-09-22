@@ -1,0 +1,16 @@
+<div class="srp">
+  <span class="srp-badge">{{ step().badge }}</span>
+  <h2 class="srp-heading">{{ step().heading }}</h2>
+  <p class="srp-subtitle">{{ step().subtitle }}</p>
+
+  <ol class="srp-points">
+    @for (point of step().points; track point) {
+      <li class="srp-point">
+        <span class="srp-coin" aria-hidden="true">{{ $index + 1 }}</span>
+        <span>{{ point }}</span>
+      </li>
+    }
+  </ol>
+
+  <button type="button" class="srp-continue" (click)="continued.emit()">{{ step().continueLabel }} →</button>
+</div>

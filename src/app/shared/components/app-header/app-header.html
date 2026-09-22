@@ -22,7 +22,10 @@
           } @else {
             <span class="avatar emoji">{{ avatarEmoji[u.avatarId] ?? '🙂' }}</span>
           }
-          <span class="name">{{ u.firstName }}</span>
+          <span class="identity">
+            <span class="name">{{ u.firstName }}</span>
+            <span class="role-label">{{ roleLabel() }}</span>
+          </span>
           <span class="chevron">▾</span>
         </button>
 

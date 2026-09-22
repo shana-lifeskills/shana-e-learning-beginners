@@ -1,0 +1,147 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Save or Spend? challenge (sos) — Savings Module, Week 2 ---- */
+$sos-teal: #0d9488;
+$sos-teal-soft: #ccfbf1;
+$sos-gold: #f5b82e;
+$sos-coral: v.$color-coral;
+
+.sos {
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.sos-head { text-align: center; margin-bottom: 1.25rem; }
+
+.sos-badge {
+  display: inline-block;
+  padding: 0.35rem 1.1rem;
+  border-radius: v.$border-radius-pill;
+  background: $sos-gold;
+  color: v.$color-navy-text;
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.sos-title {
+  @include m.playful-heading;
+  font-size: 1.9rem;
+  color: v.$color-navy-text;
+  margin: 0.7rem 0 0.3rem;
+}
+
+.sos-intro { color: w.navy(0.6); margin: 0 0 1rem; }
+
+.sos-progress {
+  height: 0.6rem;
+  max-width: 20rem;
+  margin: 0 auto 0.4rem;
+  background: w.navy(0.1);
+  border-radius: v.$border-radius-pill;
+  overflow: hidden;
+}
+
+.sos-progress-fill {
+  display: block;
+  height: 100%;
+  background: $sos-teal;
+  transition: width 0.4s ease;
+}
+
+.sos-progress-label { font-size: 0.8rem; font-weight: 700; color: w.navy(0.55); }
+
+.sos-days {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.sos-day {
+  padding: 1rem 1.1rem;
+  background: v.$color-white;
+  border: 2px solid transparent;
+  border-radius: v.$border-radius-xl;
+  box-shadow: 0 2px 14px w.navy(0.06);
+
+  &--done { border-color: $sos-teal; }
+
+  input {
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 0.7rem;
+    padding: 0.6rem 0.8rem;
+    border: 2px solid w.navy(0.12);
+    border-radius: 0.7rem;
+    font: inherit;
+    color: v.$color-navy-text;
+
+    &:focus { outline: none; border-color: $sos-teal; }
+  }
+}
+
+.sos-day-top {
+  display: flex;
+  align-items: baseline;
+  gap: 0.7rem;
+  margin-bottom: 0.7rem;
+}
+
+.sos-day-name { font-weight: 800; color: $sos-teal; }
+.sos-day-q { font-weight: 700; color: w.navy(0.6); }
+
+.sos-fork {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.7rem;
+}
+
+.sos-pick {
+  @include m.tappable;
+  padding: 0.75rem;
+  border: 2px solid transparent;
+  border-radius: v.$border-radius-lg;
+  font: inherit;
+  font-weight: 800;
+  color: v.$color-navy-text;
+
+  &--save { background: $sos-teal-soft; }
+  &--spend { background: #fdece0; }
+  &--save.sos-pick--on { background: $sos-teal; border-color: $sos-teal; color: v.$color-white; }
+  &--spend.sos-pick--on { background: $sos-coral; border-color: $sos-coral; color: v.$color-white; }
+}
+
+.sos-parent-note {
+  margin: 1.25rem 0 0;
+  padding: 0.7rem 1rem;
+  background: #fdf1cf;
+  border-radius: v.$border-radius-lg;
+  font-size: 0.9rem;
+  color: v.$color-navy-text;
+}
+
+.sos-done {
+  margin-top: 1.25rem;
+  text-align: center;
+
+  span { font-size: 2.4rem; }
+  h3 { @include m.playful-heading; color: $sos-teal; margin: 0.3rem 0; }
+  p { color: w.navy(0.6); margin: 0; }
+}
+
+.sos-complete {
+  @include w.welcome-cta-btn($sos-teal);
+  display: block;
+  margin: 1.25rem auto 0;
+
+  &:disabled { opacity: 0.45; cursor: default; }
+}
+
+.sos-hint { text-align: center; margin: 0.6rem 0 0; font-size: 0.85rem; color: w.navy(0.55); }

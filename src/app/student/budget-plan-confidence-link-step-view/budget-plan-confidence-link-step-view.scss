@@ -1,0 +1,163 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- Budget Plan Confidence Link (bcl) — Budgeting Module, Week 1 close ---- */
+$bcl-ink: v.$color-navy-text;
+$bcl-blue: #2f6fb0;
+$bcl-orange: v.$color-coral;
+$bcl-bg: #eef4fb;
+
+.bcl {
+  max-width: 34rem;
+  margin: 0 auto;
+  padding: 2.4rem clamp(1rem, 4vw, 2.5rem) 2.6rem;
+  text-align: center;
+  border-radius: v.$border-radius-xl;
+  color: $bcl-ink;
+  background: $bcl-bg;
+}
+
+.bcl-badge {
+  display: inline-block;
+  padding: 0.32rem 1rem;
+  border-radius: v.$border-radius-pill;
+  background: $bcl-orange;
+  color: v.$color-white;
+  font-weight: 800;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.bcl-week {
+  display: block;
+  margin-top: 0.6rem;
+  font-weight: 800;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba($bcl-ink, 0.55);
+}
+
+/* --- coin --- */
+.bcl-coin {
+  position: relative;
+  width: min(17rem, 80vw);
+  aspect-ratio: 1;
+  margin: 1.6rem auto 1.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bcl-coin-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: $bcl-blue;
+  opacity: 0.22;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.bcl-coin--lit .bcl-coin-ring {
+  opacity: 1;
+  animation: bcl-spin 8s linear infinite;
+}
+
+.bcl-coin-core {
+  position: relative;
+  width: 76%;
+  height: 76%;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1.2rem;
+  background: v.$color-white;
+  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.1);
+}
+
+.bcl-coin-mark { font-size: 2rem; }
+
+.bcl-statement {
+  margin: 0;
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: clamp(1.05rem, 3.6vw, 1.3rem);
+  line-height: 1.35;
+  color: $bcl-ink;
+}
+
+/* --- say it out loud --- */
+.bcl-say {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.bcl-say-label {
+  font-weight: 800;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $bcl-blue;
+}
+
+.bcl-say-btn {
+  @include m.tappable;
+  padding: 0.75rem 1.8rem;
+  border: 2px solid $bcl-blue;
+  border-radius: v.$border-radius-pill;
+  background: v.$color-white;
+  color: $bcl-blue;
+  font-weight: 800;
+  font-size: 1rem;
+}
+
+.bcl-say-btn--done {
+  background: $bcl-blue;
+  color: v.$color-white;
+  border-color: $bcl-blue;
+}
+
+.bcl-reinforce {
+  max-width: 26rem;
+  margin: 1.4rem auto 0;
+  font-size: 0.98rem;
+  line-height: 1.5;
+  color: rgba($bcl-ink, 0.78);
+}
+
+.bcl-complete {
+  @include m.tappable;
+  display: block;
+  width: 100%;
+  margin: 1.6rem 0 0;
+  padding: 0.95rem 1.6rem;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  background: $bcl-orange;
+  color: v.$color-white;
+  font-weight: 800;
+  font-size: 1.12rem;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.13);
+
+  &:disabled { background: rgba($bcl-ink, 0.18); cursor: not-allowed; box-shadow: none; }
+}
+
+.bcl-hint {
+  margin: 0.6rem 0 0;
+  font-size: 0.85rem;
+  color: rgba($bcl-ink, 0.55);
+}
+
+@keyframes bcl-spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bcl-coin--lit .bcl-coin-ring { animation: none; }
+}

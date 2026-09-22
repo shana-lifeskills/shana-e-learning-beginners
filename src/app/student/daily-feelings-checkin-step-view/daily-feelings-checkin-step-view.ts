@@ -49,8 +49,10 @@ export class DailyFeelingsCheckinStepView {
       const exercise = this.step();
       const student = this.auth.currentUser();
       if (!student) return;
-      const existing = this.progressService.getSubmissionsForExercise(exercise.id).find((s) => s.studentId === student.id);
-      this.checkins.set(existing?.values ?? {});
+      this.progressService.getSubmissionsForExercise(exercise.id).subscribe((existing) => {
+        const mine = existing.find((s) => s.studentId === student.id);
+        this.checkins.set(mine?.values ?? {});
+      });
     });
   }
 

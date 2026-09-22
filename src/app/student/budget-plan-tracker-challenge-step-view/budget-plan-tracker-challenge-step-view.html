@@ -1,0 +1,74 @@
+<div class="bpt">
+  <header class="bpt-head">
+    <span class="bpt-badge">{{ step().badge }}</span>
+    <h2 class="bpt-title">{{ step().title }}</h2>
+    <p class="bpt-intro">{{ step().intro }}</p>
+    <p class="bpt-coins">🪙 {{ step().coinsNote }}</p>
+  </header>
+
+  <div class="bpt-card">
+    <span class="bpt-card-heading">{{ step().planHeading }}</span>
+
+    <label class="bpt-line">
+      <span class="bpt-line-icon" aria-hidden="true">🛍️</span>
+      <span class="bpt-line-label">{{ step().spendLabel }}</span>
+      <input type="text" [value]="spend()" [placeholder]="step().spendPlaceholder"
+        (input)="setField('spend', $any($event.target).value)" />
+    </label>
+
+    <label class="bpt-line">
+      <span class="bpt-line-icon" aria-hidden="true">🐷</span>
+      <span class="bpt-line-label">{{ step().saveLabel }}</span>
+      <input type="text" [value]="save()" [placeholder]="step().savePlaceholder"
+        (input)="setField('save', $any($event.target).value)" />
+    </label>
+
+    <label class="bpt-line">
+      <span class="bpt-line-icon" aria-hidden="true">⏳</span>
+      <span class="bpt-line-label">{{ step().keepLabel }}</span>
+      <input type="text" [value]="keep()" [placeholder]="step().keepPlaceholder"
+        (input)="setField('keep', $any($event.target).value)" />
+    </label>
+  </div>
+
+  <div class="bpt-track">
+    <span class="bpt-track-heading">{{ step().trackHeading }}</span>
+    <p class="bpt-track-intro">{{ step().trackIntro }}</p>
+
+    <div class="bpt-progress">
+      <div class="bpt-progress-bar"><span class="bpt-progress-fill" [style.width.%]="progressPercent()"></span></div>
+      <span class="bpt-progress-label">{{ loggedCount() }} / {{ step().dayCount }} {{ step().progressLabel }}</span>
+    </div>
+
+    <ul class="bpt-days">
+      @for (logged of daysLogged(); track $index; let i = $index) {
+        <li>
+          <button type="button" class="bpt-day" [class.bpt-day--done]="logged" (click)="toggleDay(i)">
+            <span class="bpt-day-node" aria-hidden="true">{{ logged ? '✔' : i + 1 }}</span>
+            <span class="bpt-day-name">Day {{ i + 1 }}</span>
+            <span class="bpt-day-state">{{ logged ? step().dayLoggedLabel : step().dayCheckLabel }}</span>
+          </button>
+        </li>
+      }
+    </ul>
+  </div>
+
+  <p class="bpt-parent-note">
+    <span aria-hidden="true">👪</span> {{ step().parentNote }}
+  </p>
+
+  @if (canComplete()) {
+    <div class="bpt-done">
+      <span class="bpt-done-mark" aria-hidden="true">📋</span>
+      <h3>{{ step().allDoneTitle }}</h3>
+      <p>{{ step().allDoneText }}</p>
+    </div>
+  }
+
+  <button type="button" class="bpt-complete" [disabled]="!canComplete()" (click)="complete()">
+    {{ step().completeLabel }}
+  </button>
+  @if (!canComplete()) {
+    <p class="bpt-hint">Fill in your plan and log every day to finish.</p>
+  }
+</div>

@@ -61,6 +61,12 @@
 
       @if (loading()) {
         <p class="loading-copy">Loading your modules…</p>
+      } @else if (!s.hasPaid) {
+        <div class="empty-state payment-required">
+          <div class="art">🔒</div>
+          <p>Your modules are ready and waiting! Complete payment to unlock full access.</p>
+          <button type="button" class="module-cta" (click)="openPaymentModal()">Pay with Paystack</button>
+        </div>
       } @else if (modules().length === 0) {
         <div class="empty-state">
           <div class="art">📦</div>
@@ -94,4 +100,8 @@
       <button type="button" class="btn-join" (click)="notifyComingSoon()">Join challenge</button>
     </section>
   </div>
+
+  @if (showPaymentModal()) {
+    <app-payment-modal [email]="s.email" (closed)="showPaymentModal.set(false)" (paid)="onPaymentSuccess()" />
+  }
 }

@@ -1,0 +1,55 @@
+              <div class="needs-wants-welcome">
+                <span class="nww-week-pill">{{ nww.weekLabel }}</span>
+                <h1>{{ nww.title }}</h1>
+                <p class="nww-subtitle">{{ nww.subtitle }}</p>
+
+                <div class="nww-scale" aria-hidden="true">
+                  <div class="nww-beam">
+                    <span class="nww-post"></span>
+                    <span class="nww-bar"></span>
+                  </div>
+                  <div class="nww-pans">
+                    <div class="nww-pan nww-pan--needs">
+                      <span class="nww-string"></span>
+                      <div class="nww-pan-dish">
+                        <span class="nww-pan-label">{{ nww.needsLabel }}</span>
+                        <div class="nww-pan-items">
+                          @for (item of nww.needsItems; track item.label) {
+                            <span class="nww-chip">{{ item.icon }} {{ item.label }}</span>
+                          }
+                        </div>
+                      </div>
+                    </div>
+                    <div class="nww-pan nww-pan--wants">
+                      <span class="nww-string"></span>
+                      <div class="nww-pan-dish">
+                        <span class="nww-pan-label">{{ nww.wantsLabel }}</span>
+                        <div class="nww-pan-items">
+                          @for (item of nww.wantsItems; track item.label) {
+                            <span class="nww-chip">{{ item.icon }} {{ item.label }}</span>
+                          }
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="nww-objective-card">
+                  <span class="nww-objective-icon">🎯</span>
+                  <div>
+                    <h2>{{ nww.objectiveLabel }}</h2>
+                    <p>{{ nww.objectiveText }}</p>
+                  </div>
+                </div>
+
+                @if (isCompletedLessonWelcome()) {
+                  @if (nextLesson(); as next) {
+                    <button type="button" class="btn nww-start-btn" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+                  } @else {
+                    <button type="button" class="btn nww-start-btn" (click)="backToMap()">Back to My Modules →</button>
+                  }
+                  <button type="button" class="review-lesson-link" (click)="beginLesson()">↺ Review this lesson</button>
+                } @else {
+                  <button type="button" class="btn nww-start-btn" (click)="beginLesson()">{{ nww.startLabel }} →</button>
+                }
+              </div>

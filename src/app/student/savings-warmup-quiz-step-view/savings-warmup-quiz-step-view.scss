@@ -1,0 +1,212 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Savings warm-up quiz (swq) — Savings Module, Week 1: fill the jar ---- */
+$swq-teal: #0d9488;
+$swq-teal-soft: #ccfbf1;
+$swq-gold: #f5b82e;
+$swq-green: #1f9d63;
+$swq-red: #e5484d;
+
+.swq {
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: 1rem;
+  text-align: center;
+}
+
+.swq-badge {
+  display: inline-block;
+  padding: 0.35rem 1.1rem;
+  border-radius: v.$border-radius-pill;
+  background: $swq-teal-soft;
+  color: $swq-teal;
+  font-weight: 800;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.swq-heading {
+  @include m.playful-heading;
+  font-size: 1.9rem;
+  color: v.$color-navy-text;
+  margin: 0.7rem 0 0.3rem;
+}
+
+.swq-subtitle {
+  color: w.navy(0.6);
+  margin: 0 0 1.5rem;
+}
+
+.swq-body {
+  display: flex;
+  align-items: stretch;
+  gap: 1.25rem;
+  text-align: left;
+
+  @media (max-width: 600px) { flex-direction: column; align-items: center; }
+}
+
+/* --- the jar --- */
+.swq-jar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  width: 8rem;
+}
+
+.swq-jar-lid {
+  width: 5.4rem;
+  height: 0.9rem;
+  background: $swq-teal;
+  border-radius: 0.4rem 0.4rem 0 0;
+}
+
+.swq-jar-glass {
+  position: relative;
+  width: 7rem;
+  height: 13rem;
+  overflow: hidden;
+  background: rgba(13, 148, 136, 0.06);
+  border: 0.25rem solid $swq-teal;
+  border-radius: 0.8rem 0.8rem 1.8rem 1.8rem;
+}
+
+.swq-jar-fill {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(245, 184, 46, 0.25);
+  transition: height 0.6s ease;
+}
+
+.swq-jar-coins {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0.3rem;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+}
+
+.swq-coin {
+  font-size: 1.9rem;
+  line-height: 1.7rem;
+  opacity: 0;
+  transform: translateY(-4rem);
+  transition: opacity 0.4s ease, transform 0.6s cubic-bezier(0.5, 0, 0.75, 1);
+
+  &--in { opacity: 1; transform: none; }
+}
+
+.swq-jar-count {
+  margin-top: 0.5rem;
+  font-weight: 800;
+  color: $swq-teal;
+}
+
+/* --- question panel --- */
+.swq-panel {
+  flex: 1;
+  min-width: 0;
+  padding: 1.4rem;
+  background: v.$color-white;
+  border-radius: v.$border-radius-xl;
+  box-shadow: 0 2px 14px w.navy(0.06);
+}
+
+.swq-screen--shake { animation: swq-shake 0.4s; }
+
+@keyframes swq-shake {
+  20%, 60% { transform: translateX(-6px); }
+  40%, 80% { transform: translateX(6px); }
+}
+
+.swq-qcount {
+  font-weight: 800;
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: $swq-teal;
+}
+
+.swq-prompt {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: v.$color-navy-text;
+  margin: 0.4rem 0 1rem;
+}
+
+.swq-options {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.swq-option {
+  @include m.tappable;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.7rem 0.9rem;
+  background: $swq-teal-soft;
+  border: 2px solid transparent;
+  border-radius: v.$border-radius-lg;
+  font: inherit;
+  font-weight: 700;
+  color: v.$color-navy-text;
+  text-align: left;
+
+  &--correct { background: #d7f4e5; border-color: $swq-green; }
+  &--wrong { background: #fde3e4; border-color: $swq-red; }
+}
+
+.swq-option-letter {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: $swq-teal;
+  color: v.$color-white;
+  font-weight: 800;
+}
+
+.swq-feedback {
+  min-height: 1.5rem;
+  margin: 0.9rem 0 0;
+  font-weight: 700;
+
+  &--good { color: $swq-green; }
+  &--bad { color: $swq-red; }
+}
+
+.swq-done {
+  text-align: center;
+  padding: 0.5rem 0;
+
+  h3 { @include m.playful-heading; color: $swq-teal; margin: 0.4rem 0; }
+  p { color: w.navy(0.6); margin: 0 0 1.2rem; }
+}
+
+.swq-done-icon { font-size: 2.6rem; }
+
+.swq-continue {
+  @include w.welcome-cta-btn($swq-teal);
+}
+
+.swq-parent-note {
+  margin: 1.25rem auto 0;
+  max-width: 34rem;
+  padding: 0.7rem 1rem;
+  background: lighten($swq-gold, 32%);
+  border-radius: v.$border-radius-lg;
+  font-size: 0.9rem;
+  color: v.$color-navy-text;
+}

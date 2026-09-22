@@ -1,0 +1,56 @@
+<div class="sjc">
+  <header class="sjc-head">
+    <span class="sjc-badge">{{ step().badge }}</span>
+    <h2 class="sjc-title">{{ step().title }}</h2>
+    <p class="sjc-intro">{{ step().intro }}</p>
+  </header>
+
+  <button type="button" class="sjc-ready" [class.sjc-ready--on]="jarReady()" [attr.aria-pressed]="jarReady()"
+    (click)="jarReady.set(!jarReady())">
+    <span class="sjc-ready-box" aria-hidden="true">{{ jarReady() ? '✔' : '' }}</span>
+    <span>{{ step().jarStepLabel }}</span>
+  </button>
+
+  <div class="sjc-main" [class.sjc-main--locked]="!jarReady()">
+    <div class="sjc-jar" role="progressbar" [attr.aria-valuenow]="savedCount()" [attr.aria-valuemax]="step().dayCount"
+      aria-label="Days saved">
+      <span class="sjc-jar-lid" aria-hidden="true"></span>
+      <div class="sjc-jar-glass">
+        <span class="sjc-jar-fill" [style.height.%]="fillPercent()"></span>
+      </div>
+      <span class="sjc-jar-total">{{ step().currencyLabel }} {{ total() }}</span>
+      <span class="sjc-jar-caption">{{ step().totalLabel }}</span>
+    </div>
+
+    <ol class="sjc-days">
+      @for (done of saved(); track $index; let i = $index) {
+        <li class="sjc-day" [class.sjc-day--done]="done">
+          <span class="sjc-day-name">Day {{ i + 1 }}</span>
+          <input type="number" min="0" inputmode="decimal" [value]="amounts()[i]" [disabled]="done || !jarReady()"
+            [placeholder]="step().amountPlaceholder" [attr.aria-label]="'Amount saved on day ' + (i + 1)"
+            (input)="setAmount(i, $any($event.target).value)" />
+          <button type="button" class="sjc-drop" [disabled]="!jarReady() || !canDrop(i)" (click)="drop(i)">
+            {{ done ? '🪙 ' + step().droppedLabel : step().dropLabel }}
+          </button>
+        </li>
+      }
+    </ol>
+  </div>
+
+  <p class="sjc-parent-note"><span aria-hidden="true">👪</span> {{ step().parentNote }}</p>
+
+  @if (canComplete()) {
+    <div class="sjc-done">
+      <span aria-hidden="true">🐷</span>
+      <h3>{{ step().allDoneTitle }}</h3>
+      <p>{{ step().allDoneText }}</p>
+    </div>
+  }
+
+  <button type="button" class="sjc-complete" [disabled]="!canComplete()" (click)="complete()">
+    {{ step().completeLabel }}
+  </button>
+  @if (!canComplete()) {
+    <p class="sjc-hint">Get your jar ready and save something every day to finish.</p>
+  }
+</div>

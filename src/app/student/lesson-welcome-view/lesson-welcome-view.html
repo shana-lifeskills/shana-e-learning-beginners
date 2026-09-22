@@ -26,6 +26,24 @@
   } @else if (lesson.confidenceCapstoneWelcome; as ccw) {
     <app-confidence-capstone-welcome [ccw]="ccw" [completed]="completed" [next]="next" [firstName]="firstName"
       (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.budgetIntroWelcome; as biw) {
+    <app-budget-intro-welcome [biw]="biw" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.needsWantsWelcome; as nww) {
+    <app-needs-wants-welcome [nww]="nww" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.planningSpendWelcome; as psw) {
+    <app-planning-spend-welcome [psw]="psw" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.savingStepsWelcome; as ssw) {
+    <app-saving-steps-welcome [ssw]="ssw" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.piggySavingsWelcome; as psw) {
+    <app-piggy-savings-welcome [psw]="psw" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
+  } @else if (lesson.budgetHabitsWelcome; as bhw) {
+    <app-budget-habits-welcome [bhw]="bhw" [completed]="completed" [next]="next" [firstName]="firstName"
+      (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />
   } @else if (lesson.nutritionWhyFoodWelcome; as nwf) {
     <app-nutrition-why-food-welcome [nwf]="nwf" [completed]="completed" [next]="next" [firstName]="firstName"
       (begin)="begin.emit()" (proceed)="proceed.emit()" (backToModules)="backToModules.emit()" />

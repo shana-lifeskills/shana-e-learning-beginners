@@ -1,0 +1,57 @@
+              <div class="budget-habits-welcome">
+                <span class="bhw-week-pill">{{ bhw.weekLabel }}</span>
+                <h1>{{ bhw.title }}</h1>
+                <p class="bhw-subtitle">{{ bhw.subtitle }}</p>
+
+                <div class="bhw-scene">
+                  <div class="bhw-chain-wrap">
+                    <span class="bhw-chain-label">{{ bhw.streakLabel }}</span>
+                    <div class="bhw-chain" aria-hidden="true">
+                      @for (day of streakRange; track day; let last = $last) {
+                        <span class="bhw-chain-node">{{ day }}</span>
+                        @if (!last) {
+                          <span class="bhw-chain-link"></span>
+                        }
+                      }
+                    </div>
+                  </div>
+
+                  <div class="bhw-teacher-col">
+                    <div class="bhw-bubble">
+                      <p>{{ bhw.teacherSpeech }}</p>
+                    </div>
+                    <div class="bhw-teacher" aria-hidden="true">
+                      <div class="bhw-teacher-hair"></div>
+                      <div class="bhw-teacher-head">
+                        <div class="bhw-teacher-eye bhw-eye-left"></div>
+                        <div class="bhw-teacher-eye bhw-eye-right"></div>
+                        <div class="bhw-teacher-smile"></div>
+                      </div>
+                      <div class="bhw-teacher-body">
+                        <div class="bhw-teacher-collar"></div>
+                        <div class="bhw-teacher-arm bhw-arm-left"></div>
+                        <div class="bhw-teacher-arm bhw-arm-point"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="bhw-objective-card">
+                  <span class="bhw-objective-icon">🎯</span>
+                  <div>
+                    <h2>{{ bhw.objectiveLabel }}</h2>
+                    <p>{{ bhw.objectiveText }}</p>
+                  </div>
+                </div>
+
+                @if (isCompletedLessonWelcome()) {
+                  @if (nextLesson(); as next) {
+                    <button type="button" class="btn bhw-start-btn" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+                  } @else {
+                    <button type="button" class="btn bhw-start-btn" (click)="backToMap()">Back to My Modules →</button>
+                  }
+                  <button type="button" class="review-lesson-link" (click)="beginLesson()">↺ Review this lesson</button>
+                } @else {
+                  <button type="button" class="btn bhw-start-btn" (click)="beginLesson()">{{ bhw.startLabel }} →</button>
+                }
+              </div>

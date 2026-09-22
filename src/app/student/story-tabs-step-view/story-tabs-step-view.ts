@@ -144,7 +144,7 @@ export class StoryTabsStepView {
     this.starterAnswers.update((state) => ({ ...state, [question.id]: { selectedOptionId: option.id, correct } }));
 
     if (correct) {
-      this.gamification.awardStar(this.studentId(), this.moduleId(), `${question.id}__starter`);
+      this.gamification.awardStar(this.studentId(), this.moduleId(), `${question.id}__starter`).subscribe();
     }
   }
 

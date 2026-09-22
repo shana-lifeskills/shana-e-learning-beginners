@@ -54,14 +54,15 @@ export class ShareExerciseView {
       this.showPreview.set(false);
 
       const student = this.auth.currentUser();
-      const existing = this.progressService.getSubmissionsForExercise(exercise.id);
-      this.entries.set(
-        existing.map((s) => ({
-          studentName: s.studentName,
-          values: s.values,
-          isMe: s.studentId === student?.id,
-        }))
-      );
+      this.progressService.getSubmissionsForExercise(exercise.id).subscribe((existing) => {
+        this.entries.set(
+          existing.map((s) => ({
+            studentName: s.studentName,
+            values: s.values,
+            isMe: s.studentId === student?.id,
+          }))
+        );
+      });
     });
   }
 

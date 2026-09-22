@@ -1,0 +1,163 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+/* ---- Shopping Planner Confidence Link (spl) — Budgeting Module, Week 3 close ---- */
+$spl-ink: v.$color-navy-text;
+$spl-blue: #2f6fb0;
+$spl-orange: v.$color-coral;
+$spl-bg: #e5eefb;
+
+.spl {
+  max-width: 34rem;
+  margin: 0 auto;
+  padding: 2.4rem clamp(1rem, 4vw, 2.5rem) 2.6rem;
+  text-align: center;
+  border-radius: v.$border-radius-xl;
+  color: $spl-ink;
+  background: $spl-bg;
+}
+
+.spl-badge {
+  display: inline-block;
+  padding: 0.32rem 1rem;
+  border-radius: v.$border-radius-pill;
+  background: $spl-orange;
+  color: v.$color-white;
+  font-weight: 800;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.spl-week {
+  display: block;
+  margin-top: 0.6rem;
+  font-weight: 800;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba($spl-ink, 0.55);
+}
+
+/* --- coin --- */
+.spl-coin {
+  position: relative;
+  width: min(17rem, 80vw);
+  aspect-ratio: 1;
+  margin: 1.6rem auto 1.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spl-coin-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: $spl-blue;
+  opacity: 0.22;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.spl-coin--lit .spl-coin-ring {
+  opacity: 1;
+  animation: spl-spin 8s linear infinite;
+}
+
+.spl-coin-core {
+  position: relative;
+  width: 76%;
+  height: 76%;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1.2rem;
+  background: v.$color-white;
+  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.1);
+}
+
+.spl-coin-mark { font-size: 2rem; }
+
+.spl-statement {
+  margin: 0;
+  font-family: v.$headings-font-family;
+  font-weight: 800;
+  font-size: clamp(1.05rem, 3.6vw, 1.3rem);
+  line-height: 1.35;
+  color: $spl-ink;
+}
+
+/* --- say it out loud --- */
+.spl-say {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.spl-say-label {
+  font-weight: 800;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $spl-blue;
+}
+
+.spl-say-btn {
+  @include m.tappable;
+  padding: 0.75rem 1.8rem;
+  border: 2px solid $spl-blue;
+  border-radius: v.$border-radius-pill;
+  background: v.$color-white;
+  color: $spl-blue;
+  font-weight: 800;
+  font-size: 1rem;
+}
+
+.spl-say-btn--done {
+  background: $spl-blue;
+  color: v.$color-white;
+  border-color: $spl-blue;
+}
+
+.spl-reinforce {
+  max-width: 26rem;
+  margin: 1.4rem auto 0;
+  font-size: 0.98rem;
+  line-height: 1.5;
+  color: rgba($spl-ink, 0.78);
+}
+
+.spl-complete {
+  @include m.tappable;
+  display: block;
+  width: 100%;
+  margin: 1.6rem 0 0;
+  padding: 0.95rem 1.6rem;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  background: $spl-orange;
+  color: v.$color-white;
+  font-weight: 800;
+  font-size: 1.12rem;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.13);
+
+  &:disabled { background: rgba($spl-ink, 0.18); cursor: not-allowed; box-shadow: none; }
+}
+
+.spl-hint {
+  margin: 0.6rem 0 0;
+  font-size: 0.85rem;
+  color: rgba($spl-ink, 0.55);
+}
+
+@keyframes spl-spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spl-coin--lit .spl-coin-ring { animation: none; }
+}

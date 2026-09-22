@@ -1,0 +1,43 @@
+              <div class="budget-intro-welcome">
+                <span class="biw-week-pill">{{ biw.weekLabel }}</span>
+                <h1>{{ biw.title }}</h1>
+                <p class="biw-subtitle">{{ biw.subtitle }}</p>
+
+                <div class="biw-scene">
+                  <div class="biw-teacher" aria-hidden="true">
+                    <div class="biw-teacher-hair"></div>
+                    <div class="biw-teacher-head">
+                      <div class="biw-teacher-eye biw-eye-left"></div>
+                      <div class="biw-teacher-eye biw-eye-right"></div>
+                      <div class="biw-teacher-smile"></div>
+                    </div>
+                    <div class="biw-teacher-body">
+                      <div class="biw-teacher-collar"></div>
+                      <div class="biw-teacher-arm biw-arm-left"></div>
+                      <div class="biw-teacher-arm biw-arm-right"></div>
+                    </div>
+                  </div>
+                  <div class="biw-speech-bubble">
+                    <p>{{ biw.teacherSpeech }}</p>
+                  </div>
+                </div>
+
+                <div class="biw-objective-card">
+                  <span class="biw-objective-icon">🎯</span>
+                  <div>
+                    <h2>{{ biw.objectiveLabel }}</h2>
+                    <p>{{ biw.objectiveText }}</p>
+                  </div>
+                </div>
+
+                @if (isCompletedLessonWelcome()) {
+                  @if (nextLesson(); as next) {
+                    <button type="button" class="btn biw-start-btn" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+                  } @else {
+                    <button type="button" class="btn biw-start-btn" (click)="backToMap()">Back to My Modules →</button>
+                  }
+                  <button type="button" class="review-lesson-link" (click)="beginLesson()">↺ Review this lesson</button>
+                } @else {
+                  <button type="button" class="btn biw-start-btn" (click)="beginLesson()">{{ biw.startLabel }} →</button>
+                }
+              </div>

@@ -1,0 +1,79 @@
+<div class="nfb">
+  <header class="nfb-head">
+    <span class="nfb-badge">{{ step().badge }}</span>
+    <h2 class="nfb-title">{{ step().title }}</h2>
+    <p class="nfb-intro">{{ step().intro }}</p>
+  </header>
+
+  <div class="nfb-progress">
+    <div class="nfb-progress-bar"><span class="nfb-progress-fill" [style.width.%]="progressPercent()"></span></div>
+    <span class="nfb-progress-label">{{ doneCount() }} / {{ total() }} {{ step().progressLabel }}</span>
+  </div>
+
+  <ol class="nfb-days">
+    @for (entry of entries(); track $index; let i = $index) {
+      <li class="nfb-day" [class.nfb-day--done]="entry.done" [class.nfb-day--open]="entry.open">
+        <button type="button" class="nfb-day-head" (click)="toggleOpen(i)" [attr.aria-expanded]="entry.open">
+          <span class="nfb-day-node" aria-hidden="true">{{ entry.done ? '✔' : i + 1 }}</span>
+          <span class="nfb-day-name">Day {{ i + 1 }}</span>
+          <span class="nfb-day-state">{{ entry.done ? step().dayLoggedLabel : step().dayCheckLabel }}</span>
+        </button>
+
+        @if (entry.open) {
+          <div class="nfb-day-body">
+            <label class="nfb-field">
+              <span class="nfb-field-label">🧾 {{ step().needLabel }}</span>
+              <input type="text" [value]="entry.need" [placeholder]="step().needPlaceholder" [disabled]="entry.done"
+                (input)="setField(i, 'need', $any($event.target).value)" />
+            </label>
+            <label class="nfb-field">
+              <span class="nfb-field-label">⭐ {{ step().wantLabel }}</span>
+              <input type="text" [value]="entry.want" [placeholder]="step().wantPlaceholder" [disabled]="entry.done"
+                (input)="setField(i, 'want', $any($event.target).value)" />
+            </label>
+
+            <div class="nfb-decide">
+              <span class="nfb-decide-heading">{{ step().decideLabel }}</span>
+              <p class="nfb-decide-q">{{ step().decideQuestion }}</p>
+              <div class="nfb-decide-options">
+                <button type="button" class="nfb-decide-btn" [class.is-on]="entry.coversFirst === 'need'"
+                  [disabled]="entry.done" (click)="setCoversFirst(i, 'need')">
+                  {{ step().needFirstLabel }}
+                </button>
+                <button type="button" class="nfb-decide-btn" [class.is-on]="entry.coversFirst === 'want'"
+                  [disabled]="entry.done" (click)="setCoversFirst(i, 'want')">
+                  {{ step().wantFirstLabel }}
+                </button>
+              </div>
+            </div>
+
+            @if (!entry.done) {
+              <button type="button" class="nfb-log" [disabled]="!canLogDay(i)" (click)="logDay(i)">
+                {{ step().dayLoggedLabel }} Day {{ i + 1 }}
+              </button>
+            }
+          </div>
+        }
+      </li>
+    }
+  </ol>
+
+  <p class="nfb-parent-note">
+    <span aria-hidden="true">👪</span> {{ step().parentNote }}
+  </p>
+
+  @if (allDaysLogged()) {
+    <div class="nfb-done">
+      <span class="nfb-done-mark" aria-hidden="true">📋</span>
+      <h3>{{ step().allDoneTitle }}</h3>
+      <p>{{ step().allDoneText }}</p>
+    </div>
+  }
+
+  <button type="button" class="nfb-complete" [disabled]="!allDaysLogged()" (click)="complete()">
+    {{ step().completeLabel }}
+  </button>
+  @if (!allDaysLogged()) {
+    <p class="nfb-hint">Log all {{ total() }} days to finish.</p>
+  }
+</div>

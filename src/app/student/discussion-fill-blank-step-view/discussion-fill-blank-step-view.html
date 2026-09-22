@@ -1,0 +1,63 @@
+<div class="discussion-fill-blank">
+  @if (!reviewing()) {
+    <h1>🧠 {{ step().heading }}</h1>
+    @if (step().subtitle) { <p class="subtitle">{{ step().subtitle }}</p> }
+
+    @if (currentSentence(); as sentence) {
+      <div class="sentence-card">
+        <span class="s-num">Sentence {{ activeIndex() + 1 }} of {{ step().sentences.length }}</span>
+        <p class="s-text">{{ sentence.before }} <span class="s-blank">______</span> {{ sentence.after }}</p>
+      </div>
+
+      <span class="bank-label">{{ step().wordBankLabel }}</span>
+      <div class="bank">
+        @for (word of bank(); track word) {
+          <button
+            type="button"
+            class="bank-word"
+            [class.correct]="wordState(word) === 'correct'"
+            [class.incorrect]="wordState(word) === 'incorrect'"
+            [disabled]="locked() && wordState(word) === null"
+            (click)="selectWord(word)"
+          >
+            {{ word }}
+          </button>
+        }
+      </div>
+
+      @if (feedback() === 'incorrect') {
+        <p class="try-again">Not quite — give it another try! 💪</p>
+      }
+      @if (feedback() === 'correct' && sentence.feedbackText) {
+        <p class="feedback-correct">{{ sentence.feedbackText }}</p>
+      }
+    }
+  } @else {
+    <h1>✨ {{ step().reviewHeading }}</h1>
+    <p class="subtitle">Here's what you picked — tap Continue when you're ready.</p>
+
+    <div class="review-list">
+      @for (sentence of step().sentences; track sentence.id) {
+        <div class="review-row">
+          <span class="review-q">{{ sentence.before }} ___ {{ sentence.after }}</span>
+          <span class="review-a">{{ answers()[sentence.id] }}</span>
+        </div>
+      }
+    </div>
+
+    @if (step().recapHeading && step().recapPoints?.length) {
+      <div class="recap-card">
+        <h2>📌 {{ step().recapHeading }}</h2>
+        <ul>
+          @for (point of step().recapPoints; track point) {
+            <li>{{ point }}</li>
+          }
+        </ul>
+      </div>
+    }
+
+    <button type="button" class="btn btn-primary btn-lg-tappable" (click)="finish()">
+      {{ step().continueLabel }}
+    </button>
+  }
+</div>

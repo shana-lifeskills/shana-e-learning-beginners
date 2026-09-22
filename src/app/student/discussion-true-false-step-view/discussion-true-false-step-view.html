@@ -1,0 +1,70 @@
+<div class="discussion-true-false">
+  @if (!reviewing()) {
+    <h1>🧠 {{ step().heading }}</h1>
+    @if (step().subtitle) { <p class="subtitle">{{ step().subtitle }}</p> }
+
+    @if (currentStatement(); as statement) {
+      <div class="statement-card">
+        <span class="s-num">Statement {{ activeIndex() + 1 }} of {{ step().statements.length }}</span>
+        <p class="s-text">{{ statement.text }}</p>
+      </div>
+
+      <div class="verdicts">
+        <button
+          type="button"
+          class="verdict verdict--true"
+          [class.correct]="verdictState(true) === 'correct'"
+          [class.incorrect]="verdictState(true) === 'incorrect'"
+          [disabled]="locked() && verdictState(true) === null"
+          (click)="selectVerdict(true)"
+        >
+          {{ step().trueLabel }}
+        </button>
+        <button
+          type="button"
+          class="verdict verdict--false"
+          [class.correct]="verdictState(false) === 'correct'"
+          [class.incorrect]="verdictState(false) === 'incorrect'"
+          [disabled]="locked() && verdictState(false) === null"
+          (click)="selectVerdict(false)"
+        >
+          {{ step().falseLabel }}
+        </button>
+      </div>
+
+      @if (feedback() === 'incorrect') {
+        <p class="try-again">Not quite — give it another try! 💪</p>
+      }
+      @if (feedback() === 'correct' && statement.feedbackText) {
+        <p class="feedback-correct">{{ statement.feedbackText }}</p>
+      }
+    }
+  } @else {
+    <h1>✨ {{ step().reviewHeading }}</h1>
+    <p class="subtitle">Here's what you picked — tap Continue when you're ready.</p>
+
+    <div class="review-list">
+      @for (statement of step().statements; track statement.id) {
+        <div class="review-row">
+          <span class="review-q">{{ statement.text }}</span>
+          <span class="review-a">{{ answers()[statement.id] }}</span>
+        </div>
+      }
+    </div>
+
+    @if (step().recapHeading && step().recapPoints?.length) {
+      <div class="recap-card">
+        <h2>📌 {{ step().recapHeading }}</h2>
+        <ul>
+          @for (point of step().recapPoints; track point) {
+            <li>{{ point }}</li>
+          }
+        </ul>
+      </div>
+    }
+
+    <button type="button" class="btn btn-primary btn-lg-tappable" (click)="finish()">
+      {{ step().continueLabel }}
+    </button>
+  }
+</div>

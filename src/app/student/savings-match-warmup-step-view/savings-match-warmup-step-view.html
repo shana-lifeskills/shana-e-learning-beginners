@@ -1,0 +1,50 @@
+<div class="smw">
+  <span class="smw-badge">{{ step().badge }}</span>
+  <h2 class="smw-heading">{{ step().heading }}</h2>
+  <p class="smw-subtitle">{{ step().subtitle }}</p>
+
+  <div class="smw-board" [class.smw-board--shake]="wrongMeaningId() !== null">
+    <div class="smw-col">
+      <span class="smw-col-label">{{ step().actionColumnLabel }}</span>
+      @for (pair of step().pairs; track pair.id) {
+        <button type="button" class="smw-card smw-card--word" [class.smw-card--picked]="selectedWordId() === pair.id"
+          [class.smw-card--done]="matchNumber(pair.id) > 0" [disabled]="matchNumber(pair.id) > 0"
+          (click)="selectWord(pair.id)">
+          @if (matchNumber(pair.id); as n) { <span class="smw-coin" aria-hidden="true">{{ n }}</span> }
+          {{ pair.action }}
+        </button>
+      }
+    </div>
+
+    <div class="smw-col">
+      <span class="smw-col-label">{{ step().meaningColumnLabel }}</span>
+      @for (pair of meanings(); track pair.id) {
+        <button type="button" class="smw-card smw-card--meaning" [class.smw-card--done]="matchNumber(pair.id) > 0"
+          [class.smw-card--wrong]="wrongMeaningId() === pair.id" [disabled]="matchNumber(pair.id) > 0 || !selectedWordId()"
+          (click)="pickMeaning(pair.id)">
+          @if (matchNumber(pair.id); as n) { <span class="smw-coin" aria-hidden="true">{{ n }}</span> }
+          {{ pair.meaning }}
+        </button>
+      }
+    </div>
+  </div>
+
+  <p class="smw-hint" aria-live="polite">
+    @if (wrongMeaningId()) {
+      Not quite — think it through and try again!
+    } @else if (!allMatched()) {
+      {{ selectedWordId() ? step().pickMeaningHint : step().pickWordHint }}
+    }
+  </p>
+
+  @if (allMatched()) {
+    <div class="smw-done">
+      <span aria-hidden="true">🐷✨</span>
+      <h3>{{ step().allDoneTitle }}</h3>
+      <p>{{ step().allDoneText }}</p>
+      <button type="button" class="smw-continue" (click)="finish()">{{ step().continueLabel }} →</button>
+    </div>
+  }
+
+  <p class="smw-parent-note"><span aria-hidden="true">👪</span> {{ step().parentNote }}</p>
+</div>

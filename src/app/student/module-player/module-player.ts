@@ -81,6 +81,11 @@ import { PrivacyProtectorChallengeStepView } from '../privacy-protector-challeng
 import { CreativeChoiceWarmupStepView } from '../creative-choice-warmup-step-view/creative-choice-warmup-step-view';
 import { SmartChoicesWarmupStepView } from '../smart-choices-warmup-step-view/smart-choices-warmup-step-view';
 import { TradeOffQuizStepView } from '../trade-off-quiz-step-view/trade-off-quiz-step-view';
+import { SavingsRecapStepView } from '../savings-recap-step-view/savings-recap-step-view';
+import { SaveOrSpendChallengeStepView } from '../save-or-spend-challenge-step-view/save-or-spend-challenge-step-view';
+import { SavingsChoiceConfidenceLinkStepView } from '../savings-choice-confidence-link-step-view/savings-choice-confidence-link-step-view';
+import { SavingsMatchWarmupStepView } from '../savings-match-warmup-step-view/savings-match-warmup-step-view';
+import { SavingsWarmupQuizStepView } from '../savings-warmup-quiz-step-view/savings-warmup-quiz-step-view';
 import { DisciplineWarmupQuizStepView } from '../discipline-warmup-quiz-step-view/discipline-warmup-quiz-step-view';
 import { ServiceWarmupQuizStepView } from '../service-warmup-quiz-step-view/service-warmup-quiz-step-view';
 import { TeamworkWarmupQuizStepView } from '../teamwork-warmup-quiz-step-view/teamwork-warmup-quiz-step-view';
@@ -164,6 +169,14 @@ import { TradeOffConfidenceLinkStepView } from '../trade-off-confidence-link-ste
 import { MoneyMatchStepView } from '../money-match-step-view/money-match-step-view';
 import { SimpleBudgetChallengeStepView } from '../simple-budget-challenge-step-view/simple-budget-challenge-step-view';
 import { BudgetConfidenceLinkStepView } from '../budget-confidence-link-step-view/budget-confidence-link-step-view';
+import { SavingsJarChallengeStepView } from '../savings-jar-challenge-step-view/savings-jar-challenge-step-view';
+import { SavingsConfidenceLinkStepView } from '../savings-confidence-link-step-view/savings-confidence-link-step-view';
+import { BudgetPlanTrackerChallengeStepView } from '../budget-plan-tracker-challenge-step-view/budget-plan-tracker-challenge-step-view';
+import { BudgetPlanConfidenceLinkStepView } from '../budget-plan-confidence-link-step-view/budget-plan-confidence-link-step-view';
+import { NeedsFirstBudgetChallengeStepView } from '../needs-first-budget-challenge-step-view/needs-first-budget-challenge-step-view';
+import { NeedsFirstConfidenceLinkStepView } from '../needs-first-confidence-link-step-view/needs-first-confidence-link-step-view';
+import { ShoppingPlannerChallengeStepView } from '../shopping-planner-challenge-step-view/shopping-planner-challenge-step-view';
+import { ShoppingPlannerConfidenceLinkStepView } from '../shopping-planner-confidence-link-step-view/shopping-planner-confidence-link-step-view';
 import { MoneyMythBusterStepView } from '../money-myth-buster-step-view/money-myth-buster-step-view';
 import { ThinkAheadChallengeStepView } from '../think-ahead-challenge-step-view/think-ahead-challenge-step-view';
 import { ConsequenceConfidenceLinkStepView } from '../consequence-confidence-link-step-view/consequence-confidence-link-step-view';
@@ -176,6 +189,8 @@ import { PausePlanChallengeStepView } from '../pause-plan-challenge-step-view/pa
 import { StrategicThinkerLinkStepView } from '../strategic-thinker-link-step-view/strategic-thinker-link-step-view';
 import { StrategyMatchWarmupStepView } from '../strategy-match-warmup-step-view/strategy-match-warmup-step-view';
 import { DiscussionMatchStepView } from '../discussion-match-step-view/discussion-match-step-view';
+import { DiscussionTrueFalseStepView } from '../discussion-true-false-step-view/discussion-true-false-step-view';
+import { DiscussionFillBlankStepView } from '../discussion-fill-blank-step-view/discussion-fill-blank-step-view';
 import { DiscussionSequenceStepView } from '../discussion-sequence-step-view/discussion-sequence-step-view';
 import { StrategyDetectiveChallengeStepView } from '../strategy-detective-challenge-step-view/strategy-detective-challenge-step-view';
 import { TryAnotherPlanLinkStepView } from '../try-another-plan-link-step-view/try-another-plan-link-step-view';
@@ -313,6 +328,11 @@ type PlayerView = 'map' | 'lesson-welcome' | 'exercise' | 'module-complete';
     SmartChoicesWarmupStepView,
     TradeOffQuizStepView,
     DisciplineWarmupQuizStepView,
+    SavingsWarmupQuizStepView,
+    SavingsMatchWarmupStepView,
+    SavingsRecapStepView,
+    SaveOrSpendChallengeStepView,
+    SavingsChoiceConfidenceLinkStepView,
     ServiceWarmupQuizStepView,
     TeamworkWarmupQuizStepView,
     HygieneWarmupQuizStepView,
@@ -395,6 +415,14 @@ type PlayerView = 'map' | 'lesson-welcome' | 'exercise' | 'module-complete';
     MoneyMatchStepView,
     SimpleBudgetChallengeStepView,
     BudgetConfidenceLinkStepView,
+    BudgetPlanTrackerChallengeStepView,
+    SavingsJarChallengeStepView,
+    SavingsConfidenceLinkStepView,
+    BudgetPlanConfidenceLinkStepView,
+    NeedsFirstBudgetChallengeStepView,
+    NeedsFirstConfidenceLinkStepView,
+    ShoppingPlannerChallengeStepView,
+    ShoppingPlannerConfidenceLinkStepView,
     MoneyMythBusterStepView,
     ThinkAheadChallengeStepView,
     ConsequenceConfidenceLinkStepView,
@@ -407,6 +435,8 @@ type PlayerView = 'map' | 'lesson-welcome' | 'exercise' | 'module-complete';
     StrategicThinkerLinkStepView,
     StrategyMatchWarmupStepView,
     DiscussionMatchStepView,
+    DiscussionTrueFalseStepView,
+    DiscussionFillBlankStepView,
     DiscussionSequenceStepView,
     StrategyDetectiveChallengeStepView,
     TryAnotherPlanLinkStepView,
@@ -528,6 +558,12 @@ export class ModulePlayer implements OnInit {
     const student = this.auth.currentUser() as Student;
     if (!moduleId || !student) return;
 
+    if (!student.hasPaid) {
+      this.sidekick.say('Complete your payment first to unlock this module!', 'oops', 4000);
+      this.router.navigate(['/student']);
+      return;
+    }
+
     this.moduleService.getModuleById(moduleId).subscribe((module) => {
       if (!module) {
         this.router.navigate(['/student']);
@@ -606,6 +642,8 @@ export class ModulePlayer implements OnInit {
       case 'feelings-picture-choice':
       case 'trade-off-quiz':
       case 'discipline-warmup-quiz':
+      case 'savings-warmup-quiz':
+      case 'savings-match-warmup':
       case 'service-warmup-quiz':
       case 'teamwork-warmup-quiz':
       case 'hygiene-warmup-quiz':
@@ -640,6 +678,7 @@ export class ModulePlayer implements OnInit {
       case 'planning-relay-warmup':
         return 'Warm-Up';
       case 'plan-recap-reflection':
+      case 'savings-recap':
         return 'Recap';
       case 'story':
       case 'story-tabs':
@@ -676,6 +715,8 @@ export class ModulePlayer implements OnInit {
       case 'discussion-mcq':
       case 'discussion-quiz':
       case 'discussion-match':
+      case 'discussion-true-false':
+      case 'discussion-fill-blank':
       case 'discussion-sequence':
       case 'discussion-prompt-samples':
       case 'reflection-prompt-answers':
@@ -737,6 +778,11 @@ export class ModulePlayer implements OnInit {
       case 'pattern-spotter-challenge':
       case 'stay-smart-challenge':
       case 'share-reflect-challenge':
+      case 'budget-plan-tracker-challenge':
+      case 'savings-jar-challenge':
+      case 'save-or-spend-challenge':
+      case 'needs-first-budget-challenge':
+      case 'shopping-planner-challenge':
         return 'Challenge of the Week';
       case 'digital-etiquette-tracker':
       case 'digital-responsibility-tracker':
@@ -770,6 +816,11 @@ export class ModulePlayer implements OnInit {
       case 'trophy-confidence-link':
       case 'promise-confidence-link':
       case 'reflection-confidence-link':
+      case 'budget-plan-confidence-link':
+      case 'savings-confidence-link':
+      case 'savings-choice-confidence-link':
+      case 'needs-first-confidence-link':
+      case 'shopping-planner-confidence-link':
         return 'Confidence Link';
       case 'matching-game':
       case 'plan-it-race':

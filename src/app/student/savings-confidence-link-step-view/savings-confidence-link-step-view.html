@@ -1,0 +1,25 @@
+<div class="scl">
+  <span class="scl-badge">{{ step().badge }}</span>
+  <span class="scl-week">{{ step().weekLabel }}</span>
+
+  <div class="scl-scene">
+    <div class="scl-bubble" [class.scl-bubble--lit]="saidIt()">
+      <p>{{ step().statement }}</p>
+    </div>
+    <span class="scl-pig" [class.scl-pig--happy]="saidIt()" aria-hidden="true">🐷</span>
+  </div>
+
+  <button type="button" class="scl-say" [class.scl-say--done]="saidIt()" [disabled]="saidIt()"
+    (click)="saidIt.set(true)">
+    {{ saidIt() ? '✓ ' + step().saidItLabel : step().sayItLabel }}
+  </button>
+
+  <p class="scl-reinforce">{{ step().reinforceLine }}</p>
+
+  <button type="button" class="scl-complete" [disabled]="!saidIt()" (click)="finish()">
+    {{ step().completeLabel }} 🎉
+  </button>
+  @if (!saidIt()) {
+    <p class="scl-hint">Say the sentence out loud, then tap the button above.</p>
+  }
+</div>

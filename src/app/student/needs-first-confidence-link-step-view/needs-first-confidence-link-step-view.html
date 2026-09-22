@@ -1,0 +1,29 @@
+<div class="ncl">
+  <span class="ncl-badge">{{ step().badge }}</span>
+  <span class="ncl-week">{{ step().weekLabel }}</span>
+
+  <div class="ncl-coin" [class.ncl-coin--lit]="saidIt()">
+    <span class="ncl-coin-ring" aria-hidden="true"></span>
+    <span class="ncl-coin-core">
+      <span class="ncl-coin-mark" aria-hidden="true">⚖️</span>
+      <p class="ncl-statement">{{ step().statement }}</p>
+    </span>
+  </div>
+
+  <div class="ncl-say">
+    <span class="ncl-say-label">{{ step().sayItLabel }}</span>
+    <button type="button" class="ncl-say-btn" [class.ncl-say-btn--done]="saidIt()"
+      [disabled]="saidIt()" (click)="toggleSaidIt()">
+      {{ saidIt() ? '✓ ' + step().saidItLabel : step().saidItLabel }}
+    </button>
+  </div>
+
+  <p class="ncl-reinforce">{{ step().reinforceLine }}</p>
+
+  <button type="button" class="ncl-complete" [disabled]="!saidIt()" (click)="finish()">
+    {{ step().completeLabel }} 🎉
+  </button>
+  @if (!saidIt()) {
+    <p class="ncl-hint">Say the sentence out loud, then tap the button above.</p>
+  }
+</div>

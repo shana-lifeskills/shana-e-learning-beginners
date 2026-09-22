@@ -1,0 +1,151 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+.discussion-true-false {
+  max-width: 40rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+h1 {
+  @include m.playful-heading;
+  font-size: 2rem;
+  color: v.$color-navy-text;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  color: rgba(43, 45, 66, 0.6);
+  font-weight: 600;
+  font-size: 1.05rem;
+  margin-bottom: 1.75rem;
+}
+
+.statement-card {
+  background: rgba(78, 205, 196, 0.12);
+  border-radius: v.$border-radius;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.s-num {
+  display: block;
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: rgba(43, 45, 66, 0.55);
+  margin-bottom: 0.5rem;
+}
+
+.s-text {
+  margin: 0;
+  font-family: v.$headings-font-family;
+  font-weight: 700;
+  font-size: 1.35rem;
+  color: v.$color-sky;
+}
+
+.verdicts {
+  display: flex;
+  gap: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.verdict {
+  @include m.tappable;
+  flex: 1;
+  background: v.$color-white;
+  border: 2px solid rgba(43, 45, 66, 0.1);
+  border-radius: v.$border-radius-sm;
+  padding: 1rem 1.1rem;
+  font: inherit;
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: v.$color-navy-text;
+
+  &:hover:not(:disabled) { border-color: v.$color-sky; }
+  &:disabled { cursor: default; }
+
+  &.correct {
+    background: rgba(107, 203, 119, 0.35);
+    border-color: v.$color-leaf;
+    animation: bounce-in 0.4s ease;
+  }
+
+  &.incorrect {
+    background: rgba(255, 143, 163, 0.35);
+    border-color: v.$color-bubble-pink;
+    animation: shake-no 0.4s ease;
+  }
+}
+
+.try-again {
+  font-weight: 700;
+  color: v.$color-coral;
+  margin-bottom: 1.5rem;
+}
+
+.feedback-correct {
+  font-weight: 700;
+  color: v.$color-leaf;
+  margin-bottom: 1.5rem;
+}
+
+.review-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  margin-bottom: 2rem;
+  text-align: left;
+}
+
+.review-row {
+  background: v.$color-white;
+  border-radius: v.$border-radius-sm;
+  box-shadow: 0 3px 0 rgba(0, 0, 0, 0.05);
+  padding: 1rem 1.25rem;
+}
+
+.review-q {
+  display: block;
+  font-weight: 700;
+  color: rgba(43, 45, 66, 0.55);
+  font-size: 0.92rem;
+  margin-bottom: 0.3rem;
+}
+
+.review-a {
+  display: block;
+  font-weight: 800;
+  color: v.$color-navy-text;
+  font-size: 1.1rem;
+}
+
+.recap-card {
+  background: rgba(78, 205, 196, 0.12);
+  border-radius: v.$border-radius;
+  padding: 1.5rem 1.75rem;
+  margin-bottom: 2rem;
+  text-align: left;
+
+  h2 {
+    font-family: v.$headings-font-family;
+    font-weight: 800;
+    font-size: 1.3rem;
+    color: v.$color-sky;
+    margin: 0 0 0.75rem;
+  }
+
+  ul {
+    margin: 0;
+    padding-left: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  li {
+    color: v.$color-navy-text;
+    font-weight: 600;
+    line-height: 1.45;
+  }
+}

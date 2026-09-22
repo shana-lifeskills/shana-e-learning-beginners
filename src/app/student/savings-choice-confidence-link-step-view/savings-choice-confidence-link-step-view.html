@@ -1,0 +1,26 @@
+<div class="scc">
+  <span class="scc-badge">{{ step().badge }}</span>
+  <span class="scc-week">{{ step().weekLabel }}</span>
+
+  <div class="scc-sign" aria-hidden="true">
+    <span class="scc-arm scc-arm--spend">🛍️ {{ step().spendLabel }}</span>
+    <span class="scc-arm scc-arm--save" [class.scc-arm--lit]="saidIt()">🐷 {{ step().saveLabel }} →</span>
+    <span class="scc-post"></span>
+  </div>
+
+  <p class="scc-statement" [class.scc-statement--lit]="saidIt()">{{ step().statement }}</p>
+
+  <button type="button" class="scc-say" [class.scc-say--done]="saidIt()" [disabled]="saidIt()"
+    (click)="saidIt.set(true)">
+    {{ saidIt() ? '✓ ' + step().saidItLabel : step().sayItLabel }}
+  </button>
+
+  <p class="scc-reinforce">{{ step().reinforceLine }}</p>
+
+  <button type="button" class="scc-complete" [disabled]="!saidIt()" (click)="finish()">
+    {{ step().completeLabel }} 🎉
+  </button>
+  @if (!saidIt()) {
+    <p class="scc-hint">Say the sentence out loud, then tap the button above.</p>
+  }
+</div>

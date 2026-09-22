@@ -34,3 +34,11 @@ export interface RewardTotals {
   badges: number;
   trophies: number;
 }
+
+/** Raw badge/trophy history as the backend returns it — no title/icon join, since
+ *  those live only in the frontend's static module/lesson content. */
+export interface RawRewardDetails {
+  totals: RewardTotals;
+  badges: { moduleId: string; lessonId: string; earnedAt: string }[];
+  trophies: { moduleId: string; earnedAt: string }[];
+}

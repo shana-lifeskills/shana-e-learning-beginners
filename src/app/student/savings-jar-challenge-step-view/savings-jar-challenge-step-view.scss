@@ -1,0 +1,219 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+@use '../../../assets/styles/welcome-kit' as w;
+
+/* ---- Savings jar challenge (sjc) — Savings Module, Week 1 ---- */
+$sjc-teal: #0d9488;
+$sjc-teal-soft: #ccfbf1;
+$sjc-gold: #f5b82e;
+
+.sjc {
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.sjc-head { text-align: center; margin-bottom: 1.25rem; }
+
+.sjc-badge {
+  display: inline-block;
+  padding: 0.35rem 1.1rem;
+  border-radius: v.$border-radius-pill;
+  background: $sjc-gold;
+  color: v.$color-navy-text;
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.sjc-title {
+  @include m.playful-heading;
+  font-size: 1.9rem;
+  color: v.$color-navy-text;
+  margin: 0.7rem 0 0.3rem;
+}
+
+.sjc-intro { color: w.navy(0.6); margin: 0; }
+
+.sjc-ready {
+  @include m.tappable;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  width: 100%;
+  margin-bottom: 1rem;
+  padding: 0.9rem 1.1rem;
+  background: v.$color-white;
+  border: 2px dashed $sjc-teal;
+  border-radius: v.$border-radius-lg;
+  font: inherit;
+  font-weight: 800;
+  color: v.$color-navy-text;
+  text-align: left;
+
+  &--on { background: $sjc-teal-soft; border-style: solid; }
+}
+
+.sjc-ready-box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 1.7rem;
+  height: 1.7rem;
+  border: 2px solid $sjc-teal;
+  border-radius: 0.4rem;
+  background: v.$color-white;
+  color: $sjc-teal;
+}
+
+.sjc-main {
+  display: flex;
+  gap: 1.25rem;
+  align-items: flex-start;
+  padding: 1.25rem;
+  background: v.$color-white;
+  border-radius: v.$border-radius-xl;
+  box-shadow: 0 2px 14px w.navy(0.06);
+  transition: opacity 0.3s;
+
+  &--locked { opacity: 0.55; }
+  @media (max-width: 600px) { flex-direction: column; align-items: center; }
+}
+
+.sjc-jar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  width: 7rem;
+}
+
+.sjc-jar-lid {
+  width: 4.6rem;
+  height: 0.8rem;
+  background: $sjc-teal;
+  border-radius: 0.4rem 0.4rem 0 0;
+}
+
+.sjc-jar-glass {
+  position: relative;
+  width: 6rem;
+  height: 9rem;
+  overflow: hidden;
+  border: 0.22rem solid $sjc-teal;
+  border-radius: 0.7rem 0.7rem 1.6rem 1.6rem;
+  background: rgba(13, 148, 136, 0.06);
+}
+
+.sjc-jar-fill {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: $sjc-gold;
+  opacity: 0.6;
+  transition: height 0.6s ease;
+}
+
+.sjc-jar-total {
+  margin-top: 0.5rem;
+  font-weight: 800;
+  font-size: 1.15rem;
+  color: $sjc-teal;
+}
+
+.sjc-jar-caption {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: w.navy(0.55);
+}
+
+.sjc-days {
+  flex: 1;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.sjc-day {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 0.7rem;
+  background: $sjc-teal-soft;
+  border-radius: v.$border-radius-lg;
+
+  &--done { background: lighten($sjc-gold, 32%); }
+
+  input {
+    flex: 1;
+    min-width: 0;
+    padding: 0.5rem 0.7rem;
+    border: 2px solid transparent;
+    border-radius: 0.6rem;
+    font: inherit;
+    font-weight: 700;
+    color: v.$color-navy-text;
+
+    &:focus { outline: none; border-color: $sjc-teal; }
+  }
+}
+
+.sjc-day-name {
+  min-width: 3.4rem;
+  font-weight: 800;
+  color: $sjc-teal;
+}
+
+.sjc-drop {
+  @include m.tappable;
+  padding: 0.5rem 0.9rem;
+  border: none;
+  border-radius: v.$border-radius-pill;
+  background: $sjc-teal;
+  color: v.$color-white;
+  font: inherit;
+  font-weight: 800;
+  font-size: 0.85rem;
+
+  &:disabled { opacity: 0.5; cursor: default; }
+}
+
+.sjc-parent-note {
+  margin: 1.25rem 0 0;
+  padding: 0.7rem 1rem;
+  background: lighten($sjc-gold, 32%);
+  border-radius: v.$border-radius-lg;
+  font-size: 0.9rem;
+  color: v.$color-navy-text;
+}
+
+.sjc-done {
+  margin-top: 1.25rem;
+  text-align: center;
+
+  span { font-size: 2.4rem; }
+  h3 { @include m.playful-heading; color: $sjc-teal; margin: 0.3rem 0; }
+  p { color: w.navy(0.6); margin: 0; }
+}
+
+.sjc-complete {
+  @include w.welcome-cta-btn($sjc-teal);
+  display: block;
+  margin: 1.25rem auto 0;
+
+  &:disabled { opacity: 0.45; cursor: default; }
+}
+
+.sjc-hint {
+  text-align: center;
+  margin: 0.6rem 0 0;
+  font-size: 0.85rem;
+  color: w.navy(0.55);
+}

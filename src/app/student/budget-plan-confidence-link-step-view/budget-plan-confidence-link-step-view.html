@@ -1,0 +1,29 @@
+<div class="bcl">
+  <span class="bcl-badge">{{ step().badge }}</span>
+  <span class="bcl-week">{{ step().weekLabel }}</span>
+
+  <div class="bcl-coin" [class.bcl-coin--lit]="saidIt()">
+    <span class="bcl-coin-ring" aria-hidden="true"></span>
+    <span class="bcl-coin-core">
+      <span class="bcl-coin-mark" aria-hidden="true">🪙</span>
+      <p class="bcl-statement">{{ step().statement }}</p>
+    </span>
+  </div>
+
+  <div class="bcl-say">
+    <span class="bcl-say-label">{{ step().sayItLabel }}</span>
+    <button type="button" class="bcl-say-btn" [class.bcl-say-btn--done]="saidIt()"
+      [disabled]="saidIt()" (click)="toggleSaidIt()">
+      {{ saidIt() ? '✓ ' + step().saidItLabel : step().saidItLabel }}
+    </button>
+  </div>
+
+  <p class="bcl-reinforce">{{ step().reinforceLine }}</p>
+
+  <button type="button" class="bcl-complete" [disabled]="!saidIt()" (click)="finish()">
+    {{ step().completeLabel }} 🎉
+  </button>
+  @if (!saidIt()) {
+    <p class="bcl-hint">Say the sentence out loud, then tap the button above.</p>
+  }
+</div>

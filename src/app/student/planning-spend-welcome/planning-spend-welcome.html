@@ -1,0 +1,44 @@
+              <div class="planning-spend-welcome">
+                <span class="psw-week-pill">{{ psw.weekLabel }}</span>
+                <h1>{{ psw.title }}</h1>
+                <p class="psw-subtitle">{{ psw.subtitle }}</p>
+
+                <div class="psw-notepad" aria-hidden="true">
+                  <div class="psw-notepad-spiral">
+                    @for (dot of [1, 2, 3, 4, 5]; track dot) {
+                      <span class="psw-spiral-dot"></span>
+                    }
+                  </div>
+                  <div class="psw-notepad-sheet">
+                    <span class="psw-notepad-heading">{{ psw.listHeading }}</span>
+                    <ul class="psw-notepad-list">
+                      @for (item of psw.listItems; track item) {
+                        <li>
+                          <span class="psw-check" aria-hidden="true">✓</span>
+                          <span>{{ item }}</span>
+                        </li>
+                      }
+                    </ul>
+                    <span class="psw-pencil" aria-hidden="true">✏️</span>
+                  </div>
+                </div>
+
+                <div class="psw-objective-card">
+                  <span class="psw-objective-icon">🎯</span>
+                  <div>
+                    <h2>{{ psw.objectiveLabel }}</h2>
+                    <p>{{ psw.objectiveText }}</p>
+                  </div>
+                </div>
+
+                @if (isCompletedLessonWelcome()) {
+                  @if (nextLesson(); as next) {
+                    <button type="button" class="btn psw-start-btn" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+                  } @else {
+                    <button type="button" class="btn psw-start-btn" (click)="backToMap()">Back to My Modules →</button>
+                  }
+                  <button type="button" class="review-lesson-link" (click)="beginLesson()">↺ Review this lesson</button>
+                } @else {
+                  <button type="button" class="btn psw-start-btn" (click)="beginLesson()">{{ psw.startLabel }} →</button>
+                }
+              </div>

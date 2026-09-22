@@ -1,0 +1,49 @@
+<div class="piggy-savings-welcome">
+  <span class="psv-week-pill">{{ psw.weekLabel }}</span>
+  <h1>{{ psw.titleStart }}<span class="psv-accent">{{ psw.titleAccent }}</span></h1>
+  <p class="psv-subtitle">{{ psw.subtitle }}</p>
+
+  <div class="psv-stage">
+    <div class="psv-piggy" aria-hidden="true">
+      <span class="psv-coin psv-coin--1">🪙</span>
+      <span class="psv-coin psv-coin--2">🪙</span>
+      <span class="psv-coin psv-coin--3">🪙</span>
+      <div class="psv-pig">
+        <span class="psv-ear"></span>
+        <span class="psv-eye"></span>
+        <span class="psv-snout"></span>
+        <span class="psv-slot"></span>
+        <span class="psv-leg psv-leg--l"></span>
+        <span class="psv-leg psv-leg--r"></span>
+      </div>
+    </div>
+
+    <div class="psv-points">
+      <h2>{{ psw.pointsHeading }}</h2>
+      <ul>
+        @for (point of psw.points; track point.text) {
+          <li><span class="psv-point-icon">{{ point.icon }}</span>{{ point.text }}</li>
+        }
+      </ul>
+    </div>
+  </div>
+
+  <div class="psv-objective">
+    <span class="psv-objective-icon">🎯</span>
+    <div>
+      <h2>{{ psw.objectiveLabel }}</h2>
+      <p>{{ psw.objectiveText }}</p>
+    </div>
+  </div>
+
+  @if (isCompletedLessonWelcome()) {
+    @if (nextLesson(); as next) {
+      <button type="button" class="btn psv-start-btn" (click)="continueToNextLesson()">Continue to Week {{ next.week }} →</button>
+    } @else {
+      <button type="button" class="btn psv-start-btn" (click)="backToMap()">Back to My Modules →</button>
+    }
+    <button type="button" class="review-lesson-link" (click)="beginLesson()">↺ Review this lesson</button>
+  } @else {
+    <button type="button" class="btn psv-start-btn" (click)="beginLesson()">{{ psw.startLabel }} →</button>
+  }
+</div>

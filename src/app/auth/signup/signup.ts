@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
-import { Role } from '../../core/models/user.model';
 import { FriendlyAlert } from '../../shared/components/friendly-alert/friendly-alert';
 import { AuthHero } from '../../shared/components/auth-hero/auth-hero';
 import { AccountType, AccountTypePicker } from '../../shared/components/account-type-picker/account-type-picker';
@@ -57,6 +56,8 @@ export class Signup {
   }
 
   submit(): void {
+    const accountType = this.accountType();
+
     if (this.form.invalid) {
       this.errorMessage.set("Almost there! Let's fill in every box first.");
       this.form.markAllAsTouched();
@@ -69,17 +70,15 @@ export class Signup {
     const { fullName, email, password } = this.form.getRawValue();
     const [firstName, ...rest] = fullName.trim().split(/\s+/);
     const lastName = rest.join(' ');
-    const accountType = this.accountType();
     const isTrainer = accountType === 'trainer';
-    const role: Role = isTrainer ? 'trainer' : 'student';
 
     this.auth
-      .createAccount({
+      .register({
         firstName,
         lastName,
         email,
         password,
-        role,
+        role: isTrainer ? 'instructor' : 'student',
         ageGroup: isTrainer ? undefined : accountType,
       })
       .subscribe({

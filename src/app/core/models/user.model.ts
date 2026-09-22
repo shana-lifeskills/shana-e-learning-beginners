@@ -5,17 +5,14 @@ export type AgeGroup = 'beginner' | 'advanced';
 export interface BaseUser {
   id: string;
   email: string;
-  /**
-   * Stored in plain text because this is a mock, in-browser "database" with
-   * no real backend. Replace with proper hashing/auth once a real API exists.
-   */
-  password: string;
   firstName: string;
   lastName: string;
   role: Role;
   avatarId: string;
   /** Optional profile photo uploaded at signup, stored as a data URL. Takes priority over avatarId when present. */
   avatarUrl?: string;
+  /** Profile photo URL returned by the backend, if the account has one. */
+  profileImage?: string;
   createdAt: string;
   hasSeenWelcome: boolean;
   /** Consecutive days with at least one login/session, used for the streak banner. */
@@ -28,6 +25,8 @@ export interface Student extends BaseUser {
   role: 'student';
   assignedModuleIds: string[];
   ageGroup: AgeGroup;
+  /** Whether this student has paid for module access. Modules stay locked behind a payment prompt until this is true. */
+  hasPaid: boolean;
 }
 
 export interface Trainer extends BaseUser {

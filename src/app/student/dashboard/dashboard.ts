@@ -9,11 +9,12 @@ import { ModuleWithProgress } from '../../core/models/module.model';
 import { RewardTotals } from '../../core/models/gamification.model';
 import { RewardShelf } from '../../shared/components/reward-shelf/reward-shelf';
 import { OllieMascot } from '../../shared/components/ollie-mascot/ollie-mascot';
+import { PaymentModal } from '../../shared/components/payment-modal/payment-modal';
 
 @Component({
   selector: 'app-student-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterLink, RewardShelf, OllieMascot],
+  imports: [CommonModule, RouterLink, RewardShelf, OllieMascot, PaymentModal],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
 })
@@ -29,6 +30,7 @@ export class Dashboard implements OnInit {
   readonly highlights = signal<RewardHighlights>({ starsThisWeek: 0, badgesAlmostUnlocked: 0 });
   readonly showWelcome = signal(false);
   readonly loading = signal(true);
+  readonly showPaymentModal = signal(false);
 
   /** Life-skills modules only (games live on their own page), grouped by curriculum track. */
   readonly tracks = computed(() => {
@@ -68,6 +70,17 @@ export class Dashboard implements OnInit {
 
   openModule(moduleId: string): void {
     this.router.navigate(['/student/module', moduleId]);
+  }
+
+  openPaymentModal(): void {
+    this.showPaymentModal.set(true);
+  }
+
+  onPaymentSuccess(): void {
+    const student = this.student();
+    this.showPaymentModal.set(false);
+    this.auth.markAsPaid(student.id);
+    this.sidekick.say(`You're all set, ${student.firstName}! Your modules are unlocked 🎉`, 'wave', 4000);
   }
 
   buttonLabel(module: ModuleWithProgress): string {

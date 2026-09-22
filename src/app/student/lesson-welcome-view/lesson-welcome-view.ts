@@ -80,6 +80,12 @@ import { PlanningGrowthWelcome } from '../planning-growth-welcome/planning-growt
 import { PlanningCapstoneWelcome } from '../planning-capstone-welcome/planning-capstone-welcome';
 import { ConfidenceCapstoneWelcome } from '../confidence-capstone-welcome/confidence-capstone-welcome';
 import { ConfidenceSparkWelcome } from '../confidence-spark-welcome/confidence-spark-welcome';
+import { BudgetIntroWelcome } from '../budget-intro-welcome/budget-intro-welcome';
+import { NeedsWantsWelcome } from '../needs-wants-welcome/needs-wants-welcome';
+import { PlanningSpendWelcome } from '../planning-spend-welcome/planning-spend-welcome';
+import { SavingStepsWelcome } from '../saving-steps-welcome/saving-steps-welcome';
+import { PiggySavingsWelcome } from '../piggy-savings-welcome/piggy-savings-welcome';
+import { BudgetHabitsWelcome } from '../budget-habits-welcome/budget-habits-welcome';
 
 /**
  * The lesson-welcome screen: one big `@if / @else if` chain that picks the
@@ -175,6 +181,12 @@ import { ConfidenceSparkWelcome } from '../confidence-spark-welcome/confidence-s
     PlanningCapstoneWelcome,
     ConfidenceSparkWelcome,
     ConfidenceCapstoneWelcome,
+    BudgetIntroWelcome,
+    NeedsWantsWelcome,
+    PlanningSpendWelcome,
+    BudgetHabitsWelcome,
+    PiggySavingsWelcome,
+    SavingStepsWelcome,
   ],
   templateUrl: './lesson-welcome-view.html',
   styleUrl: './lesson-welcome-view.scss',
