@@ -11,10 +11,10 @@ interface AccountTypeOption {
 const OPTIONS: AccountTypeOption[] = [
   { id: 'beginner', label: 'Beginner', description: 'Just starting out — guided, playful lessons.' },
   { id: 'advanced', label: 'Advanced', description: 'Ready for deeper projects and challenges.' },
-  { id: 'trainer', label: 'Trainer', description: 'Create lessons and guide your class.' },
+  { id: 'trainer', label: 'Admin', description: 'Upload and assign modules for your class.' },
 ];
 
-/** The Beginner / Advanced / Trainer card row shown on both the login and signup pages. */
+/** The Beginner / Advanced / Admin card row shown on both the login and signup pages. */
 @Component({
   selector: 'app-account-type-picker',
   standalone: true,

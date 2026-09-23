@@ -30,7 +30,7 @@ export class Signup {
       case 'advanced':
         return 'Create account as an advanced student';
       case 'trainer':
-        return 'Create account as a trainer';
+        return 'Create account as an admin';
       default:
         return 'Create account as a beginner';
     }
@@ -78,7 +78,7 @@ export class Signup {
         lastName,
         email,
         password,
-        role: isTrainer ? 'instructor' : 'student',
+        role: isTrainer ? 'admin' : 'student',
         ageGroup: isTrainer ? undefined : accountType,
       })
       .subscribe({

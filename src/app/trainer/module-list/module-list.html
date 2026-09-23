@@ -2,9 +2,9 @@
   <div class="page-head">
     <div>
       <a routerLink="/trainer" class="back-link">← Dashboard</a>
-      <h1>My Modules</h1>
+      <h1>All Modules</h1>
     </div>
-    <a routerLink="/trainer/modules/new" class="btn btn-primary btn-lg-tappable">+ Create Module</a>
+    <a routerLink="/trainer/modules/new" class="btn btn-primary btn-lg-tappable">+ Upload Module</a>
   </div>
 
   @if (loading()) {
@@ -12,8 +12,8 @@
   } @else if (modules().length === 0) {
     <div class="empty-state">
       <span class="art">📚</span>
-      <p>You haven't created any modules yet.</p>
-      <a routerLink="/trainer/modules/new" class="btn btn-primary btn-lg-tappable">Create Your First Module</a>
+      <p>No modules uploaded yet.</p>
+      <a routerLink="/trainer/modules/new" class="btn btn-primary btn-lg-tappable">Upload Your First Module</a>
     </div>
   } @else {
     <div class="module-grid">

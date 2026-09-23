@@ -79,8 +79,9 @@ export class Dashboard implements OnInit {
   onPaymentSuccess(): void {
     const student = this.student();
     this.showPaymentModal.set(false);
-    this.auth.markAsPaid(student.id);
-    this.sidekick.say(`You're all set, ${student.firstName}! Your modules are unlocked 🎉`, 'wave', 4000);
+    this.auth.refreshCurrentUserFromBackend().subscribe(() => {
+      this.sidekick.say(`You're all set, ${student.firstName}! Your modules are unlocked 🎉`, 'wave', 4000);
+    });
   }
 
   buttonLabel(module: ModuleWithProgress): string {

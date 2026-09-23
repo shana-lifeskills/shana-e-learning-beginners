@@ -14,7 +14,7 @@ export interface SignupPayload {
   email: string;
   password: string;
   profileImage?: string;
-  role?: 'student' | 'instructor';
+  role?: 'student' | 'admin';
   /** Frontend-only concept, not sent to the backend — merged into the local profile. */
   ageGroup?: AgeGroup;
 }
@@ -26,6 +26,7 @@ interface BackendUser {
   email: string;
   profileImage?: string;
   role: 'student' | 'instructor' | 'admin';
+  hasPaid?: boolean;
 }
 
 interface AuthResponse {
@@ -34,11 +35,11 @@ interface AuthResponse {
 }
 
 /**
- * Talks to the real backend for identity (register/login/refresh/logout).
- * The backend only knows firstName/lastName/email/profileImage/role — it has
- * no concept of avatars, streaks, assigned modules or age groups yet, so
- * those domain fields still live in the local mock DB, keyed by the same
- * user id the backend issues, and are merged onto the backend identity here.
+ * Talks to the real backend for identity (register/login/refresh/logout),
+ * assigned modules, and payment entitlement (hasPaid). The backend has no
+ * concept of avatars, streaks or age groups yet, so those domain fields still
+ * live in the local mock DB, keyed by the same user id the backend issues,
+ * and are merged onto the backend identity here.
  */
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -120,21 +121,23 @@ export class AuthService {
     if (updated) this.currentUser.set(updated);
   }
 
-  /**
-   * Marks a student as paid. Stands in for the real Paystack webhook/verification
-   * step until that integration exists — called once the mock checkout modal
-   * reports a successful payment.
-   */
-  markAsPaid(userId: string): void {
-    const updated = this.db.update<Student>(COLLECTIONS.users, userId, { hasPaid: true });
-    if (updated) this.currentUser.set(updated);
-  }
-
   refreshCurrentUser(): void {
     const current = this.currentUser();
     if (!current) return;
     const fresh = this.db.getById<AppUser>(COLLECTIONS.users, current.id);
     if (fresh) this.currentUser.set(fresh);
+  }
+
+  /**
+   * Re-fetches identity from the backend and re-merges it into `currentUser` —
+   * used right after a verified payment, so `hasPaid` (now backend-owned)
+   * reflects the just-confirmed entitlement without forcing a full re-login.
+   */
+  refreshCurrentUserFromBackend(): Observable<AppUser> {
+    return this.http.get<BackendUser>(`${environment.apiUrl}/users/me`, { withCredentials: true }).pipe(
+      switchMap((user) => this.mergeIdentity(user)),
+      tap((merged) => this.currentUser.set(merged))
+    );
   }
 
   private silentRefresh(): Observable<void> {
@@ -205,7 +208,7 @@ export class AuthService {
             role: 'student',
             assignedModuleIds,
             ageGroup: (existing as Student | undefined)?.ageGroup ?? ageGroupHint ?? 'beginner',
-            hasPaid: (existing as Student | undefined)?.hasPaid ?? false,
+            hasPaid: backendUser.hasPaid ?? false,
           };
           this.db.upsert(COLLECTIONS.users, student);
           return student;

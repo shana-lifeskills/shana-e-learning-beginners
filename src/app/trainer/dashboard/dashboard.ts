@@ -35,7 +35,10 @@ export class TrainerDashboard implements OnInit {
       this.students.set(students);
       this.loading.set(false);
     });
-    this.moduleService.getModulesByTrainer(trainer.id).subscribe((modules) => this.modules.set(modules));
+    // Every admin sees the full shared module catalog now (not just what they
+    // personally authored) — there's a single flat admin role managing one
+    // shared catalog, so per-creator filtering no longer applies.
+    this.moduleService.getAllModules().subscribe((modules) => this.modules.set(modules));
   }
 
   assignedCount(student: Student): number {

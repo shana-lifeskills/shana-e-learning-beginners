@@ -25,7 +25,7 @@ export class AppHeader {
   readonly roleLabel = computed(() => {
     const u = this.user();
     if (!u) return '';
-    if (u.role === 'trainer') return 'Trainer';
+    if (u.role === 'trainer') return 'Admin';
     return u.ageGroup === 'advanced' ? 'Advanced' : 'Beginner';
   });
 

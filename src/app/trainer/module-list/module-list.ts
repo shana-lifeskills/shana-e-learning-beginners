@@ -21,10 +21,12 @@ export class ModuleList implements OnInit {
   readonly loading = signal(true);
 
   ngOnInit(): void {
-    const trainer = this.auth.currentUser() as Trainer;
-    if (!trainer) return;
+    const admin = this.auth.currentUser() as Trainer;
+    if (!admin) return;
 
-    this.moduleService.getModulesByTrainer(trainer.id).subscribe((modules) => {
+    // Every admin sees the full shared module catalog — modules aren't
+    // scoped to whoever happened to create them.
+    this.moduleService.getAllModules().subscribe((modules) => {
       this.modules.set(modules);
       this.loading.set(false);
     });

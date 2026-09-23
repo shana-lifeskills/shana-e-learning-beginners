@@ -1,7 +1,7 @@
 <div class="paystack-overlay" (click)="close()">
   <div class="paystack-modal" (click)="$event.stopPropagation()">
     @switch (step()) {
-      @case ('details') {
+      @case ('method') {
         <div class="paystack-header">
           <span class="merchant">ShanaLifeSkills Centre</span>
           <button type="button" class="close-btn" (click)="close()" aria-label="Close payment window">✕</button>
@@ -9,7 +9,42 @@
 
         <div class="amount-block">
           <span class="amount-label">Amount</span>
-          <span class="amount-value">₦{{ amountNaira }}</span>
+          <span class="amount-value">GH₵{{ amountCedisDisplay() }}</span>
+        </div>
+
+        <p class="method-heading">How would you like to pay?</p>
+
+        <div class="method-grid">
+          <button type="button" class="method-btn" (click)="chooseCard()">
+            <span class="method-icon">💳</span>
+            <span>Card</span>
+          </button>
+          <button type="button" class="method-btn" (click)="chooseMomo('mtn')">
+            <span class="method-icon">📱</span>
+            <span>MTN Mobile Money</span>
+          </button>
+          <button type="button" class="method-btn" (click)="chooseMomo('vod')">
+            <span class="method-icon">📱</span>
+            <span>Telecel Cash</span>
+          </button>
+          <button type="button" class="method-btn" (click)="chooseMomo('atl')">
+            <span class="method-icon">📱</span>
+            <span>AirtelTigo Money</span>
+          </button>
+        </div>
+
+        <p class="paystack-footer">🔒 Secured by Paystack.</p>
+      }
+      @case ('card') {
+        <div class="paystack-header">
+          <button type="button" class="close-btn" (click)="backToMethods()" aria-label="Back">←</button>
+          <span class="merchant">Pay by card</span>
+          <button type="button" class="close-btn" (click)="close()" aria-label="Close payment window">✕</button>
+        </div>
+
+        <div class="amount-block">
+          <span class="amount-label">Amount</span>
+          <span class="amount-value">GH₵{{ amountCedisDisplay() }}</span>
         </div>
 
         <div class="field-block">
@@ -17,25 +52,65 @@
           <input type="email" [value]="email()" disabled />
         </div>
 
+        <button type="button" class="pay-btn" (click)="pay()">Pay with Paystack</button>
+
+        <p class="paystack-footer">🔒 You'll enter your card details on Paystack's secure checkout — we never see them.</p>
+      }
+      @case ('phone') {
+        <div class="paystack-header">
+          <button type="button" class="close-btn" (click)="backToMethods()" aria-label="Back">←</button>
+          <span class="merchant">{{ momoProviders[selectedProvider()!] }}</span>
+          <button type="button" class="close-btn" (click)="close()" aria-label="Close payment window">✕</button>
+        </div>
+
+        <div class="amount-block">
+          <span class="amount-label">Amount</span>
+          <span class="amount-value">GH₵{{ amountCedisDisplay() }}</span>
+        </div>
+
         <div class="field-block">
-          <label>Card number</label>
-          <input type="text" placeholder="0000 0000 0000 0000" disabled />
+          <label>Mobile money number</label>
+          <input
+            type="tel"
+            placeholder="0241234567"
+            [value]="phoneNumber()"
+            (input)="updatePhone($any($event.target).value)"
+          />
         </div>
 
-        <div class="field-row">
-          <div class="field-block">
-            <label>Expiry</label>
-            <input type="text" placeholder="MM / YY" disabled />
-          </div>
-          <div class="field-block">
-            <label>CVV</label>
-            <input type="text" placeholder="•••" disabled />
-          </div>
+        <button type="button" class="pay-btn" [disabled]="!phoneNumber().trim()" (click)="payWithMomo()">
+          Send Payment Request
+        </button>
+
+        <p class="paystack-footer">🔒 You'll approve this payment on your own phone.</p>
+      }
+      @case ('otp') {
+        <div class="paystack-header">
+          <span class="merchant">Enter code</span>
+          <button type="button" class="close-btn" (click)="close()" aria-label="Close payment window">✕</button>
         </div>
 
-        <button type="button" class="pay-btn" (click)="pay()">Pay ₦{{ amountNaira }}</button>
+        <p class="method-heading">{{ momoDisplayText() }}</p>
 
-        <p class="paystack-footer">🔒 Secured by <strong>Paystack</strong> — demo checkout, no card is charged.</p>
+        <div class="field-block">
+          <label>One-time code</label>
+          <input
+            type="text"
+            inputmode="numeric"
+            placeholder="123456"
+            [value]="otpCode()"
+            (input)="updateOtp($any($event.target).value)"
+          />
+        </div>
+
+        <button type="button" class="pay-btn" [disabled]="!otpCode().trim()" (click)="submitOtp()">Verify</button>
+      }
+      @case ('awaiting-approval') {
+        <div class="status-view">
+          <div class="spinner"></div>
+          <p>{{ momoDisplayText() }}</p>
+          <p class="status-sub">Waiting for you to approve on your phone…</p>
+        </div>
       }
       @case ('processing') {
         <div class="status-view">
@@ -48,6 +123,13 @@
           <div class="check-circle">✓</div>
           <p>Payment successful!</p>
           <p class="status-sub">Unlocking your modules…</p>
+        </div>
+      }
+      @case ('error') {
+        <div class="status-view error">
+          <div class="close-btn error-icon">✕</div>
+          <p>{{ errorMessage() }}</p>
+          <button type="button" class="pay-btn" (click)="retry()">Try again</button>
         </div>
       }
     }
