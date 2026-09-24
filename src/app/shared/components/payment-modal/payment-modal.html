@@ -16,19 +16,53 @@
 
         <div class="method-grid">
           <button type="button" class="method-btn" (click)="chooseCard()">
-            <span class="method-icon">💳</span>
+            <span class="brand-badge card" aria-hidden="true">
+              @if (!logoFailed('card')) {
+                <img src="/assets/images/payment-logos/card.png" alt="" (error)="onLogoError('card')" />
+              } @else {
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2.5" /><path d="M2 10h20" /></svg>
+              }
+            </span>
             <span>Card</span>
           </button>
+          <button type="button" class="method-btn" (click)="choosePaystackCheckout()">
+            <span class="brand-badge paystack" aria-hidden="true">
+              @if (!logoFailed('paystack')) {
+                <img src="/assets/images/payment-logos/paystack.png" alt="" (error)="onLogoError('paystack')" />
+              } @else {
+                Ps
+              }
+            </span>
+            <span>Paystack</span>
+          </button>
           <button type="button" class="method-btn" (click)="chooseMomo('mtn')">
-            <span class="method-icon">📱</span>
+            <span class="brand-badge mtn" aria-hidden="true">
+              @if (!logoFailed('mtn')) {
+                <img src="/assets/images/payment-logos/mtn.png" alt="" (error)="onLogoError('mtn')" />
+              } @else {
+                MTN
+              }
+            </span>
             <span>MTN Mobile Money</span>
           </button>
           <button type="button" class="method-btn" (click)="chooseMomo('vod')">
-            <span class="method-icon">📱</span>
+            <span class="brand-badge telecel" aria-hidden="true">
+              @if (!logoFailed('telecel')) {
+                <img src="/assets/images/payment-logos/telecel.png" alt="" (error)="onLogoError('telecel')" />
+              } @else {
+                T
+              }
+            </span>
             <span>Telecel Cash</span>
           </button>
           <button type="button" class="method-btn" (click)="chooseMomo('atl')">
-            <span class="method-icon">📱</span>
+            <span class="brand-badge airteltigo" aria-hidden="true">
+              @if (!logoFailed('airteltigo')) {
+                <img src="/assets/images/payment-logos/airteltigo.png" alt="" (error)="onLogoError('airteltigo')" />
+              } @else {
+                AT
+              }
+            </span>
             <span>AirtelTigo Money</span>
           </button>
         </div>
@@ -38,7 +72,7 @@
       @case ('card') {
         <div class="paystack-header">
           <button type="button" class="close-btn" (click)="backToMethods()" aria-label="Back">←</button>
-          <span class="merchant">Pay by card</span>
+          <span class="merchant">Pay with Paystack</span>
           <button type="button" class="close-btn" (click)="close()" aria-label="Close payment window">✕</button>
         </div>
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TrainerService } from '../../core/services/trainer.service';
@@ -28,13 +28,21 @@ export class AssignModule implements OnInit {
   readonly saved = signal(false);
   readonly avatarEmoji = AVATAR_EMOJI;
 
+  /** Only students in the module's own age group can ever see it on their
+   *  dashboard (beginner/advanced content is filtered there), so this list
+   *  only offers students that assignment would actually be visible to. */
+  readonly matchingStudents = computed(() => {
+    const ageGroup = this.module()?.ageGroup;
+    return this.students().filter((s) => s.ageGroup === ageGroup);
+  });
+
   ngOnInit(): void {
     const moduleId = this.route.snapshot.paramMap.get('id');
     if (!moduleId) return;
 
     this.moduleService.getModuleById(moduleId).subscribe((module) => {
       if (!module) {
-        this.router.navigate(['/trainer/modules']);
+        this.router.navigate(['/admin/modules']);
         return;
       }
       this.module.set(module);

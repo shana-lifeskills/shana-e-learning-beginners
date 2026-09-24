@@ -31,6 +31,7 @@ export class SeedDataService {
       hasSeenWelcome: true,
       streakCount: 0,
       lastActiveDate: '',
+      emailVerified: true,
       createdModuleIds: [
         'module-counting-critters',
         'module-identity',
@@ -21898,6 +21899,7 @@ export class SeedDataService {
       ],
       ageGroup: 'beginner',
       hasPaid: true,
+      emailVerified: true,
     };
 
     const leo: Student = {
@@ -21914,6 +21916,7 @@ export class SeedDataService {
       assignedModuleIds: [identityAdvancedModule.id, planningAdvancedModule.id, confidenceAdvancedModule.id],
       ageGroup: 'advanced',
       hasPaid: true,
+      emailVerified: true,
     };
 
     this.db.upsert(COLLECTIONS.users, ava);

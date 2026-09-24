@@ -1,5 +1,5 @@
 <div class="assign-page">
-  <a routerLink="/trainer/modules" class="back-link">← My Modules</a>
+  <a routerLink="/admin/modules" class="back-link">← My Modules</a>
 
   @if (loading()) {
     <p class="loading-copy">Loading…</p>
@@ -18,9 +18,14 @@
 
     @if (students().length === 0) {
       <p class="empty-copy">No students have signed up yet.</p>
+    } @else if (matchingStudents().length === 0) {
+      <p class="empty-copy">
+        No {{ module()?.ageGroup === 'advanced' ? 'advanced' : 'beginner' }} students yet — this module only shows up
+        for {{ module()?.ageGroup === 'advanced' ? 'advanced' : 'beginner' }}-tier accounts.
+      </p>
     } @else {
       <div class="student-list">
-        @for (student of students(); track student.id) {
+        @for (student of matchingStudents(); track student.id) {
           <button
             type="button"
             class="student-row"

@@ -10,11 +10,12 @@ import { RewardTotals } from '../../core/models/gamification.model';
 import { RewardShelf } from '../../shared/components/reward-shelf/reward-shelf';
 import { OllieMascot } from '../../shared/components/ollie-mascot/ollie-mascot';
 import { PaymentModal } from '../../shared/components/payment-modal/payment-modal';
+import { VerifyEmailBanner } from '../../shared/components/verify-email-banner/verify-email-banner';
 
 @Component({
   selector: 'app-student-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterLink, RewardShelf, OllieMascot, PaymentModal],
+  imports: [CommonModule, RouterLink, RewardShelf, OllieMascot, PaymentModal, VerifyEmailBanner],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
 })

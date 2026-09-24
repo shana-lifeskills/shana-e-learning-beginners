@@ -30,9 +30,9 @@ const ADVANCED_STUDENT_NAV: NavItem[] = [
 ];
 
 const TRAINER_NAV: NavItem[] = [
-  { label: 'Home', icon: '🏠', link: '/trainer', exact: true },
-  { label: 'All Modules', icon: '📘', link: '/trainer/modules' },
-  { label: 'Upload Module', icon: '⬆️', link: '/trainer/modules/new' },
+  { label: 'Home', icon: '🏠', link: '/admin', exact: true },
+  { label: 'All Modules', icon: '📘', link: '/admin/modules' },
+  { label: 'Upload Module', icon: '⬆️', link: '/admin/modules/new' },
   { label: 'Settings', icon: '⚙️' },
 ];
 

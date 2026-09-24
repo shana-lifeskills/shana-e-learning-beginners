@@ -20,7 +20,7 @@ export class AppHeader {
   readonly avatarEmoji = AVATAR_EMOJI;
   readonly menuOpen = signal(false);
 
-  readonly homeLink = () => (this.user()?.role === 'trainer' ? '/trainer' : '/student');
+  readonly homeLink = () => (this.user()?.role === 'trainer' ? '/admin' : '/student');
 
   readonly roleLabel = computed(() => {
     const u = this.user();

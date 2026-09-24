@@ -1,23 +1,28 @@
 <div class="trainer-page">
+  <app-verify-email-banner />
+
   @if (trainer(); as t) {
     <div class="page-head">
       <h1>Welcome back, {{ t.firstName }}!</h1>
-      <p class="section-sub">Manage your modules and see how your students are doing.</p>
+      <p class="section-sub">
+        Your job here: upload new modules, keep them organized by level, and assign the right ones to the right
+        students — that's what keeps their learning moving.
+      </p>
     </div>
   }
 
   <section class="actions-row">
-    <a routerLink="/trainer/modules/new" class="action-card create">
+    <a routerLink="/admin/modules/new" class="action-card create">
       <span class="art">✏️</span>
       <div>
-        <strong>Create a Module</strong>
+        <strong>Upload a Module</strong>
         <small>Build a new set of lessons</small>
       </div>
     </a>
-    <a routerLink="/trainer/modules" class="action-card manage">
+    <a routerLink="/admin/modules" class="action-card manage">
       <span class="art">📚</span>
       <div>
-        <strong>My Modules ({{ modules().length }})</strong>
+        <strong>All Modules ({{ modules().length }})</strong>
         <small>Edit and assign to students</small>
       </div>
     </a>
@@ -39,8 +44,13 @@
           <div class="student-card">
             <span class="avatar">{{ avatarEmoji[student.avatarId] ?? '🙂' }}</span>
             <div class="student-info">
-              <strong>{{ student.firstName }} {{ student.lastName }}</strong>
-              <small>{{ assignedCount(student) }} module(s) assigned</small>
+              <div class="name-row">
+                <strong>{{ student.firstName }} {{ student.lastName }}</strong>
+                <span class="age-group-badge" [class.advanced]="student.ageGroup === 'advanced'">
+                  {{ student.ageGroup === 'advanced' ? 'Advanced' : 'Beginner' }}
+                </span>
+              </div>
+              <small>{{ assignedCountLabel(student) }}</small>
             </div>
           </div>
         }

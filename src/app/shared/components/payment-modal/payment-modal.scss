@@ -13,7 +13,7 @@
 
 .paystack-modal {
   width: 100%;
-  max-width: 22rem;
+  max-width: 30rem;
   background: v.$color-white;
   border-radius: v.$border-radius;
   padding: 1.5rem;
@@ -105,8 +105,8 @@
 
 .method-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.6rem;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.65rem;
   margin-bottom: 0.5rem;
 }
 
@@ -114,23 +114,70 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.35rem;
+  gap: 0.5rem;
   border: v.$input-border-width solid v.$color-cream-bg;
   border-radius: v.$input-border-radius;
   background: v.$color-cream-bg;
   color: v.$color-navy-text;
   font-weight: 600;
-  font-size: 0.8rem;
-  padding: 0.9rem 0.5rem;
+  font-size: 0.78rem;
+  padding: 1rem 0.5rem;
   cursor: pointer;
   text-align: center;
 
   &:hover {
     border-color: v.$color-sky;
   }
+}
 
-  .method-icon {
-    font-size: 1.4rem;
+/** Brand-colored badges standing in for each payment method's real logo —
+ *  matches each provider's actual signature color so they stay recognizable
+ *  without embedding external logo image assets. */
+.brand-badge {
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.8rem;
+  color: v.$color-white;
+  flex-shrink: 0;
+
+  svg {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  &.card {
+    background: v.$color-navy-text;
+  }
+
+  &.paystack {
+    background: #00c3f7;
+    color: #011b33;
+  }
+
+  &.mtn {
+    background: #ffcc08;
+    color: #000000;
+  }
+
+  &.telecel {
+    background: #e4032e;
+  }
+
+  &.airteltigo {
+    background: #0033a0;
+    font-size: 0.7rem;
   }
 }
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
@@ -20,6 +20,12 @@ export class ModuleList implements OnInit {
   readonly modules = signal<Module[]>([]);
   readonly loading = signal(true);
 
+  // Beginner and advanced modules can share the same title (e.g. both
+  // tiers have a "Self-Confidence" module with different content), so
+  // they're always shown as two separate, clearly-labeled groups.
+  readonly beginnerModules = computed(() => this.modules().filter((m) => m.ageGroup === 'beginner'));
+  readonly advancedModules = computed(() => this.modules().filter((m) => m.ageGroup === 'advanced'));
+
   ngOnInit(): void {
     const admin = this.auth.currentUser() as Trainer;
     if (!admin) return;
@@ -32,11 +38,13 @@ export class ModuleList implements OnInit {
     });
   }
 
-  lessonCount(module: Module): number {
-    return module.lessons.length;
+  lessonsLabel(module: Module): string {
+    const count = module.lessons.length;
+    return count === 1 ? '1 lesson' : `${count} lessons`;
   }
 
-  exerciseCount(module: Module): number {
-    return module.lessons.reduce((sum, l) => sum + l.exercises.length, 0);
+  exercisesLabel(module: Module): string {
+    const count = module.lessons.reduce((sum, l) => sum + l.exercises.length, 0);
+    return count === 1 ? '1 question' : `${count} questions`;
   }
 }

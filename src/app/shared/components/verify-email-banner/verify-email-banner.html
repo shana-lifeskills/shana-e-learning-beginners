@@ -1,0 +1,17 @@
+@if (user(); as u) {
+  @if (!u.emailVerified) {
+    <div class="verify-banner">
+      <span class="icon">✉️</span>
+      <span class="copy">
+        @if (sent()) {
+          Verification email sent — check <strong>{{ u.email }}</strong>.
+        } @else {
+          Please verify your email address ({{ u.email }}) to secure your account.
+        }
+      </span>
+      <button type="button" class="resend-btn" [disabled]="sending()" (click)="resend()">
+        {{ sending() ? 'Sending…' : sent() ? 'Resend again' : 'Resend email' }}
+      </button>
+    </div>
+  }
+}

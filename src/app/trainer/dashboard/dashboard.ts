@@ -8,11 +8,12 @@ import { Trainer } from '../../core/models/user.model';
 import { Student } from '../../core/models/user.model';
 import { Module } from '../../core/models/module.model';
 import { AVATAR_EMOJI } from '../../shared/avatar-emoji';
+import { VerifyEmailBanner } from '../../shared/components/verify-email-banner/verify-email-banner';
 
 @Component({
   selector: 'app-trainer-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, VerifyEmailBanner],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
 })
@@ -41,7 +42,8 @@ export class TrainerDashboard implements OnInit {
     this.moduleService.getAllModules().subscribe((modules) => this.modules.set(modules));
   }
 
-  assignedCount(student: Student): number {
-    return student.assignedModuleIds.length;
+  assignedCountLabel(student: Student): string {
+    const count = student.assignedModuleIds.length;
+    return count === 1 ? '1 module assigned' : `${count} modules assigned`;
   }
 }

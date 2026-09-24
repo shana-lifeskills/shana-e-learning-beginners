@@ -147,7 +147,7 @@ export class ModuleEditor {
       })
       .subscribe((module) => {
         this.submitting.set(false);
-        this.router.navigate(['/trainer/modules', module.id, 'assign']);
+        this.router.navigate(['/admin/modules', module.id, 'assign']);
       });
   }
 }

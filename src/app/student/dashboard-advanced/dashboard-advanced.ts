@@ -8,11 +8,12 @@ import { Student } from '../../core/models/user.model';
 import { ModuleWithProgress } from '../../core/models/module.model';
 import { RewardTotals } from '../../core/models/gamification.model';
 import { PaymentModal } from '../../shared/components/payment-modal/payment-modal';
+import { VerifyEmailBanner } from '../../shared/components/verify-email-banner/verify-email-banner';
 
 @Component({
   selector: 'app-dashboard-advanced',
   standalone: true,
-  imports: [CommonModule, RouterLink, PaymentModal],
+  imports: [CommonModule, RouterLink, PaymentModal, VerifyEmailBanner],
   templateUrl: './dashboard-advanced.html',
   styleUrl: './dashboard-advanced.scss',
 })

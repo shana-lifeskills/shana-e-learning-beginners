@@ -1,10 +1,10 @@
 <div class="module-list-page">
   <div class="page-head">
     <div>
-      <a routerLink="/trainer" class="back-link">← Dashboard</a>
+      <a routerLink="/admin" class="back-link">← Dashboard</a>
       <h1>All Modules</h1>
     </div>
-    <a routerLink="/trainer/modules/new" class="btn btn-primary btn-lg-tappable">+ Upload Module</a>
+    <a routerLink="/admin/modules/new" class="btn btn-primary btn-lg-tappable">+ Upload Module</a>
   </div>
 
   @if (loading()) {
@@ -13,21 +13,51 @@
     <div class="empty-state">
       <span class="art">📚</span>
       <p>No modules uploaded yet.</p>
-      <a routerLink="/trainer/modules/new" class="btn btn-primary btn-lg-tappable">Upload Your First Module</a>
+      <a routerLink="/admin/modules/new" class="btn btn-primary btn-lg-tappable">Upload Your First Module</a>
     </div>
   } @else {
-    <div class="module-grid">
-      @for (module of modules(); track module.id) {
-        <div class="module-card" [style.--accent]="module.themeColor">
-          <span class="icon">{{ module.icon }}</span>
-          <div class="info">
-            <h3>{{ module.title }}</h3>
-            <p>{{ module.description }}</p>
-            <small>{{ lessonCount(module) }} lessons • {{ exerciseCount(module) }} questions</small>
-          </div>
-          <a [routerLink]="['/trainer/modules', module.id, 'assign']" class="btn btn-outline-primary">Assign</a>
+    <!-- Beginner and advanced modules can share a title with different content
+         underneath, so they're always kept in clearly-labeled separate groups. -->
+    <section class="age-group-section">
+      <h2 class="age-group-heading">🌱 Beginner Modules</h2>
+      @if (beginnerModules().length === 0) {
+        <p class="empty-copy">No beginner modules uploaded yet.</p>
+      } @else {
+        <div class="module-grid">
+          @for (module of beginnerModules(); track module.id) {
+            <div class="module-card" [style.--accent]="module.themeColor">
+              <span class="icon">{{ module.icon }}</span>
+              <div class="info">
+                <h3>{{ module.title }}</h3>
+                <p>{{ module.description }}</p>
+                <small>{{ lessonsLabel(module) }} • {{ exercisesLabel(module) }}</small>
+              </div>
+              <a [routerLink]="['/admin/modules', module.id, 'assign']" class="btn btn-outline-primary">Assign</a>
+            </div>
+          }
         </div>
       }
-    </div>
+    </section>
+
+    <section class="age-group-section">
+      <h2 class="age-group-heading">🚀 Advanced Modules</h2>
+      @if (advancedModules().length === 0) {
+        <p class="empty-copy">No advanced modules uploaded yet.</p>
+      } @else {
+        <div class="module-grid">
+          @for (module of advancedModules(); track module.id) {
+            <div class="module-card" [style.--accent]="module.themeColor">
+              <span class="icon">{{ module.icon }}</span>
+              <div class="info">
+                <h3>{{ module.title }}</h3>
+                <p>{{ module.description }}</p>
+                <small>{{ lessonsLabel(module) }} • {{ exercisesLabel(module) }}</small>
+              </div>
+              <a [routerLink]="['/admin/modules', module.id, 'assign']" class="btn btn-outline-primary">Assign</a>
+            </div>
+          }
+        </div>
+      }
+    </section>
   }
 </div>

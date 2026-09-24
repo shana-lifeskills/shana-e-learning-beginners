@@ -1,0 +1,22 @@
+<div class="verify-page">
+  <div class="verify-card">
+    @switch (status()) {
+      @case ('checking') {
+        <div class="spinner"></div>
+        <p>Confirming your email…</p>
+      }
+      @case ('success') {
+        <div class="check-circle">✓</div>
+        <h1>Email verified!</h1>
+        <p>Thanks for confirming your email address.</p>
+        <button type="button" class="btn btn-primary btn-lg-tappable" (click)="continue()">Continue</button>
+      }
+      @case ('error') {
+        <div class="error-circle">✕</div>
+        <h1>Verification failed</h1>
+        <p>{{ errorMessage() }}</p>
+        <a routerLink="/login" class="btn btn-primary btn-lg-tappable">Back to sign in</a>
+      }
+    }
+  </div>
+</div>

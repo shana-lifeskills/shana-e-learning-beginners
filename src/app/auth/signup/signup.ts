@@ -84,7 +84,7 @@ export class Signup {
       .subscribe({
         next: (user) => {
           this.submitting.set(false);
-          this.router.navigate([user.role === 'student' ? '/student' : '/trainer']);
+          this.router.navigate([user.role === 'student' ? '/student' : '/admin']);
         },
         error: (err: Error) => {
           this.submitting.set(false);

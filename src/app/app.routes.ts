@@ -6,6 +6,7 @@ export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'signup' },
   { path: 'login', loadComponent: () => import('./auth/login/login').then((m) => m.Login) },
   { path: 'signup', loadComponent: () => import('./auth/signup/signup').then((m) => m.Signup) },
+  { path: 'verify-email', loadComponent: () => import('./auth/verify-email/verify-email').then((m) => m.VerifyEmail) },
   {
     path: 'student',
     canActivate: [studentGuard],
@@ -18,7 +19,7 @@ export const routes: Routes = [
     ],
   },
   {
-    path: 'trainer',
+    path: 'admin',
     canActivate: [trainerGuard],
     children: [
       { path: '', loadComponent: () => import('./trainer/dashboard/dashboard').then((m) => m.TrainerDashboard) },

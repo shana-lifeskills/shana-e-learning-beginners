@@ -1,4 +1,6 @@
 <div class="dashboard-page">
+  <app-verify-email-banner />
+
   @if (student(); as s) {
     <section class="welcome-banner">
       <div class="banner-copy">
@@ -34,7 +36,7 @@
         <div class="empty-state payment-required">
           <div class="art">🔒</div>
           <p>Your modules are ready and waiting! Complete payment to unlock full access.</p>
-          <button type="button" class="btn btn-primary btn-lg-tappable" (click)="openPaymentModal()">Pay with Paystack</button>
+          <button type="button" class="btn btn-primary btn-lg-tappable" (click)="openPaymentModal()">Pay to Access Module</button>
         </div>
       } @else if (tracks().length === 0) {
         <div class="empty-state">

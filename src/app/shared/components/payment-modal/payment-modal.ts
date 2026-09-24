@@ -66,17 +66,15 @@ function loadPaystackInline(): Promise<void> {
 }
 
 /**
- * Real Paystack checkout, two ways:
- *  - Card: Paystack Inline (Popup) — the backend creates the transaction and
- *    hands back a reference + public key, Paystack's own hosted UI collects
- *    card details (this app never sees them).
- *  - Mobile money (MTN / Telecel / AirtelTigo): Paystack's Charge API — the
- *    backend starts the charge and either gets an immediate result, a
- *    one-time code to collect, or an instruction to approve a prompt on the
- *    customer's own phone.
- * Either way, the backend independently verifies the result with Paystack
- * before entitlement is granted — "success" here always reflects a real,
- * server-confirmed payment.
+ * Real checkout, five ways — Card and Paystack both open Paystack Inline
+ * (Popup): the backend creates the transaction and hands back a reference +
+ * public key, Paystack's own hosted UI collects payment details (this app
+ * never sees card numbers), while MTN / Telecel / AirtelTigo go through
+ * Paystack's Charge API directly — the backend starts the charge and either
+ * gets an immediate result, a one-time code to collect, or an instruction to
+ * approve a prompt on the customer's own phone. Either way, the backend
+ * independently verifies the result with Paystack before entitlement is
+ * granted — "success" here always reflects a real, server-confirmed payment.
  */
 @Component({
   selector: 'app-payment-modal',
@@ -94,7 +92,7 @@ export class PaymentModal {
   readonly paid = output<void>();
 
   readonly step = signal<CheckoutStep>('method');
-  readonly amountCedisDisplay = signal('500.00'); // placeholder until the backend confirms the real price
+  readonly amountCedisDisplay = signal('399.00'); // placeholder until the backend confirms the real price
   readonly errorMessage = signal('');
 
   readonly momoProviders = MOMO_PROVIDER_LABELS;
@@ -102,6 +100,7 @@ export class PaymentModal {
   readonly phoneNumber = signal('');
   readonly otpCode = signal('');
   readonly momoDisplayText = signal('');
+  private readonly failedLogos = signal<Set<string>>(new Set());
 
   private momoReference: string | null = null;
   private pollTimeoutId: ReturnType<typeof setTimeout> | null = null;
@@ -119,8 +118,24 @@ export class PaymentModal {
     this.errorMessage.set('');
   }
 
+  /** "Card" jumps straight to Paystack's real, standard card-entry checkout —
+   *  no middle confirmation screen. */
   chooseCard(): void {
+    this.pay();
+  }
+
+  /** "Paystack" — the generic Paystack checkout option — shows the amount/email
+   *  confirmation screen first, then opens the same real Paystack popup. */
+  choosePaystackCheckout(): void {
     this.step.set('card');
+  }
+
+  logoFailed(key: string): boolean {
+    return this.failedLogos().has(key);
+  }
+
+  onLogoError(key: string): void {
+    this.failedLogos.update((set) => new Set(set).add(key));
   }
 
   chooseMomo(provider: MomoProvider): void {

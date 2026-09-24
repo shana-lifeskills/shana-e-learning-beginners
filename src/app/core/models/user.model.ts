@@ -19,6 +19,8 @@ export interface BaseUser {
   streakCount: number;
   /** Calendar date (YYYY-MM-DD) of the last session start, used to compute the streak. */
   lastActiveDate: string;
+  /** Whether this account has confirmed ownership of its email address via the verification link. */
+  emailVerified: boolean;
 }
 
 export interface Student extends BaseUser {

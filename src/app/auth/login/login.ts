@@ -85,7 +85,7 @@ export class Login {
           return;
         }
 
-        this.router.navigate([user.role === 'student' ? '/student' : '/trainer']);
+        this.router.navigate([user.role === 'student' ? '/student' : '/admin']);
       },
       error: (err: Error) => {
         this.submitting.set(false);

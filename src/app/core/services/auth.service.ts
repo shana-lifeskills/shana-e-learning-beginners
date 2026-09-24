@@ -27,6 +27,7 @@ interface BackendUser {
   profileImage?: string;
   role: 'student' | 'instructor' | 'admin';
   hasPaid?: boolean;
+  emailVerified?: boolean;
 }
 
 interface AuthResponse {
@@ -140,6 +141,21 @@ export class AuthService {
     );
   }
 
+  /** Verifies an email using the token from the verification link — called
+   *  by the /verify-email page, which the emailed link points to. */
+  verifyEmail(token: string): Observable<{ message: string; emailVerified: boolean }> {
+    return this.http.get<{ message: string; emailVerified: boolean }>(`${this.apiUrl}/verify-email`, {
+      params: { token },
+      withCredentials: true,
+    });
+  }
+
+  /** Re-sends the verification email to the signed-in user, then refreshes
+   *  `currentUser` in case verification state changed since last checked. */
+  resendVerificationEmail(): Observable<{ message: string }> {
+    return this.http.post<{ message: string }>(`${this.apiUrl}/resend-verification`, {}, { withCredentials: true });
+  }
+
   private silentRefresh(): Observable<void> {
     return this.refreshAccessToken().pipe(
       switchMap(() => this.http.get<BackendUser>(`${environment.apiUrl}/users/me`, { withCredentials: true })),
@@ -183,6 +199,7 @@ export class AuthService {
       hasSeenWelcome: existing?.hasSeenWelcome ?? false,
       streakCount: existing?.streakCount ?? 0,
       lastActiveDate: existing?.lastActiveDate ?? '',
+      emailVerified: backendUser.emailVerified ?? false,
     };
 
     if (role !== 'student') {
