@@ -43,7 +43,7 @@ const MOMO_PROVIDER_LABELS: Record<MomoProvider, string> = {
   atl: 'AirtelTigo Money',
 };
 
-type CheckoutStep = 'method' | 'card' | 'phone' | 'otp' | 'awaiting-approval' | 'processing' | 'success' | 'error';
+type CheckoutStep = 'method' | 'card' | 'mock-card' | 'phone' | 'otp' | 'awaiting-approval' | 'processing' | 'success' | 'error';
 
 const POLL_INTERVAL_MS = 3000;
 const MAX_POLL_ATTEMPTS = 20; // ~1 minute
@@ -102,7 +102,12 @@ export class PaymentModal {
   readonly momoDisplayText = signal('');
   private readonly failedLogos = signal<Set<string>>(new Set());
 
+  readonly mockCardNumber = signal('');
+  readonly mockCardExpiry = signal('');
+  readonly mockCardCvv = signal('');
+
   private momoReference: string | null = null;
+  private mockCardReference: string | null = null;
   private pollTimeoutId: ReturnType<typeof setTimeout> | null = null;
 
   close(): void {
@@ -116,6 +121,7 @@ export class PaymentModal {
     this.step.set('method');
     this.selectedProvider.set(null);
     this.errorMessage.set('');
+    this.mockCardReference = null;
   }
 
   /** "Card" jumps straight to Paystack's real, standard card-entry checkout —
@@ -156,7 +162,10 @@ export class PaymentModal {
     this.otpCode.set(value);
   }
 
-  /** Card checkout — Paystack Inline (Popup). */
+  /** Card checkout — Paystack Inline (Popup), or our own mock card-details
+   *  form while demo/placeholder Paystack keys are in place (Paystack's real
+   *  popup would reject a dummy key immediately, before any card details are
+   *  even shown, so it can't stand in for that UI itself). */
   pay(): void {
     this.step.set('processing');
 
@@ -165,10 +174,6 @@ export class PaymentModal {
       .pipe(
         switchMap((init) => {
           this.amountCedisDisplay.set((init.amountPesewas / 100).toLocaleString('en-GH', { minimumFractionDigits: 2 }));
-          // TEMPORARY DEMO BYPASS: no real Paystack public key configured yet —
-          // skip the real checkout popup and go straight to backend verify, which
-          // itself auto-succeeds when it has no secret key either. Remove once
-          // real Paystack keys are in place.
           if (!init.publicKey) return of(init);
           return loadPaystackInline().then(() => init);
         }),
@@ -180,7 +185,14 @@ export class PaymentModal {
       .subscribe((init) => {
         if (!init) return;
         if (!init.publicKey) {
-          this.verify(init.reference);
+          // TEMPORARY DEMO BYPASS: no real Paystack public key configured yet.
+          // Collect (fake) card details in our own form first, then verify —
+          // remove this branch once real Paystack keys are in place.
+          this.mockCardReference = init.reference;
+          this.mockCardNumber.set('');
+          this.mockCardExpiry.set('');
+          this.mockCardCvv.set('');
+          this.step.set('mock-card');
           return;
         }
         if (!window.PaystackPop) {
@@ -200,6 +212,23 @@ export class PaymentModal {
           },
         }).openIframe();
       });
+  }
+
+  updateMockCardNumber(value: string): void {
+    this.mockCardNumber.set(value);
+  }
+
+  updateMockCardExpiry(value: string): void {
+    this.mockCardExpiry.set(value);
+  }
+
+  updateMockCardCvv(value: string): void {
+    this.mockCardCvv.set(value);
+  }
+
+  submitMockCard(): void {
+    if (!this.mockCardReference) return;
+    this.verify(this.mockCardReference);
   }
 
   /** Mobile money checkout — Paystack Charge API. */

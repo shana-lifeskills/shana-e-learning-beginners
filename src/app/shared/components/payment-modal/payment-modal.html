@@ -90,6 +90,62 @@
 
         <p class="paystack-footer">🔒 You'll enter your card details on Paystack's secure checkout — we never see them.</p>
       }
+      @case ('mock-card') {
+        <div class="paystack-header">
+          <button type="button" class="close-btn" (click)="backToMethods()" aria-label="Back">←</button>
+          <span class="merchant">Card details</span>
+          <button type="button" class="close-btn" (click)="close()" aria-label="Close payment window">✕</button>
+        </div>
+
+        <div class="amount-block">
+          <span class="amount-label">Amount</span>
+          <span class="amount-value">GH₵{{ amountCedisDisplay() }}</span>
+        </div>
+
+        <div class="field-block">
+          <label>Card number</label>
+          <input
+            type="text"
+            inputmode="numeric"
+            placeholder="0000 0000 0000 0000"
+            [value]="mockCardNumber()"
+            (input)="updateMockCardNumber($any($event.target).value)"
+          />
+        </div>
+
+        <div class="field-row">
+          <div class="field-block">
+            <label>Expiry</label>
+            <input
+              type="text"
+              placeholder="MM / YY"
+              [value]="mockCardExpiry()"
+              (input)="updateMockCardExpiry($any($event.target).value)"
+            />
+          </div>
+          <div class="field-block">
+            <label>CVV</label>
+            <input
+              type="text"
+              inputmode="numeric"
+              placeholder="•••"
+              [value]="mockCardCvv()"
+              (input)="updateMockCardCvv($any($event.target).value)"
+            />
+          </div>
+        </div>
+
+        <button
+          type="button"
+          class="pay-btn"
+          [disabled]="!mockCardNumber().trim() || !mockCardExpiry().trim() || !mockCardCvv().trim()"
+          (click)="submitMockCard()"
+        >
+          Pay GH₵{{ amountCedisDisplay() }}
+        </button>
+
+        <p class="paystack-footer">🔒 Secured by Paystack.</p>
+      }
       @case ('phone') {
         <div class="paystack-header">
           <button type="button" class="close-btn" (click)="backToMethods()" aria-label="Back">←</button>
