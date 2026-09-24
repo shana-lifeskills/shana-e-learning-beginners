@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { studentGuard } from './core/guards/student.guard';
 import { trainerGuard } from './core/guards/trainer.guard';
+import { coachGuard } from './core/guards/coach.guard';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'signup' },
@@ -16,6 +17,16 @@ export const routes: Routes = [
       { path: 'rewards', loadComponent: () => import('./student/rewards-page/rewards-page').then((m) => m.RewardsPage) },
       { path: 'games', loadComponent: () => import('./student/games-page/games-page').then((m) => m.GamesPage) },
       { path: 'games/:id', loadComponent: () => import('./student/game-player/game-player').then((m) => m.GamePlayer) },
+      { path: 'assignments', loadComponent: () => import('./student/assignments/assignments').then((m) => m.StudentAssignments) },
+    ],
+  },
+  {
+    path: 'coach',
+    canActivate: [coachGuard],
+    children: [
+      { path: '', loadComponent: () => import('./coach/dashboard/dashboard').then((m) => m.CoachDashboard) },
+      { path: 'assignments', loadComponent: () => import('./coach/assignments/assignments').then((m) => m.CoachAssignments) },
+      { path: 'assignments/:id', loadComponent: () => import('./coach/assignment-detail/assignment-detail').then((m) => m.AssignmentDetail) },
     ],
   },
   {

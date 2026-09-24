@@ -1,0 +1,145 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+.detail-page {
+  max-width: 60rem;
+  margin: 0 auto;
+  padding: 2rem 2.5rem 4rem;
+}
+
+.back-link {
+  display: inline-block;
+  color: rgba(43, 45, 66, 0.6);
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-decoration: none;
+  margin-bottom: 1.25rem;
+
+  &:hover { color: v.$color-navy-text; }
+}
+
+.page-head {
+  margin-bottom: 1.75rem;
+
+  h1 {
+    @include m.auth-heading;
+    font-size: 1.6rem;
+    margin: 0 0 0.35rem;
+  }
+
+  p {
+    margin: 0 0 0.75rem;
+    color: rgba(43, 45, 66, 0.6);
+    font-weight: 500;
+  }
+}
+
+.meta-row {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.age-group-badge {
+  font-size: 0.65rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  padding: 0.2rem 0.55rem;
+  border-radius: v.$border-radius-pill;
+  background: v.$color-leaf;
+  color: v.$color-white;
+
+  &.advanced { background: v.$color-sky; }
+}
+
+.due-badge,
+.count-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: rgba(43, 45, 66, 0.6);
+  background: v.$color-cream-bg;
+  padding: 0.25rem 0.6rem;
+  border-radius: v.$border-radius-pill;
+  white-space: nowrap;
+}
+
+.loading-copy { font-weight: 600; color: rgba(43, 45, 66, 0.6); }
+
+.empty-state {
+  @include m.bouncy-card;
+  background: v.$color-white;
+  padding: 2.5rem;
+  text-align: center;
+
+  .art { font-size: 3rem; display: block; margin-bottom: 0.5rem; }
+  p { color: rgba(43, 45, 66, 0.65); font-weight: 600; margin: 0; }
+}
+
+.submission-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.submission-row {
+  @include m.bouncy-card;
+  background: v.$color-white;
+  padding: 1rem 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+
+  &:hover { transform: none; box-shadow: 0 6px 0 rgba(0, 0, 0, 0.06); }
+
+  .file-icon { font-size: 1.5rem; flex-shrink: 0; }
+
+  .info {
+    flex: 1;
+    min-width: 12rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+
+    strong { color: v.$color-navy-text; }
+    small { color: rgba(43, 45, 66, 0.55); font-weight: 600; font-size: 0.78rem; }
+    .filename { font-style: italic; }
+  }
+}
+
+.status-badge {
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  padding: 0.25rem 0.65rem;
+  border-radius: v.$border-radius-pill;
+  white-space: nowrap;
+
+  &.pending { background: rgba(v.$color-sunshine, 0.3); color: #7a5c00; }
+  &.reviewed { background: rgba(v.$color-leaf, 0.25); color: #2c6b32; }
+  &.late { background: rgba(v.$color-bubble-pink, 0.3); color: #a12447; }
+}
+
+.btn-download,
+.btn-review {
+  border: none;
+  border-radius: v.$border-radius-pill;
+  font-weight: 700;
+  font-size: 0.78rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.btn-download {
+  background: v.$color-cream-bg;
+  color: v.$color-navy-text;
+}
+
+.btn-review {
+  background: v.$color-coral;
+  color: v.$color-white;
+}

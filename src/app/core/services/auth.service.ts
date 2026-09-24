@@ -4,7 +4,7 @@ import { Observable, catchError, firstValueFrom, map, of, switchMap, tap, throwE
 import { DatabaseService } from './database.service';
 import { COLLECTIONS } from './collections';
 import { environment } from '../../../environments/environment';
-import { AgeGroup, AppUser, Role, Student, Trainer } from '../models/user.model';
+import { AgeGroup, AppUser, Coach, Role, Student, Trainer } from '../models/user.model';
 
 const SESSION_KEY = 'session_user_id';
 
@@ -14,7 +14,7 @@ export interface SignupPayload {
   email: string;
   password: string;
   profileImage?: string;
-  role?: 'student' | 'admin';
+  role?: 'student' | 'admin' | 'instructor';
   /** Frontend-only concept, not sent to the backend — merged into the local profile. */
   ageGroup?: AgeGroup;
 }
@@ -185,7 +185,8 @@ export class AuthService {
    */
   private mergeIdentity(backendUser: BackendUser, ageGroupHint?: AgeGroup): Observable<AppUser> {
     const existing = this.db.getById<AppUser>(COLLECTIONS.users, backendUser.id);
-    const role: Role = backendUser.role === 'student' ? 'student' : 'trainer';
+    const role: Role =
+      backendUser.role === 'student' ? 'student' : backendUser.role === 'instructor' ? 'coach' : 'trainer';
 
     const base = {
       id: backendUser.id,
@@ -202,7 +203,7 @@ export class AuthService {
       emailVerified: backendUser.emailVerified ?? false,
     };
 
-    if (role !== 'student') {
+    if (role === 'trainer') {
       const trainer: Trainer = {
         ...base,
         role: 'trainer',
@@ -210,6 +211,12 @@ export class AuthService {
       };
       this.db.upsert(COLLECTIONS.users, trainer);
       return of(trainer);
+    }
+
+    if (role === 'coach') {
+      const coach: Coach = { ...base, role: 'coach' };
+      this.db.upsert(COLLECTIONS.users, coach);
+      return of(coach);
     }
 
     return this.http

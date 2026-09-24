@@ -7,7 +7,7 @@ import { SidekickService } from '../../core/services/sidekick.service';
 import { FriendlyAlert } from '../../shared/components/friendly-alert/friendly-alert';
 import { AuthHero } from '../../shared/components/auth-hero/auth-hero';
 import { AccountType, AccountTypePicker } from '../../shared/components/account-type-picker/account-type-picker';
-import { AppUser } from '../../core/models/user.model';
+import { AppUser, ROLE_HOME_PATH } from '../../core/models/user.model';
 
 @Component({
   selector: 'app-login',
@@ -32,7 +32,9 @@ export class Login {
 
   constructor() {
     const queryType = this.route.snapshot.queryParamMap.get('accountType');
-    if (queryType === 'beginner' || queryType === 'advanced' || queryType === 'trainer') this.accountType.set(queryType);
+    if (queryType === 'beginner' || queryType === 'advanced' || queryType === 'trainer' || queryType === 'coach') {
+      this.accountType.set(queryType);
+    }
   }
 
   readonly ctaLabel = computed(() => {
@@ -41,6 +43,8 @@ export class Login {
         return 'Sign in as an advanced student';
       case 'trainer':
         return 'Sign in as an admin';
+      case 'coach':
+        return 'Sign in as a trainer';
       default:
         return 'Sign in as a beginner';
     }
@@ -85,7 +89,7 @@ export class Login {
           return;
         }
 
-        this.router.navigate([user.role === 'student' ? '/student' : '/admin']);
+        this.router.navigate([ROLE_HOME_PATH[user.role]]);
       },
       error: (err: Error) => {
         this.submitting.set(false);
@@ -101,16 +105,26 @@ export class Login {
     const selected = this.accountType();
 
     if (selected === 'trainer') {
-      return user.role === 'trainer' ? null : 'This account is a student account, not an admin. Switch tabs above and try again.';
+      return user.role === 'trainer' ? null : `${this.actualAccountLabel(user)} Switch to the Admin tab above and try again.`;
+    }
+    if (selected === 'coach') {
+      return user.role === 'coach' ? null : `${this.actualAccountLabel(user)} Switch to the Trainer tab above and try again.`;
     }
 
-    if (user.role === 'trainer') {
-      return "This account is an admin account. Switch to the Admin tab above and try again.";
+    // Selected tab was a student tier (beginner/advanced).
+    if (user.role !== 'student') {
+      return `${this.actualAccountLabel(user)} Switch tabs above and try again.`;
     }
     if (user.ageGroup !== selected) {
-      const actualLabel = user.ageGroup === 'advanced' ? 'Advanced' : 'Beginner';
-      return `This account is a ${actualLabel} student account. Switch tabs above and try again.`;
+      return `${this.actualAccountLabel(user)} Switch tabs above and try again.`;
     }
     return null;
+  }
+
+  private actualAccountLabel(user: AppUser): string {
+    if (user.role === 'trainer') return 'This account is an admin account.';
+    if (user.role === 'coach') return 'This account is a trainer account.';
+    const ageLabel = user.ageGroup === 'advanced' ? 'Advanced' : 'Beginner';
+    return `This account is a ${ageLabel} student account.`;
   }
 }

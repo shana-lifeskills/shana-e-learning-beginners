@@ -1,0 +1,58 @@
+<div class="assignments-page">
+  <h1>My assignments</h1>
+  <p class="subtitle">Upload your work here for your trainer to review.</p>
+
+  @if (errorMessage()) {
+    <p class="error-copy">{{ errorMessage() }}</p>
+  }
+
+  @if (loading()) {
+    <p class="loading-copy">Loading…</p>
+  } @else if (rows().length === 0) {
+    <div class="empty-state">
+      <span class="art">🎉</span>
+      <p>No assignments yet — check back soon!</p>
+    </div>
+  } @else {
+    <div class="task-list">
+      @for (row of rows(); track row.task.id) {
+        <div class="task-card">
+          <div class="task-head">
+            <strong>{{ row.task.title }}</strong>
+            @if (row.task.dueAt) {
+              <span class="due-badge" [class.overdue]="isOverdue(row.task) && row.submission?.status !== 'reviewed' && !row.submission">
+                Due {{ row.task.dueAt | date: 'mediumDate' }}
+              </span>
+            }
+          </div>
+
+          @if (row.task.instructions) {
+            <p class="instructions">{{ row.task.instructions }}</p>
+          }
+
+          @if (row.submission; as submission) {
+            <div class="submission-status" [class.reviewed]="submission.status === 'reviewed'">
+              <span class="status-icon">{{ submission.status === 'reviewed' ? '✅' : '⏳' }}</span>
+              <div>
+                <strong>{{ submission.fileName }}</strong>
+                <small>
+                  Submitted {{ submission.submittedAt | date: 'short' }} ·
+                  {{ submission.status === 'reviewed' ? 'Reviewed' : 'Waiting for review' }}
+                </small>
+              </div>
+            </div>
+            <label class="resubmit-btn">
+              Resubmit
+              <input type="file" (change)="onFileSelected(row.task.id, $event)" [disabled]="uploadingTaskId() === row.task.id" />
+            </label>
+          } @else {
+            <label class="upload-btn" [class.uploading]="uploadingTaskId() === row.task.id">
+              {{ uploadingTaskId() === row.task.id ? 'Uploading…' : '📎 Choose a file to submit' }}
+              <input type="file" (change)="onFileSelected(row.task.id, $event)" [disabled]="uploadingTaskId() === row.task.id" />
+            </label>
+          }
+        </div>
+      }
+    </div>
+  }
+</div>

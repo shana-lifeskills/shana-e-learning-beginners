@@ -6,6 +6,7 @@ import { AuthService } from '../../core/services/auth.service';
 import { FriendlyAlert } from '../../shared/components/friendly-alert/friendly-alert';
 import { AuthHero } from '../../shared/components/auth-hero/auth-hero';
 import { AccountType, AccountTypePicker } from '../../shared/components/account-type-picker/account-type-picker';
+import { ROLE_HOME_PATH } from '../../core/models/user.model';
 
 @Component({
   selector: 'app-signup',
@@ -31,6 +32,8 @@ export class Signup {
         return 'Create account as an advanced student';
       case 'trainer':
         return 'Create account as an admin';
+      case 'coach':
+        return 'Create account as a trainer';
       default:
         return 'Create account as a beginner';
     }
@@ -44,7 +47,9 @@ export class Signup {
 
   constructor() {
     const queryType = this.route.snapshot.queryParamMap.get('accountType');
-    if (queryType === 'beginner' || queryType === 'advanced' || queryType === 'trainer') this.accountType.set(queryType);
+    if (queryType === 'beginner' || queryType === 'advanced' || queryType === 'trainer' || queryType === 'coach') {
+      this.accountType.set(queryType);
+    }
   }
 
   chooseAccountType(type: AccountType): void {
@@ -70,7 +75,8 @@ export class Signup {
     const { fullName, email, password } = this.form.getRawValue();
     const [firstName, ...rest] = fullName.trim().split(/\s+/);
     const lastName = rest.join(' ');
-    const isTrainer = accountType === 'trainer';
+    const isStudent = accountType === 'beginner' || accountType === 'advanced';
+    const role = accountType === 'trainer' ? 'admin' : accountType === 'coach' ? 'instructor' : 'student';
 
     this.auth
       .register({
@@ -78,13 +84,13 @@ export class Signup {
         lastName,
         email,
         password,
-        role: isTrainer ? 'admin' : 'student',
-        ageGroup: isTrainer ? undefined : accountType,
+        role,
+        ageGroup: isStudent ? accountType : undefined,
       })
       .subscribe({
         next: (user) => {
           this.submitting.set(false);
-          this.router.navigate([user.role === 'student' ? '/student' : '/admin']);
+          this.router.navigate([ROLE_HOME_PATH[user.role]]);
         },
         error: (err: Error) => {
           this.submitting.set(false);

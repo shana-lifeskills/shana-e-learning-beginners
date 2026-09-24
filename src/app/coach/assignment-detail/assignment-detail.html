@@ -1,0 +1,50 @@
+<div class="detail-page">
+  <a class="back-link" routerLink="/coach/assignments">‹ All assignments</a>
+
+  @if (loading()) {
+    <p class="loading-copy">Loading…</p>
+  } @else if (task(); as t) {
+    <div class="page-head">
+      <div>
+        <h1>{{ t.title }}</h1>
+        @if (t.instructions) {
+          <p>{{ t.instructions }}</p>
+        }
+        <div class="meta-row">
+          <span class="age-group-badge" [class.advanced]="t.ageGroup === 'advanced'">
+            {{ t.ageGroup === 'advanced' ? 'Advanced' : 'Beginner' }}
+          </span>
+          @if (t.dueAt) {
+            <span class="due-badge">Due {{ t.dueAt | date: 'mediumDate' }}</span>
+          }
+          <span class="count-badge">{{ reviewedCount() }} / {{ submissions().length }} reviewed</span>
+        </div>
+      </div>
+    </div>
+
+    @if (submissions().length === 0) {
+      <div class="empty-state">
+        <span class="art">📭</span>
+        <p>No submissions for this assignment yet.</p>
+      </div>
+    } @else {
+      <div class="submission-list">
+        @for (submission of submissions(); track submission.id) {
+          <div class="submission-row">
+            <span class="file-icon">📄</span>
+            <div class="info">
+              <strong>{{ submission.studentName }}</strong>
+              <small>{{ submission.submittedAt | date: 'short' }}</small>
+              <small class="filename">{{ submission.fileName }}</small>
+            </div>
+            <span class="status-badge" [class]="statusLabel(submission)">{{ statusLabel(submission) }}</span>
+            <button type="button" class="btn-download" (click)="download(submission)">Download</button>
+            @if (submission.status === 'pending') {
+              <button type="button" class="btn-review" (click)="markReviewed(submission)">Mark reviewed</button>
+            }
+          </div>
+        }
+      </div>
+    }
+  }
+</div>

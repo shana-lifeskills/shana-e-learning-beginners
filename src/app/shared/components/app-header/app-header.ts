@@ -3,6 +3,7 @@ import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
 import { AVATAR_EMOJI } from '../../avatar-emoji';
 import { BrandLogo } from '../brand-logo/brand-logo';
+import { ROLE_HOME_PATH } from '../../../core/models/user.model';
 
 @Component({
   selector: 'app-header',
@@ -20,12 +21,16 @@ export class AppHeader {
   readonly avatarEmoji = AVATAR_EMOJI;
   readonly menuOpen = signal(false);
 
-  readonly homeLink = () => (this.user()?.role === 'trainer' ? '/admin' : '/student');
+  readonly homeLink = () => {
+    const role = this.user()?.role;
+    return role ? ROLE_HOME_PATH[role] : '/student';
+  };
 
   readonly roleLabel = computed(() => {
     const u = this.user();
     if (!u) return '';
     if (u.role === 'trainer') return 'Admin';
+    if (u.role === 'coach') return 'Trainer';
     return u.ageGroup === 'advanced' ? 'Advanced' : 'Beginner';
   });
 

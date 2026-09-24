@@ -13,6 +13,7 @@ interface NavItem {
 
 const STUDENT_NAV: NavItem[] = [
   { label: 'Home', icon: '🏠', link: '/student', exact: true },
+  { label: 'Assignments', icon: '📝', link: '/student/assignments' },
   { label: 'My Rewards', icon: '🏅', link: '/student/rewards' },
   { label: 'Games', icon: '🎮', link: '/student/games' },
   { label: 'Leaderboard', icon: '🏆' },
@@ -22,6 +23,7 @@ const STUDENT_NAV: NavItem[] = [
 
 const ADVANCED_STUDENT_NAV: NavItem[] = [
   { label: 'Home', icon: '🏠', link: '/student', exact: true },
+  { label: 'Assignments', icon: '📝', link: '/student/assignments' },
   { label: 'Rewards', icon: '🏅', link: '/student/rewards' },
   { label: 'Arcade', icon: '🎮', link: '/student/games' },
   { label: 'Leaderboard', icon: '📊' },
@@ -33,6 +35,13 @@ const TRAINER_NAV: NavItem[] = [
   { label: 'Home', icon: '🏠', link: '/admin', exact: true },
   { label: 'All Modules', icon: '📘', link: '/admin/modules' },
   { label: 'Upload Module', icon: '⬆️', link: '/admin/modules/new' },
+  { label: 'Settings', icon: '⚙️' },
+];
+
+const COACH_NAV: NavItem[] = [
+  { label: 'Dashboard', icon: '📊', link: '/coach', exact: true },
+  { label: 'Assignments', icon: '📝', link: '/coach/assignments' },
+  { label: 'Students', icon: '👥', link: '/coach' },
   { label: 'Settings', icon: '⚙️' },
 ];
 
@@ -49,6 +58,7 @@ export class Sidebar {
   readonly navItems = computed<NavItem[]>(() => {
     const user = this.auth.currentUser();
     if (user?.role === 'trainer') return TRAINER_NAV;
+    if (user?.role === 'coach') return COACH_NAV;
     return (user as Student)?.ageGroup === 'advanced' ? ADVANCED_STUDENT_NAV : STUDENT_NAV;
   });
 

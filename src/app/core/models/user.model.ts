@@ -1,4 +1,9 @@
-export type Role = 'student' | 'trainer';
+/** 'trainer' is the existing Admin role (uploads/assigns modules — displayed
+ *  as "Admin"). 'coach' is the real Trainer role (displayed as "Trainer") —
+ *  reviews assignment submissions and tracks student progress. Named
+ *  differently internally to avoid colliding with the existing trainer/
+ *  Trainer code that already represents the Admin feature area. */
+export type Role = 'student' | 'trainer' | 'coach';
 
 export type AgeGroup = 'beginner' | 'advanced';
 
@@ -36,7 +41,22 @@ export interface Trainer extends BaseUser {
   createdModuleIds: string[];
 }
 
-export type AppUser = Student | Trainer;
+/** The real Trainer role — displayed as "Trainer" (see the `Role` comment
+ *  above for why this is internally `Coach`, not `Trainer`). */
+export interface Coach extends BaseUser {
+  role: 'coach';
+}
+
+export type AppUser = Student | Trainer | Coach;
+
+/** Where each role lands after login/signup, and what a guard sends the
+ *  wrong role back to — single source of truth so this 3-way mapping isn't
+ *  duplicated across guards, redirects, and nav components. */
+export const ROLE_HOME_PATH: Record<Role, string> = {
+  student: '/student',
+  trainer: '/admin',
+  coach: '/coach',
+};
 
 export const AVATAR_IDS = ['nova', 'milo', 'zoe', 'kai', 'ruby', 'theo'] as const;
 export type AvatarId = (typeof AVATAR_IDS)[number];

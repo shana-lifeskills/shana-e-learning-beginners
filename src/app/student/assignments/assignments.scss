@@ -1,0 +1,141 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+.assignments-page {
+  max-width: 60rem;
+  margin: 0 auto;
+  padding: 2rem 2.5rem 4rem;
+}
+
+h1 {
+  @include m.playful-heading;
+  color: v.$color-navy-text;
+  font-size: 1.4rem;
+  margin: 0 0 0.35rem;
+}
+
+.subtitle {
+  margin: 0 0 1.5rem;
+  color: rgba(43, 45, 66, 0.6);
+  font-weight: 600;
+}
+
+.error-copy {
+  color: v.$color-coral;
+  font-weight: 700;
+  margin: 0 0 1rem;
+}
+
+.loading-copy { font-weight: 600; color: rgba(43, 45, 66, 0.6); }
+
+.empty-state {
+  @include m.bouncy-card;
+  background: v.$color-white;
+  padding: 2.5rem;
+  text-align: center;
+
+  .art { font-size: 3rem; display: block; margin-bottom: 0.5rem; }
+  p { color: rgba(43, 45, 66, 0.65); font-weight: 600; margin: 0; }
+}
+
+.task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.task-card {
+  @include m.bouncy-card;
+  background: v.$color-white;
+  padding: 1.25rem 1.5rem;
+
+  &:hover { transform: none; box-shadow: 0 6px 0 rgba(0, 0, 0, 0.06); }
+}
+
+.task-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.5rem;
+
+  strong {
+    color: v.$color-navy-text;
+    font-size: 1.05rem;
+  }
+}
+
+.due-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: rgba(43, 45, 66, 0.6);
+  background: v.$color-cream-bg;
+  padding: 0.25rem 0.6rem;
+  border-radius: v.$border-radius-pill;
+  white-space: nowrap;
+
+  &.overdue {
+    background: rgba(v.$color-bubble-pink, 0.3);
+    color: #a12447;
+  }
+}
+
+.instructions {
+  color: rgba(43, 45, 66, 0.65);
+  font-weight: 500;
+  margin: 0 0 1rem;
+}
+
+.submission-status {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: rgba(v.$color-sunshine, 0.2);
+  border-radius: v.$border-radius-sm;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.75rem;
+
+  &.reviewed {
+    background: rgba(v.$color-leaf, 0.15);
+  }
+
+  .status-icon { font-size: 1.3rem; }
+
+  strong { display: block; color: v.$color-navy-text; font-size: 0.9rem; }
+  small { color: rgba(43, 45, 66, 0.6); font-weight: 600; font-size: 0.78rem; }
+}
+
+.upload-btn,
+.resubmit-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 2px dashed v.$color-sky;
+  border-radius: v.$border-radius-pill;
+  color: v.$color-sky;
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding: 0.6rem 1.2rem;
+  cursor: pointer;
+
+  &.uploading {
+    opacity: 0.6;
+    cursor: default;
+  }
+
+  input[type='file'] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    overflow: hidden;
+  }
+}
+
+.resubmit-btn {
+  border-style: solid;
+  border-color: v.$color-cream-bg;
+  color: v.$color-navy-text;
+  background: v.$color-cream-bg;
+}

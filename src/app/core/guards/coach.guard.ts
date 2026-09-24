@@ -5,7 +5,7 @@ import { filter, map, take } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { ROLE_HOME_PATH } from '../models/user.model';
 
-export const studentGuard: CanActivateFn = () => {
+export const coachGuard: CanActivateFn = () => {
   const auth = inject(AuthService);
   const router = inject(Router);
 
@@ -15,7 +15,7 @@ export const studentGuard: CanActivateFn = () => {
     map(() => {
       const user = auth.currentUser();
       if (!user) return router.createUrlTree(['/login']);
-      if (user.role !== 'student') return router.createUrlTree([ROLE_HOME_PATH[user.role]]);
+      if (user.role !== 'coach') return router.createUrlTree([ROLE_HOME_PATH[user.role]]);
       return true;
     })
   );

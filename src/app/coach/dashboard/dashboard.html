@@ -1,0 +1,137 @@
+<div class="coach-page">
+  @if (coach(); as c) {
+    <section class="hero-banner">
+      <span class="eyebrow">Trainer Dashboard</span>
+      <h1>{{ greeting() }}, {{ c.firstName }}</h1>
+      <p>
+        @if (awaitingReview() > 0) {
+          {{ awaitingReview() }} submission{{ awaitingReview() === 1 ? '' : 's' }} {{ awaitingReview() === 1 ? 'is' : 'are' }}
+          waiting for your review.
+        } @else {
+          You're all caught up — no submissions waiting for review.
+        }
+      </p>
+    </section>
+  }
+
+  <section class="stat-row">
+    <div class="stat-card">
+      <span class="stat-icon awaiting">⏳</span>
+      <div>
+        <strong>{{ awaitingReview() }}</strong>
+        <span>Awaiting review</span>
+        <small>submitted assignments</small>
+      </div>
+    </div>
+    <div class="stat-card">
+      <span class="stat-icon stars">⭐</span>
+      <div>
+        <strong>{{ totals().stars }}</strong>
+        <span>Stars earned</span>
+        <small>all students</small>
+      </div>
+    </div>
+    <div class="stat-card">
+      <span class="stat-icon badges">🎖️</span>
+      <div>
+        <strong>{{ totals().badges }}</strong>
+        <span>Badges earned</span>
+        <small>across all skill tracks</small>
+      </div>
+    </div>
+    <div class="stat-card">
+      <span class="stat-icon trophies">🏆</span>
+      <div>
+        <strong>{{ totals().trophies }}</strong>
+        <span>Trophies won</span>
+        <small>module completions</small>
+      </div>
+    </div>
+  </section>
+
+  <div class="tab-row">
+    <button type="button" class="tab-btn" [class.active]="tab() === 'submissions'" (click)="setTab('submissions')">
+      Submitted assignments
+    </button>
+    <button type="button" class="tab-btn" [class.active]="tab() === 'progress'" (click)="setTab('progress')">
+      Student progress
+    </button>
+  </div>
+
+  @if (loading()) {
+    <p class="loading-copy">Loading…</p>
+  } @else if (tab() === 'submissions') {
+    @if (submissions().length === 0) {
+      <div class="empty-state">
+        <span class="art">📭</span>
+        <p>No assignments submitted yet.</p>
+      </div>
+    } @else {
+      <div class="submission-list">
+        @for (submission of submissions(); track submission.id) {
+          <div class="submission-row">
+            <span class="file-icon">📄</span>
+            <div class="info">
+              <strong>{{ submission.taskTitle }}</strong>
+              <small>{{ submission.studentName }} · {{ submission.submittedAt | date: 'short' }}</small>
+              <small class="filename">{{ submission.fileName }}</small>
+            </div>
+            <span class="status-badge" [class]="statusLabel(submission)">{{ statusLabel(submission) }}</span>
+            <button type="button" class="btn-download" (click)="download(submission)">Download</button>
+            @if (submission.status === 'pending') {
+              <button type="button" class="btn-review" (click)="markReviewed(submission)">Mark reviewed</button>
+            }
+          </div>
+        }
+      </div>
+    }
+  } @else {
+    @if (studentRows().length === 0) {
+      <div class="empty-state">
+        <span class="art">🧑‍🎓</span>
+        <p>No students have signed up yet.</p>
+      </div>
+    } @else {
+      <div class="progress-grid">
+        @for (row of studentRows(); track row.student.id) {
+          <div class="progress-card">
+            <div class="progress-head">
+              <div>
+                <strong>{{ row.student.firstName }} {{ row.student.lastName }}</strong>
+                <span class="age-group-badge" [class.advanced]="row.student.ageGroup === 'advanced'">
+                  {{ row.student.ageGroup === 'advanced' ? 'Advanced' : 'Beginner' }}
+                </span>
+              </div>
+              @if (row.student.streakCount > 0) {
+                <span class="streak-badge">🔥 {{ row.student.streakCount }} day streak</span>
+              }
+            </div>
+
+            <div class="progress-bar-row">
+              <span>Course progress</span>
+              <span>{{ row.progressPercent }}%</span>
+            </div>
+            <div class="progress-bar-track">
+              <div class="progress-bar-fill" [style.width.%]="row.progressPercent"></div>
+            </div>
+
+            <div class="reward-mini-row">
+              <div>
+                <strong>{{ row.stars }}</strong>
+                <small>Stars</small>
+              </div>
+              <div>
+                <strong>{{ row.badges }}</strong>
+                <small>Badges</small>
+              </div>
+              <div>
+                <strong>{{ row.trophies }}</strong>
+                <small>Trophies</small>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  }
+</div>
