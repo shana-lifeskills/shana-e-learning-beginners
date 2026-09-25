@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 import { ModuleService } from '../../core/services/module.service';
-import { Trainer } from '../../core/models/user.model';
+import { AgeGroup, Trainer } from '../../core/models/user.model';
 import { Module } from '../../core/models/module.model';
 
 @Component({
@@ -19,12 +19,16 @@ export class ModuleList implements OnInit {
 
   readonly modules = signal<Module[]>([]);
   readonly loading = signal(true);
+  readonly activeTab = signal<AgeGroup>('beginner');
 
   // Beginner and advanced modules can share the same title (e.g. both
   // tiers have a "Self-Confidence" module with different content), so
-  // they're always shown as two separate, clearly-labeled groups.
+  // they're always kept as two separate, clearly-labeled groups — now
+  // switched between via tabs instead of stacked sections.
   readonly beginnerModules = computed(() => this.modules().filter((m) => m.ageGroup === 'beginner'));
   readonly advancedModules = computed(() => this.modules().filter((m) => m.ageGroup === 'advanced'));
+
+  readonly visibleModules = computed(() => (this.activeTab() === 'beginner' ? this.beginnerModules() : this.advancedModules()));
 
   ngOnInit(): void {
     const admin = this.auth.currentUser() as Trainer;
@@ -36,6 +40,10 @@ export class ModuleList implements OnInit {
       this.modules.set(modules);
       this.loading.set(false);
     });
+  }
+
+  setTab(ageGroup: AgeGroup): void {
+    this.activeTab.set(ageGroup);
   }
 
   lessonsLabel(module: Module): string {
