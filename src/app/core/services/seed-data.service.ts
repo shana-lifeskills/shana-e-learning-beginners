@@ -4,7 +4,7 @@ import { COLLECTIONS } from './collections';
 import { Student, Trainer } from '../models/user.model';
 import { Module } from '../models/module.model';
 
-const SEED_FLAG = 'seeded_v424';
+const SEED_FLAG = 'seeded_v425';
 
 /**
  * Populates the mock database with a small amount of realistic demo data
@@ -19817,7 +19817,7 @@ export class SeedDataService {
               continueLabel: 'Continue to My Activity →',
             },
             {
-              id: 'identity-advanced-w4-discussion',
+              id: 'identity-advanced-w4-reflection-questions',
               type: 'reflection-prompt-answers',
               order: 3,
               prompt: 'Reflection Questions',

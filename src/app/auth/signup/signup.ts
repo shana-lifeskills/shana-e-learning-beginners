@@ -24,20 +24,13 @@ export class Signup {
   readonly errorMessage = signal('');
   readonly submitting = signal(false);
   readonly showPassword = signal(false);
+  /** Public signup is students-only — Admin and Trainer accounts are created by an administrator. */
+  readonly signupTypes: readonly AccountType[] = ['beginner', 'advanced'];
   readonly accountType = signal<AccountType>('beginner');
 
-  readonly ctaLabel = computed(() => {
-    switch (this.accountType()) {
-      case 'advanced':
-        return 'Create account as an advanced student';
-      case 'trainer':
-        return 'Create account as an admin';
-      case 'coach':
-        return 'Create account as a trainer';
-      default:
-        return 'Create account as a beginner';
-    }
-  });
+  readonly ctaLabel = computed(() =>
+    this.accountType() === 'advanced' ? 'Create account as an advanced student' : 'Create account as a beginner'
+  );
 
   readonly form = this.fb.nonNullable.group({
     fullName: ['', [Validators.required, Validators.minLength(2)]],
@@ -47,7 +40,7 @@ export class Signup {
 
   constructor() {
     const queryType = this.route.snapshot.queryParamMap.get('accountType');
-    if (queryType === 'beginner' || queryType === 'advanced' || queryType === 'trainer' || queryType === 'coach') {
+    if (queryType === 'beginner' || queryType === 'advanced') {
       this.accountType.set(queryType);
     }
   }
@@ -75,17 +68,14 @@ export class Signup {
     const { fullName, email, password } = this.form.getRawValue();
     const [firstName, ...rest] = fullName.trim().split(/\s+/);
     const lastName = rest.join(' ');
-    const isStudent = accountType === 'beginner' || accountType === 'advanced';
-    const role = accountType === 'trainer' ? 'admin' : accountType === 'coach' ? 'instructor' : 'student';
-
     this.auth
       .register({
         firstName,
         lastName,
         email,
         password,
-        role,
-        ageGroup: isStudent ? accountType : undefined,
+        role: 'student',
+        ageGroup: accountType === 'advanced' ? 'advanced' : 'beginner',
       })
       .subscribe({
         next: (user) => {

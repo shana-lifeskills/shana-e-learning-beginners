@@ -14,7 +14,7 @@
         <app-friendly-alert [message]="errorMessage()" icon="💛" />
       }
 
-      <app-account-type-picker heading="I'm joining as a..." [selected]="accountType()" (selectedChange)="chooseAccountType($event)" />
+      <app-account-type-picker heading="I'm joining as a..." [types]="signupTypes" [selected]="accountType()" (selectedChange)="chooseAccountType($event)" />
 
       <form [formGroup]="form" (ngSubmit)="submit()">
         <div class="mb-2">

@@ -15,19 +15,26 @@ export interface SignupPayload {
   password: string;
   profileImage?: string;
   role?: 'student' | 'admin' | 'instructor';
-  /** Frontend-only concept, not sent to the backend — merged into the local profile. */
   ageGroup?: AgeGroup;
 }
 
-interface BackendUser {
+/** The user shape the backend returns from /auth/* and /users/me. */
+export interface BackendUser {
   id: string;
   firstName: string;
   lastName: string;
   email: string;
-  profileImage?: string;
+  profileImage?: string | null;
   role: 'student' | 'instructor' | 'admin';
   hasPaid?: boolean;
   emailVerified?: boolean;
+  ageGroup?: AgeGroup;
+  avatarId?: string | null;
+  avatarUrl?: string | null;
+  hasSeenWelcome?: boolean;
+  streakCount?: number;
+  lastActiveDate?: string | null;
+  createdAt?: string;
 }
 
 interface AuthResponse {
@@ -36,11 +43,11 @@ interface AuthResponse {
 }
 
 /**
- * Talks to the real backend for identity (register/login/refresh/logout),
- * assigned modules, and payment entitlement (hasPaid). The backend has no
- * concept of avatars, streaks or age groups yet, so those domain fields still
- * live in the local mock DB, keyed by the same user id the backend issues,
- * and are merged onto the backend identity here.
+ * Talks to the real backend for identity (register/login/refresh/logout), profile
+ * (age group, avatar, welcome state, streak), assigned modules and payment
+ * entitlement (hasPaid). The backend's values always win; a copy is kept in the
+ * local mock DB, keyed by the backend user id, because module/progress views still
+ * read the current student from there.
  */
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -73,6 +80,7 @@ export class AuthService {
       password: payload.password,
       ...(payload.profileImage ? { profileImage: payload.profileImage } : {}),
       ...(payload.role ? { role: payload.role } : {}),
+      ...(payload.ageGroup ? { ageGroup: payload.ageGroup } : {}),
     };
 
     return this.http.post<AuthResponse>(`${this.apiUrl}/register`, body, { withCredentials: true }).pipe(
@@ -117,9 +125,13 @@ export class AuthService {
     );
   }
 
+  /** Records the welcome as seen locally (instant) and on the backend, so it doesn't pop up again on another device. */
   markWelcomeSeen(userId: string): void {
     const updated = this.db.update<AppUser>(COLLECTIONS.users, userId, { hasSeenWelcome: true });
     if (updated) this.currentUser.set(updated);
+    // If this write fails the local flag still hides the welcome here; the worst
+    // case is seeing it once more on another device — not worth interrupting a child.
+    this.saveProfile({ hasSeenWelcome: true });
   }
 
   refreshCurrentUser(): void {
@@ -178,28 +190,33 @@ export class AuthService {
   }
 
   /**
-   * Combines a fresh backend identity with this user's locally-tracked domain data
-   * (avatar, streak, age group, hasPaid) and — for a student — their assigned modules,
-   * now fetched from the backend instead of local storage so assignment survives across
-   * devices. Returns an Observable since that fetch is an HTTP call.
+   * Builds the app's user from a fresh backend identity. Profile fields come from the
+   * backend (so they follow the user across devices), falling back to this browser's
+   * copy only for accounts the backend hasn't stored a value for yet. For a student,
+   * assigned modules are fetched from the backend too. Returns an Observable since
+   * that fetch is an HTTP call.
    */
   private mergeIdentity(backendUser: BackendUser, ageGroupHint?: AgeGroup): Observable<AppUser> {
     const existing = this.db.getById<AppUser>(COLLECTIONS.users, backendUser.id);
     const role: Role =
       backendUser.role === 'student' ? 'student' : backendUser.role === 'instructor' ? 'coach' : 'trainer';
 
+    const avatarId = backendUser.avatarId ?? existing?.avatarId ?? this.randomAvatar();
+    if (!backendUser.avatarId) this.saveProfile({ avatarId });
+
     const base = {
       id: backendUser.id,
       email: backendUser.email,
       firstName: backendUser.firstName,
       lastName: backendUser.lastName,
-      profileImage: backendUser.profileImage,
-      avatarId: existing?.avatarId ?? this.randomAvatar(),
-      avatarUrl: existing?.avatarUrl,
-      createdAt: existing?.createdAt ?? new Date().toISOString(),
-      hasSeenWelcome: existing?.hasSeenWelcome ?? false,
-      streakCount: existing?.streakCount ?? 0,
-      lastActiveDate: existing?.lastActiveDate ?? '',
+      profileImage: backendUser.profileImage ?? undefined,
+      avatarId,
+      avatarUrl: backendUser.avatarUrl ?? existing?.avatarUrl,
+      createdAt: backendUser.createdAt ?? existing?.createdAt ?? new Date().toISOString(),
+      // Once seen anywhere, stays seen.
+      hasSeenWelcome: (backendUser.hasSeenWelcome ?? false) || (existing?.hasSeenWelcome ?? false),
+      streakCount: backendUser.streakCount ?? existing?.streakCount ?? 0,
+      lastActiveDate: backendUser.lastActiveDate ?? existing?.lastActiveDate ?? '',
       emailVerified: backendUser.emailVerified ?? false,
     };
 
@@ -231,7 +248,7 @@ export class AuthService {
             ...base,
             role: 'student',
             assignedModuleIds,
-            ageGroup: (existing as Student | undefined)?.ageGroup ?? ageGroupHint ?? 'beginner',
+            ageGroup: backendUser.ageGroup ?? (existing as Student | undefined)?.ageGroup ?? ageGroupHint ?? 'beginner',
             hasPaid: backendUser.hasPaid ?? false,
           };
           this.db.upsert(COLLECTIONS.users, student);
@@ -240,7 +257,14 @@ export class AuthService {
       );
   }
 
-  /** Increments the streak once per calendar day, resets it if a day was missed. */
+  /** Fire-and-forget profile write to the backend; the local copy is already updated. */
+  private saveProfile(changes: { avatarId?: string; hasSeenWelcome?: boolean }): void {
+    this.http.put(`${environment.apiUrl}/users/me`, changes, { withCredentials: true }).subscribe({ error: () => undefined });
+  }
+
+  /** Increments the streak once per calendar day, resets it if a day was missed. The
+   *  backend already counts each login/refresh, so with a current backend value this is
+   *  a no-op; it only covers a session whose backend streak couldn't be read. */
   private bumpStreak(user: AppUser): AppUser {
     const today = new Date().toISOString().slice(0, 10);
     if (user.lastActiveDate === today) return user;
