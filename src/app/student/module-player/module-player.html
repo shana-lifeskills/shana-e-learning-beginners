@@ -796,6 +796,8 @@
                 <app-sticker-poster-step-view [step]="exercise" (submitted)="onShared($event)" />
               } @else if (exercise.type === 'diversity-poster') {
                 <app-diversity-poster-step-view [step]="exercise" (submitted)="onShared($event)" />
+              } @else if (exercise.type === 'empathy-warmup') {
+                <app-empathy-warmup-step-view [step]="exercise" (continued)="onStepContinue()" />
               }
             </div>
           }

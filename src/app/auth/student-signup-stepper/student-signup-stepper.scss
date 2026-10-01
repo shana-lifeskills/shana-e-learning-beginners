@@ -1,0 +1,257 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+.stepper {
+  width: 100%;
+}
+
+.parent-assist-banner {
+  background: rgba(v.$color-sunshine, 0.25);
+  border: 1.5px dashed v.$color-coral;
+  border-radius: v.$border-radius-sm;
+  padding: 0.75rem 1rem;
+  font-size: 0.85rem;
+  color: v.$color-navy-text;
+  margin-bottom: 1.25rem;
+
+  strong { color: v.$color-coral; }
+}
+
+.age-group-warning {
+  background: rgba(v.$color-bubble-pink, 0.18);
+  border: 1.5px dashed #d94f6a;
+  border-radius: v.$border-radius-sm;
+  padding: 0.75rem 1rem;
+  font-size: 0.85rem;
+  color: v.$color-navy-text;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+
+  strong { color: #d94f6a; }
+}
+
+// Not inherited from _auth-shared.scss — that partial is compiled into
+// Signup's own view-encapsulated stylesheet, not visible to this child
+// component's template, so it needs its own copy of this small pattern.
+.link-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  font-weight: 700;
+  color: v.$color-brand-blue;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.step-progress {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.25rem;
+  margin-bottom: 1.5rem;
+  overflow-x: auto;
+  padding-bottom: 0.25rem;
+}
+
+.step-dot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  flex: 1;
+  min-width: 4.5rem;
+
+  .dot-num {
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: v.$color-cream-bg;
+    color: rgba(43, 45, 66, 0.5);
+    font-weight: 800;
+    font-size: 0.8rem;
+  }
+
+  .dot-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: rgba(43, 45, 66, 0.5);
+    text-align: center;
+  }
+
+  &.active .dot-num {
+    background: v.$color-brand-blue;
+    color: v.$color-white;
+  }
+
+  &.active .dot-label {
+    color: v.$color-brand-blue;
+  }
+
+  &.done .dot-num {
+    background: v.$color-leaf;
+    color: v.$color-white;
+  }
+}
+
+app-friendly-alert {
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.step-section {
+  h2 {
+    @include m.auth-heading;
+    font-size: 1.25rem;
+    color: v.$color-navy-text;
+    margin-bottom: 0.25rem;
+  }
+
+  .step-hint {
+    font-size: 0.82rem;
+    color: rgba(43, 45, 66, 0.6);
+    margin-bottom: 1rem;
+  }
+}
+
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+
+  @media (max-width: 520px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.field-error {
+  display: block;
+  color: v.$color-coral;
+  font-weight: 700;
+  font-size: 0.78rem;
+  margin-top: 0.25rem;
+}
+
+.radio-row {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.radio-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  border: 2px solid v.$color-cream-bg;
+  border-radius: v.$border-radius-pill;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  cursor: pointer;
+
+  input:checked ~ & { }
+}
+
+.option-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  &.checkboxes {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}
+
+.option-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  border: 2px solid v.$color-cream-bg;
+  border-radius: v.$border-radius-sm;
+  padding: 0.65rem 0.9rem;
+  cursor: pointer;
+  font-weight: 600;
+
+  input { margin-top: 0.2rem; }
+
+  strong { display: block; color: v.$color-navy-text; font-size: 0.9rem; }
+  small { display: block; color: rgba(43, 45, 66, 0.55); font-weight: 500; font-size: 0.78rem; }
+
+  &:has(input:checked) {
+    border-color: v.$color-brand-blue;
+    background: rgba(v.$color-brand-blue, 0.06);
+  }
+}
+
+.terms-box {
+  max-height: 16rem;
+  overflow-y: auto;
+  border: 2px solid v.$color-cream-bg;
+  border-radius: v.$border-radius-sm;
+  padding: 1rem 1.1rem;
+  margin-bottom: 1rem;
+  background: v.$color-white;
+
+  p {
+    font-size: 0.82rem;
+    line-height: 1.5;
+    color: rgba(43, 45, 66, 0.75);
+    margin-bottom: 0.5rem;
+  }
+
+  strong { color: v.$color-navy-text; }
+}
+
+.terms-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  font-weight: 700;
+  font-size: 0.88rem;
+  color: v.$color-navy-text;
+  cursor: pointer;
+
+  input { margin-top: 0.2rem; }
+}
+
+.step-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+
+  button:only-child {
+    margin-left: auto;
+  }
+}
+
+// Reuse the same password-field/toggle-visibility look from the shared
+// auth styles (this component isn't nested under .auth-card, so it needs
+// its own copy rather than inheriting from _auth-shared.scss).
+.password-field {
+  position: relative;
+
+  input { padding-right: 2.75rem; }
+
+  .toggle-visibility {
+    position: absolute;
+    top: 50%;
+    right: 0.35rem;
+    transform: translateY(-50%);
+    border: none;
+    background: transparent;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    font-size: 1.05rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover { background: v.$color-cream-bg; }
+  }
+}

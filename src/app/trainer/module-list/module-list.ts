@@ -6,6 +6,13 @@ import { ModuleService } from '../../core/services/module.service';
 import { AgeGroup, Trainer } from '../../core/models/user.model';
 import { Module } from '../../core/models/module.model';
 
+type ModuleListTab = AgeGroup | 'games';
+
+interface TrackGroup {
+  trackName: string;
+  modules: Module[];
+}
+
 @Component({
   selector: 'app-module-list',
   standalone: true,
@@ -19,16 +26,43 @@ export class ModuleList implements OnInit {
 
   readonly modules = signal<Module[]>([]);
   readonly loading = signal(true);
-  readonly activeTab = signal<AgeGroup>('beginner');
+  readonly activeTab = signal<ModuleListTab>('beginner');
 
   // Beginner and advanced modules can share the same title (e.g. both
   // tiers have a "Self-Confidence" module with different content), so
   // they're always kept as two separate, clearly-labeled groups — now
-  // switched between via tabs instead of stacked sections.
-  readonly beginnerModules = computed(() => this.modules().filter((m) => m.ageGroup === 'beginner'));
-  readonly advancedModules = computed(() => this.modules().filter((m) => m.ageGroup === 'advanced'));
+  // switched between via tabs instead of stacked sections. Game-category
+  // modules (e.g. Counting Critters, Strength Match) live under their own
+  // Games tab regardless of age group, not mixed into Beginner/Advanced.
+  readonly beginnerModules = computed(() => this.modules().filter((m) => m.ageGroup === 'beginner' && m.category !== 'game'));
+  readonly advancedModules = computed(() => this.modules().filter((m) => m.ageGroup === 'advanced' && m.category !== 'game'));
+  readonly gameModules = computed(() => this.modules().filter((m) => m.category === 'game'));
 
-  readonly visibleModules = computed(() => (this.activeTab() === 'beginner' ? this.beginnerModules() : this.advancedModules()));
+  readonly visibleModules = computed(() => {
+    switch (this.activeTab()) {
+      case 'beginner':
+        return this.beginnerModules();
+      case 'advanced':
+        return this.advancedModules();
+      case 'games':
+        return this.gameModules();
+    }
+  });
+
+  /** Beginner/Advanced modules grouped by their curriculum track (e.g.
+   *  "Character Development", "Personal Empowerment") — same grouping the
+   *  student dashboard already uses (dashboard.ts's `tracks`). Games have
+   *  no trackName, so the Games tab stays a flat list. */
+  readonly visibleTrackGroups = computed<TrackGroup[]>(() => {
+    const groups = new Map<string, Module[]>();
+    for (const module of this.visibleModules()) {
+      const track = module.trackName ?? 'Other';
+      groups.set(track, [...(groups.get(track) ?? []), module]);
+    }
+    return Array.from(groups, ([trackName, modules]) => ({ trackName, modules }));
+  });
+
+  readonly isGroupedTab = computed(() => this.activeTab() !== 'games');
 
   ngOnInit(): void {
     const admin = this.auth.currentUser() as Trainer;
@@ -42,8 +76,8 @@ export class ModuleList implements OnInit {
     });
   }
 
-  setTab(ageGroup: AgeGroup): void {
-    this.activeTab.set(ageGroup);
+  setTab(tab: ModuleListTab): void {
+    this.activeTab.set(tab);
   }
 
   lessonsLabel(module: Module): string {

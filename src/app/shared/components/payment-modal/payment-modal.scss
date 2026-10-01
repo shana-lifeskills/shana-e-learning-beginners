@@ -130,6 +130,17 @@
   }
 }
 
+// Only the Paystack tile remains active for now (see payment-modal.html) —
+// let it span the full grid width and read as a single wide button instead
+// of a small square tile sized for a 3-across grid.
+.method-btn--full {
+  grid-column: 1 / -1;
+  flex-direction: row;
+  justify-content: center;
+  font-size: 0.95rem;
+  padding: 1.1rem;
+}
+
 /** Brand-colored badges standing in for each payment method's real logo —
  *  matches each provider's actual signature color so they stay recognizable
  *  without embedding external logo image assets. */

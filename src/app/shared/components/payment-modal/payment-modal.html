@@ -12,9 +12,15 @@
           <span class="amount-value">GH₵{{ amountCedisDisplay() }}</span>
         </div>
 
-        <p class="method-heading">How would you like to pay?</p>
+        <!-- <p class="method-heading">How would you like to pay?</p> -->
+        <p class="method-heading">Pay with Paystack</p>
 
         <div class="method-grid">
+          <!-- Card, MTN, Telecel, and AirtelTigo temporarily hidden — only
+               Paystack checkout is confirmed working with the real keys
+               right now. Re-enable by uncommenting once the others are
+               verified too. -->
+          <!--
           <button type="button" class="method-btn" (click)="chooseCard()">
             <span class="brand-badge card" aria-hidden="true">
               @if (!logoFailed('card')) {
@@ -25,7 +31,8 @@
             </span>
             <span>Card</span>
           </button>
-          <button type="button" class="method-btn" (click)="choosePaystackCheckout()">
+          -->
+          <button type="button" class="method-btn method-btn--full" (click)="choosePaystackCheckout()">
             <span class="brand-badge paystack" aria-hidden="true">
               @if (!logoFailed('paystack')) {
                 <img src="/assets/images/payment-logos/paystack.png" alt="" (error)="onLogoError('paystack')" />
@@ -35,6 +42,7 @@
             </span>
             <span>Paystack</span>
           </button>
+          <!--
           <button type="button" class="method-btn" (click)="chooseMomo('mtn')">
             <span class="brand-badge mtn" aria-hidden="true">
               @if (!logoFailed('mtn')) {
@@ -65,6 +73,7 @@
             </span>
             <span>AirtelTigo Money</span>
           </button>
+          -->
         </div>
 
         <p class="paystack-footer">🔒 Secured by Paystack.</p>

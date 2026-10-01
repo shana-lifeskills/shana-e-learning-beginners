@@ -7,6 +7,27 @@
   padding: 2rem 2.5rem 4rem;
 }
 
+// Same grouping/heading style the student dashboard uses for curriculum
+// tracks (dashboard.scss) — kept visually consistent across both.
+.track-group {
+  margin-bottom: 2rem;
+
+  &:last-child { margin-bottom: 0; }
+}
+
+.track-heading {
+  display: inline-block;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: v.$color-grape;
+  background: rgba(166, 109, 212, 0.12);
+  padding: 0.35rem 0.9rem;
+  border-radius: v.$border-radius-pill;
+  margin-bottom: 1rem;
+}
+
 .page-head {
   display: flex;
   align-items: center;

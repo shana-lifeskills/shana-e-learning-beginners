@@ -28,28 +28,49 @@
         🚀 Advanced Modules
         <span class="count-pill">{{ advancedModules().length }}</span>
       </button>
+      <button type="button" class="tab-btn" [class.active]="activeTab() === 'games'" (click)="setTab('games')">
+        🎮 Games
+        <span class="count-pill">{{ gameModules().length }}</span>
+      </button>
     </div>
 
     @if (visibleModules().length === 0) {
       <div class="empty-state">
         <span class="art">📭</span>
-        <p>No {{ activeTab() }} modules uploaded yet.</p>
+        <p>No {{ activeTab() === 'games' ? 'game' : activeTab() }} modules uploaded yet.</p>
         <a routerLink="/admin/modules/new" class="btn btn-primary btn-lg-tappable">Upload a Module</a>
       </div>
+    } @else if (isGroupedTab()) {
+      <!-- Beginner/Advanced modules grouped by curriculum track, same
+           grouping the student dashboard uses. -->
+      @for (group of visibleTrackGroups(); track group.trackName) {
+        <section class="track-group">
+          <h2 class="track-heading">{{ group.trackName }}</h2>
+          <div class="module-grid">
+            @for (module of group.modules; track module.id) {
+              <ng-container [ngTemplateOutlet]="moduleCard" [ngTemplateOutletContext]="{ $implicit: module }" />
+            }
+          </div>
+        </section>
+      }
     } @else {
       <div class="module-grid">
         @for (module of visibleModules(); track module.id) {
-          <div class="module-card" [style.--accent]="module.themeColor">
-            <span class="icon">{{ module.icon }}</span>
-            <div class="info">
-              <h3>{{ module.title }}</h3>
-              <p>{{ module.description }}</p>
-              <small>{{ lessonsLabel(module) }} • {{ exercisesLabel(module) }}</small>
-            </div>
-            <a [routerLink]="['/admin/modules', module.id, 'assign']" class="btn btn-outline-primary">Assign</a>
-          </div>
+          <ng-container [ngTemplateOutlet]="moduleCard" [ngTemplateOutletContext]="{ $implicit: module }" />
         }
       </div>
     }
   }
+
+  <ng-template #moduleCard let-module>
+    <div class="module-card" [style.--accent]="module.themeColor">
+      <span class="icon">{{ module.icon }}</span>
+      <div class="info">
+        <h3>{{ module.title }}</h3>
+        <p>{{ module.description }}</p>
+        <small>{{ lessonsLabel(module) }} • {{ exercisesLabel(module) }}</small>
+      </div>
+      <a [routerLink]="['/admin/modules', module.id, 'assign']" class="btn btn-outline-primary">Assign</a>
+    </div>
+  </ng-template>
 </div>
