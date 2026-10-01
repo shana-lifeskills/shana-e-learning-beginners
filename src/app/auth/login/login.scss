@@ -1,1 +1,19 @@
 @use '../../../assets/styles/auth-shared';
+@use '../../../assets/styles/variables' as v;
+
+// Matches signup's .auth-card--wide so the panel doesn't visibly resize
+// when switching between sign-in and create-account.
+.auth-card {
+  max-width: 46rem;
+}
+
+.parent-assist-note {
+  background: rgba(v.$color-sunshine, 0.25);
+  border: 1.5px dashed v.$color-coral;
+  border-radius: v.$border-radius-sm;
+  padding: 0.6rem 0.9rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: v.$color-navy-text;
+  margin-bottom: 1rem;
+}

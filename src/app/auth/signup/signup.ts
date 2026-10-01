@@ -7,11 +7,12 @@ import { FriendlyAlert } from '../../shared/components/friendly-alert/friendly-a
 import { AuthHero } from '../../shared/components/auth-hero/auth-hero';
 import { AccountType, AccountTypePicker } from '../../shared/components/account-type-picker/account-type-picker';
 import { ROLE_HOME_PATH } from '../../core/models/user.model';
+import { StudentSignupStepper } from '../student-signup-stepper/student-signup-stepper';
 
 @Component({
   selector: 'app-signup',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink, FriendlyAlert, AuthHero, AccountTypePicker],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, FriendlyAlert, AuthHero, AccountTypePicker, StudentSignupStepper],
   templateUrl: './signup.html',
   styleUrl: './signup.scss',
 })
@@ -25,6 +26,14 @@ export class Signup {
   readonly submitting = signal(false);
   readonly showPassword = signal(false);
   readonly accountType = signal<AccountType>('beginner');
+
+  /** The real child-registration stepper replaces this component's own
+   *  3-field form only for the student tabs — Trainer/Admin keep the
+   *  simple form below unchanged. */
+  readonly isStudentSignup = computed(() => this.accountType() === 'beginner' || this.accountType() === 'advanced');
+  /** Narrowed for the stepper's [selectedAccountType] input, which only
+   *  ever renders once isStudentSignup() is true. */
+  readonly studentAccountType = computed<'beginner' | 'advanced'>(() => (this.accountType() === 'advanced' ? 'advanced' : 'beginner'));
 
   readonly ctaLabel = computed(() => {
     switch (this.accountType()) {

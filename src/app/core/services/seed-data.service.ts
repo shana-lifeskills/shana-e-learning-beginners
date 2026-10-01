@@ -3,8 +3,7 @@ import { DatabaseService } from './database.service';
 import { COLLECTIONS } from './collections';
 import { Student, Trainer } from '../models/user.model';
 import { Module } from '../models/module.model';
-
-const SEED_FLAG = 'seeded_v424';
+import { SEED_FLAG } from './seed-flag';
 
 /**
  * Populates the mock database with a small amount of realistic demo data
@@ -21826,6 +21825,337 @@ export class SeedDataService {
       ],
     };
 
+    const empathyAdvancedModule: Module = {
+      id: 'module-empathy-advanced',
+      title: 'Empathy Module',
+      description:
+        'Focus: Understanding others, managing conflict, taking responsibility, and building empathy as a habit.',
+      themeColor: '#E85D75',
+      icon: '🤝',
+      createdByTrainerId: trainer.id,
+      createdAt: now,
+      category: 'life-skills',
+      ageGroup: 'advanced',
+      trackName: 'Character Development',
+      // Weeks are added lesson by lesson in follow-up prompts.
+      lessons: [
+        {
+          id: 'empathy-advanced-week-1',
+          title: 'Seeing Different Perspectives',
+          order: 1,
+          week: 1,
+          stage: 'Awareness',
+          introWelcome: {
+            weekPill: '📅 Week 1',
+            titleStart: 'Seeing Different',
+            titleAccent: 'Perspectives',
+            titleAccentColor: 'coral',
+            subtitle: 'The same moment can look and feel completely different depending on who’s living it.',
+            objectiveIcon: '👀',
+            objectiveIconColor: 'coral',
+            objectiveHeading: 'Objective',
+            objectiveText:
+              'Learners understand that people can experience the same situation differently and that empathy begins with perspective-taking.',
+            startLabel: 'Let’s Get Started',
+            startBtnColor: 'coral',
+            image: '/assets/images/teacher-welcome.png',
+            imageAlt: 'A warm, smiling teacher welcoming the class',
+          },
+          // Remaining exercises are added in follow-up prompts.
+          exercises: [
+            {
+              id: 'empathy-advanced-w1-warmup',
+              type: 'empathy-warmup',
+              order: 1,
+              prompt: 'What Is Empathy?',
+              badge: 'Warm-Up',
+              question: 'Empathy means:',
+              options: [
+                { id: 'a', text: 'Feeling sorry for people' },
+                { id: 'b', text: 'Fixing other people’s problems' },
+                { id: 'c', text: 'Understanding how someone else feels' },
+                { id: 'd', text: 'Ignoring your own feelings' },
+              ],
+              correctOptionId: 'c',
+              feedbackText: 'Empathy starts with understanding, not fixing.',
+              continueLabel: 'Continue →',
+            },
+          ],
+        },
+      ],
+    };
+
+
+    const listeningAdvancedModule: Module = {
+      id: 'module-listening-advanced',
+      title: 'Listening Module',
+      description: 'Learn how to listen with your ears, eyes, and heart so others feel truly heard.',
+      themeColor: '#2563EB',
+      icon: '👂',
+      createdByTrainerId: trainer.id,
+      createdAt: now,
+      category: 'life-skills',
+      ageGroup: 'advanced',
+      trackName: 'Communication',
+      // Weeks are added lesson by lesson in follow-up prompts.
+      lessons: [],
+    };
+
+    const respectAdvancedModule: Module = {
+      id: 'module-respect-advanced',
+      title: 'Respect Module',
+      description: 'Focus: Respect for Self • Respect for Others • Respect for Belongings • Respect for Differences',
+      themeColor: '#DB2777',
+      icon: '🙌',
+      createdByTrainerId: trainer.id,
+      createdAt: now,
+      category: 'life-skills',
+      ageGroup: 'advanced',
+      trackName: 'Character Development',
+      // Weeks are added lesson by lesson in follow-up prompts.
+      lessons: [],
+    };
+
+    const speakingAdvancedModule: Module = {
+      id: 'module-speaking-advanced',
+      title: 'Speaking Module',
+      description: 'Learn how to speak clearly and confidently so others understand what you mean.',
+      themeColor: '#EA580C',
+      icon: '🗣️',
+      createdByTrainerId: trainer.id,
+      createdAt: now,
+      category: 'life-skills',
+      ageGroup: 'advanced',
+      trackName: 'Communication',
+      // Weeks are added lesson by lesson in follow-up prompts.
+      lessons: [],
+    };
+
+    const expressionAdvancedModule: Module = {
+      id: 'module-expression-advanced',
+      title: 'Expression Module',
+      description: 'Learn how to share your thoughts, feelings, and ideas so others truly understand you.',
+      themeColor: '#9333EA',
+      icon: '🎭',
+      createdByTrainerId: trainer.id,
+      createdAt: now,
+      category: 'life-skills',
+      ageGroup: 'advanced',
+      trackName: 'Communication',
+      // Weeks are added lesson by lesson in follow-up prompts.
+      lessons: [],
+    };
+
+    const etiquetteAdvancedModule: Module = {
+      id: 'module-etiquette-advanced',
+      title: 'Etiquette Module',
+      description: 'Being Polite, Respectful & Kind Online. Digital etiquette means being polite when using technology, respecting others online, using kind words in messages and chats, and making good choices in digital spaces. A 4-week journey in digital responsibility.',
+      themeColor: '#4F46E5',
+      icon: '🤝',
+      createdByTrainerId: trainer.id,
+      createdAt: now,
+      category: 'life-skills',
+      ageGroup: 'advanced',
+      trackName: 'Digital Responsibility',
+      // Weeks are added lesson by lesson in follow-up prompts.
+      lessons: [],
+    };
+
+    const habitsAdvancedModule: Module = {
+      id: 'module-habits-advanced',
+      title: 'Habits Module',
+      description: 'Safe, Smart & Responsible Use of Technology. Digital responsibility means using devices in a safe and respectful way, making good choices online, protecting yourself and others, and managing screen time wisely.',
+      themeColor: '#0891B2',
+      icon: '📱',
+      createdByTrainerId: trainer.id,
+      createdAt: now,
+      category: 'life-skills',
+      ageGroup: 'advanced',
+      trackName: 'Digital Responsibility',
+      // Weeks are added lesson by lesson in follow-up prompts.
+      lessons: [],
+    };
+
+    const creativityAdvancedModule: Module = {
+      id: 'module-creativity-advanced',
+      title: 'Creativity Module',
+      description: 'Theme: Developing Cognitive Skills. What is Creativity? Creativity means using your imagination to think of new ideas, solve problems, or express yourself in unique ways.',
+      themeColor: '#D97706',
+      icon: '🎨',
+      createdByTrainerId: trainer.id,
+      createdAt: now,
+      category: 'life-skills',
+      ageGroup: 'advanced',
+      trackName: 'Cognitive Skills',
+      // Weeks are added lesson by lesson in follow-up prompts.
+      lessons: [],
+    };
+
+    const strategizingAdvancedModule: Module = {
+      id: 'module-strategizing-advanced',
+      title: 'Strategizing Module',
+      description: 'Theme: Developing Cognitive Skills. Duration: 4 Weeks. What is Strategizing? Strategizing means thinking ahead and making a plan to solve a problem or reach a goal.',
+      themeColor: '#1D4ED8',
+      icon: '♟️',
+      createdByTrainerId: trainer.id,
+      createdAt: now,
+      category: 'life-skills',
+      ageGroup: 'advanced',
+      trackName: 'Cognitive Skills',
+      // Weeks are added lesson by lesson in follow-up prompts.
+      lessons: [],
+    };
+
+    const thinkingAdvancedModule: Module = {
+      id: 'module-thinking-advanced',
+      title: 'Thinking Module',
+      description: 'Theme: Developing Cognitive Skills.',
+      themeColor: '#6D28D9',
+      icon: '🧠',
+      createdByTrainerId: trainer.id,
+      createdAt: now,
+      category: 'life-skills',
+      ageGroup: 'advanced',
+      trackName: 'Cognitive Skills',
+      // Weeks are added lesson by lesson in follow-up prompts.
+      lessons: [],
+    };
+
+    const choicesAdvancedModule: Module = {
+      id: 'module-choices-advanced',
+      title: 'Choices Module',
+      description: 'Theme: Smart Financial Decisions & Money Management. Learn to use limited money wisely, weigh trade-offs, plan spending and saving, and think about consequences before you act.',
+      themeColor: '#059669',
+      icon: '💰',
+      createdByTrainerId: trainer.id,
+      createdAt: now,
+      category: 'life-skills',
+      ageGroup: 'advanced',
+      trackName: 'Financial Responsibility',
+      // Weeks are added lesson by lesson in follow-up prompts.
+      lessons: [],
+    };
+
+    const budgetingAdvancedModule: Module = {
+      id: 'module-budgeting-advanced',
+      title: 'Budgeting Module',
+      description: 'Theme: Planning How to Use Money Wisely. Learn to plan how you use money, decide what to spend and what to save, avoid waste, and make smart money choices.',
+      themeColor: '#B45309',
+      icon: '📊',
+      createdByTrainerId: trainer.id,
+      createdAt: now,
+      category: 'life-skills',
+      ageGroup: 'advanced',
+      trackName: 'Financial Responsibility',
+      // Weeks are added lesson by lesson in follow-up prompts.
+      lessons: [],
+    };
+
+    const savingsAdvancedModule: Module = {
+      id: 'module-savings-advanced',
+      title: 'Savings Module',
+      description: 'Theme: Building Strong Saving Habits. Saving means keeping money for later, not spending everything at once, planning for future needs, and building discipline with money.',
+      themeColor: '#0F766E',
+      icon: '🐷',
+      createdByTrainerId: trainer.id,
+      createdAt: now,
+      category: 'life-skills',
+      ageGroup: 'advanced',
+      trackName: 'Financial Responsibility',
+      // Weeks are added lesson by lesson in follow-up prompts.
+      lessons: [],
+    };
+
+    const disciplineAdvancedModule: Module = {
+      id: 'module-discipline-advanced',
+      title: 'Discipline Module',
+      description: 'Theme: Developing Personal Responsibility & Self-Control. Discipline means doing the right thing even when it is hard, controlling your actions and choices, and following rules and routines.',
+      themeColor: '#0369A1',
+      icon: '🧭',
+      createdByTrainerId: trainer.id,
+      createdAt: now,
+      category: 'life-skills',
+      ageGroup: 'advanced',
+      trackName: 'Leadership Potential',
+      // Weeks are added lesson by lesson in follow-up prompts.
+      lessons: [],
+    };
+
+    const serviceAdvancedModule: Module = {
+      id: 'module-service-advanced',
+      title: 'Service Module',
+      description: 'Theme: Helping Others & Making a Difference. Service means noticing when someone needs help, choosing to lend a hand, and doing small kind acts that make life better for the people and places around us.',
+      themeColor: '#C2410C',
+      icon: '🤝',
+      createdByTrainerId: trainer.id,
+      createdAt: now,
+      category: 'life-skills',
+      ageGroup: 'advanced',
+      trackName: 'Leadership Potential',
+      // Weeks are added lesson by lesson in follow-up prompts.
+      lessons: [],
+    };
+
+    const teamworkAdvancedModule: Module = {
+      id: 'module-teamwork-advanced',
+      title: 'Teamwork Module',
+      description: 'Theme: Working Together. Teamwork means doing your part, listening to others, sharing the load, and helping the group reach a goal that no one could reach alone.',
+      themeColor: '#7C3AED',
+      icon: '🧩',
+      createdByTrainerId: trainer.id,
+      createdAt: now,
+      category: 'life-skills',
+      ageGroup: 'advanced',
+      trackName: 'Leadership Potential',
+      // Weeks are added lesson by lesson in follow-up prompts.
+      lessons: [],
+    };
+
+    const hygieneAdvancedModule: Module = {
+      id: 'module-hygiene-advanced',
+      title: 'Hygiene Module',
+      description: 'Keep your body and your space clean to stay healthy, feel fresh, and keep germs from spreading.',
+      themeColor: '#0284C7',
+      icon: '🧼',
+      createdByTrainerId: trainer.id,
+      createdAt: now,
+      category: 'life-skills',
+      ageGroup: 'advanced',
+      trackName: 'Health and Wellbeing',
+      // Weeks are added lesson by lesson in follow-up prompts.
+      lessons: [],
+    };
+
+    const nutritionAdvancedModule: Module = {
+      id: 'module-nutrition-advanced',
+      title: 'Nutrition Module',
+      description: 'Give your body the food and drinks it needs to grow, stay healthy, and have the energy to learn and play.',
+      themeColor: '#DC2626',
+      icon: '🍎',
+      createdByTrainerId: trainer.id,
+      createdAt: now,
+      category: 'life-skills',
+      ageGroup: 'advanced',
+      trackName: 'Health and Wellbeing',
+      // Weeks are added lesson by lesson in follow-up prompts.
+      lessons: [],
+    };
+
+    const wellnessAdvancedModule: Module = {
+      id: 'module-wellness-advanced',
+      title: 'Wellness Module',
+      description: 'Take care of your whole self — your body, your feelings, your rest, and the people who care about you — so you can feel healthy, happy, and strong.',
+      themeColor: '#65A30D',
+      icon: '🌱',
+      createdByTrainerId: trainer.id,
+      createdAt: now,
+      category: 'life-skills',
+      ageGroup: 'advanced',
+      trackName: 'Health and Wellbeing',
+      // Weeks are added lesson by lesson in follow-up prompts.
+      lessons: [],
+    };
+
     // Every seed record below is upserted by a fixed id instead of overwriting
     // the whole collection with `saveAll` — that way, if this ever runs more
     // than once (e.g. a future schema change bumps SEED_FLAG again), it can
@@ -21859,6 +22189,25 @@ export class SeedDataService {
     this.db.upsert(COLLECTIONS.modules, identityAdvancedModule);
     this.db.upsert(COLLECTIONS.modules, planningAdvancedModule);
     this.db.upsert(COLLECTIONS.modules, confidenceAdvancedModule);
+    this.db.upsert(COLLECTIONS.modules, empathyAdvancedModule);
+    this.db.upsert(COLLECTIONS.modules, listeningAdvancedModule);
+    this.db.upsert(COLLECTIONS.modules, respectAdvancedModule);
+    this.db.upsert(COLLECTIONS.modules, speakingAdvancedModule);
+    this.db.upsert(COLLECTIONS.modules, expressionAdvancedModule);
+    this.db.upsert(COLLECTIONS.modules, etiquetteAdvancedModule);
+    this.db.upsert(COLLECTIONS.modules, habitsAdvancedModule);
+    this.db.upsert(COLLECTIONS.modules, creativityAdvancedModule);
+    this.db.upsert(COLLECTIONS.modules, strategizingAdvancedModule);
+    this.db.upsert(COLLECTIONS.modules, thinkingAdvancedModule);
+    this.db.upsert(COLLECTIONS.modules, choicesAdvancedModule);
+    this.db.upsert(COLLECTIONS.modules, budgetingAdvancedModule);
+    this.db.upsert(COLLECTIONS.modules, savingsAdvancedModule);
+    this.db.upsert(COLLECTIONS.modules, disciplineAdvancedModule);
+    this.db.upsert(COLLECTIONS.modules, serviceAdvancedModule);
+    this.db.upsert(COLLECTIONS.modules, teamworkAdvancedModule);
+    this.db.upsert(COLLECTIONS.modules, hygieneAdvancedModule);
+    this.db.upsert(COLLECTIONS.modules, nutritionAdvancedModule);
+    this.db.upsert(COLLECTIONS.modules, wellnessAdvancedModule);
 
     const ava: Student = {
       id: 'student-1',

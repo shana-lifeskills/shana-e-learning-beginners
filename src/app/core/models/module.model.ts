@@ -248,7 +248,8 @@ export type ExerciseType =
   | 'discussion-true-false'
   | 'shopping-planner-challenge'
   | 'shopping-planner-confidence-link'
-  | 'discussion-fill-blank';
+  | 'discussion-fill-blank'
+  | 'empathy-warmup';
 
 export interface BaseExercise {
   id: string;
@@ -803,6 +804,30 @@ export interface WarmupQuizStep extends BaseExercise {
   footerNote: string;
   /** Callout encouraging a parent/guardian to help the student with this exercise. */
   parentNote: string;
+  continueLabel: string;
+}
+
+/** One lettered option inside an EmpathyWarmupStep. */
+export interface EmpathyWarmupOption {
+  id: string;
+  text: string;
+}
+
+/**
+ * A single-question, image-free warm-up — a badge, one question, and
+ * lettered (A/B/C/D) options in a simple card. Picking wrong shakes the
+ * option and lets the student try again; picking right shows the feedback
+ * line and a Continue button — same "retry until correct" pattern as the
+ * other warm-up quizzes, just without a hero image since this one doesn't
+ * need one.
+ */
+export interface EmpathyWarmupStep extends BaseExercise {
+  type: 'empathy-warmup';
+  badge: string;
+  question: string;
+  options: EmpathyWarmupOption[];
+  correctOptionId: string;
+  feedbackText: string;
   continueLabel: string;
 }
 
@@ -7855,7 +7880,8 @@ export type Exercise =
   | DiscussionTrueFalseStep
   | ShoppingPlannerChallengeStep
   | ShoppingPlannerConfidenceLinkStep
-  | DiscussionFillBlankStep;
+  | DiscussionFillBlankStep
+  | EmpathyWarmupStep;
 
 /** Content for the newer, richer lesson-welcome layout. When a lesson has this, its welcome screen uses this design instead of the plain card. */
 /** One preview card inside a LessonWelcomeCard's "This Week's Mission" section. */

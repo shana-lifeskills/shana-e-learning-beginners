@@ -1,0 +1,310 @@
+<div class="stepper">
+  <div class="parent-assist-banner">
+    👪 <strong>Parents/guardians:</strong> please help your child complete this form, and also assist them during the log in
+    process.
+  </div>
+
+  <div class="step-progress">
+    @for (label of stepLabels; track label; let i = $index) {
+      <div class="step-dot" [class.active]="i === currentStep()" [class.done]="i < currentStep()">
+        <span class="dot-num">{{ i < currentStep() ? '✓' : i + 1 }}</span>
+        <span class="dot-label">{{ label }}</span>
+      </div>
+    }
+  </div>
+
+  @if (errorMessage()) {
+    <app-friendly-alert [message]="errorMessage()" icon="💛" />
+  }
+
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <!-- Step 0: Child's Information -->
+    @if (currentStep() === 0) {
+      <section class="step-section">
+        <h2>Child's Information</h2>
+
+        <div class="field-row">
+          <div class="mb-2">
+            <label class="form-label" for="firstName">First name *</label>
+            <input id="firstName" type="text" class="form-control" formControlName="firstName" placeholder="Ada" />
+            @if (fieldInvalid('firstName')) {
+              <small class="field-error">This one needs at least 2 letters.</small>
+            }
+          </div>
+          <div class="mb-2">
+            <label class="form-label" for="middleName">Middle name</label>
+            <input id="middleName" type="text" class="form-control" formControlName="middleName" />
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="mb-2">
+            <label class="form-label" for="surname">Surname *</label>
+            <input id="surname" type="text" class="form-control" formControlName="surname" placeholder="Lovelace" />
+            @if (fieldInvalid('surname')) {
+              <small class="field-error">This one needs at least 2 letters.</small>
+            }
+          </div>
+          <div class="mb-2">
+            <label class="form-label" for="preferredName">Preferred name</label>
+            <input id="preferredName" type="text" class="form-control" formControlName="preferredName" placeholder="What they like to be called" />
+          </div>
+        </div>
+
+        <div class="mb-2">
+          <label class="form-label">Gender *</label>
+          <div class="radio-row">
+            <label class="radio-pill"><input type="radio" formControlName="gender" value="male" /> Male</label>
+            <label class="radio-pill"><input type="radio" formControlName="gender" value="female" /> Female</label>
+          </div>
+          @if (fieldInvalid('gender')) {
+            <small class="field-error">Please select a gender.</small>
+          }
+        </div>
+
+        <div class="field-row">
+          <div class="mb-2">
+            <label class="form-label" for="dateOfBirth">Date of birth *</label>
+            <input id="dateOfBirth" type="date" class="form-control" formControlName="dateOfBirth" />
+            @if (fieldInvalid('dateOfBirth')) {
+              <small class="field-error">Please enter a date of birth.</small>
+            }
+          </div>
+          <div class="mb-2">
+            <label class="form-label" for="age">Age *</label>
+            <input id="age" type="number" min="3" max="17" class="form-control" formControlName="age" placeholder="10" />
+            @if (fieldInvalid('age')) {
+              <small class="field-error">Age must be between 3 and 17.</small>
+            }
+          </div>
+        </div>
+
+        @if (ageGroupMismatch()) {
+          <div class="age-group-warning">
+            ⚠️ You selected <strong>{{ selectedAccountType() === 'beginner' ? 'Beginner' : 'Advanced' }}</strong>, but
+            based on this age, this account should be
+            <strong>{{ derivedAgeGroup() === 'beginner' ? 'Beginner' : 'Advanced' }}</strong>.
+            <button type="button" class="link-btn" (click)="acceptDerivedAgeGroup()">
+              Switch to {{ derivedAgeGroup() === 'beginner' ? 'Beginner' : 'Advanced' }} instead
+            </button>
+          </div>
+        }
+
+        <div class="field-row">
+          <div class="mb-2">
+            <label class="form-label" for="school">School *</label>
+            <input id="school" type="text" class="form-control" formControlName="school" />
+            @if (fieldInvalid('school')) {
+              <small class="field-error">School is required.</small>
+            }
+          </div>
+          <div class="mb-2">
+            <label class="form-label" for="gradeClass">Grade/Class *</label>
+            <input id="gradeClass" type="text" class="form-control" formControlName="gradeClass" />
+            @if (fieldInvalid('gradeClass')) {
+              <small class="field-error">Grade/Class is required.</small>
+            }
+          </div>
+        </div>
+
+        <div class="mb-2">
+          <label class="form-label" for="country">Country *</label>
+          <input id="country" type="text" class="form-control" formControlName="country" placeholder="Ghana" />
+          @if (fieldInvalid('country')) {
+            <small class="field-error">Country is required.</small>
+          }
+        </div>
+      </section>
+    }
+
+    <!-- Step 1: Parent/Guardian & Login -->
+    @if (currentStep() === 1) {
+      <section class="step-section">
+        <h2>Parent/Guardian Information</h2>
+        <p class="step-hint">This email and password will be used to sign in — parents, please keep them safe and help your child log in.</p>
+
+        <div class="mb-2">
+          <label class="form-label" for="parentGuardianName">Parent/Guardian's name *</label>
+          <input id="parentGuardianName" type="text" class="form-control" formControlName="parentGuardianName" />
+          @if (fieldInvalid('parentGuardianName')) {
+            <small class="field-error">This field is required.</small>
+          }
+        </div>
+
+        <div class="field-row">
+          <div class="mb-2">
+            <label class="form-label" for="parentPhone">Phone number *</label>
+            <input id="parentPhone" type="tel" class="form-control" formControlName="parentPhone" placeholder="0244090168" />
+            @if (fieldInvalid('parentPhone')) {
+              <small class="field-error">Enter 10 digits starting with 0 (or 233).</small>
+            }
+          </div>
+          <div class="mb-2">
+            <label class="form-label" for="parentWhatsapp">WhatsApp number *</label>
+            <input id="parentWhatsapp" type="tel" class="form-control" formControlName="parentWhatsapp" placeholder="0244090168" />
+            @if (fieldInvalid('parentWhatsapp')) {
+              <small class="field-error">Enter 10 digits starting with 0 (or 233).</small>
+            }
+          </div>
+        </div>
+
+        <div class="mb-2">
+          <label class="form-label" for="email">Email (used to sign in) *</label>
+          <input id="email" type="email" class="form-control" formControlName="email" placeholder="you@shanalifeskills.school" autocomplete="email" />
+          @if (fieldInvalid('email')) {
+            <small class="field-error">That email doesn't look quite right yet.</small>
+          }
+        </div>
+
+        <div class="mb-2">
+          <label class="form-label" for="password">Password *</label>
+          <div class="password-field">
+            <input
+              id="password"
+              [type]="showPassword() ? 'text' : 'password'"
+              class="form-control"
+              formControlName="password"
+              placeholder="At least 8 characters"
+              autocomplete="new-password"
+            />
+            <button type="button" class="toggle-visibility" (click)="togglePasswordVisibility()" [attr.aria-label]="showPassword() ? 'Hide password' : 'Show password'">
+              {{ showPassword() ? '🙈' : '👁️' }}
+            </button>
+          </div>
+          @if (fieldInvalid('password')) {
+            <small class="field-error">Passwords need at least 8 characters.</small>
+          }
+        </div>
+      </section>
+    }
+
+    <!-- Step 2: Program Interest -->
+    @if (currentStep() === 2) {
+      <section class="step-section">
+        <h2>Program Objectives</h2>
+
+        <div class="mb-3">
+          <label class="form-label">Which module or class would you like to enrol your child in? *</label>
+          <div class="option-list">
+            @for (program of enrolPrograms; track program.id) {
+              <label class="option-card">
+                <input type="radio" formControlName="enrolProgram" [value]="program.id" />
+                <div>
+                  <strong>{{ program.label }}</strong>
+                  @if (program.description) {
+                    <small>{{ program.description }}</small>
+                  }
+                </div>
+              </label>
+            }
+          </div>
+          @if (fieldInvalid('enrolProgram')) {
+            <small class="field-error">Please choose a program.</small>
+          }
+        </div>
+
+        <div class="mb-2">
+          <label class="form-label">How did you hear about Shana Lifeskills Centre? *</label>
+          <div class="option-list checkboxes">
+            @for (option of hearAboutOptions; track option.id) {
+              <label class="option-card">
+                <input type="checkbox" [checked]="isHearAboutSelected(option.id)" (change)="toggleHearAbout(option.id)" />
+                <strong>{{ option.label }}</strong>
+              </label>
+            }
+          </div>
+          @if (isHearAboutSelected('other')) {
+            <input type="text" class="form-control mt-2" formControlName="howDidYouHearOther" placeholder="Tell us more" />
+          }
+        </div>
+      </section>
+    }
+
+    <!-- Step 3: Needs Assessment -->
+    @if (currentStep() === 3) {
+      <section class="step-section">
+        <h2>Needs Assessment</h2>
+
+        <div class="mb-2">
+          <label class="form-label" for="growthAreas">Are there any areas of your child's growth that require attention? *</label>
+          <textarea id="growthAreas" class="form-control" rows="3" formControlName="growthAreas"></textarea>
+          @if (fieldInvalid('growthAreas')) {
+            <small class="field-error">This field is required.</small>
+          }
+        </div>
+
+        <div class="mb-2">
+          <label class="form-label" for="desiredSkills">What skills do you hope your child will develop through this program? *</label>
+          <textarea id="desiredSkills" class="form-control" rows="3" formControlName="desiredSkills"></textarea>
+          @if (fieldInvalid('desiredSkills')) {
+            <small class="field-error">This field is required.</small>
+          }
+        </div>
+      </section>
+    }
+
+    <!-- Step 4: Terms & Submit -->
+    @if (currentStep() === 4) {
+      <section class="step-section">
+        <h2>Terms and Conditions</h2>
+
+        <div class="terms-box" tabindex="0">
+          <p><strong>1. Registration and Enrolment:</strong></p>
+          <p>a. Participants must complete the registration process before enrolling in any class.</p>
+          <p>b. All participants must provide accurate and up-to-date information during registration.</p>
+
+          <p><strong>2. Payment and Fees:</strong></p>
+          <p>a. Participants are responsible for the payment of course fees as specified in the program details.</p>
+          <p>b. Fees paid are non-refundable.</p>
+          <p>c. Prior to canceling enrollment, a notice period of one month is mandatory. Please note that fees are non-refundable upon cancellation.</p>
+
+          <p><strong>3. Attendance and Punctuality:</strong></p>
+          <p>a. Participants are expected to attend all classes and sessions on time. We strongly recommend that participants must sign in at least 5 minutes to the start of the class.</p>
+          <p>b. Shana Lifeskills Centre may implement attendance policies and excessive absences may affect program participation.</p>
+
+          <p><strong>4. Code of Conduct:</strong></p>
+          <p>a. Participants are expected to conduct themselves respectfully and responsibly at all times.</p>
+          <p>b. Any disruptive or disrespectful behavior may result in warnings, suspension, or expulsion from programs.</p>
+          <p>c. Harassment or discrimination of any kind will not be tolerated.</p>
+
+          <p><strong>5. Intellectual Property:</strong></p>
+          <p>a. Participants may not reproduce, distribute or share any materials without written permission.</p>
+          <p>b. From time to time, Shana Lifeskills Centre captures images and videos of participants for educational and publicity purposes.</p>
+
+          <p><strong>6. Confidentiality:</strong></p>
+          <p>a. Participants are expected to maintain confidentiality regarding other participants' personal information shared during classes.</p>
+
+          <p><strong>7. Cancellation:</strong></p>
+          <p>a. Shana Lifeskills Centre reserves the right to cancel or reschedule programs due to unforeseen circumstances.</p>
+
+          <p><strong>8. Changes to Terms and Conditions:</strong></p>
+          <p>a. Shana Lifeskills Centre reserves the right to amend these terms and conditions. Updated terms will be communicated to participants.</p>
+
+          <p><strong>9. Termination of Participation:</strong></p>
+          <p>a. Shana Lifeskills Centre may terminate a participant's enrollment for violations of these terms and conditions or disruptive behavior.</p>
+        </div>
+
+        <label class="terms-check">
+          <input type="checkbox" formControlName="termsAccepted" />
+          I have read and agree to the Terms and Conditions *
+        </label>
+        @if (fieldInvalid('termsAccepted')) {
+          <small class="field-error">You must accept the Terms and Conditions to continue.</small>
+        }
+      </section>
+    }
+
+    <div class="step-actions">
+      @if (!isFirstStep()) {
+        <button type="button" class="btn btn-outline-primary" (click)="back()">← Back</button>
+      }
+      @if (!isLastStep()) {
+        <button type="button" class="btn btn-primary" [disabled]="!canAdvance(currentStep())" (click)="next()">Next →</button>
+      } @else {
+        <button type="submit" class="btn btn-primary" [disabled]="submitting() || !form.controls.termsAccepted.value">
+          @if (submitting()) { Creating your account… } @else { Create account → }
+        </button>
+      }
+    </div>
+  </form>
+</div>

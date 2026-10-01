@@ -1,0 +1,33 @@
+<div class="ew">
+  <span class="ew-badge">{{ step().badge }}</span>
+
+  <div class="ew-card">
+    <p class="ew-question">{{ step().question }}</p>
+
+    <div class="ew-options">
+      @for (option of step().options; let i = $index; track option.id) {
+        <button
+          type="button"
+          class="ew-option"
+          [class.correct]="optionState(option) === 'correct'"
+          [class.incorrect]="optionState(option) === 'incorrect'"
+          [disabled]="locked() && optionState(option) === null"
+          (click)="selectOption(option)"
+        >
+          <span class="ew-option-letter">{{ letterFor(i) }}</span>
+          <span class="ew-option-text">{{ option.text }}</span>
+        </button>
+      }
+    </div>
+
+    @if (feedback() === 'incorrect') {
+      <p class="ew-try-again">Not quite — give it another try! 💪</p>
+    }
+    @if (feedback() === 'correct') {
+      <p class="ew-feedback-correct">✅ {{ step().feedbackText }}</p>
+      <button type="button" class="btn btn-primary btn-lg-tappable ew-continue" (click)="finish()">
+        {{ step().continueLabel }}
+      </button>
+    }
+  </div>
+</div>

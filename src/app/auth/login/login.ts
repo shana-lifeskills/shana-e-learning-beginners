@@ -29,6 +29,7 @@ export class Login {
   /** Which tab is selected — swaps the hero art/button copy, and is checked
    *  against the account that actually logs in (see submit()). */
   readonly accountType = signal<AccountType>('beginner');
+  readonly isStudentTab = computed(() => this.accountType() === 'beginner' || this.accountType() === 'advanced');
 
   constructor() {
     const queryType = this.route.snapshot.queryParamMap.get('accountType');

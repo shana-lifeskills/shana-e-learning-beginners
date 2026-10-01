@@ -1,6 +1,6 @@
 <div class="auth-page">
   <div class="auth-form-panel">
-    <div class="auth-card">
+    <div class="auth-card auth-card--wide">
       <div class="auth-tabs">
         <a routerLink="/login" [queryParams]="{ accountType: accountType() }">Sign in</a>
         <a routerLink="/signup" class="active">Create account</a>
@@ -10,53 +10,57 @@
       <h1>Create your account</h1>
       <p class="subtitle">It takes less than a minute — no card required.</p>
 
-      @if (errorMessage()) {
-        <app-friendly-alert [message]="errorMessage()" icon="💛" />
-      }
-
       <app-account-type-picker heading="I'm joining as a..." [selected]="accountType()" (selectedChange)="chooseAccountType($event)" />
 
-      <form [formGroup]="form" (ngSubmit)="submit()">
-        <div class="mb-2">
-          <label class="form-label" for="fullName">Full name</label>
-          <input id="fullName" type="text" class="form-control" formControlName="fullName" placeholder="Ada Lovelace" />
-          @if (friendlyFieldMessage('fullName'); as msg) {
-            <app-friendly-alert class="d-block mt-2" [message]="msg" icon="✏️" />
-          }
-        </div>
+      @if (isStudentSignup()) {
+        <app-student-signup-stepper [selectedAccountType]="studentAccountType()" (accountTypeChange)="chooseAccountType($event)" />
+      } @else {
+        @if (errorMessage()) {
+          <app-friendly-alert [message]="errorMessage()" icon="💛" />
+        }
 
-        <div class="mb-2">
-          <label class="form-label" for="email">Email</label>
-          <input id="email" type="email" class="form-control" formControlName="email" placeholder="you@shanalifeskills.school" autocomplete="email" />
-          @if (friendlyFieldMessage('email'); as msg) {
-            <app-friendly-alert class="d-block mt-2" [message]="msg" icon="✉️" />
-          }
-        </div>
-
-        <div class="mb-2">
-          <label class="form-label" for="password">Password</label>
-          <div class="password-field">
-            <input
-              id="password"
-              [type]="showPassword() ? 'text' : 'password'"
-              class="form-control"
-              formControlName="password"
-              placeholder="At least 8 characters"
-              autocomplete="new-password"
-            />
-            <button type="button" class="toggle-visibility" (click)="togglePasswordVisibility()" [attr.aria-label]="showPassword() ? 'Hide password' : 'Show password'">
-              {{ showPassword() ? '🙈' : '👁️' }}
-            </button>
+        <form [formGroup]="form" (ngSubmit)="submit()">
+          <div class="mb-2">
+            <label class="form-label" for="fullName">Full name</label>
+            <input id="fullName" type="text" class="form-control" formControlName="fullName" placeholder="Ada Lovelace" />
+            @if (friendlyFieldMessage('fullName'); as msg) {
+              <app-friendly-alert class="d-block mt-2" [message]="msg" icon="✏️" />
+            }
           </div>
-          @if (friendlyFieldMessage('password'); as msg) {
-            <app-friendly-alert class="d-block mt-2" [message]="msg" icon="🔒" />
-          }
-        </div>
 
-        <button type="submit" class="btn btn-primary w-100 btn-lg-tappable" [disabled]="submitting()">
-          @if (submitting()) { Creating your account… } @else { {{ ctaLabel() }} → }
-        </button>
-      </form>
+          <div class="mb-2">
+            <label class="form-label" for="email">Email</label>
+            <input id="email" type="email" class="form-control" formControlName="email" placeholder="you@shanalifeskills.school" autocomplete="email" />
+            @if (friendlyFieldMessage('email'); as msg) {
+              <app-friendly-alert class="d-block mt-2" [message]="msg" icon="✉️" />
+            }
+          </div>
+
+          <div class="mb-2">
+            <label class="form-label" for="password">Password</label>
+            <div class="password-field">
+              <input
+                id="password"
+                [type]="showPassword() ? 'text' : 'password'"
+                class="form-control"
+                formControlName="password"
+                placeholder="At least 8 characters"
+                autocomplete="new-password"
+              />
+              <button type="button" class="toggle-visibility" (click)="togglePasswordVisibility()" [attr.aria-label]="showPassword() ? 'Hide password' : 'Show password'">
+                {{ showPassword() ? '🙈' : '👁️' }}
+              </button>
+            </div>
+            @if (friendlyFieldMessage('password'); as msg) {
+              <app-friendly-alert class="d-block mt-2" [message]="msg" icon="🔒" />
+            }
+          </div>
+
+          <button type="submit" class="btn btn-primary w-100 btn-lg-tappable" [disabled]="submitting()">
+            @if (submitting()) { Creating your account… } @else { {{ ctaLabel() }} → }
+          </button>
+        </form>
+      }
 
       <p class="signup-link">
         Already have an account?

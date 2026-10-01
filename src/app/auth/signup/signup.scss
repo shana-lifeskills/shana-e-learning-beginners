@@ -1,1 +1,8 @@
 @use '../../../assets/styles/auth-shared';
+
+// The student stepper needs more room than .auth-card's default 34rem —
+// applied unconditionally (not just for the student tabs) so the panel
+// doesn't visibly resize when switching between account types.
+.auth-card--wide {
+  max-width: 46rem;
+}

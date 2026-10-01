@@ -245,6 +245,7 @@ import { WeeklyChallengeShowcaseStepView } from '../weekly-challenge-showcase-st
 import { SameOrDifferentQuizStepView } from '../same-or-different-quiz-step-view/same-or-different-quiz-step-view';
 import { DiversityPosterStepView } from '../diversity-poster-step-view/diversity-poster-step-view';
 import { KindnessBannerChallengeStepView } from '../kindness-banner-challenge-step-view/kindness-banner-challenge-step-view';
+import { EmpathyWarmupStepView } from '../empathy-warmup-step-view/empathy-warmup-step-view';
 import { LessonWelcomeView } from '../lesson-welcome-view/lesson-welcome-view';
 
 type PlayerView = 'map' | 'lesson-welcome' | 'exercise' | 'module-complete';
@@ -490,6 +491,7 @@ type PlayerView = 'map' | 'lesson-welcome' | 'exercise' | 'module-complete';
     WeeklyChallengeShowcaseStepView,
     SameOrDifferentQuizStepView,
     DiversityPosterStepView,
+    EmpathyWarmupStepView,
     KindnessBannerChallengeStepView,
     LessonWelcomeView,
   ],

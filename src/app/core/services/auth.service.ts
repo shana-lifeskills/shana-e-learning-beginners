@@ -8,6 +8,28 @@ import { AgeGroup, AppUser, Coach, Role, Student, Trainer } from '../models/user
 
 const SESSION_KEY = 'session_user_id';
 
+/** The child-registration details collected by StudentSignupStepper —
+ *  sent to the backend as-is and validated there (see auth.js). */
+export interface StudentProfilePayload {
+  middleName?: string;
+  preferredName?: string;
+  gender: 'male' | 'female';
+  dateOfBirth: string;
+  age: number;
+  school: string;
+  gradeClass: string;
+  country: string;
+  parentGuardianName: string;
+  parentPhone: string;
+  parentWhatsapp: string;
+  enrolProgram: 'soft-skills' | 'tech-skills' | 'language-skills' | 'personal-coaching';
+  howDidYouHear: string[];
+  howDidYouHearOther?: string;
+  growthAreas: string;
+  desiredSkills: string;
+  termsAccepted: boolean;
+}
+
 export interface SignupPayload {
   firstName: string;
   lastName: string;
@@ -17,6 +39,8 @@ export interface SignupPayload {
   role?: 'student' | 'admin' | 'instructor';
   /** Frontend-only concept, not sent to the backend — merged into the local profile. */
   ageGroup?: AgeGroup;
+  /** Only present for the student signup stepper. */
+  studentProfile?: StudentProfilePayload;
 }
 
 interface BackendUser {
@@ -73,6 +97,7 @@ export class AuthService {
       password: payload.password,
       ...(payload.profileImage ? { profileImage: payload.profileImage } : {}),
       ...(payload.role ? { role: payload.role } : {}),
+      ...(payload.studentProfile ? { studentProfile: payload.studentProfile } : {}),
     };
 
     return this.http.post<AuthResponse>(`${this.apiUrl}/register`, body, { withCredentials: true }).pipe(
