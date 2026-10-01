@@ -1,38 +1,51 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, map, of } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { DatabaseService } from './database.service';
-import { COLLECTIONS } from './collections';
-import { AppUser, Student } from '../models/user.model';
-import { Module } from '../models/module.model';
+import { Student } from '../models/user.model';
+import { BackendUser } from './auth.service';
+
+/** One row of GET /api/students — a backend user plus the modules assigned to them. */
+type BackendStudent = BackendUser & { assignedModuleIds: string[] };
+
+/** Maps a backend student to the app's Student shape. */
+export function toStudent(s: BackendStudent): Student {
+  return {
+    id: s.id,
+    email: s.email,
+    firstName: s.firstName,
+    lastName: s.lastName,
+    role: 'student',
+    avatarId: s.avatarId ?? 'nova',
+    avatarUrl: s.avatarUrl ?? undefined,
+    profileImage: s.profileImage ?? undefined,
+    createdAt: s.createdAt ?? '',
+    hasSeenWelcome: s.hasSeenWelcome ?? false,
+    streakCount: s.streakCount ?? 0,
+    lastActiveDate: s.lastActiveDate ?? '',
+    emailVerified: s.emailVerified ?? false,
+    assignedModuleIds: s.assignedModuleIds,
+    ageGroup: s.ageGroup ?? 'beginner',
+    hasPaid: s.hasPaid ?? false,
+  };
+}
 
 @Injectable({ providedIn: 'root' })
 export class TrainerService {
-  private db = inject(DatabaseService);
   private http = inject(HttpClient);
   private readonly assignmentsUrl = `${environment.apiUrl}/assignments`;
+  private readonly studentsUrl = `${environment.apiUrl}/students`;
 
-  /** Local student list, enriched with `assignedModuleIds` fetched from the backend so
-   *  assignment now survives across devices instead of living only in `users` localStorage. */
+  /** Every student account on the backend, with their assigned modules — the same list on every device. */
   getStudents(): Observable<Student[]> {
-    const students = this.db.getAll<AppUser>(COLLECTIONS.users).filter((u): u is Student => u.role === 'student');
-    if (students.length === 0) return of(students);
-
-    const studentIds = students.map((s) => s.id).join(',');
     return this.http
-      .get<Record<string, string[]>>(`${this.assignmentsUrl}/batch`, { params: { studentIds }, withCredentials: true })
-      .pipe(map((assignments) => students.map((s) => ({ ...s, assignedModuleIds: assignments[s.id] ?? [] }))));
+      .get<BackendStudent[]>(this.studentsUrl, { withCredentials: true })
+      .pipe(map((students) => students.map(toStudent)));
   }
 
   assignModuleToStudents(moduleId: string, studentIds: string[]): Observable<void> {
     return this.http
       .post<{ assigned: number }>(this.assignmentsUrl, { moduleId, studentIds }, { withCredentials: true })
       .pipe(map(() => void 0));
-  }
-
-  isModuleAssignedTo(module: Module, studentId: string): boolean {
-    const student = this.db.getById<Student>(COLLECTIONS.users, studentId);
-    return !!student?.assignedModuleIds.includes(module.id);
   }
 }

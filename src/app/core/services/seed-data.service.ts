@@ -19816,7 +19816,7 @@ export class SeedDataService {
               continueLabel: 'Continue to My Activity →',
             },
             {
-              id: 'identity-advanced-w4-discussion',
+              id: 'identity-advanced-w4-reflection-questions',
               type: 'reflection-prompt-answers',
               order: 3,
               prompt: 'Reflection Questions',

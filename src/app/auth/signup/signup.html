@@ -10,7 +10,7 @@
       <h1>Create your account</h1>
       <p class="subtitle">It takes less than a minute — no card required.</p>
 
-      <app-account-type-picker heading="I'm joining as a..." [selected]="accountType()" (selectedChange)="chooseAccountType($event)" />
+      <app-account-type-picker heading="I'm joining as a..." [types]="signupTypes" [selected]="accountType()" (selectedChange)="chooseAccountType($event)" />
 
       @if (isStudentSignup()) {
         <app-student-signup-stepper [selectedAccountType]="studentAccountType()" (accountTypeChange)="chooseAccountType($event)" />

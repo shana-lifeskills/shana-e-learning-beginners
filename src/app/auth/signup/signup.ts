@@ -25,6 +25,8 @@ export class Signup {
   readonly errorMessage = signal('');
   readonly submitting = signal(false);
   readonly showPassword = signal(false);
+  /** Public signup is students-only — Admin and Trainer accounts are created by an administrator. */
+  readonly signupTypes: readonly AccountType[] = ['beginner', 'advanced'];
   readonly accountType = signal<AccountType>('beginner');
 
   /** The real child-registration stepper replaces this component's own
@@ -56,7 +58,7 @@ export class Signup {
 
   constructor() {
     const queryType = this.route.snapshot.queryParamMap.get('accountType');
-    if (queryType === 'beginner' || queryType === 'advanced' || queryType === 'trainer' || queryType === 'coach') {
+    if (queryType === 'beginner' || queryType === 'advanced') {
       this.accountType.set(queryType);
     }
   }
@@ -84,17 +86,14 @@ export class Signup {
     const { fullName, email, password } = this.form.getRawValue();
     const [firstName, ...rest] = fullName.trim().split(/\s+/);
     const lastName = rest.join(' ');
-    const isStudent = accountType === 'beginner' || accountType === 'advanced';
-    const role = accountType === 'trainer' ? 'admin' : accountType === 'coach' ? 'instructor' : 'student';
-
     this.auth
       .register({
         firstName,
         lastName,
         email,
         password,
-        role,
-        ageGroup: isStudent ? accountType : undefined,
+        role: 'student',
+        ageGroup: accountType === 'advanced' ? 'advanced' : 'beginner',
       })
       .subscribe({
         next: (user) => {

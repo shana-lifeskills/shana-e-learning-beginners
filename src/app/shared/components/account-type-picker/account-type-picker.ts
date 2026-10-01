@@ -1,4 +1,4 @@
-import { Component, input, output } from '@angular/core';
+import { Component, computed, input, output } from '@angular/core';
 
 export type AccountType = 'beginner' | 'advanced' | 'trainer' | 'coach';
 
@@ -25,9 +25,11 @@ const OPTIONS: AccountTypeOption[] = [
 export class AccountTypePicker {
   readonly heading = input('I\'m joining as a...');
   readonly selected = input.required<AccountType>();
+  /** Which cards to offer — signup passes only the student types, since staff accounts are admin-created. */
+  readonly types = input<readonly AccountType[]>(OPTIONS.map((o) => o.id));
   readonly selectedChange = output<AccountType>();
 
-  readonly options = OPTIONS;
+  readonly options = computed(() => OPTIONS.filter((o) => this.types().includes(o.id)));
 
   choose(id: AccountType): void {
     this.selectedChange.emit(id);

@@ -4,7 +4,7 @@ import { Observable, forkJoin, map, of } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { DatabaseService } from './database.service';
 import { COLLECTIONS } from './collections';
-import { AppUser, Student } from '../models/user.model';
+import { Student } from '../models/user.model';
 import { Module, ModuleWithProgress } from '../models/module.model';
 import { GamificationService } from './gamification.service';
 import { RewardTotals } from '../models/gamification.model';
@@ -50,11 +50,6 @@ export class StudentService {
   private gamification = inject(GamificationService);
   private http = inject(HttpClient);
   private readonly apiUrl = `${environment.apiUrl}/progress`;
-
-  getAllStudents(): Observable<Student[]> {
-    const students = this.db.getAll<AppUser>(COLLECTIONS.users).filter((u): u is Student => u.role === 'student');
-    return of(students);
-  }
 
   getModulesForStudent(studentId: string): Observable<ModuleWithProgress[]> {
     const student = this.db.getById<Student>(COLLECTIONS.users, studentId);

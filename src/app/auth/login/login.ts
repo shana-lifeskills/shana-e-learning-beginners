@@ -30,6 +30,8 @@ export class Login {
    *  against the account that actually logs in (see submit()). */
   readonly accountType = signal<AccountType>('beginner');
   readonly isStudentTab = computed(() => this.accountType() === 'beginner' || this.accountType() === 'advanced');
+  /** Staff can't self-register, so the "create an account" prompt is swapped for a note. */
+  readonly isStaffType = computed(() => this.accountType() === 'trainer' || this.accountType() === 'coach');
 
   constructor() {
     const queryType = this.route.snapshot.queryParamMap.get('accountType');

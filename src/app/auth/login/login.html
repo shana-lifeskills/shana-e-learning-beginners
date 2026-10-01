@@ -56,8 +56,12 @@
       </form>
 
       <p class="signup-link">
-        New to ShanaLifeSkills?
-        <a routerLink="/signup" [queryParams]="{ accountType: accountType() }">Create an account</a>
+        @if (isStaffType()) {
+          New to the team? Your Shana admin will set up your account.
+        } @else {
+          New to ShanaLifeSkills?
+          <a routerLink="/signup" [queryParams]="{ accountType: accountType() }">Create an account</a>
+        }
       </p>
     </div>
   </div>
