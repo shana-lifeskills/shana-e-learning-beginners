@@ -1,8 +1,10 @@
 # Shana Learning Adventures — Beginners (Phase 1 MVP)
 
 A playful e-learning app for children aged 3–9, built with Angular (standalone
-components) and Bootstrap. This is **Phase 1**: student + trainer flows,
-gamification, and a mock in-browser "database" — no real backend yet.
+components) and Bootstrap: student + trainer flows and gamification. Accounts,
+progress and rewards live in the backend; module content and a few profile fields
+are still served from an in-browser mock database while the move to the backend
+completes (see "Mock data layer" below).
 
 ## Meet Bolt 🤖
 
@@ -34,24 +36,44 @@ nvm use 22
 ## Setup
 
 ```bash
-npm install
-npm start          # ng serve — http://localhost:4200
+npm install --include=dev   # --include=dev matters if your shell sets NODE_ENV=production
+npm start                   # ng serve — http://localhost:4200, proxies /api to localhost:3000
 ```
+
+Sign-in, progress and rewards go to the backend
+([shana-beginners-backend](../shana-beginners-backend)), so run it alongside —
+see its README (`npm run db:setup`, `npm run db:seed:demo`, `npm run dev`).
 
 ## Demo accounts
 
-The app seeds itself with sample data the first time it runs in a browser
-(see "Mock data layer" below). Use these to explore without signing up:
+Created in the backend by `npm run db:seed:demo`:
 
-| Role    | Email               | Password     |
-|---------|---------------------|--------------|
-| Student | ava@shana.dev       | ava123       |
-| Student | leo@shana.dev       | leo123       |
-| Trainer | trainer@shana.dev   | trainer123   |
+| Role in the app | Email             | Password   |
+|-----------------|-------------------|------------|
+| Student (beginner) | ava@shana.dev     | Ava12345   |
+| Student (advanced) | leo@shana.dev     | Leo12345   |
+| Admin           | trainer@shana.dev | Trainer123 |
+| Trainer         | coach@shana.dev   | Coach1234  |
 
-Ava is partway through the sample module ("Counting Critters") — lesson 1
-complete with a badge earned, lesson 2 in progress — to demonstrate that
-progress persists across logins. Leo hasn't started yet.
+Ava has all 24 beginner modules assigned; Leo has the 3 advanced ones. Neither has
+started any yet.
+
+Public signup creates **students only**. Admin and Trainer accounts are created by an
+administrator in the backend (`npm run staff:create`).
+
+## Curriculum → backend
+
+The curriculum is authored in `src/app/core/services/seed-data.service.ts`. After
+changing it, export it to the backend and load it there:
+
+```bash
+npm run export:curriculum                          # writes ../shana-beginners-backend/db/curriculum/curriculum.json
+cd ../shana-beginners-backend && npm run db:seed:curriculum
+```
+
+The export fails — writing nothing — if any module, lesson or exercise id is used
+twice. Ids are permanent: students' progress and rewards are keyed on them, so rename
+an id only for content no student has done yet.
 
 ## Building for production
 
