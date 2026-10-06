@@ -29,9 +29,9 @@ export class Signup {
   readonly signupTypes: readonly AccountType[] = ['beginner', 'advanced'];
   readonly accountType = signal<AccountType>('beginner');
 
-  /** The real child-registration stepper replaces this component's own
-   *  3-field form only for the student tabs — Trainer/Admin keep the
-   *  simple form below unchanged. */
+  /** Students sign up through the child-registration stepper. The simple form in the
+   *  template's @else branch was for Trainer/Admin; it can't be reached while public
+   *  signup is students-only (signupTypes), and is kept only until that decision is final. */
   readonly isStudentSignup = computed(() => this.accountType() === 'beginner' || this.accountType() === 'advanced');
   /** Narrowed for the stepper's [selectedAccountType] input, which only
    *  ever renders once isStudentSignup() is true. */

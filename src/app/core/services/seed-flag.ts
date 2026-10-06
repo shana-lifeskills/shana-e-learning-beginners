@@ -5,4 +5,4 @@
  * string — see the app initializer in app.config.ts. Bump this whenever
  * module/lesson content in seed-data.service.ts changes, same as before.
  */
-export const SEED_FLAG = 'seeded_v428';
+export const SEED_FLAG = 'seeded_v429';

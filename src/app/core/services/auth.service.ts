@@ -104,8 +104,8 @@ export class AuthService {
       password: payload.password,
       ...(payload.profileImage ? { profileImage: payload.profileImage } : {}),
       ...(payload.role ? { role: payload.role } : {}),
-      ...(payload.studentProfile ? { studentProfile: payload.studentProfile } : {}),
       ...(payload.ageGroup ? { ageGroup: payload.ageGroup } : {}),
+      ...(payload.studentProfile ? { studentProfile: payload.studentProfile } : {}),
     };
 
     return this.http.post<AuthResponse>(`${this.apiUrl}/register`, body, { withCredentials: true }).pipe(
