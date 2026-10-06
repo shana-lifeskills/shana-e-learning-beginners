@@ -33,6 +33,7 @@ const ADVANCED_STUDENT_NAV: NavItem[] = [
 
 const TRAINER_NAV: NavItem[] = [
   { label: 'Home', icon: '🏠', link: '/admin', exact: true },
+  { label: 'Students', icon: '🧑‍🎓', link: '/admin/students' },
   { label: 'All Modules', icon: '📘', link: '/admin/modules' },
   { label: 'Upload Module', icon: '⬆️', link: '/admin/modules/new' },
   { label: 'Settings', icon: '⚙️' },

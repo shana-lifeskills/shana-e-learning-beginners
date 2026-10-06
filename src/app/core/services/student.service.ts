@@ -50,32 +50,47 @@ export class StudentService {
   private gamification = inject(GamificationService);
   private http = inject(HttpClient);
   private readonly apiUrl = `${environment.apiUrl}/progress`;
+  private readonly paymentsUrl = `${environment.apiUrl}/payments`;
 
+  /** Every module id this student has a real, successful payment for — the
+   *  pay-as-you-go source of truth for what's unlocked. Games don't appear
+   *  here (they're never locked in the first place, see getModulesForStudent). */
+  getUnlockedModuleIds(studentId: string): Observable<string[]> {
+    return this.http
+      .get<{ moduleIds: string[] }>(`${this.paymentsUrl}/unlocked-modules`, { params: { studentId }, withCredentials: true })
+      .pipe(map((res) => res.moduleIds));
+  }
+
+  /** Every module matching the student's age group — not just ones a trainer
+   *  manually assigned, now that every module is auto-visible and gated
+   *  purely by payment (or free, for games). */
   getModulesForStudent(studentId: string): Observable<ModuleWithProgress[]> {
     const student = this.db.getById<Student>(COLLECTIONS.users, studentId);
     if (!student) return of([]);
 
-    const allModules = this.db.getAll<Module>(COLLECTIONS.modules);
+    const allModules = this.db.getAll<Module>(COLLECTIONS.modules).filter((m) => m.ageGroup === student.ageGroup);
 
-    return this.http.get<ProgressDto[]>(this.apiUrl, { params: { studentId }, withCredentials: true }).pipe(
-      map((allProgress) => {
-        const modules: ModuleWithProgress[] = student.assignedModuleIds
-          .map((moduleId) => allModules.find((m) => m.id === moduleId))
-          .filter((m): m is Module => !!m && m.ageGroup === student.ageGroup)
-          .map((module) => {
-            const progress = allProgress.find((p) => p.moduleId === module.id);
-            const totalExercises = module.lessons.reduce((sum, lesson) => sum + lesson.exercises.length, 0);
-            const completedExercises = progress?.completedExerciseIds.length ?? 0;
-            const progressPercent = totalExercises === 0 ? 0 : Math.round((completedExercises / totalExercises) * 100);
+    return forkJoin({
+      allProgress: this.http.get<ProgressDto[]>(this.apiUrl, { params: { studentId }, withCredentials: true }),
+      unlockedModuleIds: this.getUnlockedModuleIds(studentId),
+    }).pipe(
+      map(({ allProgress, unlockedModuleIds }) => {
+        const unlocked = new Set(unlockedModuleIds);
+        const modules: ModuleWithProgress[] = allModules.map((module) => {
+          const progress = allProgress.find((p) => p.moduleId === module.id);
+          const totalExercises = module.lessons.reduce((sum, lesson) => sum + lesson.exercises.length, 0);
+          const completedExercises = progress?.completedExerciseIds.length ?? 0;
+          const progressPercent = totalExercises === 0 ? 0 : Math.round((completedExercises / totalExercises) * 100);
 
-            return {
-              ...module,
-              progressPercent,
-              status: progress?.status ?? 'not-started',
-              lessonsCompleted: progress?.completedLessonIds.length ?? 0,
-              lessonsTotal: module.lessons.length,
-            };
-          });
+          return {
+            ...module,
+            progressPercent,
+            status: progress?.status ?? 'not-started',
+            lessonsCompleted: progress?.completedLessonIds.length ?? 0,
+            lessonsTotal: module.lessons.length,
+            locked: module.category !== 'game' && !unlocked.has(module.id),
+          };
+        });
         return modules;
       })
     );

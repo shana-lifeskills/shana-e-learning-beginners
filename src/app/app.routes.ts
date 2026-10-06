@@ -34,9 +34,9 @@ export const routes: Routes = [
     canActivate: [trainerGuard],
     children: [
       { path: '', loadComponent: () => import('./trainer/dashboard/dashboard').then((m) => m.TrainerDashboard) },
+      { path: 'students', loadComponent: () => import('./trainer/students-list/students-list').then((m) => m.StudentsList) },
       { path: 'modules', loadComponent: () => import('./trainer/module-list/module-list').then((m) => m.ModuleList) },
       { path: 'modules/new', loadComponent: () => import('./trainer/module-editor/module-editor').then((m) => m.ModuleEditor) },
-      { path: 'modules/:id/assign', loadComponent: () => import('./trainer/assign-module/assign-module').then((m) => m.AssignModule) },
     ],
   },
   { path: '**', redirectTo: 'signup' },

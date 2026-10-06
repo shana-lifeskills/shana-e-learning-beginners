@@ -28,7 +28,8 @@ export class DashboardAdvanced implements OnInit {
   readonly totals = signal<RewardTotals>({ stars: 0, badges: 0, trophies: 0 });
   readonly highlights = signal<RewardHighlights>({ starsThisWeek: 0, badgesAlmostUnlocked: 0 });
   readonly loading = signal(true);
-  readonly showPaymentModal = signal(false);
+  /** The module a student just clicked "Pay to unlock" on — null when the modal is closed. */
+  readonly payingModule = signal<ModuleWithProgress | null>(null);
 
   // No XP/leveling system exists yet for the advanced tier — these numbers
   // preview the target layout and will be replaced once that's built.
@@ -47,20 +48,20 @@ export class DashboardAdvanced implements OnInit {
     this.studentService.getRewardHighlights(student.id).subscribe((highlights) => this.highlights.set(highlights));
   }
 
-  openModule(moduleId: string): void {
-    this.router.navigate(['/student/module', moduleId]);
-  }
-
-  openPaymentModal(): void {
-    this.showPaymentModal.set(true);
+  openModule(module: ModuleWithProgress): void {
+    if (module.locked) {
+      this.payingModule.set(module);
+      return;
+    }
+    this.router.navigate(['/student/module', module.id]);
   }
 
   onPaymentSuccess(): void {
     const student = this.student();
-    this.showPaymentModal.set(false);
-    this.auth.refreshCurrentUserFromBackend().subscribe(() => {
-      this.sidekick.say(`You're all set, ${student.firstName}! Your modules are unlocked 🎉`, 'wave', 4000);
-    });
+    const module = this.payingModule();
+    this.payingModule.set(null);
+    this.studentService.getModulesForStudent(student.id).subscribe((modules) => this.modules.set(modules));
+    this.sidekick.say(`"${module?.title}" is unlocked, ${student.firstName}! 🎉`, 'wave', 4000);
   }
 
   buttonLabel(module: ModuleWithProgress): string {

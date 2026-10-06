@@ -115,11 +115,6 @@ h2 {
 
   .art { font-size: 3rem; margin-bottom: 0.5rem; }
   p { font-weight: 600; color: rgba(43, 45, 66, 0.7); margin: 0; }
-
-  &.payment-required {
-    p { margin-bottom: 1.25rem; }
-    button { max-width: 16rem; margin: 0 auto; }
-  }
 }
 
 .track-group {
@@ -211,6 +206,22 @@ h2 {
     border-radius: v.$border-radius-pill;
     transition: width 0.3s ease;
   }
+
+  // Pay-as-you-go: every module is visible, but an unpaid one is dimmed and
+  // its icon shows a lock instead of a reward-earning "Start" state.
+  &.locked {
+    .module-icon { filter: grayscale(0.6); opacity: 0.75; }
+    h3, p { opacity: 0.7; }
+  }
+}
+
+.btn-locked {
+  background: v.$color-cream-bg;
+  border: 2px solid rgba(43, 45, 66, 0.12);
+  color: rgba(43, 45, 66, 0.75);
+  font-weight: 700;
+
+  &:hover { background: color-mix(in srgb, v.$color-cream-bg 85%, v.$color-navy-text); }
 }
 
 // --- First-time welcome moment -----------------------------------------

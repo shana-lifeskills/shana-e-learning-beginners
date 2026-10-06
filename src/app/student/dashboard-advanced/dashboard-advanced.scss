@@ -215,22 +215,6 @@ $banner-cream: #fdf6ea;
     font-size: 2.5rem;
     margin-bottom: 0.5rem;
   }
-
-  &.payment-required {
-    p { margin: 0 0 1.25rem; }
-
-    .module-cta {
-      @include m.tappable;
-      display: inline-block;
-      border: none;
-      border-radius: v.$border-radius-pill;
-      padding: 0.75rem 1.6rem;
-      font-weight: 700;
-      color: v.$color-white;
-      background: linear-gradient(120deg, $indigo, color-mix(in srgb, $indigo 70%, white));
-      cursor: pointer;
-    }
-  }
 }
 
 .module-card {
@@ -314,6 +298,19 @@ $banner-cream: #fdf6ea;
     color: v.$color-white;
     background: linear-gradient(120deg, var(--accent, #{$indigo}), color-mix(in srgb, var(--accent, #{$indigo}) 70%, white));
     cursor: pointer;
+
+    &.module-cta--locked {
+      background: v.$color-cream-bg;
+      color: rgba(43, 45, 66, 0.75);
+      border: 2px solid rgba(43, 45, 66, 0.12);
+    }
+  }
+
+  // Pay-as-you-go: every module is visible, but an unpaid one is dimmed and
+  // its icon shows a lock instead of a reward-earning "Start" state.
+  &.locked {
+    .module-icon { filter: grayscale(0.6); opacity: 0.75; }
+    h3, .module-description { opacity: 0.7; }
   }
 }
 

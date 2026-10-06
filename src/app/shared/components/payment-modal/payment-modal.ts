@@ -88,6 +88,9 @@ export class PaymentModal {
   private readonly apiUrl = `${environment.apiUrl}/payments`;
 
   readonly email = input.required<string>();
+  /** Which module this payment unlocks — pay-as-you-go, one module at a time. */
+  readonly moduleId = input.required<string>();
+  readonly moduleTitle = input<string>('this module');
   readonly closed = output<void>();
   readonly paid = output<void>();
 
@@ -170,7 +173,7 @@ export class PaymentModal {
     this.step.set('processing');
 
     this.http
-      .post<InitializeResponse>(`${this.apiUrl}/initialize`, {}, { withCredentials: true })
+      .post<InitializeResponse>(`${this.apiUrl}/initialize`, { moduleId: this.moduleId() }, { withCredentials: true })
       .pipe(
         switchMap((init) => {
           this.amountCedisDisplay.set((init.amountPesewas / 100).toLocaleString('en-GH', { minimumFractionDigits: 2 }));
@@ -240,7 +243,7 @@ export class PaymentModal {
     this.http
       .post<MobileMoneyResponse>(
         `${this.apiUrl}/mobile-money/initiate`,
-        { phone: this.phoneNumber().trim(), provider },
+        { phone: this.phoneNumber().trim(), provider, moduleId: this.moduleId() },
         { withCredentials: true }
       )
       .pipe(

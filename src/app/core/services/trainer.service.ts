@@ -33,19 +33,14 @@ export function toStudent(s: BackendStudent): Student {
 @Injectable({ providedIn: 'root' })
 export class TrainerService {
   private http = inject(HttpClient);
-  private readonly assignmentsUrl = `${environment.apiUrl}/assignments`;
   private readonly studentsUrl = `${environment.apiUrl}/students`;
 
-  /** Every student account on the backend, with their assigned modules — the same list on every device. */
+  /** Every student account on the backend — every student now sees every
+   *  age-appropriate module automatically (pay-as-you-go unlocks it), so this
+   *  is no longer paired with a per-student module assignment list. */
   getStudents(): Observable<Student[]> {
     return this.http
       .get<BackendStudent[]>(this.studentsUrl, { withCredentials: true })
       .pipe(map((students) => students.map(toStudent)));
-  }
-
-  assignModuleToStudents(moduleId: string, studentIds: string[]): Observable<void> {
-    return this.http
-      .post<{ assigned: number }>(this.assignmentsUrl, { moduleId, studentIds }, { withCredentials: true })
-      .pipe(map(() => void 0));
   }
 }

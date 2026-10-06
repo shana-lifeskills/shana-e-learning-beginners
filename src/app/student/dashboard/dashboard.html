@@ -31,52 +31,48 @@
 
     @if (loading()) {
       <p class="loading-copy">Loading your adventures…</p>
-    } @else if (student(); as s) {
-      @if (!s.hasPaid) {
-        <div class="empty-state payment-required">
-          <div class="art">🔒</div>
-          <p>Your modules are ready and waiting! Complete payment to unlock full access.</p>
-          <button type="button" class="btn btn-primary btn-lg-tappable" (click)="openPaymentModal()">Pay to Access Module</button>
-        </div>
-      } @else if (tracks().length === 0) {
-        <div class="empty-state">
-          <div class="art">📦</div>
-          <p>No modules yet! Ask your trainer to assign one — it'll show up right here.</p>
-        </div>
-      } @else {
+    } @else if (tracks().length === 0) {
+      <div class="empty-state">
+        <div class="art">📦</div>
+        <p>No modules yet for your level — check back soon!</p>
+      </div>
+    } @else {
       @for (track of tracks(); track track.trackName) {
         <div class="track-group">
           <h3 class="track-heading">{{ track.trackName }}</h3>
           <div class="module-grid">
             @for (module of track.modules; track module.id) {
-              <div class="module-card" [style.--accent]="module.themeColor">
+              <div class="module-card" [class.locked]="module.locked" [style.--accent]="module.themeColor">
                 <div class="module-icon" [style.background]="module.themeColor">{{ module.icon }}</div>
                 <h3>{{ module.title }}</h3>
                 <p>{{ module.description }}</p>
 
-                <div class="progress-line">
-                  <span>{{ module.lessonsCompleted }} of {{ module.lessonsTotal }} lessons</span>
-                  <strong>{{ module.progressPercent }}%</strong>
-                </div>
-                <div class="progress-track">
-                  <div class="progress-fill" [style.width.%]="module.progressPercent"></div>
-                </div>
+                @if (!module.locked) {
+                  <div class="progress-line">
+                    <span>{{ module.lessonsCompleted }} of {{ module.lessonsTotal }} lessons</span>
+                    <strong>{{ module.progressPercent }}%</strong>
+                  </div>
+                  <div class="progress-track">
+                    <div class="progress-fill" [style.width.%]="module.progressPercent"></div>
+                  </div>
+                }
 
-                <button type="button" class="btn btn-primary w-100 btn-lg-tappable" (click)="openModule(module.id)">
-                  ▷ {{ buttonLabel(module) }}
+                <button type="button" class="btn w-100 btn-lg-tappable" [class.btn-primary]="!module.locked" [class.btn-locked]="module.locked" (click)="openModule(module)">
+                  {{ module.locked ? '🔒 Pay to unlock' : '▷ ' + buttonLabel(module) }}
                 </button>
               </div>
             }
           </div>
         </div>
       }
-      }
     }
   </section>
 </div>
 
-@if (showPaymentModal() && student(); as s) {
-  <app-payment-modal [email]="s.email" (closed)="showPaymentModal.set(false)" (paid)="onPaymentSuccess()" />
+@if (payingModule(); as m) {
+  @if (student(); as s) {
+    <app-payment-modal [email]="s.email" [moduleId]="m.id" [moduleTitle]="m.title" (closed)="payingModule.set(null)" (paid)="onPaymentSuccess()" />
+  }
 }
 
 @if (showWelcome() && student(); as s) {

@@ -1,0 +1,83 @@
+<div class="students-page">
+  <div class="page-head">
+    <div>
+      <a routerLink="/admin" class="back-link">← Dashboard</a>
+      <h1>Students</h1>
+    </div>
+  </div>
+
+  @if (loading()) {
+    <p class="loading-copy">Loading students…</p>
+  } @else {
+    <div class="filter-row">
+      <input
+        type="text"
+        class="filter-search"
+        placeholder="🔍 Search by name or email…"
+        [value]="searchTerm()"
+        (input)="updateSearch($any($event.target).value)"
+      />
+
+      <select class="filter-select" [value]="paymentFilter()" (change)="setPaymentFilter($any($event.target).value)">
+        <option value="all">All payment statuses</option>
+        <option value="paid">✓ Has paid before</option>
+        <option value="unpaid">⏳ No payment yet</option>
+      </select>
+
+      <select class="filter-select" [value]="typeFilter()" (change)="setTypeFilter($any($event.target).value)">
+        <option value="all">All types</option>
+        <option value="beginner">Beginner</option>
+        <option value="advanced">Advanced</option>
+      </select>
+    </div>
+
+    @if (students().length === 0) {
+      <div class="empty-state">
+        <span class="art">🧑‍🎓</span>
+        <p>No students have signed up yet. Once they do, they'll show up here.</p>
+      </div>
+    } @else if (filteredStudents().length === 0) {
+      <div class="empty-state">
+        <span class="art">🔍</span>
+        <p>No students match those filters.</p>
+      </div>
+    } @else {
+      <div class="students-table-wrap">
+        <table class="students-table">
+          <thead>
+            <tr>
+              <th>Student</th>
+              <th>Type</th>
+              <th>Payment</th>
+              <th>Joined</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (student of filteredStudents(); track student.id) {
+              <tr>
+                <td class="student-cell">
+                  <span class="avatar">{{ avatarEmoji[student.avatarId] ?? '🙂' }}</span>
+                  <div>
+                    <strong>{{ student.firstName }} {{ student.lastName }}</strong>
+                    <small>{{ student.email }}</small>
+                  </div>
+                </td>
+                <td>
+                  <span class="age-group-badge" [class.advanced]="student.ageGroup === 'advanced'">
+                    {{ student.ageGroup === 'advanced' ? 'Advanced' : 'Beginner' }}
+                  </span>
+                </td>
+                <td>
+                  <span class="payment-badge" [class.paid]="student.hasPaid">
+                    {{ student.hasPaid ? '✓ Has paid before' : '⏳ No payment yet' }}
+                  </span>
+                </td>
+                <td class="joined-cell">{{ joinedLabel(student) }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  }
+</div>

@@ -10877,4 +10877,7 @@ export interface ModuleWithProgress extends Module {
   status: 'not-started' | 'in-progress' | 'completed';
   lessonsCompleted: number;
   lessonsTotal: number;
+  /** Pay-as-you-go: true until a successful payment for this exact module.
+   *  Games are never locked. */
+  locked: boolean;
 }

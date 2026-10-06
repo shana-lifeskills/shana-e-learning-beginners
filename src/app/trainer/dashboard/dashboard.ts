@@ -7,7 +7,6 @@ import { ModuleService } from '../../core/services/module.service';
 import { Trainer } from '../../core/models/user.model';
 import { Student } from '../../core/models/user.model';
 import { Module } from '../../core/models/module.model';
-import { AVATAR_EMOJI } from '../../shared/avatar-emoji';
 import { VerifyEmailBanner } from '../../shared/components/verify-email-banner/verify-email-banner';
 
 @Component({
@@ -23,27 +22,19 @@ export class TrainerDashboard implements OnInit {
   private moduleService = inject(ModuleService);
 
   readonly trainer = computed(() => this.auth.currentUser() as Trainer);
+  // Only the count is used here now — the full list, with search/filters,
+  // lives on its own page at /admin/students.
   readonly students = signal<Student[]>([]);
   readonly modules = signal<Module[]>([]);
-  readonly loading = signal(true);
-  readonly avatarEmoji = AVATAR_EMOJI;
 
   ngOnInit(): void {
     const trainer = this.trainer();
     if (!trainer) return;
 
-    this.trainerService.getStudents().subscribe((students) => {
-      this.students.set(students);
-      this.loading.set(false);
-    });
+    this.trainerService.getStudents().subscribe((students) => this.students.set(students));
     // Every admin sees the full shared module catalog now (not just what they
     // personally authored) — there's a single flat admin role managing one
     // shared catalog, so per-creator filtering no longer applies.
     this.moduleService.getAllModules().subscribe((modules) => this.modules.set(modules));
-  }
-
-  assignedCountLabel(student: Student): string {
-    const count = student.assignedModuleIds.length;
-    return count === 1 ? '1 module assigned' : `${count} modules assigned`;
   }
 }

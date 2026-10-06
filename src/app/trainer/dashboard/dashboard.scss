@@ -55,6 +55,7 @@ h2 {
 
   &.create { border-bottom: 6px solid v.$color-coral; }
   &.manage { border-bottom: 6px solid v.$color-grape; }
+  &.students { border-bottom: 6px solid v.$color-sky; }
 }
 
 .loading-copy { font-weight: 600; color: rgba(43, 45, 66, 0.6); }
@@ -67,67 +68,4 @@ h2 {
 
   .art { font-size: 2.5rem; display: block; margin-bottom: 0.5rem; }
   p { color: rgba(43, 45, 66, 0.65); font-weight: 600; margin: 0; }
-}
-
-.student-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
-  gap: 1rem;
-}
-
-.student-card {
-  @include m.bouncy-card;
-  display: flex;
-  align-items: center;
-  gap: 0.85rem;
-  background: v.$color-white;
-  padding: 1rem 1.25rem;
-
-  &:hover { transform: none; box-shadow: 0 6px 0 rgba(0, 0, 0, 0.06); }
-
-  .avatar {
-    font-size: 1.8rem;
-    background: v.$color-cream-bg;
-    border-radius: 50%;
-    width: 3rem;
-    height: 3rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-  }
-
-  .student-info {
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
-
-    // Always stacked — relying on flex-wrap made the badge sit inline for
-    // shorter names and wrap to its own line for longer ones, which looked
-    // inconsistent card to card. A fixed column layout is consistent for every name length.
-    .name-row {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 0.25rem;
-    }
-
-    strong { color: v.$color-navy-text; }
-    small { color: rgba(43, 45, 66, 0.55); font-weight: 600; }
-  }
-}
-
-.age-group-badge {
-  font-size: 0.65rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-  padding: 0.15rem 0.5rem;
-  border-radius: v.$border-radius-pill;
-  background: v.$color-leaf;
-  color: v.$color-white;
-
-  &.advanced {
-    background: v.$color-sky;
-  }
 }

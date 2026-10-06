@@ -63,31 +63,29 @@
 
       @if (loading()) {
         <p class="loading-copy">Loading your modules…</p>
-      } @else if (!s.hasPaid) {
-        <div class="empty-state payment-required">
-          <div class="art">🔒</div>
-          <p>Your modules are ready and waiting! Complete payment to unlock full access.</p>
-          <button type="button" class="module-cta" (click)="openPaymentModal()">Pay to Access Module</button>
-        </div>
       } @else if (modules().length === 0) {
         <div class="empty-state">
           <div class="art">📦</div>
-          <p>No modules yet! Ask your trainer to assign one — it'll show up right here.</p>
+          <p>No modules yet for your level — check back soon!</p>
         </div>
       } @else {
         <div class="module-grid">
           @for (module of modules(); track module.id) {
-            <div class="module-card" [style.--accent]="module.themeColor">
+            <div class="module-card" [class.locked]="module.locked" [style.--accent]="module.themeColor">
               <span class="category-pill">{{ module.trackName ?? module.category | uppercase }}</span>
               <div class="module-icon" [style.background]="module.themeColor">{{ module.icon }}</div>
               <h3>{{ module.title }}</h3>
               <p class="module-description">{{ module.description }}</p>
-              <p class="progress-line">{{ module.lessonsCompleted }} of {{ module.lessonsTotal }} lessons</p>
-              <div class="progress-track">
-                <div class="progress-fill" [style.width.%]="module.progressPercent"></div>
-              </div>
-              <p class="progress-percent">{{ module.progressPercent }}% complete</p>
-              <button type="button" class="module-cta" (click)="openModule(module.id)">▷ {{ buttonLabel(module) }}</button>
+              @if (!module.locked) {
+                <p class="progress-line">{{ module.lessonsCompleted }} of {{ module.lessonsTotal }} lessons</p>
+                <div class="progress-track">
+                  <div class="progress-fill" [style.width.%]="module.progressPercent"></div>
+                </div>
+                <p class="progress-percent">{{ module.progressPercent }}% complete</p>
+              }
+              <button type="button" class="module-cta" [class.module-cta--locked]="module.locked" (click)="openModule(module)">
+                {{ module.locked ? '🔒 Pay to unlock' : '▷ ' + buttonLabel(module) }}
+              </button>
             </div>
           }
         </div>
@@ -95,7 +93,7 @@
     </section>
   </div>
 
-  @if (showPaymentModal()) {
-    <app-payment-modal [email]="s.email" (closed)="showPaymentModal.set(false)" (paid)="onPaymentSuccess()" />
+  @if (payingModule(); as m) {
+    <app-payment-modal [email]="s.email" [moduleId]="m.id" [moduleTitle]="m.title" (closed)="payingModule.set(null)" (paid)="onPaymentSuccess()" />
   }
 }

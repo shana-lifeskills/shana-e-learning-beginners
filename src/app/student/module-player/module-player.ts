@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 import { ModuleService } from '../../core/services/module.service';
 import { ProgressService } from '../../core/services/progress.service';
+import { StudentService } from '../../core/services/student.service';
 import { SidekickService } from '../../core/services/sidekick.service';
 import { Student } from '../../core/models/user.model';
 import { Exercise, Lesson, Module } from '../../core/models/module.model';
@@ -504,6 +505,7 @@ export class ModulePlayer implements OnInit {
   private auth = inject(AuthService);
   private moduleService = inject(ModuleService);
   private progressService = inject(ProgressService);
+  private studentService = inject(StudentService);
   private sidekick = inject(SidekickService);
 
   readonly loading = signal(true);
@@ -560,23 +562,35 @@ export class ModulePlayer implements OnInit {
     const student = this.auth.currentUser() as Student;
     if (!moduleId || !student) return;
 
-    if (!student.hasPaid) {
-      this.sidekick.say('Complete your payment first to unlock this module!', 'oops', 4000);
-      this.router.navigate(['/student']);
-      return;
-    }
-
     this.moduleService.getModuleById(moduleId).subscribe((module) => {
       if (!module) {
         this.router.navigate(['/student']);
         return;
       }
-      this.module.set(module);
 
-      this.progressService.startModule(student.id, module).subscribe((progress) => {
-        this.progress.set(progress);
-        this.loading.set(false);
+      // Pay-as-you-go: games are always free; every other module needs its
+      // own successful payment — the dashboard's lock icon shouldn't be the
+      // only thing stopping a direct URL visit from skipping payment.
+      if (module.category === 'game') {
+        this.loadModule(student, module);
+        return;
+      }
+      this.studentService.getUnlockedModuleIds(student.id).subscribe((unlockedIds) => {
+        if (!unlockedIds.includes(moduleId)) {
+          this.sidekick.say('Pay to unlock this module first!', 'oops', 4000);
+          this.router.navigate(['/student']);
+          return;
+        }
+        this.loadModule(student, module);
       });
+    });
+  }
+
+  private loadModule(student: Student, module: Module): void {
+    this.module.set(module);
+    this.progressService.startModule(student.id, module).subscribe((progress) => {
+      this.progress.set(progress);
+      this.loading.set(false);
     });
   }
 
