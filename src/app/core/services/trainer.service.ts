@@ -30,10 +30,32 @@ export function toStudent(s: BackendStudent): Student {
   };
 }
 
+export type PaymentStatus = 'pending' | 'success' | 'failed';
+
+/** One row of GET /api/payments — a payment attempt (any status), joined
+ *  with who it's for and which module it was paying to unlock. */
+export interface AdminPayment {
+  id: string;
+  reference: string;
+  amountPesewas: number;
+  currency: string;
+  status: PaymentStatus;
+  channel: 'card' | 'mobile_money';
+  provider: string | null;
+  moduleId: string | null;
+  /** Falls back to the raw moduleId if the module was since deleted; null for
+   *  historical payments made before per-module pricing existed. */
+  moduleTitle: string | null;
+  paidAt: string | null;
+  createdAt: string;
+  student: { id: string; firstName: string; lastName: string; email: string } | null;
+}
+
 @Injectable({ providedIn: 'root' })
 export class TrainerService {
   private http = inject(HttpClient);
   private readonly studentsUrl = `${environment.apiUrl}/students`;
+  private readonly paymentsUrl = `${environment.apiUrl}/payments`;
 
   /** Every student account on the backend — every student now sees every
    *  age-appropriate module automatically (pay-as-you-go unlocks it), so this
@@ -42,5 +64,13 @@ export class TrainerService {
     return this.http
       .get<BackendStudent[]>(this.studentsUrl, { withCredentials: true })
       .pipe(map((students) => students.map(toStudent)));
+  }
+
+  /** The admin payments ledger — every transaction across every student.
+   *  Filtering happens client-side on the result (same pattern as the
+   *  Students page), so no params are sent here; this always returns the
+   *  full set an instructor/admin is allowed to see. */
+  getPayments(): Observable<AdminPayment[]> {
+    return this.http.get<AdminPayment[]>(this.paymentsUrl, { withCredentials: true });
   }
 }

@@ -1,0 +1,79 @@
+@use '../../../../assets/styles/variables' as v;
+
+.chart-empty {
+  color: rgba(43, 45, 66, 0.5);
+  font-weight: 600;
+  font-size: 0.85rem;
+  padding: 1.5rem 0;
+  text-align: center;
+}
+
+.chart-wrap {
+  position: relative;
+  padding-left: 4rem;
+}
+
+.chart-svg {
+  width: 100%;
+  height: 11rem;
+  display: block;
+  cursor: crosshair;
+}
+
+.gridline {
+  stroke: v.$color-cream-bg;
+  stroke-width: 1;
+}
+
+.crosshair {
+  stroke: rgba(43, 45, 66, 0.25);
+  stroke-width: 1;
+}
+
+.y-axis-labels {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 3.6rem;
+  height: 11rem;
+
+  span {
+    position: absolute;
+    transform: translateY(-50%);
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: rgba(43, 45, 66, 0.45);
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+.x-axis-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.35rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: rgba(43, 45, 66, 0.45);
+}
+
+.chart-tooltip {
+  position: absolute;
+  top: 0.25rem;
+  transform: translateX(-50%);
+  background: v.$color-navy-text;
+  color: v.$color-white;
+  padding: 0.35rem 0.65rem;
+  border-radius: v.$border-radius-sm;
+  font-size: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.25;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 5;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.18);
+
+  strong { font-weight: 800; }
+  span { color: rgba(255, 255, 255, 0.75); font-weight: 600; }
+}

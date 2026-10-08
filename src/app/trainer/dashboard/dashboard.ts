@@ -26,6 +26,9 @@ export class TrainerDashboard implements OnInit {
   // lives on its own page at /admin/students.
   readonly students = signal<Student[]>([]);
   readonly modules = signal<Module[]>([]);
+  // Only the count is used here too — the full ledger, with filters, lives
+  // on its own page at /admin/payments.
+  readonly successfulPaymentCount = signal(0);
 
   ngOnInit(): void {
     const trainer = this.trainer();
@@ -36,5 +39,8 @@ export class TrainerDashboard implements OnInit {
     // personally authored) — there's a single flat admin role managing one
     // shared catalog, so per-creator filtering no longer applies.
     this.moduleService.getAllModules().subscribe((modules) => this.modules.set(modules));
+    this.trainerService.getPayments().subscribe((payments) => {
+      this.successfulPaymentCount.set(payments.filter((p) => p.status === 'success').length);
+    });
   }
 }

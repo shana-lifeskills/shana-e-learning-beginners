@@ -1,0 +1,53 @@
+@if (points().length === 0) {
+  <p class="chart-empty">No revenue yet.</p>
+} @else {
+  <div class="chart-wrap">
+    <svg
+      [attr.viewBox]="'0 0 ' + width + ' ' + height"
+      preserveAspectRatio="none"
+      class="chart-svg"
+      (pointermove)="onPointerMove($event)"
+      (pointerleave)="onPointerLeave()"
+    >
+      <!-- Gridlines: hairline, recessive, solid -->
+      @for (tick of yTicks(); track tick.value) {
+        <line [attr.x1]="8" [attr.x2]="width - 8" [attr.y1]="tick.y" [attr.y2]="tick.y" class="gridline" />
+      }
+
+      <!-- Area wash at ~10% opacity -->
+      <path [attr.d]="areaPath()" [attr.fill]="color()" fill-opacity="0.1" stroke="none" />
+
+      <!-- 2px line, round join/cap -->
+      <path [attr.d]="linePath()" fill="none" [attr.stroke]="color()" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+
+      <!-- End marker: >=8px, 2px surface ring -->
+      @if (coords().length > 0) {
+        <circle [attr.cx]="coords()[coords().length - 1].x" [attr.cy]="coords()[coords().length - 1].y" r="5" [attr.fill]="color()" stroke="#fff" stroke-width="2" />
+      }
+
+      <!-- Crosshair: vertical hairline snapped to the nearest day -->
+      @if (hoveredIndex() !== null && coords()[hoveredIndex()!]; as pt) {
+        <line [attr.x1]="pt.x" [attr.x2]="pt.x" [attr.y1]="12" [attr.y2]="height - 8" class="crosshair" />
+        <circle [attr.cx]="pt.x" [attr.cy]="pt.y" r="5" [attr.fill]="color()" stroke="#fff" stroke-width="2" />
+      }
+    </svg>
+
+    @if (hoveredIndex() !== null && coords()[hoveredIndex()!]; as pt) {
+      <div class="chart-tooltip" [style.left.%]="(pt.x / width) * 100">
+        <strong>{{ amountLabel(pt.point.revenuePesewas) }}</strong>
+        <span>{{ dateLabel(pt.point.date) }}</span>
+      </div>
+    }
+
+    <div class="y-axis-labels">
+      @for (tick of yTicks(); track tick.value) {
+        <span [style.top.%]="(tick.y / height) * 100">{{ tick.label }}</span>
+      }
+    </div>
+
+    <div class="x-axis-labels">
+      <span>{{ dateLabel(points()[0].date) }}</span>
+      <span>{{ dateLabel(points()[points().length - 1].date) }}</span>
+    </div>
+  </div>
+}

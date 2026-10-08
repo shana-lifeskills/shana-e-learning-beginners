@@ -4,7 +4,11 @@
                 <p class="ow-subtitle">{{ ow.subtitle }}</p>
 
                 <div class="ow-image-wrap">
-                  <img [src]="ow.image" [alt]="ow.imageAlt" />
+                  @if (ow.image) {
+                    <img [src]="ow.image" [alt]="ow.imageAlt" />
+                  } @else {
+                    <div class="ow-image-placeholder" aria-hidden="true"></div>
+                  }
                 </div>
 
                 @if (ow.objectiveCards; as cards) {

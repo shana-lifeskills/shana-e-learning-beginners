@@ -1,0 +1,96 @@
+<div class="payments-page">
+  <div class="page-head">
+    <div>
+      <a routerLink="/admin" class="back-link">← Dashboard</a>
+      <h1>Payments</h1>
+    </div>
+  </div>
+
+  @if (loading()) {
+    <p class="loading-copy">Loading payments…</p>
+  } @else {
+    <div class="stats-row">
+      <div class="stat-tile">
+        <strong>{{ successCount() }}</strong>
+        <span>Successful payments</span>
+      </div>
+      <div class="stat-tile revenue">
+        <strong>GHS {{ (totalRevenuePesewas() / 100).toLocaleString('en-GH', { minimumFractionDigits: 2 }) }}</strong>
+        <span>Revenue collected</span>
+      </div>
+    </div>
+
+    <div class="filter-row">
+      <input
+        type="text"
+        class="filter-search"
+        placeholder="🔍 Search student, module or reference…"
+        [value]="searchTerm()"
+        (input)="updateSearch($any($event.target).value)"
+      />
+
+      <select class="filter-select" [value]="statusFilter()" (change)="setStatusFilter($any($event.target).value)">
+        <option value="all">All statuses</option>
+        <option value="success">✓ Success</option>
+        <option value="pending">⏳ Pending</option>
+        <option value="failed">✕ Failed</option>
+      </select>
+
+      <div class="date-range">
+        <input type="date" class="filter-date" [value]="fromDate()" (change)="updateFromDate($any($event.target).value)" aria-label="From date" />
+        <span>to</span>
+        <input type="date" class="filter-date" [value]="toDate()" (change)="updateToDate($any($event.target).value)" aria-label="To date" />
+      </div>
+    </div>
+
+    @if (payments().length === 0) {
+      <div class="empty-state">
+        <span class="art">🧾</span>
+        <p>No payments have been made yet.</p>
+      </div>
+    } @else if (filteredPayments().length === 0) {
+      <div class="empty-state">
+        <span class="art">🔍</span>
+        <p>No payments match those filters.</p>
+      </div>
+    } @else {
+      <div class="payments-table-wrap">
+        <table class="payments-table">
+          <thead>
+            <tr>
+              <th>Student</th>
+              <th>Module</th>
+              <th>Amount</th>
+              <th>Method</th>
+              <th>Status</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (payment of filteredPayments(); track payment.id) {
+              <tr>
+                <td>
+                  @if (payment.student; as s) {
+                    <strong>{{ s.firstName }} {{ s.lastName }}</strong>
+                    <small>{{ s.email }}</small>
+                  } @else {
+                    <span class="muted">Unknown student</span>
+                  }
+                </td>
+                <td>{{ payment.moduleTitle ?? '—' }}</td>
+                <td class="amount-cell">{{ amountLabel(payment) }}</td>
+                <td>{{ channelLabel(payment) }}</td>
+                <td>
+                  <span class="status-badge" [class.success]="payment.status === 'success'" [class.failed]="payment.status === 'failed'">
+                    {{ payment.status === 'success' ? '✓ Success' : payment.status === 'failed' ? '✕ Failed' : '⏳ Pending' }}
+                  </span>
+                </td>
+                <td class="date-cell">{{ dateLabel(payment.paidAt ?? payment.createdAt) }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  }
+</div>

@@ -1,0 +1,31 @@
+@if (rows().length === 0) {
+  <p class="chart-empty">{{ emptyLabel() }}</p>
+} @else {
+  <div class="bar-list">
+    @for (row of rows(); track row.label; let i = $index) {
+      <div
+        class="bar-row"
+        (pointerenter)="onHover(i)"
+        (pointerleave)="onLeave()"
+        (focus)="onHover(i)"
+        (blur)="onLeave()"
+        tabindex="0"
+        role="img"
+        [attr.aria-label]="row.label + ': ' + row.displayValue"
+      >
+        <span class="bar-label">{{ row.label }}</span>
+        <div class="bar-track">
+          <div class="bar-fill" [style.width.%]="barWidthPercent(row)" [style.background]="color()"></div>
+        </div>
+        <span class="bar-value">{{ row.displayValue }}</span>
+
+        @if (hoveredIndex() === i) {
+          <div class="bar-tooltip">
+            <strong>{{ row.displayValue }}</strong>
+            <span>{{ row.label }}</span>
+          </div>
+        }
+      </div>
+    }
+  </div>
+}

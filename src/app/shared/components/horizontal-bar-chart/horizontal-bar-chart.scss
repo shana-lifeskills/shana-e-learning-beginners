@@ -1,0 +1,86 @@
+@use '../../../../assets/styles/variables' as v;
+
+.chart-empty {
+  color: rgba(43, 45, 66, 0.5);
+  font-weight: 600;
+  font-size: 0.85rem;
+  padding: 1.5rem 0;
+  text-align: center;
+}
+
+.bar-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.bar-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(7rem, 11rem) 1fr auto;
+  align-items: center;
+  gap: 0.75rem;
+  outline: none;
+  border-radius: v.$border-radius-sm;
+
+  &:focus-visible {
+    box-shadow: 0 0 0 2px v.$color-coral;
+  }
+}
+
+.bar-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: v.$color-navy-text;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// Gridline-equivalent: the full-width track is the one-step-off-surface
+// recessive baseline the fill sits on.
+.bar-track {
+  height: 1.1rem;
+  background: v.$color-cream-bg;
+  border-radius: 0 4px 4px 0;
+  overflow: hidden;
+}
+
+// Grows from a square left baseline; only the data-end (right, where the
+// value actually stops) gets the 4px rounding, per the mark spec.
+.bar-fill {
+  height: 100%;
+  border-radius: 0 4px 4px 0;
+  transition: width 0.4s ease;
+}
+
+.bar-value {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: v.$color-navy-text;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+// Value leads (Strong), label follows — the tooltip's hierarchy is the
+// reverse of the row's own (reader already has the label, wants the number).
+.bar-tooltip {
+  position: absolute;
+  top: -2.1rem;
+  left: 0;
+  background: v.$color-navy-text;
+  color: v.$color-white;
+  padding: 0.35rem 0.65rem;
+  border-radius: v.$border-radius-sm;
+  font-size: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.25;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 5;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.18);
+
+  strong { font-weight: 800; }
+  span { color: rgba(255, 255, 255, 0.75); font-weight: 600; }
+}

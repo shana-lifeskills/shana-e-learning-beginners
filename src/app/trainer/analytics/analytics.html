@@ -1,0 +1,69 @@
+<div class="analytics-page">
+  <div class="page-head">
+    <div>
+      <a routerLink="/admin" class="back-link">← Dashboard</a>
+      <h1>Analytics</h1>
+    </div>
+  </div>
+
+  @if (loading()) {
+    <p class="loading-copy">Loading analytics…</p>
+  } @else {
+    <div class="chart-grid">
+      <section class="chart-card wide">
+        <div class="chart-head">
+          <div>
+            <h2>Revenue, last 30 days</h2>
+            <p class="chart-sub">Successful payments only</p>
+          </div>
+          <strong class="hero-figure">{{ totalRevenueLabel() }}</strong>
+        </div>
+        <app-revenue-line-chart [points]="revenuePoints()" color="#2f7a8c" />
+      </section>
+
+      <section class="chart-card">
+        <div class="chart-head">
+          <div>
+            <h2>Paid vs unpaid</h2>
+            <p class="chart-sub">Students who have ever completed a payment</p>
+          </div>
+        </div>
+
+        <div class="status-captions">
+          <span class="status-caption paid">
+            <span class="dot"></span> ✓ Paid ({{ paymentStatus().paidStudentCount }})
+          </span>
+          <span class="status-caption unpaid">
+            <span class="dot"></span> ⏳ Unpaid ({{ paymentStatus().unpaidStudentCount }})
+          </span>
+        </div>
+
+        <div class="proportion-bar">
+          <div class="segment" [style.width.%]="paidPercent()" [style.background]="paidColor"></div>
+          <div class="segment" [style.width.%]="100 - paidPercent()" [style.background]="unpaidColor"></div>
+        </div>
+        <p class="proportion-caption">{{ paidPercent() }}% of {{ paymentStatus().totalStudentCount }} students have paid</p>
+      </section>
+
+      <section class="chart-card">
+        <div class="chart-head">
+          <div>
+            <h2>Top modules by revenue</h2>
+            <p class="chart-sub">Which modules students actually pay to unlock</p>
+          </div>
+        </div>
+        <app-horizontal-bar-chart [rows]="paymentsByModuleRows()" color="#f2921e" emptyLabel="No module payments yet." />
+      </section>
+
+      <section class="chart-card">
+        <div class="chart-head">
+          <div>
+            <h2>Module completion rates</h2>
+            <p class="chart-sub">Of students who started, most-attempted modules first</p>
+          </div>
+        </div>
+        <app-horizontal-bar-chart [rows]="moduleCompletionRows()" color="#a66dd4" emptyLabel="No module progress yet." />
+      </section>
+    </div>
+  }
+</div>

@@ -39,11 +39,11 @@ const HEAR_ABOUT_OPTIONS: { id: string; label: string }[] = [
   { id: 'other', label: 'Other' },
 ];
 
+// Tech Skills, Language Skills, and Personal Coaching aren't built yet — only
+// Soft Skills has real curriculum content, so it's the only program offered
+// at signup for now. Re-add the others here once their content exists.
 const ENROL_PROGRAMS: { id: string; label: string; description: string }[] = [
   { id: 'soft-skills', label: 'Soft Skills', description: 'Confidence, public speaking, empathy, integrity, etc.' },
-  { id: 'tech-skills', label: 'Tech Skills', description: 'Coding & AI' },
-  { id: 'language-skills', label: 'Language Skills', description: 'French' },
-  { id: 'personal-coaching', label: 'Personal Coaching', description: '' },
 ];
 
 /** 3–9 → beginner, 10–17 → advanced — matches the ranges in AGE_GROUPS. */
@@ -122,8 +122,9 @@ export class StudentSignupStepper {
     parentWhatsapp: ['', [Validators.required, ghanaPhoneValidator]],
     email: ['', [Validators.required, strictEmailValidator]],
     password: ['', [Validators.required, Validators.minLength(8)]],
-    // Step 2 — Program Interest
-    enrolProgram: ['', Validators.required],
+    // Step 2 — Program Interest — pre-selected since Soft Skills is the only
+    // program on offer right now (see ENROL_PROGRAMS).
+    enrolProgram: ['soft-skills', Validators.required],
     howDidYouHearOther: [''],
     // Step 3 — Tell Us More
     growthAreas: ['', Validators.required],

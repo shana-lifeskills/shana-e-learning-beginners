@@ -1,0 +1,214 @@
+@use '../../../assets/styles/variables' as v;
+@use '../../../assets/styles/mixins' as m;
+
+.payments-page {
+  max-width: 96rem;
+  margin: 0 auto;
+  padding: 2rem 2.5rem 4rem;
+}
+
+.page-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.back-link {
+  font-weight: 800;
+  color: v.$color-navy-text;
+  text-decoration: none;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+h1 {
+  @include m.playful-heading;
+  color: v.$color-navy-text;
+  font-size: 1.4rem;
+  margin: 0;
+}
+
+.loading-copy { font-weight: 600; color: rgba(43, 45, 66, 0.6); }
+
+.empty-state {
+  @include m.bouncy-card;
+  background: v.$color-white;
+  padding: 2.5rem;
+  text-align: center;
+
+  .art { font-size: 3rem; display: block; margin-bottom: 0.5rem; }
+  p { color: rgba(43, 45, 66, 0.65); font-weight: 600; margin: 0; }
+}
+
+// --- Summary stats ----------------------------------------------------
+
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.stat-tile {
+  @include m.bouncy-card;
+  background: v.$color-white;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 5px solid v.$color-sky;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+
+  strong {
+    font-family: v.$headings-font-family;
+    font-size: 1.5rem;
+    color: v.$color-navy-text;
+  }
+
+  span {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: rgba(43, 45, 66, 0.6);
+  }
+
+  &.revenue { border-bottom-color: v.$color-leaf; }
+}
+
+// --- Filters --------------------------------------------------------------
+
+.filter-row {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.filter-search {
+  flex: 1 1 16rem;
+  border: 2px solid rgba(43, 45, 66, 0.1);
+  border-radius: v.$border-radius-pill;
+  padding: 0.65rem 1.1rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  background: v.$color-white;
+
+  &:focus {
+    outline: none;
+    border-color: v.$color-coral;
+  }
+}
+
+.filter-select {
+  border: 2px solid rgba(43, 45, 66, 0.1);
+  border-radius: v.$border-radius-pill;
+  padding: 0.65rem 1.1rem;
+  font-weight: 700;
+  font-size: 0.85rem;
+  background: v.$color-white;
+  color: v.$color-navy-text;
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+    border-color: v.$color-coral;
+  }
+}
+
+.date-range {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: rgba(43, 45, 66, 0.55);
+}
+
+.filter-date {
+  border: 2px solid rgba(43, 45, 66, 0.1);
+  border-radius: v.$border-radius-sm;
+  padding: 0.55rem 0.75rem;
+  font-weight: 600;
+  font-size: 0.85rem;
+  background: v.$color-white;
+  color: v.$color-navy-text;
+
+  &:focus {
+    outline: none;
+    border-color: v.$color-coral;
+  }
+}
+
+// --- Table ------------------------------------------------------------
+
+.payments-table-wrap {
+  @include m.bouncy-card;
+  background: v.$color-white;
+  overflow-x: auto;
+  padding: 0;
+}
+
+.payments-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 48rem;
+
+  th {
+    text-align: left;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 800;
+    color: rgba(43, 45, 66, 0.5);
+    padding: 1rem 1.25rem;
+    border-bottom: 2px solid v.$color-cream-bg;
+  }
+
+  td {
+    padding: 0.9rem 1.25rem;
+    border-bottom: 1px solid v.$color-cream-bg;
+    vertical-align: middle;
+  }
+
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover { background: v.$color-cream-bg; }
+
+  td strong { display: block; color: v.$color-navy-text; }
+  td small { color: rgba(43, 45, 66, 0.55); font-weight: 600; }
+  .muted { color: rgba(43, 45, 66, 0.45); font-style: italic; }
+}
+
+.amount-cell {
+  font-weight: 800;
+  color: v.$color-navy-text;
+  white-space: nowrap;
+}
+
+.date-cell {
+  color: rgba(43, 45, 66, 0.6);
+  font-weight: 600;
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+.status-badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.1rem 0.55rem;
+  border-radius: v.$border-radius-pill;
+  background: color-mix(in srgb, v.$color-sunshine 25%, white);
+  color: color-mix(in srgb, v.$color-sunshine 55%, v.$color-navy-text);
+  white-space: nowrap;
+
+  &.success {
+    background: color-mix(in srgb, v.$color-leaf 20%, white);
+    color: color-mix(in srgb, v.$color-leaf 55%, v.$color-navy-text);
+  }
+
+  &.failed {
+    background: color-mix(in srgb, v.$color-bubble-pink 25%, white);
+    color: color-mix(in srgb, v.$color-bubble-pink 55%, v.$color-navy-text);
+  }
+}

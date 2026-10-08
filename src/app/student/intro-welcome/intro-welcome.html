@@ -3,7 +3,11 @@
                 <span class="iwc-week"><span class="iwc-star">☆</span>{{ iw.weekPill }}<span class="iwc-star">☆</span></span>
 
                 <div class="iwc-image">
-                  <img [src]="iw.image" [alt]="iw.imageAlt" />
+                  @if (iw.image) {
+                    <img [src]="iw.image" [alt]="iw.imageAlt" />
+                  } @else {
+                    <div class="iw-image-placeholder" aria-hidden="true"></div>
+                  }
                 </div>
 
                 <h1>{{ iw.titleStart }} {{ iw.titleAccent }}</h1>
@@ -92,7 +96,11 @@
 
                 <div class="intro-welcome-art">
                   <div class="iw-image-wrap">
-                    <img [src]="iw.image" [alt]="iw.imageAlt" />
+                    @if (iw.image) {
+                      <img [src]="iw.image" [alt]="iw.imageAlt" />
+                    } @else {
+                      <div class="iw-image-placeholder" aria-hidden="true"></div>
+                    }
                   </div>
                   @if (iw.speechBubble) {
                     <span class="iw-speech-bubble">{{ iw.speechBubble }}</span>

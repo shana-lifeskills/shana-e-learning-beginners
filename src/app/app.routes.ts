@@ -35,6 +35,8 @@ export const routes: Routes = [
     children: [
       { path: '', loadComponent: () => import('./trainer/dashboard/dashboard').then((m) => m.TrainerDashboard) },
       { path: 'students', loadComponent: () => import('./trainer/students-list/students-list').then((m) => m.StudentsList) },
+      { path: 'payments', loadComponent: () => import('./trainer/payments-list/payments-list').then((m) => m.PaymentsList) },
+      { path: 'analytics', loadComponent: () => import('./trainer/analytics/analytics').then((m) => m.Analytics) },
       { path: 'modules', loadComponent: () => import('./trainer/module-list/module-list').then((m) => m.ModuleList) },
       { path: 'modules/new', loadComponent: () => import('./trainer/module-editor/module-editor').then((m) => m.ModuleEditor) },
     ],
