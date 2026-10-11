@@ -59,6 +59,31 @@ h2 {
   &.payments { border-bottom: 6px solid v.$color-leaf; }
 }
 
+.dashboard-analytics {
+  margin-top: 0.5rem;
+}
+
+.section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+
+  h2 { margin-bottom: 0; }
+}
+
+.see-all-link {
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: v.$color-coral;
+  text-decoration: none;
+  white-space: nowrap;
+
+  &:hover { text-decoration: underline; }
+}
+
 .loading-copy { font-weight: 600; color: rgba(43, 45, 66, 0.6); }
 
 .empty-state {

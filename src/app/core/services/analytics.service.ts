@@ -29,6 +29,14 @@ export interface ModuleCompletion {
   completionRate: number;
 }
 
+export interface TopStudent {
+  id: string;
+  name: string;
+  stars: number;
+  badges: number;
+  trophies: number;
+}
+
 /** Cross-student, aggregate reads for the admin Analytics page —
  *  instructor/admin only on the backend. */
 @Injectable({ providedIn: 'root' })
@@ -50,5 +58,9 @@ export class AnalyticsService {
 
   moduleCompletion(): Observable<ModuleCompletion[]> {
     return this.http.get<ModuleCompletion[]>(`${this.apiUrl}/module-completion`, { withCredentials: true });
+  }
+
+  topStudents(): Observable<TopStudent[]> {
+    return this.http.get<TopStudent[]>(`${this.apiUrl}/top-students`, { withCredentials: true });
   }
 }

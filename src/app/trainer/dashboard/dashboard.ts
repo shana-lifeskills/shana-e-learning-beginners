@@ -8,11 +8,12 @@ import { Trainer } from '../../core/models/user.model';
 import { Student } from '../../core/models/user.model';
 import { Module } from '../../core/models/module.model';
 import { VerifyEmailBanner } from '../../shared/components/verify-email-banner/verify-email-banner';
+import { AnalyticsOverview } from '../../shared/components/analytics-overview/analytics-overview';
 
 @Component({
   selector: 'app-trainer-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterLink, VerifyEmailBanner],
+  imports: [CommonModule, RouterLink, VerifyEmailBanner, AnalyticsOverview],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
 })
