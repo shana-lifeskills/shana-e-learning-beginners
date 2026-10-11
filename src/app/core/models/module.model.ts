@@ -10877,7 +10877,11 @@ export interface ModuleWithProgress extends Module {
   status: 'not-started' | 'in-progress' | 'completed';
   lessonsCompleted: number;
   lessonsTotal: number;
-  /** Pay-as-you-go: true until a successful payment for this exact module.
-   *  Games are never locked. */
+  /** Pay-as-you-go: true until a successful payment for this exact module
+   *  (directly, via a bundle, or via an active annual subscription) OR the
+   *  previous Level isn't fully completed yet. Games are never locked. */
   locked: boolean;
+  /** Why `locked` is true, so the UI can tell "pay to unlock" apart from
+   *  "finish the previous Level first" — null when not locked. */
+  lockReason: 'payment' | 'level' | null;
 }
