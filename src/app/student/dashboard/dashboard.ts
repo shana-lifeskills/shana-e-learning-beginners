@@ -11,6 +11,7 @@ import { RewardShelf } from '../../shared/components/reward-shelf/reward-shelf';
 import { OllieMascot } from '../../shared/components/ollie-mascot/ollie-mascot';
 import { PaymentModal } from '../../shared/components/payment-modal/payment-modal';
 import { VerifyEmailBanner } from '../../shared/components/verify-email-banner/verify-email-banner';
+import { levelIndexOf } from '../../core/services/levels';
 
 @Component({
   selector: 'app-student-dashboard',
@@ -34,7 +35,21 @@ export class Dashboard implements OnInit {
   /** The module a student just clicked "Pay to unlock" on — null when the modal is closed. */
   readonly payingModule = signal<ModuleWithProgress | null>(null);
 
-  /** Life-skills modules only (games live on their own page), grouped by curriculum track. */
+  /** Other modules in the clicked module's Level that are payment-locked
+   *  (not Level-locked) — the pool a bundle purchase can pick its other
+   *  modules from, since bundling in a still-Level-locked module would be
+   *  useless (it'd stay locked regardless). */
+  readonly bundleCandidates = computed(() => {
+    const module = this.payingModule();
+    if (!module) return [];
+    return this.modules()
+      .filter((m) => m.id !== module.id && m.trackName === module.trackName && m.lockReason === 'payment')
+      .map((m) => ({ id: m.id, title: m.title }));
+  });
+
+  /** Life-skills modules only (games live on their own page), grouped by
+   *  curriculum track and sorted into Level order (untracked modules sort
+   *  last — they're not part of the Level sequence). */
   readonly tracks = computed(() => {
     const groups = new Map<string, ModuleWithProgress[]>();
     for (const module of this.modules()) {
@@ -42,7 +57,15 @@ export class Dashboard implements OnInit {
       const track = module.trackName ?? 'My Modules';
       groups.set(track, [...(groups.get(track) ?? []), module]);
     }
-    return Array.from(groups, ([trackName, modules]) => ({ trackName, modules }));
+    return Array.from(groups, ([trackName, modules]) => ({
+      trackName,
+      modules,
+      levelNumber: levelIndexOf(trackName) + 1,
+    })).sort((a, b) => {
+      if (a.levelNumber <= 0) return 1;
+      if (b.levelNumber <= 0) return -1;
+      return a.levelNumber - b.levelNumber;
+    });
   });
 
   ngOnInit(): void {
@@ -71,6 +94,15 @@ export class Dashboard implements OnInit {
   }
 
   openModule(module: ModuleWithProgress): void {
+    if (module.lockReason === 'level') {
+      const levelNumber = levelIndexOf(module.trackName); // previous Level's 1-based number
+      this.sidekick.say(
+        `Finish Level ${levelNumber} before starting "${module.title}" — you're almost there!`,
+        'wave',
+        4000
+      );
+      return;
+    }
     if (module.locked) {
       this.payingModule.set(module);
       return;

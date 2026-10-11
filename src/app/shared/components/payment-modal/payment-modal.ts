@@ -43,7 +43,25 @@ const MOMO_PROVIDER_LABELS: Record<MomoProvider, string> = {
   atl: 'AirtelTigo Money',
 };
 
-type CheckoutStep = 'method' | 'card' | 'mock-card' | 'phone' | 'otp' | 'awaiting-approval' | 'processing' | 'success' | 'error';
+type CheckoutStep =
+  | 'plan'
+  | 'bundle-pick'
+  | 'method'
+  | 'card'
+  | 'mock-card'
+  | 'phone'
+  | 'otp'
+  | 'awaiting-approval'
+  | 'processing'
+  | 'success'
+  | 'error';
+
+type PlanKind = 'module' | 'bundle' | 'annual';
+
+/** How many *other* modules a bundle needs besides the one the student
+ *  clicked (which is always included) — must match the backend's BUNDLE_SIZE
+ *  (currently 3) minus 1. */
+const BUNDLE_EXTRA_COUNT = 2;
 
 const POLL_INTERVAL_MS = 3000;
 const MAX_POLL_ATTEMPTS = 20; // ~1 minute
@@ -88,15 +106,23 @@ export class PaymentModal {
   private readonly apiUrl = `${environment.apiUrl}/payments`;
 
   readonly email = input.required<string>();
-  /** Which module this payment unlocks — pay-as-you-go, one module at a time. */
+  /** Which module the student clicked "unlock" on — always included, whichever plan they pick. */
   readonly moduleId = input.required<string>();
   readonly moduleTitle = input<string>('this module');
+  /** Other modules in the same (currently-unlocked) Level, not yet paid for —
+   *  the pool a bundle's other picks come from. Empty means "no bundle
+   *  option" (not enough same-Level modules to fill one). */
+  readonly bundleCandidates = input<{ id: string; title: string }[]>([]);
   readonly closed = output<void>();
   readonly paid = output<void>();
 
-  readonly step = signal<CheckoutStep>('method');
+  readonly step = signal<CheckoutStep>('plan');
   readonly amountCedisDisplay = signal('399.00'); // placeholder until the backend confirms the real price
   readonly errorMessage = signal('');
+
+  readonly planKind = signal<PlanKind>('module');
+  readonly selectedBundleExtraIds = signal<Set<string>>(new Set());
+  readonly bundleExtraCount = BUNDLE_EXTRA_COUNT;
 
   readonly momoProviders = MOMO_PROVIDER_LABELS;
   readonly selectedProvider = signal<MomoProvider | null>(null);
@@ -125,6 +151,47 @@ export class PaymentModal {
     this.selectedProvider.set(null);
     this.errorMessage.set('');
     this.mockCardReference = null;
+  }
+
+  /** "Unlock just this module" / "a bundle" / "everything for a year" —
+   *  the very first choice, before any payment method. */
+  choosePlan(kind: PlanKind): void {
+    this.planKind.set(kind);
+    if (kind === 'bundle') {
+      this.selectedBundleExtraIds.set(new Set());
+      this.step.set('bundle-pick');
+      return;
+    }
+    this.step.set('method');
+  }
+
+  backToPlan(): void {
+    this.step.set('plan');
+  }
+
+  toggleBundleCandidate(id: string): void {
+    this.selectedBundleExtraIds.update((set) => {
+      const next = new Set(set);
+      if (next.has(id)) {
+        next.delete(id);
+      } else if (next.size < BUNDLE_EXTRA_COUNT) {
+        next.add(id);
+      }
+      return next;
+    });
+  }
+
+  confirmBundlePick(): void {
+    if (this.selectedBundleExtraIds().size !== BUNDLE_EXTRA_COUNT) return;
+    this.step.set('method');
+  }
+
+  /** The full set of module ids this payment grants, for `kind: 'bundle'` —
+   *  the clicked module plus the student's extra picks. `undefined` for
+   *  'module'/'annual', which don't need a module list. */
+  private bundleModuleIds(): string[] | undefined {
+    if (this.planKind() !== 'bundle') return undefined;
+    return [this.moduleId(), ...this.selectedBundleExtraIds()];
   }
 
   /** "Card" jumps straight to Paystack's real, standard card-entry checkout —
@@ -172,8 +239,16 @@ export class PaymentModal {
   pay(): void {
     this.step.set('processing');
 
+    const kind = this.planKind();
+    const body =
+      kind === 'bundle'
+        ? { kind, moduleIds: this.bundleModuleIds() }
+        : kind === 'annual'
+          ? { kind }
+          : { kind, moduleId: this.moduleId() };
+
     this.http
-      .post<InitializeResponse>(`${this.apiUrl}/initialize`, { moduleId: this.moduleId() }, { withCredentials: true })
+      .post<InitializeResponse>(`${this.apiUrl}/initialize`, body, { withCredentials: true })
       .pipe(
         switchMap((init) => {
           this.amountCedisDisplay.set((init.amountPesewas / 100).toLocaleString('en-GH', { minimumFractionDigits: 2 }));
@@ -240,12 +315,16 @@ export class PaymentModal {
     if (!provider) return;
 
     this.step.set('processing');
+    const kind = this.planKind();
+    const body =
+      kind === 'bundle'
+        ? { phone: this.phoneNumber().trim(), provider, kind, moduleIds: this.bundleModuleIds() }
+        : kind === 'annual'
+          ? { phone: this.phoneNumber().trim(), provider, kind }
+          : { phone: this.phoneNumber().trim(), provider, kind, moduleId: this.moduleId() };
+
     this.http
-      .post<MobileMoneyResponse>(
-        `${this.apiUrl}/mobile-money/initiate`,
-        { phone: this.phoneNumber().trim(), provider, moduleId: this.moduleId() },
-        { withCredentials: true }
-      )
+      .post<MobileMoneyResponse>(`${this.apiUrl}/mobile-money/initiate`, body, { withCredentials: true })
       .pipe(
         catchError((err) => {
           this.fail(err?.error?.message ?? 'Could not start the mobile money payment.');

@@ -1,7 +1,7 @@
 <div class="paystack-overlay" (click)="close()">
   <div class="paystack-modal" (click)="$event.stopPropagation()">
     @switch (step()) {
-      @case ('method') {
+      @case ('plan') {
         <div class="paystack-header">
           <span class="merchant">ShanaLifeSkills Centre</span>
           <button type="button" class="close-btn" (click)="close()" aria-label="Close payment window">✕</button>
@@ -9,6 +9,66 @@
 
         <div class="amount-block">
           <span class="amount-label">Unlock "{{ moduleTitle() }}"</span>
+        </div>
+
+        <p class="method-heading">How would you like to unlock it?</p>
+
+        <div class="method-grid">
+          <button type="button" class="method-btn method-btn--full" (click)="choosePlan('module')">
+            <span>Just this module</span>
+          </button>
+          @if (bundleCandidates().length >= bundleExtraCount) {
+            <button type="button" class="method-btn method-btn--full" (click)="choosePlan('bundle')">
+              <span>A bundle of {{ bundleExtraCount + 1 }} modules</span>
+            </button>
+          }
+          <button type="button" class="method-btn method-btn--full" (click)="choosePlan('annual')">
+            <span>Everything, for a year</span>
+          </button>
+        </div>
+      }
+      @case ('bundle-pick') {
+        <div class="paystack-header">
+          <button type="button" class="close-btn" (click)="backToPlan()" aria-label="Back">←</button>
+          <span class="merchant">Pick {{ bundleExtraCount }} more modules</span>
+          <button type="button" class="close-btn" (click)="close()" aria-label="Close payment window">✕</button>
+        </div>
+
+        <p class="method-heading">"{{ moduleTitle() }}" is included — choose {{ bundleExtraCount }} more from your current level.</p>
+
+        <div class="bundle-candidate-list">
+          @for (candidate of bundleCandidates(); track candidate.id) {
+            <label class="bundle-candidate-row">
+              <input
+                type="checkbox"
+                [checked]="selectedBundleExtraIds().has(candidate.id)"
+                [disabled]="!selectedBundleExtraIds().has(candidate.id) && selectedBundleExtraIds().size >= bundleExtraCount"
+                (change)="toggleBundleCandidate(candidate.id)"
+              />
+              <span>{{ candidate.title }}</span>
+            </label>
+          }
+        </div>
+
+        <button type="button" class="pay-btn" [disabled]="selectedBundleExtraIds().size !== bundleExtraCount" (click)="confirmBundlePick()">
+          Continue
+        </button>
+      }
+      @case ('method') {
+        <div class="paystack-header">
+          <button type="button" class="close-btn" (click)="backToPlan()" aria-label="Back">←</button>
+          <span class="merchant">ShanaLifeSkills Centre</span>
+          <button type="button" class="close-btn" (click)="close()" aria-label="Close payment window">✕</button>
+        </div>
+
+        <div class="amount-block">
+          @if (planKind() === 'bundle') {
+            <span class="amount-label">Unlock {{ bundleExtraCount + 1 }} modules</span>
+          } @else if (planKind() === 'annual') {
+            <span class="amount-label">Unlock everything for a year</span>
+          } @else {
+            <span class="amount-label">Unlock "{{ moduleTitle() }}"</span>
+          }
           <span class="amount-value">GH₵{{ amountCedisDisplay() }}</span>
         </div>
 

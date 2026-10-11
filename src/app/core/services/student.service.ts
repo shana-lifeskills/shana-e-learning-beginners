@@ -8,6 +8,7 @@ import { Student } from '../models/user.model';
 import { Module, ModuleWithProgress } from '../models/module.model';
 import { GamificationService } from './gamification.service';
 import { RewardTotals } from '../models/gamification.model';
+import { LEVEL_ORDER, levelIndexOf } from './levels';
 
 export interface EarnedBadge {
   lessonTitle: string;
@@ -76,11 +77,33 @@ export class StudentService {
     }).pipe(
       map(({ allProgress, unlockedModuleIds }) => {
         const unlocked = new Set(unlockedModuleIds);
+        const progressByModuleId = new Map(allProgress.map((p) => [p.moduleId, p]));
+
+        // Level-sequencing: a Level is "complete" once every life-skills
+        // module sharing its trackName (within this student's already
+        // ageGroup-filtered module list) has status 'completed'. Computed
+        // once up front so each module's lock check below is a simple lookup.
+        const modulesByTrack = new Map<string, Module[]>();
+        for (const m of allModules) {
+          if (m.category !== 'life-skills' || !m.trackName) continue;
+          modulesByTrack.set(m.trackName, [...(modulesByTrack.get(m.trackName) ?? []), m]);
+        }
+        const isLevelComplete = (trackName: string): boolean => {
+          const mods = modulesByTrack.get(trackName);
+          if (!mods || mods.length === 0) return true;
+          return mods.every((m) => progressByModuleId.get(m.id)?.status === 'completed');
+        };
+
         const modules: ModuleWithProgress[] = allModules.map((module) => {
-          const progress = allProgress.find((p) => p.moduleId === module.id);
+          const progress = progressByModuleId.get(module.id);
           const totalExercises = module.lessons.reduce((sum, lesson) => sum + lesson.exercises.length, 0);
           const completedExercises = progress?.completedExerciseIds.length ?? 0;
           const progressPercent = totalExercises === 0 ? 0 : Math.round((completedExercises / totalExercises) * 100);
+
+          const levelIndex = levelIndexOf(module.trackName);
+          const levelLocked =
+            module.category === 'life-skills' && levelIndex > 0 && !isLevelComplete(LEVEL_ORDER[levelIndex - 1]);
+          const paymentLocked = module.category !== 'game' && !unlocked.has(module.id);
 
           return {
             ...module,
@@ -88,7 +111,8 @@ export class StudentService {
             status: progress?.status ?? 'not-started',
             lessonsCompleted: progress?.completedLessonIds.length ?? 0,
             lessonsTotal: module.lessons.length,
-            locked: module.category !== 'game' && !unlocked.has(module.id),
+            locked: paymentLocked || levelLocked,
+            lockReason: levelLocked ? 'level' : paymentLocked ? 'payment' : null,
           };
         });
         return modules;

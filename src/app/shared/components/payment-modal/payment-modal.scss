@@ -96,6 +96,33 @@
   gap: 0.75rem;
 }
 
+.bundle-candidate-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  max-height: 14rem;
+  overflow-y: auto;
+}
+
+.bundle-candidate-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 0.75rem;
+  border: v.$input-border-width solid v.$color-cream-bg;
+  border-radius: v.$input-border-radius;
+  background: v.$color-cream-bg;
+  font-weight: 600;
+  color: v.$color-navy-text;
+  cursor: pointer;
+
+  input[type='checkbox'] {
+    width: auto;
+    accent-color: v.$color-coral;
+  }
+}
+
 .method-heading {
   font-weight: 700;
   color: v.$color-navy-text;

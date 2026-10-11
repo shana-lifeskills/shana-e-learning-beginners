@@ -70,9 +70,9 @@
         </div>
       } @else {
         <div class="module-grid">
-          @for (module of modules(); track module.id) {
+          @for (module of sortedModules(); track module.id) {
             <div class="module-card" [class.locked]="module.locked" [style.--accent]="module.themeColor">
-              <span class="category-pill">{{ module.trackName ?? module.category | uppercase }}</span>
+              <span class="category-pill">{{ levelLabel(module) | uppercase }}</span>
               <div class="module-icon" [style.background]="module.themeColor">{{ module.icon }}</div>
               <h3>{{ module.title }}</h3>
               <p class="module-description">{{ module.description }}</p>
@@ -84,7 +84,13 @@
                 <p class="progress-percent">{{ module.progressPercent }}% complete</p>
               }
               <button type="button" class="module-cta" [class.module-cta--locked]="module.locked" (click)="openModule(module)">
-                {{ module.locked ? '🔒 Pay to unlock' : '▷ ' + buttonLabel(module) }}
+                @if (module.lockReason === 'level') {
+                  🔒 Finish the previous level
+                } @else if (module.lockReason === 'payment') {
+                  🔒 Pay to unlock
+                } @else {
+                  ▷ {{ buttonLabel(module) }}
+                }
               </button>
             </div>
           }
@@ -94,6 +100,6 @@
   </div>
 
   @if (payingModule(); as m) {
-    <app-payment-modal [email]="s.email" [moduleId]="m.id" [moduleTitle]="m.title" (closed)="payingModule.set(null)" (paid)="onPaymentSuccess()" />
+    <app-payment-modal [email]="s.email" [moduleId]="m.id" [moduleTitle]="m.title" [bundleCandidates]="bundleCandidates()" (closed)="payingModule.set(null)" (paid)="onPaymentSuccess()" />
   }
 }

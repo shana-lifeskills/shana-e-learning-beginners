@@ -39,7 +39,13 @@
     } @else {
       @for (track of tracks(); track track.trackName) {
         <div class="track-group">
-          <h3 class="track-heading">{{ track.trackName }}</h3>
+          <h3 class="track-heading">
+            @if (track.levelNumber > 0) {
+              Level {{ track.levelNumber }}: {{ track.trackName }}
+            } @else {
+              {{ track.trackName }}
+            }
+          </h3>
           <div class="module-grid">
             @for (module of track.modules; track module.id) {
               <div class="module-card" [class.locked]="module.locked" [style.--accent]="module.themeColor">
@@ -58,7 +64,13 @@
                 }
 
                 <button type="button" class="btn w-100 btn-lg-tappable" [class.btn-primary]="!module.locked" [class.btn-locked]="module.locked" (click)="openModule(module)">
-                  {{ module.locked ? '🔒 Pay to unlock' : '▷ ' + buttonLabel(module) }}
+                  @if (module.lockReason === 'level') {
+                    🔒 Finish the previous level
+                  } @else if (module.lockReason === 'payment') {
+                    🔒 Pay to unlock
+                  } @else {
+                    ▷ {{ buttonLabel(module) }}
+                  }
                 </button>
               </div>
             }
@@ -71,7 +83,7 @@
 
 @if (payingModule(); as m) {
   @if (student(); as s) {
-    <app-payment-modal [email]="s.email" [moduleId]="m.id" [moduleTitle]="m.title" (closed)="payingModule.set(null)" (paid)="onPaymentSuccess()" />
+    <app-payment-modal [email]="s.email" [moduleId]="m.id" [moduleTitle]="m.title" [bundleCandidates]="bundleCandidates()" (closed)="payingModule.set(null)" (paid)="onPaymentSuccess()" />
   }
 }
 
