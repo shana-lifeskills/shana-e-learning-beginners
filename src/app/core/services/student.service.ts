@@ -1,12 +1,13 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, forkJoin, map, of } from 'rxjs';
+import { Observable, forkJoin, map, of, switchMap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { DatabaseService } from './database.service';
 import { COLLECTIONS } from './collections';
 import { Student } from '../models/user.model';
 import { Module, ModuleWithProgress } from '../models/module.model';
 import { GamificationService } from './gamification.service';
+import { ModuleService } from './module.service';
 import { RewardTotals } from '../models/gamification.model';
 import { LEVEL_ORDER, levelIndexOf } from './levels';
 
@@ -49,6 +50,7 @@ interface ProgressDto {
 export class StudentService {
   private db = inject(DatabaseService);
   private gamification = inject(GamificationService);
+  private moduleService = inject(ModuleService);
   private http = inject(HttpClient);
   private readonly apiUrl = `${environment.apiUrl}/progress`;
   private readonly paymentsUrl = `${environment.apiUrl}/payments`;
@@ -69,13 +71,13 @@ export class StudentService {
     const student = this.db.getById<Student>(COLLECTIONS.users, studentId);
     if (!student) return of([]);
 
-    const allModules = this.db.getAll<Module>(COLLECTIONS.modules).filter((m) => m.ageGroup === student.ageGroup);
-
     return forkJoin({
+      allModulesUnfiltered: this.moduleService.getAllModules(),
       allProgress: this.http.get<ProgressDto[]>(this.apiUrl, { params: { studentId }, withCredentials: true }),
       unlockedModuleIds: this.getUnlockedModuleIds(studentId),
     }).pipe(
-      map(({ allProgress, unlockedModuleIds }) => {
+      map(({ allModulesUnfiltered, allProgress, unlockedModuleIds }) => {
+        const allModules = allModulesUnfiltered.filter((m) => m.ageGroup === student.ageGroup);
         const unlocked = new Set(unlockedModuleIds);
         const progressByModuleId = new Map(allProgress.map((p) => [p.moduleId, p]));
 
@@ -96,7 +98,11 @@ export class StudentService {
 
         const modules: ModuleWithProgress[] = allModules.map((module) => {
           const progress = progressByModuleId.get(module.id);
-          const totalExercises = module.lessons.reduce((sum, lesson) => sum + lesson.exercises.length, 0);
+          // `getAllModules()` returns metadata-only summaries (lessons: []) —
+          // lessonsTotal/exercisesTotal carry the real counts in that case;
+          // fall back to the full lesson array for a locally-created module.
+          const totalExercises = module.exercisesTotal ?? module.lessons.reduce((sum, lesson) => sum + lesson.exercises.length, 0);
+          const lessonsTotal = module.lessonsTotal ?? module.lessons.length;
           const completedExercises = progress?.completedExerciseIds.length ?? 0;
           const progressPercent = totalExercises === 0 ? 0 : Math.round((completedExercises / totalExercises) * 100);
 
@@ -110,7 +116,7 @@ export class StudentService {
             progressPercent,
             status: progress?.status ?? 'not-started',
             lessonsCompleted: progress?.completedLessonIds.length ?? 0,
-            lessonsTotal: module.lessons.length,
+            lessonsTotal,
             locked: paymentLocked || levelLocked,
             lockReason: levelLocked ? 'level' : paymentLocked ? 'payment' : null,
           };
@@ -124,34 +130,50 @@ export class StudentService {
     return this.gamification.getTotals(studentId);
   }
 
-  getRewardHighlights(studentId: string): Observable<RewardHighlights> {
-    const allModules = this.db.getAll<Module>(COLLECTIONS.modules);
+  /** Needs each referenced module's *full* lesson content (to find the
+   *  current lesson and check its exercises) — `getAllModules()` only
+   *  returns metadata, so this fetches full detail for just the handful of
+   *  distinct modules actually referenced, not the whole catalog. */
+  private moduleDetailsByIds(moduleIds: string[]): Observable<Map<string, Module>> {
+    const uniqueIds = [...new Set(moduleIds)];
+    if (uniqueIds.length === 0) return of(new Map());
+    return forkJoin(uniqueIds.map((id) => this.moduleService.getModuleById(id))).pipe(
+      map((modules) => new Map(modules.filter((m): m is Module => !!m).map((m) => [m.id, m])))
+    );
+  }
 
+  getRewardHighlights(studentId: string): Observable<RewardHighlights> {
     return forkJoin({
       starsThisWeek: this.gamification.getStarsThisWeek(studentId),
       allProgress: this.http.get<ProgressDto[]>(this.apiUrl, { params: { studentId }, withCredentials: true }),
     }).pipe(
-      map(({ starsThisWeek, allProgress }) => {
-        const badgesAlmostUnlocked = allProgress.filter((progress) => {
-          if (progress.status !== 'in-progress' || !progress.currentLessonId) return false;
-          const module = allModules.find((m) => m.id === progress.moduleId);
-          const lesson = module?.lessons.find((l) => l.id === progress.currentLessonId);
-          if (!lesson || lesson.exercises.length === 0) return false;
-          const doneInLesson = lesson.exercises.filter((e) => progress.completedExerciseIds.includes(e.id)).length;
-          return doneInLesson > 0 && doneInLesson < lesson.exercises.length;
-        }).length;
+      switchMap(({ starsThisWeek, allProgress }) => {
+        const inProgress = allProgress.filter((p) => p.status === 'in-progress' && p.currentLessonId);
+        return this.moduleDetailsByIds(inProgress.map((p) => p.moduleId)).pipe(
+          map((moduleById) => {
+            const badgesAlmostUnlocked = inProgress.filter((progress) => {
+              const module = moduleById.get(progress.moduleId);
+              const lesson = module?.lessons.find((l) => l.id === progress.currentLessonId);
+              if (!lesson || lesson.exercises.length === 0) return false;
+              const doneInLesson = lesson.exercises.filter((e) => progress.completedExerciseIds.includes(e.id)).length;
+              return doneInLesson > 0 && doneInLesson < lesson.exercises.length;
+            }).length;
 
-        return { starsThisWeek: starsThisWeek.starsThisWeek, badgesAlmostUnlocked };
+            return { starsThisWeek: starsThisWeek.starsThisWeek, badgesAlmostUnlocked };
+          })
+        );
       })
     );
   }
 
   getRewardDetails(studentId: string): Observable<RewardDetails> {
-    const allModules = this.db.getAll<Module>(COLLECTIONS.modules);
-    const moduleById = new Map(allModules.map((m) => [m.id, m]));
-
     return this.gamification.getDetails(studentId).pipe(
-      map((raw) => {
+      switchMap((raw) =>
+        this.moduleDetailsByIds([...raw.badges.map((b) => b.moduleId), ...raw.trophies.map((t) => t.moduleId)]).pipe(
+          map((moduleById) => ({ raw, moduleById }))
+        )
+      ),
+      map(({ raw, moduleById }) => {
         const badges: EarnedBadge[] = raw.badges.map((log) => {
           const module = moduleById.get(log.moduleId);
           const lesson = module?.lessons.find((l) => l.id === log.lessonId);

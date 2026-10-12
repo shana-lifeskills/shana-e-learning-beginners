@@ -10869,6 +10869,14 @@ export interface Module {
   trackName?: string;
   /** Which student age group this module was built for; only shown to students with a matching ageGroup. */
   ageGroup: AgeGroup;
+  /** Set only on a metadata-only summary (from `ModuleService.getAllModules()`,
+   *  which never ships full lesson content for the whole catalog) — `lessons`
+   *  is `[]` in that case, so read these instead of `lessons.length`/
+   *  `lessons.reduce(...)`. Undefined on a full-detail module (from
+   *  `getModuleById()`, or an admin-created one), where `lessons` itself is
+   *  the source of truth. */
+  lessonsTotal?: number;
+  exercisesTotal?: number;
 }
 
 /** Module joined with a student's progress, used for dashboard/player views. */

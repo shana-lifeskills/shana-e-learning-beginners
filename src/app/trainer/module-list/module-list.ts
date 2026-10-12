@@ -80,13 +80,17 @@ export class ModuleList implements OnInit {
     this.activeTab.set(tab);
   }
 
+  // `getAllModules()` returns metadata-only summaries (lessons: []) for
+  // content fetched from the backend — lessonsTotal/exercisesTotal carry
+  // the real counts in that case; fall back to the full lesson array for a
+  // locally-created module, which has neither field set.
   lessonsLabel(module: Module): string {
-    const count = module.lessons.length;
+    const count = module.lessonsTotal ?? module.lessons.length;
     return count === 1 ? '1 lesson' : `${count} lessons`;
   }
 
   exercisesLabel(module: Module): string {
-    const count = module.lessons.reduce((sum, l) => sum + l.exercises.length, 0);
+    const count = module.exercisesTotal ?? module.lessons.reduce((sum, l) => sum + l.exercises.length, 0);
     return count === 1 ? '1 question' : `${count} questions`;
   }
 }
