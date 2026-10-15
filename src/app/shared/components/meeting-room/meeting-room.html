@@ -1,0 +1,20 @@
+<div class="meeting-room">
+  @if (loading()) {
+    <div class="status">Loading your meeting room…</div>
+  } @else if (notFound()) {
+    <div class="status">
+      <p>We couldn't find that meeting.</p>
+      <a [routerLink]="backPath()">Back to Meetings</a>
+    </div>
+  } @else {
+    <header class="room-head">
+      <span class="title">{{ meeting()!.title }}</span>
+      <a class="leave-btn" [routerLink]="backPath()">Leave</a>
+    </header>
+    <iframe
+      [src]="embedUrl()"
+      allow="camera; microphone; fullscreen; display-capture; autoplay"
+      class="room-frame"
+    ></iframe>
+  }
+</div>

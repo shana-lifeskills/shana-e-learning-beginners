@@ -14,6 +14,8 @@ interface NavItem {
 const STUDENT_NAV: NavItem[] = [
   { label: 'Home', icon: '🏠', link: '/student', exact: true },
   { label: 'Assignments', icon: '📝', link: '/student/assignments' },
+  { label: 'Chat', icon: '💬', link: '/student/chat' },
+  { label: 'Meetings', icon: '📹', link: '/student/meetings' },
   { label: 'My Rewards', icon: '🏅', link: '/student/rewards' },
   { label: 'Games', icon: '🎮', link: '/student/games' },
   { label: 'Leaderboard', icon: '🏆' },
@@ -24,6 +26,8 @@ const STUDENT_NAV: NavItem[] = [
 const ADVANCED_STUDENT_NAV: NavItem[] = [
   { label: 'Home', icon: '🏠', link: '/student', exact: true },
   { label: 'Assignments', icon: '📝', link: '/student/assignments' },
+  { label: 'Chat', icon: '💬', link: '/student/chat' },
+  { label: 'Meetings', icon: '📹', link: '/student/meetings' },
   { label: 'Rewards', icon: '🏅', link: '/student/rewards' },
   { label: 'Arcade', icon: '🎮', link: '/student/games' },
   { label: 'Leaderboard', icon: '📊' },
@@ -34,6 +38,8 @@ const ADVANCED_STUDENT_NAV: NavItem[] = [
 const TRAINER_NAV: NavItem[] = [
   { label: 'Home', icon: '🏠', link: '/admin', exact: true },
   { label: 'Students', icon: '🧑‍🎓', link: '/admin/students' },
+  { label: 'Chat', icon: '💬', link: '/admin/chat' },
+  { label: 'Meetings', icon: '📹', link: '/admin/meetings' },
   { label: 'Payments', icon: '🧾', link: '/admin/payments' },
   { label: 'All Modules', icon: '📘', link: '/admin/modules' },
   { label: 'Upload Module', icon: '⬆️', link: '/admin/modules/new' },
@@ -43,6 +49,8 @@ const TRAINER_NAV: NavItem[] = [
 const COACH_NAV: NavItem[] = [
   { label: 'Dashboard', icon: '📊', link: '/coach', exact: true },
   { label: 'Assignments', icon: '📝', link: '/coach/assignments' },
+  { label: 'Chat', icon: '💬', link: '/coach/chat' },
+  { label: 'Meetings', icon: '📹', link: '/coach/meetings' },
   { label: 'Students', icon: '👥', link: '/coach' },
   { label: 'Settings', icon: '⚙️' },
 ];

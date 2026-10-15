@@ -1,0 +1,77 @@
+<div class="meetings-page">
+  <header class="page-head">
+    <h1>Meetings</h1>
+    <p>{{ isStaff() ? 'Schedule and join live video sessions with your students.' : 'Join your scheduled video sessions with your trainer.' }}</p>
+  </header>
+
+  @if (isStaff()) {
+    <form class="schedule-form" (submit)="$event.preventDefault(); scheduleMeeting()">
+      <h2>Schedule a meeting</h2>
+      <div class="fields">
+        <label>
+          Student
+          <select [ngModel]="selectedStudentId()" (ngModelChange)="selectedStudentId.set($event)" name="student">
+            <option value="" disabled selected>Choose a student…</option>
+            @for (student of students(); track student.id) {
+              <option [value]="student.id">{{ student.firstName }} {{ student.lastName }}</option>
+            }
+          </select>
+        </label>
+        <label>
+          Title
+          <input type="text" placeholder="e.g. Weekly Check-in" [ngModel]="title()" (ngModelChange)="title.set($event)" name="title" />
+        </label>
+        <label>
+          Date &amp; time
+          <input type="datetime-local" [ngModel]="scheduledAt()" (ngModelChange)="scheduledAt.set($event)" name="scheduledAt" />
+        </label>
+        <button type="submit" [disabled]="creating()">{{ creating() ? 'Scheduling…' : 'Schedule' }}</button>
+      </div>
+      @if (errorMessage()) {
+        <p class="error">{{ errorMessage() }}</p>
+      }
+    </form>
+  }
+
+  @if (loading()) {
+    <p class="hint">Loading meetings…</p>
+  } @else {
+    <section class="meeting-list">
+      <h2>Upcoming</h2>
+      @if (upcoming().length === 0) {
+        <p class="hint">No upcoming meetings scheduled.</p>
+      }
+      @for (meeting of upcoming(); track meeting.id) {
+        <article class="meeting-card">
+          <div class="info">
+            <span class="title">{{ meeting.title }}</span>
+            <span class="meta">
+              {{ meeting.scheduledAt | date: 'EEE, MMM d · h:mm a' }}
+              — {{ isStaff() ? (meeting.student.firstName + ' ' + meeting.student.lastName) : (meeting.host.firstName + ' ' + meeting.host.lastName) }}
+            </span>
+          </div>
+          <div class="actions">
+            <a class="join-btn" [routerLink]="joinPath(meeting)">Join Call</a>
+            @if (isStaff()) {
+              <button type="button" class="cancel-btn" (click)="cancelMeeting(meeting)">Cancel</button>
+            }
+          </div>
+        </article>
+      }
+    </section>
+
+    @if (past().length > 0) {
+      <section class="meeting-list past">
+        <h2>Past &amp; canceled</h2>
+        @for (meeting of past(); track meeting.id) {
+          <article class="meeting-card faded">
+            <div class="info">
+              <span class="title">{{ meeting.title }}</span>
+              <span class="meta">{{ meeting.scheduledAt | date: 'EEE, MMM d · h:mm a' }} {{ meeting.canceledAt ? '(canceled)' : '' }}</span>
+            </div>
+          </article>
+        }
+      </section>
+    }
+  }
+</div>

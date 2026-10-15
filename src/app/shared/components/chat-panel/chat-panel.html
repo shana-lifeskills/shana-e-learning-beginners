@@ -1,0 +1,64 @@
+<div class="chat-page">
+  <aside class="contact-list">
+    <h2>{{ isStaff() ? 'Students' : 'My Trainers' }}</h2>
+
+    @if (contactsLoading()) {
+      <p class="hint">Loading…</p>
+    } @else if (contacts().length === 0) {
+      <p class="hint">No contacts yet.</p>
+    }
+
+    @for (contact of contacts(); track contact.id) {
+      <button
+        type="button"
+        class="contact"
+        [class.active]="contact.id === activeContactId()"
+        (click)="selectContact(contact)"
+      >
+        <span class="avatar">{{ initials(contact) }}</span>
+        <span class="details">
+          <span class="name">{{ contact.firstName }} {{ contact.lastName }}</span>
+          <span class="preview">{{ contact.lastMessage ?? 'Say hello 👋' }}</span>
+        </span>
+        @if (contact.unreadCount > 0) {
+          <span class="unread-badge">{{ contact.unreadCount }}</span>
+        }
+      </button>
+    }
+  </aside>
+
+  <section class="thread">
+    @if (!activeContact()) {
+      <div class="empty-state">
+        <p>Pick a conversation to start chatting.</p>
+      </div>
+    } @else {
+      <header class="thread-head">
+        <span class="avatar">{{ initials(activeContact()!) }}</span>
+        <span class="name">{{ activeContact()!.firstName }} {{ activeContact()!.lastName }}</span>
+      </header>
+
+      <div class="messages">
+        @for (message of messages(); track message.id) {
+          <div class="bubble-row" [class.mine]="message.senderId === currentUserId()">
+            <span class="bubble">{{ message.body }}</span>
+          </div>
+        }
+        @if (messages().length === 0) {
+          <p class="hint">No messages yet — send the first one!</p>
+        }
+      </div>
+
+      <form class="composer" (submit)="$event.preventDefault(); sendMessage()">
+        <input
+          type="text"
+          placeholder="Type a message…"
+          [ngModel]="draft()"
+          (ngModelChange)="draft.set($event)"
+          name="draft"
+        />
+        <button type="submit" [disabled]="sending() || !draft().trim()">Send</button>
+      </form>
+    }
+  </section>
+</div>

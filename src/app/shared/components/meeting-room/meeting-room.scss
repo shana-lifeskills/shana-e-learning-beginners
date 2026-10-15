@@ -1,0 +1,50 @@
+@use '../../../../assets/styles/variables' as v;
+
+.meeting-room {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - #{v.$app-header-height});
+  background: v.$color-navy-text;
+}
+
+.status {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  color: v.$color-white;
+
+  a {
+    color: v.$color-sunshine;
+  }
+}
+
+.room-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1.5rem;
+  color: v.$color-white;
+
+  .title {
+    font-weight: 700;
+  }
+}
+
+.leave-btn {
+  background: v.$color-bubble-pink;
+  color: v.$color-white;
+  font-weight: 700;
+  padding: 0.5rem 1.2rem;
+  border-radius: v.$border-radius-pill;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.room-frame {
+  flex: 1;
+  border: none;
+  width: 100%;
+}

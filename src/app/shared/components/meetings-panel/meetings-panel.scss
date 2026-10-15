@@ -1,0 +1,156 @@
+@use '../../../../assets/styles/variables' as v;
+
+.meetings-page {
+  max-width: 60rem;
+  margin: 0 auto;
+  padding: 2rem 2.5rem 4rem;
+}
+
+.page-head {
+  margin-bottom: 1.5rem;
+
+  h1 {
+    margin: 0 0 0.25rem;
+  }
+
+  p {
+    color: rgba(31, 45, 61, 0.6);
+    margin: 0;
+  }
+}
+
+.schedule-form {
+  background: v.$color-white;
+  border-radius: v.$border-radius-lg;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 0.4rem 1rem rgba(31, 45, 61, 0.06);
+
+  h2 {
+    margin: 0 0 1rem;
+    font-size: 1.1rem;
+  }
+}
+
+.fields {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 1rem;
+
+  label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: rgba(31, 45, 61, 0.7);
+    flex: 1 1 12rem;
+  }
+
+  select,
+  input {
+    border: 1px solid rgba(31, 45, 61, 0.15);
+    border-radius: v.$border-radius-sm;
+    padding: 0.55rem 0.75rem;
+    font-size: 0.95rem;
+  }
+
+  button {
+    border: none;
+    border-radius: v.$border-radius-pill;
+    padding: 0.65rem 1.5rem;
+    background: v.$color-coral;
+    color: v.$color-white;
+    font-weight: 700;
+    cursor: pointer;
+    height: 2.6rem;
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+}
+
+.error {
+  color: v.$color-bubble-pink;
+  margin: 0.75rem 0 0;
+  font-size: 0.85rem;
+}
+
+.hint {
+  color: rgba(31, 45, 61, 0.5);
+}
+
+.meeting-list {
+  margin-bottom: 2rem;
+
+  h2 {
+    font-size: 1rem;
+    margin: 0 0 0.75rem;
+  }
+
+  &.past {
+    opacity: 0.85;
+  }
+}
+
+.meeting-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  background: v.$color-white;
+  border-radius: v.$border-radius-sm;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+  box-shadow: 0 0.3rem 0.8rem rgba(31, 45, 61, 0.05);
+
+  &.faded {
+    box-shadow: none;
+    background: v.$color-cream-bg;
+  }
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.title {
+  font-weight: 700;
+  color: v.$color-navy-text;
+}
+
+.meta {
+  font-size: 0.85rem;
+  color: rgba(31, 45, 61, 0.6);
+}
+
+.actions {
+  display: flex;
+  gap: 0.6rem;
+  flex: none;
+}
+
+.join-btn {
+  background: v.$color-sky;
+  color: v.$color-white;
+  font-weight: 700;
+  padding: 0.5rem 1.2rem;
+  border-radius: v.$border-radius-pill;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.cancel-btn {
+  border: 1px solid rgba(31, 45, 61, 0.15);
+  background: transparent;
+  color: rgba(31, 45, 61, 0.6);
+  border-radius: v.$border-radius-pill;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
